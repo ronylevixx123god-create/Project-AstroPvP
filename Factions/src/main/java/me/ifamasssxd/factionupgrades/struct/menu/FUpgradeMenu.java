@@ -157,14 +157,14 @@ extends CosmicGUI {
                 upgradeInfo.setUpgradeTier(upgrade, nextTier);
                 FactionUpgradeAPI.processPerkPurchase(this.overrideToSee, upgrade, nextTier);
                 this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.9f);
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("fquests add F_UPGRADES " + this.overrideToSee.getTag()));
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add F_UPGRADES " + this.overrideToSee.getTag());
                 this.redraw();
             }));
         }
         for (int i = 8; i < this.size; ++i) {
             ItemStack is = this.inventory.getItem(i);
             if (is != null && is.getType() != Material.AIR) continue;
-            this.setItem(i, new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)DyeColor.BLACK.getWoolData())).name(" ").build(), null);
+            this.setItem(i, new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.BLACK.getWoolData())).name(" ").build(), null);
         }
     }
 
@@ -194,7 +194,7 @@ extends CosmicGUI {
         NBTTagList ench = new NBTTagList();
         tag.set("ench", (NBTBase)ench);
         nmsStack.setTag(tag);
-        return CraftItemStack.asCraftMirror((net.minecraft.server.v1_8_R3.ItemStack)nmsStack);
+        return CraftItemStack.asCraftMirror(nmsStack);
     }
 }
 

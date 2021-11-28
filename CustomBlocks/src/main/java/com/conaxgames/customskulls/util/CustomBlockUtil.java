@@ -72,7 +72,8 @@ public class CustomBlockUtil {
     public static boolean chunkContainsABlock(Player player) {
         Chunk chunk = player.getLocation().getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
-            if (data == null || data.getLocation() == null) continue;
+            if (data == null || data.getLocation() == null)
+                continue;
             if (chunk == null) continue;
             if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
                 return true;

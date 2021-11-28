@@ -14,7 +14,8 @@ public class CustomAbilityListener implements Listener {
 
     @EventHandler
     public void pvpEvent(EntityDamageByEntityEvent event) {
-        if (!(event.getDamager() instanceof Player)) return;
+/*        if (!(event.getDamager() instanceof Player))
+            return;
         Player player = (Player) event.getDamager();
         if (CustomBlockUtil.chunkContainsABlock(player)) {
             for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
@@ -26,12 +27,12 @@ public class CustomAbilityListener implements Listener {
                 // This is when a player hits another player, we can multiply their damage, or reduce it!
                 customBlock.damageGivenEvent(player, event, player.getLocation().getChunk(), data);
             }
-        }
+        }*/
     }
 
     @EventHandler
     public void MobDeathEvent(EntityDeathEvent event) {
-        if (event.getEntity().getKiller() != null) {
+/*        if (event.getEntity().getKiller() != null) {
             Player player = event.getEntity().getKiller();
             for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
                 if (data == null) {
@@ -47,6 +48,6 @@ public class CustomAbilityListener implements Listener {
                 // This is when a mob dies, we can double the exp dropped for example!
                 customBlock.mobDeathEvent(player, event);
             }
-        }
+        }*/
     }
 }

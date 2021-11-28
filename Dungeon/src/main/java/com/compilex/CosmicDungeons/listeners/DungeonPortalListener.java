@@ -55,7 +55,6 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
-import com.compilex.CosmicDungeons.items.PortalTimeReductionTrinketItem;
 import com.compilex.CosmicDungeons.menus.DungeonMasterKeyMenu;
 import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.compilex.CosmicDungeons.utils.PortalTrinketUtils;

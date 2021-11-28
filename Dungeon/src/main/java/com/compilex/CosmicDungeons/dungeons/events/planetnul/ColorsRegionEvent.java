@@ -21,26 +21,28 @@ package com.compilex.CosmicDungeons.dungeons.events.planetnul;
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.dungeons.events.PlanetNulEvents;
 import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
-import com.compilex.CosmicDungeons.dungeons.events.planetnul.PanelColor;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+
+import java.util.*;
+
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockState;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.Action;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.Lever;
-import org.bukkit.material.MaterialData;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class ColorsRegionEvent
 extends RegionEvent {
@@ -243,12 +245,44 @@ extends RegionEvent {
         }
     }
 
+    private void spawnAntiCosmonaut(Location location) {
+        PigZombie skeleton = (PigZombie) location.getWorld().spawnEntity(location, EntityType.PIG_ZOMBIE);
+        if(Math.random() > 0.5)
+            skeleton.setBaby(true);
+        ItemStack sword = new ItemStack(Material.DIAMOND_SWORD);
+        sword.addUnsafeEnchantment(Enchantment.KNOCKBACK, new Random().nextInt(1) + 1);
+        sword.addEnchantment(Enchantment.DAMAGE_ALL, 1);
+        skeleton.getEquipment().setItemInHand(sword);
+        skeleton.setMaxHealth(10.0);
+        skeleton.setHealth(skeleton.getMaxHealth());
+        skeleton.setCustomName(CC.AquaB + "Anti" + CC.WhiteB + "-" + CC.LightPurpleB + "Cosmonaut");
+        skeleton.setCustomNameVisible(true);
+        skeleton.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 1));
+        skeleton.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, new Random().nextInt(3)));
+        skeleton.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, new Random().nextInt(2)));
+        skeleton.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
+        skeleton.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
+        skeleton.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
+        skeleton.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
+        skeleton.setCanPickupItems(false);
+        skeleton.getEquipment().setItemInHandDropChance(0.0f);
+        skeleton.getEquipment().setBootsDropChance(0.0f);
+        skeleton.getEquipment().setLeggingsDropChance(0.0f);
+        skeleton.getEquipment().setChestplateDropChance(0.0f);
+        skeleton.getEquipment().setHelmetDropChance(0.0f);
+        skeleton.setMetadata("anti_cosmonaut", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)true));
+        skeleton.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get(), (Object)true));
+    }
+
     private void onFailedAttempt() {
         this.dungeon.broadcastMessage(CC.translate((String)"&cHmm... something seems not quite right here!"));
         this.dungeon.getPlayers().forEach(p -> p.playSound(p.getLocation(), Sound.NOTE_PLING, 0.4f, 0.1f));
+        if(this.currentPanelIndex > 0) {
+            this.dungeon.getPlayers().forEach(p -> p.playSound(p.getLocation(), Sound.GHAST_SCREAM, 1f, 1f));
+            Bukkit.getScheduler().runTaskLater(CosmicDungeonsPlugin.get(), () -> spawnAntiCosmonaut(new Location(this.dungeon.getWorld(), 37, 190, -49)), 40L);
+        }
         for (int i = 0; i < this.currentPanelIndex; ++i) {
-            String panel;
-            switch (panel = this.panelOrder.get(i)) {
+            switch (this.panelOrder.get(i)) {
                 case "LEFT": {
                     this.leftPanelCurrentColors = ((PlanetNulDungeon)this.dungeon).getRandomColorsForPanel();
                     break;
@@ -278,7 +312,7 @@ extends RegionEvent {
             BlockState state = loc.getBlock().getState();
             Lever lever = (Lever)state.getData();
             lever.setPowered(up);
-            state.setData((MaterialData)lever);
+            state.setData(lever);
             state.update();
         });
     }

@@ -44,7 +44,7 @@ implements InventoryInteractable {
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        return new NBTWrapper(this.applyItemData(ItemUtils.addGlow(new ItemBuilder(Material.FLINT_AND_STEEL, CC.GoldB + "Portal Protection Trinket", new String[]{CC.Gray + "Apply to a /dungeon portal item", CC.Gray + "that, when placed, will only allow", CC.Gray + "your faction and allies to enter.", "", CC.Gray + "Drag n' drop onto item to apply."}).build())).build()).setString("random", UUID.randomUUID().toString()).build();
+        return new NBTWrapper(this.applyItemData(ItemUtils.addGlow(new ItemBuilder(Material.FLINT_AND_STEEL, CC.GoldB + "Portal Protection Trinket", CC.Gray + "Apply to a /dungeon portal item", CC.Gray + "that, when placed, will only allow", CC.Gray + "your faction and allies to enter.", "", CC.Gray + "Drag n' drop onto item to apply.").build())).build()).setString("random", UUID.randomUUID().toString()).build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {

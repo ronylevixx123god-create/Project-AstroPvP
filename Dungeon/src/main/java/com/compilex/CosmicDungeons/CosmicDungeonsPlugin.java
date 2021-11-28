@@ -46,11 +46,8 @@ import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
-import com.compilex.CosmicDungeons.items.BossSlayerTrinketItem;
-import com.compilex.CosmicDungeons.items.ChunkBusterItem;
 import com.compilex.CosmicDungeons.items.HeroicDungeonScrollItem;
 import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
-import com.compilex.CosmicDungeons.items.PortalTimeReductionTrinketItem;
 import com.compilex.CosmicDungeons.listeners.BossSlayerTrinketListener;
 import com.compilex.CosmicDungeons.listeners.DungeonChallengeChestListener;
 import com.compilex.CosmicDungeons.listeners.DungeonInOutListener;
@@ -372,10 +369,7 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
         }
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new PortalProtectionTrinketItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new PortalTimeReductionTrinketItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new BossSlayerTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new HeroicDungeonScrollItem());
-            CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new ChunkBusterItem());
         }
     }
 

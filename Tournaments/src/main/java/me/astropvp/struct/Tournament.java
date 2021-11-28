@@ -96,12 +96,19 @@ public class Tournament {
     }
 
     public void nextMatch() {
+        if(this.waitingList.size() == 0) {
+            endTournament();
+        }
         TournamentPlayer player1 = this.waitingList.get(0);
         this.waitingList.remove(player1);
         TournamentPlayer player2 = this.waitingList.get(0);
         this.waitingList.remove(player2);
         TournamentMatch match = new TournamentMatch(player1, player2, this);
         this.currentMatches.add(match);
+    }
+
+    public void endTournament() {
+
     }
 
     public TournamentMatch getMatch(TournamentPlayer player) {

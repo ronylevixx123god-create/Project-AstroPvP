@@ -157,6 +157,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.PigZombie;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.Event;
@@ -377,11 +378,13 @@ implements CommandExecutor {
         return skeleton;
     }
 
+
+
     private boolean activateRegion(String regionName) {
         if (this.exploredRegions.contains(regionName)) {
             return false;
         }
-        ((RegionEvent)this.regionEvents.get(regionName)).run();
+        this.regionEvents.get(regionName).run();
         this.exploredRegions.add(regionName);
         return true;
     }
@@ -518,7 +521,7 @@ implements CommandExecutor {
             } else {
                 this.dungeon.getTopDungeonTime().checkLatestTime((int)(this.dungeon.getTimeSinceDungeonStart() / 1000L), this.dungeon, winners, validLooters);
             }
-            final ArrayList<Location> chestLocations = new ArrayList<Location>(Arrays.asList(new Location[]{new Location(this.dungeon.world, 726.0, 148.0, 474.0), new Location(this.dungeon.world, 721.0, 148.0, 474.0), new Location(this.dungeon.world, 720.0, 148.0, 470.0), new Location(this.dungeon.world, 721.0, 148.0, 466.0), new Location(this.dungeon.world, 726.0, 148.0, 466.0)}));
+            final ArrayList<Location> chestLocations = new ArrayList<Location>(Arrays.asList(new Location(this.dungeon.world, 726.0, 148.0, 474.0), new Location(this.dungeon.world, 721.0, 148.0, 474.0), new Location(this.dungeon.world, 720.0, 148.0, 470.0), new Location(this.dungeon.world, 721.0, 148.0, 466.0), new Location(this.dungeon.world, 726.0, 148.0, 466.0)));
             Bukkit.broadcastMessage((String)"");
             if (this.dungeon.getDungeonChallengesCompleted().size() > 0) {
                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GOLD + "Their team has completed " + (Object)ChatColor.GOLD + (Object)ChatColor.BOLD + ChatColor.UNDERLINE.toString() + this.dungeon.getDungeonChallengesCompleted().size() + (Object)ChatColor.GOLD + " Dungeon Challenges:"));
@@ -767,7 +770,7 @@ implements CommandExecutor {
             }
             if (event.getClickedBlock().getType() == Material.STONE_BUTTON && colorsRegion != null) {
                 int idx;
-                ArrayList<String> solvedPanels = new ArrayList<String>();
+                ArrayList<String> solvedPanels = new ArrayList<>();
                 for (int i = 0; i < colorsRegion.currentPanelIndex; ++i) {
                     solvedPanels.add(colorsRegion.panelOrder.get(i));
                 }
@@ -790,7 +793,6 @@ implements CommandExecutor {
                     if (!button.isPowered()) {
                         button.setPowered(true);
                         Bukkit.getScheduler().runTaskLater((Plugin)CosmicDungeonsPlugin.get(), new BukkitRunnable(){
-
                             public void run() {
                                 button.setPowered(false);
                             }

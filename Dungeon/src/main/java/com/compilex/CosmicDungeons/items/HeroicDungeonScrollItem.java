@@ -41,9 +41,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class HeroicDungeonScrollItem
-extends CosmicItem
-implements InventoryInteractable {
+public class HeroicDungeonScrollItem extends CosmicItem implements InventoryInteractable {
     public HeroicDungeonScrollItem() {
         super("heroic_dungeon_scroll");
     }

@@ -1,5 +1,6 @@
 package net.astropvp.struct;
 
+import net.astropvp.CollectPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import java.util.HashMap;
@@ -17,7 +18,7 @@ public class CollectManager {
             return collectList.get(player);
         PlayerCollect collect = new PlayerCollect(player);
         collectList.put(player, collect);
-        collect.load(false);
+        Bukkit.getScheduler().runTaskAsynchronously(CollectPlugin.getInstance(), () -> collect.load(false));
         return collect;
     }
 
