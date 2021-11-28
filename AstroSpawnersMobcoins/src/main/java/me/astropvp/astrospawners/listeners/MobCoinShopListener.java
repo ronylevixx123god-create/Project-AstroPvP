@@ -51,6 +51,7 @@ public class MobCoinShopListener implements Listener {
             List<String> lore = meta.getLore();
             lore.remove(lore.size() - 1);
             lore.remove(lore.size() - 1);
+            lore.remove(lore.size() - 1);
             meta.setLore(lore);
             item.setItemMeta(meta);
             if (isInventoryFull(player)) {
