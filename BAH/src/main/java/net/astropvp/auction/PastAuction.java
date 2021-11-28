@@ -13,8 +13,7 @@ import org.bukkit.util.io.BukkitObjectOutputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.Serializable;
 
-public class PastAuction implements Serializable
-{
+public class PastAuction implements Serializable {
     private boolean didPlayersBid;
     private String winningBidder;
     private double winningBid;

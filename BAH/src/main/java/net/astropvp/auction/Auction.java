@@ -5,9 +5,7 @@
 package net.astropvp.auction;
 
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import net.astropvp.util.Utils;
-import org.arkhamnetwork.Arkkit.utils.FactionUtil;
 import org.bukkit.entity.Player;
 import org.apache.commons.lang.WordUtils;
 import me.recolance.auction.data.DataHolder;
@@ -38,7 +36,6 @@ public class Auction
         this.currentBid = 0.0;
         this.currentTopBidder = null;
         this.auctionUUID = UUID.randomUUID();
-        FactionUtils.attemptClaim()
     }
     
     public void onEnd() {

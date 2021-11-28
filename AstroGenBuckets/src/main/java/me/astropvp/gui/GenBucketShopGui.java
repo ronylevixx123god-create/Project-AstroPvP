@@ -55,7 +55,7 @@ public class GenBucketShopGui {
             event.setCancelled(true);
         }));
         expShopUI.setItem(1, 5, new GuiItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 250000), event -> {
-            player.getInventory().addItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 250000.0D));
+            player.getInventory().addItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 150000.0D));
             event.setCancelled(true);
         }));
 
@@ -65,7 +65,7 @@ public class GenBucketShopGui {
             event.setCancelled(true);
         }));
         expShopUI.setItem(2, 2, new GuiItem(sandGenBucket.getItem(GenBucketDirection.VERTICAL, 500), event -> {
-            player.getInventory().addItem(sandGenBucket.getItem(GenBucketDirection.VERTICAL, 500.0D));
+            player.getInventory().addItem(sandGenBucket.getItem(GenBucketDirection.VERTICAL, 2000.0D));
             event.setCancelled(true);
         }));
         expShopUI.setItem(2, 3, new GuiItem(obsidianGenBucket.getItem(GenBucketDirection.VERTICAL, 1000), event -> {

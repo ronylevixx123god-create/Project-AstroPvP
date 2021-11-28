@@ -32,18 +32,11 @@ public class GenBucketHandler {
     }
 
     public GenBucket getGenBucket(ItemStack itemStack) {
-        Iterator var2 = this.genBuckets.iterator();
-
-        GenBucket bucket;
-        do {
-            if (!var2.hasNext()) {
-                return null;
-            }
-
-            bucket = (GenBucket)var2.next();
-        } while(!bucket.isItem(itemStack));
-
-        return bucket;
+        for(GenBucket genBucket : this.genBuckets) {
+            if(genBucket.isItem(itemStack))
+                return genBucket;
+        }
+        return null;
     }
 
     public void loadGenBuckets() {
@@ -58,7 +51,7 @@ public class GenBucketHandler {
             long speed = thisBucket.getLong("speed");
             Material generate = KrizzUtil.findEssItem(thisBucket.getString("generate")).getType();
             Material itemType = KrizzUtil.findEssItem(thisBucket.getString("item")).getType();
-            GenBucket genBucket = new GenBucket(bucket, displayName, itemType);
+            GenBucket genBucket = new GenBucket(bucket, displayName, generate, itemType);
             genBucket.setSpeed(speed);
             genBucket.setPlacedMaterial(generate);
             this.genBuckets.add(genBucket);

@@ -106,10 +106,7 @@ public class DivineImmolation extends CustomEnchantment {
                 radius = (1.0D * level) +2;
             }
             double damage = 2.0;
-            if ((
-                    !p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (
-
-                    KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0)) {
+            if ((!p.hasMetadata("lastItemHeldChange") || MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() > 5L) && (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0)) {
                 if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L)
                     KillTrackerAPI.removeSoulsFromGems(p, 1);
                 List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
@@ -153,8 +150,8 @@ public class DivineImmolation extends CustomEnchantment {
                                     ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);
                                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8F, 0.5F);
                                 }
-                                ent.setMetadata("divineFire", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));
-                                ent.setMetadata("divineFireLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(level)));
+                                ent.setMetadata("divineFire", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+                                ent.setMetadata("divineFireLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), level));
                             }
                     }
                 }
