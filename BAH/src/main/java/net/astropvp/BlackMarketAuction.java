@@ -14,6 +14,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.File;
 import java.util.UUID;
 
 public class BlackMarketAuction extends JavaPlugin
@@ -24,7 +25,10 @@ public class BlackMarketAuction extends JavaPlugin
     private ItemStack nextAuctionItem;
     
     public void onEnable() {
-        saveDefaultConfig();
+        File file = new File(this.getDataFolder() + File.separator + "config.yml");
+        if (!file.exists()) {
+            saveDefaultConfig();
+        }
         this.auctionManager = new AuctionManager();
         this.auctionMenu = new AuctionMenu();
         this.getCommand("bah").setExecutor((CommandExecutor)new CommandBAH());
@@ -57,6 +61,6 @@ public class BlackMarketAuction extends JavaPlugin
     }
     
     public static BlackMarketAuction get() {
-        return BlackMarketAuction.instance;
+        return instance;
     }
 }

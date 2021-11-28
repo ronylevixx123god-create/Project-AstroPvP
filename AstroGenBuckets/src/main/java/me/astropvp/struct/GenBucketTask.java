@@ -43,9 +43,9 @@ public class GenBucketTask extends BukkitRunnable {
         this.placedFaction = FactionUtils.getFPlayer(player).getFaction();
         this.uuid = UUID.randomUUID();
         if (!tasks.containsKey(player.getUniqueId())) {
-            tasks.put(player.getUniqueId(), Lists.newArrayList(new GenBucketTask[]{this}));
+            tasks.put(player.getUniqueId(), Lists.newArrayList(this));
         } else {
-            List<GenBucketTask> genTasks = (List)tasks.get(player.getUniqueId());
+            List<GenBucketTask> genTasks = tasks.get(player.getUniqueId());
             genTasks.add(this);
             tasks.put(player.getUniqueId(), genTasks);
         }

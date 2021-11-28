@@ -1,13 +1,10 @@
-// 
-// Decompiled by Procyon v0.5.36
-// 
-
 package net.astropvp.auction;
 
 import net.astropvp.BlackMarketAuction;
+import net.astropvp.util.ConfigUtils;
 import net.astropvp.util.Utils;
-import net.astropvp.utils.ConfigUtils;
 import org.bukkit.Material;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -29,12 +26,10 @@ public class AuctionManager
     public AuctionManager() {
         AuctionManager.instance = this;
         this.pastAuctions = new ArrayList<>();
-        List<String> pastAuctions = BlackMarketAuction.get().getConfig().getStringList("past-auctions");
-        for (String s : pastAuctions)
-            this.pastAuctions.add(PastAuction.fromString(s));
+        List<String> pastAuctions = BlackMarketAuction.get().getConfig().contains("past-auctions") ? BlackMarketAuction.get().getConfig().getStringList("past-auctions") : new ArrayList<>();
+        pastAuctions.forEach(auction -> this.pastAuctions.add(PastAuction.fromString(auction)));
         List<String> possibleItems = BlackMarketAuction.get().getConfig().getStringList("possible-items");
-        for (String s : possibleItems)
-            this.possibleItems.add(ConfigUtils.getItem(s));
+        possibleItems.forEach(item -> this.possibleItems.add(ConfigUtils.getItem(item)));
         this.lastAuction = BlackMarketAuction.get().getConfig().getLong("last-auction");
     }
     
@@ -67,7 +62,7 @@ public class AuctionManager
                     this.cancel();
                 }
             }
-        }.runTaskTimer((Plugin)BlackMarketAuction.get(), 0L, 20L);
+        }.runTaskTimer(BlackMarketAuction.get(), 0L, 20L);
     }
     
     public Auction getCurrentAuction() {

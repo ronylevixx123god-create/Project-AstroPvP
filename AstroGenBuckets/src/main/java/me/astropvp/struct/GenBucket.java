@@ -1,5 +1,6 @@
 package me.astropvp.struct;
 
+import lombok.Getter;
 import me.astropvp.GenBucketPlugin;
 import me.astropvp.utils.KrizzUtil;
 import org.apache.commons.lang.WordUtils;
@@ -15,12 +16,14 @@ public class GenBucket {
     private String displayName;
     private Material placedMaterial;
     private GenBucketDirection direction;
+    @Getter private Material heldMaterial;
     private long speed = 10L;
 
-    public GenBucket(String name, String displayName, Material material) {
+    public GenBucket(String name, String displayName, Material placedMaterial, Material heldMaterial) {
         this.name = name;
         this.displayName = displayName;
-        this.placedMaterial = material;
+        this.placedMaterial = placedMaterial;
+        this.heldMaterial = heldMaterial;
     }
 
     public Material getPlacedMaterial() {
@@ -56,18 +59,11 @@ public class GenBucket {
     }
 
     public ItemStack getItem(GenBucketDirection direction, double price) {
-        Material itemType;
-        if (direction == GenBucketDirection.VERTICAL) {
-            itemType = Material.LAVA_BUCKET;
-        } else {
-            itemType = Material.WATER_BUCKET;
-        }
-
-        return KrizzUtil.createItem(itemType, "&a&lGen Bucket &7(" + this.displayName + ")", "", " &2&l* &a&lDirection &f" + direction.niceName(), " &2&l* &a&lMaterial &f" + WordUtils.capitalizeFully(this.placedMaterial.name().replace("_", " ")), " &2&l* &a&lPrice &f$" + price, "", "&7Place this bucket to begin generating!");
+        return KrizzUtil.createItem(this.heldMaterial, "&a&lGen Bucket &7(" + this.displayName + ")", "", " &2&l* &a&lDirection &f" + direction.niceName(), " &2&l* &a&lMaterial &f" + WordUtils.capitalizeFully(this.placedMaterial.name().replace("_", " ")), " &2&l* &a&lPrice &f$" + price, "", "&7Place this bucket to begin generating!");
     }
 
     public boolean isItem(ItemStack otherItem) {
-        if (otherItem != null && otherItem.getType().name().contains("BUCKET") && otherItem.hasItemMeta() && otherItem.getItemMeta().hasDisplayName() && otherItem.getItemMeta().hasLore()) {
+        if (otherItem != null && otherItem.hasItemMeta() && otherItem.getItemMeta().hasDisplayName() && otherItem.getItemMeta().hasLore()) {
             return !otherItem.getItemMeta().getLore().contains(KrizzUtil.color("&7Place this bucket to begin generating!")) ? false : otherItem.getItemMeta().getDisplayName().equalsIgnoreCase(this.getItem(GenBucketDirection.VERTICAL, 0.0D).getItemMeta().getDisplayName());
         } else {
             return false;
