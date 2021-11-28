@@ -1,5 +1,6 @@
 package net.astropvp.core.guis;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
@@ -43,6 +44,16 @@ public class WarpGUI {
         ItemStack crates = new ItemBuilder(Material.CHEST, CC.translate("&b&lCrates Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack end = new ItemBuilder(Material.ENDER_STONE, CC.translate("&d&lEnd Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack flat = new ItemBuilder(Material.OBSIDIAN, CC.translate("&a&lFlat World"), CC.translate("&7Click to teleport to this world")).build();
+        ItemStack nebula;
+        String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+
+        if (rank.equals("apollo") || rank.equals("helper") || rank.equals("mod") || rank.equals("banteam") || rank.equals("admin") || rank.equals("interstellar") || rank.equals("media") || player.isOp()) {
+            nebula = new ItemBuilder(Material.NETHER_STAR, CC.translate("&5&lNebula Lounge"), CC.translate("&7Click to teleport to this warp")).build();
+
+        } else {
+            nebula = new ItemBuilder(Material.BARRIER, CC.translate("&5&lNebula Lounge"), CC.translate("&cThis warp requires nebula rank. &7(/buy)")).build();
+
+        }
 
 
 
@@ -50,6 +61,7 @@ public class WarpGUI {
         expShopUI.setItem(1, 2, new GuiItem((crates), event -> player.performCommand("warp crates")));
         expShopUI.setItem(1, 3, new GuiItem((end), event -> player.performCommand("warp end")));
         expShopUI.setItem(1, 4, new GuiItem((flat), event -> player.performCommand("warp flat")));
+        expShopUI.setItem(1, 5, new GuiItem((nebula), event -> player.performCommand("warp nebula")));
 
 
 
