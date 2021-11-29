@@ -60,6 +60,7 @@
         <module>Carnage</module>
         <module>FactionShields</module>
         <module>AstroTournaments</module>
+        <module>Test</module>
     </modules>
 
     <build>
