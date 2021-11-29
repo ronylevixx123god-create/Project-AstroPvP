@@ -46,7 +46,7 @@ public class Implants extends CustomEnchantment {
                     leveledPlayers.forEach(player -> {
                         if (Implants.this.healthTickedPlayers.remove(player.getUniqueId())) {
                             if (player.getHealth() + 1.0 < player.getMaxHealth() && player.getHealth() > 0.0 && !player.isDead()) {
-                                player.setHealth(player.getHealth() + 1.0);
+                                GeneralUtil.healPlayer(player, 1);
                             }
                         } else {
                             Implants.this.healthTickedPlayers.add(player.getUniqueId());

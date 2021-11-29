@@ -38,7 +38,7 @@ public class HeroicEnlighted extends CustomEnchantment {
             if (player.getHealth() + amount > player.getMaxHealth()) {
                 return;
             }
-            player.setHealth(player.getHealth() + amount);
+            GeneralUtil.healPlayer(player, 2);
             GeneralCooldown.enterCooldown((Player) player);
         }
 
