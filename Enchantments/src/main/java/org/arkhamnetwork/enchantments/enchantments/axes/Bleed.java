@@ -80,7 +80,9 @@ public class Bleed extends CustomEnchantment {
                     continue;
                 }
                 final double amountToHeal = Math.max(2.0, bleedStack * 0.05 * bloodLustLevel);
-                GeneralUtil.healPlayer(pEnt, amountToHeal);
+                if (Math.random() < 0.1) {
+                    GeneralUtil.healPlayer(pEnt, amountToHeal);
+                }
 
                 try {
                     if (ParticleUtils.isPlayerIndicating(pEnt)) {

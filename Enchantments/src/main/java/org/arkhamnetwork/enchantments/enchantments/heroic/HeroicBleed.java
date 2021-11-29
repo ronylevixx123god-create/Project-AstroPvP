@@ -103,7 +103,9 @@ public class HeroicBleed extends HeroicCustomEnchantment {
                 if(AstroItemSkinsAPI.hasSkinEquipped((Player) leDamager, SkinType.CHRISTMAS_AXE_SNOWFLAKE)) {
                     amountToHeal = amountToHeal/1.5; //fuck knows...
                 }
-                GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
+                if (Math.random() < 0.1) {
+                    GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
+                }
                 playBleedEffect(pEnt.getLocation(), bleedStack);
                 de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayer(pEnt.getPlayer(), pEnt.getLocation(),0,0,0,0.075F, 10);
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4F, 0.6F);
