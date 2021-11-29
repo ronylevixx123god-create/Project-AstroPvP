@@ -2,8 +2,8 @@ package net.astropvp.nebulashop.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import me.matthawkk.chat.PrefixedMessage;
-import me.matthawkk.gui.CommonGUI;
+import me.matthawkk.chat.messages.PrefixedMessage;
+import me.matthawkk.gui.BaseGUI;
 import me.matthawkk.gui.GUIItem;
 import me.matthawkk.item.ItemBuilder;
 import net.astropvp.nebulashop.NebulaShop;
@@ -18,7 +18,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NebulaShopInventory extends CommonGUI {
+public class NebulaShopInventory extends BaseGUI {
     public NebulaShopInventory() {
         super("Nebula Shop", 9);
         setItem(3, getCurrentItem());

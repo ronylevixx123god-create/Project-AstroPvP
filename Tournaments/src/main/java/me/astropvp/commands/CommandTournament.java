@@ -15,11 +15,8 @@ public class CommandTournament implements CommandExecutor {
         if(!(sender instanceof Player))
             return true;
         Player player = (Player) sender;
-        if(!(CosmicTournamentsPlugin.getInstance().getPlayerDataManager().hasLoadedData(player))) {
-            CosmicTournamentsPlugin.getInstance().getPlayerDataManager().registerData(player, new PlayerData(player));
-        }
         if(args.length == 0) {
-            new TournamentMainInventory().open(player);
+            new TournamentMainInventory(player).open(player);
             return true;
         }
 

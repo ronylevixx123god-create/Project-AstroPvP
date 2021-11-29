@@ -1,5 +1,6 @@
 package me.astropvp;
 
+import lombok.Getter;
 import me.astropvp.commands.CommandAdminTournament;
 import me.astropvp.commands.CommandTournament;
 import me.astropvp.listeners.PlayerListener;
@@ -7,19 +8,23 @@ import me.astropvp.sql.Database;
 import me.astropvp.sql.SQLQueryCustomThread;
 import me.astropvp.struct.PlayerDataManager;
 import me.astropvp.struct.Tournament;
-import me.matthawkk.plugin.CustomPlugin;
+import me.astropvp.struct.TournamentManager;
+import me.matthawkk.plugin.BasePlugin;
 import me.matthawkk.plugin.Plugins;
 import org.bukkit.Bukkit;
 
-public class CosmicTournamentsPlugin extends CustomPlugin {
+public class CosmicTournamentsPlugin extends BasePlugin {
     private static CosmicTournamentsPlugin instance;
     private Database sqlDatabase;
     private SQLQueryCustomThread sqlQueryThread = new SQLQueryCustomThread();
-    private PlayerDataManager playerDataManager = new PlayerDataManager();
+    private PlayerDataManager playerDataManager;
     private Tournament activeTournament = null;
+    @Getter private TournamentManager tournamentManager;
 
     public void load() {
         instance = this;
+        registerCommands();
+        saveDefaultConfig();
         Plugins.registerListeners(this, new PlayerListener());
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())
@@ -28,10 +33,12 @@ public class CosmicTournamentsPlugin extends CustomPlugin {
             Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
             Bukkit.getPluginManager().disablePlugin(this);
         } else {
-            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS tournament_userdata(player_uuid varchar(64) PRIMARY KEY, inventory varchar(4000), tournamentwins int, tournamentlosses int, matchwins int, matchlosses int, kills int, deaths int, elo int, points int);", false);
+            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS tournament_userdata(player_uuid varchar(64) PRIMARY KEY, inventory varchar(4000), tournamentwins int, tournamentlosses int, matchwins int, matchlosses int, kills int, deaths int, elo int, points int, helmet varchar(64), chestplate varchar(64), leggings varchar(64), boots varchar(64));", false);
             this.sqlQueryThread = new SQLQueryCustomThread();
             this.sqlQueryThread.start();
         }
+        this.playerDataManager = new PlayerDataManager();
+        this.tournamentManager = new TournamentManager();
     }
 
     public void unload() {

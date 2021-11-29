@@ -11,6 +11,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.sql.Array;
 
 public class Base64Utils {
     public static String[] playerInventoryToBase64(PlayerInventory playerInventory) throws IllegalStateException {

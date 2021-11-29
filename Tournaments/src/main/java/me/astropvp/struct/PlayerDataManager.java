@@ -12,6 +12,8 @@ public class PlayerDataManager {
     }
 
     public PlayerData getData(Player player) {
+        if(!hasLoadedData(player))
+            this.loadedPlayerData.put(player, new PlayerData(player));
         return loadedPlayerData.get(player);
     }
 

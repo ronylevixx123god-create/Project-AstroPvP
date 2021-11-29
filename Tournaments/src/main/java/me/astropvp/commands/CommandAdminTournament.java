@@ -25,27 +25,6 @@ public class CommandAdminTournament implements CommandExecutor {
             Bukkit.broadcastMessage(Language.CREATE_TOURNAMENT.getMessage());
         }
 
-
-        String[] string = Base64Utils.playerInventoryToBase64(player.getInventory());
-        Bukkit.broadcastMessage(string[0]);
-        Bukkit.broadcastMessage(CC.Red + string[1]);
-        player.getInventory().clear();
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
-        Bukkit.getScheduler().runTaskLater(CosmicTournamentsPlugin.getInstance(), new BukkitRunnable() {
-            @Override
-            public void run() {
-                try {
-                    player.getInventory().setContents(Base64Utils.itemStackArrayFromBase64(string[0]));
-                    player.getInventory().setArmorContents(Base64Utils.itemStackArrayFromBase64(string[1]));
-                } catch (IOException exception) {
-                    exception.printStackTrace();
-                }
-            }
-        }, 100L);
-
         return false;
     }
 }

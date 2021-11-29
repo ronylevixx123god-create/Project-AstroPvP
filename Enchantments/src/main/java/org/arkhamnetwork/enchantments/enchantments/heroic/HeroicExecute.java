@@ -21,13 +21,13 @@ public class HeroicExecute extends HeroicCustomEnchantment {
     public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
         if (!(target instanceof org.bukkit.entity.Player))
             return;
-        if (target.getHealth() >= 12.0D)
+        if (target.getHealth() >= 20.0D)
             return;
         if (GeneralUtil.isEffectedByRage(target))
             return;
         double random = Math.random();
-        double chance = 0.06D * level;
-        double mod = 4.0D + (level/2D);
+        double chance = 0.1D * level;
+        double mod = 4.0D + (level);
         if (random < chance) {
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");
             e.setDamage(e.getDamage() * mod);

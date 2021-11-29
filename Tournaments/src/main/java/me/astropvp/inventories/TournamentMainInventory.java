@@ -3,8 +3,10 @@ package me.astropvp.inventories;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.CosmicTournamentsPlugin;
 import me.astropvp.struct.PlayerData;
-import me.matthawkk.gui.CommonGUI;
+import me.astropvp.struct.TournamentManager;
+import me.matthawkk.gui.BaseGUI;
 import me.matthawkk.gui.GUIItem;
+import me.matthawkk.item.Items;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -12,20 +14,56 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TournamentMainInventory extends CommonGUI {
-    public TournamentMainInventory() {
+public class TournamentMainInventory extends BaseGUI {
+    private TournamentManager tournamentManager;
+
+    private Player player;
+
+    private PlayerData data;
+
+    public TournamentMainInventory(Player player) {
         super("Tournaments", 27);
+        this.player = player;
+        this.data = CosmicTournamentsPlugin.getInstance().getPlayerDataManager().getData(player);
+        this.tournamentManager = CosmicTournamentsPlugin.getInstance().getTournamentManager();
         setItem(0, getStatsItem(player));
         setItem(8, getInfoItem());
         setItem(26, getProfilesItem());
         setItem(18, getShopItem(player));
+        setItem(20, getArmorItem(this.tournamentManager.getHelmet()));
+        setItem(21, getArmorItem(this.tournamentManager.getChestplate()));
+        setItem(22, getArmorItem(this.tournamentManager.getLeggings()));
+        setItem(23, getArmorItem(this.tournamentManager.getBoots()));
+        setItem(24, getArmorItem(this.tournamentManager.getWeapon()));
+
+
     }
+
+     private GUIItem getArmorItem(ItemStack item) {
+        ItemStack cloned = item.clone();
+         Items.addLore(cloned, "");
+         if(item.getType().name().contains("HELMET"))
+            Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getHelmetSkin().getDisplayName());
+         if(item.getType().name().contains("CHESTPLATE"))
+             Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getChestplateSkin().getDisplayName());
+         if(item.getType().name().contains("LEGGINGS"))
+             Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getLeggingsSkin().getDisplayName());
+         if(item.getType().name().contains("BOOTS"))
+             Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getBootsSkin().getDisplayName());
+         Items.addLore(cloned, CC.Gray + "Click to edit current skin.");
+        return new GUIItem(item) {
+            public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
+                super.onClick(player, clickType, event);
+            }
+        };
+     }
 
      private GUIItem getStatsItem(Player player) {
          PlayerData data = CosmicTournamentsPlugin.getInstance().getPlayerDataManager().getData(player);

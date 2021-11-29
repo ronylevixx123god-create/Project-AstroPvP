@@ -2,7 +2,7 @@ package net.astropvp.nebulashop.listeners;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.matthawkk.chat.PrefixedMessage;
+import me.matthawkk.chat.messages.PrefixedMessage;
 import net.astropvp.nebulashop.NebulaShop;
 import net.astropvp.nebulashop.inventories.NebulaShopInventory;
 import org.bukkit.entity.EntityType;

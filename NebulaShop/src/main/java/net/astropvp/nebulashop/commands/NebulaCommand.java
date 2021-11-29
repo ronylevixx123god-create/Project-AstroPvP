@@ -3,7 +3,7 @@ package net.astropvp.nebulashop.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
-import me.matthawkk.chat.PrefixedMessage;
+import me.matthawkk.chat.messages.PrefixedMessage;
 import net.astropvp.nebulashop.NebulaShop;
 import net.astropvp.nebulashop.inventories.NebulaShopInventory;
 import org.bukkit.Bukkit;

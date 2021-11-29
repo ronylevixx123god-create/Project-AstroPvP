@@ -2,7 +2,7 @@ package net.astropvp.nebulashop;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
-import me.matthawkk.plugin.CustomPlugin;
+import me.matthawkk.plugin.BasePlugin;
 import me.matthawkk.plugin.Plugins;
 import net.astropvp.nebulashop.commands.NebulaCommand;
 import net.astropvp.nebulashop.listeners.NebulaShopListener;
@@ -11,7 +11,7 @@ import org.bukkit.ChatColor;
 
 import java.io.File;
 
-public class NebulaShop extends CustomPlugin {
+public class NebulaShop extends BasePlugin {
     @Getter
     private static NebulaShop instance;
 

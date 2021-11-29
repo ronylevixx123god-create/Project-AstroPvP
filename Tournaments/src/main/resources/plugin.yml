@@ -1,6 +1,7 @@
 name: AstroTournaments
 main: me.astropvp.CosmicTournamentsPlugin
 version: 1.0
+depend: [Commons]
 commands:
   tournament:
     aliases: [tourney]
