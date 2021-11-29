@@ -1,6 +1,14 @@
 package net.astropvp.core;
 
 import com.astropvp.cc.player.CosmicPlayers;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.reflect.FieldAccessException;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.titles.cmds.CommandTitle;
 import com.cosmicpvp.titles.cmds.CommandTitleSet;
@@ -88,6 +96,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.logging.Level;
 
 @Getter
 @Setter
@@ -114,6 +123,7 @@ public class AstroCore extends JavaPlugin {
     // BetterPay
     Essentials ess;
     private PayToggle payToggles;
+    ProtocolManager protocolManager;
 
     public static Map<UUID, Player> grindingMessages;
 
@@ -452,6 +462,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("trash").setExecutor(new TrashCommand());
         this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
+
         getCommand("phoenix").setExecutor(new PhoenixCommand());
         Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand()).forEach(this:: registerCommand);
 
@@ -472,6 +483,28 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new AutoGiveAllTask(), 20L, 20L);
 
         freezeCommand = new Freeze();
+
+
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
+        this.protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, new PacketType[]{PacketType.Play.Client.TAB_COMPLETE}){
+
+            public void onPacketReceiving(PacketEvent event) {
+                if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
+                    try {
+                        PacketContainer packet = event.getPacket();
+                        String message = ((String)packet.getSpecificModifier(String.class).read(0)).toLowerCase();
+                        if (message.startsWith("/?") && !message.contains("  ") || message.startsWith("/") && !message.contains(" ")
+                        || message.startsWith("/help") && !message.contains("  ") || message.startsWith("/ver") && !message.contains("  ")
+                        || message.startsWith("/bukkit") && !message.contains("  ")) {
+                            event.setCancelled(true);
+                        }
+                    }
+                    catch (FieldAccessException e) {
+                        AstroCore.this.getLogger().log(Level.SEVERE, "bruh", e);
+                    }
+                }
+            }
+        });
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");

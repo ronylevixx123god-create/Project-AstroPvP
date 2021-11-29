@@ -18,6 +18,10 @@ import java.util.Map;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
+import me.astropvp.cratekeys.AstroCrateKeysAPI;
+import me.astropvp.cratekeys.data.CrateData;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -25,6 +29,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
+import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -52,30 +57,35 @@ public class CommandMobCoinShop implements CommandExecutor {
 
         if (rank.equals("apollo") || rank.equals("interstellar") || rank.equals("media")) {
             if (chests.containsKey("PremadeMeta"))
-                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2000));
-            if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2000));
-            if (chests.containsKey("CrateKeyBundle"))
-                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(800));
-            if (chests.containsKey("NewGenSkin"))
-                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(800));
-            if (chests.containsKey("Backpack"))
-                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
-            if (chests.containsKey("ApolloKey"))
-                values.put(((MysteryChest)chests.get("ApolloKey")).createClaimableItem(false), Integer.valueOf(8000));
-        } else {
-            if (chests.containsKey("PremadeMeta"))
-                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(2500));
-            if (chests.containsKey("Slotbot"))
-                values.put(((MysteryChest)chests.get("Slotbot")).createClaimableItem(false), Integer.valueOf(2500));
+                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(4000));
             if (chests.containsKey("CrateKeyBundle"))
                 values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("NewGenSkin"))
-                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1000));
+                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1200));
+            if (chests.containsKey("Backpack"))
+                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
+
+            //Normal Items
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6400));
+            values.put(CrateKeyItem.getItem(CrateType.BUNDLE), Integer.valueOf(4800));
+
+
+        } else {
+            if (chests.containsKey("PremadeMeta"))
+                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(5000));
+            if (chests.containsKey("CrateKeyBundle"))
+                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
+            if (chests.containsKey("NewGenSkin"))
+                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1500));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
-            if (chests.containsKey("ApolloKey"))
-                values.put(((MysteryChest)chests.get("ApolloKey")).createClaimableItem(false), Integer.valueOf(10000));
+
+            //Normal items
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(10000));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(8000));
+            values.put(CrateKeyItem.getItem(CrateType.BUNDLE), Integer.valueOf(6000));
+
 
 
         }

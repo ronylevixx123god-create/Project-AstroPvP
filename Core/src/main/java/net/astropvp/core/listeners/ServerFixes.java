@@ -126,7 +126,7 @@ public class ServerFixes implements Listener {
             if (player.hasPermission("commandfix.bypass"))
                 return;
             event.setCancelled(true);
-            player.sendMessage(ChatManager.translate("&f&l<&a&lAstro&e&lPvP&f&l> &7Unknown Command. Type &f\"/help\" &7for help."));
+            player.sendMessage(ChatManager.translate("&8[&a&lAstro&e&lPvP&8] &7Unknown Command. Use the command &f\"/help\" &7for help."));
         }
     }
 
