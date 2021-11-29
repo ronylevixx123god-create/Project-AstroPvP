@@ -59,7 +59,7 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.15 * level;
+            double increase = 0.10 * level;
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
@@ -78,7 +78,7 @@ public class HeroKiller extends CustomEnchantment {
                 if (((Player) e.getDamager()).getItemInHand() == null) return;
                 if (EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
                     double soulMasterLevel = EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
-                    increase*=(((1.4 * soulMasterLevel)/100) + 1);
+                    increase*=(((1.2 * soulMasterLevel)/100) + 1);
                 }
             }
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
