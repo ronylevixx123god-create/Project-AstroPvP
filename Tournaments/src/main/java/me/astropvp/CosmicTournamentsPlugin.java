@@ -33,7 +33,7 @@ public class CosmicTournamentsPlugin extends BasePlugin {
             Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
             Bukkit.getPluginManager().disablePlugin(this);
         } else {
-            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS tournament_userdata(player_uuid varchar(64) PRIMARY KEY, inventory varchar(4000), tournamentwins int, tournamentlosses int, matchwins int, matchlosses int, kills int, deaths int, elo int, points int, helmet varchar(64), chestplate varchar(64), leggings varchar(64), boots varchar(64));", false);
+            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS tournament_userdata(player_uuid varchar(64) PRIMARY KEY, inventory varchar(4000), tournamentwins int, tournamentlosses int, matchwins int, matchlosses int, kills int, deaths int, elo int, points int, helmet varchar(64), chestplate varchar(64), leggings varchar(64), boots varchar(64), sword varchar(64), axe varchar(64));", false);
             this.sqlQueryThread = new SQLQueryCustomThread();
             this.sqlQueryThread.start();
         }

@@ -3,7 +3,9 @@ package me.astropvp.struct;
 import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.CosmicTournamentsPlugin;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.inventories.ProfilePresetInventory;
 import me.astropvp.utils.Base64Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -29,6 +31,9 @@ public class PlayerData {
     @Getter @Setter private SkinType chestplateSkin;
     @Getter @Setter private SkinType leggingsSkin;
     @Getter @Setter private SkinType bootsSkin;
+    @Getter @Setter private SkinType swordSkin;
+    @Getter @Setter private SkinType axeSkin;
+
 
     @Getter @Setter private int kills;
     @Getter @Setter private int deaths;
@@ -56,6 +61,12 @@ public class PlayerData {
             this.leggingsSkin = SkinType.VALENTINES_2021_BELT;
         if(this.bootsSkin == null)
             this.bootsSkin = SkinType.COSMIC_CITIZEN_BOOTS;
+        if(this.swordSkin == null)
+            this.swordSkin = SkinType.THANKSGIVING_SWORD_HARVESTER;
+        if(this.axeSkin == null)
+            this.axeSkin = SkinType.HALLOWEEN_AXE;
+        if(this.inventory == null)
+            this.inventory = ProfilePresetInventory.getInventory();
 
     }
 
@@ -69,7 +80,7 @@ public class PlayerData {
             this.loading = true;
             PreparedStatement statement = null;
             try {
-                statement = CosmicTournamentsPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT inventory, tournamentwins, tournamentlosses, matchwins, matchlosses, kills, deaths, elo, points, helmet, chestplate, leggings, boots FROM `tournament_userdata` WHERE player_uuid = ?;");
+                statement = CosmicTournamentsPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT inventory, tournamentwins, tournamentlosses, matchwins, matchlosses, kills, deaths, elo, points, helmet, chestplate, leggings, boots, sword, axe FROM `tournament_userdata` WHERE player_uuid = ?;");
                 statement.setString(1, this.uuid.toString());
                 ResultSet results = statement.executeQuery();
                 while(results.next()) {
@@ -89,6 +100,9 @@ public class PlayerData {
                     this.chestplateSkin = SkinType.valueOf(results.getString("chestplate"));
                     this.leggingsSkin = SkinType.valueOf(results.getString("leggings"));
                     this.bootsSkin = SkinType.valueOf(results.getString("boots"));
+                    this.swordSkin = SkinType.valueOf(results.getString("sword"));
+                    this.axeSkin = SkinType.valueOf(results.getString("axe"));
+
                 }
             } catch (Exception e) {
                 e.printStackTrace();
@@ -122,7 +136,7 @@ public class PlayerData {
             return;
         }
         try {
-            PreparedStatement statement = CosmicTournamentsPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO tournament_userdata(inventory, tournamentwins, tournamentlosses, matchwins, matchlosses, kills, deaths, elo, points, helmet, chestplate, leggings, boots) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE inventory = ?, tournamentwins = ?, tournamentlosses = ?, matchwins = ?, matchlosses = ?, kills = ?, deaths = ?, elo = ?, points = ?, helmet = ?, chestplate = ?, leggings = ?, boots = ?;");
+            PreparedStatement statement = CosmicTournamentsPlugin.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO tournament_userdata(inventory, tournamentwins, tournamentlosses, matchwins, matchlosses, kills, deaths, elo, points, helmet, chestplate, leggings, boots, sword, axe) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE inventory = ?, tournamentwins = ?, tournamentlosses = ?, matchwins = ?, matchlosses = ?, kills = ?, deaths = ?, elo = ?, points = ?, helmet = ?, chestplate = ?, leggings = ?, boots = ?, sword = ?, axe = ?;");
             try {
                 statement.setString(1, this.uuid.toString());
                 statement.setString(2, Base64Utils.itemStackArrayToBase64(player.getInventory().getContents()));
@@ -138,6 +152,8 @@ public class PlayerData {
                 statement.setString(12, this.chestplateSkin.name());
                 statement.setString(13, this.leggingsSkin.name());
                 statement.setString(14, this.bootsSkin.name());
+                statement.setString(15, this.swordSkin.name());
+                statement.setString(16, this.axeSkin.name());
 
                 statement.executeUpdate();
             } finally {
@@ -146,6 +162,47 @@ public class PlayerData {
             }
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public SkinType getSkinOfType(ItemSkinType type) {
+        switch (type) {
+            case HELMET:
+                return this.helmetSkin;
+            case AMULET:
+                return this.chestplateSkin;
+            case BELT:
+                return this.leggingsSkin;
+            case BOOTS:
+                return this.bootsSkin;
+            case AXE:
+                return this.axeSkin;
+            case SWORD:
+                return this.swordSkin;
+        }
+        return null;
+    }
+
+    public void setSkinOfType(ItemSkinType type, SkinType skin) {
+        switch (type) {
+            case HELMET:
+                this.helmetSkin = skin;
+                break;
+            case AMULET:
+                this.chestplateSkin = skin;
+                break;
+            case BELT:
+                this.leggingsSkin = skin;
+                break;
+            case BOOTS:
+                this.bootsSkin = skin;
+                break;
+            case AXE:
+                this.axeSkin = skin;
+                break;
+            case SWORD:
+                this.swordSkin = skin;
+                break;
         }
     }
 

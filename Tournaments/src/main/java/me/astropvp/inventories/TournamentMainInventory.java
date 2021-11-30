@@ -7,14 +7,11 @@ import me.astropvp.struct.TournamentManager;
 import me.matthawkk.gui.BaseGUI;
 import me.matthawkk.gui.GUIItem;
 import me.matthawkk.item.Items;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
 
@@ -42,25 +39,39 @@ public class TournamentMainInventory extends BaseGUI {
         setItem(22, getArmorItem(this.tournamentManager.getLeggings()));
         setItem(23, getArmorItem(this.tournamentManager.getBoots()));
         setItem(24, getArmorItem(this.tournamentManager.getWeapon()));
-
-
     }
 
      private GUIItem getArmorItem(ItemStack item) {
         ItemStack cloned = item.clone();
          Items.addLore(cloned, "");
-         if(item.getType().name().contains("HELMET"))
-            Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getHelmetSkin().getDisplayName());
-         if(item.getType().name().contains("CHESTPLATE"))
+         if(item.getType().name().contains("HELMET")) {
+             Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getHelmetSkin().getDisplayName());
+             this.data.getHelmetSkin().applyNoDisplay(cloned);
+         }
+         if(item.getType().name().contains("CHESTPLATE")) {
              Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getChestplateSkin().getDisplayName());
-         if(item.getType().name().contains("LEGGINGS"))
+             this.data.getChestplateSkin().applyNoDisplay(cloned);
+         }
+         if(item.getType().name().contains("LEGGINGS")) {
              Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getLeggingsSkin().getDisplayName());
-         if(item.getType().name().contains("BOOTS"))
+             this.data.getLeggingsSkin().applyNoDisplay(cloned);
+         }
+         if(item.getType().name().contains("BOOTS")) {
              Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getBootsSkin().getDisplayName());
+             this.data.getBootsSkin().applyNoDisplay(cloned);
+         }
+         if(item.getType().name().contains("SWORD")) {
+             Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getSwordSkin().getDisplayName());
+             this.data.getSwordSkin().applyNoDisplay(cloned);
+         }
+         if(item.getType().name().contains("AXE")) {
+             Items.addLore(cloned, CC.GreenB + "Current Skin: " + this.data.getAxeSkin().getDisplayName());
+             this.data.getAxeSkin().applyNoDisplay(cloned);
+         }
          Items.addLore(cloned, CC.Gray + "Click to edit current skin.");
-        return new GUIItem(item) {
+        return new GUIItem(cloned, this) {
             public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
-                super.onClick(player, clickType, event);
+                new TournamentProfileInventory(player, new GUIItem[] {getItems().get(20), getItems().get(21), getItems().get(22), getItems().get(23), getItems().get(24)}).open(player);
             }
         };
      }
@@ -91,7 +102,7 @@ public class TournamentMainInventory extends BaseGUI {
          lore.add(CC.Gray + "Click to view leaderboards.");
          skullMeta.setLore(lore);
          item.setItemMeta(skullMeta);
-         return new GUIItem(item) {
+         return new GUIItem(item, this) {
              public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
              }
          };
@@ -134,7 +145,7 @@ public class TournamentMainInventory extends BaseGUI {
          lore.add(CC.DarkAquaB + "* " + CC.White + "Salty CosmicClient Emote");
          meta.setLore(lore);
          item.setItemMeta(meta);
-         return new GUIItem(item) {
+         return new GUIItem(item, this) {
              public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
              }
          };
@@ -156,7 +167,7 @@ public class TournamentMainInventory extends BaseGUI {
          lore.add(CC.Gray + "Click to view profiles.");
          meta.setLore(lore);
          item.setItemMeta(meta);
-         return new GUIItem(item) {
+         return new GUIItem(item, this) {
              public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
              }
          };
@@ -190,7 +201,7 @@ public class TournamentMainInventory extends BaseGUI {
         lore.add(CC.Gray + "Click to open the point shop.");
         meta.setLore(lore);
         item.setItemMeta(meta);
-        return new GUIItem(item) {
+        return new GUIItem(item, this) {
             public void onClick(Player player, ClickType clickType, InventoryClickEvent event) {
             }
         };
