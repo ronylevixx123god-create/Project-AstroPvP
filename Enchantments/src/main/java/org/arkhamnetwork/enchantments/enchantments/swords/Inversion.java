@@ -33,7 +33,7 @@ public class Inversion extends CustomEnchantment {
                     playerHit.sendMessage(ChatColor.DARK_PURPLE + "* CORRUPTED [" + ChatColor.RED + heal + ChatColor.DARK_PURPLE + " DMG] *");
                     return;
                 }
-                GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
+                //GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
                 e.setDamage(0.0);
                 e.setCancelled(true);
                 try {

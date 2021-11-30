@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -38,6 +39,7 @@ public class HeroicEnlighted extends CustomEnchantment {
             if (player.getHealth() + amount > player.getMaxHealth()) {
                 return;
             }
+
             GeneralUtil.healPlayer(player, 2);
             GeneralCooldown.enterCooldown((Player) player);
         }
