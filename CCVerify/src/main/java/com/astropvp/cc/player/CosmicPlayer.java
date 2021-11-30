@@ -37,6 +37,10 @@ public class CosmicPlayer {
     @Setter
     private String focusedPlayer = "";
 
+    @Getter
+    @Setter
+    private Player currentHealthBar = null;
+
     public void notify(String message, int displayTime){
         if(!this.isOnCosmicClient() || !getPlayer().isOnline())return;
 

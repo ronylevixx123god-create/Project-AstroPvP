@@ -12,7 +12,6 @@ import com.astropvp.cc.voice.GlobalChannel;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 

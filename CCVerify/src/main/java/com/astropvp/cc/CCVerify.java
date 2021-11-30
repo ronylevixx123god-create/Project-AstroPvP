@@ -8,7 +8,11 @@ import com.astropvp.cc.injection.BuycraftInjection;
 import com.astropvp.cc.listener.PlayerListener;
 import com.astropvp.cc.packet.PacketCommons;
 import com.astropvp.cc.packet.PacketIO;
+import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.voice.VoiceTask;
+import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -16,6 +20,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
+import java.util.HashMap;
 
 public class CCVerify extends JavaPlugin implements Listener {
     private static CCVerify i;
