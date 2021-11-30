@@ -25,6 +25,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -82,6 +83,13 @@ public class DamageListener implements Listener {
         if (victim.hasPotionEffect(PotionEffectType.INVISIBILITY)) {
             victim.removePotionEffect(PotionEffectType.INVISIBILITY);
         }
+
+
+    }
+
+    @EventHandler
+    public void onDurabilityLoss(PlayerItemDamageEvent event) {
+        event.setCancelled(true);
     }
 
 

@@ -22,7 +22,7 @@ public class AntiBlockGlitch
     public void enable() {
         this.registerListener(new AntiBlockGlitchListener());
         this.registerListener(new AntiWitherSpawnerListener());
-        this.registerListener(new AntiGlitchSwordListener());
+        //this.registerListener(new AntiGlitchSwordListener());
 
     }
 

@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -61,6 +63,7 @@ public class Protection extends CustomEnchantment {
                                     if (fp != null && fp.getFaction() != null && fp.getFaction().getRelationTo((RelationParticipator) fplayer.getFaction()).isAtLeast(Relation.ALLY)) {
                                         if (p.getHealth() + amountToHeal < p.getMaxHealth() && p.getHealth() > 0.0D && !p.isDead()) {
                                             p.setHealth(p.getHealth() + amountToHeal);
+
                                         }
                                         if (level >= 1 && Math.random() <= 0.05D) {
                                             p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, level * 20, (level > 2) ? 1 : 0));

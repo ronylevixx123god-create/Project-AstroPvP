@@ -1,7 +1,5 @@
 package com.astropvp.cc.listener;
 
-import com.astropvp.cc.CCVerify;
-import com.astropvp.cc.packet.type.out.PacketOutHealthBar;
 import com.astropvp.cc.packet.type.out.PacketOutHitSplat;
 import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.player.CosmicPlayers;
@@ -24,12 +22,6 @@ public class PlayerListener implements Listener {
         if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))return;
         if (event.isCancelled())return;
 
-        CosmicPlayer damager = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
-
-        if(damager.isOnCosmicClient()) {
-            damager.setCurrentHealthBar((Player) event.getEntity());
-        }
-
         double finalDamage = event.getFinalDamage();
 
         Location place = updateDamageSplatLocation(event.getEntity().getLocation());
@@ -47,11 +39,6 @@ public class PlayerListener implements Listener {
                 place.getZ()));
 
         for(CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()){
-            if(cosmicPlayer.getCurrentHealthBar() == event.getEntity()) {
-                PacketOutHealthBar healthBar = new PacketOutHealthBar((Player) event.getEntity());
-                cosmicPlayer.sendPacket(healthBar);
-            }
-
             if(cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld())continue;
 
             if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 80)continue;
