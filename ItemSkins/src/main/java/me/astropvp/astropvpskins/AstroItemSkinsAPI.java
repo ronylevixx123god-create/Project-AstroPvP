@@ -284,4 +284,12 @@ public class AstroItemSkinsAPI {
         if (inventory.getBoots() != null && inventory.getBoots().getType() != Material.AIR && hasItemSkin(inventory.getBoots()))
             getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onEquip(player));
     }
+
+    public static ItemStack removeNoDisplay(ItemStack item) {
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        cosmicData.remove("itemSkinType");
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
+        return wrapper.build();
+    }
 }

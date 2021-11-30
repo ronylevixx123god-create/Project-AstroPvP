@@ -20,6 +20,7 @@
         <module name="AstroUtils" />
         <module name="Explosive" />
         <module name="AstroCrateKeys" />
+        <module name="Test" />
         <module name="Dungeon" />
         <module name="Tournaments" />
         <module name="AstroGenBuckets" />
@@ -86,7 +87,7 @@
       <module name="ProjectAstro (1)" target="1.8" />
       <module name="SpaceChests (1)" target="1.8" />
       <module name="SpawnersMobcoins" target="8" />
-      <module name="Test" target="1.8" />
+      <module name="Test" target="8" />
       <module name="VaultsX" target="1.8" />
     </bytecodeTargetLevel>
   </component>

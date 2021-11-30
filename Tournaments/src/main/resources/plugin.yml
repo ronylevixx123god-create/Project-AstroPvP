@@ -1,4 +1,4 @@
-name: AstroTournaments
+name: Tournaments
 main: me.astropvp.CosmicTournamentsPlugin
 version: 1.0
 depend: [Commons]
