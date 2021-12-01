@@ -61,6 +61,8 @@
         <module>FactionShields</module>
         <module>AstroTournaments</module>
         <module>Test</module>
+        <module>Faction</module>
+        <module>Factionss</module>
     </modules>
 
     <build>

@@ -30,8 +30,12 @@ public class CosmicTournamentsPlugin extends BasePlugin {
         registerCommands();
         this.registerConfigs(new BaseConfig("spawn_locations", this), new SqlConfig(this));
         this.activeTournament = null;
+
+
         this.pluginPrefix = CC.DarkAquaB + "(" + CC.AquaB + "Tournaments" + CC.DarkAquaB + ")";
         this.defaultColor = ChatColor.AQUA;
+
+
         Plugins.registerListeners(this, new PlayerListener());
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())

@@ -33,6 +33,7 @@
         <module name="Slotbot" />
         <module name="KoTHs" />
         <module name="Duels" />
+        <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
         <module name="Ark" />
@@ -60,6 +61,12 @@
         <module name="Utils" />
         <module name="WeaponRunes" />
         <module name="CompilexPermissions" />
+      </profile>
+      <profile name="Annotation profile for ProjectAstro" enabled="true">
+        <sourceOutputDir name="../../target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions (1) (com.massivecraft)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
