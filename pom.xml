@@ -63,6 +63,7 @@
         <module>Test</module>
         <module>Faction</module>
         <module>Factionss</module>
+        <module>AstroEvents</module>
     </modules>
 
     <build>

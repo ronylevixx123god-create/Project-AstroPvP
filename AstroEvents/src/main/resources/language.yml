@@ -1,0 +1,22 @@
+messages:
+  invalid-event-name: "&cInvalid event name"
+  events-help-message:
+    - "&7-- &aAstro Events &7--"
+    - "&astart &7<event> &8- &7starts an event"
+    - "&astop &7<event> &8- &7stops an event"
+    - "&alist &8- &7list of events"
+  parkour-help-message:
+    - "&7-- &aAstro Events &7--"
+    - "&aparkour join &8- &7teleport to the starting point"
+    - "&aparkour leave &8- &7leave the parkour event"
+  sumo-help-message:
+    - "&7-- &aAstro Events &7--"
+    - "&asumo join &8- &7teleport to the starting point"
+    - "&asumo leave &8- &7leave the sumo event"
+  event:
+    not-participant: "&8(&c!&8) &7You aren't currently participating in this {game} event"
+    full: "&8(&c!&8) &7The {game} event is currently full"
+    already-in-progress: "&8(&c!&8) &7The {game} event is already in progress"
+    not-started: "&8(&c!&8) &7The {game} event has not yet started"
+    list-header: "&8(&a!&8) &7Minigame List"
+    list-format: "&a* &7{event}"
