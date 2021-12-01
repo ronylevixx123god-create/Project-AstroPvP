@@ -41,6 +41,7 @@ public class PacketCommons {
         packetIDMap.put((short) 71, PacketOutClearTooltip.class);
         packetIDMap.put((short) 32, PacketOutItemCooldowns.class);
         packetIDMap.put((short) 20, PacketOutChunkDataList.class);
+        packetIDMap.put((short) 54, PacketOutHealthBar.class);
 
         packetIDMap.put((short) 11, PacketInRequestPermission.class);
         packetIDMap.put((short) 7, PacketInHandshake.class);
