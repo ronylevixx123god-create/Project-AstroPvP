@@ -223,6 +223,7 @@ final class SmarterEssentialsListener
 
     private int getPlayersInRankTier(int rankTier) {
         int x = 0;
+
         for (Player p : Bukkit.getOnlinePlayers()) {
             if (rankTier == 6) {
                 if (!p.hasPermission("cosmicpvp.heroic")) continue;

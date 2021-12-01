@@ -33,9 +33,9 @@ public class CommandApply implements CommandExecutor {
             boolean op = p.isOp();
             if (op && args.length == 1) {
                 Player playerToCheck = Bukkit.getPlayer(args[0]);
-                for (Map.Entry<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> data : (Iterable<Map.Entry<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>>>) PlayerPotionEffects.getTrackedPotionEffects(playerToCheck).getEffects().entrySet()) {
+                for (Map.Entry<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> data : PlayerPotionEffects.getTrackedPotionEffects(playerToCheck).getEffects().entrySet()) {
                     for (AbstractPotionEffect ape : data.getValue())
-                        p.sendMessage(playerToCheck.getName() + ": " + ((SpecificCustomEnchantment) data.getKey()).getEnchantment().name() + " " + ((SpecificCustomEnchantment) data.getKey()).getEnchantmentLevel() + " giving " + ape.toString());
+                        p.sendMessage(playerToCheck.getName() + ": " + data.getKey().getEnchantment().name() + " " + data.getKey().getEnchantmentLevel() + " giving " + ape.toString());
                 }
                 return true;
             }

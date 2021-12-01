@@ -1,5 +1,6 @@
 package me.astropvp;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
 import me.astropvp.commands.CommandAdminTournament;
 import me.astropvp.commands.CommandTournament;
@@ -9,22 +10,28 @@ import me.astropvp.sql.SQLQueryCustomThread;
 import me.astropvp.struct.PlayerDataManager;
 import me.astropvp.struct.Tournament;
 import me.astropvp.struct.TournamentManager;
+import me.matthawkk.config.BaseConfig;
+import me.matthawkk.config.configs.SqlConfig;
 import me.matthawkk.plugin.BasePlugin;
 import me.matthawkk.plugin.Plugins;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 
 public class CosmicTournamentsPlugin extends BasePlugin {
     private static CosmicTournamentsPlugin instance;
     private Database sqlDatabase;
     private SQLQueryCustomThread sqlQueryThread = new SQLQueryCustomThread();
     private PlayerDataManager playerDataManager;
-    private Tournament activeTournament = null;
+    private Tournament activeTournament;
     @Getter private TournamentManager tournamentManager;
 
     public void load() {
         instance = this;
         registerCommands();
-        saveDefaultConfig();
+        this.registerConfigs(new BaseConfig("spawn_locations", this), new SqlConfig(this));
+        this.activeTournament = null;
+        this.pluginPrefix = CC.DarkAquaB + "(" + CC.AquaB + "Tournaments" + CC.DarkAquaB + ")";
+        this.defaultColor = ChatColor.AQUA;
         Plugins.registerListeners(this, new PlayerListener());
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())

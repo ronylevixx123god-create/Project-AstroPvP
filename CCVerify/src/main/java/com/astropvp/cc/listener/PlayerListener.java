@@ -1,6 +1,7 @@
 package com.astropvp.cc.listener;
 
 import com.astropvp.cc.CCVerify;
+import com.astropvp.cc.packet.type.out.PacketOutHealthBar;
 import com.astropvp.cc.packet.type.out.PacketOutHitSplat;
 import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.player.CosmicPlayers;
@@ -56,6 +57,13 @@ public class PlayerListener implements Listener {
                     place.getZ()));
 
             for(CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()){
+                if(cosmicPlayer.getCurrentHealthBar() == null || cosmicPlayer.getCurrentHealthBar() != event.getEntity())
+                    cosmicPlayer.setCurrentHealthBar((Player) event.getEntity());
+
+                PacketOutHealthBar healthBar = new PacketOutHealthBar((Player) event.getEntity());
+
+                cosmicPlayer.sendPacket(healthBar);
+
                 if(cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld())continue;
 
                 if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 80)continue;

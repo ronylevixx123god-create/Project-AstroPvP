@@ -2,9 +2,9 @@ package me.astropvp.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.CosmicTournamentsPlugin;
-import me.astropvp.enums.Language;
 import me.astropvp.inventories.TournamentMainInventory;
-import me.astropvp.struct.PlayerData;
+import me.matthawkk.chat.messages.ErrorMessage;
+import me.matthawkk.chat.messages.PrefixedMessage;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -24,29 +24,28 @@ public class CommandTournament implements CommandExecutor {
         switch (args[0]) {
             case "join":
                 if (CosmicTournamentsPlugin.getInstance().getActiveTournament() == null) {
-                    player.sendMessage(Language.NO_ACTIVE_TOURNAMENT.getMessage());
+                    player.sendMessage(new ErrorMessage("There is no active tournament.").get());
                     return false;
                 }
 
                 if (CosmicTournamentsPlugin.getInstance().getActiveTournament().getPlayerList().size() == 256) {
-                    player.sendMessage(Language.FULL_TOURNAMENT.getMessage());
+                    player.sendMessage(new ErrorMessage("The tournament is full.").get());
                     return false;
                 }
 
                 CosmicTournamentsPlugin.getInstance().getActiveTournament().registerPlayer(player);
-                player.sendMessage(CC.translate("&a&l(!)&a You have joined the tournament &7[" + CosmicTournamentsPlugin.getInstance().getActiveTournament().getPlayerList().size() + " / 256]"));
-
+                player.sendMessage(new PrefixedMessage( CosmicTournamentsPlugin.getInstance(), "You have joined the tournament " + CC.Gray + "[" + CosmicTournamentsPlugin.getInstance().getActiveTournament().getPlayerList().size() + " / 256]").get());
                 break;
 
             case "leave":
                 if (CosmicTournamentsPlugin.getInstance().getActiveTournament() == null) {
-                    player.sendMessage(Language.NO_ACTIVE_TOURNAMENT.getMessage());
+                    player.sendMessage(new ErrorMessage("There is no active tournament").get());
                     return false;
                 }
 
                 if (CosmicTournamentsPlugin.getInstance().getActiveTournament().getTournamentPlayer(player) != null); {
                     CosmicTournamentsPlugin.getInstance().getActiveTournament().unregisterPlayer(player);
-                    player.sendMessage(Language.LEAVE_TOURNAMENT.getMessage());
+                    player.sendMessage(new PrefixedMessage(CosmicTournamentsPlugin.getInstance(), "You have left the tournament").get());
                     return false;
                 }
 

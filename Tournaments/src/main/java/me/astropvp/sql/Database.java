@@ -14,14 +14,16 @@ public class Database {
     private String username;
     private String password;
     private String database;
+    private String port;
     private String url;
 
     public Database(CosmicTournamentsPlugin instance) {
-        this.host = instance.getConfig().getString("hostname");
-        this.username = instance.getConfig().getString("username");
-        this.password = instance.getConfig().getString("password");
-        this.database = instance.getConfig().getString("database");
-        this.url = "jdbc:mysql://" + this.host + ":3308/" + this.database + "?autoReconnect=true";
+        this.host = instance.getSqlConfig().getFileConfig().getString("hostname");
+        this.username = instance.getSqlConfig().getFileConfig().getString("username");
+        this.password = instance.getSqlConfig().getFileConfig().getString("password");
+        this.database = instance.getSqlConfig().getFileConfig().getString("database");
+        this.port = instance.getSqlConfig().getFileConfig().getString("port");
+        this.url = "jdbc:mysql://" + this.host + ":" + this.port + "/" + this.database + "?autoReconnect=true";
     }
 
     public void executeUpdate(String update, boolean async) {

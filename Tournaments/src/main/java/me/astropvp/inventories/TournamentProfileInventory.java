@@ -42,7 +42,7 @@ public class TournamentProfileInventory extends SubGUI {
                     if(AstroItemSkinsAPI.hasItemSkin(getPrevious()[i].getItem())) {
                         SkinType type = AstroItemSkinsAPI.getItemSkinByItem(getPrevious()[i].getItem()).get(0);
                         AstroItemSkinsAPI.removeNoDisplay(getPrevious()[i].getItem());
-                        getPrevious()[i].setItem(getData().getSkinOfType(type.getItemSkinType()).apply(getPrevious()[i].getItem()));
+                        getPrevious()[i].setItem(CosmicTournamentsPlugin.getInstance().getPlayerDataManager().getData(player).getSkinOfType(type.getItemSkinType()).apply(getPrevious()[i].getItem()));
                     }
                 }
                 getPrevious()[0].getGui().open(player);

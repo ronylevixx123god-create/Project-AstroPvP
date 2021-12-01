@@ -11,7 +11,6 @@
 
     <version>1.0</version>
 
-
     <properties>
 
         <maven.compiler.source>1.8</maven.compiler.source>
@@ -39,9 +38,6 @@
 
 
     <dependencies>
-
-
-
         <dependency>
 
             <groupId>com.comphenix.protocol</groupId>
@@ -84,7 +80,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>utils</artifactId>
+            <artifactId>util</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/CosmicPvPUtils.jar</systemPath>
