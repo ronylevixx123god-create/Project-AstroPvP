@@ -3,31 +3,33 @@ package com.massivecraft.factions.gui;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.data.MemoryFaction;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
+import com.massivecraft.factions.upgrade.FactionUpgradeInfo;
+import com.massivecraft.factions.upgrade.Upgrade;
+import com.massivecraft.factions.upgrade.UpgradeManager;
 import com.massivecraft.factions.util.TextUtil;
-import com.massivecraft.factions.util.UpgradeType;
 import com.massivecraft.factions.util.material.MaterialDb;
 import org.bukkit.event.inventory.ClickType;
+import org.bukkit.inventory.ItemStack;
 
 import java.text.NumberFormat;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class UpgradeGUI extends GUI<UpgradeType>{
-    private static final Map<UpgradeType, SimpleItem> items;
+public class UpgradeGUI extends GUI<FactionUpgrade>{
+    private Map<FactionUpgrade, SimpleItem> items;
 
-    static {
-        items = new LinkedHashMap<>();
-
-        items.put(UpgradeType.TNT, FactionsPlugin.getInstance().conf().upgrades().tnt().item().getItem());
-
-        items.put(UpgradeType.CHEST, FactionsPlugin.getInstance().conf().upgrades().chest().item().getItem());
-
-        items.put(UpgradeType.WARP_AMOUNT, FactionsPlugin.getInstance().conf().upgrades().warpAmount().item().getItem());
-    }
 
     public UpgradeGUI(FPlayer user) {
-        super(user, FactionsPlugin.getInstance().conf().upgrades().gui().getRows());
+        super(user, 9);
+
+        UpgradeManager manager = FactionsPlugin.getInstance().getUpgradeManager();
+        FactionUpgradeInfo upgradeInfo = manager.getFactionUpgradeInfo(this.user.getFaction());
+        for(FactionUpgrade upgrade : FactionUpgrade.values()) {
+            SimpleItem item = upgrade.createUpgradeItem(this.user.getFactionId(), upgradeInfo);
+            items.put(upgrade, item);
+        }
         build();
     }
 
@@ -37,58 +39,18 @@ public class UpgradeGUI extends GUI<UpgradeType>{
     }
 
     @Override
-    protected String parse(String toParse, UpgradeType upgradeType) {
+    protected String parse(String toParse, FactionUpgrade upgradeType) {
         String toReturn = toParse;
-
-        switch(upgradeType){
-            case TNT:
-                for(int z = 1; z <= FactionsPlugin.getInstance().conf().upgrades().tnt().getLevels().size(); z++){
-                    toReturn = toReturn.replace("{AMOUNT_" + z + "}", "" + NumberFormat.getIntegerInstance().format(FactionsPlugin.getInstance().conf().upgrades().tnt().getNumber(z)));
-
-                    toReturn = toReturn.replace("{PRICE_" + z + "}", "" + NumberFormat.getIntegerInstance().format(FactionsPlugin.getInstance().conf().upgrades().tnt().getCost(z)));
-                }
-
-                toReturn = toReturn.replace("{LEVEL}", user.getFaction().getUpgrade(upgradeType) + "");
-                break;
-            case CHEST:
-                for(int z = 1; z <= FactionsPlugin.getInstance().conf().upgrades().chest().getLevels().size(); z++){
-                    toReturn = toReturn.replace("{AMOUNT_" + z + "}", "" + FactionsPlugin.getInstance().conf().upgrades().chest().getNumber(z));
-
-                    toReturn = toReturn.replace("{PRICE_" + z + "}", "" + NumberFormat.getIntegerInstance().format(FactionsPlugin.getInstance().conf().upgrades().chest().getCost(z)));
-                }
-
-                toReturn = toReturn.replace("{LEVEL}", user.getFaction().getUpgrade(upgradeType) + "");
-                break;
-/*            case SPAWNER_BOOST:
-                for(int z = 1; z <= FactionsPlugin.getInstance().conf().upgrades().spawnerBoost().getLevels().size(); z++){
-                    toReturn = toReturn.replace("{AMOUNT_" + z + "}", "" + FactionsPlugin.getInstance().conf().upgrades().spawnerBoost().getNumber(z));
-
-                    toReturn = toReturn.replace("{PRICE_" + z + "}", "" + FactionsPlugin.getInstance().conf().upgrades().spawnerBoost().getCost(z));
-                }
-
-                toReturn = toReturn.replace("{LEVEL}", user.getFaction().getUpgrade(upgradeType) + "");
-                break;*/
-            case WARP_AMOUNT:
-                for(int z = 1; z <= FactionsPlugin.getInstance().conf().upgrades().warpAmount().getLevels().size(); z++){
-                    toReturn = toReturn.replace("{AMOUNT_" + z + "}", "" + FactionsPlugin.getInstance().conf().upgrades().warpAmount().getNumber(z));
-
-                    toReturn = toReturn.replace("{PRICE_" + z + "}", "" + NumberFormat.getIntegerInstance().format(FactionsPlugin.getInstance().conf().upgrades().warpAmount().getCost(z)));
-                }
-
-                toReturn = toReturn.replace("{LEVEL}", user.getFaction().getUpgrade(upgradeType) + "");
-                break;
-        }
         return toReturn;
     }
 
     @Override
-    protected void onClick(UpgradeType action, ClickType clickType) {
+    protected void onClick(FactionUpgrade action, ClickType clickType) {
         if(user.getFaction().isWilderness()){
             user.msg(TextUtil.parseColor("&cYou cannot use upgrades while in wilderness"));
             user.getPlayer().closeInventory();
             return;
         }
-
         if (((MemoryFaction) user.getFaction()).doUpgrade(action, user)) {
             ((MemoryFaction) user.getFaction()).commitUpgrade(action);
 
@@ -97,16 +59,25 @@ public class UpgradeGUI extends GUI<UpgradeType>{
     }
 
     @Override
-    protected Map<Integer, UpgradeType> createSlotMap() {
-        Map<Integer, UpgradeType> map = new HashMap<>();
-        map.put(FactionsPlugin.getInstance().conf().upgrades().tnt().item().getSlot(), UpgradeType.TNT);
-        map.put(FactionsPlugin.getInstance().conf().upgrades().chest().item().getSlot(), UpgradeType.CHEST);
-        map.put(FactionsPlugin.getInstance().conf().upgrades().warpAmount().item().getSlot(), UpgradeType.WARP_AMOUNT);
+    protected Map<Integer, FactionUpgrade> createSlotMap() {
+        Map<Integer, FactionUpgrade> map = new HashMap<>();
+        int slot = 0;
+        for(Map.Entry<FactionUpgrade, SimpleItem> entry : this.items.entrySet()) {
+            boolean heroic = entry.getKey().isHeroic();
+            if (heroic && slot < 29)
+                slot = 29;
+            if (slot == 9)
+                slot = 10;
+            if (slot == 34)
+                slot = 38;
+            int n = slot++;
+            map.put(n, entry.getKey());
+        }
         return map;
     }
 
     @Override
-    protected SimpleItem getItem(UpgradeType upgradeType) {
+    protected SimpleItem getItem(FactionUpgrade upgradeType) {
         return new SimpleItem(items.get(upgradeType));
     }
 

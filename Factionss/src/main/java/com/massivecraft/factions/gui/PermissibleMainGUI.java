@@ -5,6 +5,8 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.perms.PermMenuType;
 import com.massivecraft.factions.perms.Permissible;
 import com.massivecraft.factions.util.CC;
+import com.massivecraft.factions.util.TextUtil;
+import com.massivecraft.factions.util.material.MaterialDb;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
@@ -24,24 +26,24 @@ public class PermissibleMainGUI extends GUI<PermMenuType> {
         SimpleItem chunk = SimpleItem.builder().build();
         chunk.setName(CC.AquaB + "Current Chunk Permissions");
         chunk.setLore(Lists.newArrayList(CC.Gray + "Click to view all permissions", CC.Gray + "for players and factions."));
-        chunk.setMaterial(Material.GRASS_BLOCK);
+        chunk.setMaterial(MaterialDb.get("GRASS_BLOCK"));
         items.put(PermMenuType.CHUNK, chunk);
 
         SimpleItem def = SimpleItem.builder().build();
         def.setName(CC.AquaB + "Default Permissions");
-        def.setMaterial(Material.BEACON);
+        def.setMaterial(MaterialDb.get("BEACON"));
         def.setLore(Lists.newArrayList(CC.Gray + "Click to view all default permissions", CC.Gray + "for players and factions."));
         items.put(PermMenuType.DEFAULT, def);
 
         SimpleItem role = SimpleItem.builder().build();
         role.setName(CC.AquaB + "/f roles");
-        role.setMaterial(Material.WRITABLE_BOOK);
+        role.setMaterial(MaterialDb.get("WRITABLE_BOOK"));
         role.setLore(Lists.newArrayList(CC.Gray + "Click to view your faction role permissions.", CC.Gray + "Role permissions allow you to permit different", CC.Gray + "ranking faction members to perform specific tasks."));
         items.put(PermMenuType.ROLES, role);
 
         SimpleItem help = SimpleItem.builder().build();
         def.setName(CC.AquaB + "/f perm Help");
-        def.setMaterial(Material.BOOK);
+        def.setMaterial(MaterialDb.get("BOOK"));
         def.setLore(Lists.newArrayList(ChatColor.GRAY + "You can use this menu to customize", ChatColor.GRAY + "what specific types of blocks your", ChatColor.GRAY + "/f access'd factions/players can modify", ChatColor.GRAY + "in your current chunk, and by default.", "", ChatColor.AQUA + "/f access is REQUIRED for /f perm", ChatColor.GRAY + "Players and Factions will not show up", ChatColor.GRAY + "in this menu until they have /f access", ChatColor.GRAY + "to atleast one of your faction's chunks.", "",
                 ChatColor.AQUA + "Current Chunk Permissions", ChatColor.GRAY + "Edits the permissions of the specified", ChatColor.GRAY + "player or faction in the current chunk", ChatColor.GRAY + "you are standing in. These permissions", ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "OVERRULE" + ChatColor.GRAY + " any Default Permissions.", "", ChatColor.AQUA + "Default Permissions", ChatColor.GRAY + "Edits the permissions for the", ChatColor.GRAY + "specified player or faction. These settings", ChatColor.GRAY + "are what the given entity will be able to",
                 ChatColor.GRAY + "modify in chunks where no \"Current Chunk\""));
@@ -53,14 +55,17 @@ public class PermissibleMainGUI extends GUI<PermMenuType> {
         build();
     }
 
+    @Override
     protected String getName() {
-        return ChatColor.GRAY + "Default Permissions";
+        return "Default Permissions";
     }
 
+    @Override
     protected String parse(String toParse, PermMenuType permMenuType) {
-        return null;
+        return toParse;
     }
 
+    @Override
     protected void onClick(PermMenuType action, ClickType clickType) {
         switch (action) {
             case CHUNK:

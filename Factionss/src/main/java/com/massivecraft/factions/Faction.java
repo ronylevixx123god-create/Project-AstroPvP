@@ -8,13 +8,11 @@ import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.BanInfo;
 import com.massivecraft.factions.util.LazyLocation;
 import com.massivecraft.factions.util.StrikeInfo;
-import com.massivecraft.factions.util.UpgradeType;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;

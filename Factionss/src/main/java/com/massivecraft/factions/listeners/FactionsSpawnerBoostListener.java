@@ -1,21 +1,5 @@
 package com.massivecraft.factions.listeners;
 
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.FactionsPlugin;
-import com.massivecraft.factions.util.UpgradeType;
-import net.techcable.tacospigot.event.entity.SpawnerPreSpawnEvent;
-import org.bukkit.Bukkit;
-import org.bukkit.block.CreatureSpawner;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.scheduler.BukkitRunnable;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-
 public class FactionsSpawnerBoostListener extends AbstractListener{
 
 /*    public FactionsPlugin plugin;

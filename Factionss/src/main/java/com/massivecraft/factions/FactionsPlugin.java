@@ -22,6 +22,7 @@ import com.massivecraft.factions.perms.Permissible;
 import com.massivecraft.factions.perms.PermissibleAction;
 import com.massivecraft.factions.perms.PermissionsMapTypeAdapter;
 import com.massivecraft.factions.struct.ChatMode;
+import com.massivecraft.factions.upgrade.UpgradeManager;
 import com.massivecraft.factions.util.*;
 import com.massivecraft.factions.util.material.MaterialDb;
 import com.massivecraft.factions.util.particle.BukkitParticleProvider;
@@ -144,6 +145,8 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
     private String startupLog;
     private String startupExceptionLog;
     private final List<RuntimeException> grumpyExceptions = new ArrayList<>();
+
+    private UpgradeManager upgradeManager;
 
     public FCmdRoot cmdBase;
 
@@ -272,6 +275,9 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
         this.permUtil = new PermUtil(this);
         this.persist = new Persist(this);
         this.worldUtil = new WorldUtil(this);
+
+        this.upgradeManager = new UpgradeManager();
+        this.upgradeManager.loadUpgrades();
 
         this.txt = new TextUtil();
         initTXT();
@@ -670,6 +676,8 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
         return particleProvider;
     }
 
+    public UpgradeManager getUpgradeManager() { return this.upgradeManager; }
+
     // -------------------------------------------- //
     // LANG AND TAGS
     // -------------------------------------------- //
@@ -846,6 +854,8 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
             FPlayers.getInstance().forceSave();
             Board.getInstance().forceSave();
         }
+        this.upgradeManager.saveUpgradeInfo();
+
         if (this.luckPermsSetup) {
             LuckPerms.shutdown(this);
         }

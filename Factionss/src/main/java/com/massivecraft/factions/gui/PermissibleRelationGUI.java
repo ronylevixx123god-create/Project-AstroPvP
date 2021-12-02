@@ -25,22 +25,22 @@ public class PermissibleRelationGUI extends GUI<Permissible> {
 
         SimpleItem recruit = SimpleItem.builder().build();
         recruit.setName(CC.WhiteB + "Recruit");
-        recruit.setMaterial(Material.WHITE_STAINED_GLASS_PANE);
+        recruit.setMaterial(MaterialDb.get("WHITE_STAINED_GLASS_PANE"));
         items.put(Role.RECRUIT, recruit);
 
         SimpleItem normal = SimpleItem.builder().build();
         normal.setName(CC.Green + "Member");
-        normal.setMaterial(Material.GREEN_STAINED_GLASS_PANE);
+        normal.setMaterial(MaterialDb.get("GREEN_STAINED_GLASS_PANE"));
         items.put(Role.NORMAL, normal);
 
         SimpleItem moderator = SimpleItem.builder().build();
         moderator.setName(CC.AquaB + "Moderator");
-        moderator.setMaterial(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
+        moderator.setMaterial(MaterialDb.get("LIGHT_BLUE_STAINED_GLASS_PANE"));
         items.put(Role.MODERATOR, moderator);
 
         SimpleItem coleader = SimpleItem.builder().build();
         coleader.setName(CC.YellowB + "Co-Leader");
-        coleader.setMaterial(Material.YELLOW_STAINED_GLASS_PANE);
+        coleader.setMaterial(MaterialDb.get("YELLOW_STAINED_GLASS_PANE"));
         items.put(Role.COLEADER, coleader);
     }
 
@@ -54,7 +54,7 @@ public class PermissibleRelationGUI extends GUI<Permissible> {
 
     @Override
     protected String getName() {
-        return CC.Gray + "Faction Roles";
+        return "Faction Roles";
     }
 
     @Override

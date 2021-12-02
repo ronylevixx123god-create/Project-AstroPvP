@@ -11,20 +11,16 @@ import com.massivecraft.factions.perms.PermissibleAction;
 import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.util.TL;
-import com.massivecraft.factions.util.UpgradeType;
-import com.massivecraft.factions.util.material.MaterialDb;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.*;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
 import java.util.List;
@@ -253,8 +249,6 @@ public class FactionsBlockListener implements Listener {
         int i;
 
         for (i = 1; e.getBlock().getRelative(BlockFace.DOWN, i).getType() == SUGAR_CANE_BLOCK; ++i);
-
-        if (i >= ((CraftWorld) e.getBlock().getWorld()).getHandle().paperSpigotConfig.reedMaxHeight) return;
 
         FLocation fLocation = new FLocation(e.getBlock());
 

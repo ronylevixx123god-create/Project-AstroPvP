@@ -21,6 +21,7 @@ import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.BanInfo;
 import com.massivecraft.factions.struct.Permission;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -83,7 +84,7 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     protected String altJoinString = "-1";
     protected transient OfflinePlayer offlinePlayer;
 
-    protected Map<UpgradeType, Integer> upgrades = new HashMap<>();
+    protected Map<FactionUpgrade, Integer> upgrades = new HashMap<>();
 
     public HashMap<String, List<String>> getAnnouncements() {
         return this.announcements;
@@ -1290,7 +1291,7 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     }
 
     //Upgrades
-    public void commitUpgrade(UpgradeType upgradeType){
+    public void commitUpgrade(FactionUpgrade upgradeType){
         switch(upgradeType){
             case CHEST:
                 int slots = FactionsPlugin.getInstance().conf().upgrades().chest().getNumber(getUpgrade(upgradeType)) * 9;
@@ -1317,11 +1318,11 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
         }
     }
 
-    public int getUpgrade(UpgradeType type){
+    public int getUpgrade(FactionUpgrade type){
         return upgrades.getOrDefault(type, 0);
     }
 
-    public boolean doUpgrade(UpgradeType type, FPlayer user){
+    public boolean doUpgrade(FactionUpgrade type, FPlayer user){
         int maxLevel;
         int currentLevel;
         long money;
