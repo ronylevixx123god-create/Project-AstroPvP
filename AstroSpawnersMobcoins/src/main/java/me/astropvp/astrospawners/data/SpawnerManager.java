@@ -7,6 +7,8 @@ import java.util.*;
 
 import me.astropvp.astrospawners.AstroSpawners;
 import org.bukkit.*;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
 import me.astropvp.astrospawners.utils.LocationUtils;
@@ -82,6 +84,18 @@ public class SpawnerManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    public static boolean canPlaceStackedSpawnerInThisChunk(Chunk chunk, EntityType spawnertype) {
+        for (BlockState blockState : chunk.getTileEntities()) {
+            if (blockState instanceof CreatureSpawner) {
+                EntityType type = ((CreatureSpawner) blockState).getSpawnedType();
+                if (type == spawnertype) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 
 

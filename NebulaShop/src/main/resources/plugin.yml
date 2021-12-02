@@ -3,4 +3,4 @@ main: net.astropvp.nebulashop.NebulaShop
 version: 1.0
 commands:
   nebula:
-    description: [nebulashop]
+    aliases: [nebulashop]
