@@ -14,22 +14,21 @@ import java.util.List;
 
 public class DeathAndTaxesSkin extends ItemSkin {
     private HashMap<Player, Double> markList;
-    private List<Player> markedPlayers;
 
     public DeathAndTaxesSkin() {
-        markList = new HashMap<>();
-        markedPlayers = new ArrayList<>();
+        this.markList = new HashMap<>();
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if(damaged instanceof Player && Math.random() >= 0.08 && !markedPlayers.contains(damaged)) {
+        if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
+            this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());
+        if(damaged instanceof Player && Math.random() >= 0.08 && !markList.containsKey(damaged)) {
             damager.sendMessage(CC.GoldB + " ** MARKED " + damaged.getName() + " WITH DEATH AND TAXES **");
             damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES MARK " + CC.Gray + "[" + damager.getName() + "]" + CC.GoldB + " **");
-            markedPlayers.add((Player) damaged);
+            this.markList.put((Player) damaged, 0.0);
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
-                markedPlayers.remove(damaged);
                 ((Player) damaged).damage(markList.get(damaged));
-                markList.remove(damaged);
+                this.markList.remove(damaged);
                 damager.sendMessage(CC.GoldB + " ** MARKED DEALT " + Math.round(markList.get(damaged)) + " **");
                 damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES DEALT " + CC.Gray + "[" + Math.round(markList.get(damaged)) + "]" + CC.GoldB + " **");
             }, 120L);

@@ -9,7 +9,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class RabitsFootAmuletSkin extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        event.setDamage(event.getDamage() * 1.1);
     }
 }
 

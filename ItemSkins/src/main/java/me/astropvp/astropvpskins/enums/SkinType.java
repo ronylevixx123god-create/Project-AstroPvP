@@ -76,7 +76,7 @@ public enum SkinType {
     VIRUS_HELMET_N95(CC.DarkGreenB + "Anti Corona Mask", ItemSkinType.HELMET, new AntiCoronaMaskSkin(), Arrays.asList(CC.Red + "Immune to Teleblock", CC.Red + "2% chance to proc Regeneration 2 for 25s")),
     PEPE_WEAPON(CC.BlueB + "Pepe Clapper", ItemSkinType.WEAPON, new PepeWeaponSkin(), Arrays.asList(CC.Red + "Convert hit players into a rare pepe.")),
     EASTER_HELMET(CC.RedB + "Bunny Ears", ItemSkinType.HELMET, new EasterHelmetSkin(), Arrays.asList(CC.Red + "Ethereal Dodge VI")),
-    EASTER_AMULET(CC.RedB + "Rabbit's Foot", ItemSkinType.AMULET, new RabitsFootAmuletSkin(), Arrays.asList(CC.Red + "+10% Outgoing DMG")),
+    EASTER_AMULET(CC.RedB + "Rabbit's Foot", ItemSkinType.AMULET, new RabitsFootAmuletSkin(), Arrays.asList(CC.Red + "Feign Death I", CC.Red + "5% chance to not consume /dungeon portals", CC.Red + "20% chance tp increase /titan attributes by and extra level", CC.Red + "-25% /dungeon loot cooldown")),
     EASTER_BELT(CC.RedB + "Rainbow Belt", ItemSkinType.BELT, new EasterBeltSkin(), Arrays.asList(CC.Red + "-7.5% Incoming DMG")),
     EASTER_SWORD(CC.RedB + "Jumbo Chocolate Sword", ItemSkinType.SWORD, new EasterSwordSkin(), Arrays.asList(CC.Red + "+15% Outgoing PvE DMG", CC.Red + "Devour V")),
     EASTER_PICKAXE(CC.RedB + "Easter Basket", ItemSkinType.AXE, new EasterBasketSkin(), Arrays.asList(CC.Red + "-10% Incoming DMG")),
