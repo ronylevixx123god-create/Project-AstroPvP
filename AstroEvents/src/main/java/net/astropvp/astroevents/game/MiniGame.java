@@ -3,14 +3,13 @@ package net.astropvp.astroevents.game;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.players.SumoPlayer;
 import net.astropvp.astroevents.utils.Utils;
 import net.astropvp.astroevents.utils.configuration.AbstractConfig;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -42,13 +41,15 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     private final MiniGameOptions miniGamesOptions;
     private final int countdownTime;
     private final List<String> rewardCommands;
-    private final Set<Player> spectators;
+    private final Set<T> spectators;
+    private final MysteryChest mysteryChest;
+    private final Material guiMaterial;
 
     @Setter
     private MiniGameState miniGameState;
 
     @SneakyThrows
-    protected MiniGame(AstroEvents plugin, MiniGameType miniGameType, Map<UUID, T> participantsMap, MiniGameOptions miniGamesOptions) {
+    protected MiniGame(AstroEvents plugin, MiniGameType miniGameType, Map<UUID, T> participantsMap, MiniGameOptions miniGamesOptions, MysteryChest mysteryChest, Material guiMaterial) {
         this.miniGameType = miniGameType;
         this.miniGameState = MiniGameState.NOT_STARTED;
         this.miniGamesOptions = miniGamesOptions;
@@ -65,10 +66,13 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
 
         this.spawnLocation = this.getLocationFromConfig(configuration.getConfigurationSection("spawn-location"));
         this.rewardCommands = this.configuration.getStringList("rewards");
+        this.mysteryChest = mysteryChest;
+        this.guiMaterial = guiMaterial;
+
     }
 
     protected MiniGame(AstroEvents plugin, MiniGameType miniGameType) {
-        this(plugin, miniGameType, new HashMap<>(), MiniGameOptions.builder().build());
+        this(plugin, miniGameType, new HashMap<>(), MiniGameOptions.builder().build(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("BloodyNote"), Material.STONE);
     }
 
     public void addParticipant(T participant) {
@@ -155,6 +159,17 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         event.setCancelled(true);
     }
 
+    protected void addSpectator(T player) {
+        this.spectators.add(player);
+        if (this.isParticipant(player.getPlayer())) this.removeParticipant(player);
+        player.getPlayer().teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        player.getPlayer().setGameMode(GameMode.SPECTATOR);
+    }
+
+    protected Optional<T> getSpectator(Player player) {
+        return this.spectators.stream().findFirst().filter(spectator -> spectator.getPlayer().equals(player));
+    }
+
     @EventHandler
     public void onFallDamageWhileInGame(EntityDamageEvent event) {
         if (!isValidParticipant(event.getEntity())) return;
@@ -215,12 +230,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         }
     }
 
-    protected void addSpectator(Player player) {
-        this.spectators.add(player);
-        if (this.isParticipant(player)) this.removeParticipant(player);
-        player.teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-        player.setGameMode(GameMode.SPECTATOR);
-    }
+
 
     public boolean isSpectator(Player player) {
         return this.spectators.contains(player);
