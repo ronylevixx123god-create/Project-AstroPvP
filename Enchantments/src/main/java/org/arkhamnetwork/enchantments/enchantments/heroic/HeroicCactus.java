@@ -19,7 +19,7 @@ public class HeroicCactus extends HeroicCustomEnchantment {
             Player p = (Player)player;
             if (attacker instanceof Player && Math.random() < 0.10) {
                 Player pAttacker = (Player)attacker;
-                pAttacker.damage(0.5D * level);
+                //pAttacker.damage(0.5D * level);
                 Location l = p.getLocation();
                 WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }

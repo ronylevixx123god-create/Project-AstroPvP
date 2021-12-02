@@ -44,6 +44,7 @@ import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -51,6 +52,7 @@ import com.google.common.cache.CacheLoader;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.massivecraft.factions.Faction;
 import com.sk89q.jchronic.utils.Time;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -89,6 +91,15 @@ public class KothSanityListener implements Listener {
             return System.currentTimeMillis();
         }
     });
+
+    @EventHandler
+    public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
+        Player player;
+        Faction faction;
+        if (!(event.getDamager() instanceof Player) || (faction = FactionUtils.getFaction((Player)(player = (Player)event.getDamager()))).getId().equals(CosmicKOTHPlugin.get_().getBuffFactionId())) {
+            // empty if block
+        }
+    }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {

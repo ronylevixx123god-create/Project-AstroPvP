@@ -29,7 +29,7 @@ implements Listener {
             e.setUseInteractedBlock(Event.Result.DENY);
             int emptySlots = this.getEmptyInventorySlots(p);
             if (emptySlots < 10) {
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You need >=10 empty me.astropvp.cratekeys.inventory slots to open this Lootbag.");
+                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You need >=10 empty inventory slots to open this Lootbag.");
                 p.sendMessage((Object)ChatColor.GRAY + "You currently have " + (Object)ChatColor.UNDERLINE + emptySlots + (Object)ChatColor.GRAY + " empty slots.");
                 return;
             }

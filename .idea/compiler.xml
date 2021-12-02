@@ -12,11 +12,13 @@
         <module name="BlackAuctionHouse" />
         <module name="ItemSkins" />
         <module name="HotFix" />
+        <module name="AstroCollectors" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />
         <module name="AstroRevive" />
         <module name="Masks" />
+        <module name="AstroEvents" />
         <module name="AstroUtils" />
         <module name="Explosive" />
         <module name="AstroCrateKeys" />
@@ -97,5 +99,10 @@
       <module name="Test" target="8" />
       <module name="VaultsX" target="1.8" />
     </bytecodeTargetLevel>
+  </component>
+  <component name="JavacSettings">
+    <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="AstroEvents" options="-parameters" />
+    </option>
   </component>
 </project>

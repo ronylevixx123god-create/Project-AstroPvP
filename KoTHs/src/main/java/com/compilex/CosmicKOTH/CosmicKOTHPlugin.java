@@ -60,6 +60,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.command.CommandExecutor;
+import org.bukkit.configuration.InvalidConfigurationException;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.Plugin;
@@ -90,7 +92,9 @@ extends JavaPlugin {
     @Getter @Setter private final List<Outpost> outposts = new ArrayList<Outpost>();
     @Getter @Setter private Economy economy;
     @Getter @Setter private DataManager dataManager;
-
+    @Getter @Setter private File kothBuffsFile;
+    @Getter @Setter private String buffFactionId = "";
+    @Getter @Setter private YamlConfiguration kothBuffsConfig;
     @Getter @Setter private OutpostManager outpostManager;
     @Getter @Setter private boolean trophiesEnabled = false;
     @Getter @Setter private boolean vanillaPlanet = false;
@@ -106,6 +110,19 @@ extends JavaPlugin {
         this.ess3 = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
         isVanillaGalaxy = !new File("plugins/Enchantments.jar").exists();
         this.kothWorldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
+        this.kothBuffsConfig = new YamlConfiguration();
+        this.kothBuffsFile = new File(this.getDataFolder(), "koth_buffs.yml");
+        if (!this.kothBuffsFile.exists()) {
+            this.kothBuffsFile.getParentFile().mkdirs();
+            this.saveResource("koth_buffs.yml", false);
+        }
+        try {
+            this.kothBuffsConfig.load(this.kothBuffsFile);
+        }
+        catch (IOException | InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+        this.buffFactionId = this.kothBuffsConfig.getString("factionId");
         this.fixLog();
         this.loadConfig();
         this.registerCommands();
@@ -140,7 +157,14 @@ extends JavaPlugin {
     }
 
     public void onDisable() {
-        if (CosmicKOTHPlugin.get_().getKoth() != null) {
+        this.kothBuffsConfig.set("factionId", this.getBuffFactionId());
+        try {
+            this.kothBuffsConfig.save(this.kothBuffsFile);
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+            if (CosmicKOTHPlugin.get_().getKoth() != null) {
             Player[] arrplayer = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
             int n = arrplayer.length;
             for (int i = 0; i < n; ++i) {
