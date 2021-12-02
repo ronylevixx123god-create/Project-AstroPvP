@@ -20,7 +20,7 @@ public class RemoveCollectorCommand implements CommandExecutor {
         assert collectorLocation != null;
         CollectorManager.DELEGATE.removeCollector(location);
         collectorLocation.getBlock().setType(Material.AIR,true);
-        ((Player)commandSender).sendMessage(ChatColor.GREEN + "You have removed the chunk collector in this chunk. You may now place a new one!");
+        commandSender.sendMessage(ChatColor.GREEN + "You have removed the chunk collector in this chunk. You may now place a new one!");
         return true;
     }
 }

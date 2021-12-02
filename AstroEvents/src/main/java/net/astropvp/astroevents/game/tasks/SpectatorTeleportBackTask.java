@@ -21,8 +21,9 @@ public class SpectatorTeleportBackTask  extends BukkitRunnable {
         }
 
         this.game.getSpectators().forEach(spectator -> {
-            if (this.game.getSpawnLocation().distance(spectator.getLocation()) > 200)
-                    spectator.teleport(this.game.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            if (!spectator.getPlayer().getWorld().getName().equals(this.game.getGameWorld().getName())) return;
+            if (this.game.getSpawnLocation().distance(spectator.getPlayer().getLocation()) > 200)
+                    spectator.getPlayer().teleport(this.game.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         });
     }
 }
