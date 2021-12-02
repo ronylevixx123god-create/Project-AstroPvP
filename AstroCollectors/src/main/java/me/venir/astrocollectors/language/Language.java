@@ -10,7 +10,8 @@ public enum Language {
     COLLECTOR_SELL("&a&l+ $%price%"),
     COLLECTOR_TNT("&c&l+ %tnt% TNT"),
     PLACED_COLLECTOR("&a&l(!)&a Chunk collector placed, mob deaths will cause compatible mob drops to be automatically collected."),
-    CAN_NOT_PLACE_HERE("&c&l(!)&c You cannot place another collector in this chunk")
+    CAN_NOT_PLACE_HERE("&c&l(!)&c You cannot place another collector in this chunk"),
+    CAN_NOT_PLACE_IN_WILD("&c&l(!)&c You cannot place a collector in wildreness")
     ;
 
     private final String message;

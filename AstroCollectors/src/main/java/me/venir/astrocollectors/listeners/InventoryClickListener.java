@@ -7,7 +7,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class InventoryClickListener  implements Listener {
-    @EventHandler
+/*    @EventHandler
     public void onClick(InventoryClickEvent e) {
         Player p = (Player) e.getWhoClicked();
         if (p.getOpenInventory().getTitle().equals("Chunk Collector") && e.getClickedInventory() == p.getOpenInventory().getTopInventory()) {
@@ -17,5 +17,5 @@ public class InventoryClickListener  implements Listener {
                 collectorInventory.click(e);
             }
         }
-    }
+    }*/
 }

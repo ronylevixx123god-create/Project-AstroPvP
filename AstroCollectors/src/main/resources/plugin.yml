@@ -5,6 +5,7 @@ depend:
   - Factions
   - AstroSpawners
   - Essentials
+  - Arkkit
 commands:
   c:
     aliases: [collector]

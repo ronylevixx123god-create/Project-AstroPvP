@@ -3,13 +3,14 @@ package net.astropvp.astroevents.game;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.players.SumoPlayer;
 import net.astropvp.astroevents.utils.Utils;
 import net.astropvp.astroevents.utils.configuration.AbstractConfig;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -22,7 +23,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.*;
@@ -43,14 +43,12 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     private final int countdownTime;
     private final List<String> rewardCommands;
     private final Set<Player> spectators;
-    private final MysteryChest mysteryChest;
-    private final Material guiMaterial;
 
     @Setter
     private MiniGameState miniGameState;
 
     @SneakyThrows
-    protected MiniGame(AstroEvents plugin, MiniGameType miniGameType, Map<UUID, T> participantsMap, MiniGameOptions miniGamesOptions, MysteryChest mysteryChest, Material guiMaterial) {
+    protected MiniGame(AstroEvents plugin, MiniGameType miniGameType, Map<UUID, T> participantsMap, MiniGameOptions miniGamesOptions) {
         this.miniGameType = miniGameType;
         this.miniGameState = MiniGameState.NOT_STARTED;
         this.miniGamesOptions = miniGamesOptions;
@@ -64,15 +62,13 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         this.minPlayers = (byte) this.configuration.getInt("min-players");
         this.maxPlayers = (byte) this.configuration.getInt("max-players");
         this.countdownTime = this.configuration.getInt("countdown-time");
-        this.mysteryChest = mysteryChest;
 
         this.spawnLocation = this.getLocationFromConfig(configuration.getConfigurationSection("spawn-location"));
         this.rewardCommands = this.configuration.getStringList("rewards");
-        this.guiMaterial = guiMaterial;
     }
 
     protected MiniGame(AstroEvents plugin, MiniGameType miniGameType) {
-        this(plugin, miniGameType, new HashMap<>(), MiniGameOptions.builder().build(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("BloodyNote"), Material.STONE);
+        this(plugin, miniGameType, new HashMap<>(), MiniGameOptions.builder().build());
     }
 
     public void addParticipant(T participant) {
