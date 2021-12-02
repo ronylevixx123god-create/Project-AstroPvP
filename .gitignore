@@ -39,3 +39,4 @@ Thumbs.db
 target/
 .idea/
 dependency-reduced-pom.xml
+/.idea/

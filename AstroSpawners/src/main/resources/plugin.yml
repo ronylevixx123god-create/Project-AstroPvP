@@ -1,0 +1,14 @@
+name: AstroCollectors
+main: me.venir.astrocollectors.AstroCollectors
+version: 1.0
+depend:
+  - Factions
+  - AstroSpawners
+  - Essentials
+commands:
+  c:
+    aliases: [collector]
+    permission: astro.admin
+    permission-message: Permission denied
+  removecollector:
+    aliases: [removechunkcollector]
