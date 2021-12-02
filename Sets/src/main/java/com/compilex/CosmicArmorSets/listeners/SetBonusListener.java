@@ -109,7 +109,8 @@ public class SetBonusListener
         }
         if (damager != null) {
             Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damager, event.getEntity());
-            if(WeaponBonusUtils.getWeaponBonusByItem(((Player)event.getDamager()).getItemInHand()).equals(WeaponBonusType.DEMON) && Math.random() < 0.15) {
+            if (WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
+            if(WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
                 if(bonuses.containsKey(ArmorSet.ENGINEER)) {
                     if(bonuses.get(ArmorSet.ENGINEER) == 1) {
                         bonuses.remove(ArmorSet.ENGINEER);
@@ -118,6 +119,7 @@ public class SetBonusListener
                     }
                 }
                 event.getDamager().sendMessage(CC.RedB + " ** " + CC.GoldB + "ENGINEER CRYSTAL BLOCKED ("  + CC.RedB + "DEMON WEAPON BONUS" + CC.GoldB + ")" + CC.RedB + " ** ");
+            }
             }
             AbilityArmorSet set;
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);

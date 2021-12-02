@@ -109,12 +109,14 @@ public class InventoryBansheePet extends InventoryPet {
                     player.sendMessage(CC.translate("&e&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&e&lWitch Hat&7] &e&l*"));
                     continue;
                 }
-                if(WeaponBonusUtils.getWeaponBonusByItem(nearPlayer.getItemInHand()).equals(WeaponBonusType.DEMON)) {
-                    nearPlayer.sendMessage(CC.translate("&4&l* DEMON WEAPON BONUS &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &4&l*"));
-                    player.sendMessage(CC.translate("&4&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&4&lDemon Weapon Bonus&7] &4&l*"));
-                    continue;
+                if (WeaponBonusUtils.hasWeaponBonus(nearPlayer.getItemInHand())) {
+                    if (WeaponBonusUtils.getWeaponBonusByItem(nearPlayer.getItemInHand()) ==  WeaponBonusType.DEMON) {
+                        nearPlayer.sendMessage(CC.translate("&4&l* DEMON WEAPON BONUS &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &4&l*"));
+                        player.sendMessage(CC.translate("&4&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&4&lDemon Weapon Bonus&7] &4&l*"));
+                        continue;
+                    }
+                    nearbyEnemies.add(nearPlayer);
                 }
-                nearbyEnemies.add(nearPlayer);
             }
         }
 
