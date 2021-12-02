@@ -21,21 +21,23 @@ import com.massivecraft.factions.scoreboards.FScoreboard;
 import com.massivecraft.factions.scoreboards.FTeamWrapper;
 import com.massivecraft.factions.scoreboards.sidebar.FDefaultSidebar;
 import com.massivecraft.factions.struct.Permission;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.*;
 import com.massivecraft.factions.util.material.MaterialDb;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Furnace;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerBucketEmptyEvent;
 import org.bukkit.event.player.PlayerBucketFillEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
@@ -694,7 +696,6 @@ public class FactionsPlayerListener extends AbstractListener {
 
         if(!(openInv.getHolder() instanceof FChestHolder))return;
 
-        if(!FactionsPlugin.getInstance().getConfigManager().getMainConfig().upgrades().chest().preventSpawnersInChest())return;
 
         if(event.getClick() == ClickType.NUMBER_KEY){
             ItemStack keyedItem = event.getWhoClicked().getInventory().getItem(event.getHotbarButton());
@@ -775,6 +776,121 @@ public class FactionsPlayerListener extends AbstractListener {
                 event.getWhoClicked().sendMessage(TextUtil.parseColor(TL.PLAYER_CANTADDTHATITEM.getDefault()));
                 event.setCancelled(true);
             }
+        }
+    }
+
+    @EventHandler
+    public void NaturalGrowth(BlockGrowEvent e) {
+        FLocation fl = new FLocation(e.getBlock().getLocation());
+        Faction f = Board.getFactionAt(fl);
+        int naturalGrowthTier = FactionUpgradeAPI.getPerkLevel(f, FactionUpgrade.NATURAL_GROWTH);
+        if (naturalGrowthTier > 0) {
+            double d = 0.0D;
+            if (naturalGrowthTier == 1)
+                d = 0.25D;
+            if (naturalGrowthTier == 1)
+                d = 0.5D;
+            if (naturalGrowthTier == 1)
+                d = 1.0D;
+            naturalGrowthTier /= 3;
+            Block b;
+            CraftWorld cw;
+            Block nmsBlock;
+            if (Math.random() < naturalGrowthTier && nmsBlock = (Block)(cw = (CraftWorld)(b = e.getBlock()).getWorld()).getHandle().getType(new BlockPosition(b.getX(), b.getY(), b.getZ())) instanceof BlockCrops) {
+                BlockCrops bc = (BlockCrops)nmsBlock;
+                bc.o();
+            }
+        }
+    }
+
+    @EventHandler
+    public void WellFed(FoodLevelChangeEvent e) {
+        Player p = (Player)e.getEntity();
+        FPlayer fp = FPlayers.getInstance().getByPlayer(p);
+        if (e.getFoodLevel() == p.getFoodLevel() - 1) {
+            int level = fp.getFaction().getUpgrade(FactionUpgrade.HEROIC_WELL_FED);
+            if (level > 0) {
+                double chance = 0.0D;
+                double d = (level == 1) ? 0.3D : ((level == 2) ? 0.35D : ((level == 3) ? 0.45D : (chance = (level == 4) ? 0.5D : 0.0D)));
+                if (Math.random() < chance) {
+                    e.setCancelled(true);
+                    p.setSaturation(Math.max(0.0F, p.getSaturation() * (1.0F - (float)chance)));
+                }
+                return;
+            }
+            int wellFedPerk = fp.getFaction().getUpgrade(FactionUpgrade.WELL_FED);
+            if (wellFedPerk > 0) {
+                double skipHungerChance = 0.0D;
+                if (wellFedPerk == 1)
+                    skipHungerChance = 0.05D;
+                if (wellFedPerk == 2)
+                    skipHungerChance = 0.1D;
+                if (wellFedPerk == 3)
+                    skipHungerChance = 0.15D;
+                if (wellFedPerk == 4)
+                    skipHungerChance = 0.25D;
+                if (Math.random() < skipHungerChance) {
+                    e.setCancelled(true);
+                    p.setSaturation(Math.max(0.0F, p.getSaturation() * (1.0F - (float)skipHungerChance)));
+                }
+            }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void ExplosiveExpert(FurnaceSmeltEvent e) {
+        if (e.getSource().getType() == Material.getMaterial("GUNPOWDER")) {
+            FLocation fl = new FLocation(e.getBlock().getLocation());
+            Faction f = Board.getInstance().getFactionAt(fl);
+            int explosiveExpertTier = f.getUpgrade(FactionUpgrade.EXPLOSIVES_EXPERT);
+            int sulphurCost = 0;
+            if (explosiveExpertTier == 1)
+                sulphurCost = 12;
+            if (explosiveExpertTier == 2)
+                sulphurCost = 9;
+            if (explosiveExpertTier == 3 || explosiveExpertTier == 4)
+                sulphurCost = 7;
+            Furnace furnace = (Furnace)e.getBlock().getState();
+            if (sulphurCost == 0 || e.getSource().getAmount() < sulphurCost) {
+                e.setCancelled(true);
+                e.setResult((ItemStack)null);
+                furnace.setBurnTime((short)0);
+                return;
+            }
+            ItemStack gp = e.getSource();
+            if (gp.getAmount() == sulphurCost) {
+                furnace.getInventory().setSmelting((ItemStack)null);
+            } else {
+                gp.setAmount(gp.getAmount() - sulphurCost);
+                furnace.getInventory().setSmelting(gp);
+            }
+        }
+    }
+
+    @EventHandler
+    public void onFurnaceBurn(FurnaceBurnEvent e) {
+        if (e.getBlock().getState() instanceof Furnace) {
+            Furnace furnace = (Furnace)e.getBlock().getState();
+            if (furnace != null && furnace.getInventory() != null && furnace.getInventory().getSmelting() != null && furnace.getInventory().getSmelting().getType() == Material.SULPHUR) {
+                FLocation fl = new FLocation(e.getBlock().getLocation());
+                Faction f = Board.getInstance().getFactionAt(fl);
+                int explosiveExpertTier = f.getUpgrade(FactionUpgrade.NATURAL_GROWTH);
+                if (explosiveExpertTier == 0) {
+                    e.setCancelled(true);
+                    return;
+                }
+                int sulphurCost = 0;
+                if (explosiveExpertTier == 1)
+                    sulphurCost = 13;
+                if (explosiveExpertTier == 2)
+                    sulphurCost = 10;
+                if (explosiveExpertTier == 3 || explosiveExpertTier == 4)
+                    sulphurCost = 8;
+                if (furnace.getInventory().getSmelting().getAmount() < sulphurCost)
+                    e.setCancelled(true);
+            }
+        } else if (e.getBlock().getType() != Material.AIR) {
+            Bukkit.getLogger().info("[FactionUpgrades] Invalid FurnaceBurnEvent at " + e.getBlock().getLocation() + " TYPE " + e.getBlock().getType().name());
         }
     }
 

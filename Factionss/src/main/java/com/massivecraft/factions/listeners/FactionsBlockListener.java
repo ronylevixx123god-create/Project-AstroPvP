@@ -10,11 +10,15 @@ import com.massivecraft.factions.config.file.MainConfig;
 import com.massivecraft.factions.perms.PermissibleAction;
 import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Permission;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.TL;
+import net.minecraft.server.v1_8_R3.BlockCrops;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -243,9 +247,6 @@ public class FactionsBlockListener implements Listener {
         if (SUGAR_CANE_BLOCK == null){
             SUGAR_CANE_BLOCK = Material.getMaterial("SUGAR_CANE_BLOCK");
         }
-
-        if (!FactionsPlugin.getInstance().conf().upgrades().warpAmount().isEnabled())return;
-
         int i;
 
         for (i = 1; e.getBlock().getRelative(BlockFace.DOWN, i).getType() == SUGAR_CANE_BLOCK; ++i);
@@ -256,19 +257,23 @@ public class FactionsBlockListener implements Listener {
 
         if (factionAt.isWilderness()) return;
 
-        int upgrade = factionAt.getUpgrade(UpgradeType.CROP_BOOST);
+        int naturalGrowthTier = factionAt.getUpgrade(FactionUpgrade.NATURAL_GROWTH);
 
-        //if(upgrade <= 0 && FactionsPlugin.getInstance().conf().upgrades().spawnerBoost().getDefaultBoost() == 0.0D) return;
-
-        double boost = FactionsPlugin.getInstance().conf().upgrades().warpAmount().getNumber(upgrade);
-
-        float randomFloat = ThreadLocalRandom.current().nextFloat();
-
-        if (boost >= randomFloat){
-            Block relative = e.getBlock().getRelative(BlockFace.UP);
-
-            if(relative.getType() == Material.AIR){
-                relative.setType(SUGAR_CANE_BLOCK, false);
+        if (naturalGrowthTier > 0) {
+            double d = 0.0D;
+            if (naturalGrowthTier == 1)
+                d = 0.25D;
+            if (naturalGrowthTier == 1)
+                d = 0.5D;
+            if (naturalGrowthTier == 1)
+                d = 1.0D;
+            naturalGrowthTier /= 3;
+            org.bukkit.block.Block b;
+            CraftWorld cw;
+            net.minecraft.server.v1_8_R3.Block nmsBlock;
+            if (Math.random() < (double)naturalGrowthTier && (nmsBlock = (net.minecraft.server.v1_8_R3.Block) (cw = (CraftWorld)(b = e.getBlock()).getWorld()).getHandle().getType(new BlockPosition(b.getX(), b.getY(), b.getZ()))) instanceof BlockCrops) {
+                BlockCrops bc = (BlockCrops)nmsBlock;
+                bc.o();
             }
         }
     }
