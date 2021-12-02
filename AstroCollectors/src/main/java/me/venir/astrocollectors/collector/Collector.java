@@ -111,7 +111,7 @@ public final class Collector {
     }
 
     public double getMobDropWorth(Material material) {
-        return essentials.getWorth().getPrice(essentials, new ItemStack(material)).doubleValue();
+        return this.getAmount(material) * essentials.getWorth().getPrice(essentials, new ItemStack(material)).doubleValue();
     }
 
     public double getAllMobDropsWorth() {
