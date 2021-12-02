@@ -159,17 +159,6 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         event.setCancelled(true);
     }
 
-    protected void addSpectator(T player) {
-        this.spectators.add(player);
-        if (this.isParticipant(player.getPlayer())) this.removeParticipant(player);
-        player.getPlayer().teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-        player.getPlayer().setGameMode(GameMode.SPECTATOR);
-    }
-
-    protected Optional<T> getSpectator(Player player) {
-        return this.spectators.stream().findFirst().filter(spectator -> spectator.getPlayer().equals(player));
-    }
-
     @EventHandler
     public void onFallDamageWhileInGame(EntityDamageEvent event) {
         if (!isValidParticipant(event.getEntity())) return;
@@ -231,21 +220,35 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     }
 
 
-
-    public boolean isSpectator(Player player) {
-        return this.spectators.contains(player);
+    protected void addSpectator(T player) {
+        this.spectators.add(player);
+        if (this.isParticipant(player.getPlayer())) this.removeParticipant(player);
+        player.getPlayer().teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        player.getPlayer().setGameMode(GameMode.SPECTATOR);
     }
 
-    public boolean isSpectator(SumoPlayer sumoPlayer) {
-        return this.isSpectator(sumoPlayer.getPlayer());
+    protected Optional<T> getSpectator(Player player) {
+        return this.spectators.stream().findFirst().filter(spectator -> spectator.getPlayer().equals(player));
+    }
+
+    public boolean isSpectator(Player player) {
+        return this.spectators.stream().anyMatch(spectator -> spectator.equals(this.getParticipant(player)));
+    }
+
+    public boolean isSpectator(T sumoPlayer) {
+        return this.spectators.contains(sumoPlayer);
     }
 
     protected void clearSpectators() {
         this.spectators.clear();
     }
 
-    protected void removeSpectator(Player player) {
+    protected void removeSpectator(T player) {
         this.spectators.remove(player);
+    }
+
+    protected void removeSpectator(Player player) {
+        this.spectators.removeIf(spectator -> spectator.getPlayer().equals(player));
     }
 
     protected Location getLocationFromConfig(ConfigurationSection configSection) {
