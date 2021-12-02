@@ -13,6 +13,7 @@ import com.massivecraft.factions.data.MemoryFPlayer;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.gui.GUI;
+import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Essentials;
 import com.massivecraft.factions.perms.PermissibleAction;
 import com.massivecraft.factions.perms.Relation;
@@ -26,15 +27,19 @@ import com.massivecraft.factions.util.*;
 import com.massivecraft.factions.util.material.MaterialDb;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
+import net.minecraft.server.v1_8_R3.BlockCrops;
+import net.minecraft.server.v1_8_R3.BlockPosition;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Furnace;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockGrowEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.*;
@@ -55,6 +60,7 @@ import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.NumberConversions;
+import org.github.paperspigot.Title;
 
 import java.util.*;
 import java.util.logging.Level;
@@ -302,6 +308,15 @@ public class FactionsPlayerListener extends AbstractListener {
             String ownersTo = myFaction.getOwnerListString(to);
 
             if (changedFaction) {
+                if (!event.getPlayer().getWorld().getName().contains("dungeon") && !event.getPlayer().getWorld().getName().contains("event")) {
+/*                    if (factionTo.isWilderness()) {
+                        event.getPlayer().sendTitle(new Title(CC.DarkGreen + "Wilderness", CC.Gray + "PvP is enabled in this unclaimed land.", 5, 20, 5));
+                    } else if (factionTo.isWarZone()) {
+                        event.getPlayer().sendTitle(new Title(CC.DarkRed + "Warzone", CC.Gray + "Not the safest place to be.", 5, 20, 5));
+                    } else {
+                        event.getPlayer().sendTitle(new Title(myFaction.getRelationTo(factionTo).getColor() + factionTo.getTag(), CC.Gray + factionTo.getDescription(), 5, 20, 5));
+                    }*/
+                }
                 me.sendFactionHereMessage(factionFrom);
                 if (FactionsPlugin.getInstance().conf().factions().ownedArea().isEnabled() && FactionsPlugin.getInstance().conf().factions().ownedArea().isMessageOnBorder() && myFaction == factionTo && !ownersTo.isEmpty()) {
                     me.sendMessage(TL.GENERIC_OWNERS.format(ownersTo));
@@ -782,8 +797,8 @@ public class FactionsPlayerListener extends AbstractListener {
     @EventHandler
     public void NaturalGrowth(BlockGrowEvent e) {
         FLocation fl = new FLocation(e.getBlock().getLocation());
-        Faction f = Board.getFactionAt(fl);
-        int naturalGrowthTier = FactionUpgradeAPI.getPerkLevel(f, FactionUpgrade.NATURAL_GROWTH);
+        Faction f = Board.getInstance().getFactionAt(fl);
+        int naturalGrowthTier = f.getUpgrade(FactionUpgrade.NATURAL_GROWTH);
         if (naturalGrowthTier > 0) {
             double d = 0.0D;
             if (naturalGrowthTier == 1)
@@ -795,8 +810,8 @@ public class FactionsPlayerListener extends AbstractListener {
             naturalGrowthTier /= 3;
             Block b;
             CraftWorld cw;
-            Block nmsBlock;
-            if (Math.random() < naturalGrowthTier && nmsBlock = (Block)(cw = (CraftWorld)(b = e.getBlock()).getWorld()).getHandle().getType(new BlockPosition(b.getX(), b.getY(), b.getZ())) instanceof BlockCrops) {
+            Block nmsBlock = (Block)(cw = (CraftWorld)(b = e.getBlock()).getWorld()).getHandle().getType(new BlockPosition(b.getX(), b.getY(), b.getZ()));
+            if (Math.random() < naturalGrowthTier && nmsBlock instanceof BlockCrops) {
                 BlockCrops bc = (BlockCrops)nmsBlock;
                 bc.o();
             }
@@ -871,7 +886,7 @@ public class FactionsPlayerListener extends AbstractListener {
     public void onFurnaceBurn(FurnaceBurnEvent e) {
         if (e.getBlock().getState() instanceof Furnace) {
             Furnace furnace = (Furnace)e.getBlock().getState();
-            if (furnace != null && furnace.getInventory() != null && furnace.getInventory().getSmelting() != null && furnace.getInventory().getSmelting().getType() == Material.SULPHUR) {
+            if (furnace != null && furnace.getInventory() != null && furnace.getInventory().getSmelting() != null && furnace.getInventory().getSmelting().getType() == Material.GUNPOWDER) {
                 FLocation fl = new FLocation(e.getBlock().getLocation());
                 Faction f = Board.getInstance().getFactionAt(fl);
                 int explosiveExpertTier = f.getUpgrade(FactionUpgrade.NATURAL_GROWTH);

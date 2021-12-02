@@ -12,6 +12,8 @@ import com.massivecraft.factions.struct.Relation;
 import com.sun.prism.impl.ps.BaseShaderContext;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -54,12 +56,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(CC.Gray + "A fragment of the legendary", CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Ability", CC.Gray + "Summon the power of Yijki's", CC.Gray + "[" + CC.DarkRed + "Dimensional Cage" + CC.Gray + "] ability (" + cageDuration(5) + "s)", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
+        return Lists.newArrayList(CC.Gray + "A fragment of the legendary", CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Ability", CC.Gray + "Summon the power of Yijki's", CC.Gray + "[" + CC.DarkRed + "Dimensional Cage" + CC.Gray + "] ability (" + this.cageDuration + "s)", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
     }
 
-    private double cageDuration(int level) {
-        return 5.00;
-    }
+    private double cageDuration = 5.0;
 
 
     public int getCooldown(int level) {
@@ -145,7 +145,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-
         //CageCooldown.enterCageCooldown(target);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
@@ -163,7 +162,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 DamageIndicatorUtils.sendDamageIndicator(finalTarget, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
 
-            }, (long) (cageDuration(petItem.getLevel()) + cageDuration(petItem.getLevel() / 2)) * 20L);
+            }, (long) (this.cageDuration + this.cageDuration) * 20L);
         } else {
 
 
@@ -175,7 +174,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 } catch (Exception e) {
                 }
 
-            }, (long) cageDuration(petItem.getLevel()) * 20L);
+            }, (long) this.cageDuration * 20L);
         }
         return true;
     }

@@ -68,6 +68,10 @@ public class DivineImmolationListener implements Listener {
                     damage = 1.25 * (((2 * solitudeLevel)/100) + 1);
                 }
 
+                if(WeaponBonusUtils.getWeaponBonusByItem(((Player) ((Player) e.getEntity()).getKiller()).getItemInHand()).equals(WeaponBonusType.DEMON)) {
+                    damage *= 1.5;
+                }
+
                 le.damage((double) damage);
 
 

@@ -1,5 +1,6 @@
 package com.massivecraft.factions.data;
 
+import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
@@ -36,15 +37,8 @@ import org.bukkit.inventory.ItemStack;
 import java.io.IOException;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -84,6 +78,7 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     protected int tntBank = 0;
     protected String altJoinString = "-1";
     protected transient OfflinePlayer offlinePlayer;
+    protected Map<FLocation, Set<String>> chunkClaims = new ConcurrentHashMap<>();
 
     protected Map<FactionUpgrade, Integer> upgrades = new HashMap<>();
 
@@ -1351,5 +1346,196 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
 
     public Set<FLocation> getAllClaims() {
         return Board.getInstance().getAllClaims(this);
+    }
+
+    public boolean addFactionAccess(FLocation l, Faction f) {
+        String facString;
+        Set<String> access = new HashSet<>();
+        if (this.chunkClaims.containsKey(l)) {
+            access = this.chunkClaims.get(l);
+        }
+        if (access.contains(facString = this.getFactionAccessString(f.getId()))) {
+            return false;
+        }
+        access.add(facString);
+        this.chunkClaims.put(l, access);
+        return true;
+    }
+
+    public boolean addPlayerAccess(FLocation l, FPlayer f) {
+        String facString;
+        Set<String> access = new HashSet<>();
+        if (this.chunkClaims.containsKey(l)) {
+            access = this.chunkClaims.get(l);
+        }
+        if (access.contains(facString = this.getPlayerAccessString(f.getId()))) {
+            return false;
+        }
+        access.add(facString);
+        this.chunkClaims.put(l, access);
+        return true;
+    }
+
+    public List<String> getPlayerAccess(FLocation fl) {
+        ArrayList retr = Lists.newArrayList();
+        if (!this.chunkClaims.containsKey(fl)) {
+            return retr;
+        }
+        for (String s : this.chunkClaims.get(fl)) {
+            FPlayer fp;
+            if (!s.startsWith("player:") || (fp = FPlayers.getInstance().getById(s.split("player:")[1])) == null) continue;
+            retr.add(fp.getName());
+        }
+        return retr;
+    }
+
+    public List<String> getFactionAccess(FLocation fl) {
+        ArrayList retr = Lists.newArrayList();
+        if (!this.chunkClaims.containsKey(fl)) {
+            return retr;
+        }
+        for (String s : this.chunkClaims.get(fl)) {
+            Faction f;
+            if (!s.startsWith("faction:") || (f = Factions.getInstance().getByTag(s.split("faction:")[1])) == null) continue;
+            retr.add(f.getTag());
+        }
+        return retr;
+    }
+
+    public Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, Set<String> perms) {
+        LinkedHashMap<Faction, Set<FPlayer>> playersMap = new LinkedHashMap<Faction, Set<FPlayer>>();
+        if (perms == null) {
+            return playersMap;
+        }
+        perms.forEach(perm -> {
+            Faction fac;
+            FPlayer fplayer;
+            String[] split = perm.split(":");
+            String type = split[0];
+            String name = split[1];
+            if (type.equals("faction")) {
+                Faction faction = Factions.getInstance().getFactionById(name);
+                if (faction != null && !playersMap.containsKey(faction)) {
+                    playersMap.put(faction, new HashSet<>());
+                }
+            } else if (type.equals("player") && (fplayer = FPlayers.getInstance().getByPlayer(Bukkit.getPlayer(name))) != null && (fac = fplayer.getFaction()) != null && fac.isNormal() && fac.getRelationTo(owning) != Relation.ENEMY) {
+                Set players = playersMap.computeIfAbsent(fac, e -> new HashSet<>());
+                players.add(fplayer);
+            }
+        });
+        return playersMap;
+    }
+
+    public LinkedList<EconomyParticipator> getFactionWithPlayersWithAccessList(Faction owning, Set<String> perms) {
+        LinkedList<EconomyParticipator> players = new LinkedList<EconomyParticipator>();
+        if (perms == null) {
+            return players;
+        }
+        perms.forEach(perm -> {
+            Faction fac;
+            String[] split = perm.split(":");
+            String type = split[0];
+            String name = split[1];
+            FPlayer fplayer = FPlayers.getInstance().getById(name);
+            if (type.equals("faction")) {
+                Faction faction = Factions.getInstance().getFactionById(name);
+                if (!(faction != null && faction.getRelationTo(owning) == Relation.ENEMY || players.contains(faction))) {
+                    players.add(faction);
+                }
+            } else if (type.equals("player") && fplayer != null && ((fac = fplayer.getFaction()) == null || fac.getRelationTo(owning) != Relation.ENEMY) && !players.contains(fplayer)) {
+                players.add(fplayer);
+            }
+        });
+        return players;
+    }
+
+    public Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, FLocation chunk) {
+        Set<String> perms = this.chunkClaims.get(chunk);
+        return this.getFactionWithPlayersWithAccess(owning, perms);
+    }
+    public boolean removeFactionAccess(FLocation loc, Faction f) {
+        if (!isLocationTracked(loc))
+            return false;
+        Set<String> access = this.chunkClaims.get(loc);
+        String str;
+        if (access.contains(str = getFactionAccessString(f.getId()))) {
+            access.remove(str);
+            if (access.isEmpty()) {
+                this.chunkClaims.remove(loc);
+                this.removeLocation(this, loc);
+            } else {
+                this.chunkClaims.put(loc, access);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public boolean removePlayerAccess(FLocation loc, FPlayer fp) {
+        if (!isLocationTracked(loc))
+            return false;
+        Set<String> access = this.chunkClaims.get(loc);
+        String str;
+        if (access.contains(str = getPlayerAccessString(fp.getId()))) {
+            access.remove(str);
+            if (access.isEmpty()) {
+                this.chunkClaims.remove(loc);
+                FactionWrappers.removeLocation(this, loc);
+            } else {
+                this.chunkClaims.put(loc, access);
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public void removeAllFactionAccess(Faction faction, boolean removePlayers) {
+        HashSet toRemove = new HashSet();
+        if (removePlayers)
+            faction.getFPlayers().forEach(pl -> toRemove.add(getPlayerAccessString(pl.getId())));
+        this.chunkClaims.forEach((loc, access) -> {
+            String str = getFactionAccessString(faction.getId());
+            access.remove(str);
+            if (removePlayers)
+                toRemove.forEach(access::remove);
+        });
+    }
+
+    public boolean isLocationTracked(FLocation l) {
+        return this.chunkClaims.containsKey(l);
+    }
+
+    public boolean doesFactionHaveAccess(FLocation l, Faction fac) {
+        if (!isLocationTracked(l))
+            return true;
+        for (String access : this.chunkClaims.get(l)) {
+            if (!access.startsWith("faction:") || !getFactionAccessString(fac.getId()).equals(access))
+                continue;
+            return true;
+        }
+        return false;
+    }
+
+    public boolean doesPlayerHaveChunkAccess(FLocation l, FPlayer fp, boolean checkFactions) {
+        if (!isLocationTracked(l))
+            return true;
+        Faction at = Board.getInstance().getFactionAt(l);
+        if (at != getFaction())
+            return false;
+        for (String access : this.chunkClaims.get(l)) {
+            if (access.startsWith("player:") ? access.split(":")[1].equals(fp.getId()) : (access.startsWith("faction:") && checkFactions && access.split(":")[1].equals(fp.getFaction().getId()) && fp.getRole().isAtLeast(Role.NORMAL)))
+                return true;
+        }
+        if (fp.getFaction() == getFaction())
+            return (!Conf.ownedAreasEnabled || (!Conf.ownedAreaDenyBuild && !Conf.ownedAreaPainBuild) || fp.getFaction().playerHasOwnershipRights(fp, l));
+        return false;
+    }
+
+    public String getFactionAccessString(String id) {
+        return "faction:" + id;
+    }
+
+    public String getPlayerAccessString(String id) {
+        return "player:" + id;
     }
 }

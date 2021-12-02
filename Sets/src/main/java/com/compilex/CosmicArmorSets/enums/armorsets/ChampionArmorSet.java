@@ -37,6 +37,8 @@ import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.arkhamnetwork.enchantments.enchantments.armor.Gears;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -181,6 +183,9 @@ public class ChampionArmorSet
     public void activateChampionAbility(final Player player, final Player target) {
         if (target.hasMetadata("banshee_scrolls") || target.hasMetadata("bloodHoundNoBless") || player.hasMetadata("banshee_active")) {
             return;
+        }
+        if(WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()).equals(WeaponBonusType.DEMON) && Math.random() > 0.35) {
+            target.sendMessage(CC.RedB + " ** " + CC.GoldB + "CHAMPIONS WRATH BLOCKED (" + CC.RedB + "DEMON WEAPON BONUS" + CC.RedB + ") ** ");
         }
 
 

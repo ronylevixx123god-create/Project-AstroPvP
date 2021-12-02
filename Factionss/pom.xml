@@ -36,11 +36,11 @@
     </build>
     <dependencies>
         <dependency>
-            <groupId>com.extinctpvp.extinctapi</groupId>
-            <artifactId>taco</artifactId>
+            <groupId>net.astropvp</groupId>
+            <artifactId>Wine</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/taco.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Wine.jar</systemPath>
         </dependency>
     </dependencies>
 

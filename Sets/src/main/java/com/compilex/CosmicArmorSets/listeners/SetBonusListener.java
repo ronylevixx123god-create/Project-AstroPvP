@@ -33,9 +33,12 @@ import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.DimensionalTravelerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.EngineerSet;
 import com.compilex.CosmicArmorSets.enums.armorsets.SupremeArmorSet;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.bukkit.Material;
 import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Entity;
@@ -105,7 +108,17 @@ public class SetBonusListener
             damager = (Player) event.getDamager();
         }
         if (damager != null) {
-            Map<ArmorSet, Integer> bonuses;
+            Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damager, event.getEntity());
+            if(WeaponBonusUtils.getWeaponBonusByItem(((Player)event.getDamager()).getItemInHand()).equals(WeaponBonusType.DEMON) && Math.random() < 0.15) {
+                if(bonuses.containsKey(ArmorSet.ENGINEER)) {
+                    if(bonuses.get(ArmorSet.ENGINEER) == 1) {
+                        bonuses.remove(ArmorSet.ENGINEER);
+                    } else {
+                        bonuses.put(ArmorSet.ENGINEER, bonuses.get(ArmorSet.ENGINEER) - 1);
+                    }
+                }
+                event.getDamager().sendMessage(CC.RedB + " ** " + CC.GoldB + "ENGINEER CRYSTAL BLOCKED ("  + CC.RedB + "DEMON WEAPON BONUS" + CC.GoldB + ")" + CC.RedB + " ** ");
+            }
             AbilityArmorSet set;
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);
             if(AstroItemSkinsAPI.hasSkinEquipped((Player) event.getDamager(), SkinType.COSMIC_CITIZEN_BOOTS))
@@ -116,7 +129,7 @@ public class SetBonusListener
             if (damagerArmorSet == null && (set = CosmicArmorSetsAPI.getAbilityArmorSet(damager)) != null && (event.getDamager() instanceof Player || set.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
                 set.getArmorSetInfo().onPlayerAttacked(damager, event);
             }
-            if (!damager.hasMetadata("blackout") && !(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damager, event.getEntity())).isEmpty()) {
+            if (!damager.hasMetadata("blackout") && !(bonuses).isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerAttackedBonus(damager, ent.getValue(), event);
                 }

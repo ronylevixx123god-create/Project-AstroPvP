@@ -28,6 +28,8 @@ import com.compilex.CosmicArmorSets.utils.ItemUtils;
 import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.EnchantmentAPI;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -166,6 +168,10 @@ public class UltraArmorSet
     }
 
     public void activateUltraAbility(Player player, final Player target) {
+        if(WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()).equals(WeaponBonusType.DEMON) && Math.random() < 0.6) {
+            target.sendMessage(CC.RedB + " ** " + CC.GrayB + "ULTRA STRIKE BLOCKED (" + CC.DarkRedB + "DEMON WEAPON BONUS" + CC.GrayB + ")" + CC.RedB + " ** ");
+            return;
+        }
         target.sendMessage(CC.translate("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*"));
         player.sendMessage(CC.translate("&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
         target.setMetadata("ultra", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
