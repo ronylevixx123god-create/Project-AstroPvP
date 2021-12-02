@@ -1,0 +1,5 @@
+name: AstroEvents
+main: net.astropvp.astroevents.AstroEvents
+version: 1.0
+depend:
+  - HolographicDisplays
