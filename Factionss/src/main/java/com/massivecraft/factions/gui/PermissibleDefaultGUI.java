@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class PermissibleDefaultGUI extends GUI<Faction> {
     public PermissibleDefaultGUI(FPlayer user) {
-        super(user, rows);
+        super(user, 3);
     }
 
     @Override

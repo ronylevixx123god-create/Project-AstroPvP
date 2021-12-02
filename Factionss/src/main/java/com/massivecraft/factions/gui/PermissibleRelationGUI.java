@@ -5,8 +5,10 @@ import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.perms.Permissible;
 import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
+import com.massivecraft.factions.util.CC;
 import com.massivecraft.factions.util.TL;
 import com.massivecraft.factions.util.material.MaterialDb;
+import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.Collections;
@@ -20,47 +22,26 @@ public class PermissibleRelationGUI extends GUI<Permissible> {
 
     static {
         items = new LinkedHashMap<>();
-        SimpleItem.Builder starter = SimpleItem.builder().setName("&8[{relation-color}{relation}&8]");
 
-        SimpleItem recruit = starter.build();
-        recruit.setName("§a" + Role.RECRUIT.getTranslation().toString());
-        recruit.setMaterial(MaterialDb.get("WOODEN_SWORD"));
+        SimpleItem recruit = SimpleItem.builder().build();
+        recruit.setName(CC.WhiteB + "Recruit");
+        recruit.setMaterial(Material.WHITE_STAINED_GLASS_PANE);
         items.put(Role.RECRUIT, recruit);
 
-        SimpleItem normal = starter.build();
-        normal.setName("§a" + Role.NORMAL.getTranslation().toString());
-        normal.setMaterial(MaterialDb.get("STONE_SWORD"));
+        SimpleItem normal = SimpleItem.builder().build();
+        normal.setName(CC.Green + "Member");
+        normal.setMaterial(Material.GREEN_STAINED_GLASS_PANE);
         items.put(Role.NORMAL, normal);
 
-        SimpleItem moderator = starter.build();
-        moderator.setName("§a" + Role.MODERATOR.getTranslation().toString());
-        moderator.setMaterial(MaterialDb.get("IRON_SWORD"));
+        SimpleItem moderator = SimpleItem.builder().build();
+        moderator.setName(CC.AquaB + "Moderator");
+        moderator.setMaterial(Material.LIGHT_BLUE_STAINED_GLASS_PANE);
         items.put(Role.MODERATOR, moderator);
 
-        SimpleItem coleader = starter.build();
-        coleader.setName("§a" + Role.COLEADER.getTranslation().toString());
-        coleader.setMaterial(MaterialDb.get("DIAMOND_SWORD"));
+        SimpleItem coleader = SimpleItem.builder().build();
+        coleader.setName(CC.YellowB + "Co-Leader");
+        coleader.setMaterial(Material.YELLOW_STAINED_GLASS_PANE);
         items.put(Role.COLEADER, coleader);
-
-        SimpleItem ally = starter.build();
-        ally.setName("§a" + Relation.ALLY.getTranslation());
-        ally.setMaterial(MaterialDb.get("GOLD_SWORD"));
-        items.put(Relation.ALLY, ally);
-
-        SimpleItem truce = starter.build();
-        truce.setName("§a" + Relation.TRUCE.getTranslation());
-        truce.setMaterial(MaterialDb.get("IRON_AXE"));
-        items.put(Relation.TRUCE, truce);
-
-        SimpleItem neutral = starter.build();
-        neutral.setName("§a" + Relation.NEUTRAL.getTranslation());
-        neutral.setMaterial(MaterialDb.get("STONE_HOE"));
-        items.put(Relation.NEUTRAL, neutral);
-
-        SimpleItem enemy = starter.build();
-        enemy.setName("§a" + Relation.ENEMY.getTranslation());
-        enemy.setMaterial(MaterialDb.get("STONE_AXE"));
-        items.put(Relation.ENEMY, enemy);
     }
 
     private final boolean online;
@@ -73,10 +54,7 @@ public class PermissibleRelationGUI extends GUI<Permissible> {
 
     @Override
     protected String getName() {
-        String bit = FactionsPlugin.getInstance().conf().factions().other().isSeparateOfflinePerms() ?
-                TL.GUI_PERMS_RELATION_ONLINEOFFLINEBIT.format(online ? TL.GUI_PERMS_ONLINE.toString() : TL.GUI_PERMS_OFFLINE)
-                : "";
-        return TL.GUI_PERMS_RELATION_NAME.format(bit);
+        return CC.Gray + "Faction Roles";
     }
 
     @Override
@@ -107,15 +85,11 @@ public class PermissibleRelationGUI extends GUI<Permissible> {
     protected Map<Integer, Permissible> createSlotMap() {
         Map<Integer, Permissible> map = new HashMap<>();
         if (online) {
-            map.put(0, Role.RECRUIT);
-            map.put(1, Role.NORMAL);
-            map.put(2, Role.MODERATOR);
-            map.put(3, Role.COLEADER);
+            map.put(1, Role.RECRUIT);
+            map.put(3, Role.NORMAL);
+            map.put(5, Role.MODERATOR);
+            map.put(7, Role.COLEADER);
         }
-        map.put(5, Relation.ALLY);
-        map.put(6, Relation.NEUTRAL);
-        map.put(7, Relation.TRUCE);
-        map.put(8, Relation.ENEMY);
         return map;
     }
 
