@@ -2,6 +2,7 @@ package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.gui.PermissibleActionGUI;
+import com.massivecraft.factions.gui.PermissibleMainGUI;
 import com.massivecraft.factions.gui.PermissibleRelationGUI;
 import com.massivecraft.factions.perms.Permissible;
 import com.massivecraft.factions.perms.PermissibleAction;
@@ -23,10 +24,6 @@ public class CmdPerm extends FCommand {
         this.aliases.add("permission");
         this.aliases.add("permissions");
 
-        this.optionalArgs.put("relation", "relation");
-        this.optionalArgs.put("action", "action");
-        this.optionalArgs.put("access", "access");
-
         this.requirements = new CommandRequirements.Builder(Permission.PERMISSIONS)
                 .memberOnly()
                 .withRole(Role.ADMIN)
@@ -36,7 +33,7 @@ public class CmdPerm extends FCommand {
     @Override
     public void perform(CommandContext context) {
         if (context.args.size() == 0) {
-            PermissibleRelationGUI ui = new PermissibleRelationGUI(true, context.fPlayer);
+            PermissibleMainGUI ui = new PermissibleMainGUI(context.fPlayer);
             ui.open();
             return;
         } else if (context.args.size() == 1 && getPermissible(context.argAsString(0)) != null) {
