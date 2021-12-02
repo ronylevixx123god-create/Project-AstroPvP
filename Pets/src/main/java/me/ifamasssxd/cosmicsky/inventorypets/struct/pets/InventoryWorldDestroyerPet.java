@@ -259,8 +259,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     cancel();
                 }
                 int dmg = 2;
-                affected.damage(0.0D);
-                affected.setHealth(affected.getHealth() - 2.5D);
+                if (WorldGuardUtils.isPvPEnabled(affected.getLocation())) {
+                    affected.damage(0.0D);
+                    affected.setHealth(affected.getHealth() - 2.5D);
+                }
                 if (affected.getHealth() <= 0.0D || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     cancel();
