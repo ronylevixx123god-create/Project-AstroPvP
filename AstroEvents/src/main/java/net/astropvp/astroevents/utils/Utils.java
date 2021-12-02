@@ -24,7 +24,7 @@ public class Utils {
     }
 
     public static List<String> color(List<String> stringList) {
-        stringList.forEach(Utils::color);
+        stringList.replaceAll(Utils::color);
         return stringList;
     }
 

@@ -12,6 +12,7 @@ import me.venir.astrocollectors.collector.CollectorSellLog;
 import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
+import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -35,10 +36,11 @@ public final class Collector {
     private final double x, y, z;
     private final Map<Material,Integer> lootMap;
     private final List<CollectorSellLog> sellLogs;
-    Essentials essentials = AstroCollectors.INSTANCE.getEssentials();
+    Essentials essentials;
 
 
     public Collector(World world, int chunkX, int chunkZ, JSONObject data) {
+        this.essentials =  EssentialsUtils.getEssentials();
         reference = new WeakReference<>(world);
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
@@ -75,6 +77,7 @@ public final class Collector {
     }
 
     public Collector(Location location) {
+        this.essentials =  EssentialsUtils.getEssentials();
         reference = new WeakReference<>(location.getWorld());
         lootMap = new EnumMap<>(Material.class);
         x = location.getBlockX();
@@ -175,7 +178,7 @@ public final class Collector {
             player.sendMessage(Utils.format("&cYour /f tnt bank is FULL. Please clear some space."));
             return;
         }
-        faction.tnt += Double.valueOf(this.getAmount(Material.TNT));
+        faction.tnt += this.getAmount(Material.TNT);
         Language.COLLECTOR_TNT.send(player, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(this.getAmount(Material.TNT))));
 
         addTNTSellLog(player, this.getAmount(Material.TNT));

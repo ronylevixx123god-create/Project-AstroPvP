@@ -54,7 +54,7 @@ public class AstroCollectors extends JavaPlugin {
         pm.registerEvents(new BlockPlaceListener(), this);
         pm.registerEvents(new BlockBreakListener(this), this);
         pm.registerEvents(new InventoryClickListener(), this);
-        pm.registerEvents(new PlayerInteractListener(), this);
+        pm.registerEvents(new PlayerInteractListener(this), this);
 
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {

@@ -74,7 +74,7 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         });
 
         super.getSpectators().forEach(spectator -> {
-            this.leaveMiniGame(spectator, true);
+            this.leaveMiniGame(spectator.getPlayer(), true);
         });
 
         super.clearParticipants();
@@ -109,14 +109,18 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         player.setWalkSpeed((float) 0.2);
         super.clearInventory(player);
         super.clearPotionEffects(player);
-        super.getParticipant(player).getPlayerInventoryContents().restore(player);
         if (stopMiniGame) return;
 
-        if (isParticipant(player))
+        if (isParticipant(player)) {
+            super.getParticipant(player).getPlayerInventoryContents().restore(player);
             super.removeParticipant(player);
+        }
 
-        if (isSpectator(player))
+        if (isSpectator(player)) {
+            Optional<SumoPlayer> sumoPlayer = super.getSpectator(player);
+            sumoPlayer.ifPresent(participant -> participant.getPlayerInventoryContents().restore(player));
             super.removeSpectator(player);
+        }
 
         if (this.isInDuel(player)) {
             this.choseWinner(this.getOpposingPlayer(player).getPlayer(), player);
@@ -147,9 +151,11 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
             return;
         }
 
+        SumoPlayer sumoPlayer = super.getParticipant(loser);
+
         winner.teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         this.getDuelPlayers().clear();
-        this.addSpectator(loser);
+        this.addSpectator(sumoPlayer);
         this.nextFight();
     }
 
