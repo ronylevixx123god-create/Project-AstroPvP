@@ -1,6 +1,7 @@
 package net.astropvp.astroevents.game.games;
 
 import lombok.Getter;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.MiniGame;
 import net.astropvp.astroevents.game.MiniGameOptions;
@@ -16,6 +17,7 @@ import org.apache.commons.collections4.map.LinkedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -37,7 +39,7 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
     private final Map<UUID, SumoPlayer> tempMap;
 
     public SumoMiniGame(AstroEvents plugin) {
-        super(plugin, MiniGameType.SUMO, new LinkedMap<>(), MiniGameOptions.builder().excludedBlockedCommands(new String[]{"sumo"}).build());
+        super(plugin, MiniGameType.SUMO, new LinkedMap<>(), MiniGameOptions.builder().excludedBlockedCommands(new String[]{"sumo"}).build(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("SumoLootbox"), Material.STICK);
         this.plugin = plugin;
         this.duelPlayers = new Pair<>(null, null);
         this.tempMap = new HashMap<>();

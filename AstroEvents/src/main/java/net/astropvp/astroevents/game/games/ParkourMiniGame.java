@@ -6,6 +6,7 @@ import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.ImmutableBiMap;
 import lombok.Getter;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.MiniGame;
 import net.astropvp.astroevents.game.MiniGameOptions;
@@ -47,7 +48,7 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
     private final ItemStack leaveItem;
 
     public ParkourMiniGame(AstroEvents plugin) {
-        super(plugin, MiniGameType.PARKOUR, new HashMap<>(), MiniGameOptions.builder().build());
+        super(plugin, MiniGameType.PARKOUR, new HashMap<>(), MiniGameOptions.builder().build(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ParkourLootbox"), Material.FEATHER);
         this.plugin = plugin;
 
         this.startTime = 0;

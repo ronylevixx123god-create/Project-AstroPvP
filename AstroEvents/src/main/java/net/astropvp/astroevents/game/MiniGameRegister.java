@@ -1,5 +1,6 @@
 package net.astropvp.astroevents.game;
 
+import lombok.Getter;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.games.ParkourMiniGame;
 import net.astropvp.astroevents.game.games.SumoMiniGame;
@@ -11,6 +12,7 @@ import java.util.Map;
 public class MiniGameRegister {
 
     private final AstroEvents plugin;
+    @Getter
     private final Map<MiniGameType, MiniGame<?>> miniGames;
 
     public MiniGameRegister(AstroEvents plugin) {

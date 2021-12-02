@@ -4,7 +4,7 @@ import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
 import net.astropvp.astroevents.AstroEvents;
-import net.astropvp.astroevents.inventories.EventsUI;
+import net.astropvp.astroevents.inventories.MainEventsUI;
 import org.bukkit.entity.Player;
 
 @CommandAlias("event|events")
@@ -18,8 +18,8 @@ public class EventsCommand extends BaseCommand {
 
     @Default
     public void baseCommand(Player sender) {
-        EventsUI eventsUI = new EventsUI(plugin, sender);
-        eventsUI.getEventsUI().open(sender);
+        MainEventsUI mainEventsUI = new MainEventsUI(plugin, sender);
+        mainEventsUI.getEventsUI().open(sender);
     }
 
 }
