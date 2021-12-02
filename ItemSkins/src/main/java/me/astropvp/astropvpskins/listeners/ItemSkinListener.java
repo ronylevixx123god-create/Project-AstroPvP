@@ -82,7 +82,6 @@ public class ItemSkinListener implements Listener {
 
         } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked) && isArmorOrWeapon(clicked)) {
 
-
             List<SkinType> skinTypes = AstroItemSkinsAPI.getItemSkinByItem(clicked);
             assert skinTypes != null;
 

@@ -96,6 +96,7 @@ public class KothSanityListener implements Listener {
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() == null) return;
+        if (!(event.getDamager() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         Faction faction = FactionUtils.getFaction(player);
         if (faction == null) return;

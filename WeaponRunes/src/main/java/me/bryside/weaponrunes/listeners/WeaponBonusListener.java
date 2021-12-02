@@ -65,6 +65,10 @@ public class WeaponBonusListener implements Listener {
             return;
         if (clicked == null || clicked.getType() == Material.AIR)
             return;
+        /*if (clicked.getType().name().endsWith("_AXE")) {
+            e.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You cannot apply weapon bonuses to axes!"));
+            return;
+        }*/
         if (!WeaponBonusUtils.hasWeaponBonus(clicked) && WeaponBonusUtils.isWeaponBonus(cursor) && e.getClick().isLeftClick()) {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(cursor);
             if (weaponBonusType == null || !WeaponBonusUtils.isHeroicWeapon(clicked))

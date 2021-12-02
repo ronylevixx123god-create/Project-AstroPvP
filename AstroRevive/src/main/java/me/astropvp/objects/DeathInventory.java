@@ -115,6 +115,15 @@ public class DeathInventory implements Serializable {
         this.player = player.getUniqueId();
         this.time = System.currentTimeMillis();
         this.armor = Base64Utils.playerInventoryToBase64(player.getInventory())[1];
+
+        for (ItemStack itemStack : player.getInventory()) {
+            if (itemStack == null) continue;
+            if (itemStack.getType() == null) continue;
+            if (itemStack.getType() == Material.POTION) {
+                player.getInventory().remove(itemStack);
+            }
+        }
+
         this.items = Base64Utils.playerInventoryToBase64(player.getInventory())[0];
         this.inst = inst;
         setDamage(damage);
