@@ -54,6 +54,7 @@ import java.util.concurrent.TimeUnit;
 
 import com.massivecraft.factions.Faction;
 import com.sk89q.jchronic.utils.Time;
+import net.astropvp.core.utils.DamageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -94,11 +95,15 @@ public class KothSanityListener implements Listener {
 
     @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
-        Player player;
-        Faction faction;
-        if (!(event.getDamager() instanceof Player) || (faction = FactionUtils.getFaction((Player)(player = (Player)event.getDamager()))).getId().equals(CosmicKOTHPlugin.get_().getBuffFactionId())) {
-            // empty if block
+        if (event.getDamager() == null) return;
+        Player player = (Player) event.getDamager();
+        Faction faction = FactionUtils.getFaction(player);
+        if (faction == null) return;
+
+        if (faction.getId().equals(CosmicKOTHPlugin.get_().getBuffFactionId())) {
+            DamageUtils.setDamageIncrease(10, event);
         }
+
     }
 
     @EventHandler
