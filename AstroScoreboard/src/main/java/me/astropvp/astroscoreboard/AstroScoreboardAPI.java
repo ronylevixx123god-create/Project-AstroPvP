@@ -25,16 +25,18 @@ public class AstroScoreboardAPI {
     static {
         rankOrder.put("owner", "1");
         rankOrder.put("manager", "2");
-        rankOrder.put("admin", "3");
-        rankOrder.put("banteam", "4");
-        rankOrder.put("srmod", "5");
-        rankOrder.put("mod", "6");
-        rankOrder.put("helper", "7");
-        rankOrder.put("media", "8");
-        rankOrder.put("interstellar", "9");
-        rankOrder.put("apollo", "a");
-        rankOrder.put("astro+", "b");
-        rankOrder.put("astro", "c");
+        rankOrder.put("developer", "3");
+        rankOrder.put("admin", "4");
+        rankOrder.put("banteam", "5");
+        rankOrder.put("srmod", "6");
+        rankOrder.put("mod", "7");
+        rankOrder.put("helper", "8");
+        rankOrder.put("media", "9");
+        rankOrder.put("interstellar", "a");
+        rankOrder.put("apollo", "b");
+        rankOrder.put("astro+", "c");
+        rankOrder.put("astro", "d");
+
     }
 
     public static String getTeamName(Player player) {
@@ -66,6 +68,7 @@ public class AstroScoreboardAPI {
                 rankColor = ChatColor.DARK_RED;
                 break;
             case "manager":
+            case "developer":
             case "media":
                 rankColor = ChatColor.LIGHT_PURPLE;
                 break;

@@ -49,11 +49,7 @@ public class NebulaShopListener implements Listener {
     public void teleportCancel(PlayerTeleportEvent e) {
         if (e.getPlayer() == null) return;
         if (!e.getTo().getWorld().getName().equals("nebula")) return;
-        if (!PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("interstellar") &&
-                !PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("mod") &&
-                !PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("admin") &&
-                !PermissionsAPI.getPermissionUser(e.getPlayer().getUniqueId()).getGroup().equals("banteam") &&
-                !e.getPlayer().isOp()) {
+        if (e.getPlayer().hasPermission("astrocore.nebula")) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot teleport to the nebula lounge."));
             e.getPlayer().sendMessage(CC.translate("&cThis lounge requires the nebula rank!"));
             e.setCancelled(true);
