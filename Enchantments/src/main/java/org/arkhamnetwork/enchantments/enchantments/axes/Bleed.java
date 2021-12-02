@@ -33,7 +33,8 @@ public class Bleed extends CustomEnchantment {
     }
 
     public static int getBleedStack(final LivingEntity le) {
-        return le.hasMetadata("bleedStack") ? le.getMetadata("bleedStack").get(0).asInt() : 0;
+        int bleedStack = le.hasMetadata("bleedStack") ? le.getMetadata("bleedStack").get(0).asInt() : 0;
+        return Math.min(bleedStack, 8);
     }
 
     public static void clearBleedEffect(final LivingEntity le) {
@@ -48,9 +49,9 @@ public class Bleed extends CustomEnchantment {
     @SneakyThrows
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player) {
-            final double bleedChance = 0.08 * enchantLevel + 0.4;
+            final double bleedChance = 0.04 * enchantLevel + 0.4;
             if (Math.random() < bleedChance && getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
-                this.addBleedStack(user, target);
+                addBleedStack(user, target);
             }
         }
     }
