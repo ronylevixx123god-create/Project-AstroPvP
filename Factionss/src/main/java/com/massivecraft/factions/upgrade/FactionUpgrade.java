@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 
+import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.gui.SimpleItem;
 import com.massivecraft.factions.upgrade.upgrades.*;
@@ -12,6 +13,7 @@ import com.massivecraft.factions.util.CC;
 import com.massivecraft.factions.util.material.MaterialDb;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
 
@@ -85,23 +87,24 @@ public enum FactionUpgrade {
         Upgrade upgrade = getUpgrade();
         if (upgrade instanceof HeroicUpgrade) {
             int retr = ((HeroicUpgrade) upgrade).getHeroicCrystalCost(tier);
-            return (int) Math.max(0.0D, Math.ceil(retr * FactionsPlugin.getInstance().getUpgradeManager().getUpgradePriceMultiplier()));
+            return (int) Math.max(0.0D, Math.ceil(retr));
         }
         return 0;
     }
 
     public int getTokenCost(int tier) {
         int cost = getUpgrade().getTokenCost(tier);
-        return (int) Math.floor(cost * FactionsPlugin.getInstance().getUpgradeManager().getUpgradePriceMultiplier()) * 8;
+        return (int) Math.floor(cost * 8);
     }
 
     public double getMoneyCost(int tier) {
         double cost = getUpgrade().getMoneyCost(tier);
-        return Math.floor(cost * FactionsPlugin.getInstance().getUpgradeManager().getUpgradePriceMultiplier());
+        return Math.floor(cost);
     }
 
-    public SimpleItem createUpgradeItem(String factionId, FactionUpgradeInfo upgradeInfo) {
-        int tier = (upgradeInfo != null) ? upgradeInfo.getUpgradeTier(this) : 0;
+    public SimpleItem createUpgradeItem(Faction faction) {
+        int tier = (faction != null) ? faction.getUpgrade(this) : 0;
+
         Upgrade upgrade = getUpgrade();
         ArrayList<String> lore = Lists.newArrayList();
         upgrade.getLore(tier).forEach(line -> lore.add(ChatColor.GRAY + line));
@@ -120,7 +123,7 @@ public enum FactionUpgrade {
         long balanceRequired = 0L;
         boolean hasAccess = true;
         if (upgrade instanceof HeroicUpgrade)
-            hasAccess = FactionsPlugin.getInstance().getUpgradeManager().canAccessHeroic(factionId, this);
+            hasAccess = faction.canAccessHeroic(this);
         ChatColor secondaryColor = isHeroic() ? ChatColor.GOLD : ChatColor.AQUA, chatColor = secondaryColor;
         if (upgrade.getMaxUpgradeLevel() > tier) {
             lore.add(tierColor + ChatColor.BOLD.toString() + (this.heroicUpgrade ? "Requirements" : "Price"));
@@ -153,7 +156,9 @@ public enum FactionUpgrade {
         }
         SimpleItem item = SimpleItem.builder().build();
         item.setLore(lore);
-        item.setMaterial((tier == 0 || !hasAccess) ? MaterialDb.get("RED_STAINED_GLASS_PANE") : MaterialDb.get("YELLOW_STAINED_GLASS_PANE"));
+        item.setMaterial((tier == 0 || !hasAccess) ? MaterialDb.get("RED_STAINED_GLASS_PANE") : getDisplayData().getItemType());
+        if(tier == 0 || !hasAccess)
+            item.setData((short) 14);
         item.setName((this.heroicUpgrade ? ChatColor.GOLD : ChatColor.AQUA) + ChatColor.BOLD.toString() + upgrade.getDisplayName(tier));
         item.setLore(lore);
         return item;

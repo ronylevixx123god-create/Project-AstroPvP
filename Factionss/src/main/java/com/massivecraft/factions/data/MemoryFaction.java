@@ -22,6 +22,7 @@ import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.BanInfo;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
+import com.massivecraft.factions.upgrade.HeroicUpgrade;
 import com.massivecraft.factions.util.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -135,8 +136,7 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     }
 
     public int getMaxWarps() {
-            if(!FactionsPlugin.getInstance().conf().upgrades().isEnabled()) return FactionsPlugin.getInstance().conf().commands().warp().getMaxWarps();
-            return FactionsPlugin.getInstance().conf().upgrades().warpAmount().getNumber(this.getUpgrade(UpgradeType.WARP_AMOUNT));
+            return this.getUpgrade(FactionUpgrade.WARP_MASTER) + 3;
     }
 
     public boolean isWarp(String name) {
@@ -612,8 +612,8 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
         this.dtr = FactionsPlugin.getInstance().conf().factions().landRaidControl().dtr().getStartingDTR();
 
         this.inventory = Bukkit.createInventory(new FChestHolder(),
-                FactionsPlugin.getInstance().conf().upgrades().chest().getDefaultRows() * 9,
-                TextUtil.parseColor(FactionsPlugin.getInstance().conf().upgrades().chest().getChestName()));
+                54,
+                CC.Green + "Faction Chest");
 
         resetPerms(); // Reset on new Faction so it has default values.
     }
@@ -1031,8 +1031,8 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     public Inventory getChest() {
         if(inventory == null){
             this.inventory = Bukkit.createInventory(new FChestHolder(),
-                    FactionsPlugin.getInstance().conf().upgrades().chest().getNumber(getUpgrade(UpgradeType.CHEST)) * 9,
-                    TextUtil.parseColor(FactionsPlugin.getInstance().conf().upgrades().chest().getChestName()));
+                    54,
+                    CC.Green + "Faction Chest");
 
             try{
                 this.inventory.setContents(ItemBase64.itemStackArrayFromBase64(this.items));
@@ -1243,8 +1243,7 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     }
 
     public int getMaxTNT(){
-        if(!FactionsPlugin.getInstance().conf().upgrades().isEnabled())return FactionsPlugin.getInstance().conf().commands().tnt().getMaxStorage();
-        return FactionsPlugin.getInstance().conf().upgrades().tnt().getNumber(this.getUpgrade(UpgradeType.TNT));
+        return 10000000;
     }
 
     public Set<String> getOwnerList(FLocation loc) {
@@ -1291,32 +1290,6 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     }
 
     //Upgrades
-    public void commitUpgrade(FactionUpgrade upgradeType){
-        switch(upgradeType){
-            case CHEST:
-                int slots = FactionsPlugin.getInstance().conf().upgrades().chest().getNumber(getUpgrade(upgradeType)) * 9;
-
-                ItemStack[] stacks = this.getChest().getContents();
-
-                List<HumanEntity> viewers = new ArrayList<>(this.getChest().getViewers());
-
-                for(HumanEntity entity : viewers){
-                    entity.closeInventory();
-                }
-
-                Inventory inventory = Bukkit.createInventory(new FChestHolder(), slots,
-                        TextUtil.parseColor(FactionsPlugin.getInstance().conf().upgrades().chest().getChestName()));
-
-                for(int z = 0; z < stacks.length; z++){
-                    inventory.setItem(z, stacks[z]);
-                }
-
-                this.inventory = inventory;
-
-                this.items = ItemBase64.itemStackArrayToBase64(this.inventory.getContents());
-                return;
-        }
-    }
 
     public int getUpgrade(FactionUpgrade type){
         return upgrades.getOrDefault(type, 0);
@@ -1326,137 +1299,39 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
         int maxLevel;
         int currentLevel;
         long money;
-        int cost;
-        switch(type){
-            case TNT:
-                maxLevel = FactionsPlugin.getInstance().conf().upgrades().tnt().getLevels().size();
+        double cost;
+        maxLevel = type.getUpgrade().getMaxUpgradeLevel();
 
-                currentLevel = getUpgrade(type);
+        currentLevel = getUpgrade(type);
 
-                if(currentLevel + 1 > maxLevel){
-                    user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
-                    return false;
-                }
-
-                money = (long) Econ.getBalance(user);
-
-                cost = FactionsPlugin.getInstance().conf().upgrades().tnt().getCost(currentLevel + 1);
-
-                if(cost > money){
-                    user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
-                    return false;
-                }
-
-                Econ.withdraw(user, cost);
-
-                user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "TNT", currentLevel + 1);
-
-                this.upgrades.put(type, currentLevel + 1);
-                return true;
-            case CHEST:
-                maxLevel = FactionsPlugin.getInstance().conf().upgrades().chest().getLevels().size();
-
-                currentLevel = getUpgrade(type);
-
-                if(currentLevel + 1 > maxLevel){
-                    user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
-                    return false;
-                }
-
-                money = (long) Econ.getBalance(user);
-
-                cost = FactionsPlugin.getInstance().conf().upgrades().chest().getCost(currentLevel + 1);
-
-                if(cost > money){
-                    user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
-                    return false;
-                }
-
-                Econ.withdraw(user, cost);
-
-                user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "Chest", currentLevel + 1);
-
-                this.upgrades.put(type, currentLevel + 1);
-                return true;
-
-            case WARP_AMOUNT:
-                maxLevel = FactionsPlugin.getInstance().conf().upgrades().warpAmount().getLevels().size();
-
-                currentLevel = getUpgrade(type);
-
-                if(currentLevel + 1 > maxLevel){
-                    user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
-                    return false;
-                }
-
-                money = (long) Econ.getBalance(user);
-
-                cost = FactionsPlugin.getInstance().conf().upgrades().warpAmount().getCost(currentLevel + 1);
-
-                if(cost > money){
-                    user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
-                    return false;
-                }
-
-                Econ.withdraw(user, cost);
-
-                user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "Warp Amount", currentLevel + 1);
-
-                this.upgrades.put(type, currentLevel + 1);
-                return true;
-/*            case SPAWNER_BOOST:
-                maxLevel = FactionsPlugin.getInstance().conf().upgrades().spawnerBoost().getLevels().size();
-
-                currentLevel = getUpgrade(type);
-
-                if(currentLevel + 1 > maxLevel){
-                    user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
-                    return false;
-                }
-
-                money = (long) Econ.getBalance(user);
-
-                cost = FactionsPlugin.getInstance().conf().upgrades().spawnerBoost().getCost(currentLevel + 1);
-
-                if(cost > money){
-                    user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
-                    return false;
-                }
-
-                Econ.withdraw(user, cost);
-
-                user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "Spawner Boost", currentLevel + 1);
-
-                this.upgrades.put(type, currentLevel + 1);
-                return true;
-            case CROP_BOOST:
-                maxLevel = FactionsPlugin.getInstance().conf().upgrades().warpAmount().getLevels().size();
-
-                currentLevel = getUpgrade(type);
-
-                if(currentLevel + 1 > maxLevel){
-                    user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
-                    return false;
-                }
-
-                money = (long) Econ.getBalance(user);
-
-                cost = FactionsPlugin.getInstance().conf().upgrades().warpAmount().getCost(currentLevel + 1);
-
-                if(cost > money){
-                    user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
-                    return false;
-                }
-
-                Econ.withdraw(user, cost);
-
-                user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "Crop Boost", currentLevel + 1);
-
-                this.upgrades.put(type, currentLevel + 1);
-                return true;*/
+        if (currentLevel + 1 > maxLevel) {
+            user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
+            return false;
         }
-        return false;
+
+        money = (long) Econ.getBalance(user);
+
+        cost = type.getUpgrade().getMoneyCost(currentLevel + 1);
+
+        if (cost > money) {
+            user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
+            return false;
+        }
+
+        Econ.withdraw(user, cost);
+
+        user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "TNT", currentLevel + 1);
+
+        this.upgrades.put(type, currentLevel + 1);
+        return true;
     }
+
+
+
+    public boolean canAccessHeroic(FactionUpgrade upgrade) {
+        return upgrade.getUpgrade() instanceof HeroicUpgrade;
+    }
+
 
     // ----------------------------------------------//
     // Persistance and entity management

@@ -6,6 +6,7 @@ import com.massivecraft.factions.perms.PermissibleAction;
 import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.BanInfo;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.LazyLocation;
 import com.massivecraft.factions.util.StrikeInfo;
 import org.bukkit.Location;
@@ -82,7 +83,9 @@ public interface Faction extends EconomyParticipator {
 
     int getMaxTNT();
 
-    int getUpgrade(UpgradeType type);
+    int getUpgrade(FactionUpgrade type);
+
+    boolean canAccessHeroic(FactionUpgrade upgrade);
 
     void setOpen(boolean isOpen);
 

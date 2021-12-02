@@ -6,6 +6,7 @@ import com.massivecraft.factions.config.annotation.WipeOnReload;
 import com.massivecraft.factions.gui.SimpleItem;
 import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.MiscUtil;
 import com.massivecraft.factions.util.TextUtil;
 import com.massivecraft.factions.util.material.MaterialDb;
@@ -2727,7 +2728,6 @@ public class MainConfig {
     private Corner corner = new Corner();
     private Commands commands = new Commands();
     private Factions factions = new Factions();
-    private Upgrades upgrades = new Upgrades();
     @Comment("What should be logged?")
     private Logging logging = new Logging();
     @Comment("Controls certain exploit preventions")
@@ -2796,10 +2796,6 @@ public class MainConfig {
 
     public Logging logging() {
         return logging;
-    }
-
-    public Upgrades upgrades(){
-        return upgrades;
     }
 
     public Exploits exploits() {

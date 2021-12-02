@@ -10,7 +10,6 @@ package com.massivecraft.factions.upgrade.upgrades.heroic;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.upgrade.HeroicUpgrade;
 
-
 import javax.annotation.Nullable;
 import java.util.List;
 

@@ -102,6 +102,8 @@ public class SimpleItem {
         this.name = name;
     }
 
+    public void setData(Short data) { this.data = data; }
+
     public List<String> getLore() {
         return lore;
     }
