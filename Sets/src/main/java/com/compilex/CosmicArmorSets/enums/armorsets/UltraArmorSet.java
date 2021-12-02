@@ -152,7 +152,7 @@ public class UltraArmorSet
         }
         if (Math.random() <= 0.04 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage()*1.4);
+            event.setDamage(event.getDamage()*1.3);
 
         }
         this.modifyDamage(damager, event, 15.0, applied);
@@ -168,9 +168,11 @@ public class UltraArmorSet
     }
 
     public void activateUltraAbility(Player player, final Player target) {
-        if(WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()).equals(WeaponBonusType.DEMON) && Math.random() < 0.6) {
-            target.sendMessage(CC.RedB + " ** " + CC.GrayB + "ULTRA STRIKE BLOCKED (" + CC.DarkRedB + "DEMON WEAPON BONUS" + CC.GrayB + ")" + CC.RedB + " ** ");
-            return;
+        if (WeaponBonusUtils.hasWeaponBonus(target.getItemInHand())) {
+            if (WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() < 0.6) {
+                target.sendMessage(CC.RedB + " ** " + CC.GrayB + "ULTRA STRIKE BLOCKED (" + CC.DarkRedB + "DEMON WEAPON BONUS" + CC.GrayB + ")" + CC.RedB + " ** ");
+                return;
+            }
         }
         target.sendMessage(CC.translate("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*"));
         player.sendMessage(CC.translate("&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));

@@ -64,7 +64,7 @@ public class HeroicDeathbringer extends CustomEnchantment {
 
             if (doubleDamage.contains(damage)) {
                 double random = Math.random();
-                double chance = 0.025D;
+                double chance = 0.005D;
                 if (random < chance) {
                     e.getEntity().sendMessage(CC.LightPurpleB + "** PLANETARY DEATHBRINGER " + CC.Gray + "[2x DMG] " + CC.LightPurpleB + "**");
                     if(e.getFinalDamage() > 35) {
@@ -72,7 +72,7 @@ public class HeroicDeathbringer extends CustomEnchantment {
                         GeneralCooldown.enterCooldown((Player) damage);
                         return;
                     }
-                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
+                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
                     GeneralCooldown.enterCooldown((Player) damage);
 
                 }

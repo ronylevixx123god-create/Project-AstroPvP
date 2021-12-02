@@ -184,8 +184,11 @@ public class ChampionArmorSet
         if (target.hasMetadata("banshee_scrolls") || target.hasMetadata("bloodHoundNoBless") || player.hasMetadata("banshee_active")) {
             return;
         }
-        if(WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()).equals(WeaponBonusType.DEMON) && Math.random() > 0.35) {
-            target.sendMessage(CC.RedB + " ** " + CC.GoldB + "CHAMPIONS WRATH BLOCKED (" + CC.RedB + "DEMON WEAPON BONUS" + CC.RedB + ") ** ");
+
+        if (WeaponBonusUtils.hasWeaponBonus(target.getItemInHand())) {
+            if (WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() > 0.35) {
+                target.sendMessage(CC.RedB + " ** " + CC.GoldB + "CHAMPIONS WRATH BLOCKED (" + CC.RedB + "DEMON WEAPON BONUS" + CC.RedB + ") ** ");
+            }
         }
 
 

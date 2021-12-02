@@ -151,6 +151,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.sendMessage(CC.translate("&e&l* WORLD DESTROYER &7[&f" + target.getName() + "&7] &e&l*")
         );
         target.sendMessage(CC.translate("&c&l* WORLD DESTROYER &7[&f" + player.getName() + "&7] &c&l*"));
+        DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
         CageCooldownUtils.enterCageCooldown(target);
 
         petItem.setLastUsed(System.currentTimeMillis());
@@ -160,7 +161,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
                 PermissionsAPI.getPermissionUser(finalTarget.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                DamageIndicatorUtils.sendDamageIndicator(finalTarget, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
 
             }, (long) (this.cageDuration + this.cageDuration) * 20L);
         } else {
@@ -259,8 +259,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     cancel();
                 }
                 int dmg = 2;
-                affected.damage(0.0D);
-                affected.setHealth(affected.getHealth() - 2.5D);
+                if (WorldGuardUtils.isPvPEnabled(affected.getLocation())) {
+                    affected.damage(0.0D);
+                    affected.setHealth(affected.getHealth() - 2.5D);
+                }
                 if (affected.getHealth() <= 0.0D || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     cancel();
