@@ -1,20 +1,13 @@
 package com.massivecraft.factions.gui;
 
 import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.data.MemoryFaction;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
-import com.massivecraft.factions.upgrade.FactionUpgradeInfo;
-import com.massivecraft.factions.upgrade.Upgrade;
-import com.massivecraft.factions.upgrade.UpgradeManager;
 import com.massivecraft.factions.util.TextUtil;
 import com.massivecraft.factions.util.material.MaterialDb;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
 
-import java.text.NumberFormat;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class UpgradeGUI extends GUI<FactionUpgrade>{
@@ -22,12 +15,11 @@ public class UpgradeGUI extends GUI<FactionUpgrade>{
 
 
     public UpgradeGUI(FPlayer user) {
-        super(user, 9);
+        super(user, 6);
+        items = new HashMap<>();
 
-        UpgradeManager manager = FactionsPlugin.getInstance().getUpgradeManager();
-        FactionUpgradeInfo upgradeInfo = manager.getFactionUpgradeInfo(this.user.getFaction());
         for(FactionUpgrade upgrade : FactionUpgrade.values()) {
-            SimpleItem item = upgrade.createUpgradeItem(this.user.getFactionId(), upgradeInfo);
+            SimpleItem item = upgrade.createUpgradeItem(this.user.getFaction());
             items.put(upgrade, item);
         }
         build();
@@ -35,7 +27,7 @@ public class UpgradeGUI extends GUI<FactionUpgrade>{
 
     @Override
     protected String getName() {
-        return TextUtil.parseColor("Faction Upgrades");
+        return "Faction Upgrades";
     }
 
     @Override
@@ -52,8 +44,6 @@ public class UpgradeGUI extends GUI<FactionUpgrade>{
             return;
         }
         if (((MemoryFaction) user.getFaction()).doUpgrade(action, user)) {
-            ((MemoryFaction) user.getFaction()).commitUpgrade(action);
-
             user.getPlayer().closeInventory();
         }
     }
@@ -62,8 +52,8 @@ public class UpgradeGUI extends GUI<FactionUpgrade>{
     protected Map<Integer, FactionUpgrade> createSlotMap() {
         Map<Integer, FactionUpgrade> map = new HashMap<>();
         int slot = 0;
-        for(Map.Entry<FactionUpgrade, SimpleItem> entry : this.items.entrySet()) {
-            boolean heroic = entry.getKey().isHeroic();
+        for(FactionUpgrade upgrade : FactionUpgrade.values()) {
+            boolean heroic = upgrade.isHeroic();
             if (heroic && slot < 29)
                 slot = 29;
             if (slot == 9)
@@ -71,7 +61,7 @@ public class UpgradeGUI extends GUI<FactionUpgrade>{
             if (slot == 34)
                 slot = 38;
             int n = slot++;
-            map.put(n, entry.getKey());
+            map.put(n, upgrade);
         }
         return map;
     }
