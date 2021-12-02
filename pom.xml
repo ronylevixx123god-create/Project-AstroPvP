@@ -64,6 +64,7 @@
         <module>Faction</module>
         <module>Factionss</module>
         <module>AstroEvents</module>
+        <module>AstroCollectors</module>
     </modules>
 
     <build>

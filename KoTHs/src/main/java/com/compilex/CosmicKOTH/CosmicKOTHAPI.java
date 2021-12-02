@@ -51,7 +51,7 @@ public class CosmicKOTHAPI {
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes((char)'&', (String)("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH " + CC.WhiteB + "WEAPON BONUS")));
         lore.add(CC.WhiteB + " * " + CC.White + ability);
-        lore.add(CC.GrayI + "(Requires all 4 koth armor me.astropvp.cratekeys.items)");
+        lore.add(CC.GrayI + "(Requires all 4 koth items)");
         lore.add("");
         lore.add(CC.AquaB + "(!) " + (Object)ChatColor.AQUA + "Claimed by " + CC.LightPurpleB + winner + (Object)ChatColor.AQUA + " on " + CC.LightPurpleU + KothItemUtils.format.format(new Date()));
         im.setLore(lore);

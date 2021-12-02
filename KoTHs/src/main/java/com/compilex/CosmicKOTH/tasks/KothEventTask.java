@@ -6,10 +6,7 @@ import com.compilex.CosmicKOTH.struct.KothWorldType;
 import com.compilex.CosmicKOTH.utils.*;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.JSONMessage;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -187,7 +184,13 @@ implements Runnable {
         this.capped = true;
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lTHE KOTH HAS BEEN CAPTURED BY: &d&n" + this.getNameOfFlagCapper() + "&r &e&l*&6&l*&c&l*"));
-        Bukkit.broadcastMessage(ChatColor.GRAY.toString() + "A " + ChatColor.UNDERLINE + "AstroPvP KOTH Lootbag" + ChatColor.GRAY + " has been added to " + player.getName() + "'s me.astropvp.cratekeys.inventory. Prevent them from escaping the /warp koth arena alive to steal the rewards!");
+        Bukkit.broadcastMessage(ChatColor.GRAY.toString() + "A " + ChatColor.UNDERLINE + "AstroPvP KOTH Lootbag" + ChatColor.GRAY + " has been added to " + player.getName() + "'s inventory. Prevent them from escaping the /warp koth arena alive to steal the rewards!");
+        Bukkit.broadcastMessage("");
+        CosmicKOTHPlugin.get_().setBuffFactionId(FactionUtils.getFaction((Player)player).getId());
+        Bukkit.broadcastMessage(CC.translate((String)"&fTheir faction will &a&lreceive the following buffs&f until the next &a&lKOTH&f:"));
+        Bukkit.broadcastMessage(CC.translate((String)"&f&l* &a+10% Outgoing Damage"));
+        Bukkit.broadcastMessage(CC.translate((String)"&f&l* &a+10% Crystal Apply Chance"));
+        Bukkit.broadcastMessage(CC.translate((String)"&f&l* &a+5% Chance to keep Slot-Bot tickets on roll"));
         Bukkit.broadcastMessage("");
         this.logWinner(player);
         this.playerCapped = player;
@@ -200,7 +203,7 @@ implements Runnable {
             player.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("KothBag").createClaimableItem(false));
         } else {
             this.kothBroadcast("");
-            this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + this.playerCapped.getName() + " did not have any me.astropvp.cratekeys.inventory space, so the Astro Koth Lootbag has been DROPPED!");
+            this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + this.playerCapped.getName() + " did not have any inventory space, so the Astro Koth Lootbag has been DROPPED!");
             this.kothBroadcast("");
             Item j = this.playerCapped.getWorld().dropItem(player.getLocation(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("KothBag").createClaimableItem(false));
             j.setMetadata("kothLootbag", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
@@ -270,14 +273,14 @@ implements Runnable {
             String faction;
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-            FPlayer fp = FPlayers.i.get(p);
+            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
             String facId = fp.getFaction().isNormal() ? "id=" + fp.getFactionId() : "";
             String string = faction = fp.getFaction().isNormal() ? fp.getFaction().getTag() : "N/A";
             if (!new File("plugins/CosmicKOTH/koth.log").exists()) {
                 new File("plugins/CosmicKOTH").mkdir();
                 new File("plugins/CosmicKOTH/koth.log").createNewFile();
             }
-            Files.write(Paths.get("plugins/CosmicKOTH/koth.log"), ("\n[" + dateFormat.format(date) + "] <" + faction + "> " + p.getName() + " (" + p.getUniqueId().toString() + ") at " + CosmicKOTHPlugin.get_().getKoth().getRuntime() + facId).getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get("plugins/CosmicKOTH/koth.log", new String[0]), ("\n[" + dateFormat.format(date) + "] <" + faction + "> " + p.getName() + " (" + p.getUniqueId().toString() + ") at " + CosmicKOTHPlugin.get_().getKoth().getRuntime() + facId).getBytes(), StandardOpenOption.APPEND);
         }
         catch (Exception e) {
             e.printStackTrace();

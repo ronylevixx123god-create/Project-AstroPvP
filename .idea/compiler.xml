@@ -12,6 +12,7 @@
         <module name="BlackAuctionHouse" />
         <module name="ItemSkins" />
         <module name="HotFix" />
+        <module name="AstroCollectors" />
         <module name="Enchantments" />
         <module name="Attributes" />
         <module name="Bosses" />

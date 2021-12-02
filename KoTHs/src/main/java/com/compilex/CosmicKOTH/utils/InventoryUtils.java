@@ -90,8 +90,14 @@ public class InventoryUtils {
             lore.add(CC.WhiteB + "Arena: " + CC.GreenB + "Mount Olympus");
         }
         lore.add("");
-        lore.add(CC.WhiteB + "Rewards:");
+        lore.add(CC.GreenB + "Winner Reward:");
         lore.add(CC.WhiteB + "* " + CC.Gray + "1x Koth Lootbag");
+        lore.add("");
+        lore.add(CC.translate("&a&lFaction Bonus:"));
+        lore.add(CC.translate("&f&l* &7+10% Outgoing Damage"));
+        lore.add(CC.translate("&f&l* &7+10% Crystal Apply Chance"));
+        lore.add(CC.translate("&f&l* &7+5% Chance to keep Slot-Bot tickets on roll"));
+
         meta.setLore((List)lore);
         item.setItemMeta(meta);
         return item;
