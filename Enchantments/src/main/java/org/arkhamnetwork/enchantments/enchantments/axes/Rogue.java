@@ -65,9 +65,8 @@ public class Rogue extends CustomEnchantment {
             double damage = e.getDamage();
             if (!(e.getDamager() instanceof Player)) return;
             if (((Player) e.getDamager()).getItemInHand() == null) return;
-            if (EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
-                double soulMasterLevel = EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
-                damage*=(((2 * soulMasterLevel)/100) + 1);
+            if (EnchantmentAPI.itemHasEnchantment(((Player)e.getDamager()).getItemInHand(),"Soul Master")) {
+                damage*=(((2 * 5)/100) + 1);
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {

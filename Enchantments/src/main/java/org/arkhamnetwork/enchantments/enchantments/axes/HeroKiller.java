@@ -50,9 +50,9 @@ public class HeroKiller extends CustomEnchantment {
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
-            if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
-                if (!isWearingHeroic((Player)playerHit))
-                    return;
+        if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
+            if (!isWearingHeroic((Player) playerHit))
+                return;
 
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 4);
@@ -64,26 +64,25 @@ public class HeroKiller extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
 
-                if (player == null || !(player instanceof Player) || playerHit == null || !(playerHit instanceof Player)) return;
+                if (player == null || !(player instanceof Player) || playerHit == null || !(playerHit instanceof Player))
+                    return;
 
                 if (((Player) player).getItemInHand() == null || ((Player) playerHit).getItemInHand() == null) return;
 
                 if (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()))) {
-                    if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.4))
-                    {
-                        increase*=1.2;
+                    if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.4)) {
+                        increase *= 1.2;
                     }
                 }
                 if (!(e.getDamager() instanceof Player)) return;
                 if (((Player) e.getDamager()).getItemInHand() == null) return;
-                if (EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
-                    double soulMasterLevel = EnchantmentAPI.getEnchantments(((Player)e.getDamager()).getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
-                    increase*=(((1.2 * soulMasterLevel)/100) + 1);
-                }
+                if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master"))
+                    increase *= (((1.2 * 5) / 100) + 1);
             }
-                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
         }
     }
+
 
     private boolean isWearingHeroic(final Player player) {
         for (final ItemStack armor : player.getInventory().getArmorContents()) {
