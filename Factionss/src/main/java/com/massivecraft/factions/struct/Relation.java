@@ -1,6 +1,7 @@
-package com.massivecraft.factions.perms;
+package com.massivecraft.factions.struct;
 
 import com.massivecraft.factions.FactionsPlugin;
+import com.massivecraft.factions.perms.Permissible;
 import com.massivecraft.factions.util.TL;
 import org.bukkit.ChatColor;
 

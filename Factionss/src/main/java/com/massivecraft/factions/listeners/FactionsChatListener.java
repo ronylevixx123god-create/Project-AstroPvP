@@ -5,7 +5,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.config.file.MainConfig;
-import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.ChatMode;
 import org.bukkit.ChatColor;

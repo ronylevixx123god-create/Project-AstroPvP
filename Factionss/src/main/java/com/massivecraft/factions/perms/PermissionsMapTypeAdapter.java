@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.massivecraft.factions.FactionsPlugin;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.util.TL;
 
 import java.lang.reflect.Type;

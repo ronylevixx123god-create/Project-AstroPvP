@@ -1,6 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.swords;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import org.bukkit.Bukkit;
@@ -22,19 +23,18 @@ public class DeathAndTaxesSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
             this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());
-        if(damaged instanceof Player && Math.random() >= 0.08 && !markList.containsKey(damaged)) {
+        if(damaged instanceof Player && Math.random() <= 0.08 && !markList.containsKey(damaged)) {
             damager.sendMessage(CC.GoldB + " ** MARKED " + damaged.getName() + " WITH DEATH AND TAXES **");
             damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES MARK " + CC.Gray + "[" + damager.getName() + "]" + CC.GoldB + " **");
             this.markList.put((Player) damaged, 0.0);
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
-                ((Player) damaged).damage(markList.get(damaged));
+                if(!WorldGuardUtils.isPvPEnabled(damaged.getLocation()))
+                    return;
+                ((Player) damaged).damage(markList.get(damaged)/4);
+                damager.sendMessage(CC.GoldB + " ** MARKED DEALT " + Math.round(markList.get(damaged)/4) + "HP **");
+                damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES DEALT " + CC.Gray + "[" + Math.round(markList.get(damaged)/4) + "]" + CC.GoldB + " **");
                 this.markList.remove(damaged);
-                damager.sendMessage(CC.GoldB + " ** MARKED DEALT " + Math.round(markList.get(damaged)) + " **");
-                damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES DEALT " + CC.Gray + "[" + Math.round(markList.get(damaged)) + "]" + CC.GoldB + " **");
             }, 120L);
-        }
-        if(damaged instanceof Player && markList.containsKey(damaged)) {
-            markList.put((Player) damaged, markList.get(damaged) + event.getDamage());
         }
     }
 }

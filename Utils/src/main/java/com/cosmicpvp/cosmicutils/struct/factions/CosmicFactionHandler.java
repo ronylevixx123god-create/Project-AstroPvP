@@ -22,12 +22,6 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.struct.Relation;
-import com.massivecraft.factions.zcore.persist.Entity;
-import com.massivecraft.factions.zcore.persist.PlayerEntity;
-import com.massivecraft.factions.zcore.persist.PlayerEntityCollection;
 import lombok.SneakyThrows;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -64,7 +58,7 @@ public class CosmicFactionHandler
 
     @Override
     public boolean isInOwnFaction(Player player) {
-        Faction at = Board.getFactionAt((FLocation) new FLocation(player.getLocation()));
+        Faction at = Board.getInstance().getFactionAt((FLocation) new FLocation(player.getLocation()));
         FPlayer fpla = this.getFPlayer(player);
         return at != null && fpla != null && at.getFPlayers().contains((Object) fpla);
     }
@@ -93,7 +87,7 @@ public class CosmicFactionHandler
         if (fPlayer == null || otherfPlayer == null) {
             return Relation.NEUTRAL;
         }
-        return fPlayer.getRelationTo((RelationParticipator) otherfPlayer);
+        return fPlayer.getRelationTo(otherfPlayer);
     }
 
     @Override
@@ -128,7 +122,7 @@ public class CosmicFactionHandler
 
     @Override
     public String getFPlayerName(FPlayer fplayer) {
-        return fplayer.getNameAsync();
+        return fplayer.getName();
     }
 
     @Override
@@ -138,12 +132,12 @@ public class CosmicFactionHandler
 
     @Override
     public Collection<FPlayer> getAllFPlayers(boolean online) {
-        return online ? this.fPlayers.getOnline() : this.fPlayers.get();
+        return online ? this.fPlayers.getOnlinePlayers() : this.fPlayers.getAllFPlayers();
     }
 
     @Override
     public Collection<Faction> getAllFactions() {
-        return this.instance.get();
+        return this.instance.getAllFactions();
     }
 
     @Override
@@ -159,12 +153,12 @@ public class CosmicFactionHandler
 
     @Override
     public Faction getFactionAt(Location location) {
-        return Board.getFactionAt((FLocation) new FLocation(location));
+        return Board.getInstance().getFactionAt((FLocation) new FLocation(location));
     }
 
     @Override
     public Faction getFactionAt(FLocation location) {
-        return Board.getFactionAt((FLocation) location);
+        return Board.getInstance().getFactionAt((FLocation) location);
     }
 
     @Override
@@ -189,7 +183,7 @@ public class CosmicFactionHandler
 
     @Override
     public FPlayer getFPlayerByName(String name) {
-        return this.fPlayers.get(name);
+        return this.fPlayers.getById(name);
     }
 
     @Override
@@ -223,7 +217,7 @@ public class CosmicFactionHandler
             if (focusing == null) {
                 return false;
             }
-            if (focusing.getNameAsync().equals(name)) {
+            if (focusing.getName().equals(name)) {
                 return true;
             }
         } catch (Exception e) {
@@ -246,7 +240,7 @@ public class CosmicFactionHandler
 
     @Override
     public boolean attemptClaim(FPlayer fplayer, Faction faction, Location location, boolean notifyFailure) {
-        return fplayer.attemptClaimAsync(faction, location, notifyFailure);
+        return fplayer.attemptClaim(faction, location, notifyFailure);
     }
 
     @Override
@@ -293,7 +287,7 @@ public class CosmicFactionHandler
 
     @Override
     public Faction getFactionById(String id) {
-        return this.instance.get(id);
+        return this.instance.getFactionById(id);
     }
 
     @Override

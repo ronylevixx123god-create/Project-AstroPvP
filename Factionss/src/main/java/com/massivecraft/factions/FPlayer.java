@@ -1,7 +1,7 @@
 package com.massivecraft.factions;
 
 import com.massivecraft.factions.iface.EconomyParticipator;
-import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.ChatMode;
 import com.massivecraft.factions.util.SpiralTask;
@@ -12,6 +12,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.UUID;
 
 
 /**
@@ -26,6 +27,8 @@ import java.util.List;
  */
 
 public interface FPlayer extends EconomyParticipator {
+    UUID getUUID();
+
     void login();
 
     void logout();

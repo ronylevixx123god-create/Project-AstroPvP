@@ -16,12 +16,10 @@ import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.integration.LWC;
 import com.massivecraft.factions.landraidcontrol.DTRControl;
 import com.massivecraft.factions.landraidcontrol.LandRaidControl;
-import com.massivecraft.factions.perms.Permissible;
-import com.massivecraft.factions.perms.PermissibleAction;
-import com.massivecraft.factions.perms.Relation;
-import com.massivecraft.factions.perms.Role;
+import com.massivecraft.factions.perms.*;
 import com.massivecraft.factions.struct.BanInfo;
 import com.massivecraft.factions.struct.Permission;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.upgrade.HeroicUpgrade;
 import com.massivecraft.factions.util.*;
@@ -29,14 +27,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
@@ -78,8 +73,15 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     protected int tntBank = 0;
     protected String altJoinString = "-1";
     protected transient OfflinePlayer offlinePlayer;
-    protected Map<FLocation, Set<String>> chunkClaims = new ConcurrentHashMap<>();
-
+    protected ConcurrentHashMap<FLocation, Set<String>> chunkClaims = new ConcurrentHashMap<>();
+    protected ConcurrentHashMap<String, Location> allyWarps = new ConcurrentHashMap<>();
+    protected ConcurrentHashMap<String, Location> allAllyWarps = new ConcurrentHashMap<>();
+    protected ConcurrentHashMap<FLocation, Map<UUID, Set<FactionPermission>>> playerPermissionMap = new ConcurrentHashMap<>();
+    protected ConcurrentHashMap<FLocation, Map<String, Set<FactionPermission>>> factionChunkPermissionMap = new ConcurrentHashMap<>();
+    protected ConcurrentHashMap<FLocation, Set<String>> factionEdittedChunkPermissions = new ConcurrentHashMap<>();
+    protected ConcurrentHashMap<FLocation, Set<UUID>> playerEdittedChunkPermissions = new ConcurrentHashMap<>();
+    protected Map<String, Set<FactionPermission>> factionDefaultPermissions = new HashMap<>();
+    protected Map<UUID, Set<FactionPermission>> defaultPlayerPermissions = new HashMap<>();
     protected Map<FactionUpgrade, Integer> upgrades = new HashMap<>();
 
     public HashMap<String, List<String>> getAnnouncements() {
@@ -107,6 +109,8 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
         fPlayer.msg(TL.FACTIONS_ANNOUNCEMENT_BOTTOM);
         announcements.remove(fPlayer.getId());
     }
+
+
 
     public void setItems() {
         ItemStack[] stacks = this.getChest().getContents();
@@ -1349,101 +1353,96 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     }
 
     public boolean addFactionAccess(FLocation l, Faction f) {
-        String facString;
         Set<String> access = new HashSet<>();
-        if (this.chunkClaims.containsKey(l)) {
+        if (this.chunkClaims.containsKey(l))
             access = this.chunkClaims.get(l);
-        }
-        if (access.contains(facString = this.getFactionAccessString(f.getId()))) {
+        String facString;
+        if (access.contains(facString = getFactionAccessString(f.getId())))
             return false;
-        }
         access.add(facString);
         this.chunkClaims.put(l, access);
         return true;
     }
 
     public boolean addPlayerAccess(FLocation l, FPlayer f) {
-        String facString;
         Set<String> access = new HashSet<>();
-        if (this.chunkClaims.containsKey(l)) {
+        if (this.chunkClaims.containsKey(l))
             access = this.chunkClaims.get(l);
-        }
-        if (access.contains(facString = this.getPlayerAccessString(f.getId()))) {
+        String facString;
+        if (access.contains(facString = getPlayerAccessString(f.getId())))
             return false;
-        }
         access.add(facString);
         this.chunkClaims.put(l, access);
         return true;
     }
 
     public List<String> getPlayerAccess(FLocation fl) {
-        ArrayList retr = Lists.newArrayList();
-        if (!this.chunkClaims.containsKey(fl)) {
+        ArrayList<String> retr = Lists.newArrayList();
+        if (!this.chunkClaims.containsKey(fl))
             return retr;
-        }
         for (String s : this.chunkClaims.get(fl)) {
-            FPlayer fp;
-            if (!s.startsWith("player:") || (fp = FPlayers.getInstance().getById(s.split("player:")[1])) == null) continue;
+            FPlayer fp = FPlayers.getInstance().getById((s.split("player:")[1]));
+            if (!s.startsWith("player:") || (fp == null))
+                continue;
             retr.add(fp.getName());
         }
         return retr;
     }
 
     public List<String> getFactionAccess(FLocation fl) {
-        ArrayList retr = Lists.newArrayList();
-        if (!this.chunkClaims.containsKey(fl)) {
+        ArrayList<String> retr = Lists.newArrayList();
+        if (!this.chunkClaims.containsKey(fl))
             return retr;
-        }
         for (String s : this.chunkClaims.get(fl)) {
-            Faction f;
-            if (!s.startsWith("faction:") || (f = Factions.getInstance().getByTag(s.split("faction:")[1])) == null) continue;
+            Faction f = Factions.getInstance().getByTag(s.split("faction:")[1]);
+            if (!s.startsWith("faction:") || (f == null))
+                continue;
             retr.add(f.getTag());
         }
         return retr;
     }
 
     public Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, Set<String> perms) {
-        LinkedHashMap<Faction, Set<FPlayer>> playersMap = new LinkedHashMap<Faction, Set<FPlayer>>();
-        if (perms == null) {
+        LinkedHashMap<Faction, Set<FPlayer>> playersMap = new LinkedHashMap<>();
+        if (perms == null)
             return playersMap;
-        }
         perms.forEach(perm -> {
-            Faction fac;
-            FPlayer fplayer;
             String[] split = perm.split(":");
             String type = split[0];
             String name = split[1];
             if (type.equals("faction")) {
                 Faction faction = Factions.getInstance().getFactionById(name);
-                if (faction != null && !playersMap.containsKey(faction)) {
-                    playersMap.put(faction, new HashSet<>());
+                if (faction != null && !playersMap.containsKey(faction))
+                    playersMap.put(faction, new HashSet());
+            } else {
+                Faction fac;
+                FPlayer fplayer = FPlayers.getInstance().getById(name);
+                if (type.equals("player") && (fplayer != null && (fac = fplayer.getFaction()) != null && fac.isNormal() && fac.getRelationTo((RelationParticipator)owning) != Relation.ENEMY)) {
+                    Set<FPlayer> players = playersMap.computeIfAbsent(fac, e -> new HashSet<>());
+                    players.add(fplayer);
                 }
-            } else if (type.equals("player") && (fplayer = FPlayers.getInstance().getByPlayer(Bukkit.getPlayer(name))) != null && (fac = fplayer.getFaction()) != null && fac.isNormal() && fac.getRelationTo(owning) != Relation.ENEMY) {
-                Set players = playersMap.computeIfAbsent(fac, e -> new HashSet<>());
-                players.add(fplayer);
             }
         });
         return playersMap;
     }
 
     public LinkedList<EconomyParticipator> getFactionWithPlayersWithAccessList(Faction owning, Set<String> perms) {
-        LinkedList<EconomyParticipator> players = new LinkedList<EconomyParticipator>();
-        if (perms == null) {
+        LinkedList<EconomyParticipator> players = new LinkedList<>();
+        if (perms == null)
             return players;
-        }
         perms.forEach(perm -> {
-            Faction fac;
             String[] split = perm.split(":");
             String type = split[0];
             String name = split[1];
-            FPlayer fplayer = FPlayers.getInstance().getById(name);
             if (type.equals("faction")) {
                 Faction faction = Factions.getInstance().getFactionById(name);
-                if (!(faction != null && faction.getRelationTo(owning) == Relation.ENEMY || players.contains(faction))) {
+                if ((faction == null || faction.getRelationTo((RelationParticipator)owning) != Relation.ENEMY) && !players.contains(faction))
                     players.add(faction);
-                }
-            } else if (type.equals("player") && fplayer != null && ((fac = fplayer.getFaction()) == null || fac.getRelationTo(owning) != Relation.ENEMY) && !players.contains(fplayer)) {
-                players.add(fplayer);
+            } else {
+                Faction fac;
+                FPlayer fplayer = FPlayers.getInstance().getById(name);
+                if (type.equals("player") && (fplayer!= null && ((fac = fplayer.getFaction()) == null || fac.getRelationTo((RelationParticipator)owning) != Relation.ENEMY) && !players.contains(fplayer)))
+                    players.add(fplayer);
             }
         });
         return players;
@@ -1451,8 +1450,27 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
 
     public Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, FLocation chunk) {
         Set<String> perms = this.chunkClaims.get(chunk);
-        return this.getFactionWithPlayersWithAccess(owning, perms);
+        return getFactionWithPlayersWithAccess(owning, perms);
     }
+
+    public void addAllAllyWarp(String name, Location l) {
+        this.allAllyWarps.put(name, l);
+    }
+
+    public boolean hasAllWarp() {
+        return (this.allAllyWarps.size() > 0);
+    }
+
+    public boolean hasAllyWarp(Faction f) {
+        return this.allyWarps.contains(f.getId());
+    }
+
+    public Location getAllyWarp(Faction f) {
+        if (this.allyWarps.containsKey(f.getId()))
+            return this.allyWarps.get(f.getId());
+        return null;
+    }
+
     public boolean removeFactionAccess(FLocation loc, Faction f) {
         if (!isLocationTracked(loc))
             return false;
@@ -1462,7 +1480,6 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
             access.remove(str);
             if (access.isEmpty()) {
                 this.chunkClaims.remove(loc);
-                this.removeLocation(this, loc);
             } else {
                 this.chunkClaims.put(loc, access);
             }
@@ -1480,7 +1497,6 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
             access.remove(str);
             if (access.isEmpty()) {
                 this.chunkClaims.remove(loc);
-                FactionWrappers.removeLocation(this, loc);
             } else {
                 this.chunkClaims.put(loc, access);
             }
@@ -1520,14 +1536,14 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
         if (!isLocationTracked(l))
             return true;
         Faction at = Board.getInstance().getFactionAt(l);
-        if (at != getFaction())
+        if (at != fp.getFaction())
             return false;
         for (String access : this.chunkClaims.get(l)) {
             if (access.startsWith("player:") ? access.split(":")[1].equals(fp.getId()) : (access.startsWith("faction:") && checkFactions && access.split(":")[1].equals(fp.getFaction().getId()) && fp.getRole().isAtLeast(Role.NORMAL)))
                 return true;
         }
-        if (fp.getFaction() == getFaction())
-            return (!Conf.ownedAreasEnabled || (!Conf.ownedAreaDenyBuild && !Conf.ownedAreaPainBuild) || fp.getFaction().playerHasOwnershipRights(fp, l));
+        if (fp.getFaction() == at)
+            return (!fp.getFaction().playerHasOwnershipRights(fp, l));
         return false;
     }
 
@@ -1538,4 +1554,231 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     public String getPlayerAccessString(String id) {
         return "player:" + id;
     }
+
+    public void setChunkClaims(ConcurrentHashMap<FLocation, Set<String>> chunkClaims) {
+        this.chunkClaims = chunkClaims;
+    }
+
+    public ConcurrentHashMap<String, Location> getAllyWarps() {
+        return this.allyWarps;
+    }
+
+    public void setAllyWarps(ConcurrentHashMap<String, Location> allyWarps) {
+        this.allyWarps = allyWarps;
+    }
+
+    public ConcurrentHashMap<String, Location> getAllAllyWarps() {
+        return this.allAllyWarps;
+    }
+
+    public void setAllAllyWarps(ConcurrentHashMap<String, Location> allAllyWarps) {
+        this.allAllyWarps = allAllyWarps;
+    }
+
+    public void storeChunkEditted(FLocation location, Faction fac) {
+        Set<String> str = this.factionEdittedChunkPermissions.computeIfAbsent(location, map -> new HashSet());
+        str.add(fac.getId());
+    }
+
+    public void storeChunkEditted(FLocation location, FPlayer player) {
+        Set<UUID> str = this.playerEdittedChunkPermissions.computeIfAbsent(location, map -> new HashSet());
+        str.add(player.getUUID());
+    }
+
+    public Set<FactionPermission> getPermissions(Faction owner, FLocation location, Faction backup, FPlayer fplayer, String interactType) {
+        UUID uuid = fplayer.getUUID();
+        Map<UUID, Set<FactionPermission>> perms = this.playerPermissionMap.get(location);
+        boolean enemied = (owner.getRelationTo((RelationParticipator)fplayer) == Relation.ENEMY), bl = enemied;
+        if (enemied)
+            return getAllowedDefaultPermissions();
+        if (perms != null && perms.size() > 0) {
+            Set<FactionPermission> found = perms.get(uuid);
+            if (found != null)
+                return found;
+            if (owner.getRelationTo((RelationParticipator)fplayer) == Relation.MEMBER && fplayer.getRole().isAtLeast(Role.NORMAL))
+                return getFullAccessPermissions();
+        } else if ((perms == null || perms.size() == 0) && owner.getRelationTo((RelationParticipator)fplayer) == Relation.MEMBER && fplayer.getRole().isAtLeast(Role.NORMAL)) {
+            return getFullAccessPermissions();
+        }
+        Map<String, Set<FactionPermission>> factionPermissions = this.factionChunkPermissionMap.get(location);
+        if (factionPermissions != null && factionPermissions.size() > 0) {
+            Set<FactionPermission> factionPerms = factionPermissions.get(backup.getId());
+            if (fplayer.getRole() == Role.RECRUIT && fplayer.getFaction().isNormal())
+                return new HashSet<>();
+            if (factionPerms != null)
+                return factionPerms;
+        }
+        if (owner.getRelationTo((RelationParticipator)fplayer) == Relation.MEMBER && fplayer.getRole() == Role.RECRUIT)
+            return new HashSet<>();
+        HashSet<FactionPermission> allowed = new HashSet<>();
+        if (interactType != null && interactType.equals("interact"))
+            return getAllowedDefaultPermissions();
+        return allowed;
+    }
+
+    public Set<FactionPermission> getAllowedDefaultPermissions() {
+        HashSet<FactionPermission> allowed = new HashSet<>();
+        allowed.add(FactionPermission.CREEPER);
+        allowed.add(FactionPermission.DISPENSE);
+        allowed.add(FactionPermission.DROPPER);
+        allowed.add(FactionPermission.HOPPER);
+        return allowed;
+    }
+
+    public void updateClaimsWithDefaultPermissions(Faction faction) {
+        Set<FactionPermission> newPermissions = this.factionDefaultPermissions.get(faction.getId());
+        this.factionChunkPermissionMap.forEach((loc, map) -> {
+            if (map.containsKey(faction.getId())) {
+                Set<String> editted = this.factionEdittedChunkPermissions.get(loc);
+                if (editted != null && editted.contains(faction.getId()))
+                    return;
+                map.put(faction.getId(), new HashSet(newPermissions));
+            }
+        });
+    }
+
+    public void updateClaimsWithDefaultPermissions(FPlayer fplayer) {
+        UUID uuid = fplayer.getUUID();
+        Set<FactionPermission> newPermissions = this.defaultPlayerPermissions.get(uuid);
+        this.playerPermissionMap.forEach((loc, map) -> {
+            if (map.containsKey(uuid)) {
+                Set<UUID> editted = this.playerEdittedChunkPermissions.get(loc);
+                if (editted != null && editted.contains(uuid))
+                    return;
+                map.put(uuid, new HashSet(newPermissions));
+            }
+        });
+    }
+
+    public boolean hasChunkSpecificPerms(FLocation location) {
+        return (this.playerPermissionMap.containsKey(location) || this.factionChunkPermissionMap.containsKey(location));
+    }
+
+    public boolean isDefaultPermission(FLocation location, Faction fac) {
+        Set<String> editted = this.factionEdittedChunkPermissions.get(location);
+        return (editted == null || !editted.contains(fac.getId()));
+    }
+
+    public boolean isDefaultPermission(FLocation location, FPlayer fPlayer) {
+        Set<UUID> editted = this.playerEdittedChunkPermissions.get(location);
+        return (editted == null || !editted.contains(fPlayer.getUUID()));
+    }
+
+    public Set<FactionPermission> getFactionPermissions() {
+        HashSet<FactionPermission> set = new HashSet<>();
+        set.add(FactionPermission.FULL);
+        return set;
+    }
+
+    public void cleanupPermissions(FLocation location) {
+        this.factionChunkPermissionMap.remove(location);
+        this.playerPermissionMap.remove(location);
+        this.factionEdittedChunkPermissions.remove(location);
+        this.playerEdittedChunkPermissions.remove(location);
+    }
+
+    public void removePermissions(FLocation location, FPlayer player) {
+        Map<UUID, Set<FactionPermission>> permissions = this.playerPermissionMap.get(location);
+        if (permissions != null)
+            permissions.remove(player.getUUID());
+        Set<UUID> modified;
+        if ((modified = this.playerEdittedChunkPermissions.get(location)) != null)
+            modified.remove(player.getUUID());
+    }
+
+    public void removePermissions(FLocation location, Faction fac) {
+        Map<String, Set<FactionPermission>> permissions = this.factionChunkPermissionMap.get(location);
+        if (permissions != null)
+            permissions.remove(fac.getId());
+        Set<String> modified;
+        if ((modified = this.factionEdittedChunkPermissions.get(location)) != null)
+            modified.remove(fac.getId());
+    }
+
+    public void createDefaultPermissions(FLocation location, FPlayer player) {
+        Map permissions = this.playerPermissionMap.computeIfAbsent(location, e -> new HashMap<>());
+        Set<UUID> editted = this.playerEdittedChunkPermissions.get(location);
+        Set currentPerms = (Set)permissions.get(player.getUUID());
+        if (currentPerms != null && editted != null && editted.contains(player.getUUID())) {
+            Bukkit.getLogger().info("Current perms set for " + player.getName() + ", not overwritting");
+            return;
+        }
+        Set<FactionPermission> perms = this.defaultPlayerPermissions.get(player.getUUID());
+        if (perms == null)
+            perms = getDefaultPermissions();
+        permissions.put(player.getUUID(), new HashSet<>(perms));
+    }
+
+    public void createDefaultPermissions(FLocation location, Faction fac) {
+        Map permissions = this.factionChunkPermissionMap.computeIfAbsent(location, e -> new HashMap<>());
+        Set<String> edittedPermissions = this.factionEdittedChunkPermissions.get(location);
+        Set currentPerms = (Set)permissions.get(fac.getId());
+        if (currentPerms != null && edittedPermissions != null && edittedPermissions.contains(fac.getId()))
+            return;
+        Set<FactionPermission> perms = this.factionDefaultPermissions.get(fac.getId());
+        if (perms == null) {
+            perms = getDefaultPermissions();
+            this.factionDefaultPermissions.put(fac.getId(), perms);
+        }
+        permissions.put(fac.getId(), new HashSet<>(perms));
+    }
+
+    public Set<FactionPermission> getFullAccessPermissions() {
+        HashSet<FactionPermission> perms = new HashSet<>();
+        perms.add(FactionPermission.FULL);
+        return perms;
+    }
+
+    public Set<FactionPermission> getDefaultPermissions() {
+        HashSet<FactionPermission> perms = new HashSet<>();
+        perms.add(FactionPermission.OTHER);
+        perms.add(FactionPermission.CHEST);
+        return perms;
+    }
+
+    public void cleanupPermissions(UUID uuid) {
+        this.playerPermissionMap.forEach((loc, map) -> map.remove(uuid));
+        this.defaultPlayerPermissions.remove(uuid);
+        this.playerEdittedChunkPermissions.values().forEach(str -> str.remove(uuid));
+    }
+
+    public void cleanupPermissions(Faction faction) {
+        this.factionChunkPermissionMap.forEach((loc, map) -> map.remove(faction.getId()));
+        this.factionDefaultPermissions.remove(faction.getId());
+        this.factionEdittedChunkPermissions.values().forEach(str -> str.remove(faction.getId()));
+    }
+
+    public boolean hasPermission(Faction owning, FLocation location, Faction backup, FPlayer uuid, FactionPermission permission, String interactType) {
+        Set<FactionPermission> perms = getPermissions(owning, location, backup, uuid, interactType);
+        return (perms.contains(permission) || perms.contains(FactionPermission.FULL));
+    }
+
+    public ConcurrentHashMap<FLocation, Map<UUID, Set<FactionPermission>>> getPlayerPermissionMap() {
+        return this.playerPermissionMap;
+    }
+
+    public ConcurrentHashMap<FLocation, Map<String, Set<FactionPermission>>> getFactionChunkPermissionMap() {
+        return this.factionChunkPermissionMap;
+    }
+
+    public ConcurrentHashMap<FLocation, Set<String>> getFactionEdittedChunkPermissions() {
+        return this.factionEdittedChunkPermissions;
+    }
+
+    public ConcurrentHashMap<FLocation, Set<UUID>> getPlayerEdittedChunkPermissions() {
+        return this.playerEdittedChunkPermissions;
+    }
+
+    public Map<String, Set<FactionPermission>> getFactionDefaultPermissions() {
+        return this.factionDefaultPermissions;
+    }
+
+    public Map<UUID, Set<FactionPermission>> getDefaultPlayerPermissions() {
+        return this.defaultPlayerPermissions;
+    }
+
+    public Map<FLocation, Set<String>> getChunkClaims() {
+        return this.chunkClaims;
+    }
+
 }

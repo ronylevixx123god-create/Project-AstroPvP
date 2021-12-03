@@ -5,7 +5,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.FactionsPlugin;
-import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.struct.Relation;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
