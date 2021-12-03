@@ -132,15 +132,6 @@ public final class Collector {
         });
     }
 
-    public void increment(Material material) {
-        lootMap.compute(material,(key,value) -> {
-            if (value == null) {
-                return 1;
-            }
-            return value+1;
-        });
-    }
-
     public void resetAmount(Material material) {
         setAmount(material,0);
     }
@@ -151,14 +142,6 @@ public final class Collector {
             return null;
         }
         return new Location(world, x, y, z);
-    }
-
-    public Chunk getChunk() {
-        World world = reference.get();
-        if (world == null) {
-            return null;
-        }
-        return world.getChunkAt(chunkX,chunkZ);
     }
 
     public Map<Material,Integer> getLootMap() {
@@ -173,15 +156,20 @@ public final class Collector {
     public void sellTNT(Player player) {
         FPlayer fplayer = FPlayers.i.get(player);
         Faction faction = fplayer.getFaction();
+
         if (faction.isWilderness()) return;
+
         if (faction.tnt == Double.MAX_VALUE) {
             player.sendMessage(Utils.format("&cYour /f tnt bank is FULL. Please clear some space."));
             return;
         }
-        faction.tnt += this.getAmount(Material.TNT);
+
         Language.COLLECTOR_TNT.send(player, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(this.getAmount(Material.TNT))));
 
         addTNTSellLog(player, this.getAmount(Material.TNT));
+
+        faction.tnt += this.getAmount(Material.TNT);
+        this.resetAmount(Material.TNT);
 
         player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
     }
@@ -207,9 +195,9 @@ public final class Collector {
 
     public void sellOneMobDrop(Player player, Material material) {
         Economy eco = AstroCollectors.getEconomy();
-        double price = getMobDropWorth(material) * getAmount(material);
+        double price = getMobDropWorth(material);
         eco.depositPlayer(player, price);
-        Language.COLLECTOR_SELL.send(player, str -> str.replace("%price%", NumberFormat.getIntegerInstance().format(price)));
+        Language.COLLECTOR_SELL.send(player, str -> str.replace("%price%", Utils.formatNum(price)));
         resetAmount(material);
         player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
     }

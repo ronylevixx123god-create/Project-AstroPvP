@@ -63,8 +63,8 @@ public class DivineImmolationListener implements Listener {
                     damage = 4.5;
                 }
 
-                if (EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Soul Master"))) {
-                    double solitudeLevel = EnchantmentAPI.getEnchantments(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Soul Master"));
+                if (EnchantmentAPI.itemHasEnchantment(((Player) e.getEntity()).getKiller().getEquipment().getItemInHand(), "Soul Master")) {
+                    double solitudeLevel = 3;
                     damage = 1.25 * (((2 * solitudeLevel)/100) + 1);
                 }
 

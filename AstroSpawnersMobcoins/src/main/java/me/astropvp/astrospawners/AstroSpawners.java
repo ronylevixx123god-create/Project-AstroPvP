@@ -104,7 +104,7 @@ public class AstroSpawners extends JavaPlugin {
         getSpawnerManager().save();
         for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
-            AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
+            AstroSpawners.getInstance().getManager().savePlayerData(data);
         }
         MobStackerUtils.onDisable();
         EntityUtils.clearAllEntities();

@@ -66,9 +66,9 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                 //ADD LOOT TO THE CHEST
                 double chance = Math.random();
-                if (chance < 0.005) {
+                if (chance < 0.008) {
                     chest.getInventory().addItem(CoreSkulls.getStellarKey());
-                } else if (chance < 0.01) {
+                } else if (chance < 0.015) {
                     chest.getInventory().addItem(CoreSkulls.getNovaKey());
 
                 }
@@ -78,24 +78,37 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 if (!chest.getInventory().contains(Material.DOUBLE_PLANT)) {
                     chest.getInventory().addItem(MobCoinUtils.createCoinsNote("Mob Grinder", 1));
                 }
-                boolean xpBottleFound = false;
+                int expBottle = -1;
+                int mobcoin = -1;
                 boolean mobCoinsFound = false;
+                boolean expBottleFound = false;
+
+
                 for (int i = 0; i < chest.getInventory().getSize(); i++) {
-
-                    if (chest.getInventory().getItem(i) == null) {
+                    ItemStack itemStack = chest.getInventory().getItem(i);
+                    if (itemStack == null || (!MobCoinUtils.isCoinsNote(itemStack) && !ExpBottles.isXpBottle(itemStack))) {
                         continue;
-                    } else {
-                        if (ExpBottles.isXpBottle(chest.getInventory().getItem(i)) && !xpBottleFound) {
-                            xpBottleFound = true;
-
-                            chest.getInventory().setItem(i, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(i)) + amountOfExpPerBlaze, "Mob Grinder"));
-                        }
-                        if (MobCoinUtils.isCoinsNote(chest.getInventory().getItem(i)) && Math.random() < 0.2 && !mobCoinsFound) {
-                            mobCoinsFound = true;
-                            chest.getInventory().setItem(i, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(i)) + 1));
-                        }
                     }
+
+                    if (MobCoinUtils.isCoinsNote(itemStack) && !mobCoinsFound) {
+                        mobcoin = i;
+                        mobCoinsFound = true;
+                    } else if (ExpBottles.isXpBottle(itemStack) && !expBottleFound) {
+                        expBottle = i;
+                        expBottleFound = true;
+                    }
+
+                    if (expBottle == -1 || mobcoin == -1) continue;
+
+                    if (Math.random() < 0.2) {
+                        chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
+                    }
+
+                    chest.getInventory().setItem(expBottle, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(expBottle)) + amountOfExpPerBlaze, "Mob Grinder"));
+
+
                 }
+
             }
         }
     }

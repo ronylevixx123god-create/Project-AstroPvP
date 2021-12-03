@@ -41,10 +41,10 @@ public class Silence extends CustomEnchantment {
     @SneakyThrows
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         int solitudeLevel = 0;
-        if (EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Solitude")))
-            solitudeLevel = (Integer) EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Solitude"));
-        if (EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Perfect Solitude")))
-            solitudeLevel = (Integer) EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Perfect Solitude")) * 2;
+        if (EnchantmentAPI.itemHasEnchantment(user.getEquipment().getItemInHand(), "Solitude"))
+            solitudeLevel = 3;
+        if (EnchantmentAPI.itemHasEnchantment(user.getEquipment().getItemInHand(), "Perfect Solitude"));
+            solitudeLevel *=2;
         final double chance = (enchantLevel + solitudeLevel) * 0.015D;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player) target;
