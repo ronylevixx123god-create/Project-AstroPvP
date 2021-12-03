@@ -32,7 +32,7 @@ import java.util.Arrays;
 public class Silence extends CustomEnchantment {
     public Silence() {
         super("Silence", GeneralUtil.weapons, 2);
-        Bukkit.getServer().getPluginManager().registerEvents((Listener) new SilenceListener(), (Plugin) Enchantments.getInstance());
+        //Bukkit.getServer().getPluginManager().registerEvents((Listener) new SilenceListener(), (Plugin) Enchantments.getInstance());
         this.max = 4;
         this.base = 20.0;
         this.interval = 5.0;
@@ -45,7 +45,7 @@ public class Silence extends CustomEnchantment {
             solitudeLevel = (Integer) EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Solitude"));
         if (EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Perfect Solitude")))
             solitudeLevel = (Integer) EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Perfect Solitude")) * 2;
-        final double chance = (enchantLevel + solitudeLevel) * 0.03D;
+        final double chance = (enchantLevel + solitudeLevel) * 0.015D;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player) target;
             if (pTarget.hasMetadata("noDefenseProcs")) {
@@ -64,7 +64,7 @@ public class Silence extends CustomEnchantment {
             }
 
 
-            long durationTicks = (enchantLevel + solitudeLevel) * 20;
+            long durationTicks = (enchantLevel + solitudeLevel) * 20L;
 
             if (WeaponBonusUtils.hasWeaponBonus(((Player) user).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) user).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
                 durationTicks = (long) (durationTicks * 1.5);
@@ -81,7 +81,7 @@ public class Silence extends CustomEnchantment {
                 durationTicks = (long) (durationTicks * 0.75);
             }
             if((enchantLevel + solitudeLevel) * 20 * 0.6 < durationTicks && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.SUMMER_2021_HELMET)) {
-                durationTicks = (enchantLevel + solitudeLevel) * 20;
+                durationTicks = (enchantLevel + solitudeLevel) * 20L;
             }
 
             DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* SILENCE " + CC.Gray + "[" + durationTicks/20 + "s] " + CC.DarkPurpleB +  "*", "SILENCE");

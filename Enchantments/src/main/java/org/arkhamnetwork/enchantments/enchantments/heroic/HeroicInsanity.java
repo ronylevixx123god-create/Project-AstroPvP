@@ -32,8 +32,10 @@ public class HeroicInsanity extends CustomEnchantment {
             return;
         }
 
-        final double mod = 1.0 + 0.04 * level;
-        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
+        if (Math.random() < 0.1) {
+            final double mod = 1.0 + (0.04 * level);
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
+        }
         GeneralCooldown.enterCooldown((Player) player);
     }
 }

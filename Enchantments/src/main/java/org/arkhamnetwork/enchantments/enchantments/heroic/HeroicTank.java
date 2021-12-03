@@ -21,8 +21,8 @@ public class HeroicTank extends HeroicCustomEnchantment {
             final Player pAttacker = (Player) attacker;
             i = pAttacker.getItemInHand();
         }
-        double damage_negation = level * 0.02D;
-        if (i != null && i.getType().name().contains("_AXE") && e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation) > 1.0) {
+        double damage_negation = level * 0.0225D;
+        if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
             final Location l = player.getLocation();
 
