@@ -22,6 +22,9 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
+import com.massivecraft.factions.iface.EconomyParticipator;
+import com.massivecraft.factions.integration.Econ;
+import com.massivecraft.factions.struct.Relation;
 import lombok.SneakyThrows;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
@@ -32,28 +35,9 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
-public class CosmicFactionHandler
-        extends FactionHandler {
-    private Factions instance;
-    private FPlayers fPlayers;
-    private Board board;
-    private Field focusPlayerField;
-    private Method entityGetId;
-    private Method getPlayerFromFPlayer;
-
+public class CosmicFactionHandler extends FactionHandler {
     @Override
     public void initHandler() {
-        try {
-            Object fPlayers = ReflectionUtils.getObject(FPlayers.class, null, "i");
-            this.fPlayers = (FPlayers) fPlayers;
-            Object fInstance = ReflectionUtils.getObject(Factions.class, null, "i");
-            this.instance = (Factions) fInstance;
-            this.focusPlayerField = ReflectionUtils.getField(Faction.class, "focusedPlayer");
-            this.entityGetId = ReflectionUtils.getMethod(Entity.class, "getId");
-            this.getPlayerFromFPlayer = ReflectionUtils.getMethod(PlayerEntity.class, "getPlayer");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 
     @Override
@@ -132,12 +116,12 @@ public class CosmicFactionHandler
 
     @Override
     public Collection<FPlayer> getAllFPlayers(boolean online) {
-        return online ? this.fPlayers.getOnlinePlayers() : this.fPlayers.getAllFPlayers();
+        return online ? FPlayers.getInstance().getOnlinePlayers() : FPlayers.getInstance().getAllFPlayers();
     }
 
     @Override
     public Collection<Faction> getAllFactions() {
-        return this.instance.getAllFactions();
+        return Factions.getInstance().getAllFactions();
     }
 
     @Override
@@ -183,17 +167,12 @@ public class CosmicFactionHandler
 
     @Override
     public FPlayer getFPlayerByName(String name) {
-        return this.fPlayers.getById(name);
+        return FPlayers.getInstance().getById(name);
     }
 
     @Override
     public Player getPlayer(FPlayer player) {
-        try {
-            return (Player) this.getPlayerFromFPlayer.invoke((Object) player, new Object[0]);
-        } catch (IllegalAccessException | InvocationTargetException e) {
-            e.printStackTrace();
-            return null;
-        }
+        return player.getPlayer();
     }
 
     @Override
@@ -207,7 +186,7 @@ public class CosmicFactionHandler
 
     @Override
     public void sendMessage(FPlayer fplayer, String msg) {
-        ReflectionUtils.callReflectionMethod((Object) fplayer, PlayerEntity.class, "sendMessage", new ParamBuilder(String.class, msg));
+        fplayer.getPlayer().sendMessage(msg);
     }
 
     @Override
@@ -269,7 +248,7 @@ public class CosmicFactionHandler
         FPlayer fplayer = this.getFPlayer(player);
         if (fplayer == null) {
             if (includeWilderness) {
-                return this.instance.getNone();
+                return Factions.getInstance().getWilderness();
             }
             return null;
         }
@@ -282,19 +261,18 @@ public class CosmicFactionHandler
 
     @Override
     public Faction getFactionByTag(String tag) {
-        return this.instance.getByTag(tag);
+        return Factions.getInstance().getBestTagMatch(tag);
     }
 
     @Override
     public Faction getFactionById(String id) {
-        return this.instance.getFactionById(id);
+        return Factions.getInstance().getFactionById(id);
     }
 
     @Override
     public FPlayer getFPlayer(Player player) {
         try {
-            Method method = ReflectionUtils.getMethod(PlayerEntityCollection.class, "get", OfflinePlayer.class);
-            return (FPlayer) method.invoke((Object) this.fPlayers, player);
+            return FPlayers.getInstance().getByPlayer(player);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -303,12 +281,12 @@ public class CosmicFactionHandler
 
     @Override
     public String getFactionId(Faction faction) {
-        return (String) ReflectionUtils.invokeMethod(this.entityGetId, (Object) faction);
+        return faction.getId();
     }
 
     @Override
     public String getFPlayerId(FPlayer fplayer) {
-        return (String) ReflectionUtils.invokeMethod(this.entityGetId, (Object) fplayer);
+        return fplayer.getId();
     }
 
     @Override
@@ -348,11 +326,11 @@ public class CosmicFactionHandler
 
     @Override
     public double getFactionBalance(Faction faction) {
-        return (Double) ReflectionUtils.callReflectionMethod(null, Econ.class, "getFactionBalance", null);
+        return Econ.getBalance(faction);
     }
 
     private FPlayers getFPlayers() {
-        return this.fPlayers;
+        return FPlayers.getInstance();
     }
 }
 

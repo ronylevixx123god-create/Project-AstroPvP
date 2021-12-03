@@ -60,7 +60,9 @@ public enum ArmorSet {
     GRINDER(new GrinderArmorSet(), ChatColor.DARK_GRAY, CC.DarkGrayB + "Grinder", Lists.newArrayList("")),
     ULTRA(new UltraArmorSet(), ChatColor.GRAY, CC.GrayB + "Ultra", Lists.newArrayList("+10% Outgoing DMG", "-5% Incoming DMG", "4.5% Ultra Rage Ability", "8.5% Ultra Holy Negation", "4.5% Chance to Bypass Utility Belt", "x1.5 World Destroyer Duration")),
     APOLLO(new ApolloSet(), ChatColor.WHITE, CC.WhiteB + "Apollo", Lists.newArrayList("+15% Outgoing DMG", "-10% Incoming DMG", "Bypass Chad Sunglasses.", "x1.5 Pet Duration.", "Immune to Witcher Pet")),
+    NEBULA(new NebulaArmorSet(), ChatColor.LIGHT_PURPLE, CC.LightPurpleB + "Nebula", Lists.newArrayList("30% Outgoing DMG", "-60% Incoming DMG", "Immune to Witch Hat", "Galaxy Time Warp Ability", "  &7(Lose all of your defensive bonuses", "  &7from this set in exchange for", "  &7Speed IV, 50% more damage from", "  &7behind and death protection for", "  &7for 3 seconds per crystal.)", " &7&oShift + Block to activate.")),
     ANCIENT(new AncientArmorSet(), ChatColor.DARK_AQUA, CC.DarkAquaB + "Ancient", Lists.newArrayList("+7% Outgoing DMG", "-3% Incoming Damage", "10% Leviathan's Curse Ability"));
+
 
     public ItemStack helmet;
     public ItemStack chestplate;

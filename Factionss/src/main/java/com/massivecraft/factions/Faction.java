@@ -18,6 +18,12 @@ import java.util.concurrent.ConcurrentHashMap;
 public interface Faction extends EconomyParticipator {
     boolean addFactionAccess(FLocation l, Faction f);
 
+    FPlayer focusedPlayer();
+
+    FPlayer getFocusedPlayer();
+
+    void setFocusedPlayer(FPlayer fPlayer);
+
     boolean addPlayerAccess(FLocation l, FPlayer f);
 
     List<String> getPlayerAccess(FLocation fl);

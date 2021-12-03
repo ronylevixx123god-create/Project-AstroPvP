@@ -50,13 +50,13 @@ public class DungeonsRewardsAPI {
         ArrayList lore = Lists.newArrayList((Object[])new String[]{(Object)ChatColor.GRAY + "A bag of dungeon loot obtained", (Object)ChatColor.GRAY + "by " + (Object)ChatColor.GOLD + p.getName() + (Object)ChatColor.GRAY + " from defeating the", d.getDungeonName() + (Object)ChatColor.GRAY + " dungeon!", ""});
         lore.add((Object)ChatColor.GRAY + "Contains " + (Object)ChatColor.GOLD + "??? Dungeon" + (Object)ChatColor.GRAY + " items...");
         if (d.isAbandondedSpaceship()) {
-            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("abandonedship").createClaimableItem(false);
+            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("AbandonedShipLootbag").createClaimableItem(false);
         }
         if (d.isDestroyedOutpost()) {
-            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("destroyedoutpost").createClaimableItem(false);
+            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("DestroyedOutpostLootbag").createClaimableItem(false);
         }
         if (d.isPlanetNul()) {
-            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("planetnul").createClaimableItem(false);
+            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PlanetNulLootbag").createClaimableItem(false);
         }
         return null;
     }
@@ -65,13 +65,13 @@ public class DungeonsRewardsAPI {
         ArrayList lore = Lists.newArrayList((Object[])new String[]{(Object)ChatColor.GRAY + "A bag of dungeon loot obtained", (Object)ChatColor.GRAY + "by " + (Object)ChatColor.GOLD + p.getName() + (Object)ChatColor.GRAY + " from defeating the", d.getDungeonName() + (Object)ChatColor.GRAY + " dungeon!", ""});
         lore.add((Object)ChatColor.GRAY + "Contains " + (Object)ChatColor.GOLD + "??? Dungeon" + (Object)ChatColor.GRAY + " items...");
         if (d.isAbandondedSpaceship()) {
-            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("abandonedshipheroic").createClaimableItem(false);
+            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicAbandonedShipLootbag").createClaimableItem(false);
         }
         if (d.isDestroyedOutpost()) {
-            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("destroyedoutpostheroic").createClaimableItem(false);
+            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicDestroyedOutpostLootbag").createClaimableItem(false);
         }
         if (d.isPlanetNul()) {
-            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("planetnulheroic").createClaimableItem(false);
+            return CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicPlanetNulLootbag").createClaimableItem(false);
         }
         return null;
     }

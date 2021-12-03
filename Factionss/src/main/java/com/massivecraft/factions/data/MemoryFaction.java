@@ -83,6 +83,16 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     protected Map<String, Set<FactionPermission>> factionDefaultPermissions = new HashMap<>();
     protected Map<UUID, Set<FactionPermission>> defaultPlayerPermissions = new HashMap<>();
     protected Map<FactionUpgrade, Integer> upgrades = new HashMap<>();
+    protected FPlayer focusedPlayer;
+
+    public FPlayer getFocusedPlayer() {
+        return this.focusedPlayer;
+    }
+
+    public void setFocusedPlayer(FPlayer fPlayer) {
+        this.focusedPlayer = fPlayer;
+    }
+
 
     public HashMap<String, List<String>> getAnnouncements() {
         return this.announcements;
