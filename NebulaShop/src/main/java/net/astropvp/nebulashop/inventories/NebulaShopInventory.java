@@ -2,6 +2,7 @@ package net.astropvp.nebulashop.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import me.matthawkk.chat.messages.PrefixedMessage;
 import me.matthawkk.gui.BaseGUI;
 import me.matthawkk.gui.GUIItem;
@@ -28,7 +29,7 @@ public class NebulaShopInventory extends BaseGUI {
 
     private GUIItem getCurrentItem() {
         ItemStack shopItem = NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().clone();
-        ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.LightPurpleB + " * PRICE: " + CC.White + "$" + NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice()).build();
+        ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.LightPurpleB + " * PRICE: " + CC.White + "$" + NumberUtils.formatMoney(NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice())).build();
         return new GUIItem(item.clone()) {
             public void onClick(Player player1, ClickType clickType, InventoryClickEvent inventoryClickEvent) {
                 if(NebulaShop.getInstance().getNebulaShopManager().hasAlreadyBought(player1)) {

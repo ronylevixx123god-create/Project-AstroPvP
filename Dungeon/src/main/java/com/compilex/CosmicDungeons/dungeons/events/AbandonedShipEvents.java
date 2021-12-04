@@ -49,6 +49,7 @@ import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.DamageTracker;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -245,7 +246,6 @@ extends DungeonEvents {
                 String playerList = "";
                 List<Player> players = this.dungeon.getPlayers();
                 for (Player p2 : players) {
-                    ItemStack lootbag;
                     DungeonPlayer dp2 = DungeonsAPI.get().getPlayerDungeonData(p2);
                     if (dp2 == null || dp2.getCurrentDungeon() == null || !dp2.getCurrentDungeon().equals(e.getDungeon())) continue;
                     ++total;
@@ -265,7 +265,11 @@ extends DungeonEvents {
                         continue;
                     }
                     p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
-                    ItemStack itemStack = lootbag = this.dungeon.isHeroic() ? DungeonsRewardsAPI.getHeroicDungeonLootbag(p2, e.getDungeon()) : DungeonsRewardsAPI.getDungeonLootBag(p2, e.getDungeon());
+
+                    ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicAbandonedShipLootbag").createClaimableItem(false);
+                    ItemStack abaBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("AbandonedShipLootbag").createClaimableItem(false);
+
+                    ItemStack lootbag  = this.dungeon.isHeroic() ? heroicBag : abaBag;
                     if (p2.getInventory().firstEmpty() != -1) {
                         p2.getInventory().addItem(lootbag);
                     } else {

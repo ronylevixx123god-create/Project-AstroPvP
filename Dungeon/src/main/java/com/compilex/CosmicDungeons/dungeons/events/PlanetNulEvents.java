@@ -137,6 +137,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.ess3.api.MaxMoneyException;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -464,12 +465,11 @@ implements CommandExecutor {
             if (this.extraChests.values().stream().allMatch(v -> v)) {
                 this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.DUNGEON_WHISPERER);
             }
-            String playerList = "";
+            StringBuilder playerList = new StringBuilder();
             final HashSet<UUID> validLooters = new HashSet<UUID>();
             List<Player> winners = this.dungeon.getPlayers();
             int total = 0;
             for (Player p2 : winners) {
-                ItemStack lootbag;
                 DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p2);
                 if (dp == null || dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon)) continue;
                 ++total;
@@ -488,24 +488,28 @@ implements CommandExecutor {
                 p2.sendMessage(CC.translate((String)"&a&l+ $30,000,000 (&7Planet Nul dungeon complete!&a&l)"));
                 User eUser = CosmicDungeonsPlugin.get().ess3.getUser(p2);
                 try {
-                    eUser.setMoney(eUser.getMoney().add(new BigDecimal(30000000)));
+                    eUser.setMoney(eUser.getMoney().add(new BigDecimal(25000000)));
                 }
                 catch (MaxMoneyException e) {
                     e.printStackTrace();
                 }
-                ItemStack itemStack = lootbag = this.dungeon.isHeroic() ? DungeonsRewardsAPI.getHeroicDungeonLootbag(p2, this.dungeon) : DungeonsRewardsAPI.getDungeonLootBag(p2, this.dungeon);
+
+                ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicPlanetNulLootbag").createClaimableItem(false);
+                ItemStack nulBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PlanetNulLootbag").createClaimableItem(false);
+
+                ItemStack lootbag  = this.dungeon.isHeroic() ? heroicBag : nulBag;
                 if (p2.getInventory().firstEmpty() != -1) {
-                    p2.getInventory().addItem(new ItemStack[]{lootbag});
+                    p2.getInventory().addItem(lootbag);
                 } else {
                     p2.getWorld().dropItem(p2.getLocation(), lootbag);
                     p2.sendMessage((Object)ChatColor.GRAY + "(No room in inventory, dropped on ground.)");
                 }
-                playerList = playerList + p2.getName() + ", ";
+                playerList.append(p2.getName()).append(", ");
                 long bonusCD = dp.getCooldowns().addDungeonCooldown(this.dungeon, 300000L);
                 dp.logDungeonComplete(this.dungeon);
             }
-            if (playerList.endsWith(", ")) {
-                playerList = playerList.substring(0, playerList.length() - 2);
+            if (playerList.toString().endsWith(", ")) {
+                playerList = new StringBuilder(playerList.substring(0, playerList.length() - 2));
             }
             this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", ChatColor.GREEN, ChatColor.GRAY);
             Bukkit.broadcastMessage((String)"");
