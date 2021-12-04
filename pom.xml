@@ -65,6 +65,7 @@
         <module>Factionss</module>
         <module>AstroEvents</module>
         <module>AstroCollectors</module>
+        <module>CoolPlugin</module>
     </modules>
 
     <build>

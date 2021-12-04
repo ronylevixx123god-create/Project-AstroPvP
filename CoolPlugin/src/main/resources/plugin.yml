@@ -1,0 +1,4 @@
+name: CoolPlugin
+main: net.astropvp.coolplugin.CoolPlugin
+version: 1.0
+commands:

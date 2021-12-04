@@ -93,7 +93,9 @@ public class MobGrinderRunnable extends BukkitRunnable {
                     if (MobCoinUtils.isCoinsNote(itemStack) && !mobCoinsFound) {
                         mobcoin = i;
                         mobCoinsFound = true;
-                    } else if (ExpBottles.isXpBottle(itemStack) && !expBottleFound) {
+                    }
+
+                    if (ExpBottles.isXpBottle(itemStack) && !expBottleFound) {
                         expBottle = i;
                         expBottleFound = true;
                     }
