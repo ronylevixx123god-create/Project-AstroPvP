@@ -1,11 +1,9 @@
 package com.massivecraft.factions;
 
 import com.massivecraft.factions.iface.EconomyParticipator;
-import com.massivecraft.factions.perms.Permissible;
-import com.massivecraft.factions.perms.PermissibleAction;
-import com.massivecraft.factions.perms.Relation;
-import com.massivecraft.factions.perms.Role;
+import com.massivecraft.factions.perms.*;
 import com.massivecraft.factions.struct.BanInfo;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.LazyLocation;
 import com.massivecraft.factions.util.StrikeInfo;
@@ -14,14 +12,121 @@ import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public interface Faction extends EconomyParticipator {
+    boolean addFactionAccess(FLocation l, Faction f);
+
+    FPlayer focusedPlayer();
+
+    FPlayer getFocusedPlayer();
+
+    void setFocusedPlayer(FPlayer fPlayer);
+
+    boolean addPlayerAccess(FLocation l, FPlayer f);
+
+    List<String> getPlayerAccess(FLocation fl);
+
+    List<String> getFactionAccess(FLocation fl);
+
+    Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, Set<String> perms);
+
+    LinkedList<EconomyParticipator> getFactionWithPlayersWithAccessList(Faction owning, Set<String> perms);
+
+    Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, FLocation chunk);
+
+    void addAllAllyWarp(String name, Location l);
+
+    boolean hasAllWarp();
+
+    boolean hasAllyWarp(Faction f);
+
+    Location getAllyWarp(Faction f);
+
+    boolean removeFactionAccess(FLocation loc, Faction f);
+
+    boolean removePlayerAccess(FLocation loc, FPlayer fp);
+
+    void removeAllFactionAccess(Faction faction, boolean removePlayers);
+
+    boolean isLocationTracked(FLocation l);
+
+    boolean doesFactionHaveAccess(FLocation l, Faction fac);
+
+    boolean doesPlayerHaveChunkAccess(FLocation l, FPlayer fp, boolean checkFactions);
+
+    String getFactionAccessString(String id);
+
+    String getPlayerAccessString(String id);
+
+    void setChunkClaims(ConcurrentHashMap<FLocation, Set<String>> chunkClaims);
+
+    ConcurrentHashMap<String, Location> getAllyWarps();
+
+    void setAllyWarps(ConcurrentHashMap<String, Location> allyWarps);
+
+    ConcurrentHashMap<String, Location> getAllAllyWarps();
+
+    void setAllAllyWarps(ConcurrentHashMap<String, Location> allAllyWarps);
+
     Map<String, List<String>> getAnnouncements();
 
     Map<String, LazyLocation> getWarps();
+
+    Map<FLocation, Set<String>> getChunkClaims();
+
+    void storeChunkEditted(FLocation location, Faction fac);
+
+    void storeChunkEditted(FLocation location, FPlayer player);
+
+    Set<FactionPermission> getPermissions(Faction owner, FLocation location, Faction backup, FPlayer fplayer, String interactType);
+
+    Set<FactionPermission> getAllowedDefaultPermissions();
+
+    void updateClaimsWithDefaultPermissions(Faction faction);
+
+    void updateClaimsWithDefaultPermissions(FPlayer fplayer);
+
+    boolean hasChunkSpecificPerms(FLocation location);
+
+    boolean isDefaultPermission(FLocation location, Faction fac);
+
+    boolean isDefaultPermission(FLocation location, FPlayer fPlayer);
+
+    Set<FactionPermission> getFactionPermissions();
+
+    void cleanupPermissions(FLocation location);
+
+    void removePermissions(FLocation location, FPlayer player);
+
+    void removePermissions(FLocation location, Faction fac);
+
+    void createDefaultPermissions(FLocation location, FPlayer player);
+
+    void createDefaultPermissions(FLocation location, Faction fac);
+
+    Set<FactionPermission> getFullAccessPermissions();
+
+    Set<FactionPermission> getDefaultPermissions();
+
+    void cleanupPermissions(UUID uuid);
+
+    void cleanupPermissions(Faction faction);
+
+    boolean hasPermission(Faction owning, FLocation location, Faction backup, FPlayer uuid, FactionPermission permission, String interactType);
+
+    ConcurrentHashMap<FLocation, Map<UUID, Set<FactionPermission>>> getPlayerPermissionMap();
+
+    ConcurrentHashMap<FLocation, Map<String, Set<FactionPermission>>> getFactionChunkPermissionMap();
+
+    ConcurrentHashMap<FLocation, Set<String>> getFactionEdittedChunkPermissions();
+
+    ConcurrentHashMap<FLocation, Set<UUID>> getPlayerEdittedChunkPermissions();
+
+    Map<String, Set<FactionPermission>> getFactionDefaultPermissions();
+
+    Map<UUID, Set<FactionPermission>> getDefaultPlayerPermissions();
 
     LazyLocation getWarp(String name);
 

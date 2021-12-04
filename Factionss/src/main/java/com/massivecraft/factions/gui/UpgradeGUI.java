@@ -2,6 +2,8 @@ package com.massivecraft.factions.gui;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.data.MemoryFaction;
+import com.massivecraft.factions.gui.GUI;
+import com.massivecraft.factions.gui.SimpleItem;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.TextUtil;
 import com.massivecraft.factions.util.material.MaterialDb;
@@ -10,7 +12,7 @@ import org.bukkit.event.inventory.ClickType;
 import java.util.HashMap;
 import java.util.Map;
 
-public class UpgradeGUI extends GUI<FactionUpgrade>{
+public class UpgradeGUI extends GUI<FactionUpgrade> {
     private Map<FactionUpgrade, SimpleItem> items;
 
 

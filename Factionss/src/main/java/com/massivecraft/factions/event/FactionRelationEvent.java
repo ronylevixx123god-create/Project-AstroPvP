@@ -1,7 +1,7 @@
 package com.massivecraft.factions.event;
 
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.struct.Relation;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 

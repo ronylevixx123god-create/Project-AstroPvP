@@ -7,7 +7,7 @@ import com.earth2me.essentials.User;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.iface.EconomyParticipator;
 import com.massivecraft.factions.listeners.EssentialsListener;
-import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Permission;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;

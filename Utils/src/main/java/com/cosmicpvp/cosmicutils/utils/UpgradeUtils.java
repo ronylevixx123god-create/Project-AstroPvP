@@ -7,8 +7,9 @@
  */
 package com.cosmicpvp.cosmicutils.utils;
 
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Factions;
+import com.massivecraft.factions.upgrade.FactionUpgrade;
 import org.bukkit.entity.Player;
 
 public class UpgradeUtils {
@@ -19,7 +20,7 @@ public class UpgradeUtils {
             return 0;
         }
         try {
-            return FactionUpgradeAPI.getPerkLevelIfAllowed((Player) player, (FactionUpgrade) FactionUpgrade.valueOf((String) upgradeName));
+            return FPlayers.getInstance().getByPlayer(player).getFaction().getUpgrade(FactionUpgrade.valueOf(upgradeName));
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
@@ -31,7 +32,7 @@ public class UpgradeUtils {
             return 0;
         }
         try {
-            return FactionUpgradeAPI.getPerkLevelIfAllowed((String) factionId, (FactionUpgrade) FactionUpgrade.valueOf((String) upgradeName));
+            return Factions.getInstance().getFactionById(factionId).getUpgrade(FactionUpgrade.valueOf(upgradeName));
         } catch (Exception e) {
             e.printStackTrace();
             return 0;

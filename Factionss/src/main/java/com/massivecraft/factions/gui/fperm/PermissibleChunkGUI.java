@@ -1,12 +1,14 @@
-package com.massivecraft.factions.gui;
+package com.massivecraft.factions.gui.fperm;
 
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.gui.GUI;
+import com.massivecraft.factions.gui.SimpleItem;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.Map;
 
-public class PermissibleChunkGUI extends GUI<FLocation>{
+public class PermissibleChunkGUI extends GUI<FLocation> {
     public PermissibleChunkGUI(FPlayer user) {
         super(user, 3);
     }

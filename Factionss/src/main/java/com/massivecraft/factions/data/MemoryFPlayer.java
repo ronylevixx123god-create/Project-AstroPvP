@@ -12,7 +12,7 @@ import com.massivecraft.factions.integration.LWC;
 import com.massivecraft.factions.landraidcontrol.DTRControl;
 import com.massivecraft.factions.landraidcontrol.PowerControl;
 import com.massivecraft.factions.perms.PermissibleAction;
-import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.scoreboards.FScoreboard;
 import com.massivecraft.factions.scoreboards.sidebar.FInfoSidebar;
@@ -85,6 +85,11 @@ public abstract class MemoryFPlayer implements FPlayer {
     protected transient long lastFrostwalkerMessage;
     protected transient boolean shouldTakeFallDamage = true;
     protected transient OfflinePlayer offlinePlayer;
+    protected UUID uuid;
+
+    public UUID getUUID() {
+        return this.uuid;
+    }
 
     public void login() {
         this.kills = getPlayer().getStatistic(Statistic.PLAYER_KILLS);
@@ -332,6 +337,7 @@ public abstract class MemoryFPlayer implements FPlayer {
 
     public MemoryFPlayer(MemoryFPlayer other) {
         this.factionId = other.factionId;
+        this.uuid = other.getPlayer().getUniqueId();
         this.factionRosterId = other.factionRosterId;
         this.id = other.id;
         this.power = other.power;

@@ -129,7 +129,11 @@ public class ArmorSetBonusCrystalItem
             ArrayList list2 = Lists.newArrayList();
             ArmorSet set2 = s;
             for (String str : s.getCrystalDescription()) {
-                lore.add("  " + s.getColor() + CC.Bold + "* " + s.getColor() + str);
+                if(str.contains("&")) {
+                    lore.add(CC.translate("  " + s.getColor() + CC.Bold + "  " + s.getColor() + str));
+                } else {
+                    lore.add("  " + s.getColor() + CC.Bold + "* " + s.getColor() + str);
+                }
             }
         }
         String name = null;

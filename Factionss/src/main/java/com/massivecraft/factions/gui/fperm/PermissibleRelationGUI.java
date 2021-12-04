@@ -1,14 +1,14 @@
-package com.massivecraft.factions.gui;
+package com.massivecraft.factions.gui.fperm;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FactionsPlugin;
+import com.massivecraft.factions.gui.GUI;
+import com.massivecraft.factions.gui.SimpleItem;
 import com.massivecraft.factions.perms.Permissible;
-import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.util.CC;
 import com.massivecraft.factions.util.TL;
 import com.massivecraft.factions.util.material.MaterialDb;
-import org.bukkit.Material;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.Collections;

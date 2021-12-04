@@ -132,6 +132,8 @@ public class FCmdRoot extends FCommand implements CommandExecutor {
 
     public CmdSetPaypal cmdSetPaypal = new CmdSetPaypal();
 
+    public CmdAccess cmdAccess = new CmdAccess();
+
     public FCmdRoot() {
         super();
 
@@ -147,6 +149,7 @@ public class FCmdRoot extends FCommand implements CommandExecutor {
         this.setHelpShort("The faction base command");
         this.helpLong.add(FactionsPlugin.getInstance().txt().parseTags("<i>This command contains all faction stuff."));
 
+        this.addSubCommand(this.cmdAccess);
         this.addSubCommand(this.cmdAlts);
         this.addSubCommand(this.cmdAdmin);
         this.addSubCommand(this.cmdAutoClaim);

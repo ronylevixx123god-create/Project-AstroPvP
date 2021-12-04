@@ -319,4 +319,8 @@ public class FLocation implements Serializable {
         FLocation that = (FLocation) obj;
         return this.x == that.x && this.z == that.z && (Objects.equals(this.worldName, that.worldName));
     }
+
+    public String formatXAndZ(String splitter) {
+        return chunkToBlock(this.x) + "x" + splitter + " " + chunkToBlock(this.z) + "z";
+    }
 }
