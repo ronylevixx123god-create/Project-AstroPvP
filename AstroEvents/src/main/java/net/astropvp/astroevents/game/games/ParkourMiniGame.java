@@ -30,6 +30,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -87,9 +88,10 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
         super.setMiniGameState(MiniGameState.IN_PROGRESS);
         super.getParticipants().forEach((playerUUID, participant) -> {
             Player player = participant.getPlayer();
-            player.setWalkSpeed((float) 0.2);
             player.getInventory().setItem(3, this.getCheckpointItem());
             player.getInventory().setItem(5, this.getLeaveItem());
+            if (this.getCheckpoints().inverse().containsKey((byte) 0))
+                player.teleport(this.getCheckpoints().inverse().get((byte) 0), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         });
         new ParkourTimeTask(this).runTaskTimer(plugin, 0L, 20L);
     }
@@ -116,9 +118,11 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
         if (isParticipant(player)) return;
         super.addParticipant(new ParkourPlayer(player));
         player.teleport(super.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-        player.setWalkSpeed((float) 0.0);
         player.setHealth(20);
         player.setFoodLevel(20);
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        player.setMetadata("ncf_combat", new FixedMetadataValue(plugin, System.currentTimeMillis()));
         super.clearPotionEffects(player);
         super.clearInventory(player);
     }
@@ -135,10 +139,10 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
     private void leaveMiniGame(Player player, boolean stopMiniGame) {
         if (!isParticipant(player)) return;
         player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-        player.setWalkSpeed((float) 0.2);
         super.clearInventory(player);
         super.clearPotionEffects(player);
         super.getParticipant(player).getPlayerInventoryContents().restore(player);
+        player.removeMetadata("ncf_combat", plugin);
         if (stopMiniGame) return;
         super.removeParticipant(player);
     }

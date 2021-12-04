@@ -24,6 +24,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.server.ServerCommandEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.*;
 
@@ -94,6 +95,9 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         player.setFoodLevel(20);
         super.clearPotionEffects(player);
         super.clearInventory(player);
+        player.setAllowFlight(false);
+        player.setFlying(false);
+        player.setMetadata("ncf_combat", new FixedMetadataValue(plugin, System.currentTimeMillis()));
     }
 
     @Override
@@ -113,6 +117,7 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         player.setWalkSpeed((float) 0.2);
         super.clearInventory(player);
         super.clearPotionEffects(player);
+        player.removeMetadata("ncf_combat", plugin);
 
         if (super.isParticipant(player)) {
             super.getParticipant(player).getPlayerInventoryContents().restore(player);
