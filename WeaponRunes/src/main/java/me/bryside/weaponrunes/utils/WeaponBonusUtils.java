@@ -43,4 +43,11 @@ public class WeaponBonusUtils {
         }
         return false;
     }
+
+    public static double getWeaponBonusSuccess(ItemStack item) {
+        if(!isWeaponBonus(item))
+            return 0;
+        NBTWrapper wrapper = new NBTWrapper(item);
+        return (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).getDouble("success"));
+    }
 }

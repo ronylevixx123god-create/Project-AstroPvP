@@ -29,6 +29,9 @@ public class PlayerPotionEffectPersistTask implements Runnable {
                 if (this.cosmicOutpostsEnabled && CosmicOutpostsAPI.getOutpostTierOfWorld(p) == OutpostTier.VANILLA) {
                     continue;
                 }
+                if (p.getLocation().getWorld().getName().equals("events_world")) {
+                    continue;
+                }
                 if (p.hasMetadata("armorRescanRunning")) {
                     continue;
                 }

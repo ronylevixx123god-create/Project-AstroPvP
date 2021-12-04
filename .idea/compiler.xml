@@ -32,6 +32,7 @@
         <module name="AuctionHouse" />
         <module name="Factions" />
         <module name="Conquest" />
+        <module name="CoolPlugin" />
         <module name="Slotbot" />
         <module name="KoTHs" />
         <module name="Duels" />

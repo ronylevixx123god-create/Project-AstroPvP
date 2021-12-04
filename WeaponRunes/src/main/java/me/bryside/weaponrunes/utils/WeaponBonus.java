@@ -24,13 +24,12 @@ public abstract class WeaponBonus {
     public abstract WeaponBonusType getType();
 
     public ItemStack getItem(double success) {
-        ItemStack item = new ItemStack(Material.INK_SACK, 1, getType().getData().shortValue());
+        ItemStack item = new ItemStack(Material.INK_SACK, 1, getType().getData());
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(getType().getName() + getType().getColor() + ChatColor.BOLD + " Weapon Bonus" + CC.Gray + " (" + Integer.valueOf((int)success) + "%)");
+        meta.setDisplayName(getType().getName() + getType().getColor() + ChatColor.BOLD + " Weapon Bonus" + CC.Gray + " (" + (int) success + "%)");
         List<String> lore = Lists.newArrayList();
         lore.add("");
-        for (String s : getLore())
-            lore.add(s);
+        lore.addAll(getLore());
         lore.add("");
         lore.add(CC.Gray + "Weapon Bonuses can " + CC.GrayU + "ONLY" + CC.Gray + " be applied");
         lore.add(CC.Gray + "to " + getType().getColor() + "Heroic Weapons " + CC.Gray + "and only");
@@ -42,6 +41,7 @@ public abstract class WeaponBonus {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.setString("bonusType", getType().getId());
+        cosmicData.setDouble("success", success);
         wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "weaponBonus");

@@ -103,7 +103,13 @@ public enum DungeonType {
         if (CosmicDungeonsPlugin.get().isLowCostKeys()) {
             cost *= 0.1;
         }*/
-        return 1;
+        if (this.getDungeonInstance().dungeonType == DungeonType.ABANDONED_SHIP) {
+            return 15000000;
+        } else if (this.getDungeonInstance().dungeonType == DungeonType.DESTROYED_OUTPOST) {
+            return 30000000;
+        } else {
+            return 50000000;
+        }
     }
 
 /*    public int getDaysSinceDungeonWasAvailable() {
