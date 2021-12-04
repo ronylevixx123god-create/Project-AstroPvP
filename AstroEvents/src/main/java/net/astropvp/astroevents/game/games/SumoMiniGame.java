@@ -23,6 +23,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.server.ServerCommandEvent;
 
 import java.util.*;
 
@@ -107,20 +108,28 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
     private void leaveMiniGame(Player player, boolean stopMiniGame) {
         if (!isParticipant(player) && !isSpectator(player)) return;
 
+        player.setGameMode(GameMode.SURVIVAL);
         player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         player.setWalkSpeed((float) 0.2);
         super.clearInventory(player);
         super.clearPotionEffects(player);
+
+        if (super.isParticipant(player)) {
+            super.getParticipant(player).getPlayerInventoryContents().restore(player);
+        }
+
+        if (super.isSpectator(player)) {
+            Optional<SumoPlayer> sumoPlayer = super.getSpectator(player);
+            sumoPlayer.ifPresent(participant -> participant.getPlayerInventoryContents().restore(player));
+        }
+
         if (stopMiniGame) return;
 
         if (isParticipant(player)) {
-            super.getParticipant(player).getPlayerInventoryContents().restore(player);
             super.removeParticipant(player);
         }
 
         if (isSpectator(player)) {
-            Optional<SumoPlayer> sumoPlayer = super.getSpectator(player);
-            sumoPlayer.ifPresent(participant -> participant.getPlayerInventoryContents().restore(player));
             super.removeSpectator(player);
         }
 
@@ -156,6 +165,10 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         SumoPlayer sumoPlayer = super.getParticipant(loser);
 
         winner.teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+
+        winner.setAllowFlight(true);
+        winner.setFlying(true);
+
         this.getDuelPlayers().clear();
         this.addSpectator(sumoPlayer);
         this.nextFight();
@@ -164,6 +177,12 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
     public void fight() {
         this.duelPlayers.setLeft(this.getParticipantsQueue().getValue(0));
         this.duelPlayers.setRight(this.getParticipantsQueue().getValue(1));
+
+        this.duelPlayers.getLeft().getPlayer().setAllowFlight(false);
+        this.duelPlayers.getLeft().getPlayer().setFlying(false);
+
+        this.duelPlayers.getRight().getPlayer().setAllowFlight(false);
+        this.duelPlayers.getRight().getPlayer().setFlying(false);
 
         this.duelPlayers.getLeft().getPlayer().teleport(fightLocationOne, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         this.duelPlayers.getRight().getPlayer().teleport(fightLocationTwo, PlayerTeleportEvent.TeleportCause.UNKNOWN);
