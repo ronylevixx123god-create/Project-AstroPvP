@@ -91,12 +91,14 @@ public class MOTD implements Listener {
 
         Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
             Player player = e.getPlayer();
-            if (CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) {
-                player.sendMessage("");
-                player.sendMessage(CC.translate("&aThank you &f" + player.getName() + " &afor using the Astro Client!"));
-                player.sendMessage(CC.translate("&7With this client you will be able to see &fItemSkins&7, &fRoam&7, &fFaction Ping&7 and so much more..."));
-                player.sendMessage(CC.translate("&eYou now have 1.5x EXP and 1.5x Grinding Lootboxes chance."));
-                player.sendMessage("");
+            if (CosmicPlayers.get().getCosmicPlayer(player) != null) {
+                if (CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) {
+                    player.sendMessage("");
+                    player.sendMessage(CC.translate("&aThank you &f" + player.getName() + " &afor using the Astro Client!"));
+                    player.sendMessage(CC.translate("&7With this client you will be able to see &fItemSkins&7, &fRoam&7, &fFaction Ping&7 and so much more..."));
+                    player.sendMessage(CC.translate("&eYou now have 1.5x EXP and 1.5x Grinding Lootboxes chance."));
+                    player.sendMessage("");
+                }
                 //player.performCommand("vc proximity");
             } else {
                 player.sendMessage("");
