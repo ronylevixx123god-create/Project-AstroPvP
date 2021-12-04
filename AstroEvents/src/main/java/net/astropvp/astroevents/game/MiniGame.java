@@ -177,18 +177,19 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommandWhileInGame(PlayerCommandPreprocessEvent event) {
         if (!isValidParticipant(event.getPlayer())) return;
+
         if (!miniGamesOptions.isBlockCommands()) return;
 
-        String command = event.getMessage().replace("/", "");
+        String command = event.getMessage().replace("/", "").toLowerCase(Locale.ROOT);
 
-        if (Arrays.stream(this.miniGamesOptions.getExcludedBlockedCommands()).noneMatch(str -> str.startsWith(command)))
+        if (Arrays.stream(this.miniGamesOptions.getExcludedBlockedCommands()).noneMatch(command::startsWith))
             event.setCancelled(true);
     }
 
     private boolean isValidParticipant(Player player) {
-        if (!this.isParticipant(player)) return false;
+        if (!this.isParticipant(player) && !this.isSpectator(player)) return false;
         if (player.isOp()) return false;
-        return !player.hasPermission("extinct.helper");
+        return !player.hasPermission("astro.admin");
     }
 
     private boolean isValidParticipant(Entity entity) {
@@ -228,11 +229,11 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     }
 
     protected Optional<T> getSpectator(Player player) {
-        return this.spectators.stream().findFirst().filter(spectator -> spectator.getPlayer().equals(player));
+        return this.spectators.stream().filter(spectator -> spectator.getPlayer().equals(player)).findFirst();
     }
 
     public boolean isSpectator(Player player) {
-        return this.spectators.stream().anyMatch(spectator -> spectator.equals(this.getParticipant(player)));
+        return this.spectators.stream().anyMatch(spectator -> spectator.getPlayer().equals(player));
     }
 
     public boolean isSpectator(T sumoPlayer) {

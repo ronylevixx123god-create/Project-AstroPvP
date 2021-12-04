@@ -23,11 +23,13 @@ public class BlockBreakListener implements Listener {
 
     @EventHandler
     public void onBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         removeCollector(event.getBlock());
     }
 
     @EventHandler
     public void onExplode(BlockExplodeEvent event) {
+        if (event.isCancelled()) return;
         for (Block block : event.blockList()) {
             removeCollector(block);
         }
@@ -35,6 +37,7 @@ public class BlockBreakListener implements Listener {
 
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent event) {
+        if (event.isCancelled()) return;
         for (Block block : event.blockList()) {
             removeCollector(block);
         }
@@ -42,6 +45,7 @@ public class BlockBreakListener implements Listener {
 
     @EventHandler
     public void onEntityExplode(BlockExplodeEvent event) {
+        if (event.isCancelled()) return;
         for (Block block : event.blockList()) {
             removeCollector(block);
         }

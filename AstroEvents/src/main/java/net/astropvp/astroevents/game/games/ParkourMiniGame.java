@@ -48,7 +48,7 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
     private final ItemStack leaveItem;
 
     public ParkourMiniGame(AstroEvents plugin) {
-        super(plugin, MiniGameType.PARKOUR, new HashMap<>(), MiniGameOptions.builder().build(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ParkourLootbox"), Material.FEATHER);
+        super(plugin, MiniGameType.PARKOUR, new HashMap<>(), MiniGameOptions.builder().excludedBlockedCommands(new String[]{"parkour"}).build(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ParkourLootbox"), Material.FEATHER);
         this.plugin = plugin;
 
         this.startTime = 0;
