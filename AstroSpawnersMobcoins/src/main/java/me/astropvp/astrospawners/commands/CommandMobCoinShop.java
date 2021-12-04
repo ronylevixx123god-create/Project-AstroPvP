@@ -53,9 +53,8 @@ public class CommandMobCoinShop implements CommandExecutor {
         PlayerData data = manager.getPlayerData((Player) sender);
         double balance = ((data == null) ? 0 : data.getCoins());
 
-        String rank = PermissionsAPI.getPermissionUser(((Player) sender).getPlayer().getUniqueId()).getGroup();
 
-        if (rank.equals("apollo") || rank.equals("interstellar") || rank.equals("media")) {
+        if (sender.hasPermission("astrocore.apollo")) {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(4000));
             if (chests.containsKey("CrateKeyBundle"))
@@ -66,9 +65,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
 
             //Normal Items
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6400));
-            values.put(CrateKeyItem.getItem(CrateType.BUNDLE), Integer.valueOf(4800));
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(12000));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(8000));
 
 
         } else {
@@ -82,9 +80,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
 
             //Normal items
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(10000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(8000));
-            values.put(CrateKeyItem.getItem(CrateType.BUNDLE), Integer.valueOf(6000));
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(15000));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(10000));
 
 
 
@@ -104,7 +101,7 @@ public class CommandMobCoinShop implements CommandExecutor {
             int price = ((Integer)entry.getValue()).intValue();
             List<String> lore = meta.hasLore() ? meta.getLore() : Lists.newArrayList();
             lore.add("");
-            if (rank.equals("apollo") || rank.equals("helper") || rank.equals("mod") || rank.equals("banteam") || rank.equals("admin") || rank.equals("interstellar") || rank.equals("media")) {
+            if (sender.hasPermission("astrocore.apollo")) {
                 lore.add(String.valueOf(CC.AquaB) + "* PRICE (Apollo Bonus): " + CC.White + NumberUtils.formatMoney(price) + " Mob Coins");
             } else {
                 lore.add(String.valueOf(CC.GreenB) + "* PRICE: " + CC.White + NumberUtils.formatMoney(price) + " Mob Coins");

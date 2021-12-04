@@ -68,6 +68,17 @@ public class ServerFixes implements Listener {
         }
     }
 
+
+    @EventHandler
+    public void antiNearCrash(PlayerCommandPreprocessEvent e) {
+        if (e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) {
+            if (WorldGuardUtils.inRegion(e.getPlayer().getLocation(),"spawn_region")) {
+                e.getPlayer().sendMessage(CC.translate("&cYou cannot type /near at spawn!"));
+                e.setMessage("/null");
+            }
+        }
+    }
+
     @EventHandler
     public void preventBlockGlitch(BlockPlaceEvent event) {
         if (!event.isCancelled()) return;
