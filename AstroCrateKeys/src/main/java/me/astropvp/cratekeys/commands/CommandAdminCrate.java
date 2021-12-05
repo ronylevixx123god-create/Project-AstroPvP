@@ -2,6 +2,7 @@ package me.astropvp.cratekeys.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
+import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -31,6 +32,7 @@ public class CommandAdminCrate implements CommandExecutor {
             Map<ItemStack, Double> items = AstroCrateKeysAPI.getItems(type);
             items.put(player.getItemInHand(), Double.valueOf(percentage));
             AstroCrateKeysAPI.setItems(type, items);
+            AstroCrateKeysPlugin.cachedCrateLoot.put(type, AstroCrateKeysAPI.getItems(type));
             player.sendMessage(String.valueOf(CC.Green) + "Added your item in hand to the crate '" + type.getName() + "'!");
             return false;
         }
@@ -54,6 +56,7 @@ public class CommandAdminCrate implements CommandExecutor {
             }
             items.remove(item);
             AstroCrateKeysAPI.setItems(type, items);
+            AstroCrateKeysPlugin.cachedCrateLoot.put(type, AstroCrateKeysAPI.getItems(type));
             player.sendMessage(String.valueOf(CC.Green) + "Removed your item in hand from the crate '" + args[1] + "'!");
             return false;
         }

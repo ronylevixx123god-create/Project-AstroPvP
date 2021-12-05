@@ -74,9 +74,9 @@ public class NewStakeInventory {
     ItemStack pendingItem;
     ItemStack acceptedItem;
     boolean modified = false;
-    HashMap<String, NewStakeInventory.PlayerType> playerTypes = new HashMap();
-    HashMap<String, NewStakeInventory.PlayerType> teamLeaderTypes;
-    HashMap<TeamData, NewStakeInventory.PlayerType> teamTypes;
+    HashMap<String, PlayerType> playerTypes = new HashMap();
+    HashMap<String, PlayerType> teamLeaderTypes;
+    HashMap<TeamData, PlayerType> teamTypes;
     LinkedHashMap<Integer, Integer> validSlots;
     BukkitTask runnable;
     private ItemStack selected;
@@ -119,8 +119,8 @@ public class NewStakeInventory {
         this.duel = duel;
         this.p1 = p1;
         this.p2 = p2;
-        this.playerTypes.put(p1.getName(), NewStakeInventory.PlayerType.ONE);
-        this.playerTypes.put(p2.getName(), NewStakeInventory.PlayerType.TWO);
+        this.playerTypes.put(p1.getName(), PlayerType.ONE);
+        this.playerTypes.put(p2.getName(), PlayerType.TWO);
         this.playerOneInventory = Bukkit.createInventory(null, 81, getTradeInventoryTitle(p1.getName(), p2.getName()));
         this.playerTwoInventory = Bukkit.createInventory(null, 81, getTradeInventoryTitle(p1.getName(), p2.getName()));
         this.setupInventory(this.playerOneInventory, this.p2);
@@ -362,7 +362,7 @@ public class NewStakeInventory {
         e.setResult(Result.DENY);
         if (this.getDuel().getCreateState() == DuelCreateState.STAKES) {
             Player p = (Player)e.getWhoClicked();
-            NewStakeInventory.PlayerType pt = this.playerTypes.get(p.getName());
+            PlayerType pt = this.playerTypes.get(p.getName());
             if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
                 Inventory inventory = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.playerOneInventory : this.playerTwoInventory;
                 Inventory inventory2 = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.playerTwoInventory : this.playerOneInventory;
@@ -370,7 +370,7 @@ public class NewStakeInventory {
                 if (e.getRawSlot() < e.getInventory().getSize()) {
                     if (e.getRawSlot() == 0 && pt == NewStakeInventory.PlayerType.ONE) {
                         this.modified = true;
-                        if (inventory.getItem(0) == this.pendingItem) {
+                        if (inventory.getItem(0).equals(this.pendingItem)) {
                             inventory.setItem(0, this.acceptedItem);
                             inventory2.setItem(0, this.acceptedItem);
                             this.checkDone();
@@ -380,7 +380,7 @@ public class NewStakeInventory {
                         }
                     } else if (e.getRawSlot() == 8 && pt == NewStakeInventory.PlayerType.TWO) {
                         this.modified = true;
-                        if (inventory.getItem(8) == this.pendingItem) {
+                        if (inventory.getItem(8).equals(this.pendingItem)) {
                             inventory.setItem(8, this.acceptedItem);
                             inventory2.setItem(8, this.acceptedItem);
                             this.checkDone();
@@ -401,9 +401,9 @@ public class NewStakeInventory {
 
                     this.modified = true;
                     is = e.getCurrentItem();
-                    this.playerOneInventory.setItem(e.getRawSlot(), null);
-                    this.playerTwoInventory.setItem(e.getRawSlot(), null);
-                    p.getInventory().addItem(is);
+                    this.playerOneInventory.setItem(e.getRawSlot(), (ItemStack)null);
+                    this.playerTwoInventory.setItem(e.getRawSlot(), (ItemStack)null);
+                    p.getInventory().addItem(new ItemStack[]{is});
                     System.out.println("B");
                     p.updateInventory();
                     this.p2.updateInventory();
@@ -424,7 +424,7 @@ public class NewStakeInventory {
 
                     this.modified = true;
                     is = e.getCurrentItem();
-                    p.getInventory().removeItem(is);
+                    p.getInventory().removeItem(new ItemStack[]{is});
                     p.updateInventory();
                     int firstEmpty = this.getFirstEmpty(pt, inventory);
                     if (firstEmpty == -1) {
@@ -446,13 +446,14 @@ public class NewStakeInventory {
         }
     }
 
+
     public void onTeamInventoryEvent(InventoryClickEvent e) {
 
         e.setCancelled(true);
         e.setResult(Result.DENY);
         if (this.getDuel().getCreateState() == DuelCreateState.STAKES) {
             Player p = (Player)e.getWhoClicked();
-            NewStakeInventory.PlayerType pt = this.playerTypes.get(p.getName());
+            PlayerType pt = this.playerTypes.get(p.getName());
             if (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) {
                 Inventory inventory = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.teamALeaderInventory : this.teamBLeaderInventory;
                 Inventory inventory2 = p.getUniqueId().equals(this.p1.getUniqueId()) ? this.teamBLeaderInventory : this.teamALeaderInventory;

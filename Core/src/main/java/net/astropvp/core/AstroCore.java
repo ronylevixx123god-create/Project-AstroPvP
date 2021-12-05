@@ -67,14 +67,15 @@ import me.astropvp.autobroadcast.tasks.AutoBroadcastTask;
 import me.astropvp.autogiveall.struct.GiveAllManager;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
+import net.astropvp.core.conaxgames.staff.*;
+import net.astropvp.core.conaxgames.staff.staffmode.StaffModeCommand;
+import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModeListeners;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModulesRegister;
 import net.astropvp.core.items.*;
 import net.astropvp.core.items.coder.EnchantmentCoderItem;
 import net.astropvp.core.items.coder.HeroicEnchantmentCoderItem;
 import net.astropvp.core.listeners.*;
-import net.astropvp.core.conaxgames.staff.Freeze;
-import net.astropvp.core.conaxgames.staff.FreezeCommand;
-import net.astropvp.core.conaxgames.staff.StaffChatCommand;
-import net.astropvp.core.conaxgames.staff.StaffListeners;
 import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.utils.CleanseScroll;
@@ -109,6 +110,9 @@ public class AstroCore extends JavaPlugin {
     public static AstroCore getInstance() {
         return instance;
     }
+
+    private StaffModeManager staffModeManager;
+    private StaffModulesRegister staffModulesRegister;
 
     // Sponges
     private CommandHelp commandHelp;
@@ -242,6 +246,10 @@ public class AstroCore extends JavaPlugin {
         this.enchantmentCoderManager = new EnchantmentCoderManager("plugins/AstroCore/enchantmentcoderdata.json");
         this.enchantmentCoderManager.loadData();
 
+        this.staffModeManager = new StaffModeManager();
+        this.staffModulesRegister = new StaffModulesRegister(this);
+        this.staffModulesRegister.initialize();
+
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
@@ -275,6 +283,7 @@ public class AstroCore extends JavaPlugin {
         this.claimsOnFrozen = new HashMap<>();
 
         this.getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
+        this.getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
 
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
@@ -464,7 +473,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
 
         getCommand("phoenix").setExecutor(new PhoenixCommand());
-        Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand()).forEach(this:: registerCommand);
+        Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand(), new StaffModeCommand()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new StaffListeners(), this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
@@ -518,6 +527,7 @@ public class AstroCore extends JavaPlugin {
 
     @SneakyThrows
     public void onDisable() {
+        this.staffModeManager.toggleOffAllStaffModes();
         this.payToggles.saveToggles();
         try {
             this.jackpotManager.saveFileData();

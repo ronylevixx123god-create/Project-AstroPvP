@@ -79,11 +79,6 @@
             <artifactId>Utils</artifactId>
             <version>0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Factions</artifactId>
-            <version>0.1</version>
-        </dependency>
 
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -105,11 +100,7 @@
             <artifactId>SpaceChests</artifactId>
             <version>0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Factions</artifactId>
-            <version>0.1</version>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Conquest</artifactId>
@@ -140,6 +131,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicFactionPoints.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>fac</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

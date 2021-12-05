@@ -128,7 +128,7 @@ public class Scoreboard implements BoardAdapter {
                     return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
                 }
 
-        } else if(!fplayer.getFaction().isWilderness()) {
+        } else if(!FactionUtils.isWilderness(fplayer.getFaction())) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
@@ -594,7 +594,7 @@ public class Scoreboard implements BoardAdapter {
 
 
     public long getInterval() {
-        return 20L;
+        return 90L;
     }
 
     public int getPing() {

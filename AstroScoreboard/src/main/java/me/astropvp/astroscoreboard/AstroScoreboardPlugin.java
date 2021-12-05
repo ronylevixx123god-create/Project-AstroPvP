@@ -63,7 +63,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     }
 
     public void runTasks() {
-        Bukkit.getScheduler().scheduleSyncDelayedTask(this, (Runnable) new BukkitRunnable() {
+        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, (Runnable) new BukkitRunnable() {
             @Override
             public void run() {
                 for (Player player : Bukkit.getOnlinePlayers()) {
@@ -77,7 +77,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(this, 20L, 40L));
+        }.runTaskTimerAsynchronously(this, 20L, 20L));
     }
 
     public static AstroScoreboardPlugin getInstance() {

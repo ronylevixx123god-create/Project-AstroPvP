@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
@@ -45,6 +46,8 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
         }
         final Player damaged = (Player) damagedPlayer;
         final Player attacker = (Player) attackerEnt;
+        if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation())) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation())) return;
         if (enchantLevel * 0.005 >= Math.random()) {
             if (GeneralUtil.isAlly(damaged, attacker)) {
                 return;

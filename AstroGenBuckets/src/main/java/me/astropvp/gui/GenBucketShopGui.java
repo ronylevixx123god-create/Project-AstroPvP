@@ -54,10 +54,10 @@ public class GenBucketShopGui {
             player.getInventory().addItem(netherrackGenBucket.getItem(GenBucketDirection.HORIZONTAL, 100.0D));
             event.setCancelled(true);
         }));
-        expShopUI.setItem(1, 5, new GuiItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 25000), event -> {
+/*        expShopUI.setItem(1, 5, new GuiItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 25000), event -> {
             player.getInventory().addItem(waterkGenBucket.getItem(GenBucketDirection.HORIZONTAL, 25000.0D));
             event.setCancelled(true);
-        }));
+        }));*/
 
         //VERTICAL
         expShopUI.setItem(2, 1, new GuiItem(cobblestoneGenBucket.getItem(GenBucketDirection.VERTICAL, 100), event -> {

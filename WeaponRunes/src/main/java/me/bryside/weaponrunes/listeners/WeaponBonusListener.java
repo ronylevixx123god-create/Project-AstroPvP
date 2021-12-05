@@ -73,11 +73,11 @@ public class WeaponBonusListener implements Listener {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(cursor);
             if (weaponBonusType == null || !WeaponBonusUtils.isHeroicWeapon(clicked))
                 return;
-            if(Math.random() > WeaponBonusUtils.getWeaponBonusSuccess(cursor) * 0.01) {
+            /*if(Math.random() > WeaponBonusUtils.getWeaponBonusSuccess(cursor) * 0.01) {
                 e.setCursor(null);
                 e.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "Weapon Bonus Failed.");
                 return;
-            }
+            }*/
             e.setCurrentItem(weaponBonusType.getInstance().applyBonus(clicked, weaponBonusType));
             e.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Successfully Applied " + weaponBonusType.getName() + " Weapon Rune&a to your sword!"));
             if (cursor.getAmount() > 1) {

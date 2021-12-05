@@ -50,6 +50,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class CommandAdminDungeon
@@ -172,7 +173,7 @@ implements CommandExecutor {
                 }
                 sender.sendMessage(CC.Red + "Chest containing map: " + LocationUtils.convertLocationToString(mapChest));
                 sender.sendMessage(CC.Red + " hasBeenOpened: " + dungeon.getDungeonEvents().getLootedChestBlocks().contains((Object)mapChest));
-                player2.teleport(mapChest);
+                player2.teleport(mapChest, PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 return true;
             }
             if (args[0].equalsIgnoreCase("map")) {

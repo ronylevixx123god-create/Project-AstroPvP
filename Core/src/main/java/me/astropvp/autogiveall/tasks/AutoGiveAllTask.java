@@ -9,16 +9,11 @@
  */
 package me.astropvp.autogiveall.tasks;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import me.astropvp.autogiveall.struct.GiveAllManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class AutoGiveAllTask
 implements Runnable {
