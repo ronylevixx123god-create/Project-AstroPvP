@@ -398,13 +398,6 @@ implements Listener {
                     if (p.isOp() && p.getName().equalsIgnoreCase("MattHawkk") && p.isSneaking()) {
                         closeTimer = 10;
                     }
-                    if (hasTimeReductionTrinket) {
-                        int timeReductionTier = PortalTrinketUtils.portalHasTrinket(portalItem, "TIME_REDUCTION_1") ? 1 : (PortalTrinketUtils.portalHasTrinket(portalItem, "TIME_REDUCTION_2") ? 2 : 3);
-                        p.sendMessage(CC.GoldB + "Time Reduction Trinket: " + CC.Red + "- " + PortalTimeReductionTrinketItem.getSecondsFromTier(timeReductionTier) + "s portal close time");
-                        if ((closeTimer -= PortalTimeReductionTrinketItem.getSecondsFromTier(timeReductionTier)) < 10) {
-                            closeTimer = 10;
-                        }
-                    }
                     if (hasBossSlayerTrinket) {
                         p.sendMessage(CC.GoldB + "Boss Slayer Trinket: " + CC.Red + "+ 1.5x Outgoing Boss Damage");
                         dungeon.setBossSlayerTrinket(true);

@@ -85,13 +85,8 @@ public class Bleed extends CustomEnchantment {
                     GeneralUtil.healPlayer(pEnt, amountToHeal);
                 }
 
-                try {
-                    if (ParticleUtils.isPlayerIndicating(pEnt)) {
                         de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation(), 0f, 1f, 0f, 0.075f, 10);
-                    }
-                } catch (Exception exception) {
 
-                }
 
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }

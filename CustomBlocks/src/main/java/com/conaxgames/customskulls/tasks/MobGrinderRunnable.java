@@ -85,6 +85,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
 
                 for (int i = 0; i < chest.getInventory().getSize(); i++) {
+                    if (mobCoinsFound && expBottleFound) break;
                     ItemStack itemStack = chest.getInventory().getItem(i);
                     if (itemStack == null || (!MobCoinUtils.isCoinsNote(itemStack) && !ExpBottles.isXpBottle(itemStack))) {
                         continue;
@@ -102,12 +103,15 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                     if (expBottle == -1 || mobcoin == -1) continue;
 
-                    if (Math.random() < 0.2) {
-                        chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
+                    if (!mobCoinsFound) {
+                        if (Math.random() < 0.2) {
+                            chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
+                        }
                     }
 
-                    chest.getInventory().setItem(expBottle, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(expBottle)) + amountOfExpPerBlaze, "Mob Grinder"));
-
+                    if (!expBottleFound) {
+                        chest.getInventory().setItem(expBottle, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(expBottle)) + amountOfExpPerBlaze, "Mob Grinder"));
+                    }
 
                 }
 

@@ -35,14 +35,14 @@ public class NebulaShopListener implements Listener {
         }
     }
 
-    @EventHandler
+/*    @EventHandler
     public void onPlayerMove(PlayerMoveEvent e) {
         if (!e.getPlayer().getWorld().getName().equals("nebula"))
             return;
         if (e.getPlayer().getLocation().getBlockY() < 135) {
             e.getPlayer().teleport(NebulaShop.getInstance().getNebulaShopManager().getShopLocation());
         }
-    }
+    }*/
 
 
     @EventHandler

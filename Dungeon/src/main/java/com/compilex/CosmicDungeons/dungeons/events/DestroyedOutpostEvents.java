@@ -313,6 +313,9 @@ extends DungeonEvents {
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onPlayerMove(PlayerMoveEvent event) {
+        if (!event.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         if (this.parkourRestrictionTask != null) {
             this.parkourRestrictionTask.onPlayerMove(event);
         }
@@ -1059,6 +1062,9 @@ extends DungeonEvents {
         }
 
         public void onPlayerMove(PlayerMoveEvent event) {
+            if (!event.getTo().getWorld().getName().startsWith("dungeon_")) {
+                return;
+            }
             String regionMovingTo;
             DungeonPlayer dungeonPlayer;
             Location to = event.getTo();

@@ -650,6 +650,9 @@ implements CommandExecutor {
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) {
+        if (!event.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(event.getPlayer());
         if (dp != null && dp.getCurrentDungeon() != null && dp.getCurrentDungeon().equals(this.dungeon) && WorldGuardUtils.getRegionsIn((Location)event.getPlayer().getLocation()).contains("first_parkour") && event.getPlayer().getLocation().getBlockY() <= 140) {
             if (this.attemptTakeClockOfReturning(event.getPlayer())) {

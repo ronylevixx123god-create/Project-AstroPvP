@@ -105,23 +105,13 @@ public class Silence extends CustomEnchantment {
                 @Override
                 public void run() {
                     pTarget.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
-                    try {
-                        if (ParticleUtils.isPlayerIndicating((Player) user)) {
-                            try {
-                                de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 5);
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                            try {
-                                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 5);
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        }
-                   } catch (Exception e) {
 
-                    }
+                    de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 5);
+
+
+                    de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer(pTarget, target.getLocation(), 0, 0, 0, 0.4f, 5);
                 }
+
             }, durationTicks);
         }
     }

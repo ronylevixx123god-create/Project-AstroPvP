@@ -65,9 +65,7 @@ public enum CosmicToggle {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
         }
 
-        if (this == PARTICLE) {
-            return ParticleUtils.isPlayerIndicating(player);
-        }
+
         if (this == SCOREBOARD) {
             return !AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId());
         }
