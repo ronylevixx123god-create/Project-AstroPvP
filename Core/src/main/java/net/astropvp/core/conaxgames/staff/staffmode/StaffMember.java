@@ -1,8 +1,9 @@
-package net.astropvp.core.conaxgames.staff;
+package net.astropvp.core.conaxgames.staff.staffmode;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
 import lombok.Getter;
+import net.astropvp.core.conaxgames.staff.staffmode.PlayerInventoryContents;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;

@@ -1,7 +1,7 @@
-package net.astropvp.core.conaxgames.staff.staffmodules.modules;
+package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
 import net.astropvp.core.conaxgames.staff.Freeze;
-import net.astropvp.core.conaxgames.staff.staffmodules.moduletypes.EntityInteractModule;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.EntityInteractModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractAtEntityEvent;
