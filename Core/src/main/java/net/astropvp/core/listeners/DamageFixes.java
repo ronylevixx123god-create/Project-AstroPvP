@@ -16,7 +16,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DamageFixes implements Listener {
 
-    @EventHandler
+    /*@EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player) {
             e.setDamage(e.getDamage() * (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100));
@@ -25,7 +25,7 @@ public class DamageFixes implements Listener {
             e.setDamage(e.getDamage() / (1 + ((DamageUtils.getDecreasedDamageOn((Player) e.getDamager())) / 100)));
 
         }
-    }
+    }*/
 
     /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf(final EntityDamageByEntityEvent event) {
