@@ -20,7 +20,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 150;
+    int amountOfExpPerBlaze = 100;
 
     @Override
     public void run() {
@@ -85,11 +85,12 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
 
                 for (int i = 0; i < chest.getInventory().getSize(); i++) {
-                    if (mobCoinsFound && expBottleFound) break;
                     ItemStack itemStack = chest.getInventory().getItem(i);
                     if (itemStack == null || (!MobCoinUtils.isCoinsNote(itemStack) && !ExpBottles.isXpBottle(itemStack))) {
                         continue;
                     }
+
+                    if (expBottleFound && mobCoinsFound) break;
 
                     if (MobCoinUtils.isCoinsNote(itemStack) && !mobCoinsFound) {
                         mobcoin = i;
@@ -103,15 +104,13 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                     if (expBottle == -1 || mobcoin == -1) continue;
 
-                    if (!mobCoinsFound) {
-                        if (Math.random() < 0.2) {
-                            chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
-                        }
+                    if (Math.random() < 0.2) {
+                        chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
                     }
 
-                    if (!expBottleFound) {
-                        chest.getInventory().setItem(expBottle, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(expBottle)) + amountOfExpPerBlaze, "Mob Grinder"));
-                    }
+
+                    chest.getInventory().setItem(expBottle, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(expBottle)) + amountOfExpPerBlaze, "Mob Grinder"));
+
 
                 }
 

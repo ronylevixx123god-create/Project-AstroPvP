@@ -153,6 +153,7 @@ public class CombatLogCombatListener
             return;
         }
         if (CombatLog.inCombat(e.getPlayer())) {
+            if (e.getCause() == PlayerTeleportEvent.TeleportCause.UNKNOWN) return;
             if (e.getPlayer().isOp() || e.getPlayer().hasPermission("arkkit.combatlog.use_enderpearls")) {
                 return;
             }
