@@ -29,6 +29,7 @@ public abstract class InteractModule extends StaffModule implements Listener {
         if (event.getItem() == null) return;
         if (this.getMaterial() != event.getItem().getType()) return;
         this.onPlayerInteract(event);
+        event.setCancelled(true);
     }
 
 }

@@ -20,7 +20,7 @@ public class VanishModule extends InteractModule {
 
         staffMember.toggleVanish();
 
-        String status = super.getStaffModeManager().isStaffModeToggled(player) ? "&a&lENABLED" : "&c&lDISABLED";
+        String status = super.getStaffModeManager().getStaffMember(player).isVanished() ? "&a&lENABLED" : "&c&lDISABLED";
 
         player.sendMessage(CC.translate("&8[&a!&8] &7Vanish has been " + status));
     }

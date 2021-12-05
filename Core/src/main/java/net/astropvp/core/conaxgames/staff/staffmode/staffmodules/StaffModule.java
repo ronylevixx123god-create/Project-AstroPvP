@@ -21,6 +21,7 @@ public class StaffModule implements Listener {
                 .setName("&a&l" + itemName)
                 .setLore("")
                 .addLore(description)
+                .colorize()
                 .build();
     }
 }

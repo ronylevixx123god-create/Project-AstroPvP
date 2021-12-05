@@ -29,6 +29,7 @@ public abstract class EntityInteractModule extends StaffModule implements Listen
         if (!(event.getRightClicked() instanceof Player)) return;
 
         this.onPlayerInteract(event, (Player) event.getRightClicked());
+        event.setCancelled(true);
     }
 
 }
