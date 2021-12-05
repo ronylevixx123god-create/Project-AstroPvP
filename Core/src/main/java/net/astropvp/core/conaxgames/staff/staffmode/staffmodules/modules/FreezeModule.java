@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 public class FreezeModule extends EntityInteractModule {
 
     public FreezeModule() {
-        super("Freeze", Material.PACKED_ICE, 7, "&7Right-Click a player to", "&7freeze him");
+        super("Freeze", Material.PACKED_ICE, 6, "&7Right-Click a player to", "&7freeze him");
     }
 
     @Override

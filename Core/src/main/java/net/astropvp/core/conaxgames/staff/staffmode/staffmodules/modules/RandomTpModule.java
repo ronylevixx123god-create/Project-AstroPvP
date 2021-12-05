@@ -8,21 +8,18 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class RandomTpModule extends InteractModule {
 
     public RandomTpModule() {
-        super("Random TP", Material.MINECART, 1, "&7Right-Click this item to", "&7teleport to a random player on the server");
+        super("Random TP", Material.MINECART, 3, "&7Right-Click this item to", "&7teleport to a random player on the server");
     }
 
     @Override
     protected void onPlayerInteract(PlayerInteractEvent event) {
-        List<Player> players = new ArrayList<>(Bukkit.getOnlinePlayers());
-        int random = new Random().nextInt(players.size());
-        Player player = players.get(random);
+        Random random = new Random();
+        Player player = (Player) Bukkit.getOnlinePlayers().toArray()[random.nextInt(Bukkit.getOnlinePlayers().size())];
 
         StaffMember staffMember = super.getStaffModeManager().getStaffMember(player);
 

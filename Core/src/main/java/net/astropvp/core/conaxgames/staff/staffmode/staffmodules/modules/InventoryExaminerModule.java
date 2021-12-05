@@ -9,7 +9,7 @@ import org.bukkit.event.player.PlayerInteractAtEntityEvent;
 public class InventoryExaminerModule extends EntityInteractModule {
 
     public InventoryExaminerModule() {
-        super("Invsee Player", Material.BOOK, 0, "&7Right-Click a player", "to examin his inventory");
+        super("Invsee Player", Material.BOOK, 2, "&7Right-Click a player", "to examin his inventory");
     }
 
     @Override
