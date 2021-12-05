@@ -66,28 +66,28 @@ public class Rogue extends CustomEnchantment {
             if (!(e.getDamager() instanceof Player)) return;
             if (((Player) e.getDamager()).getItemInHand() == null) return;
             if (EnchantmentAPI.itemHasEnchantment(((Player)e.getDamager()).getItemInHand(),"Soul Master")) {
-                damage*=(((2 * 5)/100) + 1);
+                damage*=1.1;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 if (WeaponBonusUtils.hasWeaponBonus(((Player) player).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
-                    e.setDamage(damage + (multi * 0.3));
+                    e.setDamage(damage + (multi * 0.2));
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&b&lReforged Bonus&c&l)"));
 
                 } else {
-                    e.setDamage(damage + (multi * 0.31));
+                    e.setDamage(damage + (multi * 0.21));
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&e&lSoul Harvester&c&l)"));
 
                 }
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
-                e.setDamage(damage + (multi * 0.3));
+                e.setDamage(damage + (multi * 0.2));
                 ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&c&lSoul Maui's Hook&c&l)"));
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD)) {
-                    e.setDamage(damage + (multi * 0.30));
+                    e.setDamage(damage + (multi * 0.20));
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&2&lDoomsday Machete&c&l)"));
             } else {
                 ((Player) playerHit).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** " + ((Player) player).getName() + "'s ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));
-                e.setDamage(damage + (multi * 0.2));
+                e.setDamage(damage + (multi * 0.1));
             }
 
 

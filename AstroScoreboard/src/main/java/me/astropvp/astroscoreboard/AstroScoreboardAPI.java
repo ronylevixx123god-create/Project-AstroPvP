@@ -54,13 +54,13 @@ public class AstroScoreboardAPI {
         Faction factionName = ((FPlayer) FPlayers.i.get((OfflinePlayer) player)).getFaction();
         final Random random = new Random();
 
-        if (!(factionName.isWilderness())) {
+        if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fp.getFaction().getTag());
         } else {
             faction = "-";
         }
 
-        String color = fp.getFaction().isWilderness() ? CC.White : fp.getRelationTo(fother).getColor().toString();
+        String color = FactionUtils.isWilderness(fp.getFaction()) ? CC.White : fp.getRelationTo(fother).getColor().toString();
         ChatColor rankColor;
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
         switch (rank) {

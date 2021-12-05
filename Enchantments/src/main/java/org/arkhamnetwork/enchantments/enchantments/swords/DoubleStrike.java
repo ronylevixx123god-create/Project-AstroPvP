@@ -29,7 +29,7 @@ public class DoubleStrike extends CustomEnchantment {
     @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double random = Math.random();
-        double chance = 0.025D * level;
+        double chance = 0.015D * level;
         if (random < chance) {
             double dmg = e.getFinalDamage();
             if (dmg == 0.0D)

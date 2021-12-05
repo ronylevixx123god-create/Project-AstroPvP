@@ -230,7 +230,8 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOW)
     public void onBlockPhysics(BlockPhysicsEvent e) {
-        if (e.getBlock().hasMetadata("dungeonPortalBlock") || e.getBlock().hasMetadata("dungeonExitPortalBlock") || e.getBlock().getType() == Material.ENDER_PORTAL) {
+        if (e.getBlock().getType() == Material.ENDER_PORTAL) {
+        //if (e.getBlock().hasMetadata("dungeonPortalBlock") || e.getBlock().hasMetadata("dungeonExitPortalBlock") || e.getBlock().getType() == Material.ENDER_PORTAL) {
             e.setCancelled(true);
         }
     }

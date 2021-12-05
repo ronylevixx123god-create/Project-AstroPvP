@@ -1,22 +1,17 @@
 package me.astropvp.astroscoreboard.board;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.board.BoardTimer;
-import com.massivecraft.factions.integration.Econ;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
-import net.astropvp.core.AstroCore;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.*;
+import org.bukkit.scoreboard.Criterias;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 public class Board {
@@ -38,7 +33,6 @@ public class Board {
         return this.entries;
     }
 
-    private Set<BoardTimer> timers = new HashSet<>();
 
     private Set<String> keys = new HashSet<>();
 
@@ -109,16 +103,5 @@ public class Board {
         return null;
     }
 
-    public BoardTimer getCooldown(String id) {
-        for (BoardTimer cooldown : getTimers()) {
-            if (cooldown.getId().equals(id))
-                return cooldown;
-        }
-        return null;
-    }
 
-    public Set<BoardTimer> getTimers() {
-        this.timers.removeIf(cooldown -> (System.currentTimeMillis() >= cooldown.getEnd()));
-        return this.timers;
-    }
 }
