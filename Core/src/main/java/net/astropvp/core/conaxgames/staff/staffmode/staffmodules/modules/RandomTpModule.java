@@ -21,7 +21,7 @@ public class RandomTpModule extends InteractModule {
         Random random = new Random();
         Player player = (Player) Bukkit.getOnlinePlayers().toArray()[random.nextInt(Bukkit.getOnlinePlayers().size())];
 
-        StaffMember staffMember = super.getStaffModeManager().getStaffMember(player);
+        StaffMember staffMember = super.getStaffModeManager().getStaffMember(event.getPlayer());
 
         staffMember.getPlayer().teleport(player, PlayerTeleportEvent.TeleportCause.UNKNOWN);
     }
