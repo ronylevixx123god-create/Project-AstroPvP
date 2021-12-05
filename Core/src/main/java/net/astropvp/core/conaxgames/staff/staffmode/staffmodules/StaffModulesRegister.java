@@ -2,10 +2,7 @@ package net.astropvp.core.conaxgames.staff.staffmode.staffmodules;
 
 import lombok.Getter;
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.FreezeModule;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.InventoryExaminerModule;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.RandomTpModule;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.VanishModule;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -22,7 +19,7 @@ public class StaffModulesRegister {
     }
 
     public void initialize() {
-        this.registerAll(new FreezeModule(), new InventoryExaminerModule(), new RandomTpModule(), new VanishModule());
+        this.registerAll(new FreezeModule(), new InventoryExaminerModule(), new RandomTpModule(), new VanishModule(), new CompassModule());
     }
 
     private void registerAll(StaffModule... modules) {
