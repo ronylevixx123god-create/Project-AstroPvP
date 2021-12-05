@@ -51,13 +51,14 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onPlayerMove(PlayerMoveEvent e) {
+        if (!e.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         Event event;
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
             return;
         }
-        if (!e.getTo().getWorld().getName().startsWith("dungeon_")) {
-            return;
-        }
+
         DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(e.getPlayer());
         if (dp.getBukkitPlayer().hasMetadata("lastTrackedMoveEvent") && (long)MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)dp.getBukkitPlayer().getMetadata("lastTrackedMoveEvent").get(0)).asLong() < 20L) {
             return;
@@ -80,6 +81,9 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onPlayerTeleport(PlayerTeleportEvent e) {
+        if (!e.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         Event event;
         if (e.isCancelled()) {
             return;

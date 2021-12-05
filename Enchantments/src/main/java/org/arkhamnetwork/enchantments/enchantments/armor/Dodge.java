@@ -39,13 +39,8 @@ public class Dodge extends CustomEnchantment {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
                 e.setCancelled(true);
                 ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
-                try {
-                    if (ParticleUtils.isPlayerIndicating(player.getKiller())) {
                         de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 10);
-                    }
-                } catch (Exception ex) {
 
-                }
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }
         }

@@ -91,19 +91,9 @@ public class Rogue extends CustomEnchantment {
             }
 
 
-            if (player instanceof Player) {
-                try {
-                    if (ParticleUtils.isPlayerIndicating((Player) player)) {
-                        try {
-                            de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                } catch (Exception exception) {
 
-                }
-            }
+                            de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
+
             KillTrackerAPI.removeSoulsFromGems(p, soulCost);
             if (playerHit instanceof Player) {
                 DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkAquaB + "* " + "ROGUE" + CC.Gray + "[" + new DecimalFormat("##.##").format(multi) + "x]" + CC.DarkAquaB +  "*", "ROGUE");

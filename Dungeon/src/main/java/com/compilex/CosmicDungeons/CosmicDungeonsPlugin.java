@@ -48,7 +48,6 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.dungeons.libs.PlanetNulDungeon;
 import com.compilex.CosmicDungeons.items.HeroicDungeonScrollItem;
 import com.compilex.CosmicDungeons.items.PortalProtectionTrinketItem;
-import com.compilex.CosmicDungeons.listeners.BossSlayerTrinketListener;
 import com.compilex.CosmicDungeons.listeners.DungeonChallengeChestListener;
 import com.compilex.CosmicDungeons.listeners.DungeonInOutListener;
 import com.compilex.CosmicDungeons.listeners.DungeonLootbagListener;
@@ -357,7 +356,6 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPlayerMoveListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonSanityListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new DungeonChallengeChestListener(), (Plugin)this);
-        this.getServer().getPluginManager().registerEvents((Listener)new BossSlayerTrinketListener(), (Plugin)this);
         try {
             if (Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")) {
                 NCPHookManager.addHook((CheckType)CheckType.MOVING_SURVIVALFLY, (NCPHook)new DestroyedOutpostNCPHook());

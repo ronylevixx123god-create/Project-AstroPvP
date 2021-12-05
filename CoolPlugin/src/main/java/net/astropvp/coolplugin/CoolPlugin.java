@@ -38,7 +38,7 @@ public class CoolPlugin extends JavaPlugin implements Listener {
                 ServerCommandEvent serverCommandEvent= new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof add " + playerName);
                 serverCommandEvent.callEvent();
             }
-        }, 400L, 20L);
+        }, 400L, 40L);
     }
 
     public void onDisable() {

@@ -19,7 +19,7 @@ public class CrateDataManager {
         crates.forEach(crate -> AstroCrateKeysAPI.addCrate(crate.getCrateType(), crate.getLocation()));
         for (int i = crates.size() - 1; i >= 0; i--) {
             CrateData data = crates.get(i);
-            if (data.getLocation().getBlock().getType() != Material.GOLD_BLOCK)
+            if (data.getLocation().getBlock().getType() != Material.JUKEBOX)
                 crates.remove(i);
         }
     }

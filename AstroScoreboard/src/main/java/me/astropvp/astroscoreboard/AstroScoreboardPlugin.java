@@ -77,7 +77,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
                     }
                 }
             }
-        }.runTaskTimerAsynchronously(this, 20L, 20L));
+        }.runTaskTimerAsynchronously(this, 20L, 40L));
     }
 
     public static AstroScoreboardPlugin getInstance() {

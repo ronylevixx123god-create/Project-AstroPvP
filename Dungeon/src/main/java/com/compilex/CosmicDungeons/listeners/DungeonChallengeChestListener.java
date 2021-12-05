@@ -31,6 +31,9 @@ public class DungeonChallengeChestListener
 implements Listener {
     @EventHandler(priority=EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (!event.getPlayer().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         Set allowedLooters;
         Block block;
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && (block = event.getClickedBlock()) != null && block.getType() == Material.CHEST && block.hasMetadata("dungeonChallengeLootChest") && (allowedLooters = (Set)((MetadataValue)block.getMetadata("dungeonChallengeLootChest").get(0)).value()) != null && !allowedLooters.contains(event.getPlayer().getUniqueId()) && !event.getPlayer().isOp()) {

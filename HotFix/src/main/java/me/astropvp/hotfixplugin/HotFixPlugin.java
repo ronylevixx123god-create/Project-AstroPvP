@@ -5,6 +5,8 @@ import me.astropvp.hotfixplugin.commands.FixSlotsCommand;
 import me.astropvp.hotfixplugin.listeners.DamageListener;
 import me.astropvp.hotfixplugin.listeners.TeleportSafetyListener;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class HotFixPlugin extends JavaPlugin {

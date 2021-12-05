@@ -508,6 +508,9 @@ extends DungeonEvents {
 
     @EventHandler
     public void onPlayerMoveInMaze(PlayerMoveEvent e) {
+        if (!e.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
             return;
         }
@@ -563,6 +566,9 @@ extends DungeonEvents {
 
     @EventHandler
     public void onPlayerMoveInParkour(PlayerMoveEvent e) {
+        if (!e.getTo().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         Block b;
         if (e.getFrom().getBlockX() == e.getTo().getBlockX() && e.getFrom().getBlockY() == e.getTo().getBlockY() && e.getFrom().getBlockZ() == e.getTo().getBlockZ()) {
             return;

@@ -62,6 +62,9 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
+        if (!event.getPlayer().getWorld().getName().startsWith("dungeon_")) {
+            return;
+        }
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK || event.getAction() == Action.RIGHT_CLICK_AIR) {
             Player player = event.getPlayer();
             if (event.getItem() == null) {

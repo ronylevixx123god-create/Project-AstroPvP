@@ -119,14 +119,11 @@ public class HeroicBleed extends HeroicCustomEnchantment {
         }
 
         if (Math.random() < 0.1) {
-            try {
-                if (ParticleUtils.isPlayerIndicating(le.getKiller())) {
+
                     playBleedEffect(le.getLocation().add(0.0D, 1.0D, 0.0D), bleedStack);
                 }
-            } catch (Exception e) {
 
-            }
-        }
+
     }
 
     private void playBleedEffect(Location loc, int bleedStack) {
