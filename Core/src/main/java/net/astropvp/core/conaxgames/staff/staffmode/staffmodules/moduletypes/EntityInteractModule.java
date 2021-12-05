@@ -26,6 +26,8 @@ public abstract class EntityInteractModule extends StaffModule implements Listen
     public void onStaffItemClick(PlayerInteractAtEntityEvent event) {
         if (!this.staffModeManager.isStaffModeToggled(event.getPlayer())) return;
         if (event.getRightClicked() == null) return;
+        if (event.getPlayer().getItemInHand() == null) return;
+        if (event.getPlayer().getItemInHand().getType() != super.getMaterial()) return;
         if (!(event.getRightClicked() instanceof Player)) return;
 
         this.onPlayerInteract(event, (Player) event.getRightClicked());
