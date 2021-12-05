@@ -1,5 +1,6 @@
 package me.astropvp.astrospawners.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -26,7 +27,11 @@ public class CombineSpawnersInventoryListener implements Listener {
                 return;
             }
             amount += other;
-            event.setCursor(null);
+            if(event.getCursor().getAmount() > 1) {
+                event.getCursor().setAmount(event.getCursor().getAmount() - 1);
+            } else {
+                event.setCursor(null);
+            }
             event.setCurrentItem(ItemSpawner.getItem(type, amount));
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.ANVIL_USE, 0.75F, 2F);
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.LEVEL_UP, 0.75F, 2F);
