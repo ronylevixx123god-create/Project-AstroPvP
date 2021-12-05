@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
+import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
@@ -35,7 +36,7 @@ public class LootPreviewGUI {
 
     public LootPreviewGUI(Player player, CrateType type) {
         this.type = type;
-        Map<ItemStack, Double> itemList = AstroCrateKeysAPI.getItems(type);
+        Map<ItemStack, Double> itemList = AstroCrateKeysPlugin.getCachedCrateLoot().get(type);
 
 
 

@@ -3,7 +3,9 @@ package me.astropvp.cratekeys.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
+import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
+import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 import net.minecraft.server.v1_8_R3.InventoryUtils;
@@ -57,16 +59,17 @@ public class CrateKeyInventoryListener implements Listener {
                 return;
             }
 
+            CrateType type = CrateKeyItem.getCrateType(player.getItemInHand());
             if (player.isSneaking()) {
                 int amountOfKeys = player.getItemInHand().getAmount();
                 while (amountOfKeys != 0) {
-                    addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
+                    addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
                     amountOfKeys--;
                 }
                 player.setItemInHand((ItemStack) null);
 
             } else {
-                addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysAPI.getItems(CrateKeyItem.getCrateType(player.getItemInHand()))));
+                addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
 
                 if (player.getItemInHand().getAmount() > 1) {
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);

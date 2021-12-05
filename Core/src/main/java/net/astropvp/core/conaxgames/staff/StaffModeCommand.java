@@ -31,7 +31,7 @@ public class StaffModeCommand  extends Command {
 
         Player player = (Player) commandSender;
 
-        if (!player.hasPermission("astrocore.staff")) {
+        if (!player.hasPermission("astrocore.staffmode")) {
             player.sendMessage(CC.Red + "No Permission.");
             return false;
         }
