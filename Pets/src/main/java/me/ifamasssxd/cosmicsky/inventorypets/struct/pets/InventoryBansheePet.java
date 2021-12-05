@@ -91,7 +91,7 @@ public class InventoryBansheePet extends InventoryPet {
 
         Faction faction = FactionUtils.getFaction(player);
 
-        for (Entity other : player.getNearbyEntities(12.0D, 12.0D, 12.0D)) {
+        for (Entity other : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
             if (other instanceof Player) {
                 Player nearPlayer = (Player) other;
                 Faction nearFac = FactionUtils.getFaction(nearPlayer);
@@ -114,8 +114,8 @@ public class InventoryBansheePet extends InventoryPet {
                         player.sendMessage(CC.translate("&4&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&4&lDemon Weapon Bonus&7] &4&l*"));
                         continue;
                     }
-                    nearbyEnemies.add(nearPlayer);
                 }
+                nearbyEnemies.add(nearPlayer);
             }
         }
 
