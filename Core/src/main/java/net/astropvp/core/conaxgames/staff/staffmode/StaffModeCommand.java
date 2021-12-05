@@ -1,4 +1,4 @@
-package net.astropvp.core.conaxgames.staff;
+package net.astropvp.core.conaxgames.staff.staffmode;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;

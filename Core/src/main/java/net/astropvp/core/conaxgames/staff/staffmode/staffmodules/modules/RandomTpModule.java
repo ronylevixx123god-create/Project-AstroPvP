@@ -1,7 +1,7 @@
-package net.astropvp.core.conaxgames.staff.staffmodules.modules;
+package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
-import net.astropvp.core.conaxgames.staff.StaffMember;
-import net.astropvp.core.conaxgames.staff.staffmodules.moduletypes.InteractModule;
+import net.astropvp.core.conaxgames.staff.staffmode.StaffMember;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.InteractModule;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

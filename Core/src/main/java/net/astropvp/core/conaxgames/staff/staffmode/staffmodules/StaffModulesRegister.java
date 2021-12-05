@@ -1,11 +1,11 @@
-package net.astropvp.core.conaxgames.staff.staffmodules;
+package net.astropvp.core.conaxgames.staff.staffmode.staffmodules;
 
 import lombok.Getter;
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.conaxgames.staff.staffmodules.modules.FreezeModule;
-import net.astropvp.core.conaxgames.staff.staffmodules.modules.InventoryExaminerModule;
-import net.astropvp.core.conaxgames.staff.staffmodules.modules.RandomTpModule;
-import net.astropvp.core.conaxgames.staff.staffmodules.modules.VanishModule;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.FreezeModule;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.InventoryExaminerModule;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.RandomTpModule;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules.VanishModule;
 
 import java.util.HashSet;
 import java.util.Set;

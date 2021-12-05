@@ -1,7 +1,7 @@
-package net.astropvp.core.conaxgames.staff;
+package net.astropvp.core.conaxgames.staff.staffmode;
 
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.conaxgames.staff.staffmodules.StaffModulesRegister;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModulesRegister;
 import org.bukkit.GameMode;
 import org.bukkit.entity.Player;
 
@@ -10,11 +10,9 @@ import java.util.*;
 public class StaffModeManager {
 
     private final Map<UUID, StaffMember> staffInStaffMode;
-    private final StaffModulesRegister staffModulesRegister;
 
     public StaffModeManager() {
         this.staffInStaffMode = new HashMap<>();
-        this.staffModulesRegister = AstroCore.getInstance().getStaffModulesRegister();
     }
 
     public void toggleStaffMode(Player player) {
@@ -32,7 +30,7 @@ public class StaffModeManager {
         this.getStaffMember(player).vanishPlayer();
         this.clearInventory(player);
 
-        this.staffModulesRegister.getModules().forEach(staffModule -> {
+        AstroCore.getInstance().getStaffModulesRegister().getModules().forEach(staffModule -> {
             player.getInventory().setItem(staffModule.getSlot(), staffModule.getModuleItem());
         });
     }

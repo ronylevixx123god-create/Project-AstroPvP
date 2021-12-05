@@ -1,4 +1,4 @@
-package net.astropvp.core.conaxgames.staff;
+package net.astropvp.core.conaxgames.staff.staffmode;
 
 import lombok.Getter;
 import org.bukkit.entity.Player;

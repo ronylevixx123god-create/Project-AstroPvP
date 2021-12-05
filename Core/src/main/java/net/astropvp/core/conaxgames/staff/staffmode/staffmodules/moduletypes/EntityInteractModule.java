@@ -1,9 +1,9 @@
-package net.astropvp.core.conaxgames.staff.staffmodules.moduletypes;
+package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes;
 
 import lombok.Getter;
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.conaxgames.staff.StaffModeManager;
-import net.astropvp.core.conaxgames.staff.staffmodules.StaffModule;
+import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;

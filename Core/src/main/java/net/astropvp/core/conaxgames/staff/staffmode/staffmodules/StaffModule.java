@@ -1,4 +1,4 @@
-package net.astropvp.core.conaxgames.staff.staffmodules;
+package net.astropvp.core.conaxgames.staff.staffmode.staffmodules;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
