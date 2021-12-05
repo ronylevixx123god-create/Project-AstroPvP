@@ -23,7 +23,7 @@ public class StaffModeManager {
         }
     }
 
-    private void toggleStaffModeOn(Player player) {
+    public void toggleStaffModeOn(Player player) {
         this.staffInStaffMode.put(player.getUniqueId(), new StaffMember(player));
 
         player.setGameMode(GameMode.CREATIVE);
@@ -35,7 +35,7 @@ public class StaffModeManager {
         });
     }
 
-    private void toggleStaffModeOff(Player player) {
+    public void toggleStaffModeOff(Player player) {
         this.getStaffMember(player).getPlayerInventoryContents().restore(player);
         this.staffInStaffMode.remove(player.getUniqueId());
     }
@@ -48,6 +48,12 @@ public class StaffModeManager {
         return this.staffInStaffMode.get(player.getUniqueId());
     }
 
+
+    public void toggleOffAllStaffModes() {
+        this.staffInStaffMode.forEach(((uuid, staffMember) -> {
+            this.toggleStaffModeOff(staffMember.getPlayer());
+        }));
+    }
 
     private void clearInventory(Player player){
         player.getInventory().setHelmet(null);

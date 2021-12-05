@@ -70,6 +70,7 @@ import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
 import net.astropvp.core.conaxgames.staff.*;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffModeCommand;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
+import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModeListeners;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModulesRegister;
 import net.astropvp.core.items.*;
 import net.astropvp.core.items.coder.EnchantmentCoderItem;
@@ -282,6 +283,7 @@ public class AstroCore extends JavaPlugin {
         this.claimsOnFrozen = new HashMap<>();
 
         this.getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
+        this.getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
 
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
@@ -525,6 +527,7 @@ public class AstroCore extends JavaPlugin {
 
     @SneakyThrows
     public void onDisable() {
+        this.staffModeManager.toggleOffAllStaffModes();
         this.payToggles.saveToggles();
         try {
             this.jackpotManager.saveFileData();
