@@ -156,7 +156,7 @@ public class AncientArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -5.0, multiplier);
+        this.modifyDamage(damaged, event, -3.0, multiplier);
         return false;
     }
 
@@ -172,7 +172,7 @@ public class AncientArmorSet
             }
             this.startAncientEffect(damager, (Player) event.getEntity());
         }
-        return this.modifyDamage(damager, event, 8.0, applied);
+        return this.modifyDamage(damager, event, 7.0, applied);
     }
 
     @Override

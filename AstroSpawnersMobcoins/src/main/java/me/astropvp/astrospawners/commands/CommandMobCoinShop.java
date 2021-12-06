@@ -57,8 +57,6 @@ public class CommandMobCoinShop implements CommandExecutor {
         if (sender.hasPermission("astrocore.apollo")) {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(4000));
-            if (chests.containsKey("CrateKeyBundle"))
-                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("NewGenSkin"))
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1200));
             if (chests.containsKey("Backpack"))
@@ -72,8 +70,6 @@ public class CommandMobCoinShop implements CommandExecutor {
         } else {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(5000));
-            if (chests.containsKey("CrateKeyBundle"))
-                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("NewGenSkin"))
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1500));
             if (chests.containsKey("Backpack"))

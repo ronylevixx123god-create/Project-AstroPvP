@@ -150,7 +150,7 @@ public class ChampionArmorSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -8, multiplier);
+        this.modifyDamage(damaged, event, -7.5, multiplier);
         return false;
     }
 
