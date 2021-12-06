@@ -64,6 +64,9 @@ public class EndLogicnessListener implements Listener {
 		}
 		
 		if(!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
+			if (CombatLog.inCombat(player)) {
+				return;
+			}
 			EndPlayerData.remove(player);
 			player.sendMessage("");
 			player.sendMessage(CC.YellowB + "(!) " + CC.Yellow + "As a result of leaving the End World, "
