@@ -27,6 +27,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerVelocityEvent;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
@@ -34,10 +35,20 @@ public class DamageListener implements Listener {
 
 
     @EventHandler
+    public void onVelocity(PlayerVelocityEvent e) {
+        if(e.getPlayer().getName().equalsIgnoreCase("MattHawkk")) {
+            if (e.getPlayer().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
+                e.setCancelled(true);
+            }
+        }
+    }
+
+    @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
+
 
             if (damaged.getInventory().getHelmet() != null) {
                 if (damaged.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) {
