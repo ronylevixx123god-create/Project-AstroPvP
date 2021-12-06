@@ -22,8 +22,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public final class CosmicUtils
-        extends JavaPlugin {
+public final class CosmicUtils extends JavaPlugin {
     private static CosmicUtils instance;
     private Map<String, Player> asyncPlayerMap = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
     private Map<UUID, Player> asyncPlayerMapUUID = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
@@ -88,9 +87,7 @@ public final class CosmicUtils
         }, 0L, 40L);
         CosmicGUI.activeGUIs.entrySet();
         this.arkkitEnabled = Bukkit.getPluginManager().isPluginEnabled("Arkkit");
-        if (new File("plugins/FactionUpgrades.jar").exists()) {
-            UpgradeUtils.factionUpgradesEnabled = true;
-        }
+        UpgradeUtils.factionUpgradesEnabled = true;
         this.armorsetEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
         this.outpostsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
         this.evolutionKitEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicEvolutionKits");
