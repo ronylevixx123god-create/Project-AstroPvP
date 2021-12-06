@@ -87,18 +87,12 @@ public class CmdJoin
                 return;
             }
             if (Conf.factionMemberLimit > 0 && faction.getFPlayers().size() >= Conf.factionMemberLimit && !fplayer.isAdminBypassing()) {
-                if (Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades")) {
                     int extraMemebers = FactionUpgradeAPI.getPerkLevel(faction, FactionUpgrade.MAX_FACTION_SIZE);
                     if (faction.getFPlayers().size() >= Conf.factionMemberLimit + extraMemebers) {
                         CmdJoin.this.msg(" <b>!<white> The faction %s is at the limit of %d members, so %s cannot currently join.", faction.getTag(CmdJoin.this.fme), Conf.factionMemberLimit, fplayer.describeToAsync(CmdJoin.this.fme, false));
                         proccessingJoins.remove(CmdJoin.this.me.getUniqueId());
                         return;
                     }
-                } else {
-                    CmdJoin.this.msg(" <b>!<white> The faction %s is at the limit of %d members, so %s cannot currently join.", faction.getTag(CmdJoin.this.fme), Conf.factionMemberLimit, fplayer.describeToAsync(CmdJoin.this.fme, false));
-                    proccessingJoins.remove(CmdJoin.this.me.getUniqueId());
-                    return;
-                }
             }
             if (fplayer.hasFaction()) {
                 CmdJoin.this.msg("<b>%s must leave %s current faction first.", fplayer.describeToAsync(CmdJoin.this.fme, true), samePlayer ? "your" : "their");
