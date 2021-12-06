@@ -40,7 +40,6 @@ public class CosmicBosses extends JavaPlugin {
     private boolean eggEnabled;
     private boolean naturalSpawnEnabled;
     private boolean scoreboardEnabled;
-    private boolean factionUpgradesEnabled;
     private BlockChangeManager blockChangeManager;
     private BossSpawnTask task;
     public static String battlefieldWorld;
@@ -74,16 +73,12 @@ public class CosmicBosses extends JavaPlugin {
         this.eggEnabled = this.getConfig().getBoolean("eggEnabled", false);
         this.naturalSpawnEnabled = this.getConfig().getBoolean("naturalSpawn", false);
         this.scoreboardEnabled = this.getConfig().getBoolean("scoreboardEnabled", true);
-        this.factionUpgradesEnabled = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
-        if (this.factionUpgradesEnabled) {
             try {
                 final FactionUpgrade upgrade = FactionUpgrade.CONQUEST_MASTERY;
                 Bukkit.getLogger().info("Hook loaded for Faction Upgrades.");
             } catch (Exception e) {
                 Bukkit.getLogger().info("Unable to load new faction ugprade support!");
-                this.factionUpgradesEnabled = false;
             }
-        }
         this.loadBosses();
         this.blockChangeManager = new BlockChangeManager();
         RewardInventory.loadBossRewards(this);
@@ -185,9 +180,6 @@ public class CosmicBosses extends JavaPlugin {
         return this.scoreboardEnabled;
     }
 
-    public boolean isFactionUpgradesEnabled() {
-        return this.factionUpgradesEnabled;
-    }
 
     public void setEggEnabled(final boolean eggEnabled) {
         this.eggEnabled = eggEnabled;
@@ -201,9 +193,6 @@ public class CosmicBosses extends JavaPlugin {
         this.scoreboardEnabled = scoreboardEnabled;
     }
 
-    public void setFactionUpgradesEnabled(final boolean factionUpgradesEnabled) {
-        this.factionUpgradesEnabled = factionUpgradesEnabled;
-    }
 
     public BlockChangeManager getBlockChangeManager() {
         return this.blockChangeManager;

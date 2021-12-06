@@ -46,20 +46,18 @@ public class TPWarmup
     protected static double getTeleportWarmupDelay(Player p) {
         double xp = p.getTotalExperience();
         double teleportWarmup = 7.0;
-        if (Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades")) {
-            int tpMasterTier = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.TP_MASTERY);
-            if (tpMasterTier == 1) {
-                teleportWarmup *= 0.9;
-            }
-            if (tpMasterTier == 2) {
-                teleportWarmup *= 0.85;
-            }
-            if (tpMasterTier == 3) {
-                teleportWarmup *= 0.75;
-            }
-            if (tpMasterTier == 4) {
-                teleportWarmup *= 0.65;
-            }
+        int tpMasterTier = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.TP_MASTERY);
+        if (tpMasterTier == 1) {
+            teleportWarmup *= 0.9;
+        }
+        if (tpMasterTier == 2) {
+            teleportWarmup *= 0.85;
+        }
+        if (tpMasterTier == 3) {
+            teleportWarmup *= 0.75;
+        }
+        if (tpMasterTier == 4) {
+            teleportWarmup *= 0.65;
         }
         if (p.getWorld().getEnvironment() == World.Environment.THE_END) {
             return 1.0;
