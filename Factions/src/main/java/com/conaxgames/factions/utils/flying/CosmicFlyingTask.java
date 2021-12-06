@@ -61,7 +61,7 @@ implements Runnable {
         flyingOnlyInBases = P.getP().getConfig().getBoolean("flying-only-in-bases");
         flyingInAllyBases = P.getP().getConfig().getBoolean("flying-in-ally-bases");
         flyingInTruceBases = P.getP().getConfig().getBoolean("flying-in-truce-bases");
-        this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
+        this.factionUpgrades = true;
     }
 
     @Override

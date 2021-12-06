@@ -11,6 +11,8 @@ import me.astropvp.astroendgrinding.entities.EndMonster;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
+import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -64,14 +66,30 @@ public class EndBasicMonster extends EndMonster {
 	}
 	
 	@Override
-	public List<ItemStack> getRewards() {
+	public List<ItemStack> getRewards(Player player) {
 		List<ItemStack> rewards = Lists.newArrayList();
 
 		MysteryChest reward = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("SwagBag");
 
 
 		Random random = new Random();
-		int randomNumber = random.nextInt(1000000 - 500000) + 500000;
+		int randomNumber = random.nextInt(200000) + 200000;
+
+		int upgradeLevel = FactionUpgradeAPI.getPerkLevel(player, FactionUpgrade.ENDER_FARMING);
+		switch (upgradeLevel) {
+			case 1:
+				randomNumber *= 2;
+				break;
+			case 2:
+				randomNumber *= 3;
+				break;
+			case 3:
+				randomNumber += 5;
+				break;
+			default:
+				break;
+		}
+
 
 		rewards.add(ArkhamMoneyNotesAPI.getMoneyNote("End Monster", randomNumber));
 		if(Math.random() < 0.15) {

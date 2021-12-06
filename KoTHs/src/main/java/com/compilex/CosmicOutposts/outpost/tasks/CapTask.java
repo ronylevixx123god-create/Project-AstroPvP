@@ -68,7 +68,7 @@ implements Runnable {
 
     public CapTask(Outpost outpost) {
         this.outpost = outpost;
-        this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
+        this.factionUpgrades = true;
         this.webLink = Bukkit.getPluginManager().isPluginEnabled("CosmicWebLink");
         this.masks = new File("plugins/CosmicMasks.jar").exists();
     }

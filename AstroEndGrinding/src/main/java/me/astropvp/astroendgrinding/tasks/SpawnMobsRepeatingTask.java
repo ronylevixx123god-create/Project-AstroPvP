@@ -34,7 +34,11 @@ public class SpawnMobsRepeatingTask extends BukkitRunnable {
 					continue;
 				}
 
-				ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), location, 1f, 1f, 1f, 0.05f, 60);
+				try {
+					ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), location, 1f, 1f, 1f, 0.05f, 60);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
 
 
 

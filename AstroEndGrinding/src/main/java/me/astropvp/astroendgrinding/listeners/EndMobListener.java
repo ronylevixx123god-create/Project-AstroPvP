@@ -43,7 +43,7 @@ public class EndMobListener implements Listener {
 		for(MonsterType type : MonsterType.values()) {
 			if(type.getInstance().isMobType(entity)) {
 				event.getDrops().clear();
-				for (ItemStack item : type.getInstance().getRewards()) {
+				for (ItemStack item : type.getInstance().getRewards(event.getEntity().getKiller())) {
 					event.getDrops().add(item);
 				}
 				if(event.getEntity().getKiller() != null && event.getEntity().getKiller() instanceof Player) {

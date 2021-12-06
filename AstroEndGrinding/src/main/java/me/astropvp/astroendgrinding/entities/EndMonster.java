@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.bukkit.Location;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,7 +26,7 @@ public class EndMonster {
 		return null;
 	}
 	
-	public List<ItemStack> getRewards(){
+	public List<ItemStack> getRewards(Player player){
 		return Lists.newArrayList();
 	}
 	
