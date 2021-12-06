@@ -137,7 +137,7 @@
             <artifactId>fac</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -157,7 +157,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ccv</artifactId>
+            <artifactId>ccvt</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CCVerify-1.0 (12).jar</systemPath>

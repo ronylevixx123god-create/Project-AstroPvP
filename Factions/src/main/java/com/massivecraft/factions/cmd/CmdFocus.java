@@ -2,6 +2,7 @@ package com.massivecraft.factions.cmd;
 
 import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.event.FactionFocusEvent;
 import com.massivecraft.factions.struct.Relation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,6 +39,7 @@ public class CmdFocus extends FCommand
                     return;
                 }
                 focusPlayer(pSender, this.myFaction, playerToFocus, true);
+
             }
         }
     }
@@ -88,6 +90,8 @@ public class CmdFocus extends FCommand
             myFaction.msg(ChatColor.RED + "" + ChatColor.BOLD + "/f focus: " + ChatColor.WHITE + ChatColor.BOLD + ChatColor.UNDERLINE + " " + playerToFocus.getTag() + " " + playerToFocus.getPlayer().getName());
             if (command) {
                 pSender.sendMessage(ChatColor.GRAY + "Use " + ChatColor.UNDERLINE + "/f unfocus" + ChatColor.GRAY + " to clear your faction target.");
+                FactionFocusEvent factionFocusEvent = new FactionFocusEvent(pSender.getFaction(), playerToFocus);
+                factionFocusEvent.callEvent();
             }
 
             if (command) {
