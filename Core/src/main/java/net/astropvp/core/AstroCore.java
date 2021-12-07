@@ -288,7 +288,6 @@ public class AstroCore extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
@@ -431,12 +430,9 @@ public class AstroCore extends JavaPlugin {
 
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
-        this.getServer().getPluginManager().registerEvents(new RogueScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
 
-
-        this.getServer().getPluginManager().registerEvents(new RevokeScratchCardListener(), this);
 
         this.getCommand("merchant").setExecutor(new MerchantCommand());
 

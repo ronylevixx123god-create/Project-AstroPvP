@@ -4,12 +4,10 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
 import net.astropvp.core.guis.MerchantGUI;
-import net.astropvp.core.guis.RogueScratchCardGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 
 public class MerchantGUIListener implements Listener {
     @EventHandler

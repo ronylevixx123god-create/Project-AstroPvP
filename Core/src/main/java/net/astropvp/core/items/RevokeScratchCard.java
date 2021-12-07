@@ -6,17 +6,21 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
-import net.astropvp.core.guis.RevokeScratchCardGUI;
-import net.astropvp.core.guis.RogueScratchCardGUI;
 import net.minecraft.server.v1_8_R3.NBTBase;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.github.paperspigot.Title;
+
+import java.util.Random;
 
 public class RevokeScratchCard extends CosmicItem
         implements InventoryInteractable {
@@ -96,8 +100,33 @@ public class RevokeScratchCard extends CosmicItem
             player.setItemInHand((ItemStack) null);
         }
 
-        RevokeScratchCardGUI card = new RevokeScratchCardGUI(player);
-        card.open();
+        ItemStack book = EnchantmentBook.getEnchantmentBook(EnchantmentAPI.getEnchantment("Revoke"), generateRandomNumberOneToThree(), generateRandomNumberOneToHundred(), generateRandomNumberOneToHundred());
+
+
+        if (Math.random() < 0.15) {
+                player.sendMessage(CC.translate("&a&l(!) &aYou have Won! You have received the Reward!"));
+                player.sendTitle(new Title(CC.translate("&a&lYou won!"), CC.translate("&7You have received the reward."),10,20,10));
+                player.getInventory().addItem(book);
+                player.playSound(player.getLocation(), Sound.VILLAGER_YES, 10,10);
+
+            } else {
+                player.sendTitle(new Title(CC.translate("&c&lYou Lost!"), CC.translate("&7Better Luck Next Time."),10,20,10));
+                player.sendMessage(CC.translate("&c&l(!) &cYou have Lost!"));
+                player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 10,10);
+            }
+
+    }
+
+    public int generateRandomNumberOneToThree() {
+        Random rand = new Random();
+        return rand.nextInt((3 - 1) + 1) + 1;
+
+    }
+
+    public int generateRandomNumberOneToHundred() {
+        Random rand = new Random();
+        return rand.nextInt((100 - 1) + 1) + 1;
+
     }
 }
 

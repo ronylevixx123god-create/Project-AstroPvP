@@ -21,6 +21,8 @@ public class DeathAndTaxesSkin extends ItemSkin {
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
             this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());
         if(damaged instanceof Player && Math.random() <= 0.08 && !markList.containsKey(damaged)) {

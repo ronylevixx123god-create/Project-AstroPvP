@@ -23,7 +23,10 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
-    }
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), ()-> {
+            refreshTagsAsyncForServer();
+
+        }, 60L);    }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
@@ -31,6 +34,10 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
         }
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), ()-> {
+            refreshTagsAsyncForServer();
+
+        }, 60L);
     }
 
     @EventHandler
@@ -48,16 +55,6 @@ public class ListenerSB implements Listener {
 
     @EventHandler
     public void onFactionLeave(FPlayerLeaveEvent event) {
-        refreshTagsAsyncForServer();
-    }
-
-    @EventHandler
-    public void onJoinTabbb(PlayerJoinEvent event) {
-        refreshTagsAsyncForServer();
-    }
-
-    @EventHandler
-    public void onQuitbbb(PlayerQuitEvent event) {
         refreshTagsAsyncForServer();
     }
 
