@@ -7,7 +7,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 public class CompassModule extends InteractModule {
 
     public CompassModule() {
-        super("Teleport", Material.MINECART, 0, "&7Right-Click this item to", "&7teleport to a the location you are aiming at");
+        super("Teleport", Material.COMPASS, 0, "&7Right-Click this item to", "&7teleport to a the location you are aiming at");
     }
 
     @Override
