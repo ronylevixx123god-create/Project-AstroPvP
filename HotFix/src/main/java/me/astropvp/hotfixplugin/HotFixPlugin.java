@@ -2,6 +2,7 @@ package me.astropvp.hotfixplugin;
 
 import me.astropvp.astropvpskins.commands.CommandMultiSkin;
 import me.astropvp.hotfixplugin.commands.FixSlotsCommand;
+import me.astropvp.hotfixplugin.listeners.CannonFix;
 import me.astropvp.hotfixplugin.listeners.DamageListener;
 import me.astropvp.hotfixplugin.listeners.TeleportSafetyListener;
 import org.bukkit.Bukkit;
@@ -20,6 +21,7 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportSafetyListener(), this);
         getCommand("fixslot").setExecutor(new FixSlotsCommand());
+        Bukkit.getPluginManager().registerEvents(new CannonFix(), this);
 
     }
 
