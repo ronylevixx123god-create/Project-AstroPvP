@@ -29,6 +29,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
+import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import net.astropvp.core.items.RevokeScratchCard;
 import net.astropvp.core.items.RogueScratchCard;
@@ -66,9 +67,9 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
 
             //Normal Items
-            values.put(SlotbotScratchCard.getRogueSratchCard(), Integer.valueOf(2400));
-            values.put(RogueScratchCard.getRogueSratchCard(), Integer.valueOf(2400));
-            values.put(RevokeScratchCard.getRogueSratchCard(), Integer.valueOf(2400));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
             values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(4800));
             values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(6400));
 
@@ -83,9 +84,9 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
 
             //Normal items
-            values.put(SlotbotScratchCard.getRogueSratchCard(), Integer.valueOf(3000));
-            values.put(RogueScratchCard.getRogueSratchCard(), Integer.valueOf(3000));
-            values.put(RevokeScratchCard.getRogueSratchCard(), Integer.valueOf(3000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
             values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6000));
             values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
 
