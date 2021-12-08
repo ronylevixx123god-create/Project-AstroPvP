@@ -30,6 +30,9 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
+import net.astropvp.core.items.RevokeScratchCard;
+import net.astropvp.core.items.RogueScratchCard;
+import net.astropvp.core.items.SlotbotScratchCard;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -63,8 +66,12 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
 
             //Normal Items
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(12000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(8000));
+            values.put(SlotbotScratchCard.getRogueSratchCard(), Integer.valueOf(2400));
+            values.put(RogueScratchCard.getRogueSratchCard(), Integer.valueOf(2400));
+            values.put(RevokeScratchCard.getRogueSratchCard(), Integer.valueOf(2400));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(4800));
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(6400));
+
 
 
         } else {
@@ -76,8 +83,12 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
 
             //Normal items
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(15000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(10000));
+            values.put(SlotbotScratchCard.getRogueSratchCard(), Integer.valueOf(3000));
+            values.put(RogueScratchCard.getRogueSratchCard(), Integer.valueOf(3000));
+            values.put(RevokeScratchCard.getRogueSratchCard(), Integer.valueOf(3000));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6000));
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
+
 
 
 
