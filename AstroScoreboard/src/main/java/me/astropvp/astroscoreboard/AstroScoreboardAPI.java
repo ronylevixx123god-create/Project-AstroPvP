@@ -42,8 +42,15 @@ public class AstroScoreboardAPI {
     public static String getTeamName(Player player) {
         FPlayer fPlayer = FPlayers.i.get(player);
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-
-        return rankOrder.get(rank) + fPlayer.getFaction().getId();
+        String faction;
+        Faction factionName = ((FPlayer) FPlayers.i.get(player)).getFaction();
+        if (!(FactionUtils.isWilderness(factionName))) {
+            faction = CC.strip(fPlayer.getFaction().getTag()).toLowerCase();
+        } else {
+            faction = "zzzzzz";
+        }
+        return faction;
+        //return rankOrder.get(rank) + fPlayer.getFaction().getId();
     }
 
 
