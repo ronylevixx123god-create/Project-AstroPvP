@@ -20,12 +20,21 @@ public class DamageFixes implements Listener {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
-        if(e.getEntity() instanceof Player) {
+        /*if(e.getEntity() instanceof Player) {
             e.setDamage(e.getDamage() * (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100));
         }
         if(e.getDamager() instanceof Player) {
             e.setDamage(e.getDamage() / (1 + ((DamageUtils.getDecreasedDamageOn((Player) e.getDamager())) / 100)));
 
+        }*/
+
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            //Player phurt = (Player) e.getEntity();
+            Player damager = (Player) e.getDamager();
+
+            if (DamageUtils.isInPremade(damager)) {
+                e.setDamage(e.getDamage()* 0.7);
+            }
         }
     }
 
