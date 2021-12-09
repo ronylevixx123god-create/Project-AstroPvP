@@ -8,11 +8,9 @@ import net.astropvp.astroevents.game.MiniGameOptions;
 import net.astropvp.astroevents.game.MiniGameState;
 import net.astropvp.astroevents.game.MiniGameType;
 import net.astropvp.astroevents.game.players.SumoPlayer;
-import net.astropvp.astroevents.game.tasks.MiniGameCountDown;
-import net.astropvp.astroevents.game.tasks.SpectatorTeleportBackTask;
-import net.astropvp.astroevents.game.tasks.SumoDeathCheckTask;
-import net.astropvp.astroevents.game.tasks.SumoStartDuelTask;
+import net.astropvp.astroevents.game.tasks.*;
 import net.astropvp.astroevents.utils.Pair;
+import net.astropvp.astroevents.utils.Utils;
 import org.apache.commons.collections4.map.LinkedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -23,7 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -71,6 +68,7 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
     public void startMiniGameCountDown() {
         super.setMiniGameState(MiniGameState.STARTING);
         new MiniGameCountDown(this).runTaskTimer(plugin, 0L, 20L);
+        new MiniGameFlyDisableTask(this).runTaskTimer(plugin, 0L, 10L);
     }
 
     @Override
@@ -99,7 +97,6 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         super.clearInventory(player);
         player.setAllowFlight(false);
         player.setFlying(false);
-        player.setMetadata("ncf_combat", new FixedMetadataValue(plugin, System.currentTimeMillis()));
     }
 
     @Override
@@ -119,7 +116,6 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         player.setWalkSpeed((float) 0.2);
         super.clearInventory(player);
         super.clearPotionEffects(player);
-        player.removeMetadata("ncf_combat", plugin);
 
         if (super.isParticipant(player)) {
             super.getParticipant(player).getPlayerInventoryContents().restore(player);
@@ -160,12 +156,17 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         if (super.getMiniGameState() == MiniGameState.IN_PROGRESS) {
             event.setDamage(0.0);
         }
+
+        if (!this.isInDuel(super.getParticipant((Player) event.getEntity()))) {
+            event.setCancelled(true);
+        }
     }
 
     public void choseWinner(Player winner, Player loser) {
         if (this.getParticipants().size() <= 2) {
             this.stopMiniGame();
             this.giveWinnerRewards(winner);
+            Bukkit.broadcastMessage(Utils.color(super.getConfiguration().getString("win-message").replace("{player}", winner.getName())));
             return;
         }
 

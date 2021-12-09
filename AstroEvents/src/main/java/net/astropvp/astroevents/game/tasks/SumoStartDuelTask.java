@@ -20,8 +20,6 @@ public class SumoStartDuelTask extends BukkitRunnable {
         this.countdown = 5;
         this.left = this.miniGame.getDuelPlayers().getLeft();
         this.right = this.miniGame.getDuelPlayers().getRight();
-        this.left.setDamageEnabled(false);
-        this.right.setDamageEnabled(false);
     }
 
     @Override
@@ -32,8 +30,6 @@ public class SumoStartDuelTask extends BukkitRunnable {
         }
 
         if (this.miniGame.getDuelPlayers().getLeft() == null || miniGame.getDuelPlayers().getRight() == null) {
-            this.left.setDamageEnabled(true);
-            this.right.setDamageEnabled(true);
             this.cancel();
             return;
         }

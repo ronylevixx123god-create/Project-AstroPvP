@@ -14,6 +14,7 @@ import net.astropvp.astroevents.game.MiniGameState;
 import net.astropvp.astroevents.game.MiniGameType;
 import net.astropvp.astroevents.game.players.ParkourPlayer;
 import net.astropvp.astroevents.game.tasks.MiniGameCountDown;
+import net.astropvp.astroevents.game.tasks.MiniGameFlyDisableTask;
 import net.astropvp.astroevents.game.tasks.ParkourTimeTask;
 import net.astropvp.astroevents.utils.Clickable;
 import net.astropvp.astroevents.utils.Utils;
@@ -30,7 +31,6 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -101,6 +101,7 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
         this.loadCheckpoints();
         super.setMiniGameState(MiniGameState.STARTING);
         new MiniGameCountDown(this).runTaskTimer(plugin, 0L, 20L);
+        new MiniGameFlyDisableTask(this).runTaskTimer(plugin, 0L, 10L);
     }
 
     @Override
@@ -122,7 +123,6 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
         player.setFoodLevel(20);
         player.setAllowFlight(false);
         player.setFlying(false);
-        player.setMetadata("ncf_combat", new FixedMetadataValue(plugin, System.currentTimeMillis()));
         super.clearPotionEffects(player);
         super.clearInventory(player);
     }
@@ -142,7 +142,6 @@ public class ParkourMiniGame extends MiniGame<ParkourPlayer> {
         super.clearInventory(player);
         super.clearPotionEffects(player);
         super.getParticipant(player).getPlayerInventoryContents().restore(player);
-        player.removeMetadata("ncf_combat", plugin);
         if (stopMiniGame) return;
         super.removeParticipant(player);
     }
