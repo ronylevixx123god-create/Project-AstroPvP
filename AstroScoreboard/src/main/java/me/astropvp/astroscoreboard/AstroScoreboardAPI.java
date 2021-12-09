@@ -43,14 +43,14 @@ public class AstroScoreboardAPI {
         FPlayer fPlayer = FPlayers.i.get(player);
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
         String faction;
-        Faction factionName = ((FPlayer) FPlayers.i.get(player)).getFaction();
+        Faction factionName = FPlayers.i.get(player).getFaction();
         if (!(FactionUtils.isWilderness(factionName))) {
-            faction = CC.strip(fPlayer.getFaction().getTag()).toLowerCase();
+            faction = CC.strip(fPlayer.getFaction().getTag());
         } else {
             faction = "zzzzzz";
         }
-        return faction;
-        //return rankOrder.get(rank) + fPlayer.getFaction().getId();
+        //return faction;
+        return faction + rankOrder.get(rank);
     }
 
 
@@ -58,9 +58,7 @@ public class AstroScoreboardAPI {
         FPlayer fp = FactionUtils.getFPlayer(player);
         String faction;
         FPlayer fother = FactionUtils.getFPlayer(other);
-        Faction factionName = ((FPlayer) FPlayers.i.get((OfflinePlayer) player)).getFaction();
-        final Random random = new Random();
-
+        Faction factionName = FPlayers.i.get(player).getFaction();
         if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fp.getFaction().getTag());
         } else {

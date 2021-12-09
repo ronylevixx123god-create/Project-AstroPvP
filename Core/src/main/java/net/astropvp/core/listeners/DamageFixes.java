@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.utils.DamageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -13,10 +14,11 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class DamageFixes implements Listener {
 
-    /*@EventHandler
+    @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player) {
             e.setDamage(e.getDamage() * (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100));
@@ -25,7 +27,29 @@ public class DamageFixes implements Listener {
             e.setDamage(e.getDamage() / (1 + ((DamageUtils.getDecreasedDamageOn((Player) e.getDamager())) / 100)));
 
         }
-    }*/
+    }
+
+    @EventHandler
+    public void onHitP6(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player phurt = (Player) e.getEntity();
+
+            e.setDamage(e.getDamage() * (1-getProtectionReduction(phurt)));
+        }
+    }
+
+    public double getProtectionReduction(Player p) {
+        double decrease = 0;
+        for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
+            if (armorPiece == null) continue;
+            if (armorPiece.getType() == Material.AIR) continue;
+            if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
+                int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+                if (protLevel == 6) decrease += 5;
+            }
+        }
+        return decrease * 0.01;
+    }
 
     /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void dmgDebuf(final EntityDamageByEntityEvent event) {

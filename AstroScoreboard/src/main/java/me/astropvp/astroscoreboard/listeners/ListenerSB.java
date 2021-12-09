@@ -71,6 +71,7 @@ public class ListenerSB implements Listener {
     @EventHandler
     public void onFactionRelationChange(FactionRelationEvent event) {
         refreshTagsAsyncForFaction(event.getFaction(),event.getTargetFaction());
+        refreshTagsAsyncForFaction(event.getTargetFaction(), event.getFaction());
     }
 
     @EventHandler
