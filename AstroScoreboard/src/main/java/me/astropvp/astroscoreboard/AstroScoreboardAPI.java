@@ -54,7 +54,7 @@ public class AstroScoreboardAPI {
     }
 
 
-    public static String getDefaultPrefix(Player player, Player other) throws Exception {
+    public static String getDefaultPrefix(Player player, Player other) {
         FPlayer fp = FactionUtils.getFPlayer(player);
         String faction;
         FPlayer fother = FactionUtils.getFPlayer(other);

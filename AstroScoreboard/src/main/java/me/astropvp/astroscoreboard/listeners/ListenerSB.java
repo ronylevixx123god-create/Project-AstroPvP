@@ -23,10 +23,9 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), ()-> {
-            refreshTagsAsyncForServer();
+        refreshTagsAsyncForServer();
 
-        }, 60L);    }
+    }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
@@ -34,10 +33,6 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), ()-> {
-            refreshTagsAsyncForServer();
-
-        }, 60L);
     }
 
     @EventHandler
@@ -70,7 +65,7 @@ public class ListenerSB implements Listener {
 
     @EventHandler
     public void onFactionRelationChange(FactionRelationEvent event) {
-        refreshTagsAsyncForFaction(event.getFaction(),event.getTargetFaction());
+        refreshTagsAsyncForFaction(event.getFaction(), event.getTargetFaction());
         refreshTagsAsyncForFaction(event.getTargetFaction(), event.getFaction());
     }
 
@@ -82,11 +77,15 @@ public class ListenerSB implements Listener {
     @EventHandler
     public void onFactionFocus(FactionFocusEvent event) {
         refreshTagsAsyncForFaction(event.getFsender(), FactionUtils.getFaction(event.getFtarget()));
+        refreshTagsAsyncForFaction(event.getFsender(), event.getFsender());
+
     }
 
     @EventHandler
     public void onFactionUnFocus(FactionUnFocusEvent event) {
         refreshTagsAsyncForFaction(event.getFsender(), FactionUtils.getFaction(event.getFtarget()));
+        refreshTagsAsyncForFaction(event.getFsender(), event.getFsender());
+
     }
 
     public void refreshTagsAsyncForFaction(Faction faction1, Faction faction2) {
