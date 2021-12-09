@@ -413,6 +413,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MerchantGUIListener(), this);
         this.getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new HolyWhiteScrollListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ThrowableCreeperEggs(), this);
         try {
             Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
             this.getServer().getPluginManager().registerEvents((Listener)new HolyWhiteScrollCombatLoggerListener(), (Plugin)this);
