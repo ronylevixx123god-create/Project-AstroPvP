@@ -194,13 +194,6 @@
             <systemPath>${project.basedir}/lib/CosmicKOTH.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>npc</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/NoCheatPlus.jar</systemPath>
-        </dependency>
 
 
         <dependency>

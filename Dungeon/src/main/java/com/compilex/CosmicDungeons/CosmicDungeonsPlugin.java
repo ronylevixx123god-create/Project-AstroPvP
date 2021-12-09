@@ -74,9 +74,6 @@ import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import fr.neatmonster.nocheatplus.checks.CheckType;
-import fr.neatmonster.nocheatplus.hooks.NCPHook;
-import fr.neatmonster.nocheatplus.hooks.NCPHookManager;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -356,15 +353,8 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonPlayerMoveListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)this.dungeonSanityListener, (Plugin)this);
         this.getServer().getPluginManager().registerEvents((Listener)new DungeonChallengeChestListener(), (Plugin)this);
-        try {
-            if (Bukkit.getPluginManager().isPluginEnabled("NoCheatPlus")) {
-                NCPHookManager.addHook((CheckType)CheckType.MOVING_SURVIVALFLY, (NCPHook)new DestroyedOutpostNCPHook());
-                this.getLogger().info("Registered NoCheatPlus Hook for DestroyedOutpost dungeon!");
-            }
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+
+
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new PortalProtectionTrinketItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)new HeroicDungeonScrollItem());
