@@ -6,7 +6,6 @@ import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.astroevents.AstroEvents;
-import net.astropvp.astroevents.game.players.SumoPlayer;
 import net.astropvp.astroevents.utils.Utils;
 import net.astropvp.astroevents.utils.configuration.AbstractConfig;
 import org.bukkit.*;
@@ -18,7 +17,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -168,7 +166,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         event.setCancelled(true);
     }
 
-    @EventHandler
+/*    @EventHandler
     public void onDamageWhileInGame(EntityDamageEvent event) {
         if (!isValidParticipant(event.getEntity())) return;
         if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
@@ -180,7 +178,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         if (!isValidParticipant(event.getEntity())) return;
         if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
         event.setCancelled(true);
-    }
+    }*/
 
     @EventHandler
     public void onInventoryInteract(InventoryClickEvent event) {
