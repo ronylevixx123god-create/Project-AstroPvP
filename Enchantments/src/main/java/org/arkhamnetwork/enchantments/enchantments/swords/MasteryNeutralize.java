@@ -50,7 +50,7 @@ public class MasteryNeutralize extends CustomEnchantment {
 
 
 
-        if ((level) * multi >= ThreadLocalRandom.current().nextInt(180)) {
+        if ((level) * multi >= ThreadLocalRandom.current().nextInt(240)) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.RUINS_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage(CC.translate("&5&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s NEUTRALIZE &7(Lost Amulet) &5&l*"));

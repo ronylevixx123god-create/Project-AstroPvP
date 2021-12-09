@@ -3,6 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -35,7 +37,12 @@ class TeleblockListener implements Listener {
                 if (MaskType.hasEquipped(pHurt, "GLITCH")) {
                     return;
                 }
-                final Map<ArmorSet, Integer> equipped = (Map<ArmorSet, Integer>) CosmicArmorSetsAPI.getBonusCrystalsEquipped(pHurt);
+                if(!AstroItemSkinsAPI.hasSkinEquipped(pHurt, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
+                    pHurt.sendMessage(CC.translate("&c&l** Snowflake Slippers &7Blocked &cTeleblock &l**"));
+                    return;
+                }
+
+                    final Map<ArmorSet, Integer> equipped = (Map<ArmorSet, Integer>) CosmicArmorSetsAPI.getBonusCrystalsEquipped(pHurt);
                 final Integer crystalCount = equipped.get(ArmorSet.RANGER);
                 if (crystalCount != null && Math.random() < 0.2 * crystalCount) {
                     pHurt.sendMessage(CC.GreenB + "* RANGER CRYSTAL [" + CC.Gray + "Immune to Teleblock" + CC.GreenB + "] *");
