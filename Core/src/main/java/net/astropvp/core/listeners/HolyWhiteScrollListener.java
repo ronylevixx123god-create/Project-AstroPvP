@@ -145,9 +145,15 @@ public class HolyWhiteScrollListener implements Listener {
                     continue;
                 }
                 if (isBansheed) {
-                    e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                    killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing.");
+                    if (e.getEntity().hasMetadata("champion_ability")) {
+                        e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *" + CC.GoldB + " (Champion Ability)");
+                        killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *" + CC.GoldB + " (Champion Ability)");
+                        Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing + Champ ability.");
+                    } else {
+                        e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                        killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                        Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing.");
+                    }
                     continue;
                 }
                 if (!isTravAxe)

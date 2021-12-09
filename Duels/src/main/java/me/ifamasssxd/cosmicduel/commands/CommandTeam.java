@@ -219,7 +219,7 @@ public class CommandTeam implements CommandExecutor {
             if (data.getTeamates() != null)
                 data.getTeamates().stream().forEach(uuid -> {
                     Player teammate = Bukkit.getPlayer(uuid);
-                    if (teammate != null && teammate.isOnline()) {
+                    if (teammate != null) {
                         teammate.sendMessage(CC.translate("&c&l(!) &c" + player.getName() + " has disbanded your team!"));
                         teammate.playSound(teammate.getLocation(), Sound.ORB_PICKUP, 10.0F, 10.0F);
                     }

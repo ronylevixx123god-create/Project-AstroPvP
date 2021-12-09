@@ -33,7 +33,7 @@ public class DamageFixes implements Listener {
             Player damager = (Player) e.getDamager();
 
             if (DamageUtils.isInPremade(damager)) {
-                e.setDamage(e.getDamage()* 0.7);
+                e.setDamage(e.getDamage()* 0.6);
             }
         }
     }
@@ -54,7 +54,7 @@ public class DamageFixes implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 5;
+                if (protLevel == 6) decrease += 6;
             }
         }
         return decrease * 0.01;
