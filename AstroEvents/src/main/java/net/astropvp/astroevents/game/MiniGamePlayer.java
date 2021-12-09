@@ -15,11 +15,14 @@ public class MiniGamePlayer {
     @Setter
     private long joinGameTime;
     private final PlayerInventoryContents playerInventoryContents;
+    @Setter
+    private boolean damageEnabled;
 
     public MiniGamePlayer(Player player) {
         this.player = player;
         this.joinGameTime = System.currentTimeMillis();
         this.playerInventoryContents = new PlayerInventoryContents(player.getInventory().getContents().clone(), player.getInventory().getArmorContents().clone());
+        this.damageEnabled = false;
     }
 
     public void sendMessage(String text) {

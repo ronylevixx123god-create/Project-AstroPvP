@@ -18,6 +18,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -160,10 +161,24 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     }
 
     @EventHandler
-    public void onFallDamageWhileInGame(EntityDamageEvent event) {
+    public void onFallDamageToPlayerWhileInGame(EntityDamageEvent event) {
         if (!isValidParticipant(event.getEntity())) return;
         if (miniGamesOptions.isFallDamage()) return;
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamageWhileInGame(EntityDamageEvent event) {
+        if (!isValidParticipant(event.getEntity())) return;
+        if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamageFromPlayerWhileInGame(EntityDamageByEntityEvent event) {
+        if (!isValidParticipant(event.getEntity())) return;
+        if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
         event.setCancelled(true);
     }
 

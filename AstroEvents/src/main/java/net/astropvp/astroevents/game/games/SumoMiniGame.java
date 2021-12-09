@@ -11,8 +11,8 @@ import net.astropvp.astroevents.game.players.SumoPlayer;
 import net.astropvp.astroevents.game.tasks.MiniGameCountDown;
 import net.astropvp.astroevents.game.tasks.SpectatorTeleportBackTask;
 import net.astropvp.astroevents.game.tasks.SumoDeathCheckTask;
+import net.astropvp.astroevents.game.tasks.SumoStartDuelTask;
 import net.astropvp.astroevents.utils.Pair;
-import net.minecraft.server.v1_8_R3.ExceptionInvalidSyntax;
 import org.apache.commons.collections4.map.LinkedMap;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;
@@ -23,10 +23,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
-import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 
 
 public class SumoMiniGame extends MiniGame<SumoPlayer> {
@@ -191,6 +193,7 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
 
         this.duelPlayers.getLeft().getPlayer().teleport(fightLocationOne, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         this.duelPlayers.getRight().getPlayer().teleport(fightLocationTwo, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        new SumoStartDuelTask(this).runTaskTimer(plugin, 10, 10);
     }
 
     public void nextFight() {
