@@ -38,7 +38,10 @@ public class AstroEvents extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        this.commands.clear();
         this.getMiniGameRegister().unregisterAll();
+        this.commandManager = null;
+        this.configManager = null;
     }
 
     private void registerCommands() {
