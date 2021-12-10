@@ -143,7 +143,6 @@ public class InventorySkrrtPet extends InventoryPet {
 
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
-                //SkrrtCooldown.enterSkrrtCooldown(p);
                 SkrrtCooldownUtils.enterSkrrtCooldown(p);
 
                 CombatLog.flagCombat(p);

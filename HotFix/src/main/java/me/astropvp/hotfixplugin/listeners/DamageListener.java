@@ -35,10 +35,10 @@ import org.bukkit.util.Vector;
 public class DamageListener implements Listener {
 
     @EventHandler
-    public void onChat(AsyncPlayerChatEvent e) {
-        if(e.getMessage().contains("log4j") || e.getMessage().contains("jndi")) {
-            Bukkit.getPlayer("MattHawkk").sendMessage(e.getPlayer().getName() + "tried log4j crash");
-            e.setCancelled(true);
+    public void onChat(AsyncPlayerChatEvent event) {
+        if (event.getMessage().toLowerCase().contains("jndi")) {
+            event.setMessage("/null");
+            event.setCancelled(true);
         }
     }
 
