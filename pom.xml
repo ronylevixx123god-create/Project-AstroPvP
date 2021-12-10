@@ -66,6 +66,7 @@
         <module>AstroEvents</module>
         <module>AstroCollectors</module>
         <module>CoolPlugin</module>
+        <module>AstroPearls</module>
     </modules>
 
     <build>

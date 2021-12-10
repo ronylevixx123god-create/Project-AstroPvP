@@ -39,7 +39,7 @@ public class GiveThrowableCreeperEgg extends Command {
             return true;
         }
 
-        if (isNumeric(strings[1])) {
+        if (!isNumeric(strings[1])) {
             sender.sendMessage(CC.Red + "Invalid number.");
             return true;
         }

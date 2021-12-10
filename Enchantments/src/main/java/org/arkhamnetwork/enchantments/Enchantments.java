@@ -82,7 +82,7 @@ public class Enchantments extends EnchantPlugin {
                 new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(), new HeroicBarbarian(), new HeroicDeepWounds(),
                 new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Immortal(), new Pummel(), new Barbarian(),
                 new ArrowDeflect(), new Greatsword(), new Virus(), new Unfocus(), new Teleblock(), new Longbow(), new Inversion(), new Farcast(), new Paradox(), new Solitude(),
-                new Heavy(), new Hijack(), new Enrage(), new Dodge(), new Insanity(), new Phoenix(), new Disintegrate(), new BloodLink(), new Resilience(), new Tray(),
+                new Heavy(), new Hijack(), new Enrage(), new Dodge(), new Insanity(), new Phoenix(), new Disintegrate(), new BloodLink(), new Resilience(), new Tray(), new Exterminator(),
                 new Sticky(), new Metaphysical(), new Pacify(), new TargetTracking(), new DimensionRift(), new EagleEye(), new Marksman(), new Blacksmith(), new ArrowBreak(), new Assassin(),
                 new Aegis(), new AntiGank(), new RepairGuard(), new Fuse(), new Dominate(), new DeathGod(), new Diminish(), new HeroicPlagueCarrier(), new HeroicOverload(), new HeroicInquisitive(),
                 new HeroicDeathbringer(), new HeroicEnlighted(), new HeroicBlacksmith(), new HeroicSniper(), new HeroicDiminish(), new HeroicAssassin(), new HeroicDetonate(), new HeroicImplants(), new HeroicLifesteal(), new HeroicArmored(),

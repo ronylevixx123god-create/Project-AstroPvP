@@ -24,6 +24,7 @@ descriptions:
   - Vampire=A chance to heal you for up to 3hp a few seconds after you strike.
   - FeatherWeight=A chance to give a burst of haste.
   - Haste=Allows you to swing your tools faster.
+  - Exterminator=Temporary disables enemy ability to use Undead Ruse, Guardians, and Spirits.
   - Obliterate=Extreme knockback.
   - Trap=A chance to give a buffed slowness effect.
   - Martyr Valor=Heroic Enchantment. Reduces incoming damage while wielding any sword (including heroic swords). This enchantment is stackable.

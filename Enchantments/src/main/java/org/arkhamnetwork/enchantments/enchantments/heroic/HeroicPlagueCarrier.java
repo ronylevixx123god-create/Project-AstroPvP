@@ -5,14 +5,12 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
+import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -28,6 +26,13 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
         this.max = 8;
         this.base = 25.0D;
         this.interval = 20.0D;
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+            @Override
+            public void run() {
+                HeroicPlagueCarrier.this.heroicEnchantment = true;
+                HeroicPlagueCarrier.this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Plague Carrier");
+            }
+        }, 2L);
     }
 
     @SneakyThrows
@@ -36,7 +41,7 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
             return;
         if (player instanceof Player) {
             Player p = (Player) player;
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+            double dmg = e.getFinalDamage();
             dmg *= ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0D && Math.random() < 0.8D) {
                 if (p.hasMetadata("HeroicPlagueCarrier") && System.currentTimeMillis() - ((MetadataValue) p.getMetadata("HeroicPlagueCarrier").get(0)).asLong() <= 120000L)

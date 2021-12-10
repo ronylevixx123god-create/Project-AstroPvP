@@ -112,6 +112,8 @@ public class Guardians extends CustomEnchantment {
             if (player.hasMetadata("inDungeonParkour")) {
                 return;
             }
+            if (Exterminator.isExterminated((Player) player)) return;
+
             final boolean KOTH_or_duel = player.getWorld().getName().equals("world_koth") || player.getWorld().getName().equals("world_duels") || player.getWorld().getName().equals("world_duels2");
             double chance = 0.005;
             if (chance > 0.005) {

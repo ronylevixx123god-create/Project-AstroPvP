@@ -191,13 +191,22 @@ public class CommandTeam implements CommandExecutor {
                 return false;
             }
             if (data.getLeaderUUID() == player.getUniqueId()) {
-                player.performCommand("team disband");
+                if (data.getTeamates() != null)
+                    data.getTeamates().stream().forEach(uuid -> {
+                        Player teammate = Bukkit.getPlayer(uuid);
+                        if (teammate != null) {
+                            teammate.sendMessage(CC.translate("&c&l(!) &c" + player.getName() + " has disbanded your team!"));
+                            teammate.playSound(teammate.getLocation(), Sound.ORB_PICKUP, 10.0F, 10.0F);
+                        }
+                    });
+                player.sendMessage(CC.translate("&c&l(!) &cYou have disbanded your team!"));
+                CosmicDuel.get().getTeamDataManager().removeTeam(data);
                 return false;
             }
             data.removeFromTeam(player.getUniqueId());
             player.sendMessage(CC.translate("&c&l(!) &cYou have left the team!"));
             Bukkit.getPlayer(data.getLeaderUUID()).sendMessage(CC.translate("&c&l(!) &f" + player.getName() + "&c has left your team!"));
-            data.getTeamates().stream().forEach(uuid -> {
+            data.getTeamates().forEach(uuid -> {
                 Player teammate = Bukkit.getPlayer(uuid);
                 if (teammate.isOnline()) {
                     teammate.sendMessage(CC.translate("&c&l(!) &c" + player.getName() + " has left your team!"));

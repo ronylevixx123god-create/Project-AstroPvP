@@ -14,6 +14,7 @@
         <module name="HotFix" />
         <module name="AstroCollectors" />
         <module name="Enchantments" />
+        <module name="AstroPearls" />
         <module name="Attributes" />
         <module name="Bosses" />
         <module name="AstroRevive" />
