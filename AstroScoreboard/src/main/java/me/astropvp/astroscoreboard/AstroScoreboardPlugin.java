@@ -39,7 +39,6 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerListeners();
         getInstance().setBoardManager(new BoardManager((BoardAdapter) new Scoreboard()));
 
-        runTasks();
     }
 
     @Override
@@ -62,23 +61,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         getServer().getScheduler().runTaskTimerAsynchronously((Plugin) this, (Runnable) this.boardManager, 0L, interval);
     }
 
-    public void runTasks() {
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(this, (Runnable) new BukkitRunnable() {
-            @Override
-            public void run() {
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    //FPlayer fplayer = FactionUtils.getFPlayer(player);
-                    for (Player other : Bukkit.getOnlinePlayers()) {
-                        try {
-                            PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
-                        } catch (Exception exception) {
-                            exception.printStackTrace();
-                        }
-                    }
-                }
-            }
-        }.runTaskTimerAsynchronously(this, 20L, 20L));
-    }
+
 
     public static AstroScoreboardPlugin getInstance() {
         return astroScoreboardPlugin;

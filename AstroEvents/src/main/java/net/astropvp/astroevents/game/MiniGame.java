@@ -6,7 +6,6 @@ import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.astroevents.AstroEvents;
-import net.astropvp.astroevents.game.players.SumoPlayer;
 import net.astropvp.astroevents.utils.Utils;
 import net.astropvp.astroevents.utils.configuration.AbstractConfig;
 import org.bukkit.*;
@@ -160,12 +159,26 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     }
 
     @EventHandler
-    public void onFallDamageWhileInGame(EntityDamageEvent event) {
+    public void onFallDamageToPlayerWhileInGame(EntityDamageEvent event) {
         if (!isValidParticipant(event.getEntity())) return;
         if (miniGamesOptions.isFallDamage()) return;
         if (event.getCause() != EntityDamageEvent.DamageCause.FALL) return;
         event.setCancelled(true);
     }
+
+/*    @EventHandler
+    public void onDamageWhileInGame(EntityDamageEvent event) {
+        if (!isValidParticipant(event.getEntity())) return;
+        if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
+        event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onDamageFromPlayerWhileInGame(EntityDamageByEntityEvent event) {
+        if (!isValidParticipant(event.getEntity())) return;
+        if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
+        event.setCancelled(true);
+    }*/
 
     @EventHandler
     public void onInventoryInteract(InventoryClickEvent event) {

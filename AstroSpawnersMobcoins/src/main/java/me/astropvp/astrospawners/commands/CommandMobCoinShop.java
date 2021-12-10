@@ -29,7 +29,11 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
+import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
+import net.astropvp.core.items.RevokeScratchCard;
+import net.astropvp.core.items.RogueScratchCard;
+import net.astropvp.core.items.SlotbotScratchCard;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
@@ -57,31 +61,35 @@ public class CommandMobCoinShop implements CommandExecutor {
         if (sender.hasPermission("astrocore.apollo")) {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(4000));
-            if (chests.containsKey("CrateKeyBundle"))
-                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("NewGenSkin"))
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1200));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
 
             //Normal Items
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(12000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(8000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(4800));
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(6400));
+
 
 
         } else {
             if (chests.containsKey("PremadeMeta"))
                 values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(5000));
-            if (chests.containsKey("CrateKeyBundle"))
-                values.put(((MysteryChest)chests.get("CrateKeyBundle")).createClaimableItem(false), Integer.valueOf(1000));
             if (chests.containsKey("NewGenSkin"))
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1500));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
 
             //Normal items
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(15000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(10000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
+            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
+            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6000));
+            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
+
 
 
 

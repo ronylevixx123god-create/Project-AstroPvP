@@ -42,18 +42,23 @@ public class AstroScoreboardAPI {
     public static String getTeamName(Player player) {
         FPlayer fPlayer = FPlayers.i.get(player);
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-
-        return rankOrder.get(rank) + fPlayer.getFaction().getId();
+        String faction;
+        Faction factionName = FPlayers.i.get(player).getFaction();
+        if (!(FactionUtils.isWilderness(factionName))) {
+            faction = CC.strip(fPlayer.getFaction().getTag());
+        } else {
+            faction = "zzzzzz";
+        }
+        //return faction;
+        return faction + rankOrder.get(rank);
     }
 
 
-    public static String getDefaultPrefix(Player player, Player other) throws Exception {
+    public static String getDefaultPrefix(Player player, Player other) {
         FPlayer fp = FactionUtils.getFPlayer(player);
         String faction;
         FPlayer fother = FactionUtils.getFPlayer(other);
-        Faction factionName = ((FPlayer) FPlayers.i.get((OfflinePlayer) player)).getFaction();
-        final Random random = new Random();
-
+        Faction factionName = FPlayers.i.get(player).getFaction();
         if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fp.getFaction().getTag());
         } else {

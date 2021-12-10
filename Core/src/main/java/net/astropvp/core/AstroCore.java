@@ -288,7 +288,6 @@ public class AstroCore extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new SlotbotScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
@@ -414,6 +413,7 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new MerchantGUIListener(), this);
         this.getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new HolyWhiteScrollListener(), this);
+        this.getServer().getPluginManager().registerEvents(new ThrowableCreeperEggs(), this);
         try {
             Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
             this.getServer().getPluginManager().registerEvents((Listener)new HolyWhiteScrollCombatLoggerListener(), (Plugin)this);
@@ -431,12 +431,9 @@ public class AstroCore extends JavaPlugin {
 
 
         this.getServer().getPluginManager().registerEvents(new Freeze(), this);
-        this.getServer().getPluginManager().registerEvents(new RogueScratchCardListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
 
-
-        this.getServer().getPluginManager().registerEvents(new RevokeScratchCardListener(), this);
 
         this.getCommand("merchant").setExecutor(new MerchantCommand());
 
@@ -473,7 +470,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
 
         getCommand("phoenix").setExecutor(new PhoenixCommand());
-        Arrays.asList(new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand(), new StaffModeCommand()).forEach(this:: registerCommand);
+        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand(), new StaffModeCommand()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new StaffListeners(), this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);

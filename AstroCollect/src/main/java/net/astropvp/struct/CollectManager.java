@@ -18,7 +18,7 @@ public class CollectManager {
             return collectList.get(player);
         PlayerCollect collect = new PlayerCollect(player);
         collectList.put(player, collect);
-        Bukkit.getScheduler().runTaskAsynchronously(CollectPlugin.getInstance(), () -> collect.load(false));
+        collect.load(false);
         return collect;
     }
 

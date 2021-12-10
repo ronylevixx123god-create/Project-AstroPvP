@@ -117,7 +117,7 @@ public class InventoryWitcherPet extends InventoryPet {
             }*/
             if (playerHasApollo(p)) {
                 player.sendMessage(CC.translate("&f&l* &7&n" + p.getName() + "&f&l APOLLO SET BLOCKED WITCHER *"));
-                p.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&f&lWITHCER PET *"));
+                p.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&r &f&lWITCHER PET *"));
                 continue;
             }
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));

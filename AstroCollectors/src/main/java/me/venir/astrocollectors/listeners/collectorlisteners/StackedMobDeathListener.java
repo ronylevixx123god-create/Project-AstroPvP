@@ -35,6 +35,7 @@ public class StackedMobDeathListener implements Listener {
     public void onStackedEntityDeath(StackedMobDeathEvent e) {
         Entity entity = e.getEntity();
         if (!(entity instanceof LivingEntity)) return;
+        if (entity instanceof Blaze) return;
         int stackSize = AstroSpawners.getInstance().getMobStackerUtils().getStackSize(entity);
         if (!(e.getDamager() instanceof Player)) {
             Location location = entity.getLocation();

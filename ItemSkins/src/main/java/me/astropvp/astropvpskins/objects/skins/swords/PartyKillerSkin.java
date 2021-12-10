@@ -14,6 +14,8 @@ public class PartyKillerSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;
+        if (event.isCancelled())
+            return;
         damager.setLastDamage(damager.getLastDamage()*1.05);
 
         if (Math.random()<0.2 && damaged instanceof Player) {

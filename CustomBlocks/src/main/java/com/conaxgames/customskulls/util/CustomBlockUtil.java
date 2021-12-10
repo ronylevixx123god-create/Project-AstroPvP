@@ -54,7 +54,7 @@ public class CustomBlockUtil {
     }
 
     public static Location getClosestChestLocation(Location location) {
-        int radius = 2;
+        int radius = 1;
         Block block = location.getBlock(); //placed block
         for (int x = -(radius); x <= radius; x++) {
             for (int y = -(radius); y <= radius; y++) {

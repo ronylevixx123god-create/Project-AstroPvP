@@ -64,7 +64,7 @@ public class HeroicDeathbringer extends CustomEnchantment {
 
             if (doubleDamage.contains(damage)) {
                 double random = Math.random();
-                double chance = 0.005D;
+                double chance = 0.004D;
                 if (random < chance) {
                     e.getEntity().sendMessage(CC.LightPurpleB + "** PLANETARY DEATHBRINGER " + CC.Gray + "[2x DMG] " + CC.LightPurpleB + "**");
                     if(e.getFinalDamage() > 35) {

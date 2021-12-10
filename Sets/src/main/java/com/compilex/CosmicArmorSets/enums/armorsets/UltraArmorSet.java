@@ -137,7 +137,7 @@ public class UltraArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        this.modifyDamage(damaged, event, -10, multiplier);
+        this.modifyDamage(damaged, event, -5, multiplier);
         return false;
     }
 
@@ -150,12 +150,12 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        if (Math.random() <= 0.04 * (double) applied) {
+        if (Math.random() <= 0.025 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage()*1.3);
+            event.setDamage(event.getDamage()*1.1);
 
         }
-        this.modifyDamage(damager, event, 15.0, applied);
+        this.modifyDamage(damager, event, 10.0, applied);
         return false;
     }
 

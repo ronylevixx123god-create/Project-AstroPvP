@@ -132,13 +132,6 @@ public class DivineImmolation extends CustomEnchantment {
                                     e.setDamage(e.getDamage()*1.1);
                                 }
 
-                                if (Math.random() < 0.25) {
-                                    if (le instanceof Player) {
-
-                                                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), le.getEyeLocation(), 0, 0, 0, 0.3f, 1);
-
-                                        }
-                                    }
 
                                 le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)100, 0));
                                 if (le instanceof Player) {

@@ -63,7 +63,7 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ " + StringUtils.formatWithCommas(give) + "XP " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
                         player2.giveExp(give);
                         x.addExperience(give);
-                        if (Math.random() <= 0.2) {
+                        if (Math.random() <= 0.1) {
                             Bukkit.broadcastMessage("");
                             Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
                             Bukkit.broadcastMessage("");
@@ -73,12 +73,12 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         double multiplier = 1.0D;
                         if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
                             multiplier += 0.25D;
-                        int give2 = (int) (multiplier * ThreadLocalRandom.current().nextInt(10000000, 30000001));
+                        int give2 = (int) (multiplier * ThreadLocalRandom.current().nextInt(250000, 500001));
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ $" + StringUtils.formatWithCommas(give2) + " " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
                         EconomyUtils.depositBalance((OfflinePlayer) player2, give2);
                         x.addMoney(give2);
 
-                        if (Math.random() <= 0.2) {
+                        if (Math.random() <= 0.1) {
                             Bukkit.broadcastMessage("");
                             Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
                             Bukkit.broadcastMessage("");

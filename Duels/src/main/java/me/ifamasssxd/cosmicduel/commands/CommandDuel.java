@@ -203,7 +203,7 @@ public class CommandDuel implements CommandExecutor {
                 p.sendMessage(CC.translate("&c&l(!) &cMake sure you have the same amount of players on both teams."));
                 return true;
             }
-            if (team != null && oTeam != null && team.getTotalSize() < 2 && oTeam.getTotalSize() < 2) {
+            if (team != null && oTeam != null && (team.getTotalSize() < 2 || oTeam.getTotalSize() < 2)) {
                 p.sendMessage(CC.translate("&c&l(!) &cBoth teams must have atleast 1 teammate to duel."));
                 return true;
             }
