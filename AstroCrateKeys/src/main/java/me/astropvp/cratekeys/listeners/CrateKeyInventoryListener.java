@@ -5,9 +5,11 @@ import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
+import me.astropvp.cratekeys.data.Filter;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.minecraft.server.v1_8_R3.InventoryUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -60,16 +62,29 @@ public class CrateKeyInventoryListener implements Listener {
             }
 
             CrateType type = CrateKeyItem.getCrateType(player.getItemInHand());
+            Filter filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(type);
+
             if (player.isSneaking()) {
                 int amountOfKeys = player.getItemInHand().getAmount();
                 while (amountOfKeys != 0) {
-                    addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
+                    ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
+
+                    if (filter.isBlockedItem(itemStack)) {
+                        player.sendMessage(CC.translate(itemStack.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft Click the crate to edit this filter."));
+                    } else {
+                        addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
+                    }
                     amountOfKeys--;
                 }
                 player.setItemInHand((ItemStack) null);
 
             } else {
-                addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
+                ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
+                if (filter.isBlockedItem(itemStack)) {
+                    player.sendMessage(CC.translate(itemStack.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft Click the crate to edit this filter."));
+                } else {
+                    addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
+                }
 
                 if (player.getItemInHand().getAmount() > 1) {
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
@@ -102,6 +117,7 @@ public class CrateKeyInventoryListener implements Listener {
     public static void addItemToPlayer(Player player, ItemStack item) {
         if (item == null || item.getType() == Material.AIR)
             return;
+
         player.getInventory().addItem(item);
     }
 }

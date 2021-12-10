@@ -6,11 +6,15 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
+import me.astropvp.cratekeys.data.Filter;
 import me.astropvp.cratekeys.enums.CrateType;
+
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -23,24 +27,30 @@ import java.util.Map;
 public class LootPreviewGUI {
     private PaginatedGui expShopUI;
     private CrateType type;
-
+    private final Filter filter;
 
 
     public PaginatedGui getLootGUI() {
         return this.expShopUI;
+
     }
-
-
-
 
 
     public LootPreviewGUI(Player player, CrateType type) {
         this.type = type;
+        if (AstroCrateKeysPlugin.getFilters().containsKey(player.getUniqueId()) && AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).containsKey(type)) {
+            this.filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(type);
+            this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
+
+        } else {
+            this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
+            this.filter = new Filter(type, new ArrayList<>());
+        }
+
+
         Map<ItemStack, Double> itemList = AstroCrateKeysPlugin.getCachedCrateLoot().get(type);
 
 
-
-        this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
         expShopUI.setDefaultClickAction(event -> {
             event.setCancelled(true);
         });
@@ -77,18 +87,31 @@ public class LootPreviewGUI {
 
 
         for (Map.Entry<ItemStack, Double> entry : itemList.entrySet()) {
-            ItemStack item = entry.getKey();
+            ItemStack item = entry.getKey().clone();
             double chance = entry.getValue();
 
             ItemBuilder itemBuilder = new ItemBuilder(item);
             itemBuilder.addLoreLine("");
             itemBuilder.addLoreLine(CC.translate("&a&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
+            if (filter.isBlockedItem(item)) {
+                itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: &aTrue"));
+            } else {
+                itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: &cFalse"));
+            }
+            itemBuilder.addLoreLine("");
             expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
-                event.setCancelled(true);
+                if (filter.isBlockedItem(item)) {
+                    filter.removeBlockedLootItem(item);
+                } else {
+                    filter.addBlockedLootItem(item);
+
+                }
+                LootPreviewGUI filterGUI = new LootPreviewGUI(player, type);
+                filterGUI.getLootGUI().open(player);
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
             }));
         }
-
 
 
     }
@@ -104,6 +127,7 @@ public class LootPreviewGUI {
         item.setItemMeta(meta);
         return item;
     }
+
     public ItemStack createFillerItem() {
         ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
         ItemMeta meta = item.getItemMeta();
