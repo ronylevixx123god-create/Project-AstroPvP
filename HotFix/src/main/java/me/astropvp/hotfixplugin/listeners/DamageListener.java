@@ -36,18 +36,13 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent e) {
-
-    }
-
-
-    @EventHandler
-    public void onVelocity(PlayerVelocityEvent e) {
-        if(e.getPlayer().getName().equalsIgnoreCase("MattHawkk")) {
-            if (e.getPlayer().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-                e.setCancelled(true);
-            }
+        if(e.getMessage().contains("log4j") || e.getMessage().contains("jndi")) {
+            Bukkit.getPlayer("MattHawkk").sendMessage(e.getPlayer().getName() + "tried log4j crash");
+            e.setCancelled(true);
         }
     }
+
+
 
     @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {

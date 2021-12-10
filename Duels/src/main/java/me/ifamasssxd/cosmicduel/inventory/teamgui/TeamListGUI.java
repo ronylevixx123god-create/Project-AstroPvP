@@ -87,7 +87,6 @@ public class TeamListGUI {
             for (UUID uuid : teamData.getTeamates()) {
                 if (Bukkit.getPlayer(uuid) == null) {
                     lore.add(CC.translate("&f&l ●&c Offline Player"));
-
                 } else {
                     Player player1 = Bukkit.getPlayer(uuid);
                     lore.add(CC.translate("&f&l ●&a " + player1.getName()));
@@ -103,7 +102,6 @@ public class TeamListGUI {
                 TeamData playerTeam = CosmicDuel.get().getTeamDataManager().tryFindTeam(player.getUniqueId());
                 if (playerTeam == null) {
                     player.sendMessage(CC.translate("&cYou are not apart of a team!"));
-
                 }
 
                 Player sender = (Player) event.getWhoClicked();
