@@ -2,10 +2,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -91,6 +88,8 @@ public class InventoryWitcherPet extends InventoryPet {
 
         if (playerHasApollo(player)) {
             sum *= 1.5;
+        } else if(MaskUtils.hasMaskEquipped(player, "ELF")) {
+            sum*=1.5;
         }
 
         procAbility(player, sum, 5);

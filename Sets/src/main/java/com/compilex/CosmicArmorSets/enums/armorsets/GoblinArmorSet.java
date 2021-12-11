@@ -92,7 +92,7 @@ public class GoblinArmorSet extends ArmorSetInfo implements WeaponedArmorSet {
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
         this.modifyDamage(damager, event, 8, multiplier);
-        if(event.getEntity() instanceof Player && !event.getEntity().hasMetadata("necro_blocked") && Math.random() < (5 * multiplier)) {
+        if(event.getEntity() instanceof Player && !event.getEntity().hasMetadata("necro_blocked") && Math.random() < 0.15) {
             damager.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + event.getEntity().getName() + "'s Rogue) &6&l*&e&l*&6&l*"));
             event.getEntity().sendMessage(CC.translate("&2&l** NECROMANCER MASK BLOCKED &7(" + damager.getName() + "'s Goblin Armor Set) &2&l**"));
             event.getEntity().setMetadata("necro_blocked", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
@@ -113,7 +113,13 @@ public class GoblinArmorSet extends ArmorSetInfo implements WeaponedArmorSet {
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
         event.setDamage(event.getDamage() * 1.25);
-        return true;
+        if(event.getEntity() instanceof Player && !event.getEntity().hasMetadata("necro_blocked") && Math.random() < 35) {
+            damager.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + event.getEntity().getName() + "'s Rogue) &6&l*&e&l*&6&l*"));
+            event.getEntity().sendMessage(CC.translate("&2&l** NECROMANCER MASK BLOCKED &7(" + damager.getName() + "'s Goblin Armor Set) &2&l**"));
+            event.getEntity().setMetadata("necro_blocked", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), System.currentTimeMillis()));
+            Bukkit.getScheduler().scheduleAsyncDelayedTask(CosmicArmorSetsPlugin.get_(), () -> event.getEntity().removeMetadata("necro_blocked", CosmicArmorSetsPlugin.get_()), 400L);
+        }
+        return false;
     }
 
     @Override

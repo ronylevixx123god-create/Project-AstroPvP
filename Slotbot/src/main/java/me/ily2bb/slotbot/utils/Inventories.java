@@ -135,7 +135,7 @@ public class Inventories {
 
     public static void startRollingInColumn(final Player player, final Inventory inventory, final int column) {
         player.setMetadata("slot_rolling_" + column, new FixedMetadataValue(SlotBotPlugin.getInstance(), null));
-        final Object[] objects = SlotBotPlugin.getMap();
+         Object[] objects = SlotBotPlugin.getMap();
         final ItemStack item = Utils.getRandomItemFromLootTable(objects);
         final BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(SlotBotPlugin.getInstance(), (Runnable) new BukkitRunnable() {

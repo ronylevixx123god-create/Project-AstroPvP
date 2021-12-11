@@ -62,6 +62,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     private double cageDuration = 5.0;
 
 
+
+
     public int getCooldown(int level) {
         return 300;
     }
@@ -115,6 +117,14 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     break;
                 }
             }
+        }
+
+        if (playerHasApollo(player)) {
+            cageDuration = 7.5;
+        } else if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+            cageDuration = 7.5;
+        } else {
+            cageDuration = 5.0;
         }
 
 

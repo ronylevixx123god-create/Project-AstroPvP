@@ -53,6 +53,7 @@ public class CosmicArmorSetsPlugin
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new OmniCrystal());
         }
         this.goblinSetManager = new GoblinSetManager(this);
+
     }
 
     public void onDisable() {
@@ -73,6 +74,7 @@ public class CosmicArmorSetsPlugin
         this.getServer().getPluginManager().registerEvents(new MasteryShardListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorSetCrystalTinkererListener(), this);
         getServer().getPluginManager().registerEvents(new NebulaSetListener(), this);
+        getServer().getPluginManager().registerEvents(new GoblinSetListener(), this);
     }
 
     public Map<Player, CachedArmorSet<AbilityArmorSet>> getPlayerAbilityArmorSets() {
