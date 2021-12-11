@@ -13,7 +13,6 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.integration.Econ;
 import com.reliableplugins.printer.Printer;
 import com.reliableplugins.printer.PrinterPlayer;
@@ -39,8 +38,6 @@ import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelType;
 import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
-import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,9 +49,6 @@ import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -62,9 +56,6 @@ public class Scoreboard implements BoardAdapter {
     private final AstroScoreboardPlugin plugin = AstroScoreboardPlugin.getInstance();
     private static DateFormat format = new SimpleDateFormat("MM/dd");
     private final Map<String, String> rankOrder = new HashMap<>();
-    private static final DateTimeFormatter DATE_FORMATED = DateTimeFormatter.ofPattern("EEE, MMM dd | HH:mm");
-    private String date;
-    private final DecimalFormat df;
 
     public List<String> getScoreboard(Player player, Board board) {
         return mainBoard(player);
@@ -75,11 +66,6 @@ public class Scoreboard implements BoardAdapter {
     }
 
     public void preLoop() {
-        LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("America/New_York"));
-        this.date = localDateTime.format(DATE_FORMATED);
-
-
-
     }
 
     public Scoreboard() {
@@ -94,13 +80,13 @@ public class Scoreboard implements BoardAdapter {
         rankOrder.put("apollo", "9");
         rankOrder.put("astro+", "a");
         rankOrder.put("astro", "b");
-        this.df = new DecimalFormat("#.#");
+
+
     }
 
 
     /*public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
-
         return CC.translate("&a&lAstro &7⎜ &fMap V");
     }*/
 
@@ -115,7 +101,6 @@ public class Scoreboard implements BoardAdapter {
                 }
             }
         }
-
         if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
             for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
                 if(entity.hasMetadata("boss")) {
@@ -134,16 +119,19 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
         }
 
-            if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-          }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
-                if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
-                    return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
-                }
+        }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+            if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
+                return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
+            }
+
+        } else if(!FactionUtils.isWilderness(fplayer.getFaction())) {
+            return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
-        return CC.translate("&a&lAstro &7┃ &f" + Bukkit.getOnlinePlayers().size());
+        return CC.translate("&a&lAstro&f&lPvP &7" + getDateSuffix());
     }
 
 
@@ -274,18 +262,14 @@ public class Scoreboard implements BoardAdapter {
         /*if (player.hasMetadata("cageMatch")) {
             List<String> board = new LinkedList<>();
             CageMatch pvpMatch = WildPvPPlugin.getInstance().getMatchManager().getMatchFromPlayer(player);
-
             board.add("");
             board.add(CC.translate("&a&lOpponent"));
-
-
             Player enemy;
             if (pvpMatch.getHost() == player) {
                 enemy = pvpMatch.getOpponent();
             } else {
                 enemy = pvpMatch.getHost();
             }
-
             board.add(CC.translate("&c") + enemy.getName());
             board.add("");
             board.add(CC.translate("&a&lExpiration"));
@@ -296,11 +280,10 @@ public class Scoreboard implements BoardAdapter {
             board.add("");
             board.add(CC.translate("&a&lAccount"));
             board.add(player.getName());
-
             return board;
         }*/
 
-            if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             List<String> board = new LinkedList<>();
             OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
             me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("great_hall");
@@ -556,20 +539,18 @@ public class Scoreboard implements BoardAdapter {
             board.add("");
             board.add(CC.translate("&b&lStronghold"));
             board.add(String.valueOf(CosmicHCFOutposts.get().getOutpostManager().getOutpostInside(player.getLocation()).getOutpostState()));
-
             board.addLongLine(-3, this.getOutpostName() + " " + this.getPrettyFormattedCapturePercent(), -3);
             scoreboard.addLongLine(-4, CC.Gray + " " + this.getOutpostState().getName() + CC.Green + (this.getOutpostState() == OutpostState.CONTROLLED && this.defendingFaction != null ? " " + CC.Gray + "(" + CC.Green + this.defendingFaction.getTag() + CC.Gray + ")" : ""), -4);
             player.setMetadata("boss_scoreboard", new FixedMetadataValue(CosmicKOTHPlugin.get_(), System.currentTimeMillis() + 30000L));
             scoreboard.setSlot(DisplaySlot.SIDEBAR);
-
             return board;
         }*/
 
 
-        /*PlayerDataManager manager = AstroSpawners.getInstance().getManager();
+        PlayerDataManager manager = AstroSpawners.getInstance().getManager();
         PlayerData data = manager.getPlayerData(player);
         List<String> board = new LinkedList<>();
-        board.add(CC.translate("&7"));
+        board.add(" ");
         board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
         board.add(ChatColor.WHITE + player.getName());
         board.add(" ");
@@ -580,32 +561,7 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add(" ");
         board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Mobcoins");
-        board.add(CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");*/
-
-        PlayerDataManager manager = AstroSpawners.getInstance().getManager();
-        PlayerData data = manager.getPlayerData(player);
-        List<String> board = new LinkedList<>();
-        //board.add(CC.translate("&7     " + date));
-        if (CombatLog.inCombat(player) || !EnderpearlCooldown.isEnderpearlCooldownOver(player)) {
-            board.add("");
-        }
-        if (CombatLog.inCombat(player)) {
-            board.add(CC.translate("&c&l Combat Tag&7: &c" + getTimeLeftMSInCombat(player)) + "ms");
-        }
-        if (!EnderpearlCooldown.isEnderpearlCooldownOver(player)) {
-            board.add(CC.translate("&b&l Enderpearl&7: &c") + EnderpearlCooldown.getEnderpearlCooldownLeft(player) + "ms");
-        }
-        board.add("");
-        board.add(CC.translate("&a XP&7: &2") + NumberUtils.formatMoney(player.getTotalExperience()));
-        board.add(CC.translate("&a Power&7: &f" +(int)FactionUtils.getFPlayer(player).getPower() +"&7/" + (int)FactionUtils.getFPlayer(player).getPowerMax()));
-        board.add(CC.translate("&a Account&7: &f" + player.getName()));
-        board.add(CC.translate("&a Balance&7: &2$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player))));
-        if (!FactionUtils.getFaction(player).isWilderness()) {
-            Faction faction = FactionUtils.getFaction(player);
-            board.add(CC.translate("&a Faction&7: &f" + faction.getTag()));
-        }
-        board.add("");
-        board.add(CC.translate("&7 play.astropvp.net"));
+        board.add(CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
 
         /*board.add("");
         board.add(CC.GreenB + player.getName());
@@ -630,14 +586,7 @@ public class Scoreboard implements BoardAdapter {
 
 
     public long getInterval() {
-        return 10L;
-    }
-
-    public static int getTimeLeftMSInCombat(Player pl) {
-        if (pl.hasMetadata("cl_combat") && pl.getMetadata("cl_combat").get(0) != null && System.currentTimeMillis() - pl.getMetadata("cl_combat").get(0).asLong() <= 10000L) {
-            return (int) (10000L - (System.currentTimeMillis() - pl.getMetadata("cl_combat").get(0).asLong()));
-        }
-        return 0;
+        return 40L;
     }
 
     public int getPing() {
