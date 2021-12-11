@@ -1,9 +1,6 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.cache.CacheBuilder;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
@@ -115,7 +112,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         },30L);
         damaged.sendTitle(new Title(CC.RedB + "Feign Death", CC.Red + NumberUtils.formatSeconds(seconds), 10, 25, 10));
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE) && !new NBTWrapper(pl.getItemInHand()).getString("cosmicType").equals("GOBLIN_WEAPON"))
                 pl.hidePlayer(damaged);
         }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);
