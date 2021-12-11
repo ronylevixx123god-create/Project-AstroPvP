@@ -74,7 +74,7 @@ public class GoblinArmorSet extends ArmorSetInfo implements WeaponedArmorSet {
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList(CC.translate("&e&lGOBLIN SET BONUS"), CC.translate("&e&l* &eDeal 25% More Damage All Enemies"), CC.translate("&e&l* &eReceive 15% Less Damage"), CC.translate("&e&l* &e35% chance to negate Rogue Enchantment"), CC.translate("&e&l* &e25% chance to disable Enemies Necromancer Mask for 20s"), CC.translate("&e&l* &e35% chance to disable enemy Golden Admirer"), CC.translate("&e&l* &eImmune to skrrt pet"), CC.translate("&e&l* &eSuper Charged Goblin Ability"));
+        return Lists.newArrayList(CC.YellowB + "GOBLIN SET BONUS", CC.translate("&e&l* &eDeal 25% More Damage All Enemies"), CC.translate("&e&l* &eReceive 15% Less Damage"), CC.translate("&e&l* &e35% chance to negate Rogue Enchantment"), CC.translate("&e&l* &e25% chance to disable Enemies Necromancer Mask for 20s"), CC.translate("&e&l* &e35% chance to disable enemy Golden Admirer"), CC.translate("&e&l* &eImmune to skrrt pet"), CC.translate("&e&l* &eSuper Charged Goblin Ability"));
     }
 
     @Override

@@ -37,8 +37,8 @@ public class ColoredLoreTag extends ArkPlugin {
     private static ItemStack loreTagItem;
 
     static {
-        pending_lore_name = "pending_lore_name";
-        lore_confirm_metadata = "lore_confirmation";
+        pending_lore_name = "coloredpending_lore_name";
+        lore_confirm_metadata = "coloredlore_confirmation";
         PREVIOUS_LORE_PREFIX = ChatColor.GOLD + ChatColor.BOLD.toString() + "LORE ";
         LORE_PREFIX = ChatColor.GOLD + ChatColor.BOLD.toString() + "~";
     }
@@ -61,7 +61,7 @@ public class ColoredLoreTag extends ArkPlugin {
     @Override
     public void enable() throws IOException {
         this.registerListener(new ColoredLoreTag.CustomLoreListener());
-        this.registerCommand(new CommandGiveLoreTag("givecoloredloretag", "/<command>", "Spawn item lore tag."));
+        this.registerCommand(new CommandGiveColoredLoreTag("givecoloredloretag", "/<command>", "Spawn item lore tag."));
         super.enable();
     }
 
@@ -177,14 +177,6 @@ public class ColoredLoreTag extends ArkPlugin {
                     if (is == null || is.getType() == Material.AIR) {
                         pl.sendMessage(ChatColor.RED + "Hold the ITEM you'd like to apply custom lore to.");
                         pl.sendMessage(ChatColor.GRAY + "Type '" + ChatColor.RED + "cancel" + ChatColor.GRAY + "' to unqueue this opperation.");
-                        return;
-                    }
-                    if (e.getMessage().contains("\u00a7") || e.getMessage().contains("&")) {
-                        pl.sendMessage(ChatColor.RED + "You cannot use color codes in your line of lore.");
-                        return;
-                    }
-                    if (!StringUtils.isAlphanumeric(e.getMessage().replace(" ", "").replace("?", "").replace(".", "").replace("!", ""))) {
-                        pl.sendMessage(ChatColor.RED + "Your custom lore line must only contain alpha numeric characters!");
                         return;
                     }
                     if (!ItemNametagListener.canRename.contains(is.getType())) {

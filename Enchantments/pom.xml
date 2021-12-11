@@ -108,7 +108,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Upgrades</artifactId>
+            <artifactId>Upgradess</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions (23).jar</systemPath>

@@ -23,6 +23,8 @@ public class HeroicLifesteal extends HeroicCustomEnchantment {
         if (random < chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) target, "NECROMANCER"))
                 return;
+            if (target instanceof Player && target.hasMetadata("necro_blocked"))
+                return;
             GeneralUtil.setPlayerHealth(user, health);
         }
     }
