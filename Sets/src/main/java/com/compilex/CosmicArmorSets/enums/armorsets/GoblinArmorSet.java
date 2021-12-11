@@ -74,7 +74,7 @@ public class GoblinArmorSet extends ArmorSetInfo implements WeaponedArmorSet {
 
     @Override
     public List<String> getEquipDescription() {
-        return Lists.newArrayList("&e&lGOBLIN SET BONUS", "&e&l* &eDeal 25% More Damage All Enemies", "&e&l* &eReceive 15% Less Damage", "&e&l* &e35% chance to negate Rogue Enchantment", "&e&l* &e25% chance to disable Enemies Necromancer Mask for 20s", "&e&l* &e35% chance to disable enemy Golden Admirer", "&e&l* &eImmune to skrrt pet", "&e&l* &eSuper Charged Goblin Ability");
+        return Lists.newArrayList("&e&lGOBLIN SET BONUS", CC.translate("&e&l* &eDeal 25% More Damage All Enemies"), CC.translate("&e&l* &eReceive 15% Less Damage"), CC.translate("&e&l* &e35% chance to negate Rogue Enchantment"), CC.translate("&e&l* &e25% chance to disable Enemies Necromancer Mask for 20s"), CC.translate("&e&l* &e35% chance to disable enemy Golden Admirer"), CC.translate("&e&l* &eImmune to skrrt pet"), CC.translate("&e&l* &eSuper Charged Goblin Ability"));
     }
 
     @Override
@@ -118,7 +118,7 @@ public class GoblinArmorSet extends ArmorSetInfo implements WeaponedArmorSet {
 
     @Override
     public ItemStack getWeapon(boolean applyTransmog) {
-        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_AXE, CC.YellowB + "Goblin Axe", "", CC.YellowB + "GOBLIN WEAPON BONUS", CC.Yellow + "Deal +25% damage to all enemies at desert", CC.Yellow + "35% chance to negate stitches pet", CC.Yellow + "Ability to see feign death players in warzone", CC.Gray + "(" + CC.GrayI + "Requires all 4 supreme items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "GOBLIN_WEAPON").build();
+        ItemStack item = new NBTWrapper(new ItemBuilder(Material.DIAMOND_AXE, CC.YellowB + "Goblin Axe", "", CC.YellowB + "GOBLIN WEAPON BONUS", CC.Yellow + "Deal +25% damage to all enemies at desert", CC.Yellow + "35% chance to negate stitches pet", CC.Yellow + "Ability to see feign death players in warzone", CC.Gray + "(" + CC.GrayI + "Requires all 4 goblin items." + CC.Gray + ")").enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "GOBLIN_WEAPON").build();
         this.addEnchantment("Block", this.getMaxEnchantLevel("Block"), item);
         this.addEnchantment("Reflective Block", this.getMaxEnchantLevel("Reflective Block"), item);
         return item;
