@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
@@ -17,6 +19,7 @@ import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -60,6 +63,19 @@ public class Rogue extends CustomEnchantment {
             double multi = 1.0D + 0.166666666666666D * (double)level + Math.random() / 2.0D;
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
+                return;
+            }
+            double chance = 0;
+            if(CosmicArmorSetsAPI.getArmorSet((Player) playerHit) != null && CosmicArmorSetsAPI.getArmorSet((Player) playerHit) == ArmorSet.GOBLIN)
+                chance += 35;
+            if(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit) != null && CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.GOBLIN)) {
+                int applied = CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).get(ArmorSet.GOBLIN);
+                chance += applied * 8;
+            }
+            if(Math.random() < chance) {
+                player.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + playerHit.getName() + "'s Rogue) &6&l*&e&l*&6&l*"));
+                playerHit.sendMessage(CC.translate("&c&l** ROGUE BLOCKED &7(" + player.getName() + "'s Goblin Armor Set) &e&l**"));
+                ((Player) player).playSound(player.getLocation(), Sound.VILLAGER_YES, 0.5f, 0.5f);
                 return;
             }
             double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);

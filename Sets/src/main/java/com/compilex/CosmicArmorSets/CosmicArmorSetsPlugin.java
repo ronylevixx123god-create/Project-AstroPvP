@@ -6,11 +6,13 @@ import com.compilex.CosmicArmorSets.cmds.CommandHeroicUpgrade;
 import com.compilex.CosmicArmorSets.cmds.CommandMasteryShard;
 import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
 import com.compilex.CosmicArmorSets.enums.CachedArmorSet;
+import com.compilex.CosmicArmorSets.enums.GoblinSetManager;
 import com.compilex.CosmicArmorSets.items.AntiMKitCrystalItem;
 import com.compilex.CosmicArmorSets.items.ArmorSetBonusCrystalItem;
 import com.compilex.CosmicArmorSets.items.CrystalExtractionItem;
 import com.compilex.CosmicArmorSets.items.OmniCrystal;
 import com.compilex.CosmicArmorSets.listeners.*;
+import lombok.Getter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -20,11 +22,13 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Getter
 public class CosmicArmorSetsPlugin
         extends JavaPlugin {
     private static CosmicArmorSetsPlugin p;
     private final Map<Player, CachedArmorSet<AbilityArmorSet>> playerAbilityArmorSets = new ConcurrentHashMap<Player, CachedArmorSet<AbilityArmorSet>>();
     private final boolean debugging = false;
+    private GoblinSetManager goblinSetManager;
 
     public static CosmicArmorSetsPlugin get_() {
         return p;
@@ -48,6 +52,7 @@ public class CosmicArmorSetsPlugin
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ArmorSetBonusCrystalItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new OmniCrystal());
         }
+        this.goblinSetManager = new GoblinSetManager(this);
     }
 
     public void onDisable() {
