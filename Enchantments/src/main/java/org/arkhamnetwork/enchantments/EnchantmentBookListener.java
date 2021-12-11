@@ -10,6 +10,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import org.apache.commons.lang.StringUtils;
@@ -27,12 +28,10 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
+import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class EnchantmentBookListener implements Listener {
@@ -282,112 +281,134 @@ public class EnchantmentBookListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onBlackscrollApply(final InventoryClickEvent e) throws Exception {
-        if (!e.getInventory().getTitle().equals("container.crafting")) {
-            return;
-        }
-        boolean heroicBlackscroll = false;
-        NBTWrapper wrapper = null;
-        final Material type = (e.getCursor() != null) ? e.getCursor().getType() : null;
-        if (e.getCursor() != null && ((heroicBlackscroll = (type == Material.INK_SACK && (wrapper = new NBTWrapper(e.getCursor())).hasKey("cosmicType") && wrapper.getString("cosmicType").equals("heroicBlackscroll"))) || EnchantmentBook.isBlackscroll(e.getCursor()))) {
-            if (e.getRawSlot() <= 3 && e.getRawSlot() >= 0 && e.getSlotType() != InventoryType.SlotType.QUICKBAR) {
-                return;
+    @EventHandler(
+            priority = EventPriority.MONITOR,
+            ignoreCancelled = true
+    )
+    public void onBlackscrollApply(InventoryClickEvent e) {
+        if (e.getInventory().getTitle().equals("container.crafting")) {
+            NBTWrapper wrapper = null;
+            if (e.getCursor() != null) {
+                e.getCursor().getType();
+            } else {
+                Object var10000 = null;
             }
-            if (e.getCurrentItem() != null) {
-                final Player pl = (Player) e.getWhoClicked();
-                final ItemStack to_enchant = e.getCurrentItem();
-                final Map<CustomEnchantment, Integer> allEnchants;
-                if (!EnchantmentBook.isEquipment(to_enchant) || e.getCurrentItem().getMaxStackSize() != 1 || (allEnchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(to_enchant)).isEmpty()) {
+
+            boolean heroicBlackscroll = EnchantmentBook.isHeroicBlackScroll(e.getCursor());
+            boolean masteryBlackscroll = EnchantmentBook.isMasteryBlackscroll(e.getCursor());
+            if (e.getCursor() != null && e.getCursor().getType() != Material.AIR && (wrapper = new NBTWrapper(e.getCursor())) != null && (heroicBlackscroll || masteryBlackscroll || EnchantmentBook.isBlackscroll(e.getCursor()))) {
+                if (e.getRawSlot() <= 3 && e.getRawSlot() >= 0 && e.getSlotType() != InventoryType.SlotType.QUICKBAR) {
                     return;
                 }
-                if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
-                    e.setCancelled(true);
-                    pl.sendMessage(CC.RedB + "(!) " + CC.Red + "Please remove your armor before attempting to Black Scroll it!");
-                    return;
-                }
-                final ItemStack blackscroll = e.getCursor().clone();
-                final List<CustomEnchantment> validEnchantsToExtract = new ArrayList<>();
-                for (final CustomEnchantment enchant : allEnchants.keySet()) {
-                    if (enchant instanceof MasteryCustomEnchantment) {
-                        continue;
+
+                if (e.getCurrentItem() != null) {
+                    Player pl = (Player)e.getWhoClicked();
+                    ItemStack to_enchant = e.getCurrentItem();
+                    Map allEnchants;
+                    if (!EnchantmentBook.isEquipment(to_enchant) || e.getCurrentItem().getMaxStackSize() != 1 || (allEnchants = EnchantmentAPI.getEnchantments(to_enchant)).isEmpty()) {
+                        return;
                     }
-                    if (enchant.heroicEnchantment && !heroicBlackscroll) {
-                        continue;
+
+                    if (e.getSlotType() == InventoryType.SlotType.ARMOR) {
+                        e.setCancelled(true);
+                        pl.sendMessage(CC.RedB + "(!) " + CC.Red + "Please remove your armor before attempting to Black Scroll it!");
+                        return;
                     }
-                    validEnchantsToExtract.add(enchant);
-                }
-                final Random random = ThreadLocalRandom.current();
-                if (validEnchantsToExtract.isEmpty()) {
-                    pl.sendMessage(ChatColor.RED + "You can only apply a Black Scroll to an item that contains non heroic enchantments!");
-                    return;
-                }
-                final NBTWrapper clickedWrapper = new NBTWrapper(e.getCurrentItem());
-                final NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("conaxData");
-                if (cosmicData != null && cosmicData.hasKey("noEnchants")) {
-                    pl.sendMessage(CC.RedB + "(!) " + CC.Red + "This armor is too powerful to have its enchantments extracted by black scrolls!");
-                    return;
-                }
-                if (e.getCursor().getAmount() > 1) {
-                    blackscroll.setAmount(blackscroll.getAmount() - 1);
-                    pl.setItemOnCursor(blackscroll);
-                } else {
-                    if (heroicBlackscroll && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        final long itemID = ItemID.getItemID(blackscroll);
-                        if (itemID != -1L) {
-                            ItemID.blacklistIID(itemID, "blackScrollUse");
+
+                    ItemStack blackscroll = e.getCursor().clone();
+                    List<CustomEnchantment> validEnchantsToExtract = Lists.newArrayList();
+                    Iterator var11 = allEnchants.keySet().iterator();
+
+                    while(var11.hasNext()) {
+                        CustomEnchantment enchant = (CustomEnchantment)var11.next();
+                        if ((!(enchant instanceof MasteryCustomEnchantment) || masteryBlackscroll) && (!enchant.heroicEnchantment || heroicBlackscroll)) {
+                            validEnchantsToExtract.add(enchant);
                         }
                     }
-                    pl.setItemOnCursor((ItemStack) null);
-                }
-                e.setCancelled(true);
-                e.setResult(Event.Result.DENY);
-                CustomEnchantment ce = validEnchantsToExtract.get(random.nextInt(validEnchantsToExtract.size()));
-                if (ce.heroicEnchantment && !heroicBlackscroll) {
-                    ce = ce.nonHeroicVersion;
-                }
-                final int level = allEnchants.get(ce);
-                int blackscrollMod = 0;
-                if (CosmicOutpostsAPI.controlsVanillaOutpost(pl)) {
-                    blackscrollMod = 10;
-                }
-                int chance;
-                if (heroicBlackscroll && wrapper.hasKey("conaxData")) {
-                    final NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));
-                    final int minChance = builder.getInt("min");
-                    int newMaxChance;
-                    final int maxChance = newMaxChance = builder.getInt("max");
-                    final int dif = maxChance - minChance;
-                    if (random.nextBoolean() && minChance < 100) {
-                        newMaxChance = Math.max(minChance, maxChance / 2);
-                        if (dif > 5 && maxChance == minChance) {
-                            newMaxChance += random.nextInt(5);
-                            if (newMaxChance <= maxChance) {
-                                newMaxChance = maxChance;
+
+                    Random random = ThreadLocalRandom.current();
+                    if (validEnchantsToExtract.isEmpty()) {
+                        pl.sendMessage(ChatColor.RED + "You can only apply a Black Scroll to an item that contains non heroic enchantments!");
+                        return;
+                    }
+
+                    NBTWrapper clickedWrapper = new NBTWrapper(e.getCurrentItem());
+                    NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("cosmicData");
+                    if (cosmicData != null && cosmicData.hasKey("noEnchants")) {
+                        pl.sendMessage(CC.RedB + "(!) " + CC.Red + "This armor is too powerful to have its enchantments extracted by black scrolls!");
+                        return;
+                    }
+
+                    if (e.getCursor().getAmount() > 1) {
+                        blackscroll.setAmount(blackscroll.getAmount() - 1);
+                        pl.setItemOnCursor(blackscroll);
+                    } else {
+                        if ((masteryBlackscroll || heroicBlackscroll) && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+                            long itemID = ItemID.getItemID(blackscroll);
+                            if (itemID != -1L) {
+                                ItemID.blacklistIID(itemID, "blackScrollUse");
                             }
                         }
+
+                        pl.setItemOnCursor((ItemStack)null);
                     }
-                    chance = minChance + random.nextInt(newMaxChance - minChance + 1);
-                } else {
-                    chance = EnchantmentBook.getBlackScrollBookSuccessRate(blackscroll) + blackscrollMod;
+
+                    e.setCancelled(true);
+                    e.setResult(Event.Result.DENY);
+                    CustomEnchantment ce = (CustomEnchantment)validEnchantsToExtract.get(random.nextInt(validEnchantsToExtract.size()));
+                    if (ce.heroicEnchantment && !heroicBlackscroll) {
+                        ce = ce.nonHeroicVersion;
+                    }
+
+                    int level = (Integer)allEnchants.get(ce);
+                    int blackscrollMod = 0;
+                    if (CosmicOutpostsAPI.controlsVanillaOutpost(pl)) {
+                        blackscrollMod = 10;
+                    }
+
+                    int chance;
+                    if ((heroicBlackscroll || masteryBlackscroll) && wrapper.hasKey("cosmicData")) {
+                        NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
+                        int minChance = builder.getInt("min");
+                        int newMaxChance;
+                        int maxChance = newMaxChance = builder.getInt("max");
+                        int dif = maxChance - minChance;
+                        if (random.nextBoolean() && minChance < 100) {
+                            newMaxChance = Math.max(minChance, maxChance / 2);
+                            if (dif > 5 && maxChance == minChance) {
+                                newMaxChance += random.nextInt(5);
+                                if (newMaxChance <= maxChance) {
+                                    newMaxChance = maxChance;
+                                }
+                            }
+                        }
+
+                        chance = minChance + random.nextInt(newMaxChance - minChance + 1);
+                    } else {
+                        chance = EnchantmentBook.getBlackScrollBookSuccessRate(blackscroll) + blackscrollMod;
+                    }
+
+                    if (pl.hasMetadata("blackscrollPet_Effect")) {
+                        int petLevel = ((MetadataValue)pl.getMetadata("blackscrollPet_Effect").get(0)).asInt();
+                        chance += petLevel;
+                        pl.removeMetadata("blackscrollPet_Effect", Bukkit.getPluginManager().getPlugin("CosmicSkyInventoryPets"));
+                    }
+
+                    e.setCurrentItem(ce.removeFromItem(e.getCurrentItem()));
+                    ItemStack book = EnchantmentBook.getEnchantmentBook(ce, level, chance, 100);
+                    PlayerUtil.giveOrDropProtectedItem(pl, book, -1);
+                    pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0F, 0.75F);
+                    pl.playEffect(EntityEffect.VILLAGER_HAPPY);
+                    Location l = pl.getLocation();
+                    ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0D, 1.0D, 0.0D), random.nextFloat(), random.nextFloat(), random.nextFloat(), 0.8F, 85);
+                    ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0D, 1.0D, 0.0D), random.nextFloat(), random.nextFloat(), random.nextFloat(), 0.65F, 30);
+                    pl.updateInventory();
                 }
-                if (pl.hasMetadata("blackscrollPet_Effect")) {
-                    final int petLevel = pl.getMetadata("blackscrollPet_Effect").get(0).asInt();
-                    chance += petLevel;
-                    pl.removeMetadata("blackscrollPet_Effect", Bukkit.getPluginManager().getPlugin("CosmicSkyInventoryPets"));
-                }
-                e.setCurrentItem(ce.removeFromItem(e.getCurrentItem()));
-                final ItemStack book = EnchantmentBook.getEnchantmentBook(ce, level, 100, 0);
-                PlayerUtil.giveOrDropProtectedItem(pl, book, -1);
-                pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 1.0f, 0.75f);
-                pl.playEffect(EntityEffect.WOLF_HEARTS);
-                final Location l = pl.getLocation();
-                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
-                de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), l.add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
-                pl.updateInventory();
             }
+
         }
     }
+
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onMagicDustApply(final InventoryClickEvent e) {

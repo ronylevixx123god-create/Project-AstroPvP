@@ -92,6 +92,22 @@ public class EnchantmentBook {
         return is;
     }
 
+    public static ItemStack getMasteryBlackscroll(int successRateMin, int successRateMax) {
+        int chosenMax = successRateMin + ThreadLocalRandom.current().nextInt(successRateMax - successRateMin + 1);
+        ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short)0, CC.DarkRedB + "Mastery Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.DARK_RED + successRateMin + "%-" + chosenMax + "%" + ChatColor.GRAY + " success book.", CC.DarkRedB + "(!)" + CC.DarkRed + " Chance to extract Mastery Enchantments");
+        return (new NBTWrapper(is)).setString("cosmicType", "masteryBlackscroll").setNBTBase("conaxData", (new NBTTagCompoundBuilder()).setInt("min", successRateMin).setInt("max", chosenMax).get()).setGlowing().build();
+    }
+
+
+    public static boolean isMasteryBlackscroll(ItemStack item) {
+        if (item != null && item.getType() == Material.INK_SACK) {
+            NBTWrapper wrapper = new NBTWrapper(item);
+            return wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("masteryBlackscroll");
+        } else {
+            return false;
+        }
+    }
+
     public static ItemStack getBlackScroll() {
         return getBlackScroll(new Random().nextInt(50) + 51);
     }
