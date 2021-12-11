@@ -585,7 +585,7 @@ public class Scoreboard implements BoardAdapter {
         PlayerDataManager manager = AstroSpawners.getInstance().getManager();
         PlayerData data = manager.getPlayerData(player);
         List<String> board = new LinkedList<>();
-        board.add(CC.translate("&7     " + date));
+        //board.add(CC.translate("&7     " + date));
         if (CombatLog.inCombat(player) || !EnderpearlCooldown.isEnderpearlCooldownOver(player)) {
             board.add("");
         }
