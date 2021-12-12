@@ -4,7 +4,7 @@ import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.Filter;
 import me.astropvp.cratekeys.enums.CrateType;
 
-import me.ifamasssxd.cosmicmysterychest.utils.Serialization;
+import me.astropvp.cratekeys.utils.Serialization;
 import org.bukkit.inventory.ItemStack;
 
 import java.sql.PreparedStatement;

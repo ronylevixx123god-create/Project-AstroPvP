@@ -24,6 +24,10 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 public class CrateKeyInventoryListener implements Listener {
 
     @EventHandler
@@ -62,7 +66,13 @@ public class CrateKeyInventoryListener implements Listener {
             }
 
             CrateType type = CrateKeyItem.getCrateType(player.getItemInHand());
-            Filter filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(type);
+            Filter filter;
+            if (AstroCrateKeysPlugin.getFilters().containsKey(player.getUniqueId()) && AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).containsKey(type)) {
+                filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(type);
+            } else {
+                filter = new Filter(type, new ArrayList<>());
+                AstroCrateKeysPlugin.getInstance().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
+            }
 
             if (player.isSneaking()) {
                 int amountOfKeys = player.getItemInHand().getAmount();

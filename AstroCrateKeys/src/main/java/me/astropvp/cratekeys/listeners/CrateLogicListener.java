@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
+import me.astropvp.cratekeys.data.Filter;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.inventory.LootPreviewGUI;
 import me.astropvp.cratekeys.items.CratePlacementItem;
@@ -24,6 +25,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.ArrayList;
+
 public class CrateLogicListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
@@ -70,7 +74,13 @@ public class CrateLogicListener implements Listener {
 
         event.setCancelled(true);
 
-
+        Filter filter;
+        if (AstroCrateKeysPlugin.getFilters().containsKey(player.getUniqueId()) && AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).containsKey(data.getCrateType())) {
+            filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(data.getCrateType());
+        } else {
+            filter = new Filter(data.getCrateType(), new ArrayList<>());
+            AstroCrateKeysPlugin.getInstance().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
+        }
         LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, data.getCrateType());
         lootPreviewGUI.getLootGUI().open(player);
     }
