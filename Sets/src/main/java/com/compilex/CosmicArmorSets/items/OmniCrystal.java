@@ -74,6 +74,10 @@ public class OmniCrystal
             return;
         }
 
+        ItemMeta meta = clicked.getItemMeta();
+        if (meta.hasLore())  {
+            if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS"))) return;
+        }
 
         if (ArmorSet.getArmorSetFromItem(clicked) != null && ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI) {
             return;
@@ -85,12 +89,12 @@ public class OmniCrystal
             newCursor.setAmount(newCursor.getAmount() - 1);
             player.setItemOnCursor(newCursor);
         }
+
         int chance = cursorWrapper.getconaxData().getInt("success");
         if (ThreadLocalRandom.current().nextInt(101) >= chance) {
             player.playSound(player.getLocation(), Sound.GLASS, 1.0f, 2.0f);
             return;
         }
-        ItemMeta meta = clicked.getItemMeta();
         if (meta.hasLore()) {
             List lore = meta.getLore();
             lore.add("");
