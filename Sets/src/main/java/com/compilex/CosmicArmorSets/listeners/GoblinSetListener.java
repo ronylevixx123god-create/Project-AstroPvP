@@ -5,6 +5,7 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.CachedGoblinSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astrospawners.utils.ActionBarMessageUtils;
 import org.bukkit.Location;
@@ -83,6 +84,7 @@ public class GoblinSetListener implements Listener {
             for (int y = location.getBlockY() - 5; y <= location.getBlockY()+5; y++) {
                 for (int z = location.getBlockZ() - 5; z <= location.getBlockZ()+5; z++) {
                     Material m = location.getWorld().getBlockAt(x, y, z).getType();
+                    if (FactionUtils.isWarZone(location.getWorld().getBlockAt(x, y, z).getLocation())) continue;
                     if (!WorldGuardUtils.isPvPEnabled(location.getWorld().getBlockAt(x, y, z).getLocation())) continue;
                     if (m.name().contains("DOOR") || m.name().contains("SLAB") || m == Material.BED || m == Material.ENCHANTMENT_TABLE || m == Material.SIGN_POST || m.name().contains("PLATE") || m.name().contains("STAIR") || m.name().contains("CHEST") || m == Material.STRING) {
                         location.getWorld().getBlockAt(x, y, z).setType(Material.AIR);

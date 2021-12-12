@@ -1,7 +1,9 @@
 package net.astropvp.core.items;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import net.astropvp.core.AstroCore;
@@ -116,7 +118,9 @@ public class ThrowableCreeperEggs implements Listener {
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Location creeperLocation = creeper.getLocation();
             creeper.remove();
-            creeperLocation.getWorld().createExplosion(creeperLocation, 3, false);
+            if (!FactionUtils.isWarZone(location)) {
+                creeperLocation.getWorld().createExplosion(creeperLocation, 3, false);
+            }
 
         }, (5L));
     }
