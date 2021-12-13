@@ -125,12 +125,12 @@ public class ApolloSet extends ArmorSetInfo
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
         if (regionName.contains("parkour") && !regionName.contains("enchants"))
             return;
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        //EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+       // EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
 
