@@ -56,7 +56,9 @@ public class DamageFixes implements Listener {
     public void omniReduction(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
-            if (DamageUtils.wearingOmniArmorSet(phurt)) {
+            Player hitter = (Player) e.getDamager();
+
+            if (DamageUtils.wearingOmniArmorSet(phurt) && !DamageUtils.wearingOmniArmorSet(hitter)) {
                 e.setDamage(e.getDamage() * 0.6);
             }
         }
@@ -66,7 +68,9 @@ public class DamageFixes implements Listener {
     public void omniDmgIncrease(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player hitter = (Player) e.getDamager();
-            if (DamageUtils.wearingOmniArmorSet(hitter))
+            Player phurt = (Player) e.getEntity();
+
+            if (DamageUtils.wearingOmniArmorSet(hitter) && !DamageUtils.wearingOmniArmorSet(phurt))
                 e.setDamage(e.getDamage() * 1.40);
         }
     }

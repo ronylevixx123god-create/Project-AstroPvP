@@ -47,6 +47,9 @@ public class ServerFixes implements Listener {
             e.setCancelled(true);
     }
 
+
+
+
     @EventHandler
     public void Interact(InventoryClickEvent event){
         HumanEntity player = event.getWhoClicked();
