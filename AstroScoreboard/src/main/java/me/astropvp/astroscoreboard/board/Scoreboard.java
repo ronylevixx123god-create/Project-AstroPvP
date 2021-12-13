@@ -87,7 +87,6 @@ public class Scoreboard implements BoardAdapter {
 
     /*public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
-
         return CC.translate("&a&lAstro &7⎜ &fMap V");
     }*/
 
@@ -120,13 +119,13 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
         }
 
-            if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-          }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
-                if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
-                    return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
-                }
+        }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+            if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
+                return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
+            }
 
         } else if(!FactionUtils.isWilderness(fplayer.getFaction())) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
@@ -263,18 +262,14 @@ public class Scoreboard implements BoardAdapter {
         /*if (player.hasMetadata("cageMatch")) {
             List<String> board = new LinkedList<>();
             CageMatch pvpMatch = WildPvPPlugin.getInstance().getMatchManager().getMatchFromPlayer(player);
-
             board.add("");
             board.add(CC.translate("&a&lOpponent"));
-
-
             Player enemy;
             if (pvpMatch.getHost() == player) {
                 enemy = pvpMatch.getOpponent();
             } else {
                 enemy = pvpMatch.getHost();
             }
-
             board.add(CC.translate("&c") + enemy.getName());
             board.add("");
             board.add(CC.translate("&a&lExpiration"));
@@ -285,11 +280,10 @@ public class Scoreboard implements BoardAdapter {
             board.add("");
             board.add(CC.translate("&a&lAccount"));
             board.add(player.getName());
-
             return board;
         }*/
 
-            if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             List<String> board = new LinkedList<>();
             OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
             me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("great_hall");
@@ -545,12 +539,10 @@ public class Scoreboard implements BoardAdapter {
             board.add("");
             board.add(CC.translate("&b&lStronghold"));
             board.add(String.valueOf(CosmicHCFOutposts.get().getOutpostManager().getOutpostInside(player.getLocation()).getOutpostState()));
-
             board.addLongLine(-3, this.getOutpostName() + " " + this.getPrettyFormattedCapturePercent(), -3);
             scoreboard.addLongLine(-4, CC.Gray + " " + this.getOutpostState().getName() + CC.Green + (this.getOutpostState() == OutpostState.CONTROLLED && this.defendingFaction != null ? " " + CC.Gray + "(" + CC.Green + this.defendingFaction.getTag() + CC.Gray + ")" : ""), -4);
             player.setMetadata("boss_scoreboard", new FixedMetadataValue(CosmicKOTHPlugin.get_(), System.currentTimeMillis() + 30000L));
             scoreboard.setSlot(DisplaySlot.SIDEBAR);
-
             return board;
         }*/
 

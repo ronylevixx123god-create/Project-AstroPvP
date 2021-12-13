@@ -127,7 +127,10 @@ public class InventoryBansheePet extends InventoryPet {
 
 
         int duration;
+
         if (playerHasApollo(player)) {
+            duration = 12;
+        } else if (MaskUtils.hasMaskEquipped(player, "ELF")) {
             duration = 12;
         } else {
             duration = 8;

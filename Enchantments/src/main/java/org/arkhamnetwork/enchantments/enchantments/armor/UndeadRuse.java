@@ -34,14 +34,19 @@ public class UndeadRuse extends CustomEnchantment {
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
-            if(player.hasMetadata("undead_ruse"))
+            if (player.hasMetadata("undead_ruse"))
                 return;
+            if (Exterminator.isExterminated((Player) player)) return;
+
             double chance = 0.002;
             if (Math.random() < chance) {
+                if (Exterminator.isExterminated((Player) player)) return;
                 int zombie_count = (int) (Math.random() / 2.0 * level) + 1;
                 final Player p = (Player) player;
                 p.setMetadata("undead_ruse", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
-                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {p.removeMetadata("undead_ruse", Enchantments.getInstance());}, 10000L);
+                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+                    p.removeMetadata("undead_ruse", Enchantments.getInstance());
+                }, 10000L);
 
                 final Location spawnLoc = p.getTargetBlock((HashSet<Byte>) null, 5).getLocation().add(0.0, 1.0, 0.0);
                 de.inventivegames.particle.ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
@@ -66,13 +71,13 @@ public class UndeadRuse extends CustomEnchantment {
                 if (attacker instanceof Player) {
                     final Player pAttacker = (Player) attacker;
                     pAttacker.hidePlayer(p);
-                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(), 0,0,0,0.75f,35);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(), 0, 0, 0, 0.75f, 35);
                     Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                         @SneakyThrows
                         @Override
                         public void run() {
                             pAttacker.showPlayer(p);
-                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(), 0,0,0,0.75f,35);
+                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer(p, p.getLocation(), 0, 0, 0, 0.75f, 35);
                         }
                     }, zombie_count * 20L + 20L);
                 }

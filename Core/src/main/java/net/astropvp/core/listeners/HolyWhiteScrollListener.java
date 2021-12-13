@@ -3,6 +3,7 @@ package net.astropvp.core.listeners;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.cosmicpvp.cosmicutils.utils.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
@@ -14,10 +15,6 @@ import net.astropvp.core.utils.HolyWhiteScrollUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -125,6 +122,10 @@ public class HolyWhiteScrollListener implements Listener {
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved you from getting monoed &a&l*"));
                         continue;
                     }
+                    if (MaskUtils.hasMaskEquipped(e.getEntity(), "ELF") && Math.random() <= 0.25) {
+                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &bMonopoly Effect &a&l*"));
+                        continue;
+                    }
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
@@ -145,9 +146,15 @@ public class HolyWhiteScrollListener implements Listener {
                     continue;
                 }
                 if (isBansheed) {
-                    e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                    killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing.");
+                    if (e.getEntity().hasMetadata("champion_ability")) {
+                        e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *" + CC.GoldB + " (Champion Ability)");
+                        killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *" + CC.GoldB + " (Champion Ability)");
+                        Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing + Champ ability.");
+                    } else {
+                        e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                        killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                        Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing.");
+                    }
                     continue;
                 }
                 if (!isTravAxe)

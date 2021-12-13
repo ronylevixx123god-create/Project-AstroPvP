@@ -23,8 +23,8 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
-        refreshTagsAsyncForServer();
 
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), this::refreshTagsAsyncForServer, 20L);
     }
 
     @EventHandler

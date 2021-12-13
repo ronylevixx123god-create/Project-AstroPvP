@@ -114,6 +114,7 @@ public class Spirits extends CustomEnchantment {
                 chance = 0.02;
             }
             if (Math.random() < chance) {
+                if (Exterminator.isExterminated((Player) player)) return;
                 player.setMetadata("acenstoralEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + 10000L)));
                 int acenstoral_count = level / 10 + 1;
                 final Player p = (Player) player;

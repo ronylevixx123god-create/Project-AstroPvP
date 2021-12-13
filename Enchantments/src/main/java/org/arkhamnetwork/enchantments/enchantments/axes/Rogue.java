@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
@@ -17,6 +19,7 @@ import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -57,12 +60,25 @@ public class Rogue extends CustomEnchantment {
             return;
         }
         if (this.isPlayerBehind(p, playerHit)) {
-            final double multi = 1.0 + 0.166666666666666 * level + Math.random() / 4;
+            double multi = 1.0D + 0.166666666666666D * (double)level + Math.random() / 2.0D;
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;
             }
-            double damage = e.getDamage();
+            double chance = 0;
+            if(CosmicArmorSetsAPI.getArmorSet((Player) playerHit) != null && CosmicArmorSetsAPI.getArmorSet((Player) playerHit) == ArmorSet.GOBLIN)
+                chance += 35;
+            if(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit) != null && CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.GOBLIN)) {
+                int applied = CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).get(ArmorSet.GOBLIN);
+                chance += applied * 8;
+            }
+            if((CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit) != null && CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.GOBLIN) || CosmicArmorSetsAPI.getArmorSet((Player) playerHit) != null && CosmicArmorSetsAPI.getArmorSet((Player) playerHit) == ArmorSet.GOBLIN) && Math.random() < chance) {
+                player.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + playerHit.getName() + "'s Rogue) &6&l*&e&l*&6&l*"));
+                playerHit.sendMessage(CC.translate("&c&l** ROGUE BLOCKED &7(" + player.getName() + "'s Goblin Armor Set) &e&l**"));
+                ((Player) player).playSound(player.getLocation(), Sound.VILLAGER_YES, 0.5f, 0.5f);
+                return;
+            }
+            double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             if (!(e.getDamager() instanceof Player)) return;
             if (((Player) e.getDamager()).getItemInHand() == null) return;
             if (EnchantmentAPI.itemHasEnchantment(((Player)e.getDamager()).getItemInHand(),"Soul Master")) {
@@ -71,19 +87,19 @@ public class Rogue extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 if (WeaponBonusUtils.hasWeaponBonus(((Player) player).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
-                    e.setDamage(damage + (multi * 0.2));
+                    e.setDamage(damage + (multi * 0.15));
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&b&lReforged Bonus&c&l)"));
 
                 } else {
-                    e.setDamage(damage + (multi * 0.21));
+                    e.setDamage(damage + (multi * 0.15));
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&e&lSoul Harvester&c&l)"));
 
                 }
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
-                e.setDamage(damage + (multi * 0.2));
+                e.setDamage(damage + (multi * 0.15));
                 ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&c&lSoul Maui's Hook&c&l)"));
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD)) {
-                    e.setDamage(damage + (multi * 0.20));
+                    e.setDamage(damage + (multi * 0.15));
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&2&lDoomsday Machete&c&l)"));
             } else {
                 ((Player) playerHit).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** " + ((Player) player).getName() + "'s ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));

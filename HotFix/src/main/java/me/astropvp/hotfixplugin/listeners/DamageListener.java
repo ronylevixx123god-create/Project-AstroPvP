@@ -25,6 +25,7 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerItemDamageEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerVelocityEvent;
@@ -33,15 +34,15 @@ import org.bukkit.util.Vector;
 
 public class DamageListener implements Listener {
 
-
     @EventHandler
-    public void onVelocity(PlayerVelocityEvent e) {
-        if(e.getPlayer().getName().equalsIgnoreCase("MattHawkk")) {
-            if (e.getPlayer().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-                e.setCancelled(true);
-            }
+    public void onChat(AsyncPlayerChatEvent event) {
+        if (event.getMessage().toLowerCase().contains("jndi")) {
+            event.setMessage("/null");
+            event.setCancelled(true);
         }
     }
+
+
 
     @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {

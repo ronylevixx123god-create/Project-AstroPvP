@@ -104,7 +104,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -10.0, multiplier);
+        this.modifyDamage(damaged, event, -8.0, multiplier);
         return false;
     }
 
@@ -117,7 +117,7 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 10.0, applied);
+        return this.modifyDamage(damager, event, 8.0, applied);
     }
 
     @Override
@@ -125,12 +125,12 @@ public class ApolloSet extends ArmorSetInfo
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
         if (regionName.contains("parkour") && !regionName.contains("enchants"))
             return;
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        //EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     @Override
     public void onUnequip(Player player) {
-        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+       // EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
 

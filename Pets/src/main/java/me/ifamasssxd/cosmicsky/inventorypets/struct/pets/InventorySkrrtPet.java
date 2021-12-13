@@ -1,5 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
@@ -92,8 +94,7 @@ public class InventorySkrrtPet extends InventoryPet {
 
     private void givePlayerGearFive(final Player player) {
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
-        player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
-        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
+
         (new BukkitRunnable() {
             public void run() {
                 EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
@@ -129,6 +130,12 @@ public class InventorySkrrtPet extends InventoryPet {
 
             FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
             FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
+            if(CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GOBLIN || CosmicArmorSetsAPI.getBonusCrystalsEquipped(p).containsKey(ArmorSet.GOBLIN) && Math.random() <= 0.35) {
+                p.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + p.getName() + "'s Skrrt Pet) &6&l*&e&l*&6&l*"));
+                p.playSound(player.getLocation(), Sound.VILLAGER_YES, 0.5f, 0.5f);
+                player.sendMessage(CC.translate("&4&l** SKRRT BLOCKED &7(" + player.getName() + "'s Goblin Armor Set) &4&l**"));
+                return;
+            }
             if (SkrrtCooldownUtils.isOnSkrrtCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on &nSkrrt Cooldown&c, this lasts for 60s!"));
                 return;
@@ -138,12 +145,13 @@ public class InventorySkrrtPet extends InventoryPet {
                 return;
             }
             if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
+                player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
+                player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
                 p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
                 player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
 
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
-                //SkrrtCooldown.enterSkrrtCooldown(p);
                 SkrrtCooldownUtils.enterSkrrtCooldown(p);
 
                 CombatLog.flagCombat(p);

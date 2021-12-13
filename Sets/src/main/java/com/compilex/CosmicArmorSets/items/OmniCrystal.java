@@ -65,10 +65,6 @@ public class OmniCrystal
     }
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper cursorWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent event) throws CosmicException {
-        if (1==1) {
-            player.sendMessage(CC.translate("&cOmni Crystals are disabled this season!"));
-            return;
-        }
 
         if (clickedWrapper == null || !GeneralUtil.isArmor(clicked)) {
             return;
@@ -78,8 +74,12 @@ public class OmniCrystal
             return;
         }
 
+        ItemMeta meta = clicked.getItemMeta();
+        if (meta.hasLore())  {
+            if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS"))) return;
+        }
 
-        if (ArmorSet.getArmorSetFromItem(clicked) != null) {
+        if (ArmorSet.getArmorSetFromItem(clicked) != null && ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI) {
             return;
         }
         if (player.getItemOnCursor().getAmount() <= 1) {
@@ -89,12 +89,12 @@ public class OmniCrystal
             newCursor.setAmount(newCursor.getAmount() - 1);
             player.setItemOnCursor(newCursor);
         }
+
         int chance = cursorWrapper.getconaxData().getInt("success");
         if (ThreadLocalRandom.current().nextInt(101) >= chance) {
             player.playSound(player.getLocation(), Sound.GLASS, 1.0f, 2.0f);
             return;
         }
-        ItemMeta meta = clicked.getItemMeta();
         if (meta.hasLore()) {
             List lore = meta.getLore();
             lore.add("");
@@ -106,7 +106,7 @@ public class OmniCrystal
         clicked.setItemMeta(meta);
         clickedWrapper = new NBTWrapper(clicked);
         NBTTagCompoundBuilder cosmicData = clickedWrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-        //cosmicData.setInt("omniArmorSet", 1);
+        cosmicData.setInt("omniArmorSet", 1);
         NBTTagCompoundBuilder display = clickedWrapper.hasKey("display") ? new NBTTagCompoundBuilder(clickedWrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
         display.setInt("color", 0x0027FF);
         clickedWrapper.setNBTBase("display", display.get());

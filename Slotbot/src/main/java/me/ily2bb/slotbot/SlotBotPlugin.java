@@ -80,6 +80,10 @@ public class SlotBotPlugin extends JavaPlugin {
         this.registerListener(new WitchFix());
     }
 
+    public static void setMap(Object[] objects) {
+        SlotBotPlugin.objects = objects;
+    }
+
     public void registerCommands() {
         this.getCommand("slot").setExecutor(new CommandSlotBot());
         this.getCommand("addskin").setExecutor(new CommandSkinCommand());

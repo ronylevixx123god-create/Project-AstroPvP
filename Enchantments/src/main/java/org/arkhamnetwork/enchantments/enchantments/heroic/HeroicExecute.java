@@ -21,7 +21,7 @@ public class HeroicExecute extends HeroicCustomEnchantment {
     public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
         if (!(target instanceof org.bukkit.entity.Player))
             return;
-        if (target.getHealth() >= 12.0D)
+        if (target.getHealth() >= 10.0D)
             return;
         if (GeneralUtil.isEffectedByRage(target))
             return;

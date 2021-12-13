@@ -3,6 +3,7 @@ package net.astropvp.core.listeners;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import net.astropvp.core.utils.DamageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -20,20 +21,11 @@ public class DamageFixes implements Listener {
 
     @EventHandler
     public void onHit(EntityDamageByEntityEvent e) {
-        /*if(e.getEntity() instanceof Player) {
-            e.setDamage(e.getDamage() * (1 + (DamageUtils.getIncreasedDamageOn((Player) e.getEntity())) / 100));
-        }
-        if(e.getDamager() instanceof Player) {
-            e.setDamage(e.getDamage() / (1 + ((DamageUtils.getDecreasedDamageOn((Player) e.getDamager())) / 100)));
-
-        }*/
-
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            //Player phurt = (Player) e.getEntity();
             Player damager = (Player) e.getDamager();
 
             if (DamageUtils.isInPremade(damager)) {
-                e.setDamage(e.getDamage()* 0.7);
+                e.setDamage(e.getDamage()* 0.6);
             }
         }
     }
@@ -47,6 +39,42 @@ public class DamageFixes implements Listener {
         }
     }
 
+    @EventHandler
+    public void elfMaskReHeal(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player phurt = (Player) e.getEntity();
+            if (!(phurt.getHealth() <= 10)) return;
+            if (MaskUtils.hasMaskEquipped(phurt, "ELF") && Math.random() <= 0.15) {
+                e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK HEAL ABILITY &a&l*"));
+                e.setCancelled(true);
+
+            }
+        }
+    }
+
+    @EventHandler
+    public void omniReduction(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player phurt = (Player) e.getEntity();
+            Player hitter = (Player) e.getDamager();
+
+            if (DamageUtils.wearingOmniArmorSet(phurt) && !DamageUtils.wearingOmniArmorSet(hitter)) {
+                e.setDamage(e.getDamage() * 0.6);
+            }
+        }
+    }
+
+    @EventHandler
+    public void omniDmgIncrease(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player hitter = (Player) e.getDamager();
+            Player phurt = (Player) e.getEntity();
+
+            if (DamageUtils.wearingOmniArmorSet(hitter) && !DamageUtils.wearingOmniArmorSet(phurt))
+                e.setDamage(e.getDamage() * 1.40);
+        }
+    }
+
     public double getProtectionReduction(Player p) {
         double decrease = 0;
         for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
@@ -54,7 +82,7 @@ public class DamageFixes implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 5;
+                if (protLevel == 6) decrease += 6;
             }
         }
         return decrease * 0.01;

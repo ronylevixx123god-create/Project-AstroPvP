@@ -2,10 +2,15 @@ package net.astropvp.core.utils;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Map;
 
@@ -142,12 +147,6 @@ public class DamageUtils {
             return true;
 
         } else if (crystals.containsKey(ArmorSet.SUPREME) &&
-                crystals.containsKey(ArmorSet.PHANTOM) &&
-                crystals.containsKey(ArmorSet.ENGINEER) &&
-                crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER)) {
-            return true;
-
-        } else if (crystals.containsKey(ArmorSet.SUPREME) &&
                 crystals.containsKey(ArmorSet.YETI) &&
                 crystals.containsKey(ArmorSet.KOTH) &&
                 crystals.containsKey(ArmorSet.ENGINEER)) {
@@ -171,5 +170,36 @@ public class DamageUtils {
 
         return false;
 
+    }
+
+
+    public static boolean wearingOmniArmorSet(Player player) {
+        int amount = 0;
+        for (ItemStack item : player.getInventory().getArmorContents()) {
+            if (item != null && item.getType() != Material.AIR) {
+                ItemMeta meta = item.getItemMeta();
+                if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS")))
+                    amount++;
+            }
+        }
+        return amount == 3;
+    }
+
+    public static boolean isHeroicArmor(ItemStack item) {
+        if (item == null)
+            return false;
+        NBTWrapper wrapper = new NBTWrapper(item);
+        return wrapper.getString("cosmicType").equals("HEROIC_ARMOR");
+    }
+
+    public static boolean wearingMetaArmorSet(Player player) {
+        int metaArmorSetCount = 0;
+        ArmorSet armorSet = CosmicArmorSetsAPI.getArmorSet(player.getInventory().getArmorContents());
+        for (ItemStack item : player.getInventory().getArmorContents()) {
+            if (item != null && item.getType() != Material.AIR &&
+                    isHeroicArmor(item) && armorSet == null)
+                metaArmorSetCount++;
+        }
+        return metaArmorSetCount == 4;
     }
 }

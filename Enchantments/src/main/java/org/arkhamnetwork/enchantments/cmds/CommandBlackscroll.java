@@ -46,7 +46,7 @@ public class CommandBlackscroll implements CommandExecutor {
             }
 
             if (args[0].equalsIgnoreCase("mastery")) {
-                PlayerUtil.giveOrDropProtectedItem(pl, (giveNum != null) ? EnchantmentBook.getBlackScroll(giveNum) : EnchantmentBook.getBlackScroll(), -1);
+                PlayerUtil.giveOrDropProtectedItem(pl, EnchantmentBook.getMasteryBlackscroll(100, 100), -1);
                 sender.sendMessage(CC.Red + "Mastery Blackscroll given to " + pl.getName() + "!");
                 return true;
             }

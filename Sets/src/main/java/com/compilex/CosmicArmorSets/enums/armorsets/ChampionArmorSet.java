@@ -203,6 +203,8 @@ public class ChampionArmorSet
         target.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
         target.setMetadata("banshee_scrolls", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        target.setMetadata("champion_ability", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
         PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 5), new PotionEffect(PotionEffectType.SPEED, 160, 4));
         new BukkitRunnable() {
@@ -210,6 +212,8 @@ public class ChampionArmorSet
                 target.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
                 player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
                 target.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
+                target.removeMetadata("champion_ability", CosmicSkyInventoryPets.get());
+
                 target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
                 PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SPEED);
                 PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 3), new PotionEffect(PotionEffectType.SPEED, 160, 3));

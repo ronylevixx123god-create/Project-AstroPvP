@@ -410,7 +410,6 @@ public class AstroCore extends JavaPlugin {
 
         this.toggleManager.loadToggles();
 
-        this.getServer().getPluginManager().registerEvents(new MerchantGUIListener(), this);
         this.getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new HolyWhiteScrollListener(), this);
         this.getServer().getPluginManager().registerEvents(new ThrowableCreeperEggs(), this);
@@ -435,7 +434,6 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
 
 
-        this.getCommand("merchant").setExecutor(new MerchantCommand());
 
         this.getCommand("togglesb").setExecutor(new CommandScoreboard());
         this.getCommand("toggles").setExecutor(new CommandToggles());

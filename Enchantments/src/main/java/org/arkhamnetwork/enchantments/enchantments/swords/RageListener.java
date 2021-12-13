@@ -18,7 +18,7 @@ import org.bukkit.plugin.Plugin;
 import java.util.Objects;
 
 final class RageListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamaged(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof LivingEntity) {
             Player entity = (Player) event.getEntity();
@@ -83,5 +83,17 @@ final class RageListener implements Listener {
                 damager.setMetadata("combo_pve", new FixedMetadataValue(Enchantments.getInstance(), pve_combo));
             }
         }
+    }*/
+
+    @EventHandler(
+            priority = EventPriority.HIGH,
+            ignoreCancelled = true
+    )
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player && (e.getEntity().hasMetadata("pvp_rageHitCombo") || e.getEntity().hasMetadata("pve_rageHitCombo"))) {
+            e.getEntity().removeMetadata("pvp_rageHitCombo", Enchantments.getInstance());
+            e.getEntity().removeMetadata("pve_rageHitCombo", Enchantments.getInstance());
+        }
+
     }
 }

@@ -5,6 +5,7 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.base.CaseFormat;
@@ -56,6 +57,20 @@ public class EnchantmentBook {
         return is;
     }
 
+    public static ItemStack getGodlyTransmog() {
+        ItemBuilder builder = new ItemBuilder(Material.PAPER, CC.translate("&6&lGodly Transmog Scroll"), CC.translate("&7Apply this equipment to &6&ncustomize"), CC.translate("&7the order of &dcustom &benchantments"), CC.translate("&7displayed on the item."), "", CC.translate("&6&oPlace scroll on item to apply."));
+        return (new NBTWrapper(builder.build())).setString("cosmicType", "godlyTransmog").setNBTBase("cosmicData", (new NBTTagCompoundBuilder()).setInt("npm", 5).get()).setGlowing().build();
+    }
+
+    public static boolean isGodlyTransmog(ItemStack item) {
+        if (item != null && item.getType() == Material.PAPER) {
+            NBTWrapper wrapper = new NBTWrapper(item);
+            return wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("godlyTransmog");
+        } else {
+            return false;
+        }
+    }
+
     public static ItemStack getEnchantmentBook(final CustomEnchantment ench, final int level, final int success, final int failure) {
         final ItemStack is = ItemUtils.buildItem(Material.BOOK, (short) 0, TieredEnchantments.getTierColor(ench) + ChatColor.BOLD.toString() + ChatColor.UNDERLINE + ench.name() + " " + getRoman(level), ChatColor.GREEN.toString() + success + "% Success Rate", ChatColor.RED.toString() + failure + "% Destroy Rate");
         final List<String> lore = is.getItemMeta().getLore();
@@ -75,6 +90,22 @@ public class EnchantmentBook {
     public static ItemStack getWhiteScroll() {
         final ItemStack is = ItemUtils.buildItem(Material.EMPTY_MAP, (short) 0, ChatColor.YELLOW + "White Scroll", ChatColor.GRAY.toString() + "Prevents an item from being destroyed", ChatColor.GRAY.toString() + "due to a failed Enchantment Book.", ChatColor.YELLOW.toString() + "Place scroll on item to apply.");
         return is;
+    }
+
+    public static ItemStack getMasteryBlackscroll(int successRateMin, int successRateMax) {
+        int chosenMax = successRateMin + ThreadLocalRandom.current().nextInt(successRateMax - successRateMin + 1);
+        ItemStack is = ItemUtils.buildItem(Material.INK_SACK, (short)0, CC.DarkRedB + "Mastery Black Scroll", ChatColor.GRAY.toString() + "Removes a random enchantment", ChatColor.GRAY.toString() + "from an item and converts", ChatColor.GRAY.toString() + "it into a " + ChatColor.DARK_RED + successRateMin + "%-" + chosenMax + "%" + ChatColor.GRAY + " success book.", CC.DarkRedB + "(!)" + CC.DarkRed + " Chance to extract Mastery Enchantments");
+        return (new NBTWrapper(is)).setString("cosmicType", "masteryBlackscroll").setNBTBase("conaxData", (new NBTTagCompoundBuilder()).setInt("min", successRateMin).setInt("max", chosenMax).get()).setGlowing().build();
+    }
+
+
+    public static boolean isMasteryBlackscroll(ItemStack item) {
+        if (item != null && item.getType() == Material.INK_SACK) {
+            NBTWrapper wrapper = new NBTWrapper(item);
+            return wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("masteryBlackscroll");
+        } else {
+            return false;
+        }
     }
 
     public static ItemStack getBlackScroll() {

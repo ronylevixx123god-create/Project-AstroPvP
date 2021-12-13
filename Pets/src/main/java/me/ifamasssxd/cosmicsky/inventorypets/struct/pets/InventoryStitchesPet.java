@@ -10,6 +10,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -96,6 +97,11 @@ public class InventoryStitchesPet extends InventoryPet {
 
 
         nearbyEntities.forEach(needToBeStitched -> {
+            if(new NBTWrapper(needToBeStitched.getItemInHand()).getString("cosmicType").equals("GOBLIN_WEAPON") && Math.random() < 0.35) {
+                needToBeStitched.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN WEAPON &7(Blocked " + player.getName() + "'s Sitches Pet) &6&l*&e&l*&6&l*"));
+                needToBeStitched.playSound(player.getLocation(), Sound.VILLAGER_YES, 0.5f, 0.5f);
+                player.sendMessage(CC.translate("&6&l** STITCHES BLOCKED &7(" + player.getName() + "'s Goblin Armor Set) &6&l**"));
+            }
             needToBeStitched.sendMessage(CC.translate(String.format("&6&l** %s STITCHES PET [&6%d.0s&6&l] - PET SILENCE! **",
                     player.getName() + (player.getName().endsWith("s") ? "'" : "'s"),
                     (18 + petItem.getLevel()))));
