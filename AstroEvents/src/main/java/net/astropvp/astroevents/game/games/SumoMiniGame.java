@@ -178,7 +178,11 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         winner.setFlying(true);
 
         this.getDuelPlayers().clear();
-        this.addSpectator(sumoPlayer);
+
+        if (sumoPlayer.getPlayer() != null) {
+            this.addSpectator(sumoPlayer);
+        }
+
         this.nextFight();
     }
 

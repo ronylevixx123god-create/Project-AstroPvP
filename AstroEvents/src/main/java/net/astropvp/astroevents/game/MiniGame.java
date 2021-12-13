@@ -235,6 +235,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
 
 
     protected void addSpectator(T player) {
+        if (player == null) return;
         this.spectators.add(player);
         if (this.isParticipant(player.getPlayer())) this.removeParticipant(player);
         player.getPlayer().teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
@@ -246,6 +247,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     }
 
     public boolean isSpectator(Player player) {
+        if (player == null) return false;
         return this.spectators.stream().anyMatch(spectator -> spectator.getPlayer().equals(player));
     }
 
