@@ -82,7 +82,7 @@ public class CrateKeyInventoryListener implements Listener {
                     if (filter.isBlockedItem(itemStack)) {
                         player.sendMessage(CC.translate(itemStack.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft Click the crate to edit this filter."));
                     } else {
-                        addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
+                        addItemToPlayer(player, itemStack);
                     }
                     amountOfKeys--;
                 }
@@ -93,7 +93,7 @@ public class CrateKeyInventoryListener implements Listener {
                 if (filter.isBlockedItem(itemStack)) {
                     player.sendMessage(CC.translate(itemStack.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft Click the crate to edit this filter."));
                 } else {
-                    addItemToPlayer(player, ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type)));
+                    addItemToPlayer(player, itemStack);
                 }
 
                 if (player.getItemInHand().getAmount() > 1) {

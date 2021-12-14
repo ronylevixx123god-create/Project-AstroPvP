@@ -42,9 +42,22 @@ public class DamageListener implements Listener {
         }
     }
 
-
-
     @EventHandler
+    public void diaSwordFix(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            Player damaged = (Player) e.getEntity();
+            if (damager.getItemInHand() != null) {
+                if (damager.getItemInHand().getType().name().contains("DIAMOND")) {
+                    e.setDamage(e.getDamage()*0.85);
+                }
+            }
+        }
+    }
+
+
+
+/*    @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
@@ -69,7 +82,7 @@ public class DamageListener implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
