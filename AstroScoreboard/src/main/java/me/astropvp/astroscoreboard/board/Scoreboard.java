@@ -54,7 +54,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Scoreboard implements BoardAdapter {
     private final AstroScoreboardPlugin plugin = AstroScoreboardPlugin.getInstance();
-    private static DateFormat format = new SimpleDateFormat("MM/dd");
+    private static DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
     private final Map<String, String> rankOrder = new HashMap<>();
 
     public List<String> getScoreboard(Player player, Board board) {
@@ -121,11 +121,11 @@ public class Scoreboard implements BoardAdapter {
                 return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
             }
 
-        } else if (!FactionUtils.isWilderness(fplayer.getFaction())) {
-            return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
-        return CC.translate("&6&lAstro &7⎜ &f" + getDateSuffix());
+        return CC.translate("&6&lAstro &7⎜ &fNebula");
+
     }
+
 
 
     public List<String> mainBoard(Player player) {
@@ -528,15 +528,16 @@ public class Scoreboard implements BoardAdapter {
         PlayerDataManager manager = AstroSpawners.getInstance().getManager();
         PlayerData data = manager.getPlayerData(player);
         FPlayer fPlayer = FactionUtils.getFPlayer(player);
+        board.add(CC.translate("&7&o        ") + getDateSuffix());
         board.add(" ");
         board.add(CC.translate("&6&l" + player.getName()));
-        board.add(CC.translate("&f&l ● &fMobcoins&7: &6" + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁"));
-        board.add(CC.translate("&f&l ● &fBalance&7: &6$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player))));
-        board.add(CC.translate("&f&l ● &fXP&7: &6" + NumberUtils.formatMoney(player.getTotalExperience())));
+        board.add(CC.translate("&f&l ● &eXP&7: &f" + NumberUtils.formatMoney(player.getTotalExperience())));
+        board.add(CC.translate("&f&l ● &eBalance&7: &f$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player))));
+        board.add(CC.translate("&f&l ● &eMobcoins&7: &f" + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁"));
         if (fPlayer != null) {
             board.add(" ");
-            board.add(CC.translate("&6&l" + fPlayer.getFaction().getTag() + "&7[&f" + fPlayer.getFaction().getOnlinePlayers().size() + "/25&7]"));
-            board.add(CC.translate("&f&l ● &fPower&7: &6" + fPlayer.getPower() + "&7/" + fPlayer.getPowerMax()));
+            board.add(CC.translate("&6&l" + fPlayer.getFaction().getTag() + " &7[&f" + fPlayer.getFaction().getOnlinePlayers().size() + "/25&7]"));
+            board.add(CC.translate("&f&l ● &fPower&7: &6" + (int)fPlayer.getPower() + "&7/" + (int)fPlayer.getPowerMax()));
         }
         board.add("");
         board.add(CC.translate("&7play.astropvp.net"));
