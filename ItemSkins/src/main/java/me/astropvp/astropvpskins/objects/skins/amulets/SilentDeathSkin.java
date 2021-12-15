@@ -1,6 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.amulets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -23,6 +24,8 @@ public class SilentDeathSkin extends ItemSkin {
 
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         event.setDamage(event.getDamage() * 1.03);
         if(!(damaged instanceof Player))
             return;

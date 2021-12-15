@@ -48,6 +48,9 @@ public class StackedMobDeathListener implements Listener {
             if (collector.getAmount(itemStack.getType())+ (stackSize) >= Double.MAX_VALUE) {
                 return;
             }
+            if (collector.getAllMobDropsWorth() + (stackSize*4) >= Double.MAX_VALUE) {
+                return;
+            }
             collector.incrementAmount(itemStack.getType(), stackSize);
             AstroSpawners.getInstance().getMobStackerUtils().removeStackedMob(entity);
         }

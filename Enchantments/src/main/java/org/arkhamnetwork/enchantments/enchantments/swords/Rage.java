@@ -59,14 +59,10 @@ public class Rage extends CustomEnchantment {
                 return;
             }
 
-            if (user.hasMetadata("noRageUntil") && ((MetadataValue)user.getMetadata("noRageUntil").get(0)).asLong() > System.currentTimeMillis()) {
-                return;
-            }
-
             double mod = 0.1D * (double)enchantLevel;
             double hitCombo = (double)(target instanceof Player ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0D;
-            if (hitCombo > 3.5D) {
-                hitCombo = 3.5D;
+            if (hitCombo > 4.5D) {
+                hitCombo = 4.5D;
             }
 
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {

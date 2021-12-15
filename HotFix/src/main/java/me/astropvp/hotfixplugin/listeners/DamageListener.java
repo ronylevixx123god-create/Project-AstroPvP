@@ -57,7 +57,7 @@ public class DamageListener implements Listener {
 
 
 
-/*    @EventHandler
+    @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
@@ -82,7 +82,7 @@ public class DamageListener implements Listener {
                 }
             }
         }
-    }*/
+    }
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
