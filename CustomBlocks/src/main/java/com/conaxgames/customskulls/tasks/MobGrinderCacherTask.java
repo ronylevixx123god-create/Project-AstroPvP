@@ -3,20 +3,22 @@ package com.conaxgames.customskulls.tasks;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
+import com.conaxgames.customskulls.struct.MobGrinderCache;
+import com.conaxgames.customskulls.util.CC;
+import com.conaxgames.customskulls.util.CustomBlockUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-
 public class MobGrinderCacherTask extends BukkitRunnable {
-    private HashMap<String, Location> grinderBlocks;
 
-    public MobGrinderCacherTask(HashMap<String, Location> grinderBlocks) {
-        this.grinderBlocks = grinderBlocks;
-    }
 
     @Override
     public void run() {
+        CoreSkulls.getGrinderBlocks().clear();
+
         for (String key : AbilityData.getAbilityDataMap().keySet()) {
             if (key == null) continue;
             if (AbilityData.getByUUID(key) == null) continue;
@@ -25,7 +27,24 @@ public class MobGrinderCacherTask extends BukkitRunnable {
             if (data.getAbilityType() == null) continue;
             if (CoreSkulls.customBlocks.get(data.getAbilityType().getName()) == null) continue;
             if (data.getAbilityType() != AbilityType.TRIALS_FAME_AND_FORTUNE) continue;
-            grinderBlocks.put(key, data.getLocation());
+
+            boolean playerFound = false;
+
+            for (Entity entity : data.getLocation().getWorld().getNearbyEntities(data.getLocation(), 16, 6, 16)) {
+                if (entity instanceof Player) {
+                    playerFound = true;
+                    break;
+                }
+            }
+
+
+            if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
+                Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
+                MobGrinderCache mobGrinderCache = new MobGrinderCache(data, chestLocation, playerFound);
+
+                CoreSkulls.getGrinderBlocks().add(mobGrinderCache);
+
+            }
         }
     }
 }

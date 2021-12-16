@@ -117,6 +117,7 @@ public class MobGrinder extends CustomBlock {
         }
         if (fPlayer.getRelationToLocation().isMember()) {
             MakeCustomBlocks.newFileItem(p0, AbilityType.TRIALS_FAME_AND_FORTUNE, p1.getBlock(), this);
+            fPlayer.getPlayer().sendMessage(CC.translate("&c&l* &cIt can take up to 10 seconds for this block to enable."));
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
             p1.setCancelled(true);

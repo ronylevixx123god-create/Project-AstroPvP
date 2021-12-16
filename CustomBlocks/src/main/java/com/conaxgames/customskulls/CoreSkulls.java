@@ -8,6 +8,8 @@ import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.listeners.SlotbotMachineGUIListener;
+import com.conaxgames.customskulls.struct.MobGrinderCache;
+import com.conaxgames.customskulls.tasks.MobGrinderCacherTask;
 import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
@@ -18,6 +20,7 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.inventory.ItemStack;
@@ -26,10 +29,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class CoreSkulls extends JavaPlugin {
 
@@ -44,6 +44,9 @@ public class CoreSkulls extends JavaPlugin {
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
     public static MobStackerUtils mobStackerUtils;
+    @Getter
+    public static ArrayList<MobGrinderCache> grinderBlocks;
+
 
 
     @Override
@@ -73,6 +76,7 @@ public class CoreSkulls extends JavaPlugin {
         info("CoreSkulls!");
         inSlotbotMachine = new HashMap<>();
         registerTasks();
+        grinderBlocks = new ArrayList<>();
 
     }
 
@@ -116,6 +120,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 10*20);
     }
 
 
