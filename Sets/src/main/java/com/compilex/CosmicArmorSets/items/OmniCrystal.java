@@ -79,6 +79,12 @@ public class OmniCrystal
             if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS"))) return;
         }
 
+        if (1==1) {
+            event.getWhoClicked().sendMessage(CC.translate("&cOmni Crystals are disabled"));
+            event.setCancelled(true);
+            return;
+        }
+
         if (ArmorSet.getArmorSetFromItem(clicked) != null && ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI) {
             return;
         }

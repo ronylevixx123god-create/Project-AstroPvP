@@ -129,74 +129,72 @@ public class HeroicArmorListener
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPlayerDamage(EntityDamageByEntityEvent event) {
-        Material type;
+    public void onPlayerDamage(final EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player) {
             double damageReduction = 0.0;
-            OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld(event.getEntity());
+            final OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld(event.getEntity());
             if (tier != null && (tier == OutpostTier.VANILLA || tier == OutpostTier.TRAINEE)) {
                 return;
             }
-            Player player = (Player) event.getEntity();
-            for (ItemStack item : player.getInventory().getArmorContents()) {
-                if (item == null) continue;
-                type = item.getType();
-                if (type == Material.LEATHER_CHESTPLATE) {
-                    if (!CosmicArmorSetsAPI.isHeroicArmor(item)) continue;
-                    if (this.isMkitArmor(item)) {
-                        damageReduction += 0.16;
-                        continue;
+            final Player player = (Player)event.getEntity();
+            for (final ItemStack item : player.getInventory().getArmorContents()) {
+                if (item != null) {
+                    final Material type = item.getType();
+                    if (type == Material.LEATHER_CHESTPLATE) {
+                        if (CosmicArmorSetsAPI.isHeroicArmor(item)) {
+                            if (this.isMkitArmor(item)) {
+                                damageReduction += 0.16;
+                            }
+                            else {
+                                damageReduction += 0.1;
+                            }
+                        }
                     }
-                    damageReduction += 0.1;
-                    continue;
-                }
-                if (type == Material.LEATHER_LEGGINGS) {
-                    if (!CosmicArmorSetsAPI.isHeroicArmor(item)) continue;
-                    if (this.isMkitArmor(item)) {
-                        damageReduction += 0.13;
-                        continue;
+                    else if (type == Material.LEATHER_LEGGINGS) {
+                        if (CosmicArmorSetsAPI.isHeroicArmor(item)) {
+                            if (this.isMkitArmor(item)) {
+                                damageReduction += 0.13;
+                            }
+                            else {
+                                damageReduction += 0.08;
+                            }
+                        }
                     }
-                    damageReduction += 0.08;
-                    continue;
+                    else if ((type == Material.LEATHER_BOOTS || type == Material.LEATHER_HELMET) && CosmicArmorSetsAPI.isHeroicArmor(item)) {
+                        if (this.isMkitArmor(item)) {
+                            damageReduction += 0.08;
+                        }
+                        else {
+                            damageReduction += 0.045;
+                        }
+                    }
                 }
-                if (type != Material.LEATHER_BOOTS && type != Material.LEATHER_HELMET || !CosmicArmorSetsAPI.isHeroicArmor(item))
-                    continue;
-                if (this.isMkitArmor(item)) {
-                    damageReduction += 0.08;
-                    continue;
-                }
-                damageReduction += 0.045;
             }
             if (damageReduction > 0.0) {
-                double reductionDamage = damageReduction * event.getDamage();
+                final double reductionDamage = damageReduction * event.getDamage();
                 event.setDamage(Math.max(0.0, event.getDamage() - reductionDamage));
             }
         }
         if (event.getDamager() instanceof Player && event.getEntity() instanceof Player) {
-            double damageMod = 0.0;
+            final double damageMod = 0.0;
             double damageIncrease = 0.0;
-            if (CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsTraineeOutpost((Player) event.getDamager())) {
-                damageMod += 0.025;
-            }
-            if (HCFOutpostAPI.isControllingOutpost((Player) event.getDamager(), OutpostType.COURTYARD)) {
-                damageMod += 0.0625;
-            }
-            for (ItemStack item : ((Player) event.getEntity()).getInventory().getArmorContents()) {
-                if (item == null) continue;
-                type = item.getType();
-                if (type == Material.LEATHER_CHESTPLATE) {
-                    if (!CosmicArmorSetsAPI.isHeroicArmor(item)) continue;
-                    damageIncrease += damageMod;
-                    continue;
+            for (final ItemStack item : ((Player)event.getEntity()).getInventory().getArmorContents()) {
+                if (item != null) {
+                    final Material type = item.getType();
+                    if (type == Material.LEATHER_CHESTPLATE) {
+                        if (CosmicArmorSetsAPI.isHeroicArmor(item)) {
+                            damageIncrease += damageMod;
+                        }
+                    }
+                    else if (type == Material.LEATHER_LEGGINGS) {
+                        if (CosmicArmorSetsAPI.isHeroicArmor(item)) {
+                            damageIncrease += damageMod;
+                        }
+                    }
+                    else if ((type == Material.LEATHER_BOOTS || type == Material.LEATHER_HELMET) && CosmicArmorSetsAPI.isHeroicArmor(item)) {
+                        damageIncrease += damageMod;
+                    }
                 }
-                if (type == Material.LEATHER_LEGGINGS) {
-                    if (!CosmicArmorSetsAPI.isHeroicArmor(item)) continue;
-                    damageIncrease += damageMod;
-                    continue;
-                }
-                if (type != Material.LEATHER_BOOTS && type != Material.LEATHER_HELMET || !CosmicArmorSetsAPI.isHeroicArmor(item))
-                    continue;
-                damageIncrease += damageMod;
             }
             if (damageIncrease > 0.0) {
                 event.setDamage(event.getDamage() * (1.0 + damageIncrease));
@@ -204,12 +202,9 @@ public class HeroicArmorListener
         }
     }
 
-    private boolean isMkitArmor(ItemStack item) {
-        NBTTagCompoundBuilder builder = new NBTWrapper(item).getCompound("conaxData");
-        if (builder == null) {
-            return false;
-        }
-        return builder.hasKey("abilitySet");
+    private boolean isMkitArmor(final ItemStack item) {
+        final NBTTagCompoundBuilder builder = new NBTWrapper(item).getCompound("cosmicData");
+        return builder != null && builder.hasKey("abilitySet");
     }
 }
 

@@ -54,7 +54,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Scoreboard implements BoardAdapter {
     private final AstroScoreboardPlugin plugin = AstroScoreboardPlugin.getInstance();
-    private static DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
+    private static DateFormat format = new SimpleDateFormat("MM/dd");
     private final Map<String, String> rankOrder = new HashMap<>();
 
     public List<String> getScoreboard(Player player, Board board) {
@@ -84,21 +84,27 @@ public class Scoreboard implements BoardAdapter {
 
     }
 
+
+    /*public String getTitle(Player player) {
+        FPlayer fplayer = FactionUtils.getFPlayer(player);
+        return CC.translate("&a&lAstro &7⎜ &fMap V");
+    }*/
+
     public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
-        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
-            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
-                if (entity.hasMetadata("boss")) {
-                    if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
                         return DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP ? CC.GoldB + "Mother Of Yijki" : CC.LightPurpleB + "Mother Of Yijki";
                     }
                 }
             }
         }
-        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
-            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
-                if (entity.hasMetadata("boss")) {
-                    if (Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
+        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
+            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if(entity.hasMetadata("boss")) {
+                    if(Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
                         return CC.GoldB + "The Corrupt Cosmonaut";
                     }
                 }
@@ -116,16 +122,17 @@ public class Scoreboard implements BoardAdapter {
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-        } else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+        }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
             if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
                 return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
             }
 
+        } else if(!FactionUtils.isWilderness(fplayer.getFaction())) {
+            return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
-        return CC.translate("&6&lAstro &7⎜ &fNebula");
 
+        return CC.translate("&a&lAstro&f&lPvP &7" + getDateSuffix());
     }
-
 
 
     public List<String> mainBoard(Player player) {
@@ -232,6 +239,9 @@ public class Scoreboard implements BoardAdapter {
                 }
             }
         }
+
+
+
 
 
         if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
@@ -522,31 +532,57 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.White + "play.astropvp.net");
             return board;
         }
+/*
+        if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
+            List<String> board = new LinkedList<>();
+            EndPlayerData me.astropvp.cratekeys.data = EndPlayerData.findPlayer(player);
+            board.add("");
+            board.add(CC.translate("&b&lStronghold"));
+            board.add(String.valueOf(CosmicHCFOutposts.get().getOutpostManager().getOutpostInside(player.getLocation()).getOutpostState()));
+            board.addLongLine(-3, this.getOutpostName() + " " + this.getPrettyFormattedCapturePercent(), -3);
+            scoreboard.addLongLine(-4, CC.Gray + " " + this.getOutpostState().getName() + CC.Green + (this.getOutpostState() == OutpostState.CONTROLLED && this.defendingFaction != null ? " " + CC.Gray + "(" + CC.Green + this.defendingFaction.getTag() + CC.Gray + ")" : ""), -4);
+            player.setMetadata("boss_scoreboard", new FixedMetadataValue(CosmicKOTHPlugin.get_(), System.currentTimeMillis() + 30000L));
+            scoreboard.setSlot(DisplaySlot.SIDEBAR);
+            return board;
+        }*/
 
 
-        List<String> board = new LinkedList<>();
         PlayerDataManager manager = AstroSpawners.getInstance().getManager();
         PlayerData data = manager.getPlayerData(player);
-        FPlayer fPlayer = FactionUtils.getFPlayer(player);
-        board.add(CC.translate("&7&o        ") + getDateSuffix());
+        List<String> board = new LinkedList<>();
         board.add(" ");
-        board.add(CC.translate("&6&l" + player.getName()));
-        board.add(CC.translate("&f&l ● &eXP&7: &f" + NumberUtils.formatMoney(player.getTotalExperience())));
-        board.add(CC.translate("&f&l ● &eBalance&7: &f$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player))));
-        board.add(CC.translate("&f&l ● &eMobcoins&7: &f" + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁"));
-        if (fPlayer != null) {
-            board.add(" ");
-            board.add(CC.translate("&6&l" + fPlayer.getFaction().getTag() + " &7[&f" + fPlayer.getFaction().getOnlinePlayers().size() + "/25&7]"));
-            board.add(CC.translate("&f&l ● &fPower&7: &6" + (int)fPlayer.getPower() + "&7/" + (int)fPlayer.getPowerMax()));
+        board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
+        board.add(ChatColor.WHITE + player.getName());
+        board.add(" ");
+        board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
+        board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player)));
+        board.add(" ");
+        board.add(ChatColor.RED + ChatColor.BOLD.toString() + "XP");
+        board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
+        board.add(" ");
+        board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Mobcoins");
+        board.add(CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
+
+        /*board.add("");
+        board.add(CC.GreenB + player.getName());
+        board.add(CC.White + " ● " + CC.Green + "XP" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(player.getTotalExperience()));
+        board.add(CC.White + " ● "+ CC.Green + "Ping" + CC.Gray + ": " + CC.LightPurple + getPing() + "ms");
+        board.add(CC.White + " ● "+ CC.Green + "Balance" + CC.Gray + ": " + CC.White + "$" + formatIntoShortMoney((long) Econ.econ.getBalance(player)));
+        board.add(CC.White + " ● "+ CC.Green + "Mobcoins" + CC.Gray + ": " + CC.White + NumberFormat.getIntegerInstance().format(me.astropvp.cratekeys.data.getCoins()) + "⛁");
+        board.add(" ");
+        if (fplayer != null) {
+            if (fplayer.hasFaction()) {
+                board.add(CC.GreenB + fplayer.getFaction().getTag());
+                board.add(CC.White + " ● " + CC.Green + "Power" + CC.Gray + ": " + CC.White + fplayer.getPowerRounded() + CC.Gray + "/" + CC.White + fplayer.getPowerMaxRounded());
+                board.add(CC.White + " ● "+ CC.Green + "Online" + CC.Gray + ": " + CC.Green + fplayer.getFaction().getOnlinePlayers().size() + CC.Gray + "/" + CC.White + fplayer.getFaction().getFPlayers().size());
+                board.add("");
+            }
         }
-        board.add("");
-        board.add(CC.translate("&7play.astropvp.net"));
+        board.add(CC.Yellow + "play.astropvp.net");*/
 
         return board;
+    }
 
-
-
-}
 
 
     public long getInterval() {
@@ -568,37 +604,37 @@ public class Scoreboard implements BoardAdapter {
 
     private static final NavigableMap<Long, String> suffixes = new TreeMap<>();
 
-static {
-        suffixes.put(1_000L,"k");
-        suffixes.put(1_000_000L,"M");
-        suffixes.put(1_000_000_000L,"B");
-        suffixes.put(1_000_000_000_000L,"T");
-        suffixes.put(1_000_000_000_000_000L,"QD");
-        suffixes.put(1_000_000_000_000_000_000L,"QT");
-        }
+    static {
+        suffixes.put(1_000L, "k");
+        suffixes.put(1_000_000L, "M");
+        suffixes.put(1_000_000_000L, "B");
+        suffixes.put(1_000_000_000_000L, "T");
+        suffixes.put(1_000_000_000_000_000L, "QD");
+        suffixes.put(1_000_000_000_000_000_000L, "QT");
+    }
 
-public static String formatIntoShortMoney(long value){
+    public static String formatIntoShortMoney(long value) {
         //Long.MIN_VALUE == -Long.MIN_VALUE so we need an adjustment here
-        if(value==Long.MIN_VALUE)return formatIntoShortMoney(Long.MIN_VALUE+1);
-        if(value< 0)return"-"+formatIntoShortMoney(-value);
-        if(value< 1000)return Long.toString(value); //deal with easy case
+        if (value == Long.MIN_VALUE) return formatIntoShortMoney(Long.MIN_VALUE + 1);
+        if (value < 0) return "-" + formatIntoShortMoney(-value);
+        if (value < 1000) return Long.toString(value); //deal with easy case
 
-        Map.Entry<Long, String> e=suffixes.floorEntry(value);
-        Long divideBy=e.getKey();
-        String suffix=e.getValue();
+        Map.Entry<Long, String> e = suffixes.floorEntry(value);
+        Long divideBy = e.getKey();
+        String suffix = e.getValue();
 
-        long truncated=value/(divideBy/10); //the number part of the output times 10
-        boolean hasDecimal=truncated< 100&&(truncated/10d)!=(truncated/10);
-        return hasDecimal?(truncated/10d)+suffix:(truncated/10)+suffix;
-        }
+        long truncated = value / (divideBy / 10); //the number part of the output times 10
+        boolean hasDecimal = truncated < 100 && (truncated / 10d) != (truncated / 10);
+        return hasDecimal ? (truncated / 10d) + suffix : (truncated / 10) + suffix;
+    }
 
-public static double round(double value,int places){
-        if(places< 0)throw new IllegalArgumentException();
+    public static double round(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
 
-        long factor=(long)Math.pow(10,places);
-        value=value*factor;
-        long tmp=Math.round(value);
-        return(double)tmp/factor;
-        }
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
 
-        }
+}

@@ -135,10 +135,6 @@ public class CosmicArmorSetsAPI {
             existing.add(CC.DarkRed + "This weapon is stronger than diamond.");
             im.setLore(existing);
             retr.setItemMeta(im);
-            if (type == HeroicWeaponType.AXE) {
-                ArmorSet.addMaxedEnchant(retr, "Silence");
-                ArmorSet.addMaxedEnchant(retr, "Lifesteal");
-            }
         }
         return retr;
     }

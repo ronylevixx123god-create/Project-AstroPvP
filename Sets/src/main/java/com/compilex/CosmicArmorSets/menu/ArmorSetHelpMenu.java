@@ -42,8 +42,8 @@ public class ArmorSetHelpMenu extends CosmicGUI {
         setItem(12, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.CHAMPION.getArmorSetInfo().getHelmet(true))));
         setItem(13, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.ULTRA.getArmorSetInfo().getHelmet(true))));
         setItem(14, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.APOLLO.getArmorSetInfo().getHelmet(true))));
-        setItem(15, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.NEBULA.getArmorSetInfo().getHelmet(true))));
-        setItem(16, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.GOBLIN.getArmorSetInfo().getHelmet(true))));
+        //setItem(15, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.NEBULA.getArmorSetInfo().getHelmet(true))));
+        //setItem(16, new InventoryItem(EnchantmentAPI.removeEnchantments(ArmorSet.GOBLIN.getArmorSetInfo().getHelmet(true))));
 
 
 
