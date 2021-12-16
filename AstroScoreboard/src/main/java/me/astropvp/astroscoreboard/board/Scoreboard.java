@@ -131,7 +131,7 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
-        return CC.translate("&a&lAstro&f&lPvP &7" + getDateSuffix());
+        return CC.translate("&6&lAstro&f&lPvP &7" + getDateSuffix());
     }
 
 

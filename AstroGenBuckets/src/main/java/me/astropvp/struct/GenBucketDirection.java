@@ -7,7 +7,7 @@ import org.bukkit.block.BlockFace;
 
 public enum GenBucketDirection {
     HORIZONTAL(BlockFace.NORTH, 100, new BlockFace[]{BlockFace.NORTH, BlockFace.EAST, BlockFace.SOUTH, BlockFace.WEST}),
-    VERTICAL(BlockFace.DOWN, 256, new BlockFace[]{BlockFace.UP, BlockFace.DOWN});
+    VERTICAL(BlockFace.DOWN, 254, new BlockFace[]{BlockFace.UP, BlockFace.DOWN});
 
     private BlockFace defaultBlockFace;
     private int maxBlocks;

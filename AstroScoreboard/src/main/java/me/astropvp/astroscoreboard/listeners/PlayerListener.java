@@ -33,7 +33,7 @@ public class PlayerListener implements Listener {
 		//player.setScoreboard(board);
 		TabListManager.sendTablist(player,
 		CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
-		CC.translate("\n&6Players&7: &f"+ Bukkit.getServer().getOnlinePlayers().size() + "&7 (Astro Realm)"+ "\n&6Store&7: &fbuy.astropvp.net\n" + "&6Discord&7: &fdiscord.astropvp.net" + "\n"));
+		CC.translate("\n&6Store&7: &fbuy.astropvp.net\n" + "&6Discord&7: &fdiscord.astropvp.net" + "\n"));
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
