@@ -23,15 +23,10 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageByEntityEvent event){
-        if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))return;
-        if (event.isCancelled())return;
-
-        CosmicPlayer cp = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
-        cp.setCurrentHealthBar((Player) event.getEntity());
-        PacketOutHealthBar healthBar = new PacketOutHealthBar(cp.getCurrentHealthBar());
-        cp.sendPacket(healthBar);
-
-
+        if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))
+            return;
+        if (event.isCancelled())
+            return;
         Player damager = (Player)((Object)event.getDamager());
         Player player = (Player)((Object)event.getEntity());
 
@@ -50,6 +45,11 @@ public class PlayerListener implements Listener {
             if (healthDifference > 44) {
                 healthDifference = 44;
             }
+
+            CosmicPlayer cp = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
+            cp.setCurrentHealthBar((Player) event.getEntity());
+            PacketOutHealthBar healthBar = new PacketOutHealthBar(cp.getCurrentHealthBar());
+            cp.sendPacket(healthBar);
 
             Location place = updateDamageSplatLocation(event.getEntity().getLocation());
 
