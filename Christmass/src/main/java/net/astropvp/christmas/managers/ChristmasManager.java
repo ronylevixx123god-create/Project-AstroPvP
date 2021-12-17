@@ -20,7 +20,7 @@ public class ChristmasManager {
     @Setter
     private Location shopLocation;
 
-    private List<String> alreadyBought;
+    private final List<String> alreadyBought;
 
     public ChristmasManager() {
         this.currentItem = ConfigUtils.getItem(Christmas.getInstance().getConfig().getString("current-item"));

@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
@@ -53,7 +55,10 @@ public class DivineImmolationListener implements Listener {
                 if (!(le.getKiller() instanceof Player)) return;
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le.getKiller(), SkinType.VALENTINES_2021_HELMET)) {
                     if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                        damage = 2.5;
+                        if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) e.getEntity()).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
+
+                            damage = 2.5;
+                        }
                     } else {
                         damage = 2;
                     }

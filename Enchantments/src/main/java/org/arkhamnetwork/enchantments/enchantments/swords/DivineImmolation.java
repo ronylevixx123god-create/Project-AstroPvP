@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
@@ -129,7 +131,10 @@ public class DivineImmolation extends CustomEnchantment {
                                 le.damage(damage);
 
                                 if (WeaponBonusUtils.hasWeaponBonus(((Player) player).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED) {
-                                    e.setDamage(e.getDamage()*1.1);
+                                    if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
+
+                                        e.setDamage(e.getDamage() * 1.1);
+                                    }
                                 }
 
 

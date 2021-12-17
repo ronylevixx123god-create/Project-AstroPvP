@@ -21,7 +21,7 @@ import java.util.List;
 
 public class ChristmasInventory extends BaseGUI {
     public ChristmasInventory() {
-        super("Christmas Shop", 9);
+        super("Christmas Daily Present", 9);
         setItem(3, getCurrentItem());
         setItem(5, getInformationBook());
     }
@@ -29,7 +29,7 @@ public class ChristmasInventory extends BaseGUI {
 
     private GUIItem getCurrentItem() {
         ItemStack shopItem = Christmas.getInstance().getChristmasManager().getCurrentItem().clone();
-        ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.DarkGreenB + " * PRICE: " + CC.White + "FREE!").build();
+        ItemStack item = new ItemBuilder(shopItem).build();
         return new GUIItem(item.clone()) {
             public void onClick(Player player1, ClickType clickType, InventoryClickEvent inventoryClickEvent) {
                 if(Christmas.getInstance().getChristmasManager().hasAlreadyBought(player1)) {
@@ -48,16 +48,13 @@ public class ChristmasInventory extends BaseGUI {
     }
 
     private GUIItem getInformationBook() {
-        ItemStack item = new ItemBuilder(Material.BOOK).name(CC.DarkGreenB + "Christmas Shop").lore(CC.Gray + "The Christmas shop is a secret",
-                CC.Gray + "market, only accessible by the",
-                CC.translate( "&d&l<&5&l&o&nN&d&l&o&ne&5&l&n&ob&d&l&n&ou&5&l&n&ol&d&l&n&oa&5&l> ") + CC.Gray + "rank holders",
-                "",
-                CC.Gray + "The items in the Christmas shop are",
-                CC.Gray + "only available for " + CC.GrayU + "limited time",
-                CC.Gray + "before being replaced with new items.",
-                "",
-                CC.RedB + "NOTE: " + CC.Red + "You can only purchase items",
-                CC.Red + "on from the Christmas Shop 1 time per restock"
+        ItemStack item = new ItemBuilder(Material.COOKIE).name(CC.DarkGreenB + "Christmas Daily Present").lore(
+                CC.translate("&7This is a place where you you can"),
+                CC.translate("&7claim your daily reward from"),
+                CC.translate("&7Santa Claus. He will give you each item"),
+                CC.translate("&7only once and if you miss it, that"),
+                CC.translate("&7is your own fault, Santa Claus"),
+                CC.translate("&7has got a busy schedule...")
                 ).build();
         return new GUIItem(item) {};
 

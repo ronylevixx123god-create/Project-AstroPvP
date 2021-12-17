@@ -16,6 +16,8 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Collection;
+
 public class ListenerSB implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -23,8 +25,8 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), this::refreshTagsAsyncForServer, 40L);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), this::refreshTagsAsyncForServer, 30L);
     }
 
     @EventHandler
@@ -84,14 +86,14 @@ public class ListenerSB implements Listener {
     @EventHandler
     public void onFactionUnFocus(FactionUnFocusEvent event) {
         refreshTagsAsyncForFaction(event.getFsender(), FactionUtils.getFaction(event.getFtarget()));
-        refreshTagsAsyncForFaction(event.getFsender(), event.getFsender());
-
     }
 
     public void refreshTagsAsyncForFaction(Faction faction1, Faction faction2) {
+        Collection<? extends Player> faction1OnlinePlayers = faction1.getOnlinePlayers();
+        Collection<? extends Player> faction2OnlinePlayers = faction2.getOnlinePlayers();
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
-            for (Player player : faction1.getOnlinePlayers()) {
-                for (Player other : faction2.getOnlinePlayers()) {
+            for (Player player : faction1OnlinePlayers) {
+                for (Player other : faction2OnlinePlayers) {
                     try {
                         PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
                     } catch (Exception exception) {
@@ -103,9 +105,10 @@ public class ListenerSB implements Listener {
     }
 
     public void refreshTagsAsyncForServer() {
+        Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                for (Player other : Bukkit.getOnlinePlayers()) {
+            for (Player player : allPlayers) {
+                for (Player other : allPlayers) {
                     try {
                         PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
                     } catch (Exception exception) {

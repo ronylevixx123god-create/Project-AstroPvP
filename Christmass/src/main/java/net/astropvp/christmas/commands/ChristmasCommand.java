@@ -19,7 +19,7 @@ public class ChristmasCommand implements CommandExecutor {
         Player player = (Player) commandSender;
         if(!player.isOp() || args.length == 0) {
             new ChristmasInventory().open(player);
-            player.sendMessage(new PrefixedMessage(Christmas.getInstance(), "Opening Christmas Shop.").get());
+            player.sendMessage(CC.translate("&a&l(!)&a Opening the Christmas Present Menu."));
             return true;
         }
         if(args[0].equalsIgnoreCase("setitem") && args.length == 1) {
@@ -30,18 +30,10 @@ public class ChristmasCommand implements CommandExecutor {
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.DarkGreenB + CC.Underline + "Christmas Shop"));
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "The " + CC.DarkGreen + "Christmas Shop " + CC.Gray + "has been " + CC.DarkGreen + "restocked"));
-            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "with " + player.getItemInHand().getItemMeta().getDisplayName()) + CC.Gray + " for " + CC.DarkGreen + "NO COST");
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.Gray + "with " + player.getItemInHand().getItemMeta().getDisplayName()) + CC.Gray + " type /santa to claim it.");
             Bukkit.broadcastMessage("");
             return true;
         }
-        if(args[0].equalsIgnoreCase("setspawn")) {
-            Christmas.getInstance().getChristmasManager().setShopLocation(player.getLocation());
-            player.sendMessage(new PrefixedMessage(Christmas.getInstance(), "Success.").get());
-            return true;
-        }
-
-
-
         return false;
     }
 }
