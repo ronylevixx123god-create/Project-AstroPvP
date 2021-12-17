@@ -66,7 +66,6 @@ import me.ifamasssxd.killtracker.listeners.SoulGemListener;
 import me.astropvp.autobroadcast.tasks.AutoBroadcastTask;
 import me.astropvp.autogiveall.struct.GiveAllManager;
 import net.astropvp.core.commands.*;
-import net.astropvp.core.conaxgames.giveall.ManualGiveAllCommand;
 import net.astropvp.core.conaxgames.staff.*;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffModeCommand;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
@@ -367,7 +366,7 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
         getCommand("givepearl").setExecutor(new GivePearlCommand());
         this.getCommand("armorcolor").setExecutor(new ArmorColorCommand());
-        this.getCommand("trailer").setExecutor(new TrailerCommand());
+        //this.getCommand("trailer").setExecutor(new TrailerCommand());
 
         this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
         this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
@@ -462,13 +461,14 @@ public class AstroCore extends JavaPlugin {
         this.getCommand("pots").setExecutor(new PotionsCommand(this));
 
         this.getCommand("invsee").setExecutor(new Invsee());
+        this.getCommand("giveall").setExecutor(new GiveallCommand());
         this.getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
         this.getCommand("trash").setExecutor(new TrashCommand());
         this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
         this.getCommand("togglepay").setExecutor(new CommandTogglePay());
 
         getCommand("phoenix").setExecutor(new PhoenixCommand());
-        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new ManualGiveAllCommand(), new StaffModeCommand()).forEach(this:: registerCommand);
+        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new StaffModeCommand()).forEach(this:: registerCommand);
 
         this.getServer().getPluginManager().registerEvents(new StaffListeners(), this);
         this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
