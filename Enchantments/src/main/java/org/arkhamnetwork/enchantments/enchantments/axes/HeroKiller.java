@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
@@ -71,7 +73,9 @@ public class HeroKiller extends CustomEnchantment {
 
                 if (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()))) {
                     if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.4)) {
-                        increase *= 1.1;
+                        if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
+                            increase *= 1.1;
+                        }
                     }
                 }
                 if (!(e.getDamager() instanceof Player)) return;

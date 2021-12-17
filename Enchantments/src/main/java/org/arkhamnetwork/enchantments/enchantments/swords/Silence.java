@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
@@ -67,7 +69,9 @@ public class Silence extends CustomEnchantment {
             long durationTicks = (enchantLevel + solitudeLevel) * 20L;
 
             if (WeaponBonusUtils.hasWeaponBonus(((Player) user).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) user).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.5) {
-                durationTicks = (long) (durationTicks * 1.5);
+                if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) target).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
+                    durationTicks = (long) (durationTicks * 1.5);
+                }
             }
 
             if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {

@@ -30,6 +30,7 @@ package com.compilex.CosmicArmorSets.enums.armorsets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
@@ -188,7 +189,13 @@ public class ChampionArmorSet
         if (WeaponBonusUtils.hasWeaponBonus(target.getItemInHand())) {
             if (WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() > 0.35) {
                 target.sendMessage(CC.RedB + " ** " + CC.GoldB + "CHAMPIONS WRATH BLOCKED (" + CC.RedB + "DEMON WEAPON BONUS" + CC.RedB + ") ** ");
+                return;
             }
+        }
+
+        if (CosmicArmorSetsAPI.getBonusCrystalsEquipped(target).containsKey(ArmorSet.SANTA) && Math.random() <= 0.35) {
+            target.sendMessage(CC.translate("&4&l*&2&l*&f&l* &2&lSANTA SET &7Blocked &6Champion Ability &f&l*&2&l&4&l*"));
+            return;
         }
 
 
