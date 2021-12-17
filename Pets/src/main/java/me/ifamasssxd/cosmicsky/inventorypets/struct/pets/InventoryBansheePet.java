@@ -85,8 +85,6 @@ public class InventoryBansheePet extends InventoryPet {
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
-
-
         List<Player> nearbyEnemies = Lists.newArrayList();
 
         Faction faction = FactionUtils.getFaction(player);
