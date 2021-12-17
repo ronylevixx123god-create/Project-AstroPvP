@@ -26,12 +26,11 @@ public class PlayerListener implements Listener {
         if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))return;
         if (event.isCancelled())return;
 
-        if(CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager()).isOnCosmicClient()) {
-            CosmicPlayer cosmicPlayer = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
-            cosmicPlayer.setCurrentHealthBar((Player) event.getEntity());
-            PacketOutHealthBar healthBar = new PacketOutHealthBar(cosmicPlayer.getCurrentHealthBar());
-            cosmicPlayer.sendPacket(healthBar);
-        }
+        CosmicPlayer cp = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
+        cp.setCurrentHealthBar((Player) event.getEntity());
+        PacketOutHealthBar healthBar = new PacketOutHealthBar(cp.getCurrentHealthBar());
+        cp.sendPacket(healthBar);
+
 
         Player damager = (Player)((Object)event.getDamager());
         Player player = (Player)((Object)event.getEntity());
