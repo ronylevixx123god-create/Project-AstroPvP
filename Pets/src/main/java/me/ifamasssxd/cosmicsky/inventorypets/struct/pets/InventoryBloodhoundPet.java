@@ -146,8 +146,14 @@ public class InventoryBloodhoundPet extends InventoryPet {
 
 
    private void startBoodHoundPet(Player player, final Player pTarget) {
-      pTarget.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* BLOODHOUND PET: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
-      player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* BLOODHOUND PET: (" + ChatColor.GRAY + pTarget.getName() + ChatColor.DARK_RED + ")");
+      player.sendMessage("");
+      player.sendMessage(CC.translate("&4&l*** BLOODHOUND PET [&6" + pTarget.getName() + "s&4&l] - HUNT! **"));
+      player.sendMessage("");
+
+      pTarget.sendMessage("");
+      pTarget.sendMessage(CC.translate("&4&l*** " + player.getName() + "&4&l's BLOODHOUND PET [&6" + 10 + "s&4&l] - HUNT! **"));
+      pTarget.sendMessage("");
+
       pTarget.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), true));
       pTarget.setMetadata("bloodHoundNoBless", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
       pTarget.removePotionEffect(PotionEffectType.SLOW);

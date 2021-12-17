@@ -8,11 +8,11 @@ import org.bukkit.entity.Player;
 public class SkrrtCooldownUtils {
     public static void enterSkrrtCooldown(Player target) {
         CosmicSkyInventoryPets.getSkrrtCooldownMap().put(target.getUniqueId(), target);
-        target.sendMessage(CC.translate("&c&lSKRRT PET: &aYou cannot be skrrt for 60 seconds anymore!"));
+        target.sendMessage(CC.translate("&c&l(Skrrt Pet) &cYou cannot be skrrt for 60 seconds anymore!"));
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
             CosmicSkyInventoryPets.getSkrrtCooldownMap().remove(target.getUniqueId());
-            target.sendMessage(CC.translate("&a&lSKRRT PET: &aYou can now get skrrt again!"));
+            target.sendMessage(CC.translate("&a&lSkrrt Pet) &aYou can now get skrrt again!"));
         }, 1200L);
     }
 

@@ -10,11 +10,11 @@ public class WitcherCooldownUtils {
 
     public static void enterWitcherCooldown(Player target) {
         CosmicSkyInventoryPets.getWitcherCooldownMap().put(target.getUniqueId(), target);
-        target.sendMessage(CC.translate("&c&lWITCHER PET: &aYou cannot be witchered for 60 seconds anymore!"));
+        target.sendMessage(CC.translate("&c&l(Witcher Pet)&c You cannot be witchered for 60 seconds anymore!"));
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
             CosmicSkyInventoryPets.getWitcherCooldownMap().remove(target.getUniqueId());
-            target.sendMessage(CC.translate("&a&lWITCHER PET: &aYou can now get witchered again!"));
+            target.sendMessage(CC.translate("&a&l(Witcher)&a You can now get witchered again!"));
         }, 1200L);
     }
 
