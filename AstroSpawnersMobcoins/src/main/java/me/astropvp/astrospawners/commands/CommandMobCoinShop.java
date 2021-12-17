@@ -66,18 +66,14 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1200));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
-            if (chests.containsKey("boots_gen"))
-                values.put(((MysteryChest)chests.get("boots_gen")).createClaimableItem(false), Integer.valueOf(4800));
-            if (chests.containsKey("OPSkin"))
-                values.put(((MysteryChest)chests.get("OPSkin")).createClaimableItem(false), Integer.valueOf(6000));
-
+            if (chests.containsKey("AstroNote"))
+                values.put(((MysteryChest)chests.get("AstroNote")).createClaimableItem(false), Integer.valueOf(1600));
             //Normal Items
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
             values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(4800));
             values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(6400));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("omni_crystal").createItem(((Player) sender).getPlayer(), 35), Integer.valueOf(5200));
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("holy_water").createItem(((Player) sender).getPlayer(), 35), Integer.valueOf(1600));
 
 
@@ -91,10 +87,8 @@ public class CommandMobCoinShop implements CommandExecutor {
                 values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1500));
             if (chests.containsKey("Backpack"))
                 values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
-            if (chests.containsKey("boots_gen"))
-                values.put(((MysteryChest)chests.get("boots_gen")).createClaimableItem(false), Integer.valueOf(6000));
-            if (chests.containsKey("OPSkin"))
-                values.put(((MysteryChest)chests.get("OPSkin")).createClaimableItem(false), Integer.valueOf(7500));
+            if (chests.containsKey("AstroNote"))
+                values.put(((MysteryChest)chests.get("AstroNote")).createClaimableItem(false), Integer.valueOf(2000));
 
             //Normal items
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
@@ -102,7 +96,6 @@ public class CommandMobCoinShop implements CommandExecutor {
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
             values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6000));
             values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("omni_crystal").createItem(((Player) sender).getPlayer(), 35), Integer.valueOf(6500));
             values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("holy_water").createItem(((Player) sender).getPlayer(), 35), Integer.valueOf(2000));
 
 
