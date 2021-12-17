@@ -65,7 +65,7 @@ public class GenBucketTask extends BukkitRunnable {
 
             this.currentLocation.getBlock().setType(this.activeBucket.getBucket().getPlacedMaterial());
             ++this.totalBlocks;
-            if (this.totalBlocks >= this.maxBlocks || this.currentLocation.getY() >= 256.0D) {
+            if (this.totalBlocks >= this.maxBlocks || this.currentLocation.getY() >= 254.0D) {
                 this.endTask();
                 return;
             }

@@ -52,16 +52,30 @@ extends CosmicGUI {
             String coordString = "Unknown";
             if (outpost.getTeleportLocation() != null) {
                 Location l = outpost.getTeleportLocation();
+                String colorB = outpost.getNameColor();
                 String color = outpost.getNameColor();
-                String colorB = outpost.getNameColor() + CC.Bold;
-                coordString = "  " + color + l.getBlockX() + colorB + "x " + color + l.getBlockY() + colorB + "y " + color + l.getBlockZ() + colorB + "z" + (this.player.getWorld().equals((Object)outpost.getTeleportLocation().getWorld()) ? color + " (" + colorB + outpost.getDistanceDecimalFormat().format(outpost.getTeleportLocation().distance(this.player.getLocation())) + "m" + color + " away)" : "");
+
+                coordString = "  " + CC.White + l.getBlockX() + colorB + "x " + CC.White+ l.getBlockY() + colorB + "y " + CC.White + l.getBlockZ() + colorB + "z" + (this.player.getWorld().equals((Object)outpost.getTeleportLocation().getWorld()) ? color + " (" + colorB + outpost.getDistanceDecimalFormat().format(outpost.getTeleportLocation().distance(this.player.getLocation())) + "m" + color + " away)" : "");
             }
-            ArrayList<String> lore = Lists.newArrayList("", coordString, "", CC.GoldB + "Status", outpost.getOutpostState().getName() + (outpost.getOutpostState() == OutpostState.CONTROLLED ? CC.Gray + " (" + CC.Green + outpost.getLastFactionToCapTag() + CC.Gray + ")" : "") + CC.Gray + " " + outpost.getPrettyFormattedCapturePercent(), "", CC.GoldB + "Rewards When Captured");
+            String color = outpost.getNameColor();
+
+            ArrayList<String> lore = Lists.newArrayList(CC.translate("&7Every bend is meant to test you, every junction made")
+                    , CC.translate("&7to bring you closer to that place where love and")
+                    , CC.translate("&7sacrifice meet.")
+                    , ""
+                    , CC.translate(color + "Stronghold Coords&f:")
+                    , CC.translate(coordString),
+                    "",
+                    CC.translate(color + "Current Info&f:"),
+                    CC.translate(outpost.getOutpostState().getName() + (outpost.getOutpostState() == OutpostState.CONTROLLED ? CC.Gray + " (" + CC.Green + outpost.getLastFactionToCapTag() + CC.Gray + ")" : "") + CC.Gray + " " + outpost.getPrettyFormattedCapturePercent())
+                    , ""
+                    , CC.GoldB + "Rewards When Captured");
+
             type.getRewardStrings().forEach(re -> lore.add(" " + re));
             lore.add("");
-            lore.add(CC.Gray + "Control the " + CosmicKOTHPlugin.get_().getBaseName() + " to gain access to");
-            lore.add(CC.Gray + "these rewards for you and your faction!");
-            this.setItem(index, new ItemBuilder(type.getGuiMaterial().getItemType(), outpost.getOutpostName() + " " + CosmicKOTHPlugin.get_().getBaseName(), new String[0]).lore((List)lore).data((short)type.getGuiMaterial().getData()).build(), () -> Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicKOTHPlugin.get_(), () -> {
+            lore.add(CC.translate(CC.Gray + "Control the &n" + CosmicKOTHPlugin.get_().getBaseName() + "&7 to gain access to"));
+            lore.add(CC.translate( "&7these rewards for &nyou&7 and your &nfaction&7!"));
+            this.setItem(index, new ItemBuilder(type.getGuiMaterial().getItemType(), outpost.getOutpostName(), new String[0]).lore((List)lore).data((short)type.getGuiMaterial().getData()).build(), () -> Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicKOTHPlugin.get_(), () -> {
                 this.player.closeInventory();
                 this.player.performCommand(CosmicKOTHPlugin.get_().getBaseName().toLowerCase());
             }));

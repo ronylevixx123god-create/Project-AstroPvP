@@ -9,7 +9,6 @@ import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.Filter;
 import me.astropvp.cratekeys.enums.CrateType;
 
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;
@@ -21,6 +20,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +28,7 @@ public class LootPreviewGUI {
     private PaginatedGui expShopUI;
     private CrateType type;
     private final Filter filter;
+
 
 
     public PaginatedGui getLootGUI() {
@@ -38,14 +39,17 @@ public class LootPreviewGUI {
 
     public LootPreviewGUI(Player player, CrateType type) {
         this.type = type;
+
+        this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
+
         if (AstroCrateKeysPlugin.getFilters().containsKey(player.getUniqueId()) && AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).containsKey(type)) {
             this.filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(type);
-            this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
-
         } else {
-            this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
-            this.filter = new Filter(type, new ArrayList<>());
+            player.sendMessage(CC.translate("&cAn error appeared, please report this to an administrator!"));
+            this.filter = null;
+            return;
         }
+
 
 
         Map<ItemStack, Double> itemList = AstroCrateKeysPlugin.getCachedCrateLoot().get(type);

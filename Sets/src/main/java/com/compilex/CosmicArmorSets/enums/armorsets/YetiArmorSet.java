@@ -75,7 +75,7 @@ public class YetiArmorSet
     @Override
     public List<String> getEquipDescription() {
 
-        return Lists.newArrayList(ChatColor.WHITE + "" + ChatColor.BOLD + "YETI SET BONUS: " + ChatColor.WHITE + "+10% ATK / -10% DMG");
+        return Lists.newArrayList(ChatColor.WHITE + "" + ChatColor.BOLD + "YETI SET BONUS: " + ChatColor.WHITE + "+10% Extra DMG / -10% DMG Reduction");
     }
 
     @Override
@@ -100,17 +100,7 @@ public class YetiArmorSet
         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.1);
         ItemStack item = damager.getItemInHand();
         if (event.getEntity() instanceof Player && item != null && item.getType() == Material.DIAMOND_AXE && new NBTWrapper(item).getString("cosmicType").equals("YETI_AXE")) {
-            Player damaged = (Player) event.getEntity();
-            int heroicArmorItems = 0;
-            for (ArmorSlot armorSlot : ArmorSlot.values()) {
-                if (!(Math.random() <= 0.75)) continue;
-                ArmorUtil.modifyPlayerArmor(damaged, armorSlot, -1, false);
-            }
-            for (ItemStack armorSlot : damaged.getEquipment().getArmorContents()) {
-                if (!CosmicArmorSetsAPI.isHeroicArmor(armorSlot)) continue;
-                ++heroicArmorItems;
-            }
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (2.075 + (double) heroicArmorItems * 0.03));
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.15);
         }
         return true;
     }

@@ -37,6 +37,7 @@ public class CommandSlotBot implements CommandExecutor {
                     }
                 }
                 list.add(Utils.toBase64(new ItemStack[]{item}, 9));
+                SlotBotPlugin.setMap(Utils.getMap());
                 if ((args.length >= 3 && args[2].contentEquals("show")) || (args.length >= 4 && args[3].contentEquals("show"))) {
                     String i = list.get(list.size() - 1);
                     i = String.valueOf(i) + ":show";

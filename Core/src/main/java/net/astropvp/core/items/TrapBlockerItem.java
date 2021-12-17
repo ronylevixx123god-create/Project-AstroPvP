@@ -29,15 +29,13 @@ public class TrapBlockerItem extends CosmicItem
     private static Map<UUID, Player> trapCooldown;
 
 
-
-
     public TrapBlockerItem() {
         super("trap_blocker");
         trappedPlayers = new HashMap<UUID, Player>();
         trapCooldown = new HashMap<UUID, Player>();
     }
 
-    public ItemStack createItem(Player player, Object ... objects) {
+    public ItemStack createItem(Player player, Object... objects) {
         return this.applyItemData((new ItemBuilder(Material.BONE, CC.translate("&c&lTrap Blocker &7(Right-Click)")
                 , CC.Gray + ""
                 , CC.translate("&7&nRight-Click&7 to activate"),
@@ -86,36 +84,37 @@ public class TrapBlockerItem extends CosmicItem
         }
 
 
-
-
-
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
 
         cosmicData.setInt("trap_blocker", 1);
         event.setCancelled(true);
-        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("cosmicData", (NBTBase) cosmicData.get());
         item = wrapper.build();
 
 
         if (FactionUtils.getFaction(player) == null) {
             throw new PrefixedException("You cannot use this item when you don't have a faction!");
         }
-        int amountOfPlayers=0;
-        for (Entity entity : player.getNearbyEntities(10,10,10)) {
+        int amountOfPlayers = 0;
+        for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
             if (!(entity instanceof Player))
                 continue;
             amountOfPlayers++;
-            Player p = (Player)entity;
+            Player p = (Player) entity;
             if (FactionUtils.getFaction(p) == null) continue;
             if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p)) {
                 if (!isTrapped(p.getUniqueId())) {
+                    if (MaskUtils.hasMaskEquipped(p, "ELF") && Math.random() <= 0.25) {
+                        p.sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &cTrap Blocker &a&l*"));
+                        continue;
+                    }
                     trappedPlayers.put(p.getUniqueId(), p);
                     p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
                     p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 10, 10);
                     amountOfPlayers++;
                 }
 
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), ()-> {
+                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                     trappedPlayers.remove(p.getUniqueId());
                     p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
                 }, 300L);
@@ -132,9 +131,9 @@ public class TrapBlockerItem extends CosmicItem
         for (Player p : trappedPlayers.values()) {
             player.sendMessage(CC.translate(" &c&l* &7" + p.getName()));
         }
-        trapCooldown.put(player.getUniqueId(),player);
+        trapCooldown.put(player.getUniqueId(), player);
 
-        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), ()-> {
+        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
             player.sendMessage(CC.translate("&a&l* YOU CAN NOW USE A NEW TRAP BLOCKER *"));
             trapCooldown.remove(player.getUniqueId());
         }, 2400L);
@@ -143,7 +142,7 @@ public class TrapBlockerItem extends CosmicItem
         if (item.getAmount() == 1) {
             player.setItemInHand(null);
         } else {
-            item.setAmount(item.getAmount()-1);
+            item.setAmount(item.getAmount() - 1);
 
         }
     }

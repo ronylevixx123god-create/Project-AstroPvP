@@ -30,6 +30,7 @@ public enum ArkPlugins {
     PVP_POTION_EFFECTS(new PvPPotionEffects(Arkkit.get()), "Clear potion effects whenever a player goes between a pvp and non-pvp WG flagged area."),
     NO_CURSOR_DROP(new NoCursorDrop(Arkkit.get()), "Prevents users from losing item being held on cursor on inventory close."),
     NO_ENCHANTMENT_TABLE_BOOKS(new NoEnchantmentTableBooks(Arkkit.get()), "Prevents users from enchanting books on enchantment tables."),
+
     ENCHANTMENT_ANVIL_FIX(new EnchantmentAnvilFix(Arkkit.get()), "Disables EnchantmentAPI anvil and enchantment table mechanics."),
     SMARTER_ESSENTIALS(new SmarterEssentials(Arkkit.get()), "Prevents /tpaccept exploitation into enemy faction bases."),
     CHUNK_LOAD_FLUSH(new ChunkLoadFlush(Arkkit.get()), "Removes entities in chunks when they are loaded."),
@@ -77,6 +78,8 @@ public enum ArkPlugins {
     SUICIDE(new Suicide(Arkkit.get()), "Enables /suicide command for players to use."),
     DEATH_MESSAGES(new DeathMessages(Arkkit.get()), "Enables nice pvp death messages that display a JSON value of the item used."),
     LORE_TAG(new LoreTag(Arkkit.get()), "Enables the lore tag item to add a custom line of lore text to an item"),
+    COLOREDLORE_TAG(new ColoredLoreTag(Arkkit.get()), "Enables the colored lore tag item to add a custom line of lore text to an item"),
+
     BLOCK_VALUE(new BlockValue(Arkkit.get()), "Enables tracking of custom block values in claims."),
     EQUIPMENT_LOOTBOX(new EquipmentLootboxes(Arkkit.get()), "Equipement lootboxes that give a random Armor Set item."),
     NO_DUPE_EXPLOIT(new NoDupeExploit(Arkkit.get()), "Scans inventories for items with duplicated IID and removes them."),

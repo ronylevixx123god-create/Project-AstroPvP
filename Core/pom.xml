@@ -214,7 +214,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>holo</artifactId>
+            <artifactId>hoglo</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/HolographicDisplays (2).jar</systemPath>

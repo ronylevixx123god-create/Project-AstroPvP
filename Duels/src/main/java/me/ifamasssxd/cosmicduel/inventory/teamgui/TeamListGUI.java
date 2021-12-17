@@ -102,6 +102,9 @@ public class TeamListGUI {
                 TeamData playerTeam = CosmicDuel.get().getTeamDataManager().tryFindTeam(player.getUniqueId());
                 if (playerTeam == null) {
                     player.sendMessage(CC.translate("&cYou are not apart of a team!"));
+                    event.setCancelled(true);
+                    player.closeInventory();
+                    return;
                 }
 
                 Player sender = (Player) event.getWhoClicked();

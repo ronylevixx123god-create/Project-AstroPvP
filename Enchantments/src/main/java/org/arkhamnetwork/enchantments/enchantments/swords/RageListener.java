@@ -18,13 +18,13 @@ import org.bukkit.plugin.Plugin;
 import java.util.Objects;
 
 final class RageListener implements Listener {
-    /*@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamaged(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof LivingEntity) {
             Player entity = (Player) event.getEntity();
             if (entity.hasMetadata("combo_pvp")) {
-                if(RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
-                    if(entity.getMetadata("combo_pvp").get(0).asInt() > 1) {
+                if (RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
+                    if (entity.getMetadata("combo_pvp").get(0).asInt() > 1) {
                         int newRageValue = entity.getMetadata("combo_pvp").get(0).asInt() - 2;
                         entity.setMetadata("combo_pvp", new FixedMetadataValue(Enchantments.getInstance(), newRageValue));
                     }
@@ -37,7 +37,7 @@ final class RageListener implements Listener {
             }
             if (entity.hasMetadata("combo_pve")) {
                 if (RuneCacher.isContained((Player) event.getEntity()) && RuneCacher.getRuneCacher((Player) event.getEntity()).getRuneType() == RuneType.KRONOS) {
-                    if(entity.getMetadata("combo_pve").get(0).asInt() > 1) {
+                    if (entity.getMetadata("combo_pve").get(0).asInt() > 1) {
                         int newRageValue = entity.getMetadata("combo_pve").get(0).asInt() - 2;
                         entity.setMetadata("combo_pve", new FixedMetadataValue(Enchantments.getInstance(), newRageValue));
                     }
@@ -83,17 +83,6 @@ final class RageListener implements Listener {
                 damager.setMetadata("combo_pve", new FixedMetadataValue(Enchantments.getInstance(), pve_combo));
             }
         }
-    }*/
-
-    @EventHandler(
-            priority = EventPriority.HIGH,
-            ignoreCancelled = true
-    )
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player && (e.getEntity().hasMetadata("pvp_rageHitCombo") || e.getEntity().hasMetadata("pve_rageHitCombo"))) {
-            e.getEntity().removeMetadata("pvp_rageHitCombo", Enchantments.getInstance());
-            e.getEntity().removeMetadata("pve_rageHitCombo", Enchantments.getInstance());
-        }
-
     }
 }
+

@@ -3,6 +3,7 @@ package net.astropvp.core.listeners;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.cosmicpvp.cosmicutils.utils.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
@@ -14,10 +15,6 @@ import net.astropvp.core.utils.HolyWhiteScrollUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -123,6 +120,10 @@ public class HolyWhiteScrollListener implements Listener {
                     if (AstroItemSkinsAPI.hasSkinEquipped(e.getEntity().getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved you from getting monoed &a&l*"));
+                        continue;
+                    }
+                    if (MaskUtils.hasMaskEquipped(e.getEntity(), "ELF") && Math.random() <= 0.25) {
+                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &bMonopoly Effect &a&l*"));
                         continue;
                     }
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));

@@ -17,16 +17,21 @@ public class Lifesteal extends CustomEnchantment {
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         final double random = Math.random();
-        if (target instanceof Player && MaskType.hasEquipped((Player) target, "NECROMANCER")) {
-            return;
-        }
+
         final double chance = (enchantLevel > 3) ? 0.3 : (0.1 * enchantLevel);
         int health = (int) user.getHealth() + enchantLevel;
         if (health > user.getMaxHealth()) {
             health = (int) user.getMaxHealth();
         }
 
+
+
         if (random < chance) {
+            if (target instanceof Player && MaskType.hasEquipped((Player) target, "NECROMANCER")) {
+                return;
+            }
+            if (target instanceof Player && target.hasMetadata("necro_blocked"))
+                return;
             GeneralUtil.setPlayerHealth(user, health);
         }
     }

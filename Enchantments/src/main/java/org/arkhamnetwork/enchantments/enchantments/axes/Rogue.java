@@ -72,7 +72,7 @@ public class Rogue extends CustomEnchantment {
                 int applied = CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).get(ArmorSet.GOBLIN);
                 chance += applied * 8;
             }
-            if(Math.random() < chance) {
+            if((CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit) != null && CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.GOBLIN) || CosmicArmorSetsAPI.getArmorSet((Player) playerHit) != null && CosmicArmorSetsAPI.getArmorSet((Player) playerHit) == ArmorSet.GOBLIN) && Math.random() < chance) {
                 player.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + playerHit.getName() + "'s Rogue) &6&l*&e&l*&6&l*"));
                 playerHit.sendMessage(CC.translate("&c&l** ROGUE BLOCKED &7(" + player.getName() + "'s Goblin Armor Set) &e&l**"));
                 ((Player) player).playSound(player.getLocation(), Sound.VILLAGER_YES, 0.5f, 0.5f);

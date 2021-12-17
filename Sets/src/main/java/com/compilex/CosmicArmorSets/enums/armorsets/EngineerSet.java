@@ -142,9 +142,12 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         final Material mat = Material.TNT;
         EntityFallingBlock block = new EntityFallingBlock(location, (World) location.getWorld(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()).getBlockData()) {
             boolean damagedPlayed = false;
+
             @SneakyThrows
             public void die() {
-                if (isAlive() && this.damagedPlayed) { this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId()); }
+                if (isAlive() && this.damagedPlayed) {
+                    this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
+                }
                 try {
                     de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0.5f, 0f, 0.6f, 5);
                 } catch (Exception exception) {
@@ -153,6 +156,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
                 this.bukkitEntity.getLocation().getWorld().playSound(this.bukkitEntity.getLocation(), Sound.ZOMBIE_WOOD, 1.2F, 0.9f);
                 super.die();
             }
+
             public void h() {
                 if (this.ticksLived >= 1) {
                     try {
@@ -164,16 +168,23 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
                             if (ent instanceof EntityHuman) {
                                 CraftPlayer player = (CraftPlayer) ent.getBukkitEntity();
                                 if (player.getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() ||
-                                        EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0D || !WorldGuardUtils.isPvPEnabled(player.getLocation())) { continue; }
-                                if (faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE)) { continue; }
-                                if (player.hasMetadata("b2-bombed")) { die();continue; }
+                                        EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0D || !WorldGuardUtils.isPvPEnabled(player.getLocation())) {
+                                    continue;
+                                }
+                                if (faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE)) {
+                                    continue;
+                                }
+                                if (player.hasMetadata("b2-bombed")) {
+                                    die();
+                                    continue;
+                                }
                                 player.setWalkSpeed(0.0f);
                                 player.sendMessage(CC.translate("&c&l* B-2 BOMBED [&7" + original.getName() + " (Frozen for 3s)&c&l] *"));
                                 player.setMetadata("b2-bombed", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), true));
                                 Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicArmorSetsPlugin.get_(), () -> {
                                     if (player.isOnline())
                                         unfreeze(player);
-                                    }, 3 * 20);
+                                }, 3 * 20);
                                 this.damagedPlayed = true;
                                 killed++;
                             }
@@ -238,6 +249,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         return false;
     }
 
+    @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
         if (!(event.getEntity() instanceof Player)) {
             return false;
@@ -252,6 +264,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         return false;
     }
 
+    @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
         return false;
     }
@@ -264,6 +277,7 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
         return armor;
     }
 
+    @Override
     public ItemStack getWeapon(boolean p0) {
         return (new NBTWrapper((new ItemBuilder(Material.DIAMOND_SWORD, CC.GoldB + "Engineer Hammer", CC.Gray + "A titan-forged grandmaster", CC.Gray + "warhammer that crushes all.", "", CC.GoldB + "ENGINEER WEAPON BONUS", CC.Gold + "Deal +15% damage to all enemies.", CC.Gold + "120% B-2 Bomber Ability", CC.Gold + "Immune to World Destroyer Pet", CC.Gold + "Immune to Shockwave, Obliterate, Guardians", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer items." + CC.Gray + ")")).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build())).setString("cosmicType", "ENGINEER_SWORD").build();
     }

@@ -135,10 +135,6 @@ public class CosmicArmorSetsAPI {
             existing.add(CC.DarkRed + "This weapon is stronger than diamond.");
             im.setLore(existing);
             retr.setItemMeta(im);
-            if (type == HeroicWeaponType.AXE) {
-                ArmorSet.addMaxedEnchant(retr, "Silence");
-                ArmorSet.addMaxedEnchant(retr, "Lifesteal");
-            }
         }
         return retr;
     }
@@ -317,6 +313,8 @@ public class CosmicArmorSetsAPI {
             if (armor == null || armor.getType() == Material.AIR) continue;
             List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
             if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.RUINS_HELMET)) {
+                if (sets == null) return null;
+                if (ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()) == null) return null;
                 sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
             }
             if (sets == null || sets.isEmpty()) continue;

@@ -137,7 +137,7 @@ public class UltraArmorSet
             return false;
         }
         this.removeResistance(damaged);
-        this.modifyDamage(damaged, event, -6, multiplier);
+        this.modifyDamage(damaged, event, -5, multiplier);
         return false;
     }
 
@@ -155,7 +155,7 @@ public class UltraArmorSet
             event.setDamage(event.getDamage()*1.1);
 
         }
-        this.modifyDamage(damager, event, 7.5, applied);
+        this.modifyDamage(damager, event, 10, applied);
         return false;
     }
 

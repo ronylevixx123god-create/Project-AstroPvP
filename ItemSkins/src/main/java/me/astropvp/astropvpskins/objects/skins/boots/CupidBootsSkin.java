@@ -11,8 +11,8 @@ import org.bukkit.util.Vector;
 public class CupidBootsSkin extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()))
-            return;
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         damaged.setVelocity(new Vector(Math.random(), Math.random(), Math.random()));
     }
 }

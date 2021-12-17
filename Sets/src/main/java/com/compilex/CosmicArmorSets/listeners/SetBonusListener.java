@@ -58,6 +58,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Map;
+import java.util.Objects;
 
 public class SetBonusListener
         implements Listener {
@@ -84,6 +85,10 @@ public class SetBonusListener
             armor.getSet().getArmorSetInfo().onUnequip(player);
         }
     }
+
+
+
+
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
@@ -123,6 +128,8 @@ public class SetBonusListener
             }
             AbilityArmorSet set;
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);
+            if (bonuses == null) return;
+
             if(AstroItemSkinsAPI.hasSkinEquipped((Player) event.getDamager(), SkinType.COSMIC_CITIZEN_BOOTS))
                 event.setDamage(event.getDamage() * 1.2);
             if (damagerArmorSet != null && (event.getDamager() instanceof Player || damagerArmorSet.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
@@ -153,7 +160,8 @@ public class SetBonusListener
                     abilityArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
                 }
             }
-            if (!damaged.hasMetadata("blackout") && !(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager)).isEmpty()) {
+            if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null) return;
+            if (!damaged.hasMetadata("blackout") && !(Objects.requireNonNull(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager))).isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }

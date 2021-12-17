@@ -25,16 +25,20 @@ public class DeathAndTaxesSkin extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
             this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());
-        if(damaged instanceof Player && Math.random() <= 0.08 && !markList.containsKey(damaged)) {
+        if(damaged instanceof Player && Math.random() <= 0.02 && !markList.containsKey(damaged)) {
             damager.sendMessage(CC.GoldB + " ** MARKED " + damaged.getName() + " WITH DEATH AND TAXES **");
             damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES MARK " + CC.Gray + "[" + damager.getName() + "]" + CC.GoldB + " **");
             this.markList.put((Player) damaged, 0.0);
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
                 if(!WorldGuardUtils.isPvPEnabled(damaged.getLocation()))
                     return;
-                ((Player) damaged).damage(markList.get(damaged)/4);
-                damager.sendMessage(CC.GoldB + " ** MARKED DEALT " + Math.round(markList.get(damaged)/4) + "HP **");
-                damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES DEALT " + CC.Gray + "[" + Math.round(markList.get(damaged)/4) + "]" + CC.GoldB + " **");
+                double amount = markList.get(damaged)/8;
+                if (amount > 10) {
+                    amount = 10;
+                }
+                ((Player) damaged).damage(amount);
+                damager.sendMessage(CC.GoldB + " ** MARKED DEALT " + amount + "HP **");
+                damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES DEALT " + CC.Gray + "[" + amount + " DMG]" + CC.GoldB + " **");
                 this.markList.remove(damaged);
             }, 120L);
         }

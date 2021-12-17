@@ -1,6 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.swords;
 
 import com.cosmicpvp.cosmicutils.itembuilder.YijkiStaffBuilder;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
@@ -14,6 +15,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class BladeOfDarknessSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(Math.random() >= 0.02) {
             //TODO: YIJKI ABILITY
         }

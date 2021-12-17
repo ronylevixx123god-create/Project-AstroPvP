@@ -15,7 +15,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 public class CandyBladeSkin extends ItemSkin {
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(damaged instanceof Player) {
             new MasteryLifesteal().applyDamagedOtherPlayer(damager, (Player) damaged, event, 10);
         }

@@ -62,6 +62,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     private double cageDuration = 5.0;
 
 
+
+
     public int getCooldown(int level) {
         return 300;
     }
@@ -115,6 +117,14 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     break;
                 }
             }
+        }
+
+        if (playerHasApollo(player)) {
+            cageDuration = 7.5;
+        } else if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+            cageDuration = 7.5;
+        } else {
+            cageDuration = 5.0;
         }
 
 
@@ -258,10 +268,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     cancel();
                 }
-                int dmg = 2;
                 if (WorldGuardUtils.isPvPEnabled(affected.getLocation())) {
                     affected.damage(0.0D);
-                    affected.setHealth(affected.getHealth() - 1.5D);
+                    affected.setHealth(affected.getHealth() - 1D);
                 }
                 if (affected.getHealth() <= 0.0D || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);

@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.commands.*;
+import org.arkhamnetwork.Arkkit.patches.ColoredLoreTag;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
@@ -108,6 +109,7 @@ public class Arkkit
         getCommand("arkdebug").setExecutor(new CommandArkDebug());
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkDebug registered");
         Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading commands...");
+        Arkkit.get().registerPatch(new ColoredLoreTag(this));
     }
 
     private boolean setupEconomy() {

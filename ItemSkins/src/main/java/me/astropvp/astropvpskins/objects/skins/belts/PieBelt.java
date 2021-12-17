@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.belts;
 
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import org.bukkit.Bukkit;
@@ -17,6 +18,8 @@ public class PieBelt extends ItemSkin {
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(Math.random() <= 0.05) {
             if(hypnosis.containsKey(damaged)) {
                 hypnosis.put(damaged, hypnosis.get(damaged) + 1);
