@@ -5,7 +5,6 @@ import lombok.Getter;
 import me.matthawkk.plugin.BasePlugin;
 import me.matthawkk.plugin.Plugins;
 import net.astropvp.christmas.commands.ChristmasCommand;
-import net.astropvp.christmas.listeners.ChristmasListener;
 import net.astropvp.christmas.managers.ChristmasManager;
 import org.bukkit.ChatColor;
 
@@ -27,9 +26,8 @@ public class Christmas extends BasePlugin {
         }
         christmasManager = new ChristmasManager();
         getCommand("christmas").setExecutor(new ChristmasCommand());
-        Plugins.registerListeners(this, new ChristmasListener());
         this.defaultColor = ChatColor.LIGHT_PURPLE;
-        this.pluginPrefix = CC.DarkRedB + "<" + CC.Green + "Christmas" + CC.DarkRedB + ">";
+        this.pluginPrefix = CC.DarkRedB + "<" + CC.DarkGreenB + "Christmas" + CC.DarkRedB + ">";
     }
 
     public void unload() {

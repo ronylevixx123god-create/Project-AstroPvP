@@ -18,24 +18,18 @@ public class ChristmasManager {
 
     @Getter
     @Setter
-    private double currentPrice;
-
-    @Getter
-    @Setter
     private Location shopLocation;
 
     private List<String> alreadyBought;
 
     public ChristmasManager() {
         this.currentItem = ConfigUtils.getItem(Christmas.getInstance().getConfig().getString("current-item"));
-        this.currentPrice = Christmas.getInstance().getConfig().getInt("current-price");
         this.shopLocation = ConfigUtils.stringToLocation(Christmas.getInstance().getConfig().getString("shop-location"));
         this.alreadyBought = Christmas.getInstance().getConfig().getStringList("already-bought");
     }
 
     public void saveShop() {
         Christmas.getInstance().getConfig().set("current-item", ConfigUtils.toBase64(new ItemStack[]{this.currentItem}, 9));
-        Christmas.getInstance().getConfig().set("current-price", this.currentPrice);
         Christmas.getInstance().getConfig().set("shop-location", ConfigUtils.locationToString(this.shopLocation));
         Christmas.getInstance().getConfig().set("already-bought", this.alreadyBought);
         Christmas.getInstance().saveConfig();
