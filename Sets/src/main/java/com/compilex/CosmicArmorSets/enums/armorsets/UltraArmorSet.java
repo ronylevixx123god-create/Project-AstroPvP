@@ -152,7 +152,7 @@ public class UltraArmorSet
         }
         if (Math.random() <= 0.025 * (double) applied) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage()*1.1);
+            event.setDamage(event.getDamage()*1.15);
 
         }
         this.modifyDamage(damager, event, 10, applied);

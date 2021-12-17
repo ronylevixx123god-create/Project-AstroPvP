@@ -89,16 +89,10 @@ public class ListenerSB implements Listener {
     }
 
     public void refreshTagsAsyncForFaction(Faction faction1, Faction faction2) {
-        Collection<? extends Player> faction1OnlinePlayers = faction1.getOnlinePlayers();
-        Collection<? extends Player> faction2OnlinePlayers = faction2.getOnlinePlayers();
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
-            for (Player player : faction1OnlinePlayers) {
-                for (Player other : faction2OnlinePlayers) {
-                    try {
+            for (Player player : faction1.getOnlinePlayers()) {
+                for (Player other : faction2.getOnlinePlayers()) {
                         PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
                 }
             }
         });
@@ -109,11 +103,7 @@ public class ListenerSB implements Listener {
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
             for (Player player : allPlayers) {
                 for (Player other : allPlayers) {
-                    try {
                         PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
                 }
             }
         });

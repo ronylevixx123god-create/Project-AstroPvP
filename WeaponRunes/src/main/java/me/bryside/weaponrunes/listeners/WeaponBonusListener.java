@@ -71,8 +71,11 @@ public class WeaponBonusListener implements Listener {
         }*/
         if (!WeaponBonusUtils.hasWeaponBonus(clicked) && WeaponBonusUtils.isWeaponBonus(cursor) && e.getClick().isLeftClick()) {
             WeaponBonusType weaponBonusType = WeaponBonusUtils.getWeaponBonusByItem(cursor);
-            if (weaponBonusType == null || !WeaponBonusUtils.isHeroicWeapon(clicked))
+            if (weaponBonusType == null || !WeaponBonusUtils.isHeroicWeapon(clicked)) {
+                e.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You cannot apply weapon bonuses to non-heroic weapons"));
+                e.setCancelled(true);
                 return;
+            }
             /*if(Math.random() > WeaponBonusUtils.getWeaponBonusSuccess(cursor) * 0.01) {
                 e.setCursor(null);
                 e.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "Weapon Bonus Failed.");

@@ -27,7 +27,7 @@ public class Overwhelm extends CustomEnchantment {
 
         if (target.hasMetadata("overwhelm_effect")) return;
 
-        if (Math.random() < 0.05) {
+        if (Math.random() < 0.08) {
             target.setMetadata("overwhelm_effect", new FixedMetadataValue(Enchantments.getInstance(), true));
             target.sendMessage(CC.translate("&6&l* STRUCK BY OVERWHELM EFFECT &7[" + user.getName() + "&7]&6&l *"));
 
