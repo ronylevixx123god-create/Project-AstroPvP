@@ -42,13 +42,13 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void diaSwordFix(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             if (damager.getItemInHand() != null) {
                 if (damager.getItemInHand().getType() == Material.DIAMOND_SWORD) {
-                    e.setDamage(e.getDamage()*0.75);
+                    e.setDamage(e.getDamage()*0.65);
                 }
             }
         }

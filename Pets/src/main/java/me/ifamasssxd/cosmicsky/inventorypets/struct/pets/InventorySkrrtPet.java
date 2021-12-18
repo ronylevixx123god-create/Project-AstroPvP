@@ -147,8 +147,13 @@ public class InventorySkrrtPet extends InventoryPet {
             if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
                 player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
                 player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-                p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
-                player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* SKRRT: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
+                player.sendMessage("");
+                player.sendMessage(CC.translate("&4&l*** SKRRT PET [&6" + p.getName() + "s&4&l] - SKRRT'D! **"));
+                player.sendMessage("");
+
+                p.sendMessage("");
+                p.sendMessage(CC.translate("&4&l*** " + player.getName() + "&4&l's SKRRT PET [&6" + freezeDuration(5) + "s&4&l] - SKRRT! **"));
+                p.sendMessage("");
 
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 

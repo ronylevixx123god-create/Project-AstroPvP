@@ -12,8 +12,6 @@ import me.astropvp.cratekeys.managers.CrateDataManager;
 import me.astropvp.cratekeys.managers.FilterManager;
 import me.astropvp.cratekeys.sql.Database;
 import me.astropvp.cratekeys.sql.SQLQueryCustomThread;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -32,8 +30,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
     public static HashMap<CrateType, Map<ItemStack, Double>> cachedCrateLoot;
     @Getter
     private FilterManager filterManager;
-    @Getter
-    private static HashMap<UUID, HashMap<CrateType, Filter>> filters;
+    public static HashMap<UUID, HashMap<CrateType, Filter>> filters;
     @Getter
     private Database sqlDatabase;
 
@@ -98,6 +95,10 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
 
     public static AstroCrateKeysPlugin getInstance() {
         return AstroCrateKeysPlugin;
+    }
+
+    public static HashMap<UUID, HashMap<CrateType,Filter>> getFilters() {
+        return filters;
     }
 
 }

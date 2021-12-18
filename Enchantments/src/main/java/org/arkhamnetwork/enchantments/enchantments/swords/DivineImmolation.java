@@ -133,7 +133,7 @@ public class DivineImmolation extends CustomEnchantment {
                                 if (WeaponBonusUtils.hasWeaponBonus(((Player) player).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player)player).getItemInHand()) == WeaponBonusType.REFORGED) {
                                     if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
 
-                                        e.setDamage(e.getDamage() * 1.1);
+                                        e.setDamage(e.getDamage() * 1.15);
                                     }
                                 }
 
