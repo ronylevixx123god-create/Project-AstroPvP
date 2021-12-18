@@ -20,7 +20,7 @@ public enum FactionUpgrade {
     ENHANCED_FLIGHT(Material.FEATHER, (Upgrade)new EnhancedFlight(3, "Enhanced Flight", Lists.newArrayList((Object)ChatColor.GRAY + "Increased flight abilities in your claims!"))),
     EXPLOSIVES_EXPERT(Material.TNT, (Upgrade)new ExplosivesExpert(4, "Explosives Expert", Lists.newArrayList("Smelt Gun Powder into TNT."))),
     WARP_MASTER(Material.ENDER_PEARL, (Upgrade)new WarpMaster(12, "Warp Master", Lists.newArrayList("Create more /f warps."))),
-    MAX_FACTION_SIZE(Material.EMERALD, (Upgrade)new MaxFactionSize(10, "Max Faction Size", Lists.newArrayList("Increases max faction size."))),
+    MAX_FACTION_SIZE(Material.EMERALD, (Upgrade)new MaxFactionSize(5, "Max Faction Size", Lists.newArrayList("Increases max faction size."))),
     FACTION_POWER_BOOST(Material.DIAMOND, (Upgrade)new FactionPowerBoost(5, "Faction Power Boost", Lists.newArrayList("Adds passive faction power boosts."))),
     //MCMMO_MASTERY(Material.BOOK, (Upgrade)new mcMMOMastery(4, "mcMMO Mastery", Lists.newArrayList("Shorter mcMMO Active Ability Cooldowns"))),
     MONSTER_FARM(Material.BLAZE_ROD, (Upgrade)new MonsterFarm(4, "Monster Farm", Lists.newArrayList("Increased mob spawn rates in claims."))),

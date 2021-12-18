@@ -28,7 +28,7 @@ extends Upgrade {
 
     @Override
     public double getMoneyCost(int tier) {
-        return tier * 1000000;
+        return tier * 100000000;
     }
 
     @Override
