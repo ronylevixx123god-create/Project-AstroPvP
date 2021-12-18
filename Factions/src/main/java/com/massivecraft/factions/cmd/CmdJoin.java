@@ -86,7 +86,7 @@ public class CmdJoin
                 proccessingJoins.remove(CmdJoin.this.me.getUniqueId());
                 return;
             }
-            if (Conf.factionMemberLimit > 0 && faction.getFPlayers().size() >= Conf.factionMemberLimit && !fplayer.isAdminBypassing()) {
+            if (Conf.factionMemberLimit > 0 && !fplayer.isAdminBypassing()) {
                     int extraMemebers = FactionUpgradeAPI.getPerkLevel(faction, FactionUpgrade.MAX_FACTION_SIZE);
                     if (faction.getFPlayers().size() >= Conf.factionMemberLimit + extraMemebers) {
                         CmdJoin.this.msg(" <b>!<white> The faction %s is at the limit of %d members, so %s cannot currently join.", faction.getTag(CmdJoin.this.fme), Conf.factionMemberLimit, fplayer.describeToAsync(CmdJoin.this.fme, false));
