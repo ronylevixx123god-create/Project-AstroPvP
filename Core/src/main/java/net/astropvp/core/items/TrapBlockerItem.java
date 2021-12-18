@@ -27,12 +27,14 @@ public class TrapBlockerItem extends CosmicItem
 
     private static Map<UUID, Player> trappedPlayers;
     private static Map<UUID, Player> trapCooldown;
+    private static Map<UUID, Player> trappedPlayersCooldown;
 
 
     public TrapBlockerItem() {
         super("trap_blocker");
         trappedPlayers = new HashMap<UUID, Player>();
         trapCooldown = new HashMap<UUID, Player>();
+        trappedPlayersCooldown = new HashMap<>();
     }
 
     public ItemStack createItem(Player player, Object... objects) {
@@ -108,7 +110,13 @@ public class TrapBlockerItem extends CosmicItem
                         p.sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &cTrap Blocker &a&l*"));
                         continue;
                     }
+
+                    if (trappedPlayersCooldown.containsKey(p.getUniqueId())) {
+                        player.sendMessage(CC.translate("&c&l(Trap Blocker)&c " + p.getName() + " is still on trap blocker cooldown, this lasts 60s."));
+                        continue;
+                    }
                     trappedPlayers.put(p.getUniqueId(), p);
+                    trappedPlayersCooldown.put(p.getUniqueId(), p);
                     p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
                     p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 10, 10);
                     amountOfPlayers++;
@@ -118,6 +126,11 @@ public class TrapBlockerItem extends CosmicItem
                     trappedPlayers.remove(p.getUniqueId());
                     p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
                 }, 300L);
+
+                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
+                    trappedPlayersCooldown.remove(p.getUniqueId());
+                    p.sendMessage(CC.translate("&c&l(Trap Blocker)&c You can now get trap blocked again."));
+                }, 20*60L);
             }
         }
 

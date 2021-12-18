@@ -27,6 +27,7 @@ public class MauisHookSkin extends ItemSkin {
         if (!damager.getWorld().getName().equals("world") && !damager.getWorld().getName().equals("flat")) return;
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation())) return;
+        if (event.isCancelled()) return;
 
         if (!(damaged instanceof Player))
             return;

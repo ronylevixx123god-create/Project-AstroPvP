@@ -170,7 +170,7 @@ public class ArmorSetBonusCrystalItem
         if (sets != null) {
             double chanceToApply;
             ArmorSet itemSet = ArmorSet.getArmorSetFromItem(clicked);
-            if (itemSet != null && itemSet != ArmorSet.OMNI) {
+            if (itemSet != null) {
                 throw new PrefixedException("You cannot apply an Armor Set Crystal to an existing Armor Set piece!");
             }
 
