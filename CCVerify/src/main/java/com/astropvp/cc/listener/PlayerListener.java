@@ -49,6 +49,7 @@ public class PlayerListener implements Listener {
             CosmicPlayer cp = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
             cp.setCurrentHealthBar((Player) event.getEntity());
             PacketOutHealthBar healthBar = new PacketOutHealthBar(cp.getCurrentHealthBar());
+            Bukkit.broadcastMessage("send health bar packet");
             cp.sendPacket(healthBar);
 
             Location place = updateDamageSplatLocation(event.getEntity().getLocation());
