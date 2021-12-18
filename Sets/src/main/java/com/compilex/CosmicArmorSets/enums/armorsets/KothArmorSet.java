@@ -172,7 +172,6 @@ public class KothArmorSet
 
     @Override
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        NBTWrapper wrapper;
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
@@ -182,19 +181,23 @@ public class KothArmorSet
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
         }
         ItemStack item = damager.getItemInHand();
-        if (event.getEntity() instanceof Player && item != null && (item.getType() == Material.GOLD_AXE || item.getType() == Material.GOLD_SWORD) && (wrapper = new NBTWrapper(item)).getString("cosmicType").equals("HEROIC_WEAPON")) {
-            String kothWeapon;
-            NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
-            String string = kothWeapon = builder != null ? builder.getString("KOTH_WEAPON") : "";
-            if (kothWeapon.equalsIgnoreCase("AXE")) {
-                Player damaged = (Player) event.getEntity();
-                for (ArmorSlot slot : ArmorSlot.values()) {
-                    if (!(Math.random() <= 0.5)) continue;
-                    ArmorUtil.modifyPlayerArmor(damaged, slot, -(2 + this.random.nextInt(2)), false);
-                    Bukkit.getLogger().info("Damaging " + slot + " from " + damaged.getName() + " from " + damager.getName() + "'s Koth Axe!");
+        if (event.getEntity() instanceof Player && item != null && (item.getType() == Material.GOLD_AXE || item.getType() == Material.GOLD_SWORD)) {
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? wrapper.getCompound("cosmicData") : new NBTTagCompoundBuilder();
+            if(cosmicData.hasKey("heroic_weapon") && cosmicData.getInt("heroic_weapon") == 1) {
+                String kothWeapon;
+                NBTTagCompoundBuilder builder = wrapper.getCompound("conaxData");
+                String string = kothWeapon = builder != null ? builder.getString("KOTH_WEAPON") : "";
+                if (kothWeapon.equalsIgnoreCase("AXE")) {
+                    Player damaged = (Player) event.getEntity();
+                    for (ArmorSlot slot : ArmorSlot.values()) {
+                        if (!(Math.random() <= 0.5)) continue;
+                        ArmorUtil.modifyPlayerArmor(damaged, slot, -(2 + this.random.nextInt(2)), false);
+                        Bukkit.getLogger().info("Damaging " + slot + " from " + damaged.getName() + " from " + damager.getName() + "'s Koth Axe!");
+                    }
+                } else if (kothWeapon.equalsIgnoreCase("SWORD")) {
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
                 }
-            } else if (kothWeapon.equalsIgnoreCase("SWORD")) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.075);
             }
         }
         return false;

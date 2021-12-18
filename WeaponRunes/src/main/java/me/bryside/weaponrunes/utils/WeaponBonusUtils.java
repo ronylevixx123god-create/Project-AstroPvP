@@ -39,7 +39,7 @@ public class WeaponBonusUtils {
         if (i.getType().toString().endsWith("_SWORD") || i.getType().toString().endsWith("_AXE")) {
             if (!i.getType().name().contains("GOLD")) return false;
             NBTWrapper wrapper = new NBTWrapper(i);
-            return wrapper.getString("cosmicType").equals("HEROIC_WEAPON");
+            return wrapper.hasKey("cosmicData") && wrapper.getCompound("cosmicData").hasKey("heroic_weapon") && wrapper.getCompound("cosmicData").getInt("heroic_weapon") == 0;
         }
         return false;
     }
