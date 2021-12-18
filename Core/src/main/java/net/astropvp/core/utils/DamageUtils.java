@@ -138,33 +138,69 @@ public class DamageUtils {
         if (crystals.containsKey(ArmorSet.SUPREME) &&
                 crystals.containsKey(ArmorSet.PHANTOM) &&
                 crystals.containsKey(ArmorSet.ENGINEER) &&
-                crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER))
+                crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER) &&
+        !crystals.containsKey(ArmorSet.ASTRO) &&
+        !crystals.containsKey(ArmorSet.ANCIENT) &&
+        !crystals.containsKey(ArmorSet.CHAMPION)&&
+        !crystals.containsKey(ArmorSet.ULTRA) &&
+        !crystals.containsKey(ArmorSet.APOLLO) &&
+        !crystals.containsKey(ArmorSet.SANTA)) {
             return true;
-        else if (crystals.containsKey(ArmorSet.PHANTOM) &&
+        } else if (crystals.containsKey(ArmorSet.PHANTOM) &&
                 crystals.containsKey(ArmorSet.SUPREME) &&
                 crystals.containsKey(ArmorSet.YETI) &&
-                crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER)) {
+                crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER)&&
+                !crystals.containsKey(ArmorSet.ASTRO) &&
+                !crystals.containsKey(ArmorSet.ANCIENT) &&
+                !crystals.containsKey(ArmorSet.CHAMPION)&&
+                !crystals.containsKey(ArmorSet.ULTRA) &&
+                !crystals.containsKey(ArmorSet.APOLLO) &&
+                !crystals.containsKey(ArmorSet.SANTA)) {
             return true;
 
         } else if (crystals.containsKey(ArmorSet.SUPREME) &&
                 crystals.containsKey(ArmorSet.YETI) &&
                 crystals.containsKey(ArmorSet.KOTH) &&
-                crystals.containsKey(ArmorSet.ENGINEER)) {
+                crystals.containsKey(ArmorSet.ENGINEER)&&
+                !crystals.containsKey(ArmorSet.ASTRO) &&
+                !crystals.containsKey(ArmorSet.ANCIENT) &&
+                !crystals.containsKey(ArmorSet.CHAMPION)&&
+                !crystals.containsKey(ArmorSet.ULTRA) &&
+                !crystals.containsKey(ArmorSet.APOLLO) &&
+                !crystals.containsKey(ArmorSet.SANTA)) {
             return true;
         } else if (crystals.containsKey(ArmorSet.KOTH) &&
                 crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER) &&
                 crystals.containsKey(ArmorSet.MOTHER_OF_YIJKI) &&
-                crystals.containsKey(ArmorSet.PHANTOM)) {
+                crystals.containsKey(ArmorSet.PHANTOM)&&
+                !crystals.containsKey(ArmorSet.ASTRO) &&
+                !crystals.containsKey(ArmorSet.ANCIENT) &&
+                !crystals.containsKey(ArmorSet.CHAMPION)&&
+                !crystals.containsKey(ArmorSet.ULTRA) &&
+                !crystals.containsKey(ArmorSet.APOLLO) &&
+                !crystals.containsKey(ArmorSet.SANTA)) {
             return true;
         } else if (crystals.containsKey(ArmorSet.KOTH) &&
                 crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER) &&
                 crystals.containsKey(ArmorSet.DRAGON_SLAYER) &&
-                crystals.containsKey(ArmorSet.PHANTOM)) {
+                crystals.containsKey(ArmorSet.PHANTOM)&&
+                !crystals.containsKey(ArmorSet.ASTRO) &&
+                !crystals.containsKey(ArmorSet.ANCIENT) &&
+                !crystals.containsKey(ArmorSet.CHAMPION)&&
+                !crystals.containsKey(ArmorSet.ULTRA) &&
+                !crystals.containsKey(ArmorSet.APOLLO) &&
+                !crystals.containsKey(ArmorSet.SANTA)) {
             return true;
-        }else if (crystals.containsKey(ArmorSet.ENGINEER) &&
+        } else if (crystals.containsKey(ArmorSet.ENGINEER) &&
                 crystals.containsKey(ArmorSet.DIMENSIONAL_TRAVELER) &&
                 crystals.containsKey(ArmorSet.DRAGON_SLAYER) &&
-                crystals.containsKey(ArmorSet.YETI)) {
+                crystals.containsKey(ArmorSet.YETI)&&
+                !crystals.containsKey(ArmorSet.ASTRO) &&
+                !crystals.containsKey(ArmorSet.ANCIENT) &&
+                !crystals.containsKey(ArmorSet.CHAMPION)&&
+                !crystals.containsKey(ArmorSet.ULTRA) &&
+                !crystals.containsKey(ArmorSet.APOLLO) &&
+                !crystals.containsKey(ArmorSet.SANTA)) {
             return true;
         }
 

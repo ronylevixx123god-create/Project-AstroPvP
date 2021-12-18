@@ -152,7 +152,8 @@ public class UltraArmorSet
             return false;
         }
         if (Math.random() <= 0.025 * (double) applied) {
-            if (new NBTWrapper(((Player) event.getEntity()).getItemInHand()).getString("cosmicType").equals("SANTA_WEAPON")) {
+            if (new NBTWrapper(((Player) event.getEntity()).getItemInHand()).hasKey("cosmicType") &&
+            new NBTWrapper(((Player) event.getEntity()).getItemInHand()).getString("cosmicType").equals("SANTA_WEAPON")) {
                 event.getEntity().sendMessage(CC.translate("&2&l** SANTA SWORD &7Blocked Ultra Strike &2&l**"));
             } else if (WeaponBonusUtils.hasWeaponBonus(((Player) event.getEntity()).getItemInHand())) {
                 if (WeaponBonusUtils.getWeaponBonusByItem(((Player) event.getEntity()).getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() < 0.6) {

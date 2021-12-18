@@ -12,6 +12,7 @@ public class SantaListener implements Listener {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damaged = ((Player) e.getEntity()).getPlayer();
             if (damaged.getItemInHand() != null) {
+                if(!new NBTWrapper(damaged.getItemInHand()).hasKey("cosmicType")) return;
                 if (new NBTWrapper(damaged.getItemInHand()).getString("cosmicType").equals("SANTA_WEAPON")) {
                     e.setDamage(e.getDamage()*0.85);
                 }
