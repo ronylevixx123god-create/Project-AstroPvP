@@ -27,6 +27,7 @@ import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
 import com.compilex.CosmicArmorSets.utils.TranslateList;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.EnchantmentAPI;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
@@ -78,7 +79,7 @@ public class UltraArmorSet
     @Override
     public List<String> getEquipDescription() {
         return TranslateList.translateList(ChatColor.GRAY + "" + ChatColor.BOLD +
-                "",
+                        "",
                 "&7&lULTRA SET BONUS",
                 "&7&l➥ &7You deal 35% more damage.",
                 "&7&l➥ &7Enemies deal 20% less damage to you.",
@@ -86,7 +87,7 @@ public class UltraArmorSet
                 "&7&l➥ &710% Chance to proc Ultra Rage.",
                 "&7&l➥ &7x1.5 World Destroyer Duration.",
                 "&7&l➥ &750% Chance to Bypass Utility Belt."
-        , "");
+                , "");
     }
 
     @Override
@@ -120,7 +121,7 @@ public class UltraArmorSet
         this.removeResistance(damager);
         if (Math.random() <= 0.065) {
             this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.4);
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.4);
         }
         return true;
     }
@@ -151,8 +152,16 @@ public class UltraArmorSet
             return false;
         }
         if (Math.random() <= 0.025 * (double) applied) {
-            this.activateUltraAbility(damager, (Player) event.getEntity());
-            event.setDamage(event.getDamage()*1.15);
+            if (new NBTWrapper(((Player) event.getEntity()).getItemInHand()).getString("cosmicType").equals("SANTA_WEAPON")) {
+                event.getEntity().sendMessage(CC.translate("&2&l** SANTA SWORD &7Blocked Ultra Strike &2&l**"));
+            } else if (WeaponBonusUtils.hasWeaponBonus(((Player) event.getEntity()).getItemInHand())) {
+                if (WeaponBonusUtils.getWeaponBonusByItem(((Player) event.getEntity()).getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() < 0.6) {
+                    event.getEntity().sendMessage(CC.RedB + " ** " + CC.GrayB + "ULTRA STRIKE BLOCKED (" + CC.DarkRedB + "DEMON WEAPON BONUS" + CC.GrayB + ")" + CC.RedB + " ** ");
+                }
+            } else {
+                this.activateUltraAbility(damager, (Player) event.getEntity());
+                event.setDamage(event.getDamage() * 1.15);
+            }
 
         }
         this.modifyDamage(damager, event, 10, applied);
@@ -168,12 +177,7 @@ public class UltraArmorSet
     }
 
     public void activateUltraAbility(Player player, final Player target) {
-        if (WeaponBonusUtils.hasWeaponBonus(target.getItemInHand())) {
-            if (WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() < 0.6) {
-                target.sendMessage(CC.RedB + " ** " + CC.GrayB + "ULTRA STRIKE BLOCKED (" + CC.DarkRedB + "DEMON WEAPON BONUS" + CC.GrayB + ")" + CC.RedB + " ** ");
-                return;
-            }
-        }
+
         target.sendMessage(CC.translate("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*"));
         player.sendMessage(CC.translate("&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
         target.setMetadata("ultra", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
