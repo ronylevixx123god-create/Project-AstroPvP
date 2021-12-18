@@ -85,23 +85,6 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
-    public void onMonsterDeathMultiplyXP(EntityDeathEvent e) {
-        if (e.getEntity() instanceof Player) {
-            return;
-        }
-        if (e.getEntity().getLastDamageCause() != null && e.getEntity().getLastDamageCause() instanceof EntityDamageByEntityEvent) {
-            Player p;
-            EntityDamageByEntityEvent edbee = (EntityDamageByEntityEvent)e.getEntity().getLastDamageCause();
-            Entity damager = edbee.getDamager();
-            if (damager instanceof Projectile && ((Projectile)damager).getShooter() instanceof Entity) {
-                damager = (Entity)((Projectile)damager).getShooter();
-            }
-            if (damager instanceof Player && (p = (Player)damager).hasPermission("cosmicpvp.heroic")) {
-                e.setDroppedExp((int)Math.round((double)e.getDroppedExp() * 1.3));
-            }
-        }
-    }
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerConsumePufferfish(PlayerItemConsumeEvent e) {

@@ -11,10 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scoreboard.Criterias;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 import me.astropvp.astroscoreboard.manager.TabListManager;
 
 public class PlayerListener implements Listener {
@@ -41,7 +38,7 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		Scoreboard board = player.getScoreboard();
 		if(board != null) {
-			board.getTeams().forEach(team -> team.unregister());
+			board.getTeams().forEach(Team::unregister);
 		}
 		
 	}

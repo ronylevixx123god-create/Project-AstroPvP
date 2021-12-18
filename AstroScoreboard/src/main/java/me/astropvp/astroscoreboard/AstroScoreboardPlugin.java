@@ -29,7 +29,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     }
 
     public BoardManager getBoardManager() {
-        return this.boardManager;
+        return boardManager;
     }
 
     @Override
@@ -56,9 +56,9 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     }
 
     public void setBoardManager(BoardManager boardManager) {
-        this.boardManager = boardManager;
-        long interval = this.boardManager.getAdapter().getInterval();
-        getServer().getScheduler().runTaskTimerAsynchronously((Plugin) this, (Runnable) this.boardManager, 0L, interval);
+        AstroScoreboardPlugin.boardManager = boardManager;
+        long interval = AstroScoreboardPlugin.boardManager.getAdapter().getInterval();
+        getServer().getScheduler().runTaskTimerAsynchronously((Plugin) this, (Runnable) AstroScoreboardPlugin.boardManager, 0L, interval);
     }
 
 
