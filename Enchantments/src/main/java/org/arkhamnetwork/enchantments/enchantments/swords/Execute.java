@@ -29,23 +29,20 @@ public class Execute extends CustomEnchantment {
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 12.0) {
+        if (target.getHealth() >= 8.0) {
             return;
         }
         if (GeneralUtil.isEffectedByRage(target)) {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.1 * level;
-        final double mod = 4.2;
+        final double chance = 0.01 * level;
+        double mod = (level)*0.18;
         if (random < chance) {
             if (!(e.getDamager() instanceof org.bukkit.entity.Player) || !(e.getEntity() instanceof org.bukkit.entity.Player))
                 return;
-            double finalDamage = e.getFinalDamage();
-            Location place = e.getEntity().getLocation();
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
-            final Location l = target.getLocation();
+            e.setDamage(e.getDamage() * mod);
         }
 
     }

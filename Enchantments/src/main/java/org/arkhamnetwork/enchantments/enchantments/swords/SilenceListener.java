@@ -13,7 +13,7 @@ final class SilenceListener implements Listener {
     public void onEntityDamage(final EntityDamageEvent e) {
         if (e.getFinalDamage() > 0.0 && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs")) {
             if (e.getEntity() != null && ((Player) e.getEntity()).getKiller() != null && ((Player) e.getEntity()).getKiller() instanceof Player && AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.VALENTINES_2021_HELMET)) {
-                e.setDamage(e.getDamage() * 1.15);
+                e.setDamage(e.getDamage() * 1.10);
             }
         }
     }

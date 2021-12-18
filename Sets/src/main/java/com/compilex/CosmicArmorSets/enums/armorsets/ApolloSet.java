@@ -117,7 +117,8 @@ public class ApolloSet extends ArmorSetInfo
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        return this.modifyDamage(damager, event, 15.0, applied);
+        this.modifyDamage(damager, event, 15.0, applied);
+        return false;
     }
 
     @Override

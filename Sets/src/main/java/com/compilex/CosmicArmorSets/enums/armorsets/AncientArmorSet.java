@@ -165,6 +165,8 @@ public class AncientArmorSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
+        this.modifyDamage(damager, event, 7.0, applied);
+
         if (Math.random() <= 0.0005 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
@@ -172,7 +174,7 @@ public class AncientArmorSet
             }
             this.startAncientEffect(damager, (Player) event.getEntity());
         }
-        return this.modifyDamage(damager, event, 7.0, applied);
+        return false;
     }
 
     @Override
