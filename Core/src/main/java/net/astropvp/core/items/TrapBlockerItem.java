@@ -101,7 +101,6 @@ public class TrapBlockerItem extends CosmicItem
         for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
             if (!(entity instanceof Player))
                 continue;
-            amountOfPlayers++;
             Player p = (Player) entity;
             if (FactionUtils.getFaction(p) == null) continue;
             if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p)) {
