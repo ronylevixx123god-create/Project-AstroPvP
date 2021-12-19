@@ -151,6 +151,8 @@ public class UltraArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
+        this.modifyDamage(damager, event, 10, applied);
+
         if (Math.random() <= 0.025 * (double) applied) {
             if (new NBTWrapper(((Player) event.getEntity()).getItemInHand()).hasKey("cosmicType") &&
             new NBTWrapper(((Player) event.getEntity()).getItemInHand()).getString("cosmicType").equals("SANTA_WEAPON")) {
@@ -165,7 +167,6 @@ public class UltraArmorSet
             }
 
         }
-        this.modifyDamage(damager, event, 10, applied);
         return false;
     }
 

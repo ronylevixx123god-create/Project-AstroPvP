@@ -89,14 +89,7 @@ return true;
 
     @Override
     public boolean onPlayerAttackedBonus(Player damager, int applied, EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player)) {
-            return false;
-        }
-        this.removeResistance(damager);
-        if (this.isBlockedOutpostWorld(damager)) {
-            return false;
-        }
-        return this.modifyDamage(damager, event, 15.0, applied);
+        return false;
     }
 
     @Override

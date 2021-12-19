@@ -1,8 +1,11 @@
 package me.astropvp.hotfixplugin.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import java.util.EnumSet;
 import java.util.Set;
@@ -35,6 +38,19 @@ public class TeleportSafetyListener implements Listener {
         if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL &&
                 event.getTo().getY() < 1.0D)
             event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void playerDamageEvent(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world") && !e.getEntity().getWorld().getName().equalsIgnoreCase("flat")) return;
+            if (e.getCause() != EntityDamageEvent.DamageCause.VOID) return;
+            Player p = (Player) e.getEntity();
+            if (p.getLocation().getY() < -1.0) {
+                p.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                p.sendMessage(CC.translate("&cPrevented you from dying to void."));
+            }
+        }
     }
 
 

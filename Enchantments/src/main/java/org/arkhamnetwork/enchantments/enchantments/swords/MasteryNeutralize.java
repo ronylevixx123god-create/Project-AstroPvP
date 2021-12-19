@@ -50,7 +50,7 @@ public class MasteryNeutralize extends CustomEnchantment {
 
 
 
-        if ((level) * multi >= ThreadLocalRandom.current().nextInt(240)) {
+        if ((level) * multi >= ThreadLocalRandom.current().nextInt(300)) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.RUINS_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage(CC.translate("&5&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s NEUTRALIZE &7(Lost Amulet) &5&l*"));
@@ -58,17 +58,17 @@ public class MasteryNeutralize extends CustomEnchantment {
             }
             pTarget.sendMessage(CC.translate("&5&l* NEUTRALIZED &7[" + user.getName() + "&7]&5&l *"));
             if (!pTarget.hasMetadata("noDefenseProcs")) {
-                pTarget.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+                //pTarget.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             } else {
-                pTarget.setMetadata("silenced", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+                //pTarget.setMetadata("silenced", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             }
             pTarget.playSound(pTarget.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
             DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* NEUTRALIZED" + CC.Gray +  "[5s]" + CC.Gray + " *", "NEUTRALIZE");
-            pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+            //pTarget.setMetadata("neutralized", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
             Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
-                pTarget.removeMetadata("neutralized", Enchantments.getInstance());
-                pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
-                pTarget.removeMetadata("silenced", Enchantments.getInstance());
+                //pTarget.removeMetadata("neutralized", Enchantments.getInstance());
+                //pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
+                //pTarget.removeMetadata("silenced", Enchantments.getInstance());
 
             }, 100L);
             GeneralCooldown.enterCooldown(user);

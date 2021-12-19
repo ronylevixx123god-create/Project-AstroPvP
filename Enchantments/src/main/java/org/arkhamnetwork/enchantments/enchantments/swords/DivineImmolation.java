@@ -129,16 +129,6 @@ public class DivineImmolation extends CustomEnchantment {
                             if (!WorldGuardUtils.isPvPDisabled(ent.getLocation()) && !ent.hasMetadata("spectator")) {
                                 LivingEntity le = (LivingEntity)ent;
                                 le.damage(damage);
-                                if (playerHit instanceof Player) {
-                                    if (WeaponBonusUtils.hasWeaponBonus(((Player) player).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) player).getItemInHand()) == WeaponBonusType.REFORGED) {
-                                        if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
-
-                                            e.setDamage(e.getDamage() * 1.15);
-                                        }
-                                    }
-                                }
-
-
                                 le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)100, 0));
                                 if (le instanceof Player) {
                                     ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0F, 0.3F);

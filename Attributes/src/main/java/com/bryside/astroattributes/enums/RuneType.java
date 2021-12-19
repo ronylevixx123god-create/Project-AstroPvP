@@ -111,7 +111,7 @@ public enum RuneType {
         NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("type", type.name()).setInt("durability", heroicWeaponType.getDurability()).setDouble("dmgIncr", heroicWeaponType.getAttackModifier()).setInt("maxDurability", heroicWeaponType.getDurability()).get().setInt("heroic_weapon", 1);
         item = wrapper.setNBTBase("conaxData", (NBTBase) compoundBuilder.get()).build();
-        item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", 0).setString("titanAttributeType", "ATLAS").setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
+        item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", 0).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
         return item;
     }
 
@@ -127,7 +127,7 @@ public enum RuneType {
         NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("type", type.name()).setInt("durability", Integer.valueOf(heroicWeaponType.getDurability())).setDouble("dmgIncr", Double.valueOf(heroicWeaponType.getAttackModifier())).setInt("maxDurability", Integer.valueOf(heroicWeaponType.getDurability())).setInt("heroic_weapon", 1).get();
         item = wrapper.setNBTBase("conaxData", (NBTBase) compoundBuilder.get()).build();
-        item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", Integer.valueOf(0)).setString("titanAttributeType", "ATLAS").setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
+        item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", Integer.valueOf(0)).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
         return item;
     }
 }

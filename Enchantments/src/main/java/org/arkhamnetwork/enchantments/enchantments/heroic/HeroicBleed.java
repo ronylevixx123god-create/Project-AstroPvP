@@ -70,7 +70,7 @@ public class HeroicBleed extends HeroicCustomEnchantment {
     }
 
     private int getMaxBleedStack(int level) {
-        return 20;
+        return 5;
     }
 
     private void addBleedStack(LivingEntity leDamager, LivingEntity le) throws Exception {

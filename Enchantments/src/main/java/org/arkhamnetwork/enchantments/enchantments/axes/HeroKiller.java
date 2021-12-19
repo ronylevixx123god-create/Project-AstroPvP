@@ -61,7 +61,7 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.10 * level;
+            double increase = 0.075 * level;
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {

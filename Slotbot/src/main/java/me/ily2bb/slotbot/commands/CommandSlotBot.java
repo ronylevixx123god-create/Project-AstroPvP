@@ -21,6 +21,10 @@ import java.util.List;
 public class CommandSlotBot implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command arg1, final String arg2, final String[] args) {
         if (args.length >= 1 && sender.hasPermission("slotbot.setitem")) {
+            if (args[0].contentEquals("reloadlist")) {
+                SlotBotPlugin.setMap(Utils.getMap());
+                sender.sendMessage("relaoded list");
+            }
             if (args.length >= 2 && args[0].contentEquals("additem")) {
                 final Player player = (Player) sender;
                 final ItemStack item = player.getItemInHand();
@@ -37,7 +41,6 @@ public class CommandSlotBot implements CommandExecutor {
                     }
                 }
                 list.add(Utils.toBase64(new ItemStack[]{item}, 9));
-                SlotBotPlugin.setMap(Utils.getMap());
                 if ((args.length >= 3 && args[2].contentEquals("show")) || (args.length >= 4 && args[3].contentEquals("show"))) {
                     String i = list.get(list.size() - 1);
                     i = String.valueOf(i) + ":show";
