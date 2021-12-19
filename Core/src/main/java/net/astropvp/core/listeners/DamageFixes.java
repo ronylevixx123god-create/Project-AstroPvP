@@ -32,7 +32,7 @@ public class DamageFixes implements Listener {
             }
             double damageReduction = (amountOfPremadePieces*10)*0.01;
             if (amountOfPremadePieces != 0) {
-                e.setDamage(e.getDamage()*damageReduction);
+                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*damageReduction);
             }
         }
     }

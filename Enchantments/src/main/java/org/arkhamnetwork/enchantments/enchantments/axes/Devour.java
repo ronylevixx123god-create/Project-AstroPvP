@@ -28,6 +28,8 @@ public class Devour extends CustomEnchantment {
             if (Bleed.getBleedStack(target) > 0) {
                 if (GeneralUtil.isEffectedByRage(target))
                     return;
+                if (Math.random() > 0.4) return;
+
                 double mod = Bleed.getBleedStack(target) * 0.015D + enchantLevel * 0.1D + 1.0D;
                 event.setDamage(event.getDamage() * mod);
                 target.setMetadata("effectedByDevour", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis())));

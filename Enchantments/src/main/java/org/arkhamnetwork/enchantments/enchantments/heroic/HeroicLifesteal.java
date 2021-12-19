@@ -15,7 +15,7 @@ public class HeroicLifesteal extends HeroicCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         double random = Math.random();
-        double chance = (enchantLevel == 1) ? 0.001D : ((enchantLevel == 2) ? 0.001D : ((enchantLevel == 3) ? 0.3D : 0.002D));
+        double chance = (enchantLevel == 1) ? 0.001D : ((enchantLevel == 2) ? 0.001D : ((enchantLevel == 3) ? 0.1D : 0.002D));
         int toHeal = (enchantLevel == 1) ? 2 : ((enchantLevel == 2) ? 2 : ((enchantLevel == 3) ? 2 : 3));
         int health = (int) user.getHealth() + toHeal;
         if (health > user.getMaxHealth())
