@@ -19,7 +19,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class DamageFixes implements Listener {
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onHit(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player damager = (Player) e.getDamager();
@@ -30,7 +30,7 @@ public class DamageFixes implements Listener {
                     amountOfPremadePieces++;
                 }
             }
-            double damageReduction = (amountOfPremadePieces*10)*0.01;
+            double damageReduction = (amountOfPremadePieces*15)*0.01;
             if (amountOfPremadePieces != 0) {
                 e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*damageReduction);
             }

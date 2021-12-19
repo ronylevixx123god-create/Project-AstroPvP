@@ -23,9 +23,9 @@ public class PacketOutCooldown implements Packet {
     @SerializedName(value="itemID")
     private int itemID;
 
-    public PacketOutCooldown(String key, String caragory, boolean infinite, int color, String name, int duration, int max, String item, int itemID) {
+    public PacketOutCooldown(String key, String category, boolean infinite, int color, String name, int duration, int max, String item, int itemID) {
         this.key = key;
-        this.category = caragory;
+        this.category = category;
         this.infinite = infinite;
         this.color = color;
         this.name = name;

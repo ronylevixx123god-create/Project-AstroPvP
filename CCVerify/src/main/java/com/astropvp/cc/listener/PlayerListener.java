@@ -9,6 +9,8 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.astropvp.cc.util.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.EnderPearl;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -53,6 +55,7 @@ public class PlayerListener implements Listener {
             cDamager.sendHealthBar(damaged);
             CosmicPlayer cDamaged = CosmicPlayers.get().getCosmicPlayer(damaged);
             cDamaged.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
+            cDamager.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
 
             Location place = updateDamageSplatLocation(event.getEntity().getLocation());
 
@@ -82,8 +85,8 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onThrow(ProjectileLaunchEvent event) {
-        if(event.getEntity().getType() == EntityType.ENDER_PEARL && event.getEntity().getShooter() instanceof Player) {
-            PacketOutCooldown packet = new PacketOutCooldown("Enderpearl", "DEBUFF", false, -43691, "Enderpearl", 10000, 10000, "ENDER_PEARL", 368);
+        if(event.getEntity() instanceof EnderPearl && event.getEntity().getShooter() instanceof Player) {
+            PacketOutCooldown packet = new PacketOutCooldown("Enderpearl", "DEBUFF", false, -43691, "Enderpearl", 10000, 10000, null, 368);
             CosmicPlayer cPlayer = CosmicPlayers.get().getCosmicPlayer((Player) event.getEntity().getShooter());
             cPlayer.sendPacket(packet);
         }
