@@ -15,14 +15,14 @@ public class PacketOutHealthBar implements Packet {
     @SerializedName(value = "name")
     private String name;
 
-    public PacketOutHealthBar(Player player) {
-        this.currentHealth = (long) player.getHealth();
-        this.maxHealth = (long) player.getMaxHealth();
-        this.name = player.getName();
+    public PacketOutHealthBar(long currentHealth, long maxHealth, String name) {
+        this.currentHealth = currentHealth;
+        this.maxHealth = maxHealth;
+        this.name = name;
     }
 
     @Override
     public short getID() {
-        return 54;
+        return 72;
     }
 }

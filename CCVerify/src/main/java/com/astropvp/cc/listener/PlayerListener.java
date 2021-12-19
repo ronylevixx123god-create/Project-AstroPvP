@@ -1,6 +1,7 @@
 package com.astropvp.cc.listener;
 
 import com.astropvp.cc.CCVerify;
+import com.astropvp.cc.packet.type.out.PacketOutCooldown;
 import com.astropvp.cc.packet.type.out.PacketOutHealthBar;
 import com.astropvp.cc.packet.type.out.PacketOutHitSplat;
 import com.astropvp.cc.player.CosmicPlayer;
@@ -8,11 +9,13 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.astropvp.cc.util.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.text.DecimalFormat;
@@ -28,14 +31,14 @@ public class PlayerListener implements Listener {
         if (event.isCancelled())
             return;
         Player damager = (Player)((Object)event.getDamager());
-        Player player = (Player)((Object)event.getEntity());
+        Player damaged = (Player)((Object)event.getEntity());
 
-        double oldHealth = player.getHealth();
+        double oldHealth = damaged.getHealth();
         Bukkit.getScheduler().scheduleSyncDelayedTask(CCVerify.get(), () -> {
-            if (player.isDead()) {
+            if (damaged.isDead()) {
                 return;
             }
-            double healthDifference = Math.round(player.getHealth() - oldHealth);
+            double healthDifference = Math.round(damaged.getHealth() - oldHealth);
             if (healthDifference >= 0.0) {
                 return;
             }
@@ -46,11 +49,8 @@ public class PlayerListener implements Listener {
                 healthDifference = 44;
             }
 
-            CosmicPlayer cp = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
-            cp.setCurrentHealthBar((Player) event.getEntity());
-            PacketOutHealthBar healthBar = new PacketOutHealthBar(cp.getCurrentHealthBar());
-            Bukkit.broadcastMessage("send health bar packet");
-            cp.sendPacket(healthBar);
+            CosmicPlayer cDamager = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
+            cDamager.sendHealthBar(damaged);
 
             Location place = updateDamageSplatLocation(event.getEntity().getLocation());
 
@@ -75,6 +75,16 @@ public class PlayerListener implements Listener {
         }, 1L);
 
 
+
+    }
+
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void onThrow(ProjectileLaunchEvent event) {
+        if(event.getEntity().getType() == EntityType.ENDER_PEARL && event.getEntity().getShooter() instanceof Player) {
+            PacketOutCooldown packet = new PacketOutCooldown("Enderpearl", "DEBUFF", false, -43691, "Enderpearl", 10000, 10000, null, 368);
+            CosmicPlayer cPlayer = CosmicPlayers.get().getCosmicPlayer((Player) event.getEntity().getShooter());
+            cPlayer.sendPacket(packet);
+        }
 
     }
 

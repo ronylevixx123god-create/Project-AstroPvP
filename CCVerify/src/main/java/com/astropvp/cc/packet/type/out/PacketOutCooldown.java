@@ -36,6 +36,6 @@ public class PacketOutCooldown implements Packet {
     }
 
     public short getID() {
-        return 20;
+        return 22;
     }
 }
