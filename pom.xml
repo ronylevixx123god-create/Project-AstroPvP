@@ -69,6 +69,7 @@
         <module>AstroPearls</module>
         <module>Christmas</module>
         <module>Christmass</module>
+        <module>AstroGamble</module>
     </modules>
 
     <build>

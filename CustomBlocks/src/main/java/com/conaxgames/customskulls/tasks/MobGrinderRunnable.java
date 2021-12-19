@@ -55,9 +55,9 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
             //ADD LOOT TO THE CHEST
             double chance = Math.random();
-            if (chance < 0.008) {
+            if (chance < 0.01) {
                 chest.getInventory().addItem(CoreSkulls.getStellarKey());
-            } else if (chance < 0.015) {
+            } else if (chance < 0.03) {
                 chest.getInventory().addItem(CoreSkulls.getNovaKey());
 
             }
@@ -92,7 +92,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
                 if (expBottle == -1 || mobcoin == -1) continue;
 
-                if (Math.random() < 0.2) {
+                if (Math.random() < 0.35) {
                     chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
                 }
 

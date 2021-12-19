@@ -24,8 +24,15 @@ public class DamageFixes implements Listener {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player damager = (Player) e.getDamager();
 
-            if (DamageUtils.isInPremade(damager)) {
-                e.setDamage(e.getDamage()* 0.6);
+            int amountOfPremadePieces = 0;
+            for (ItemStack itemStack : damager.getInventory().getArmorContents()) {
+                if (DamageUtils.isPremadePiece(itemStack)) {
+                    amountOfPremadePieces++;
+                }
+            }
+            double damageReduction = (amountOfPremadePieces*10)*0.01;
+            if (amountOfPremadePieces != 0) {
+                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*damageReduction);
             }
         }
     }
