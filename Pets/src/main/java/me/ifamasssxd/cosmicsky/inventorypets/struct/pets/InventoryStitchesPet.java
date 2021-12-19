@@ -56,7 +56,7 @@ public class InventoryStitchesPet extends InventoryPet {
 
     @Override
     public int getCooldown(int p0) {
-        return (int) TimeUnit.MINUTES.toSeconds(9);
+        return (int) TimeUnit.MINUTES.toSeconds(3);
     }
 
 
