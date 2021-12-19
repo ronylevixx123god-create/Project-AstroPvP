@@ -51,6 +51,8 @@ public class PlayerListener implements Listener {
 
             CosmicPlayer cDamager = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
             cDamager.sendHealthBar(damaged);
+            CosmicPlayer cDamaged = CosmicPlayers.get().getCosmicPlayer(damaged);
+            cDamaged.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
 
             Location place = updateDamageSplatLocation(event.getEntity().getLocation());
 
@@ -81,7 +83,7 @@ public class PlayerListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void onThrow(ProjectileLaunchEvent event) {
         if(event.getEntity().getType() == EntityType.ENDER_PEARL && event.getEntity().getShooter() instanceof Player) {
-            PacketOutCooldown packet = new PacketOutCooldown("Enderpearl", "DEBUFF", false, -43691, "Enderpearl", 10000, 10000, null, 368);
+            PacketOutCooldown packet = new PacketOutCooldown("Enderpearl", "DEBUFF", false, -43691, "Enderpearl", 10000, 10000, "ENDER_PEARL", 368);
             CosmicPlayer cPlayer = CosmicPlayers.get().getCosmicPlayer((Player) event.getEntity().getShooter());
             cPlayer.sendPacket(packet);
         }
