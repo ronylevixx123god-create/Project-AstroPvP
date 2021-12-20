@@ -83,7 +83,7 @@ return true;
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -10.0, multiplier);
+        this.modifyDamage(damaged, event, -12.0, multiplier);
         return false;
     }
 
