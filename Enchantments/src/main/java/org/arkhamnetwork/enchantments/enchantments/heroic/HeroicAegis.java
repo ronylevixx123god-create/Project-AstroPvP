@@ -25,8 +25,6 @@ public class HeroicAegis extends HeroicCustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(attacker instanceof Player))
             return;
-        if (player.hasMetadata("noDefenseProcs"))
-            return;
         if (player.hasMetadata("aegis_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("aegis_nextReset").get(0).asLong()) {
                 player.removeMetadata("aegis_uniqueEnemies", Enchantments.getInstance());
