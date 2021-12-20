@@ -6,9 +6,9 @@ import org.bukkit.Location;
 
 @Getter
 public class MobGrinderCache {
-    private AbilityData abilityData;
-    private Location chestLocation;
-    private boolean playerNearby;
+    private final AbilityData abilityData;
+    private final Location chestLocation;
+    private final boolean playerNearby;
 
     public MobGrinderCache(AbilityData abilityData, Location chestLocation, boolean playerNearby) {
         this.abilityData = abilityData;

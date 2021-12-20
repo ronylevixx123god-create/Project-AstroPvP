@@ -89,7 +89,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>keys</artifactId>
+            <artifactId>kgeys</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroCrateKeys.jar</systemPath>

@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.massivecraft.factions.P;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
@@ -71,7 +72,7 @@ public class RocketEscape extends CustomEnchantment {
                     }
 
                 }
-                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pl))) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pl) && (!MaskUtils.hasMaskEquipped(pl, "WITCHER")))) {
                     pl.playSound(pl.getLocation(), Sound.ANVIL_BREAK, 5, 5);
                     pl.sendMessage(CC.translate("&6&l* CURSED WINGS BLOCKED &nROCKET ESCAPE&r &6&l*"));
                     return;

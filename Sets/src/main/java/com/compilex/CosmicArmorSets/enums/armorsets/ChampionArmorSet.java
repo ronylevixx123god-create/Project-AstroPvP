@@ -206,7 +206,6 @@ public class ChampionArmorSet
         player.sendMessage(CC.translate("&6&l* CHAMPION WRATH PROC *"));
         player.sendMessage(CC.translate("&a&lBUFF: &cBanshee RKO Proc &aActivated"));
         player.sendMessage(CC.translate("&a&lBUFF: &cAnti Utility Proc &aActivated"));
-        player.sendMessage(CC.translate("&a&lBUFF: &cWorld Destroyer Ticks &aActivated"));
         player.sendMessage(CC.translate("&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
         target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));

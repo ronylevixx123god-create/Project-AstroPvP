@@ -38,10 +38,9 @@ public class MobGrinderCacherTask extends BukkitRunnable {
             }
 
 
-            if (CustomBlockUtil.getClosestChestLocation(data.getLocation()) != null) {
-                Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
+            Location chestLocation = CustomBlockUtil.getClosestChestLocation(data.getLocation());
+            if (chestLocation != null) {
                 MobGrinderCache mobGrinderCache = new MobGrinderCache(data, chestLocation, playerFound);
-
                 CoreSkulls.getGrinderBlocks().add(mobGrinderCache);
 
             }

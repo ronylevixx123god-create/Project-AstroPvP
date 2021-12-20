@@ -5,6 +5,7 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
+import com.conaxgames.customskulls.listeners.CrateKeyGUIListener;
 import com.conaxgames.customskulls.listeners.CustomAbilityListener;
 import com.conaxgames.customskulls.listeners.CustomBlockListener;
 import com.conaxgames.customskulls.listeners.SlotbotMachineGUIListener;
@@ -71,6 +72,7 @@ public class CoreSkulls extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
         getServer().getPluginManager().registerEvents(new SlotbotMachineGUIListener(), this);
+        getServer().getPluginManager().registerEvents(new CrateKeyGUIListener(), this);
         mobStackerUtils = AstroSpawners.getInstance().getMobStackerUtils();
         LoadCustomBlocks.load();
         info("CoreSkulls!");
@@ -98,6 +100,7 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
         customBlocks.put("COSMIC_TOKEN_GENERATOR", new SlotbotMachine());
         customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
+        customBlocks.put("SECURITY_SYSTEM", new CrateKeyOpener());
     }
 
     public void info(String string) {
@@ -120,7 +123,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 10*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 20*20);
     }
 
 
