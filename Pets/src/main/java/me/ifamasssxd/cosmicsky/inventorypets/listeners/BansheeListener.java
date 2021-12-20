@@ -26,16 +26,9 @@ public class BansheeListener implements Listener {
 
             if (damager.hasMetadata("banshee_active")) {
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless")) {
-                    if (event.getEntity().hasMetadata("champion_ability")) {
-                        event.setDamage(event.getDamage() * 1.15D);
-
-                    } else {
-                        event.setDamage(event.getDamage() * 1.30D);
-                    }
-
+                    event.setDamage(event.getDamage() * 1.30D);
                 }
                 if (event.getEntity().hasMetadata("champion_ability")) {
-
                     damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG& &4&l** &6&l(Champion Ability)"));
                 } else {
                     damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG& &4&l**"));
@@ -49,13 +42,14 @@ public class BansheeListener implements Listener {
     @EventHandler
     public void onEntityDamage2(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
-        if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation())) return;
+        if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation()))
+            return;
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player)event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced((Player)event.getEntity())) && Math.random() < 0.005) {
-                event.getEntity().sendMessage(CC.translate("&e&l* WITCH HAT &7Activated &4Banshee Pet &7on&f " +damager.getName()+ " &e&l*"));
-                damager.sendMessage(CC.translate("&e&l* &f" + event.getEntity().getName() +" &e&lWITCH HAT &4Banshee Pet &7Ability &e&l*"));
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced((Player) event.getEntity())) && Math.random() < 0.005) {
+                event.getEntity().sendMessage(CC.translate("&e&l* WITCH HAT &7Activated &4Banshee Pet &7on&f " + damager.getName() + " &e&l*"));
+                damager.sendMessage(CC.translate("&e&l* &f" + event.getEntity().getName() + " &e&lWITCH HAT &4Banshee Pet &7Ability &e&l*"));
                 InventoryBansheePet.startBansheeEffect((Player) event.getEntity(), damager);
             }
         }

@@ -49,7 +49,7 @@ public class DivineImmolationListener implements Listener {
                     }
                 }
 
-                double damage = 1.5;
+                double damage = 2.5;
 
 
                 if (!(le.getKiller() instanceof Player)) return;
@@ -57,15 +57,15 @@ public class DivineImmolationListener implements Listener {
                     if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
                         if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) e.getEntity()).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
 
-                            damage = 2;
+                            damage = 3;
                         }
                     } else {
-                        damage = 1.5;
+                        damage = 2.5;
                     }
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.SUMMER_2021_SWORD)) {
-                    damage = 2;
+                    damage = 3.5;
                 }
 
 

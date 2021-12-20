@@ -41,11 +41,11 @@ public class Rage extends CustomEnchantment {
             Player pUser = (Player) user;
             double hitCombo = RageUtils.getComboOfPlayer(pUser, target instanceof Player);
 
-            if (hitCombo > 2.5D) {
-                hitCombo = 2.5D;
+            if (hitCombo > 3.5D) {
+                hitCombo = 3.5D;
             }
 
-            if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
+            if (hitCombo > 1.0D) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * hitCombo);
                 playRageEffect(target.getEyeLocation(), enchantLevel);
             }

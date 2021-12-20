@@ -7,7 +7,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HeroicSolitude extends HeroicCustomEnchantment {
     public HeroicSolitude() {
-        super("Perfect Solitude", "Solitude", GeneralUtil.swords, 2);
+        super("Perfect Solitude", "Solitude", GeneralUtil.weapons, 2);
         this.max = 3;
         this.base = 15.0;
         this.interval = 15.0;

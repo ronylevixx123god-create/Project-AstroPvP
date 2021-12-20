@@ -1,10 +1,12 @@
 package me.astropvp.hotfixplugin.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import java.util.EnumSet;
@@ -92,6 +94,13 @@ public class TeleportSafetyListener implements Listener {
                 if (upperMaterial == null || upperMaterial == Material.AIR)
                     player.teleport(blockBehindLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
             }
+        }
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockPlaceEnder(BlockPlaceEvent event) {
+        if (event.getBlock().getType() == Material.ENDER_PORTAL_FRAME) {
+            event.getPlayer().sendMessage(CC.Red + "You cannot place this block!");
+            event.setCancelled(true);
         }
     }
 

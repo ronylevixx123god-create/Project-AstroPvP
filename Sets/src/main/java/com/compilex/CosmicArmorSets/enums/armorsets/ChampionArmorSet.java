@@ -165,7 +165,7 @@ public class ChampionArmorSet
         }
         this.modifyDamage(damager, event, 10, applied);
 
-        if (Math.random() <= 0.004 * (double) applied) {
+        if (Math.random() <= 0.006 * (double) applied) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }
         return false;

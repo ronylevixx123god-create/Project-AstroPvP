@@ -1,14 +1,13 @@
 package com.conaxgames.customskulls;
 
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketListener;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
-import com.conaxgames.customskulls.listeners.CrateKeyGUIListener;
-import com.conaxgames.customskulls.listeners.CustomAbilityListener;
-import com.conaxgames.customskulls.listeners.CustomBlockListener;
-import com.conaxgames.customskulls.listeners.SlotbotMachineGUIListener;
+import com.conaxgames.customskulls.listeners.*;
 import com.conaxgames.customskulls.struct.MobGrinderCache;
 import com.conaxgames.customskulls.tasks.MobGrinderCacherTask;
 import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
@@ -79,6 +78,7 @@ public class CoreSkulls extends JavaPlugin {
         inSlotbotMachine = new HashMap<>();
         registerTasks();
         grinderBlocks = new ArrayList<>();
+        ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
 
     }
 
@@ -123,7 +123,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 20*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 30*20);
     }
 
 
