@@ -30,6 +30,8 @@ public class HeroicEnlighted extends CustomEnchantment {
         if (player.hasMetadata("neutralized")) {
             return;
         }
+        if (player.hasMetadata("noDefenseProcs"))
+            return;
         double random = Math.random();
         double chance = 0.02D * level;
         double amount = 2;

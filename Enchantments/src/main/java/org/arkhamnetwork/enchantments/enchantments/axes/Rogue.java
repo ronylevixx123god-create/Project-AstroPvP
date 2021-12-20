@@ -54,6 +54,8 @@ public class Rogue extends CustomEnchantment {
             return;
         if (player.hasMetadata("noSoulProcs"))
             return;
+        if(player.hasMetadata("witcher_ability"))
+            return;
         final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {

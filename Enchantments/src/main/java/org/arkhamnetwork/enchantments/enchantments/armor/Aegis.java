@@ -32,6 +32,8 @@ public class Aegis extends CustomEnchantment {
             return;
         if (!(attacker instanceof Player))
             return;
+        if (player.hasMetadata("noDefenseProcs"))
+            return;
         int ticksToCheck = 100;
         if (player.hasMetadata("aegis_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > ((MetadataValue)player.getMetadata("aegis_nextReset").get(0)).asLong()) {

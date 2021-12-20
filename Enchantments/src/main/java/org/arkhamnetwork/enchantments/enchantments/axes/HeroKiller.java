@@ -49,6 +49,9 @@ public class HeroKiller extends CustomEnchantment {
             return;
         }
 
+        if(p.hasMetadata("witcher_ability"))
+            return;
+
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
@@ -61,7 +64,7 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.075 * level;
+            double increase = 0.01 * level;
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
@@ -83,7 +86,7 @@ public class HeroKiller extends CustomEnchantment {
                 if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master"))
                     increase *= (((1.2 * 5) / 100) + 1);
             }
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
+            e.setDamage(e.getDamage() * (1 + increase));
         }
     }
 

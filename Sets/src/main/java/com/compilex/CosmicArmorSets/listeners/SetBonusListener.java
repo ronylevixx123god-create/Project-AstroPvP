@@ -115,16 +115,16 @@ public class SetBonusListener
         if (damager != null) {
             Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damager, event.getEntity());
             if (WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
-            if(WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
-                if(bonuses.containsKey(ArmorSet.ENGINEER)) {
-                    if(bonuses.get(ArmorSet.ENGINEER) == 1) {
-                        bonuses.remove(ArmorSet.ENGINEER);
-                    } else {
-                        bonuses.put(ArmorSet.ENGINEER, bonuses.get(ArmorSet.ENGINEER) - 1);
+                if(WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
+                    if(bonuses.containsKey(ArmorSet.ENGINEER)) {
+                        if(bonuses.get(ArmorSet.ENGINEER) == 1) {
+                            bonuses.remove(ArmorSet.ENGINEER);
+                        } else {
+                            bonuses.put(ArmorSet.ENGINEER, bonuses.get(ArmorSet.ENGINEER) - 1);
+                        }
                     }
+                    event.getDamager().sendMessage(CC.RedB + " ** " + CC.GoldB + "ENGINEER CRYSTAL BLOCKED ("  + CC.RedB + "DEMON WEAPON BONUS" + CC.GoldB + ")" + CC.RedB + " ** ");
                 }
-                event.getDamager().sendMessage(CC.RedB + " ** " + CC.GoldB + "ENGINEER CRYSTAL BLOCKED ("  + CC.RedB + "DEMON WEAPON BONUS" + CC.GoldB + ")" + CC.RedB + " ** ");
-            }
             }
             AbilityArmorSet set;
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);
@@ -160,8 +160,9 @@ public class SetBonusListener
                     abilityArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
                 }
             }
-            if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null) return;
-            if (!damaged.hasMetadata("blackout") && !(Objects.requireNonNull(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager))).isEmpty()) {
+            if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
+                return;
+            if (!damaged.hasMetadata("blackout") && !damaged.hasMetadata("neutralized") && !(Objects.requireNonNull(bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager))).isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }
@@ -185,9 +186,8 @@ public class SetBonusListener
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onEntityDamage(FoodLevelChangeEvent event) {
-        Player extraDamage;
         ArmorSet set;
-        if (event.getEntity() instanceof Player && (set = CosmicArmorSetsAPI.getArmorSet(extraDamage = (Player) event.getEntity())) != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
+        if (event.getEntity() instanceof Player && (set = CosmicArmorSetsAPI.getArmorSet((Player) event.getEntity())) != null && set.getArmorSetInfo() instanceof OtherPlayerEventListenerSet) {
             ((OtherPlayerEventListenerSet) set.getArmorSetInfo()).onPlayerEvent(event);
         }
     }
