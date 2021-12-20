@@ -41,8 +41,8 @@ public class Rage extends CustomEnchantment {
             Player pUser = (Player) user;
             double hitCombo = RageUtils.getComboOfPlayer(pUser, target instanceof Player);
 
-            if (hitCombo > 3.5D) {
-                hitCombo = 3.5D;
+            if (hitCombo > 4.5D) {
+                hitCombo = 4.5D;
             }
 
             if (hitCombo > 1.0D) {
