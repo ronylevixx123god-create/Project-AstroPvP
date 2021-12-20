@@ -312,7 +312,8 @@ public class CosmicArmorSetsAPI {
     public static Map<ArmorSet, Integer> getBonusCrystalsEquippedWithCorruptionIncluded(Player player, Entity other) {
         HashMap<ArmorSet, Integer> found = null;
         for (ItemStack armor : player.getInventory().getArmorContents()) {
-            if (armor == null || armor.getType() == Material.AIR) continue;
+            if (armor == null || armor.getType() == Material.AIR)
+                continue;
             List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
             if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.RUINS_HELMET)) {
                 if (sets == null) return null;
@@ -320,9 +321,10 @@ public class CosmicArmorSetsAPI {
                     return null;
                 sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
             }
-            if (sets == null || sets.isEmpty()) continue;
+            if (sets == null || sets.isEmpty())
+                continue;
             if (found == null) {
-                found = new HashMap<ArmorSet, Integer>();
+                found = new HashMap<>();
             }
             Iterator<ArmorSet> iterator = sets.iterator();
             while (iterator.hasNext()) {
