@@ -84,7 +84,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>permissions</artifactId>
+            <artifactId>permissifons</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CompilexPermissions_2_1_1_1.jar</systemPath>

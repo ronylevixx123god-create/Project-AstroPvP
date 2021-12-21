@@ -61,11 +61,6 @@ public class CommandArmorSet
             sender.sendMessage(CC.Red + "Proc'ing Dimensional Traveler!");
             return true;
         }
-        if (args.length == 1 && args[0].equals("yijkirev")) {
-            Player p = (Player) sender;
-            ((MotherOfYijki) ArmorSet.MOTHER_OF_YIJKI.getArmorSetInfo()).activateYijki(p.getLocation(), p);
-            return true;
-        }
         if (args.length == 1 && args[0].equalsIgnoreCase("rangerbow")) {
             ((Player) sender).getInventory().addItem(ArmorSet.createRangerBow());
             return true;

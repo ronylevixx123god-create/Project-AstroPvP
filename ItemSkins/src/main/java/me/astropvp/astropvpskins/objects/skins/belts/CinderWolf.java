@@ -15,7 +15,8 @@ public class CinderWolf extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (damaged instanceof Player) return;
 
         if (damager.hasMetadata("cinderWolf")) {

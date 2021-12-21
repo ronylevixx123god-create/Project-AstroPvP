@@ -70,13 +70,13 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(CC.translate("&f"));
-            player.sendMessage(CC.translate("&f                   Welcome, &a" + player.getName() + "&f to &a&lAstro&e&lPvP&f!"));
+            player.sendMessage(CC.translate("&f                   Welcome, &6" + player.getName() + "&f to &6&lAstro&f&lPvP&f!"));
             player.sendMessage(CC.translate(""));
             player.sendMessage(CC.translate("                     &a&lSHOP &fbuy.astropvp.net"));
             player.sendMessage(CC.translate("               &6&lDISCORD &fdiscord.astropvp.net"));
             player.sendMessage(CC.translate("                   &c&lRULES &frules.astropvp.net"));
             player.sendMessage("");
-            player.sendMessage(CC.translate("&f&l  WE RECOMMEND YOU TO USE &aclient.astropvp.net &f&lOR &a1.8.9"));
+            player.sendMessage(CC.translate("&f&l  WE RECOMMEND YOU TO USE &6client.astropvp.net &f&lOR &61.8.9"));
             player.sendMessage("");
             if (Conf.gracePeriod) {
                 player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. TnT Explosives are Disabled."));

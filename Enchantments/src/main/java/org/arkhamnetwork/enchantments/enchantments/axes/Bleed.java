@@ -8,6 +8,7 @@ import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -47,17 +48,22 @@ public class Bleed extends CustomEnchantment {
     }
 
     @SneakyThrows
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player) {
-            final double bleedChance = 0.04 * enchantLevel + 0.4;
-            if (Math.random() < bleedChance && getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+
+        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
+            double bleedChance = 0.08D * enchantLevel + 0.4D;
+            if (Math.random() < bleedChance && getBleedStack(target) < getMaxBleedStack(enchantLevel))
+                GeneralCooldown.enterCooldown((Player) user);
+            try {
                 addBleedStack(user, target);
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
         }
     }
 
     private int getMaxBleedStack(final int level) {
-        return 20;
+        return 5;
     }
 
     public static void addBleedStack(final LivingEntity leDamager, final LivingEntity le) throws Exception {

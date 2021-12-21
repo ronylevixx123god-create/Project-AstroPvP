@@ -24,13 +24,14 @@ implements Runnable {
     public AutoBroadcastTask() {
         for (BroadcastMessages messages : BroadcastMessages.values()) {
             this.messagesList.add(messages.getMessage());
-            int n = this.messagesList.size() - 1;
         }
     }
 
     @Override
     public void run() {
+        Bukkit.broadcastMessage(CC.translate("&7&m----&f&m----&6&m----&e&l[ &6&lAstro&f&lPvP &e&l]&6&m----&f&m----&7&m----"));
         Bukkit.broadcastMessage(CC.translate(this.messagesList.get(this.i)));
+        Bukkit.broadcastMessage(CC.translate("&7&m----&f&m----&6&m----&e&m-----------&6&m----&f&m----&7&m----"));
         this.i = this.i == this.messagesList.size() - 1 ? 0 : ++this.i;
     }
 }

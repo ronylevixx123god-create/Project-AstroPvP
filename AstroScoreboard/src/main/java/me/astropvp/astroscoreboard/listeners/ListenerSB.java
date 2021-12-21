@@ -16,6 +16,8 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Collection;
+
 public class ListenerSB implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
@@ -24,7 +26,7 @@ public class ListenerSB implements Listener {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), this::refreshTagsAsyncForServer, 20L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), this::refreshTagsAsyncForServer, 40L);
     }
 
     @EventHandler
@@ -103,9 +105,11 @@ public class ListenerSB implements Listener {
     }
 
     public void refreshTagsAsyncForServer() {
+        Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
+
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                for (Player other : Bukkit.getOnlinePlayers()) {
+            for (Player player : allPlayers) {
+                for (Player other : allPlayers) {
                     try {
                         PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
                     } catch (Exception exception) {

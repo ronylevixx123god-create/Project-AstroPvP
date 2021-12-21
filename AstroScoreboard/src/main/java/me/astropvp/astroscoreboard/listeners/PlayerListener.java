@@ -11,10 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scoreboard.Criterias;
-import org.bukkit.scoreboard.DisplaySlot;
-import org.bukkit.scoreboard.Objective;
-import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.*;
 import me.astropvp.astroscoreboard.manager.TabListManager;
 
 public class PlayerListener implements Listener {
@@ -32,8 +29,8 @@ public class PlayerListener implements Listener {
 		//board.registerNewObjective(objectiveName, "health").setDisplaySlot(DisplaySlot.BELOW_NAME);
 		//player.setScoreboard(board);
 		TabListManager.sendTablist(player,
-		CC.translate("\n&a&lASTRO &7⎜ &fFactions\n"),
-		CC.translate("\n&a&lSTORE &fbuy.astropvp.net\n&a&lDISCORD &fdiscord.astropvp.net\n"));
+		CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
+		CC.translate("\n&6Store&7: &fbuy.astropvp.net\n" + "&6Discord&7: &fdiscord.astropvp.net" + "\n"));
 	}
 	
 	@EventHandler(priority = EventPriority.HIGHEST)
@@ -41,7 +38,7 @@ public class PlayerListener implements Listener {
 		Player player = event.getPlayer();
 		Scoreboard board = player.getScoreboard();
 		if(board != null) {
-			board.getTeams().forEach(team -> team.unregister());
+			board.getTeams().forEach(Team::unregister);
 		}
 		
 	}

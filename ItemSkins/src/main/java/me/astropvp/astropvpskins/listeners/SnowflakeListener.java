@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -36,7 +37,8 @@ public class SnowflakeListener implements Listener {
     @EventHandler
     public void onRightClick(PlayerInteractEvent e) {
         if(e.getAction() == Action.RIGHT_CLICK_AIR && e.getPlayer().getItemInHand() != null && e.getPlayer().getItemInHand().getType().name().contains("AXE") && !Snowflake.getSnowflakeCooldown().contains(e.getPlayer())) {
-            if (AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.CHRISTMAS_AXE_SNOWFLAKE)) {
+            if (!WorldGuardUtils.isPvPEnabled(e.getPlayer().getLocation())) return;
+                if (AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.CHRISTMAS_AXE_SNOWFLAKE)) {
                 Snowflake.addSnowflakeCooldown(e.getPlayer());
                 Snowball snowball = e.getPlayer().launchProjectile(Snowball.class);
                 snowball.setMetadata("snowflake", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), e.getPlayer().getName()));

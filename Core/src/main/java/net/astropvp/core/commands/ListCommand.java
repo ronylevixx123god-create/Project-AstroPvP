@@ -20,7 +20,7 @@ public class ListCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
         p.sendMessage("");
-        p.sendMessage(CC.translate("&a&lAstro&e&lPvP List &7[" + Bukkit.getOnlinePlayers().size() + "&7 Online]"));
+        p.sendMessage(CC.translate("&6&lAstro&f&lPvP List &7[" + Bukkit.getOnlinePlayers().size() + "&7 Online]"));
         p.sendMessage("");
         return false;
     }

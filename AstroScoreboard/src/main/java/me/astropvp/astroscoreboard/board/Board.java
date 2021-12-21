@@ -70,7 +70,7 @@ public class Board {
 
         Objective h = scoreboard.registerNewObjective("showhealth", Criterias.HEALTH);
         h.setDisplaySlot(DisplaySlot.BELOW_NAME);
-        h.setDisplayName(ChatColor.RED + "❤");
+        h.setDisplayName(ChatColor.GOLD + "❤");
     }
 
     public String getNewKey(BoardEntry entry) {

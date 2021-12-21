@@ -25,7 +25,6 @@ public class HeroicValor extends HeroicCustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(player instanceof Player))
             return;
-
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_SWORD)) {
             level = 5;
         }

@@ -24,6 +24,7 @@ package me.ifamasssxd.cosmicjackpot.struct;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
@@ -75,11 +76,22 @@ public class JackpotManager {
             if (secondsLeft == 300 || secondsLeft == 60 || secondsLeft == 30 || secondsLeft == 10 || secondsLeft <= 5 && secondsLeft > 0) {
                 for (Player pl : Bukkit.getOnlinePlayers()) {
                     if (this.toggledNofications.contains(pl.getUniqueId())) continue;
-                    if (secondsLeft >= 60) {
-                        pl.sendMessage("");
-                    }
-                    pl.sendMessage(CC.translate("&a✪ &e&lJACKPOT &7⎜ &eThe Jackpot &7(&a$" + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + "&7)&e will be rolled in &f" + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + "&7."));
-                    pl.sendMessage(CC.translate("&7Type &f/jackpot buy (amount)&7 to purchase tickets!"));
+
+                    pl.sendMessage("");
+                    pl.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6&lJackpot")));
+                    pl.sendMessage(StringUtils.getCenteredMessage(CC.translate("&fTime Remaining&7: &6" + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()))));
+                    pl.sendMessage(StringUtils.getCenteredMessage(CC.translate("&fTotal Value&7: &a$" + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()))));
+                    pl.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&o(( &f&o/jackpot buy (amount)&7&o to purchase tickets ))")));
+                    pl.sendMessage("");
+
+
+
+
+
+                    ///////
+
+                    //pl.sendMessage(CC.translate("&a✪ &e&lJACKPOT &7⎜ &eThe Jackpot &7(&a$" + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + "&7)&e will be rolled in &f" + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + "&7."));
+                    //pl.sendMessage(CC.translate("&7Type &f/jackpot buy (amount)&7 to purchase tickets!"));
                     //pl.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + "Astro Jackpot (" + ChatColor.AQUA + ChatColor.BOLD + "$" + ChatColor.AQUA + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + ") drawing in " + ChatColor.AQUA + ChatColor.BOLD.toString() + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + ChatColor.AQUA + "!");
                     if (secondsLeft < 60) continue;
                 }

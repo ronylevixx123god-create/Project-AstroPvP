@@ -72,6 +72,8 @@ public class NatureWrath extends CustomEnchantment {
             if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {
                 return;
             }
+            if(p.hasMetadata("witcher_ability"))
+                return;
             int cost = KOTH ? (this.soulCost * 2) : this.soulCost;
             if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
                 cost /= 2;

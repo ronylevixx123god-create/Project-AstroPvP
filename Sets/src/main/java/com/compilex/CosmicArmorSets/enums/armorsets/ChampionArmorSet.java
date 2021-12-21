@@ -30,6 +30,7 @@ package com.compilex.CosmicArmorSets.enums.armorsets;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
@@ -162,10 +163,13 @@ public class ChampionArmorSet
         if (this.isBlockedOutpostWorld(damager)) {
             return false;
         }
-        if (Math.random() <= 0.006 * (double) applied) {
+        this.modifyDamage(damager, event, 10, applied);
+
+        if (Math.random() <= 0.0025 * (double) applied) {
             this.activateChampionAbility(damager, (Player) event.getEntity());
         }
-        return this.modifyDamage(damager, event, 10, applied);
+        return false;
+
     }
 
     @Override
@@ -188,7 +192,13 @@ public class ChampionArmorSet
         if (WeaponBonusUtils.hasWeaponBonus(target.getItemInHand())) {
             if (WeaponBonusUtils.getWeaponBonusByItem(target.getItemInHand()) == (WeaponBonusType.DEMON) && Math.random() > 0.35) {
                 target.sendMessage(CC.RedB + " ** " + CC.GoldB + "CHAMPIONS WRATH BLOCKED (" + CC.RedB + "DEMON WEAPON BONUS" + CC.RedB + ") ** ");
+                return;
             }
+        }
+
+        if (CosmicArmorSetsAPI.getBonusCrystalsEquipped(target).containsKey(ArmorSet.SANTA) && Math.random() <= 0.35) {
+            target.sendMessage(CC.translate("&4&l*&2&l*&f&l* &2&lSANTA SET &7Blocked &6Champion Ability &f&l*&2&l&4&l*"));
+            return;
         }
 
 
@@ -196,7 +206,6 @@ public class ChampionArmorSet
         player.sendMessage(CC.translate("&6&l* CHAMPION WRATH PROC *"));
         player.sendMessage(CC.translate("&a&lBUFF: &cBanshee RKO Proc &aActivated"));
         player.sendMessage(CC.translate("&a&lBUFF: &cAnti Utility Proc &aActivated"));
-        player.sendMessage(CC.translate("&a&lBUFF: &cWorld Destroyer Ticks &aActivated"));
         player.sendMessage(CC.translate("&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
         target.sendMessage(CC.translate(("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));

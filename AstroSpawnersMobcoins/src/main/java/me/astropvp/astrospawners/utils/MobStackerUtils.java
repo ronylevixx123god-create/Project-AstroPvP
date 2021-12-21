@@ -75,16 +75,12 @@ public class MobStackerUtils {
         if (entity.getType() == EntityType.BLAZE) {
             size = entityStack + (data != null ? (data.getSpawnerAmount()*10)+100 : 100);
 
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
-                size += size*1.5;
-            }
-
 
         } else {
             size = entityStack + (data != null ? data.getSpawnerAmount() : 100);
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
-                size += size *1.5;
-            }
+        }
+        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
+            size += size*1.5;
         }
 
 

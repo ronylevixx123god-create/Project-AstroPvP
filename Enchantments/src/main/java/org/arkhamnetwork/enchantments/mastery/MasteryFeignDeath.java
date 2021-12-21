@@ -194,7 +194,6 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
                     if (faction != null && other != null)
                         tag = faction.describeToAsync(other) + " ";
                     Bukkit.getLogger().info(player.getName() + " is damaging " + event.getEntity().getName() + " for " + event.getFinalDamage() + " while invisible! " + hitCount + " / " + max);
-                    event.getEntity().sendMessage(CC.Red + "-" + NumberUtils.formatSeconds(event.getFinalDamage()) + " HP (" + tag + player.getName() + "'s Ghost" + CC.Red + ")");
                 }
             }
         }

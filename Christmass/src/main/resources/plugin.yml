@@ -1,0 +1,6 @@
+name: Christmas
+main: net.astropvp.christmas.Christmas
+version: 1.0
+commands:
+  christmas:
+    aliases: [santa, present, presents, advent, christmas]

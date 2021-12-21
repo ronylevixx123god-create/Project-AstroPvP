@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
@@ -47,6 +49,9 @@ public class HeroKiller extends CustomEnchantment {
             return;
         }
 
+        if(p.hasMetadata("witcher_ability"))
+            return;
+
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
@@ -59,7 +64,7 @@ public class HeroKiller extends CustomEnchantment {
             }
 
 
-            double increase = 0.10 * level;
+            double increase = 0.01 * level;
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
@@ -71,7 +76,9 @@ public class HeroKiller extends CustomEnchantment {
 
                 if (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()))) {
                     if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.4)) {
-                        increase *= 1.1;
+                        if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
+                            increase *= 1.1;
+                        }
                     }
                 }
                 if (!(e.getDamager() instanceof Player)) return;
@@ -79,7 +86,7 @@ public class HeroKiller extends CustomEnchantment {
                 if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master"))
                     increase *= (((1.2 * 5) / 100) + 1);
             }
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + increase));
+            e.setDamage(e.getDamage() * (1 + increase));
         }
     }
 

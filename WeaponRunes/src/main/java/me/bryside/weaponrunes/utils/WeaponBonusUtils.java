@@ -37,9 +37,7 @@ public class WeaponBonusUtils {
 
     public static boolean isHeroicWeapon(ItemStack i) {
         if (i.getType().toString().endsWith("_SWORD") || i.getType().toString().endsWith("_AXE")) {
-            NBTWrapper wrapper = new NBTWrapper(i);
-            if (wrapper.getString("cosmicType").equals("HEROIC_WEAPON"))
-                return true;
+            return i.getType().name().contains("GOLD");
         }
         return false;
     }

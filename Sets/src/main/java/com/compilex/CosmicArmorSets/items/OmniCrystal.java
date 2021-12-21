@@ -78,8 +78,14 @@ public class OmniCrystal
         if (meta.hasLore())  {
             if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS"))) return;
         }
+        List<ArmorSet> bonusApplied = ArmorSet.getFromArmorBonusCrystal(clickedWrapper);
+        if (bonusApplied != null && !bonusApplied.isEmpty()) {
+            event.getWhoClicked().sendMessage(CC.translate("&cYou cannot apply an omni crystal to a piece that contains crystals"));
+            event.setCancelled(true);
+            return;
+        }
 
-        if (ArmorSet.getArmorSetFromItem(clicked) != null && ArmorSet.getArmorSetFromItem(clicked) != ArmorSet.OMNI) {
+        if (ArmorSet.getArmorSetFromItem(clicked) != null) {
             return;
         }
         if (player.getItemOnCursor().getAmount() <= 1) {

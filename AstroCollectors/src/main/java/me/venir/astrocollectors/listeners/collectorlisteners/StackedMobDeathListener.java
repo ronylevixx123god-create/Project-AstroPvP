@@ -48,6 +48,9 @@ public class StackedMobDeathListener implements Listener {
             if (collector.getAmount(itemStack.getType())+ (stackSize) >= Double.MAX_VALUE) {
                 return;
             }
+            if (collector.getAllMobDropsWorth() + (stackSize*4) >= Double.MAX_VALUE) {
+                return;
+            }
             collector.incrementAmount(itemStack.getType(), stackSize);
             AstroSpawners.getInstance().getMobStackerUtils().removeStackedMob(entity);
         }
@@ -56,9 +59,7 @@ public class StackedMobDeathListener implements Listener {
     @EventHandler
     public void onEntityDeath(EntityDeathEvent e) {
         if (!(e.getEntity() instanceof Creature)) return;
-        if (e.getEntity().hasMetadata("end_grinding_mob") || e.getEntity().hasMetadata("end_skeleton_mob") || e.getEntity().hasMetadata("end_creeper_mob")) {
-            return;
-        }
+        if (e.getEntity().getWorld().getName().contains("end")) return;
         StackedMobDeathEvent stackedMobDeathEvent = new StackedMobDeathEvent(e.getEntity(), null);
         Bukkit.getPluginManager().callEvent(stackedMobDeathEvent);
         e.getDrops().clear();

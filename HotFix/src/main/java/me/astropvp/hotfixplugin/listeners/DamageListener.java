@@ -42,6 +42,30 @@ public class DamageListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void diaSwordFix(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            e.setDamage(e.getDamage() * 0.7);
+            if (damager.getItemInHand() != null) {
+                if (damager.getItemInHand().getType() == Material.DIAMOND_SWORD) {
+                    e.setDamage(e.getDamage() * 0.65);
+                }
+            }
+        }
+    }
+
+    @EventHandler
+    public void axeFix(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            if (damager.getItemInHand() != null) {
+                if (damager.getItemInHand().getType().name().contains("_AXE")) {
+                    e.setDamage(e.getDamage() * 1.25);
+                }
+            }
+        }
+    }
 
 
     @EventHandler
@@ -53,19 +77,19 @@ public class DamageListener implements Listener {
 
             if (damaged.getInventory().getHelmet() != null) {
                 if (damaged.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) {
-                    damaged.setHealth(damaged.getHealth()-18);
+                    damaged.setHealth(damaged.getHealth() - 18);
                 }
             } else if (damaged.getInventory().getChestplate() != null) {
                 if (damaged.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) {
-                    damaged.setHealth(damaged.getHealth()-18);
+                    damaged.setHealth(damaged.getHealth() - 18);
                 }
             } else if (damaged.getInventory().getLeggings() != null) {
                 if (damaged.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) {
-                    damaged.setHealth(damaged.getHealth()-18);
+                    damaged.setHealth(damaged.getHealth() - 18);
                 }
             } else if (damaged.getInventory().getBoots() != null) {
                 if (damaged.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-                    damaged.setHealth(damaged.getHealth()-18);
+                    damaged.setHealth(damaged.getHealth() - 18);
                 }
             }
         }
@@ -79,7 +103,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler (ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true)
     public void onIllegalSandStacking(EntityChangeBlockEvent event) {
         if (event.getTo() != Material.SAND) return;
         Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getBlock()));
@@ -99,7 +123,7 @@ public class DamageListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDurabilityLoss(PlayerItemDamageEvent event) {
         event.setCancelled(true);
     }

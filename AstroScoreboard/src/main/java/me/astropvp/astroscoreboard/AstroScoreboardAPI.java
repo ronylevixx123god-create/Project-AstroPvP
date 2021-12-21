@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Random;
 
 
@@ -68,7 +69,7 @@ public class AstroScoreboardAPI {
         String color = FactionUtils.isWilderness(fp.getFaction()) ? CC.White : fp.getRelationTo(fother).getColor().toString();
         ChatColor rankColor;
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-        switch (rank) {
+        switch (Objects.requireNonNull(rank)) {
             case "owner":
                 rankColor = ChatColor.DARK_RED;
                 break;

@@ -6,7 +6,8 @@ public enum CrateType {
     NOVA("Nova", "&e"),
     STELLAR("Stellar", "&c"),
     BUNDLE("Bundle", "&d"),
-    APOLLO("Apollo", "&b");
+    APOLLO("Apollo", "&b"),
+    WINTER("Winter", "&3");
 
     private final String name;
 

@@ -16,8 +16,10 @@ public class HeroicCactus extends HeroicCustomEnchantment {
         if (player instanceof Player) {
             if(player.hasMetadata("neutralized"))
                 return;
+            if (player.hasMetadata("noDefenseProcs"))
+                return;
             Player p = (Player)player;
-            if (attacker instanceof Player && Math.random() < 0.35) {
+            if (attacker instanceof Player && Math.random() < 0.1) {
                 Player pAttacker = (Player)attacker;
                 pAttacker.damage(0.5D * level);
                 Location l = p.getLocation();

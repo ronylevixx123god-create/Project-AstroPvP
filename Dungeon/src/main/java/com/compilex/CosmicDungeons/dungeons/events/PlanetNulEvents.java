@@ -318,7 +318,7 @@ implements CommandExecutor {
         Collections.shuffle(randomAdditionPanels);
         randomPanels.add(randomAdditionPanels.get(0));
         for (i = 0; i < this.extraChests.entrySet().size(); ++i) {
-            Map.Entry<Location, Boolean> entry = new ArrayList<Map.Entry<Location, Boolean>>(this.extraChests.entrySet()).get(i);
+            Map.Entry<Location, Boolean> entry = new ArrayList<>(this.extraChests.entrySet()).get(i);
             if (i == 0) {
                 ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getClockOfReturning());
                 continue;

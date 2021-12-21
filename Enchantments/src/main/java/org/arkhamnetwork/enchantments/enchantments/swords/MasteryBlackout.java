@@ -43,7 +43,7 @@ public class MasteryBlackout extends CustomEnchantment {
             enchantLevel = 5;
         }
 
-        if (Math.random() <= 0.008D * enchantLevel) {
+        if (Math.random() <= 0.002D * enchantLevel) {
             int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
                 multi = 1;
@@ -54,13 +54,12 @@ public class MasteryBlackout extends CustomEnchantment {
                 return;
             }
             pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
-            DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* BLACKOUT " +CC.Gray + "[" +(2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB  + " *", "BLACKOUT");
+            String text = CC.DarkPurpleB + "* BLACKOUT " + CC.Gray + "[" + (2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB + " *";
+            DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, text, "BLACKOUT");
             pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + (2 + enchantLevel) * multi + "&7s] &5&l *"));
-            ((Player) user).sendMessage(CC.translate(CC.DarkPurpleB + "* BLACKOUT " + CC.Gray + "[" + (2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB +  " *"));
-            //pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
-            //Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
-            GeneralCooldown.enterCooldown((Player) user);
-            //this.applyCooldown(user, 6);
+            user.sendMessage(CC.translate(text));
+            pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
+            Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
         }
     }
 

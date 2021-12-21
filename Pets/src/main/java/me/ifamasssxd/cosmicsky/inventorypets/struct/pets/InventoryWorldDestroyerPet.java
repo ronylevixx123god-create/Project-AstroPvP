@@ -158,9 +158,14 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         //CageCooldown.enterCageCooldown(target);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-        player.sendMessage(CC.translate("&e&l* WORLD DESTROYER &7[&f" + target.getName() + "&7] &e&l*")
-        );
-        target.sendMessage(CC.translate("&c&l* WORLD DESTROYER &7[&f" + player.getName() + "&7] &c&l*"));
+
+        player.sendMessage("");
+        player.sendMessage(CC.translate("&4&l*** WORLD DESTROYER PET [&6" + target.getName() + "s&4&l] - CAGED! **"));
+        player.sendMessage("");
+
+        target.sendMessage("");
+        target.sendMessage(CC.translate("&4&l*** " + player.getName() + "&4&l's WORLD DESTROYER PET [&6" + cageDuration + "s&4&l] - CAGE! **"));
+        target.sendMessage("");
         DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
         CageCooldownUtils.enterCageCooldown(target);
 
@@ -268,10 +273,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     cancel();
                 }
-                int dmg = 2;
                 if (WorldGuardUtils.isPvPEnabled(affected.getLocation())) {
-                    affected.damage(0.0D);
-                    affected.setHealth(affected.getHealth() - 1.5D);
+                    affected.damage(1.0D);
                 }
                 if (affected.getHealth() <= 0.0D || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);

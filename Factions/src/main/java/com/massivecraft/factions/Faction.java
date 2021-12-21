@@ -215,7 +215,7 @@ public class Faction extends Entity implements EconomyParticipator {
     public Set<RolePerm> getRolePerms(Role role) {
         Set<RolePerm> permissions = this.activeRolePerms.get(role);
         if (permissions == null) {
-            permissions = new HashSet<RolePerm>();
+            permissions = new HashSet<>();
             for (RolePerm perm : RolePerm.values()) {
                 if (!role.isAtLeast(perm.getDefaultRole())) continue;
                 Bukkit.getLogger().info("Giving Default " + perm.name() + " to " + role.name());

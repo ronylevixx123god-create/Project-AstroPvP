@@ -21,6 +21,8 @@ public class Tank extends CustomEnchantment {
         if (!(player instanceof Player)) {
             return;
         }
+        if (player.hasMetadata("neutralized"))
+            return;
         ItemStack i = null;
         if (attacker instanceof Player) {
             final Player pAttacker = (Player) attacker;

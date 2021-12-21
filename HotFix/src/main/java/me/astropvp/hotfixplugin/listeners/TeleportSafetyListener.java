@@ -1,8 +1,13 @@
 package me.astropvp.hotfixplugin.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import java.util.EnumSet;
 import java.util.Set;
@@ -35,6 +40,19 @@ public class TeleportSafetyListener implements Listener {
         if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL &&
                 event.getTo().getY() < 1.0D)
             event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void playerDamageEvent(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player) {
+            if (!e.getEntity().getWorld().getName().equalsIgnoreCase("world") && !e.getEntity().getWorld().getName().equalsIgnoreCase("flat")) return;
+            if (e.getCause() != EntityDamageEvent.DamageCause.VOID) return;
+            Player p = (Player) e.getEntity();
+            if (p.getLocation().getY() < -1.0) {
+                p.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                p.sendMessage(CC.translate("&cPrevented you from dying to void."));
+            }
+        }
     }
 
 
@@ -76,6 +94,13 @@ public class TeleportSafetyListener implements Listener {
                 if (upperMaterial == null || upperMaterial == Material.AIR)
                     player.teleport(blockBehindLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
             }
+        }
+    }
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onBlockPlaceEnder(BlockPlaceEvent event) {
+        if (event.getBlock().getType() == Material.ENDER_PORTAL_FRAME) {
+            event.getPlayer().sendMessage(CC.Red + "You cannot place this block!");
+            event.setCancelled(true);
         }
     }
 

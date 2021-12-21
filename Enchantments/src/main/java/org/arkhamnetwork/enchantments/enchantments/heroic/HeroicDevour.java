@@ -31,12 +31,12 @@ public class HeroicDevour extends HeroicCustomEnchantment {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
+            if (Math.random() > 0.4) return;
 
             final double mod = Bleed.getBleedStack(target) * 0.015 + enchantLevel * 0.1 + 1.0;
             event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
             final Location l = target.getLocation();
-            GeneralCooldown.enterCooldown((Player) user);
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
         }
     }

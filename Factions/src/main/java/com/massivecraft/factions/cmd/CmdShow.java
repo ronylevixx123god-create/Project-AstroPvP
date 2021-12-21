@@ -55,7 +55,7 @@ public class CmdShow extends FCommand {
         }
 
         double econ = Econ.getFactionBalance(finalFaction);
-        //ShieldHandler shieldHandler = FactionShieldsPlugin.getInstance().getShieldHandler();
+        ShieldHandler shieldHandler = FactionShieldsPlugin.getInstance().getShieldHandler();
         if (this.payForCommand(Conf.econCostShow, "to show faction information", "for showing faction information")) {
             Collection<FPlayer> admins = finalFaction.getFPlayersWhereRole(Role.ADMIN);
             Collection<FPlayer> mods = Lists.newArrayList();
@@ -69,7 +69,7 @@ public class CmdShow extends FCommand {
             } else {
                 this.msg(this.p.txt.titleize(finalFaction.getTag(this.fme)));
                 this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aDescription: <p>&f%s"), finalFaction.getDescription());
-                /*if (!shieldHandler.hasShield(finalFaction)) {
+                if (!shieldHandler.hasShield(finalFaction)) {
                     this.msg(CC.translate("&aShield: &7none"));
                 } else {
                     FactionShield shield = shieldHandler.getShield(finalFaction);
@@ -83,7 +83,7 @@ public class CmdShow extends FCommand {
                         this.msg(CC.translate("&aShield: &c&lDISABLED &7(Enables: &f" + time) + "&7)");
 
                     }
-                }*/
+                }
             }
 
             if (finalFaction.isNormal()) {

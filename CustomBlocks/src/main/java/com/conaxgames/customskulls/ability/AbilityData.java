@@ -35,4 +35,9 @@ public class AbilityData {
     public static String getUUID(Location location) {
         return location.getBlockX() + "_" + location.getBlockY() + "_" + location.getBlockZ();
     }
+
+    public static String getUUID(int x, int y, int z) {
+        return x + "_" + y + "_" + z;
+    }
+
 }

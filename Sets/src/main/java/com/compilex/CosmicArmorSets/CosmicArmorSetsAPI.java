@@ -74,7 +74,7 @@ public class CosmicArmorSetsAPI {
     }
 
     public static ArmorSet getRandomArmorSetFromUpgrade() {
-        ArrayList avail = Math.random() <= 0.7 ? Lists.newArrayList( new ArmorSet[]{ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER}) : Lists.newArrayList( new ArmorSet[]{ArmorSet.PHANTOM, ArmorSet.MOTHER_OF_YIJKI, ArmorSet.DIMENSIONAL_TRAVELER});
+        ArrayList avail = Math.random() <= 0.7 ? Lists.newArrayList(new ArmorSet[]{ArmorSet.YETI, ArmorSet.SUPREME, ArmorSet.RANGER}) : Lists.newArrayList(new ArmorSet[]{ArmorSet.PHANTOM, ArmorSet.MOTHER_OF_YIJKI, ArmorSet.DIMENSIONAL_TRAVELER});
         return (ArmorSet) avail.get(ThreadLocalRandom.current().nextInt(avail.size()));
     }
 
@@ -135,10 +135,6 @@ public class CosmicArmorSetsAPI {
             existing.add(CC.DarkRed + "This weapon is stronger than diamond.");
             im.setLore(existing);
             retr.setItemMeta(im);
-            if (type == HeroicWeaponType.AXE) {
-                ArmorSet.addMaxedEnchant(retr, "Silence");
-                ArmorSet.addMaxedEnchant(retr, "Lifesteal");
-            }
         }
         return retr;
     }
@@ -153,8 +149,10 @@ public class CosmicArmorSetsAPI {
 
     public static NBTWrapper createHeroicWeaponNBT(NBTWrapper wrapper, HeroicWeaponType type) {
         NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("type", type.name()).setInt("durability", type.getDurability()).setDouble("dmgIncr", type.getAttackModifier()).setInt("maxDurability", type.getDurability()).get();
-        return wrapper.setString("cosmicType", "HEROIC_WEAPON").setNBTBase("conaxData", compoundBuilder.get());
+        cosmicData.setInt("heroic_weapon", 1);
+        return wrapper.setNBTBase("conaxData", compoundBuilder.get()).setNBTBase("cosmicData", cosmicData.get());
     }
 
     public static boolean isHeroicArmor(ItemStack item) {
@@ -314,16 +312,19 @@ public class CosmicArmorSetsAPI {
     public static Map<ArmorSet, Integer> getBonusCrystalsEquippedWithCorruptionIncluded(Player player, Entity other) {
         HashMap<ArmorSet, Integer> found = null;
         for (ItemStack armor : player.getInventory().getArmorContents()) {
-            if (armor == null || armor.getType() == Material.AIR) continue;
+            if (armor == null || armor.getType() == Material.AIR)
+                continue;
             List<ArmorSet> sets = ArmorSet.getFromArmorBonusCrystal(armor);
             if (other instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) other, SkinType.CORRUPT_AMULET_CORRUPTION) && armor.getType().toString().endsWith("_CHESTPLATE") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.RUINS_HELMET)) {
                 if (sets == null) return null;
-                if (ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()) == null) return null;
+                if (ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()) == null)
+                    return null;
                 sets.removeAll(ArmorSet.getFromArmorBonusCrystal(((Player) other).getInventory().getChestplate()));
             }
-            if (sets == null || sets.isEmpty()) continue;
+            if (sets == null || sets.isEmpty())
+                continue;
             if (found == null) {
-                found = new HashMap<ArmorSet, Integer>();
+                found = new HashMap<>();
             }
             Iterator<ArmorSet> iterator = sets.iterator();
             while (iterator.hasNext()) {
@@ -413,7 +414,7 @@ public class CosmicArmorSetsAPI {
         if (name == null) {
             name = CC.DarkRedB + "Heroic " + StringUtils.capitaliseAllWords(type.name().split("_")[1].toLowerCase());
         }
-        if ((im = (item = new ItemBuilder(type, name).lore(lore = Lists.newArrayList( new String[]{"", CC.Gray + "+" + armorModifier + " Armor Value", CC.Gray + durability + " Durability", CC.DarkRed + "This armor is stronger than diamond."})).build()).getItemMeta()) instanceof LeatherArmorMeta) {
+        if ((im = (item = new ItemBuilder(type, name).lore(lore = Lists.newArrayList(new String[]{"", CC.Gray + "+" + armorModifier + " Armor Value", CC.Gray + durability + " Durability", CC.DarkRed + "This armor is stronger than diamond."})).build()).getItemMeta()) instanceof LeatherArmorMeta) {
             LeatherArmorMeta lm = (LeatherArmorMeta) im;
             lm.setColor(Color.RED);
             item.setItemMeta(lm);
