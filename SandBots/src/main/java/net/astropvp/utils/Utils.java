@@ -4,45 +4,38 @@
 
 package net.astropvp.utils;
 
-import java.util.List;
-
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Factions;
-import net.astropvp.inventories.MenuManager;
-import org.bukkit.World;
-import org.bukkit.Bukkit;
-import java.util.UUID;
-import net.astropvp.config.ConfigFile;
-import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.block.Block;
-import java.util.ArrayList;
-import net.astropvp.config.FilesManager;
-import org.bukkit.inventory.meta.LeatherArmorMeta;
-import org.bukkit.util.EulerAngle;
-import org.bukkit.plugin.Plugin;
-import net.astropvp.animations.Animation;
-import net.astropvp.inventories.SandBotGui;
-import net.astropvp.inventories.FactionManageGui;
-import net.astropvp.inventories.RemoveGUI;
-import net.astropvp.enums.GuiType;
-import java.util.concurrent.ConcurrentHashMap;
-import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.inventory.meta.SkullMeta;
-import org.bukkit.Material;
-import org.bukkit.entity.ArmorStand;
-import net.astropvp.managers.SandBotManager;
-import org.bukkit.entity.Entity;
-import org.bukkit.util.Vector;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.Location;
-import org.bukkit.entity.Player;
-import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import net.astropvp.SandBots;
+import net.astropvp.animations.Animation;
+import net.astropvp.config.ConfigFile;
+import net.astropvp.config.FilesManager;
+import net.astropvp.enums.GuiType;
+import net.astropvp.inventories.FactionManageGui;
+import net.astropvp.inventories.MenuManager;
+import net.astropvp.inventories.RemoveGUI;
+import net.astropvp.inventories.SandBotGui;
+import net.astropvp.managers.SandBotManager;
+import org.bukkit.*;
+import org.bukkit.block.Block;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.ArmorStand;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.LeatherArmorMeta;
+import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.util.EulerAngle;
+import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Utils
 {
@@ -77,8 +70,8 @@ public class Utils
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be in your factions claim to place a sand bot.");
             return;
         }
-        if (getFactionAliveBotsCount(FactionUtils.getFactionId(player)) >= 2) {
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot place more than 2 bots in your faction.");
+        if (getFactionAliveBotsCount(FactionUtils.getFactionId(player)) >= 4) {
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot place more than 4 bots in your faction.");
             return;
         }
         for (final SandBotManager bot : SandBots.sandBots) {
