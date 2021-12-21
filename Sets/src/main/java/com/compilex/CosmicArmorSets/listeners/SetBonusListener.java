@@ -140,7 +140,7 @@ public class SetBonusListener
             if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) event.getEntity(), "HEROIC_ARMOR_SET")) > 0) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (reduceLevel == 1 ? 0.9 : (reduceLevel == 2 ? 0.85 : (reduceLevel == 3 ? 0.8 : (reduceLevel == 4 ? 0.75 : 1.0)))));
             }
-            if (WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
+            if (damaged != null && WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
                 if(WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
                     if(bonuses.containsKey(ArmorSet.ENGINEER)) {
                         if(bonuses.get(ArmorSet.ENGINEER) == 1) {
@@ -162,7 +162,7 @@ public class SetBonusListener
             }
             if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
                 return;
-            if (!damaged.hasMetadata("blackout") && !damaged.hasMetadata("neutralized") && bonuses != null && !bonuses.isEmpty()) {
+            if (!damaged.hasMetadata("blackout") && bonuses != null && !bonuses.isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }
