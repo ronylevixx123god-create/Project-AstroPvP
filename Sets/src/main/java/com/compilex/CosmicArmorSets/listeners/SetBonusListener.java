@@ -126,7 +126,7 @@ public class SetBonusListener
             if (damagerArmorSet == null && (set = CosmicArmorSetsAPI.getAbilityArmorSet(damager)) != null && (event.getDamager() instanceof Player || set.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
                 set.getArmorSetInfo().onPlayerAttacked(damager, event);
             }
-            if (!damager.hasMetadata("blackout") && !(bonuses).isEmpty()) {
+            if (!(bonuses).isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerAttackedBonus(damager, ent.getValue(), event);
                 }
@@ -162,7 +162,7 @@ public class SetBonusListener
             }
             if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
                 return;
-            if (!damaged.hasMetadata("blackout") && bonuses != null && !bonuses.isEmpty()) {
+            if (bonuses != null && !bonuses.isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }
