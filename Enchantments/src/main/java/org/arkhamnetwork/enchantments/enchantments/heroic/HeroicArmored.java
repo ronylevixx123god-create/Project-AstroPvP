@@ -38,7 +38,6 @@ public class HeroicArmored extends HeroicCustomEnchantment {
             if (i != null && i.getType().name().contains("_SWORD") && e
                     .getDamage() * (1.0D - damage_negation) > 1.0D) {
                 e.setDamage(e.getDamage() * (1.0D - damage_negation));
-                Location l = player.getLocation();
             }
         }
     }

@@ -31,10 +31,7 @@ public class DoubleStrike extends CustomEnchantment {
         double random = Math.random();
         double chance = 0.015D * level;
         if (random < chance) {
-            double dmg = e.getFinalDamage();
-            if (dmg == 0.0D)
-                dmg = e.getFinalDamage();
-            final double fdmg = dmg;
+            final double fdmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             Player pp = (Player) e.getDamager();
 
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {

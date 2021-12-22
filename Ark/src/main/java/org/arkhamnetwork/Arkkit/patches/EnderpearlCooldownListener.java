@@ -24,12 +24,18 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import com.sk89q.worldguard.protection.ApplicableRegionSet;
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
+import com.sk89q.worldguard.protection.managers.RegionManager;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.EnderPearl;
@@ -96,7 +102,11 @@ final class EnderpearlCooldownListener
             Player pl = e.getPlayer();
             boolean bl = teleblock = pl.hasMetadata("teleblock") && pl.getMetadata("teleblock").get(0).asLong() > System.currentTimeMillis();
             if (AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.CHRISTMAS_BOOTS_SLIPPERS)) teleblock = false;
-            if (!EnderpearlCooldown.isEnderpearlCooldownOver(e.getPlayer()) || teleblock) {
+            WorldGuardPlugin worldGuard = WorldGuardUtils.getWorldGuard();
+            RegionManager regionManager = worldGuard.getRegionManager(e.getTo().getWorld());
+            ApplicableRegionSet set = regionManager.getApplicableRegions(e.getTo());
+            if (!set.allows(DefaultFlag.ENDERPEARL)) e.setCancelled(true);
+                if (!EnderpearlCooldown.isEnderpearlCooldownOver(e.getPlayer()) || teleblock) {
                 e.setCancelled(true);
                 if (teleblock) {
                     long delay = pl.getMetadata("teleblock").get(0).asLong() - System.currentTimeMillis();

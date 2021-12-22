@@ -132,10 +132,10 @@ public class Phoenix extends CustomEnchantment {
             }
             int soulCost = getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount(player, soulCost) && canUsePhoenix(player, level)) {
+                GeneralUtil.setPlayerHealth((LivingEntity) player, player.getMaxHealth());
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);
                 last_phoenix.put(player.getUniqueId().toString(), Long.valueOf(System.currentTimeMillis()));
                 player.setMetadata("phoenixProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(player.hasMetadata("phoenixProcs") ? (((MetadataValue) player.getMetadata("phoenixProcs").get(0)).asInt() + 1) : 1)));
-                GeneralUtil.setPlayerHealth((LivingEntity) player, player.getMaxHealth());
                 player.sendMessage("");
                 player.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "*** " + ChatColor.UNDERLINE + "PHOENIX SOUL" + ChatColor.GOLD + ChatColor.BOLD + " ***");
                 player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + soulCost + " Soul Gems");

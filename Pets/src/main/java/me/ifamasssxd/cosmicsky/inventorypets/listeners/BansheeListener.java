@@ -29,9 +29,9 @@ public class BansheeListener implements Listener {
                     event.setDamage(event.getDamage() * 1.30D);
                 }
                 if (event.getEntity().hasMetadata("champion_ability")) {
-                    damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG& &4&l** &6&l(Champion Ability)"));
+                    damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l** &6&l(Champion Ability)"));
                 } else {
-                    damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG& &4&l**"));
+                    damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l**"));
 
                 }
             }
