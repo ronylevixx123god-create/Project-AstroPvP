@@ -26,7 +26,7 @@ public class ListenerSB implements Listener {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), this::refreshTagsAsyncForServer, 40L);
+        refreshTagsAsyncForServer(event.getPlayer());
     }
 
     @EventHandler
@@ -47,22 +47,22 @@ public class ListenerSB implements Listener {
 
     @EventHandler
     public void onFactionJoin(FPlayerJoinEvent event) {
-        refreshTagsAsyncForServer();
+        refreshTagsAsyncForServer(event.getFPlayer().getPlayer());
     }
 
     @EventHandler
     public void onFactionLeave(FPlayerLeaveEvent event) {
-        refreshTagsAsyncForServer();
+        refreshTagsAsyncForServer(event.getFPlayer().getPlayer());
     }
 
     @EventHandler
     public void onFactionCreate(FactionCreateEvent event) {
-        refreshTagsAsyncForServer();
+        refreshTagsAsyncForServer(event.getFPlayer().getPlayer());
     }
 
     @EventHandler
     public void onFactionDisband(FactionDisbandEvent event) {
-        refreshTagsAsyncForServer();
+        refreshTagsAsyncForServer(event.getPlayer());
     }
 
     @EventHandler
@@ -73,7 +73,7 @@ public class ListenerSB implements Listener {
 
     @EventHandler
     public void onFactionRename(FactionRenameEvent event) {
-        refreshTagsAsyncForServer();
+        refreshTagsAsyncForServer(event.getPlayer());
     }
 
     @EventHandler
@@ -104,18 +104,14 @@ public class ListenerSB implements Listener {
         });
     }
 
-    public void refreshTagsAsyncForServer() {
+    public void refreshTagsAsyncForServer(Player playerJoining) {
         Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
 
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
             for (Player player : allPlayers) {
-                for (Player other : allPlayers) {
-                    try {
-                        PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
-                    } catch (Exception exception) {
-                        exception.printStackTrace();
-                    }
-                }
+                PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining) + " ");
+                PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrefix(playerJoining, player) + " ");
+
             }
         });
     }
