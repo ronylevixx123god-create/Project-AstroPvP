@@ -33,6 +33,8 @@ public class CustomBlockUtil {
         return null;
     }
 
+
+
     public static Boolean isCustomItem(ItemStack itemStack) {
         NBTItem nbtItem = new NBTItem(itemStack);
         return nbtItem.hasKey("cosmicType") && nbtItem.getString("cosmicType").equals("custom_block");

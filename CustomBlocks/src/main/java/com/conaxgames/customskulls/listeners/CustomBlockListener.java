@@ -7,6 +7,7 @@ import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.EntityType;
@@ -30,36 +31,11 @@ public class CustomBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerUse(final PlayerInteractEvent event) {
-        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+        if (event.getClickedBlock() == null || event.getClickedBlock().getType() == Material.AIR) {
             return;
         }
-        if (CustomBlockUtil.isCustomItem(event.getPlayer().getItemInHand())) {
-            this.interactCustomBlockItem(event, event.getPlayer().getItemInHand());
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onDamage(final PlayerInteractEvent event) {
-        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
-            return;
-        }
-        if (CustomBlockUtil.isCustomItem(event.getPlayer().getItemInHand())) {
-            this.interactCustomBlockItem(event, event.getPlayer().getItemInHand());
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onPlayerHit(final EntityDamageByEntityEvent event) {
-        if (event.getDamager().getType() != EntityType.PLAYER) {
-            return;
-        }
-        final Player player = (Player) event.getDamager();
-        if (player.getItemInHand() == null || player.getItemInHand().getType() == Material.AIR) {
-            return;
-        }
-        final ItemStack playerItemInHand = player.getItemInHand();
-        if (CustomBlockUtil.isCustomItem(playerItemInHand)) {
-            Objects.requireNonNull(CustomBlockUtil.getCustomItem(playerItemInHand)).hitEntityAction(player, event, event.getEntity(), playerItemInHand);
+        if (AbilityData.getByUUID(AbilityData.getUUID(event.getClickedBlock().getLocation())) != null) {
+            this.interactCustomBlockItem(event);
         }
     }
 
@@ -122,9 +98,7 @@ public class CustomBlockListener implements Listener {
         if (!(CustomBlockUtil.isCustomItem(item))) {
             return;
         }
-        if (CustomBlockUtil.getBlockDatasInChunk(player) == null) {
-            return;
-        }
+        CustomBlockUtil.getBlockDatasInChunk(player);
 
         if (event.getPlayer().getLocation().getChunk() != event.getBlockAgainst().getLocation().getChunk()) {
             player.sendMessage(CC.translate("&c&l(!)&c You must stand in the same chunk as the block you are placing against."));
@@ -135,7 +109,7 @@ public class CustomBlockListener implements Listener {
 
         for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
 
-            if (data.getAbilityType().name().equals(CustomBlockUtil.getCustomItem(item).getIdentifier())) {
+            if (data.getAbilityType().name().equals(Objects.requireNonNull(CustomBlockUtil.getCustomItem(item)).getIdentifier())) {
                 player.sendMessage(CC.translate("&c&l(!)&c This chunk already contains this custom block."));
                 event.setCancelled(true);
                 return;
@@ -151,45 +125,44 @@ public class CustomBlockListener implements Listener {
             compound.setString("type", CustomBlockUtil.getCustomItem(item).getIdentifier());*/
             //event.setCancelled(true);
 
-            (CustomBlockUtil.getCustomItem(item)).placeBlockAction(player, event, event.getBlock(), item);
+            (Objects.requireNonNull(CustomBlockUtil.getCustomItem(item))).placeBlockAction(player, event, event.getBlock(), item);
         }
 
 
     }
 
 
-    private void interactCustomBlockItem(final PlayerInteractEvent event, final ItemStack item) {
+    private void interactCustomBlockItem(PlayerInteractEvent event) {
         final Player player = event.getPlayer();
-        if (event.getPlayer().getItemInHand() == null || event.getPlayer().getItemInHand().getType() == Material.AIR) {
+        Block block = event.getClickedBlock();
+        if (event.getClickedBlock() == null || event.getClickedBlock().getType() == Material.AIR) {
             return;
         }
-        if (CustomBlockUtil.isCustomItem(item)) {
-            CustomBlock customBlock = CustomBlockUtil.getCustomItem(item);
-            if (customBlock != null) {
-                if (event.getAction() == Action.LEFT_CLICK_AIR) {
-                    if (!player.isSneaking()) {
-                        customBlock.leftClickAirAction(player, item);
-                    } else {
-                        customBlock.shiftLeftClickAirAction(player, item);
-                    }
-                } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                    if (!player.isSneaking()) {
-                        customBlock.leftClickBlockAction(player, event, event.getClickedBlock(), item);
-                    } else {
-                        customBlock.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), item);
-                    }
-                } else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
-                    if (!player.isSneaking()) {
-                        customBlock.rightClickAirAction(player, item);
-                    } else {
-                        customBlock.shiftRightClickAirAction(player, item);
-                    }
-                } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
-                    if (!player.isSneaking()) {
-                        customBlock.rightClickBlockAction(player, event, event.getClickedBlock(), item);
-                    } else {
-                        customBlock.shiftRightClickBlockAction(player, event, event.getClickedBlock(), item);
-                    }
+        if (AbilityData.getByUUID(AbilityData.getUUID(block.getLocation())) != null) {
+            CustomBlock customBlock = CoreSkulls.customBlocks.get(AbilityData.getByUUID(AbilityData.getUUID(block.getLocation())).getAbilityType().getName());
+            if (event.getAction() == Action.LEFT_CLICK_AIR) {
+                if (!player.isSneaking()) {
+                    customBlock.leftClickAirAction(player, customBlock.getItem());
+                } else {
+                    customBlock.shiftLeftClickAirAction(player, customBlock.getItem());
+                }
+            } else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+                if (!player.isSneaking()) {
+                    customBlock.leftClickBlockAction(player, event, event.getClickedBlock(), customBlock.getItem());
+                } else {
+                    customBlock.shiftLeftClickBlockAction(player, event, event.getClickedBlock(), customBlock.getItem());
+                }
+            } else if (event.getAction() == Action.RIGHT_CLICK_AIR) {
+                if (!player.isSneaking()) {
+                    customBlock.rightClickAirAction(player, customBlock.getItem());
+                } else {
+                    customBlock.shiftRightClickAirAction(player, customBlock.getItem());
+                }
+            } else if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+                if (!player.isSneaking()) {
+                    customBlock.rightClickBlockAction(player, event, event.getClickedBlock(), customBlock.getItem());
+                } else {
+                    customBlock.shiftRightClickBlockAction(player, event, event.getClickedBlock(), customBlock.getItem());
                 }
             }
         }

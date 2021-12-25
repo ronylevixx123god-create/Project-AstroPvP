@@ -22,6 +22,7 @@ public class AbilityData {
     private String uuid;
     private Location location;
     private AbilityType abilityType;
+    private long lastActivated = 0;
 
     public AbilityData(String uuid) {
         this.uuid = uuid;

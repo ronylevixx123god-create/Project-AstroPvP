@@ -91,9 +91,12 @@ public class ListenerSB implements Listener {
     }
 
     public void refreshTagsAsyncForFaction(Faction faction1, Faction faction2) {
+        Collection<? extends Player> faction1Players = faction1.getOnlinePlayers();
+        Collection<? extends Player> factions2Players = faction2.getOnlinePlayers();
+
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
-            for (Player player : faction1.getOnlinePlayers()) {
-                for (Player other : faction2.getOnlinePlayers()) {
+            for (Player player : faction1Players) {
+                for (Player other : factions2Players) {
                     try {
                         PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
                     } catch (Exception exception) {
