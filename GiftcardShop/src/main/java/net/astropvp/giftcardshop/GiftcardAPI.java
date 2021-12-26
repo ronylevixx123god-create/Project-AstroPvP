@@ -7,6 +7,7 @@ import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import net.astropvp.giftcardshop.data.AddGiftcards;
+import net.astropvp.giftcardshop.utils.Clickable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.json.JSONObject;
@@ -41,8 +42,11 @@ public class GiftcardAPI {
         String codeAndAmount = code+":"+amount;
 
         AddGiftcards.addNewGiftcard(player.getUniqueId(), codeAndAmount);
-        player.sendMessage(CC.translate("&a&l(!)&a A giftcard has been added to your &f/giftcards&a."));
+        Clickable giftcardClickable = new Clickable("");
+        giftcardClickable.add(CC.translate("&a&l(!)&a A giftcard has been added to your &f/giftcards&a."), CC.translate("&a/giftcards"), "/giftcards");
+        giftcardClickable.sendToPlayer(player);
         player.sendMessage(CC.translate("&7* The code is &f" + code));
+
 
 
     }
