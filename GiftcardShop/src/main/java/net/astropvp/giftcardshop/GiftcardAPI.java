@@ -22,7 +22,7 @@ public class GiftcardAPI {
         player.sendMessage(CC.translate("&a&l(!)&a Generating a &f$" + NumberUtils.formatMoney(amount) +  " &aGiftcard for you..."));
 
         Unirest.setTimeouts(0, 0);
-        HttpResponse response = Unirest.post("https://plugin.tebex.io/gift-cards?amount=" + amount + "&note=" + player.getName() + " Generated Giftcard")
+        HttpResponse response = Unirest.post("https://plugin.tebex.io/gift-cards?amount=" + amount + "&note=" + player.getName() + "+Generated+Giftcard")
                 .header("X-Tebex-Secret", GiftcardShopPlugin.getInstance().getConfig().getString("tebex-secret"))
                 .header("Content-Type", "text/plain")
                 .body("012345678910")

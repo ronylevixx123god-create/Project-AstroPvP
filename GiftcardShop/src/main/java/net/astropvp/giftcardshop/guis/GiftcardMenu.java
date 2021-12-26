@@ -34,6 +34,9 @@ public class GiftcardMenu {
                     .addLoreLine(CC.translate("&f&l● &aInitial Amount: &f$") + NumberUtils.formatMoney(amount))
                     .addLoreLine("")
                     .addLoreLine(CC.translate("&7You can use this giftcard on &fbuy.astropvp.net&7."))
+                    .addLoreLine("")
+                    .addLoreLine(CC.translate("&7* You can check the remaining balance at"))
+                    .addLoreLine(CC.translate("&fbuy.astropvp.net/#giftcardbalance&7!"))
                     .build();
 
             this.giftcardsMenu.addItem(new GuiItem(item));
