@@ -70,6 +70,7 @@
         <module>Christmas</module>
         <module>Christmass</module>
         <module>AstroGamble</module>
+        <module>GiftcardShop</module>
     </modules>
 
     <build>
