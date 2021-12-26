@@ -48,6 +48,8 @@ public class CustomBlockListener implements Listener {
             return;
         }
 
+        if (data.getAbilityType() == null) return;
+
         CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
 
         if (customBlock == null) {
@@ -68,6 +70,8 @@ public class CustomBlockListener implements Listener {
                 continue;
             }
 
+            if (data.getAbilityType() == null) continue;
+
             CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
 
             if (customBlock == null) {
@@ -82,7 +86,7 @@ public class CustomBlockListener implements Listener {
             //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
             block.setType(Material.AIR);
             block.getWorld().dropItemNaturally(block.getLocation(), item.toItemStack()); // dropping our item stack
-            DeleteCustomBlocks.func(block.getLocation()); // delete file and memory.
+            DeleteCustomBlocks.func(block.getLocation(), null, customBlock); // delete file and memory.
 
         }
     }

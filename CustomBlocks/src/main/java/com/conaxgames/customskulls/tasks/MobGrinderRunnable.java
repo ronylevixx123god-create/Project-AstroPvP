@@ -29,8 +29,11 @@ public class MobGrinderRunnable extends BukkitRunnable {
     public void run() {
         for (MobGrinderCache mobGrinderCache : CoreSkulls.getGrinderBlocks()) {
             if (mobGrinderCache == null) continue;
+            if (!mobGrinderCache.getAbilityData().isActive()) continue;
             boolean playerFound = mobGrinderCache.isPlayerNearby();
             if (!playerFound) continue;
+
+
 
             Location chestLocation = mobGrinderCache.getChestLocation();
 
@@ -51,6 +54,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             }
 
             if (!stackedBlazesFound) continue;
+
 
 
             //ADD LOOT TO THE CHEST

@@ -49,7 +49,7 @@ public class MakeCustomBlocks {
             exception.printStackTrace();
         }
         player.sendMessage("");
-        player.sendMessage(CC.B_GREEN + "*** " + CC.YELLOW + "You placed a " + customBlock.getName() + CC.YELLOW + " Custom Block!" + CC.B_GREEN + " ***");
+        player.sendMessage(CC.translate("&a&l(!)&a You placed a " + customBlock.getName() + "&a Custom Block!"));
         player.sendMessage(CC.GRAY + "Stand in the same chunk as the custom block to gain its respective effects.");
         player.sendMessage("");
     }

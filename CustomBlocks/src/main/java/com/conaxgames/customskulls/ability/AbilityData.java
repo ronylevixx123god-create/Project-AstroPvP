@@ -42,7 +42,7 @@ public class AbilityData {
     }
 
     public boolean isActive() {
-        return System.currentTimeMillis() <= lastActivated + 3600000;
+        return System.currentTimeMillis() < lastActivated + 3600000;
     }
 
 }

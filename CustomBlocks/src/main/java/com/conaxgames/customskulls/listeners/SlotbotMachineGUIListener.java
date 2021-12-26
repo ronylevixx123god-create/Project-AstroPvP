@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import de.inventivegames.particle.ParticleEffect;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -138,6 +139,11 @@ public class SlotbotMachineGUIListener implements Listener {
                 p.sendMessage(CC.translate("&c&l- $" +NumberUtils.formatMoney(price)));
                 p.closeInventory();
                 p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5,5);
+                try {
+                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),e.getWhoClicked().getLocation(), 2,2,2,0.05f,40);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

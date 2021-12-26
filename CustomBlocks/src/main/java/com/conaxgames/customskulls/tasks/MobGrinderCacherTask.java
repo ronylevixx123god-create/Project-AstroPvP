@@ -26,7 +26,7 @@ public class MobGrinderCacherTask extends BukkitRunnable {
             if (data == null) continue;
             if (data.getAbilityType() == null) continue;
             if (CoreSkulls.customBlocks.get(data.getAbilityType().getName()) == null) continue;
-            if (data.getAbilityType() != AbilityType.TRIALS_FAME_AND_FORTUNE) continue;
+            if (data.getAbilityType() != AbilityType.BLAZE_STONE_TOTEM) continue;
 
             boolean playerFound = false;
 
