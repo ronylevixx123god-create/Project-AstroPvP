@@ -138,8 +138,11 @@ public class CustomBlockListener implements Listener {
         if (event.getClickedBlock() == null || event.getClickedBlock().getType() == Material.AIR) {
             return;
         }
+        if (event.getClickedBlock().getType() != Material.NOTE_BLOCK) return;
         if (AbilityData.getByUUID(AbilityData.getUUID(block.getLocation())) != null) {
+            if (AbilityData.getByUUID(AbilityData.getUUID(block.getLocation())).getAbilityType() == null) return;
             CustomBlock customBlock = CoreSkulls.customBlocks.get(AbilityData.getByUUID(AbilityData.getUUID(block.getLocation())).getAbilityType().getName());
+            if (customBlock == null) return;
             if (event.getAction() == Action.LEFT_CLICK_AIR) {
                 if (!player.isSneaking()) {
                     customBlock.leftClickAirAction(player, customBlock.getItem());

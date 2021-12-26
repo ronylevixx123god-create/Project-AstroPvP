@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
+import com.conaxgames.customskulls.guis.MainCustomBlockGUI;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
@@ -78,6 +79,9 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
+        MainCustomBlockGUI mainCustomBlockGUI = new MainCustomBlockGUI(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())), p1.getClickedBlock());
+        mainCustomBlockGUI.getCustomBlockGui().open(p1.getPlayer());
+        p1.getPlayer().sendMessage(CC.translate("&a&l(!)&a Opening the Custom Block menu..."));
     }
 
     @Override

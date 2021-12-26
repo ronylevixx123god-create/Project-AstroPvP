@@ -41,4 +41,8 @@ public class AbilityData {
         return x + "_" + y + "_" + z;
     }
 
+    public boolean isActive() {
+        return System.currentTimeMillis() <= lastActivated + 3600000;
+    }
+
 }
