@@ -74,7 +74,7 @@ extends JavaPlugin {
         this.registerTasks();
         this.registerListeners();
         this.registerCommands();
-        this.sqlDatabase = new Database(this);
+        /*this.sqlDatabase = new Database(this);
         if (this.sqlDatabase.isConnected()) {
             this.setupTables();
             for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
@@ -82,16 +82,9 @@ extends JavaPlugin {
             }
         } else {
             Bukkit.getLogger().severe("Unable to connect to database!");
-        }
+        }*/
         this.setupDuelLog();
         queueEnabled = this.getConfig().getBoolean("queueEnabled", false);
-        try {
-            Class.forName("com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI");
-        }
-        catch (Exception e) {
-            Bukkit.getLogger().info("Disabling envoys due to old api..");
-            envoysEnabled = false;
-        }
         this.topManager.loadTopPlayers();
         this.topManager.checkDepreciation();
         this.teamDataManager = new TeamDataManager();
