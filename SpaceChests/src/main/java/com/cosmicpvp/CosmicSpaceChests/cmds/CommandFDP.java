@@ -20,7 +20,6 @@ package com.cosmicpvp.CosmicSpaceChests.cmds;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.CosmicSpaceChests.generators.LegendaryGenerator;
-import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.libs.RankItems;
 import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyTask;
@@ -30,7 +29,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import java.util.UUID;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -117,9 +115,7 @@ implements CommandExecutor {
                     pl.getInventory().addItem(new ItemStack[]{is});
                 }
             }
-            if (args[0].equalsIgnoreCase("phoenix")) {
-                pl.getInventory().addItem(new ItemStack[]{EvolutionKitItems.getKitItem(EvolutionKits.PHOENIX)});
-            }
+
             if (args[0].equalsIgnoreCase("legend")) {
                 ItemUtils.giveItemToPlayer(pl, LegendaryGenerator.getRandomLegendary());
             }

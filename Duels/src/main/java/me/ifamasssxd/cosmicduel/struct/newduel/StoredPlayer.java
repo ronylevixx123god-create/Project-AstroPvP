@@ -106,9 +106,7 @@ public class StoredPlayer {
         p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 3.0f, 1.0f);
         p.setHealth(p.getMaxHealth());
         this.restored = true;
-        if (CosmicDuel.mcMMOEnabled) {
-            BleedTimerTask.remove((LivingEntity)p);
-        }
+
     }
 }
 
