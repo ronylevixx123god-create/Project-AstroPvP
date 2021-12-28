@@ -48,15 +48,15 @@ public class MainCustomBlockGUI {
                 event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock for 1 hour!"));
                 event.getWhoClicked().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())));
                 ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.VILLAGER_YES, 20, 20);
-                MainCustomBlockGUI mainCustomBlockGUI = new MainCustomBlockGUI(data, data.getLocation().getBlock());
-                mainCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
+                event.getWhoClicked().closeInventory();
                 try {
-                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),data.getLocation(), 2,2,2,0.05f,40);
+                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),data.getLocation(), 2,2,2,0.05f,60);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             } else {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to reactivate this custom block."));
+                event.getWhoClicked().closeInventory();
             }
 
         }));
