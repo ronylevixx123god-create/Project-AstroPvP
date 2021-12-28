@@ -19,23 +19,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class DamageFixes implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH)
-    public void onHit(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            Player damager = (Player) e.getDamager();
-
-            int amountOfPremadePieces = 0;
-            for (ItemStack itemStack : damager.getInventory().getArmorContents()) {
-                if (DamageUtils.isPremadePiece(itemStack)) {
-                    amountOfPremadePieces++;
-                }
-            }
-            double damageReduction = (amountOfPremadePieces*15)*0.01;
-            if (amountOfPremadePieces != 0) {
-                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*damageReduction);
-            }
-        }
-    }
 
     @EventHandler
     public void onHitP6(EntityDamageByEntityEvent e) {
@@ -59,28 +42,6 @@ public class DamageFixes implements Listener {
         }
     }
 
-    @EventHandler
-    public void omniReduction(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            Player phurt = (Player) e.getEntity();
-            Player hitter = (Player) e.getDamager();
-
-            if (DamageUtils.wearingOmniArmorSet(phurt) && !DamageUtils.wearingOmniArmorSet(hitter)) {
-                e.setDamage(e.getDamage() * 0.6);
-            }
-        }
-    }
-
-    @EventHandler
-    public void omniDmgIncrease(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            Player hitter = (Player) e.getDamager();
-            Player phurt = (Player) e.getEntity();
-
-            if (DamageUtils.wearingOmniArmorSet(hitter) && !DamageUtils.wearingOmniArmorSet(phurt))
-                e.setDamage(e.getDamage() * 1.40);
-        }
-    }
 
     public double getProtectionReduction(Player p) {
         double decrease = 0;

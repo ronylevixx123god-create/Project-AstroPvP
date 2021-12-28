@@ -176,13 +176,6 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>shield</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/FactionShields.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
             <artifactId>protect</artifactId>
             <version>0.1</version>
             <scope>system</scope>
