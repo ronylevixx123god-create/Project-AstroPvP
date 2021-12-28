@@ -1,11 +1,13 @@
 package me.astropvp.astrospawners;
 
+import lombok.Getter;
 import me.astropvp.astrospawners.commands.*;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
 import me.astropvp.astrospawners.ftop.CommandAdminFactionsTop;
 import me.astropvp.astrospawners.ftop.CommandFactionsTop;
 import me.astropvp.astrospawners.ftop.FactionsTopAPI;
 import me.astropvp.astrospawners.ftop.RecalculationTask;
+import me.astropvp.astrospawners.guis.AntiAFKGrindingGUI;
 import me.astropvp.astrospawners.sql.Database;
 import me.astropvp.astrospawners.sql.SQLQueryCustomThread;
 import me.astropvp.astrospawners.utils.PlayerData;
@@ -21,11 +23,17 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.*;
+
 public class AstroSpawners extends JavaPlugin {
     public static AstroSpawners astroSpawners;
     private PlayerDataManager manager;
     private MobStackerUtils mobStackerUtils;
     private static PlayerDataManager manager2;
+    @Getter
+    private Map<UUID, Integer> afkGrinders;
+    @Getter
+    private List<UUID> waitingForAfkGrindingVerification;
 
     private Database sqlDatabase;
     private SpawnerManager spawnerManager;
@@ -90,6 +98,8 @@ public class AstroSpawners extends JavaPlugin {
             System.out.println("(!) Started Automaticly Saving Spawners!");
         },60*20, minutes*60*20);
 
+        this.afkGrinders = new HashMap<>();
+        this.waitingForAfkGrindingVerification = new ArrayList<>();
     }
 
     public void loadConfig() {
@@ -126,6 +136,7 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new MobCoinShopListener());
         registerListener(new PlayerDataOnJoin());
         registerListener(new ClickMobcoinsNoteListener());
+        registerListener(new GrindingGuiClose());
     }
 
     public void registerCommands() {
@@ -144,6 +155,25 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
         getCommand("factionstop").setExecutor((CommandExecutor)new CommandFactionsTop());
         getCommand("adminfactionstop").setExecutor((CommandExecutor)new CommandAdminFactionsTop());
+    }
+
+    public void addPlayerToAfkGrinding(Player p) {
+        UUID uuid = p.getUniqueId();
+
+        if (afkGrinders.containsKey(uuid)) {
+            int amount = afkGrinders.get(uuid);
+            afkGrinders.put(uuid, amount+1);
+        } else {
+            afkGrinders.put(uuid, 1);
+        }
+
+        int amount = afkGrinders.get(uuid);
+        if (amount >= 10000) {
+            AntiAFKGrindingGUI antiAFKGrindingGUI = new AntiAFKGrindingGUI(p);
+            antiAFKGrindingGUI.getAntiAfkGrindingGui().open(p);
+        }
+
+
     }
 
     public void runTasks() {
