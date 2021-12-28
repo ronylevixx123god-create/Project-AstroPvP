@@ -7,6 +7,7 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
@@ -81,6 +82,7 @@ public class EntityStackerListener implements Listener {
 
             if (plugin.getWaitingForAfkGrindingVerification().contains(e.getDamager().getUniqueId())) {
                 e.setCancelled(true);
+                e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will resolve it."));
                 return;
             }
 
@@ -102,13 +104,13 @@ public class EntityStackerListener implements Listener {
             EconomyUtils.depositBalance(p, 27);
 
 
-            double exp = 200;
+            double exp = 100;
 
             PlayerData data = manager.getPlayerData(p);
 
 
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
-                exp = exp * 1.5;
+                exp +=50;
 
 
                 if (Math.random() < 0.05) {
@@ -132,34 +134,35 @@ public class EntityStackerListener implements Listener {
             }
 
 
-            if (p.getItemInHand().getType() == Material.DIAMOND_SWORD && p.getItemInHand().getItemMeta().hasLore()) {
-                exp = exp + 50;
+            if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Master Inquisitive")) {
+                exp +=50;
+            } else if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Inquisitive")) {
+                exp +=100;
+
             }
 
             if (isOnCosmicClient) {
-                exp = exp * 1.5;
+                exp +=50;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MEDIEVAL_SWORD_KING)) {
-                exp = exp * 2;
+                exp +=100;
             }
 
 
             if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
-                exp = exp * 1.5;
+                exp +=50;
             }
 
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
-                exp = exp * 1.75;
+                exp +=75;
             }
 
 
             p.giveExp((int) exp);
 
             plugin.addPlayerToAfkGrinding(p);
-            System.out.println("Added " + p.getName() + " to anti afking players list!");
-
 
         }
 

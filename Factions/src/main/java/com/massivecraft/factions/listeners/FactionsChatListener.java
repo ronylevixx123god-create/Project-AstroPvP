@@ -263,23 +263,10 @@ public class FactionsChatListener implements Listener {
         String channelName = null;
         String channelURL = null;
 
-        double elo = 0.0D;
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicDuel") && !this.vanillaGalaxy) {
-            try {
-                DuelPlayer player = DuelPlayer.getDuelPlayer(event.getPlayer());
-                if (player != null) {
-                    elo = player.getElo();
-                }
-            } catch (Exception var38) {
-            }
-        }
-
         List<FancyMessage> player_faction_info = Lists.newArrayList(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Username: " + ChatColor.valueOf(Conf.hoverChatColor) + event.getPlayer().getName()), new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Nick: " + ChatColor.valueOf(Conf.hoverChatColor) + event.getPlayer().getDisplayName()), new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Faction: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getFaction().getTag()), null, new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Balance: " + ChatColor.valueOf(Conf.hoverChatColor) + "$" + this.formatter.format(balance)));
-        if (1 == 2) {
-            player_faction_info.set(3, new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Duel ELO: " + ChatColor.valueOf(Conf.hoverChatColor) + this.eloFormat.format(elo)));
-        } else {
-            player_faction_info.remove(3);
-        }
+
+        player_faction_info.remove(3);
+
 
         String player_display_name = event.getPlayer().getDisplayName();
 

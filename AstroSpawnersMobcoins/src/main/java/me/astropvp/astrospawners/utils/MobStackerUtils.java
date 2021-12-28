@@ -46,7 +46,7 @@ public class MobStackerUtils {
     }
 
     public void setStackSize(Entity entity, int size) {
-        entity.setCustomName(CC.Green + EntityUtils.getEntityName(entity.getType()) + " " + CC.Gray + "[" + CC.White + "x " + CC.Underline + size + CC.Gray + "]");
+        entity.setCustomName(CC.GoldB + EntityUtils.getEntityName(entity.getType()) + " " + CC.Gray + "[" + CC.White + "x " + CC.Underline + size + CC.Gray + "]");
         mobMap.put(entity.getUniqueId(), size);
     }
 
