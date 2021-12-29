@@ -85,9 +85,7 @@ public class ItemFlipData {
             items.addAll(((ItemFlipPlayerData) this.getData().get(1)).getItems());
 
             CollectPlugin.getInstance().getCollectManager().getPlayerCollect(winner).add(new CollectCategory(CollectType.ITEMFLIP, items.toArray(new ItemStack[items.size() - 1]), CC.RedB + loser.getName() + "'s ItemFlip Items"));
-            winner.sendMessage("");
-            winner.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The ItemFlip Items from &f" + loser.getName() + "&b have been put into your &f/collect&b."));
-            winner.sendMessage("");
+
 
 
             loser.sendMessage(color.getPrefix() + CC.Bold + "(!) " + color.getPrefix() + winner.getName() + " has won the item flip with " + CC.Bold + color.getName() + "!");
@@ -113,6 +111,9 @@ public class ItemFlipData {
                     msg.sendToPlayer(player);
                 }
             }
+            winner.sendMessage("");
+            winner.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The ItemFlip Items from &f" + loser.getName() + "&b have been put into your &f/collect&b."));
+            winner.sendMessage("");
         }
 
         flips.remove(this);

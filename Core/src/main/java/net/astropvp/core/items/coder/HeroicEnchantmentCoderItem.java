@@ -3,6 +3,7 @@ package net.astropvp.core.items.coder;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ExpUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import java.util.Arrays;
 import java.util.List;
@@ -18,6 +19,7 @@ import net.astropvp.core.guis.EnchantmentCoderInventory;
 import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -28,7 +30,7 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryInteractable {
+public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryInteractable  {
 
     public HeroicEnchantmentCoderItem() {
         super("heroic_enchantment_coder");
@@ -42,35 +44,45 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
 
                 CC.translate("&7&oApply this to a sword or piece of gear to unleash its power"), "",
 
-                CC.translate("&c&lRight-Click &7to open the GUI and add books."),
-                CC.translate("&c&lXP Cost &8(on apply) &710,000")));
-        meta.setDisplayName(CC.translate("&b&k;;&f&l&nHeroic&d&k;;&c&l Enchantment Coder"));
+                CC.translate("&6&lRight-Click &7to open the GUI and add books."),
+                CC.translate("&6&lXP Cost &750,000 &8(on apply) ")));
+        meta.setDisplayName(CC.translate("&b&k;;&f&l&nHeroic&d&k;;&6&l Enchantment Coder"));
         item.setItemMeta(meta);
-        NBTWrapper wrapper = new NBTWrapper(item);
+/*        NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder tag = new NBTTagCompoundBuilder();
         tag.setBoolean("enchantmentCoder", Boolean.TRUE);
         tag.setString("uuid", UUID.randomUUID().toString());
         wrapper.setNBTBase("cosmicData", (NBTBase)tag.get());
-        item = wrapper.build();
-        return item;
+        item = wrapper.build();*/
+        return this.applyItemData(item).build();
     }
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
-        return (inventoryItemType == InventoryItemType.CURSOR);
+        return inventoryItemType == InventoryItemType.CURSOR;
     }
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper wrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent e) throws CosmicException {
-        if (clicked == null || clicked.getType() == Material.AIR || clicked.getType() == null)
+        if (clicked == null || clicked.getType() == Material.AIR || clicked.getType() == null) {
             return;
+        }
         if (!EnchantmentAPI.getEnchantments(clicked).isEmpty()) {
             player.sendMessage(CC.translate("&c&l(!) &cPlease blackscroll all the enchantments off this item before using this Heroic Enchantment Coder."));
             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);
             e.setCancelled(true);
             return;
         }
-        Material type = clicked.getType();
-        if (type == null)
+
+        if (player.getTotalExperience() < 50000) {
+            player.sendMessage(CC.translate("&c&l(!) &cYou need 50,000 XP to be able to apply the Heroic Enchantment Coder."));
+            player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);
+            e.setCancelled(true);
             return;
+        }
+
+        Material type = clicked.getType();
+        if (type == null) {
+            return;
+        }
         UUID uuid = player.getUniqueId();
         EnchantmentCoderManager manager = AstroCore.getInstance().getEnchantmentCoderManager();
         List<CustomEnchantment> enchantments = manager.getEnchantmentsForUser(uuid, type);
@@ -88,7 +100,9 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
         e.setCancelled(true);
         e.setCurrentItem(clicked);
         player.sendMessage(CC.translate("&a&l(!) &aSuccessfully added enchantments to your item!"));
+        player.sendMessage(CC.translate("&c&l- 50,000 xp"));
         player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
+        player.setTotalExperience(player.getTotalExperience()-50000);
     }
 
     public void onItemUse(Player player, ItemStack item, NBTWrapper wrapper, PlayerInteractEvent event) throws CosmicException {
