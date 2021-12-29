@@ -24,6 +24,8 @@ patches:
   # Enables compilex's inhouse built anti-cheating suite.
   anti_hack: false
 
+  better_trade: true
+
   # Prevents known minecart dupes.
   anti_minecart: false
 

@@ -76,6 +76,8 @@ public class Arkkit
             }
         }, 0L, 40L);
         this.enable_time = System.currentTimeMillis();
+
+
     }
 
     public void onDisable() {
