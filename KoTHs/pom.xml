@@ -74,6 +74,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>net.astropvp.astroevents</groupId>
+            <artifactId>GiftcardShop</artifactId>
+            <version>1.0</version>
+        </dependency>
+
 
         <!-- System Repos -->
         <dependency>

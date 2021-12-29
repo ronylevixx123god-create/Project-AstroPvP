@@ -92,19 +92,19 @@ public class Scoreboard implements BoardAdapter {
 
     public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
-        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
-            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
-                if(entity.hasMetadata("boss")) {
-                    if(Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
                         return DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP ? CC.GoldB + "Mother Of Yijki" : CC.LightPurpleB + "Mother Of Yijki";
                     }
                 }
             }
         }
-        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
-            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
-                if(entity.hasMetadata("boss")) {
-                    if(Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
+        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
                         return CC.GoldB + "The Corrupt Cosmonaut";
                     }
                 }
@@ -122,12 +122,19 @@ public class Scoreboard implements BoardAdapter {
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-        }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+        }
+        if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
             if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
                 return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
             }
+        }
+        KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
 
-        } else if(!FactionUtils.isWilderness(fplayer.getFaction())) {
+        if (koth != null && WorldGuardUtils.getRegionsIn(player) != null && (WorldGuardUtils.getRegionsIn(player).contains("desertkoth") || WorldGuardUtils.getRegionsIn(player).contains("desertkoth2"))) {
+            return CC.translate("&6&lDesert KOTH &7" + getDateSuffix());
+        }
+
+        if (!FactionUtils.isWilderness(fplayer.getFaction())) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
@@ -239,9 +246,6 @@ public class Scoreboard implements BoardAdapter {
                 }
             }
         }
-
-
-
 
 
         if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
@@ -363,17 +367,19 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-
-        if (CosmicKOTHAPI.isKOTHRunning() && player.getLocation().getWorld().getName().equals("world_koth")) {
-            KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
+        KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
+        if (koth != null && WorldGuardUtils.getRegionsIn(player) != null && (WorldGuardUtils.getRegionsIn(player).contains("desertkoth") || WorldGuardUtils.getRegionsIn(player).contains("desertkoth2"))) {
             List<String> board = new LinkedList<>();
             board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&a&lKOTH Event"));
             if (koth.getPlayerCapping() != null) {
-                board.add(CC.translate("&a Capper&7: &f" + koth.getPlayerCapping().getName()));
-                board.add(CC.translate("&a Time Left&7: &f") + koth.getSecondsUntilCap() + "s");
+                board.add(CC.translate("&f&l● &6Capper&7: &e" + koth.getPlayerCapping().getName()));
+                board.add(CC.translate("&f&l● &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
+                board.add("");
             }
-            board.add(CC.translate("&a Location&7: &7X37, Y52, Z-28"));
+            board.add(CC.translate("&f&l● &6Nearby Players:&c " + player.getNearbyEntities(32, 40, 32).size()));
+            board.add(CC.translate("&f&l● &6Account:&f " + player.getName()));
+            board.add("");
+            board.add(CC.translate("&fX&72504&7, &fY&719, &fZ&74638"));
             board.add("");
             board.add(CC.White + "play.astropvp.net");
             return board;
@@ -582,7 +588,6 @@ public class Scoreboard implements BoardAdapter {
 
         return board;
     }
-
 
 
     public long getInterval() {

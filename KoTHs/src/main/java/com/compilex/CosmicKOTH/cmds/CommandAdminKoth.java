@@ -19,6 +19,7 @@ import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.LocationUtils;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -30,6 +31,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class CommandAdminKoth
 implements CommandExecutor {
+    @SneakyThrows
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (!sender.isOp()) {
             return true;

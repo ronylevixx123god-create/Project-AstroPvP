@@ -243,7 +243,7 @@ extends JavaPlugin {
             }, 200L);
         }
         this.registerCenter();
-        Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), new Runnable(){
+        /*Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), new Runnable(){
 
             @Override
             public void run() {
@@ -276,7 +276,7 @@ extends JavaPlugin {
                     }
                 }, 20L);
             }
-        }, 10L);
+        }, 10L);*/
     }
 
 
@@ -324,7 +324,7 @@ extends JavaPlugin {
     }
 
     public void registerCenter() {
-        ProtectedRegion region = WorldGuardUtils.getRegionFromName("world_koth", "koth_center");
+        ProtectedRegion region = WorldGuardUtils.getRegionFromName("world", "koth_center");
         if (region != null) {
             BlockVector maxVector = region.getMaximumPoint();
             BlockVector minVector = region.getMinimumPoint();

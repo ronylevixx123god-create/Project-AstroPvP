@@ -118,7 +118,7 @@ public class KothSanityListener implements Listener {
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.WEB && e.getPlayer().getWorld().getName().equals("world_koth")) {
+        if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.WEB && e.getPlayer().getWorld().getName().equals("world")) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
@@ -136,7 +136,7 @@ public class KothSanityListener implements Listener {
 
     @EventHandler
     public void onBlockPhysics(BlockPhysicsEvent e) {
-        if (e.getBlock().getWorld().getName().equals("world_koth")) {
+        if (e.getBlock().getWorld().getName().equals("world")) {
             e.setCancelled(true);
         }
     }
