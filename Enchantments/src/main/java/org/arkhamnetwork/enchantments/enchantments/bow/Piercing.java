@@ -1,16 +1,30 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.metadata.MetadataValue
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.MetadataValue;
 
-public class Piercing extends CustomEnchantment {
+public class Piercing
+extends CustomEnchantment {
     public Piercing() {
         super("Piercing", new Material[]{Material.BOW}, 2);
         this.max = 5;
@@ -18,23 +32,26 @@ public class Piercing extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    @SneakyThrows
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        final double armor_percent_ignored = level * 2.5;
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        double armor_percent_ignored = (double)level * 2.5;
         if (e.isCancelled() || !(playerHit instanceof Player)) {
             return;
         }
         if (playerHit.hasMetadata("lastArrowDamageEvent")) {
-            final long minDelayMilliseconds = level * 200;
-            final long last = playerHit.getMetadata("lastArrowDamageEvent").get(0).asLong();
+            long minDelayMilliseconds = level * 200;
+            long last = ((MetadataValue)playerHit.getMetadata("lastArrowDamageEvent").get(0)).asLong();
             if (System.currentTimeMillis() - last <= minDelayMilliseconds) {
                 return;
             }
         }
-        final double extra_dmg = armor_percent_ignored / 100.0 * e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+        double extra_dmg = armor_percent_ignored / 100.0 * e.getDamage();
         playerHit.damage(extra_dmg);
-        ((Player) player).playSound(player.getLocation(), Sound.ARROW_HIT, 1.2f, 0.6f);
-        de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
-
+        ((Player)player).playSound(player.getLocation(), Sound.ARROW_HIT, 1.2f, 0.6f);
+        try {
+            de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float) Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 20);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 }
+

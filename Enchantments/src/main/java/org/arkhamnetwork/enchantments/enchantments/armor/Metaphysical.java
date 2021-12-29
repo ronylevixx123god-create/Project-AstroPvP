@@ -1,12 +1,20 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -14,7 +22,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class Metaphysical extends CustomEnchantment {
+public class Metaphysical
+extends CustomEnchantment {
     public Metaphysical() {
         super("Metaphysical", GeneralUtil.boots, 2);
         this.max = 4;
@@ -22,15 +31,15 @@ public class Metaphysical extends CustomEnchantment {
         this.interval = 4.0;
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
-        player.setMetadata("metaphysicalEnchant", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
-
+    public void applyEquipEffect(Player player, int enchantLevel) {
+        player.setMetadata("metaphysicalEnchant", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        player.removeMetadata("metaphysicalEnchant", (Plugin) Enchantments.getInstance());
+    public void applyUnequipEffect(Player player, int enchantLevel) {
+        player.removeMetadata("metaphysicalEnchant", (Plugin)Enchantments.getInstance());
     }
 }
+

@@ -1,3 +1,19 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.player.PlayerQuitEvent
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -11,63 +27,62 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashMap;
 import java.util.HashSet;
 
-public class Deathbringer extends CustomEnchantment {
+public class Deathbringer
+extends CustomEnchantment {
     public Deathbringer() {
         super("Deathbringer", GeneralUtil.armor, 9);
         this.max = 3;
         this.base = 25.0;
-        this.interval = 7.0;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        this.interval = 10.0;
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
             @Override
             public void run() {
-                Deathbringer.this.heroicVersion = EnchantmentAPI.getEnchantment("Planetary Deathbringer");
+                Deathbringer.this.heroicVersion = EnchantmentAPI.getEnchantment((String)"Planetary Deathbringer");
             }
         }, 2L);
-        Bukkit.getPluginManager().registerEvents((Listener) new DeathbringEvents(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener)new DeathbringEvents(), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
+    public void applyEquipEffect(Player player, int enchantLevel) {
         DeathbringEvents.doubleDamage.add(player);
         DeathbringEvents.playerLevels.put(player, enchantLevel);
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        DeathbringEvents.doubleDamage.remove(player);
-        DeathbringEvents.playerLevels.remove(player);
+    public void applyUnequipEffect(Player player, int enchantLevel) {
+        DeathbringEvents.doubleDamage.remove((Object)player);
+        DeathbringEvents.playerLevels.remove((Object)player);
     }
 
-    private static class DeathbringEvents implements Listener {
-        private static HashSet<Player> doubleDamage;
-        private static HashMap<Player, Integer> playerLevels;
+    private static class DeathbringEvents
+    implements Listener {
+        private static HashSet<Player> doubleDamage = new HashSet();
+        private static HashMap<Player, Integer> playerLevels = new HashMap();
 
-        static {
-            DeathbringEvents.doubleDamage = new HashSet<Player>();
-            DeathbringEvents.playerLevels = new HashMap<Player, Integer>();
+        private DeathbringEvents() {
         }
 
         @EventHandler
-        public void onEntityDamageByEntity(final EntityDamageByEntityEvent e) {
-            final Entity damage = e.getDamager();
-            if ((damage instanceof Projectile && DeathbringEvents.doubleDamage.contains(((Projectile) damage).getShooter())) || DeathbringEvents.doubleDamage.contains(damage)) {
-                final double random = Math.random();
-                final double chance = 0.1 * (DeathbringEvents.playerLevels.containsKey((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage) ? DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage) : 1);
-                if (random < chance) {
-                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2);
-                }
+        public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+            double chance;
+            double random;
+            Entity damage = e.getDamager();
+            if ((damage instanceof Projectile && doubleDamage.contains((Object)((Projectile)damage).getShooter()) || doubleDamage.contains((Object)damage)) && (random = Math.random()) < (chance = 0.1 * (double)(playerLevels.containsKey(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage) ? playerLevels.get(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage) : 1))) {
+                e.setDamage(e.getDamage() * 2.0);
             }
         }
 
         @EventHandler
-        public void onPlayerQuit(final PlayerQuitEvent e) {
-            DeathbringEvents.doubleDamage.remove(e.getPlayer());
-            DeathbringEvents.playerLevels.remove(e.getPlayer());
+        public void onPlayerQuit(PlayerQuitEvent e) {
+            doubleDamage.remove((Object)e.getPlayer());
+            playerLevels.remove((Object)e.getPlayer());
         }
     }
 }
+

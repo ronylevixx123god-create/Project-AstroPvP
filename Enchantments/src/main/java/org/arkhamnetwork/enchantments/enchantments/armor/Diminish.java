@@ -1,9 +1,22 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -17,44 +30,41 @@ import org.bukkit.plugin.Plugin;
 
 import java.text.DecimalFormat;
 
-public class Diminish extends CustomEnchantment {
-    private DecimalFormat df;
+public class Diminish
+extends CustomEnchantment {
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     public Diminish() {
         super("Diminish", GeneralUtil.chestplates, 2);
-        this.df = new DecimalFormat("#.##");
         this.max = 6;
         this.base = 15.0;
         this.interval = 3.0;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
             @Override
             public void run() {
-                Diminish.this.heroicVersion = EnchantmentAPI.getEnchantment("Vengeful Diminish");
+                Diminish.this.heroicVersion = EnchantmentAPI.getEnchantment((String)"Vengeful Diminish");
             }
         }, 2L);
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-
-
-        if (!(attacker instanceof Player)) return;
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_SWORD)) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        if (player.hasMetadata("neutralized"))
             return;
-        }
-
+        double procChance;
+        double random;
         if (player.hasMetadata("diminishEffect")) {
-            final double maxDmg = player.getMetadata("diminishEffect").get(0).asDouble();
-            if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
+            double maxDmg = ((MetadataValue)player.getMetadata("diminishEffect").get(0)).asDouble();
+            if (e.getFinalDamage() > maxDmg) {
                 e.setDamage(maxDmg);
-                player.removeMetadata("diminishEffect", (Plugin) Enchantments.getInstance());
+                player.removeMetadata("diminishEffect", (Plugin)Enchantments.getInstance());
                 return;
             }
         }
-        final double random = Math.random();
-        final double procChance = 0.0015 * level;
-        if (random < procChance && e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0) {
-            player.setMetadata("diminishEffect", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getDamage(EntityDamageEvent.DamageModifier.BASE)));
-            ((Player) player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "DMG: " + this.df.format(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) + ChatColor.BOLD + "] *");
+        if ((random = Math.random()) < (procChance = 0.015 * (double)level) && e.getFinalDamage() > 0.0) {
+            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)e.getFinalDamage()));
+            ((Player)player).sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* DIMINISH [" + (Object)ChatColor.YELLOW + "DMG: " + this.df.format(Math.max(0.0, e.getFinalDamage())) + (Object)ChatColor.BOLD + "] *");
         }
     }
 }
+

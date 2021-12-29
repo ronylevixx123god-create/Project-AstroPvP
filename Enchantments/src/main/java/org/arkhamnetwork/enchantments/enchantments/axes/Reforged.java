@@ -1,3 +1,17 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.block.BlockBreakEvent
+ *  org.bukkit.event.block.BlockEvent
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.inventory.ItemStack
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
@@ -11,7 +25,8 @@ import org.bukkit.event.block.BlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class Reforged extends CustomEnchantment {
+public class Reforged
+extends CustomEnchantment {
     public Reforged() {
         super("Reforged", GeneralUtil.weapons_and_tools, 7);
         this.max = 10;
@@ -19,34 +34,31 @@ public class Reforged extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        ItemStack weapon;
+        double chance;
         if (!(user instanceof Player)) {
             return;
         }
-        final Player playerAttacker = (Player) user;
-        final double random = Math.random();
-        final double chance = 0.08 * enchantLevel;
-        if (random < chance) {
-            final ItemStack weapon = playerAttacker.getItemInHand();
-            if (weapon != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
-                //playerAttacker.setItemInHand(ItemUtils.addDurability(weapon, 1));
+        Player playerAttacker = (Player)user;
+        double random = Math.random();
+        if (random < (chance = 0.08 * (double)enchantLevel) && (weapon = playerAttacker.getItemInHand()) != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
+            playerAttacker.setItemInHand(ItemUtils.addDurability((ItemStack)weapon, (int)1));
+            playerAttacker.updateInventory();
+        }
+    }
+
+    public void applyToolEffect(Player player, Block block, int enchantLevel, BlockEvent event) {
+        if (event instanceof BlockBreakEvent) {
+            ItemStack weapon;
+            double chance;
+            Player playerAttacker = player;
+            double random = Math.random();
+            if (random < (chance = 0.08 * (double)enchantLevel) && (weapon = playerAttacker.getItemInHand()) != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
+                playerAttacker.setItemInHand(ItemUtils.addDurability((ItemStack)weapon, (int)1));
                 playerAttacker.updateInventory();
             }
         }
     }
-
-    public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
-        if (event instanceof BlockBreakEvent) {
-            final Player playerAttacker = player;
-            final double random = Math.random();
-            final double chance = 0.08 * enchantLevel;
-            if (random < chance) {
-                final ItemStack weapon = playerAttacker.getItemInHand();
-                if (weapon != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
-                    //playerAttacker.setItemInHand(ItemUtils.addDurability(weapon, 1));
-                    playerAttacker.updateInventory();
-                }
-            }
-        }
-    }
 }
+

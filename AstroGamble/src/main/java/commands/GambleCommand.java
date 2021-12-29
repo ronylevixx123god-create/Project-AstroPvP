@@ -1,5 +1,6 @@
 package commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;

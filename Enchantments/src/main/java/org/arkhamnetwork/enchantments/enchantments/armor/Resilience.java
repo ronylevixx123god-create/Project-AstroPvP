@@ -1,3 +1,16 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.ChatColor
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -11,7 +24,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class Resilience extends CustomEnchantment {
+public class Resilience
+extends CustomEnchantment {
     public Resilience() {
         super("Resilience", GeneralUtil.helmets, 2);
         this.max = 4;
@@ -19,21 +33,22 @@ public class Resilience extends CustomEnchantment {
         this.interval = 4.0;
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        final double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-        final double minDmgToProc = 10 - level;
-        final double chance = level * 0.005;
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        double dmg = e.getFinalDamage();
+        double minDmgToProc = 10 - level;
+        double chance = (double)level * 0.05;
         if (player.getHealth() - dmg <= 0.0 && dmg >= minDmgToProc && Math.random() < chance) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
-            ((Player) player).sendMessage(ChatColor.DARK_GREEN + "" + ChatColor.BOLD + "** RESILIENCE (" + ChatColor.DARK_GREEN + "50% DMG TAKEN" + ChatColor.BOLD + ") **");
+            e.setDamage(e.getDamage() / 2.0);
+            ((Player)player).sendMessage((Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "** RESILIENCE (" + (Object)ChatColor.DARK_GREEN + "50% DMG TAKEN" + (Object)ChatColor.BOLD + ") **");
         }
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
-        player.setMetadata("resilienceEnchant", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
+    public void applyEquipEffect(Player player, int enchantLevel) {
+        player.setMetadata("resilienceEnchant", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        player.removeMetadata("resilienceEnchant", (Plugin) Enchantments.getInstance());
+    public void applyUnequipEffect(Player player, int enchantLevel) {
+        player.removeMetadata("resilienceEnchant", (Plugin)Enchantments.getInstance());
     }
 }
+

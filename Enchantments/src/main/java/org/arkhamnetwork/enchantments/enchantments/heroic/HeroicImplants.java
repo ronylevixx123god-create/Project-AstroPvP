@@ -1,75 +1,108 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.google.common.collect.HashMultimap
+ *  com.google.common.collect.Multimap
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.FoodLevelChangeEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.scheduler.BukkitRunnable
+ *  org.bukkit.scheduler.BukkitTask
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.BukkitTask;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
-public class HeroicImplants extends HeroicCustomEnchantment {
-    private Set<UUID> implantedPlayers;
+public class HeroicImplants
+extends HeroicCustomEnchantment {
+    private Set<UUID> implantedPlayers = new HashSet<UUID>();
+    private static HashMap<Integer, BukkitTask> heroicImplantTasks = new HashMap();
+    private Set<UUID> healthTickedPlayers = new HashSet<UUID>();
+    private Multimap<Integer, Player> heroicImplantPlayers = HashMultimap.create();
 
     public HeroicImplants() {
         super("Alien Implants", "Implants", GeneralUtil.helmets, 2);
-        this.implantedPlayers = new HashSet<>();
-        //this.healthTickedPlayers = new HashSet<>();
-        //this.heroicImplantPlayers = HashMultimap.create();
         this.max = 3;
-        /*Bukkit.getPluginManager().registerEvents(new HeroicImplantsListener(), (Plugin)Enchantments.getInstance());
-        int healthIncrease = 2;
-        for (int i = 1; i <= this.max; i++) {
+        Bukkit.getPluginManager().registerEvents((Listener)new HeroicImplantsListener(), (Plugin)Enchantments.getInstance());
+        final int healthIncrease = 2;
+        for (int i = 1; i <= this.max; ++i) {
             final int finalI = i;
-            BukkitTask existing = heroicImplantTasks.get(Integer.valueOf(i));
-            if (existing != null)
+            BukkitTask existing = heroicImplantTasks.get(i);
+            if (existing != null) {
                 existing.cancel();
-            BukkitTask task = (new BukkitRunnable() {
+            }
+            BukkitTask task = new BukkitRunnable(){
+
                 public void run() {
-                    Collection<Player> leveledPlayers = HeroicImplants.this.heroicImplantPlayers.get(Integer.valueOf(finalI));
-                    if (leveledPlayers == null || leveledPlayers.isEmpty())
+                    Collection<Player> leveledPlayers = HeroicImplants.this.heroicImplantPlayers.get(finalI);
+                    if (leveledPlayers == null || leveledPlayers.isEmpty()) {
                         return;
+                    }
                     leveledPlayers.forEach(player -> {
-                        int val$healthIncrease = 2;
                         if (HeroicImplants.this.healthTickedPlayers.remove(player.getUniqueId())) {
-                            if (player.getHealth() + val$healthIncrease < player.getMaxHealth() && player.getHealth() > 0.0D && !player.isDead() && !player.hasMetadata("neutralized"))
-                                player.setHealth(player.getHealth() + val$healthIncrease);
+                            if (player.getHealth() + (double)healthIncrease < player.getMaxHealth() && player.getHealth() > 0.0 && !player.isDead()) {
+                                player.setHealth(player.getHealth() + (double)healthIncrease);
+                            }
                         } else {
                             HeroicImplants.this.healthTickedPlayers.add(player.getUniqueId());
                         }
-                        if (player.getFoodLevel() < 20 && player.getHealth() > 0.0D && !player.isDead())
+                        if (player.getFoodLevel() < 20 && player.getHealth() > 0.0 && !player.isDead()) {
                             player.setFoodLevel(player.getFoodLevel() + 1);
+                        }
                     });
                 }
-            }).runTaskTimer((Plugin)Enchantments.getInstance(), (40 * 3 / i), (40 * 3 / i));
-            heroicImplantTasks.put(Integer.valueOf(i), task);
+            }.runTaskTimer((Plugin)Enchantments.getInstance(), (long)(40 * (3 / i)), (long)(40 * (3 / i)));
+            heroicImplantTasks.put(i, task);
         }
     }
 
     public void applyEquipEffect(Player player, int level) {
-        player.setMetadata(name() + "_enchant", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Integer.valueOf(level)));
-        this.heroicImplantPlayers.put(Integer.valueOf(level), player);
+        player.setMetadata(this.name() + "_enchant", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
+        this.heroicImplantPlayers.put(level, player);
         this.implantedPlayers.add(player.getUniqueId());
     }
 
     public void applyUnequipEffect(Player player, int level) {
         this.implantedPlayers.remove(player.getUniqueId());
-        this.heroicImplantPlayers.remove(Integer.valueOf(level), player);
-        player.removeMetadata(name() + "_enchant", (Plugin)Enchantments.getInstance());
+        this.heroicImplantPlayers.remove((Object)level, (Object)player);
+        player.removeMetadata(this.name() + "_enchant", (Plugin)Enchantments.getInstance());
     }
 
-    private static HashMap<Integer, BukkitTask> heroicImplantTasks = new HashMap<>();
+    class HeroicImplantsListener
+    implements Listener {
+        HeroicImplantsListener() {
+        }
 
-    private Set<UUID> healthTickedPlayers;
-
-    private Multimap<Integer, Player> heroicImplantPlayers;
-
-    class HeroicImplantsListener implements Listener {
-        @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+        @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
         public void onFoodLoss(FoodLevelChangeEvent event) {
-            if (event.getEntity() instanceof Player) {
-                Player player = (Player)event.getEntity();
-                if (player.getFoodLevel() > event.getFoodLevel() && HeroicImplants.this.implantedPlayers.contains(player.getUniqueId()))
-                    event.setCancelled(true);
+            Player player;
+            if (event.getEntity() instanceof Player && (player = (Player)event.getEntity()).getFoodLevel() > event.getFoodLevel() && HeroicImplants.this.implantedPlayers.contains(player.getUniqueId())) {
+                event.setCancelled(true);
             }
-        }*/
+        }
     }
 }
+

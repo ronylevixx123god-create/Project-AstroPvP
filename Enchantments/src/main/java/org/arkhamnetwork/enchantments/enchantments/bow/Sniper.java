@@ -1,3 +1,23 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.Sound
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
@@ -6,7 +26,7 @@ import com.rit.sucy.EnchantmentAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
-import org.bukkit.entity.Entity;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -14,50 +34,54 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
-public class Sniper extends CustomEnchantment {
+public class Sniper
+extends CustomEnchantment {
     public Sniper() {
         super("Sniper", new Material[]{Material.BOW}, 2);
         this.max = 5;
         this.base = 10.0;
         this.interval = 8.0;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
             @Override
             public void run() {
-                Sniper.this.heroicVersion = EnchantmentAPI.getEnchantment("Lethal Sniper");
+                Sniper.this.heroicVersion = EnchantmentAPI.getEnchantment((String)"Lethal Sniper");
             }
         }, 2L);
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        boolean headshot;
         if (event.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
-        final Projectile proj = (Projectile) event.getDamager();
+        Projectile proj = (Projectile)event.getDamager();
         if (!(proj.getShooter() instanceof Player)) {
             return;
         }
-        final Entity victima = (Entity) target;
-        final double y = proj.getLocation().getY();
-        final double victimay = victima.getLocation().getY();
-        final double level = enchantLevel;
-        final boolean headshot = y - victimay > 1.9;
+        LivingEntity victima = target;
+        double y = proj.getLocation().getY();
+        double victimay = victima.getLocation().getY();
+        double level = enchantLevel;
+        boolean bl = headshot = y - victimay > 1.9;
         if (headshot && Math.random() < 0.35 + level * 0.075) {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
-            final double multiplier = level * 0.42 + 1.0;
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * multiplier);
+            double multiplier = level * 0.42 + 1.0;
+            event.setDamage(event.getDamage() * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
             if (target instanceof Player) {
-                ((Player) target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");
-                ((Player) target).playSound(target.getLocation(), Sound.HURT_FLESH, 2.0f, 0.3f);
+                ((Player)target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");
+                ((Player)target).playSound(target.getLocation(), Sound.HURT_FLESH, 2.0f, 0.3f);
             }
         }
     }
 
-    private void playBleedEffect(final Location loc, final int bleedStack) {
+    private void playBleedEffect(Location loc, int bleedStack) {
         for (int i = Math.max(1, bleedStack / 2); i > 0; --i) {
-            WorldUtil.sendWorldEffect(loc.getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
+            WorldUtil.sendWorldEffect((Block)loc.getBlock(), (int)Material.REDSTONE_BLOCK.getId(), (int)2001);
         }
     }
 }
+

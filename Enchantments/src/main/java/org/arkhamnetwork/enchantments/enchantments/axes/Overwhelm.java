@@ -1,10 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -18,7 +17,6 @@ public class Overwhelm extends CustomEnchantment {
         this.interval = 8.0;
     }
 
-    @SneakyThrows
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (event.isCancelled()) {
             return;

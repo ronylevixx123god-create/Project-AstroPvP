@@ -1,17 +1,29 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Location
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.Random;
 
-public class Lucky extends CustomEnchantment {
+public class Lucky
+extends CustomEnchantment {
     public Lucky() {
         super("Lucky", GeneralUtil.armor, 3);
         this.max = 10;
@@ -19,17 +31,21 @@ public class Lucky extends CustomEnchantment {
         this.interval = 10.0;
     }
 
-    @SneakyThrows
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player && new Random().nextInt(400) <= level) {
-            final Player p = (Player) player;
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
-            dmg *= ArmorUtil.getArmorDamageNullificationPercent((float) ArmorUtil.getArmorValue(p));
+            Player p = (Player)player;
+            double dmg = e.getDamage();
+            dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
                 e.setCancelled(true);
                 e.setDamage(0.0);
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayer(p, p.getLocation(), 0,0,0,0.3f,30);
+                try {
+                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0.3f, 0.3f, 0.3f, 0.1f, 30);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
     }
 }
+

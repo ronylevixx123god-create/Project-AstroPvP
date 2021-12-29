@@ -1,3 +1,12 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.entity.Player
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -7,7 +16,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class HeroicGhost extends HeroicCustomEnchantment {
+public class HeroicGhost
+extends HeroicCustomEnchantment {
     private final String ghostlyGhostMetadata = "heroicGhostEnchantment";
 
     public HeroicGhost() {
@@ -16,11 +26,12 @@ public class HeroicGhost extends HeroicCustomEnchantment {
         this.max = 3;
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
-        player.setMetadata("heroicGhostEnchantment", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
+    public void applyEquipEffect(Player player, int enchantLevel) {
+        player.setMetadata("heroicGhostEnchantment", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        player.removeMetadata("heroicGhostEnchantment", (Plugin) Enchantments.getInstance());
+    public void applyUnequipEffect(Player player, int enchantLevel) {
+        player.removeMetadata("heroicGhostEnchantment", (Plugin)Enchantments.getInstance());
     }
 }
+

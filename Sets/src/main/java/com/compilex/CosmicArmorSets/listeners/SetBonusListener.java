@@ -140,6 +140,16 @@ public class SetBonusListener
             if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) event.getEntity(), "HEROIC_ARMOR_SET")) > 0) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (reduceLevel == 1 ? 0.9 : (reduceLevel == 2 ? 0.85 : (reduceLevel == 3 ? 0.8 : (reduceLevel == 4 ? 0.75 : 1.0)))));
             }
+            if (damagedArmorSet != null) {
+                damagedArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
+            } else {
+                AbilityArmorSet abilityArmorSet = CosmicArmorSetsAPI.getAbilityArmorSet(damaged);
+                if (abilityArmorSet != null) {
+                    abilityArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
+                }
+            }
+            if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
+                return;
             if (damaged != null && WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
                 if(WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
                     if(bonuses.containsKey(ArmorSet.ENGINEER)) {
@@ -152,18 +162,10 @@ public class SetBonusListener
                     event.getDamager().sendMessage(CC.RedB + " ** " + CC.GoldB + "ENGINEER CRYSTAL BLOCKED ("  + CC.RedB + "DEMON WEAPON BONUS" + CC.GoldB + ")" + CC.RedB + " ** ");
                 }
             }
-            if (damagedArmorSet != null) {
-                damagedArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
-            } else {
-                AbilityArmorSet abilityArmorSet = CosmicArmorSetsAPI.getAbilityArmorSet(damaged);
-                if (abilityArmorSet != null) {
-                    abilityArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
-                }
-            }
-            if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
-                return;
             if (bonuses != null && !bonuses.isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
+                    if(ent.getKey() == ArmorSet.ENGINEER && WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15)
+                        continue;
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }
             }

@@ -1,3 +1,12 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.entity.Player
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -12,19 +21,21 @@ final class BleedEvent {
     protected int ticks;
     protected BleedTask bleedTask;
 
-    BleedEvent(final Player p, final double damage_per_interval, final int intervals) {
+    BleedEvent(Player p, double damage_per_interval, int intervals) {
         this.player = p;
         this.dmg = damage_per_interval;
         this.ticks = intervals;
     }
 
     public void start() {
-        (this.bleedTask = new BleedTask(this)).runTaskTimer((Plugin) Enchantments.getInstance(), 20L, 35L);
-        this.player.setMetadata("ce_bleeding", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) this.bleedTask.getTaskId()));
+        this.bleedTask = new BleedTask(this);
+        this.bleedTask.runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 35L);
+        this.player.setMetadata("ce_bleeding", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)this.bleedTask.getTaskId()));
     }
 
     public void stop() {
-        this.player.removeMetadata("ce_bleeding", (Plugin) Enchantments.getInstance());
+        this.player.removeMetadata("ce_bleeding", (Plugin)Enchantments.getInstance());
         this.bleedTask.cancel();
     }
 }
+

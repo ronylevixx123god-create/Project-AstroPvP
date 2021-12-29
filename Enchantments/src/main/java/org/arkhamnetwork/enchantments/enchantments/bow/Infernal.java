@@ -1,7 +1,26 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.entity.Arrow
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.ProjectileLaunchEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,35 +34,34 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class Infernal extends CustomEnchantment {
-    protected static String infernalEncahntmentMetadata;
-    protected static String infernalEncahntmentOwnerMetadata;
-
-    static {
-        Infernal.infernalEncahntmentMetadata = "infernal_enchantment";
-        Infernal.infernalEncahntmentOwnerMetadata = "infernal_enchantment_owner";
-    }
+public class Infernal
+extends CustomEnchantment {
+    protected static String infernalEncahntmentMetadata = "infernal_enchantment";
+    protected static String infernalEncahntmentOwnerMetadata = "infernal_enchantment_owner";
 
     public Infernal() {
         super("Infernal", new Material[]{Material.BOW}, 2);
         this.max = 3;
         this.base = 15.0;
         this.interval = 5.0;
-        Bukkit.getPluginManager().registerEvents((Listener) new InfernalListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener)new InfernalListener(), (Plugin)Enchantments.getInstance());
     }
 
-    @SneakyThrows
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         playerHit.setFireTicks(level * 20);
-        de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 10);
-
+        try {
+            ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float)Math.random(), 0.25f, 10);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
     }
 
-    public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {
+    public void applyProjectileEffect(LivingEntity player, int level, ProjectileLaunchEvent e) {
         if (e.getEntity() instanceof Arrow && player instanceof Player) {
-            ((Arrow) e.getEntity()).setFireTicks(level * 60);
-            e.getEntity().setMetadata(Infernal.infernalEncahntmentMetadata, (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
-            e.getEntity().setMetadata(Infernal.infernalEncahntmentOwnerMetadata, (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) ((Player) player).getName()));
+            ((Arrow)e.getEntity()).setFireTicks(level * 60);
+            e.getEntity().setMetadata(infernalEncahntmentMetadata, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
+            e.getEntity().setMetadata(infernalEncahntmentOwnerMetadata, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)((Player)player).getName()));
         }
     }
 }
+

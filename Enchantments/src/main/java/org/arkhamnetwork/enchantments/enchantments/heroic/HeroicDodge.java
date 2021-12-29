@@ -1,9 +1,22 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import lombok.SneakyThrows;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -17,46 +30,45 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class HeroicDodge extends HeroicCustomEnchantment {
+public class HeroicDodge
+extends HeroicCustomEnchantment {
     public HeroicDodge() {
         super("Ethereal Dodge", "Dodge", GeneralUtil.boots, 2);
     }
 
-    @SneakyThrows
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        if (player.getWorld().getName().toLowerCase().contains("dungeon_planet_nul"))
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        if (player.hasMetadata("neutralized"))
+            return;
+        if (player.hasMetadata("noDefenseProcs"))
             return;
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.02 * level;
-            final boolean sneaking = ((Player) player).isSneaking();
+            double chance = 0.05 * (double)level;
+            boolean sneaking = ((Player)player).isSneaking();
             if (sneaking) {
                 chance += 0.2;
             }
             if (Math.random() < chance) {
-                if (attacker == null) return;
-                if (attacker instanceof Player) {
-                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_AXE)) return;
-                }
-
                 e.setCancelled(true);
-                ((Player) player).sendMessage(ChatColor.LIGHT_PURPLE + "*DODGE*");
+                e.setDamage(0.0);
+                ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*DODGE*");
                 try {
-                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 10);
+                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.2f, 0.2f, 0.2f, 0.1f, 10);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
-                final double chanceForSpeed = 5 + (level - 1) * 2;
+                double chanceForSpeed = 5 + (level - 1) * 2;
                 if (Math.random() < chanceForSpeed * 0.01) {
-                    PlayerPotionEffects.trackPotionEffect((Player) player, new SpecificCustomEnchantment(this, level), new PotionEffect(PotionEffectType.SPEED, 60, Math.max(2, 2 + level / 2)));
+                    PlayerPotionEffects.trackPotionEffect((Player)player, new SpecificCustomEnchantment(this, level), new PotionEffect(PotionEffectType.SPEED, 60, Math.max(2, 2 + level / 2)));
                 }
             }
         } else if (e != null && e.getCause() == EntityDamageEvent.DamageCause.FALL) {
             if (player.getFallDistance() > 5.0f) {
-                ((Player) player).sendMessage(ChatColor.YELLOW + "* FALL DODGED *");
+                ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*FALL DODGED*");
             }
             e.setDamage(0.0);
             e.setCancelled(true);
         }
     }
 }
+

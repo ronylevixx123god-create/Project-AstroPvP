@@ -1,9 +1,45 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.massivecraft.factions.iface.RelationParticipator
+ *  com.massivecraft.factions.struct.Relation
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.Sound
+ *  org.bukkit.World$Environment
+ *  org.bukkit.entity.Arrow
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.ProjectileLaunchEvent
+ *  org.bukkit.event.player.PlayerTeleportEvent$TeleportCause
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.util.Vector
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import me.ifamasssxd.cosmicmasks.MaskType;
+import de.inventivegames.particle.ParticleEffect;
+import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
 import org.bukkit.*;
@@ -23,36 +59,33 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class HeroicTeleportation extends HeroicCustomEnchantment {
+public class HeroicTeleportation
+extends HeroicCustomEnchantment {
     public HeroicTeleportation() {
         super("Bidirectional Teleportation", "Teleportation", false);
         this.max = 5;
         this.setNaturalMaterials(new Material[]{Material.BOW});
-        Bukkit.getPluginManager().registerEvents((Listener) new HeroicTeleportListener(this), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener)new HeroicTeleportListener(this), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyProjectileEffect(final LivingEntity user, final int enchantLevel, final ProjectileLaunchEvent event) {
-
+    public void applyProjectileEffect(LivingEntity user, int enchantLevel, ProjectileLaunchEvent event) {
         if (event.getEntity() instanceof Arrow && !event.isCancelled()) {
-            if (WorldGuardUtils.getRegionsIn(user.getLocation()).contains("second_parkour") && user.getLocation().getWorld().getName().equalsIgnoreCase("dungeon_planet_nul"))
-                return;
-            event.getEntity().setMetadata("bi_teleport_arrow", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
+            event.getEntity().setMetadata("bi_teleport_arrow", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
         }
     }
 
-    public void grapplePlayer(final Player target, final Player damager, final int level) {
-        if (!target.getWorld().equals(damager.getWorld())) {
+    public void grapplePlayer(Player target, Player damager, int level) {
+        if (!target.getWorld().equals((Object)damager.getWorld())) {
             Bukkit.getLogger().info("unable to grapple to " + target.getName() + " because " + damager.getName() + " was in another world!");
             return;
         }
-        final Vector velocity = target.getLocation().toVector().subtract(damager.getLocation().toVector());
+        Vector velocity = target.getLocation().toVector().subtract(damager.getLocation().toVector());
         if (velocity.length() != 0.0) {
             velocity.normalize();
         }
-        final double distance = target.getLocation().distanceSquared(damager.getLocation());
+        double distance = target.getLocation().distanceSquared(damager.getLocation());
         double maxDistance = level * 10;
-        maxDistance *= maxDistance;
-        if (distance > maxDistance) {
+        if (distance > (maxDistance *= maxDistance)) {
             if (level == this.getMaxLevel()) {
                 damager.sendMessage(CC.RedB + "(!) " + CC.Red + "Your Teleportation target is too far away to pull with Bidirectional Teleportation!");
             } else {
@@ -60,8 +93,8 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
             }
             return;
         }
-        final double toMultiply = Math.min(Math.max(1.0, distance / 50.0), 6.0 + level * 0.5);
-        final double y = velocity.getY();
+        double toMultiply = Math.min(Math.max(1.0, distance / 50.0), 6.0 + (double)level * 0.5);
+        double y = velocity.getY();
         velocity.multiply(-toMultiply);
         velocity.setY(y * (-toMultiply / 1.75));
         if (velocity.getY() < 0.01 && velocity.getY() > -0.01) {
@@ -76,50 +109,63 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
         damager.sendMessage(CC.LightPurpleB + "* BIDIRECTIONAL TELEPORT [pulling: " + CC.Gray + target.getName() + CC.LightPurpleB + "] *");
     }
 
-    public void trapTarget(final Player player, final Player damager, final int level) {
+    public void trapTarget(Player player, Player damager, int level) {
         if (player.getWalkSpeed() < 0.2f) {
             return;
         }
         player.setWalkSpeed(0.0f);
-        final int duration = (int) (1.0 + level * 0.125);
-        player.sendMessage(CC.RedB + "* BIDIRECTIONAL TRAPPED [by: " + CC.Gray + damager.getName() + " (" + NumberUtils.formatSeconds((double) duration) + "s)]" + CC.RedB + " *");
-        Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.setWalkSpeed(0.2f), (long) (duration * 20));
+        int duration = (int)(1.0 + (double)level * 0.125);
+        player.sendMessage(CC.RedB + "* BIDIRECTIONAL TRAPPED [by: " + CC.Gray + damager.getName() + " (" + NumberUtils.formatSeconds((double)duration) + "s)]" + CC.RedB + " *");
+        Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> player.setWalkSpeed(0.2f), (long)(duration * 20));
     }
 
-    class HeroicTeleportListener extends CustomEnchantListener<HeroicTeleportation> {
-        public HeroicTeleportListener(final HeroicTeleportation enchant) {
+    class HeroicTeleportListener
+    extends CustomEnchantListener<HeroicTeleportation> {
+        public HeroicTeleportListener(HeroicTeleportation enchant) {
             super(enchant);
         }
 
         @EventHandler
-        public void onPlayerDamageByArrow(final EntityDamageByEntityEvent event) throws Exception {
-            if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player && ((Arrow) event.getDamager()).getShooter() instanceof Player) {
-                final List<MetadataValue> meta = (List<MetadataValue>) event.getDamager().getMetadata("bi_teleport_arrow");
+        public void onPlayerDamageByArrow(EntityDamageByEntityEvent event) {
+            if (event.getDamager() instanceof Arrow && event.getEntity() instanceof Player && ((Arrow)event.getDamager()).getShooter() instanceof Player) {
+                Player playerHit;
+                List meta = event.getDamager().getMetadata("bi_teleport_arrow");
                 if (meta == null || meta.isEmpty()) {
                     return;
                 }
-                final int level = meta.get(0).asInt();
-                final double chanceToProc = 0.066 * level;
-                final Player shooter = (Player) ((Arrow) event.getDamager()).getShooter();
-                final Player playerHit = (Player) event.getEntity();
-                if (!shooter.canSee(playerHit) || WorldGuardUtils.isPvPDisabled(playerHit.getLocation()) || WorldGuardUtils.isPvPDisabled(shooter.getLocation())) {
+                int level = ((MetadataValue)meta.get(0)).asInt();
+                double chanceToProc = 0.066 * (double)level;
+                Player shooter = (Player)((Arrow)event.getDamager()).getShooter();
+                if (!shooter.canSee(playerHit = (Player)event.getEntity()) || WorldGuardUtils.isPvPDisabled((Location)playerHit.getLocation()) || WorldGuardUtils.isPvPDisabled((Location)shooter.getLocation())) {
                     return;
                 }
-                final Relation relation = FactionUtils.getRelationTo((RelationParticipator) FactionUtils.getFPlayer(shooter), (RelationParticipator) FactionUtils.getFPlayer((Player) event.getEntity()));
+                Relation relation = FactionUtils.getRelationTo((RelationParticipator)FactionUtils.getFPlayer((Player)shooter), (RelationParticipator)FactionUtils.getFPlayer((Player)((Player)event.getEntity())));
                 if (relation == Relation.ENEMY || relation == Relation.NEUTRAL) {
-                    if (MaskType.hasEquipped(playerHit, "GLITCH")) {
+                    if (MaskUtils.hasMaskEquipped((Player)playerHit, (String)"GLITCH")) {
                         return;
                     }
                     if (Math.random() <= chanceToProc) {
-                        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 10);
-                        de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.1f, 10);
-                        ((HeroicTeleportation) this.customEnchant).grapplePlayer(playerHit, shooter, level);
+                        try {
+                            ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 35);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+
+                        try {
+                            ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.1f, 10);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
+                        }
+
+                        ((HeroicTeleportation)this.customEnchant).grapplePlayer(playerHit, shooter, level);
                         event.setCancelled(true);
                         event.setDamage(0.0);
                         return;
                     }
-                    ((HeroicTeleportation) this.customEnchant).trapTarget(playerHit, shooter, level);
-                } else if (relation == Relation.ALLY || relation == Relation.MEMBER) {
+                    ((HeroicTeleportation)this.customEnchant).trapTarget(playerHit, shooter, level);
+                    return;
+                }
+                if (relation == Relation.ALLY || relation == Relation.MEMBER) {
                     if (playerHit.getWorld().getName().equals("cosmic-station-1")) {
                         return;
                     }
@@ -128,26 +174,37 @@ public class HeroicTeleportation extends HeroicCustomEnchantment {
                     if (event.getDamager() instanceof Projectile) {
                         event.getDamager().remove();
                     }
-                    final Location tp = playerHit.getLocation();
+                    Location tp = playerHit.getLocation();
                     tp.setPitch(shooter.getLocation().getPitch());
                     tp.setYaw(shooter.getLocation().getYaw());
                     if (!shooter.getWorld().getName().equals(playerHit.getWorld().getName()) || tp.distanceSquared(shooter.getLocation()) > Math.pow(30.0, 2.0)) {
-                        shooter.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "Your ally is too far away to teleport to with this level of Bidirectional Teleportation.");
+                        shooter.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "Your ally is too far away to teleport to with this level of Bidirectional Teleportation.");
                         return;
                     }
-                    if ((playerHit.getWorld().getEnvironment() == World.Environment.THE_END || playerHit.getWorld().getName().equals("world_koth")) && !WorldGuardUtils.isPvPDisabled(shooter.getLocation()) && WorldGuardUtils.isPvPDisabled(tp)) {
+                    if ((playerHit.getWorld().getEnvironment() == World.Environment.THE_END || playerHit.getWorld().getName().equals("world_koth")) && !WorldGuardUtils.isPvPDisabled((Location)shooter.getLocation()) && WorldGuardUtils.isPvPDisabled((Location)tp)) {
                         shooter.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot teleport from PvP-enabled to PvP-disabled with Bidirectional Teleportation in The End or KOTH.");
                         return;
                     }
-                    shooter.setMetadata("ignore_combat_tag", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) tp));
+                    shooter.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)tp));
                     shooter.teleport(tp, PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                    shooter.removeMetadata("ignore_combat_tag", (Plugin) Enchantments.getInstance());
+                    shooter.removeMetadata("ignore_combat_tag", (Plugin)Enchantments.getInstance());
                     shooter.playSound(shooter.getLocation(), Sound.ORB_PICKUP, 0.75f, 0.341f);
-                    final Location loc = playerHit.getLocation().add(0.0, 0.5, 0.0);
-                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 10);
-                    de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.1f, 10);
+                    Location loc = playerHit.getLocation().add(0.0, 0.5, 0.0);
+                    try {
+                        ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 35);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+                    try {
+                        ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.1f, 10);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
                 }
             }
         }
     }
 }
+

@@ -1,3 +1,26 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
+ *  com.compilex.CosmicArmorSets.enums.ArmorSet
+ *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
+ *  com.google.common.collect.Lists
+ *  com.rit.sucy.CustomEnchantment
+ *  net.minecraft.server.v1_7_R4.MinecraftServer
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
@@ -25,7 +48,8 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Blessed extends CustomEnchantment {
+public class Blessed
+extends CustomEnchantment {
     private static List<PotionEffectType> debuffs;
 
     public Blessed() {
@@ -33,60 +57,61 @@ public class Blessed extends CustomEnchantment {
         this.max = 4;
         this.base = 30.0;
         this.interval = 10.0;
-        Blessed.debuffs = (List<PotionEffectType>) Lists.newArrayList(new PotionEffectType[]{PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HARM, PotionEffectType.HUNGER, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.WEAKNESS, PotionEffectType.WITHER});
+        debuffs = Lists.newArrayList(PotionEffectType.BLINDNESS, PotionEffectType.CONFUSION, PotionEffectType.HARM, PotionEffectType.HUNGER, PotionEffectType.POISON, PotionEffectType.SLOW, PotionEffectType.SLOW_DIGGING, PotionEffectType.WEAKNESS, PotionEffectType.WITHER);
     }
 
-    public static void blessPlayer(final Player player) {
-        blessPlayer(player, false);
-    }
-
-    public static void blessPlayer(final Player player, final boolean respectDeepWounds) {
-        final List<PotionEffectType> playerDebuffs = getActiveDebuffs(player);
-        if (playerDebuffs.size() > 0) {
-            if (respectDeepWounds && player.hasMetadata("deepWounds") && player.getMetadata("deepWounds").get(0).asLong() > System.currentTimeMillis()) {
-                player.sendMessage(ChatColor.DARK_RED + "** DEEP WOUNDS " + ChatColor.GRAY + "(NO BLESS)" + ChatColor.DARK_RED + " **");
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        double chance;
+        if (!(target instanceof Player) || !(user instanceof Player)) {
+            return;
+        }
+        Player playerAttacker = (Player)user;
+        double random = Math.random();
+        if (random < (chance = 0.03 * (double)enchantLevel)) {
+            if (user.hasMetadata("deepWounds") && ((MetadataValue)user.getMetadata("deepWounds").get(0)).asLong() > System.currentTimeMillis()) {
+                playerAttacker.sendMessage((Object)ChatColor.DARK_RED + "** DEEP WOUNDS " + (Object)ChatColor.GRAY + "(NO BLESS)" + (Object)ChatColor.DARK_RED + " **");
                 return;
             }
-            final ArmorSet as = CosmicArmorSetsAPI.getArmorSet(player);
-            if (as != null && as.equals((Object) ArmorSet.KOTH)) {
-                final long nextBlessedTextTick = player.hasMetadata("nextBlessedTextTick") ? player.getMetadata("nextBlessedTextTick").get(0).asLong() : 0L;
-                if (MinecraftServer.currentTick >= nextBlessedTextTick) {
-                    player.setMetadata("nextBlessedTextTick", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServer.currentTick + 160)));
-                    player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "** BLESSED **");
+            Bleed.clearBleedEffect((LivingEntity)playerAttacker);
+            playerAttacker.playSound(playerAttacker.getLocation(), Sound.SPLASH, 1.2f, 2.0f);
+            Blessed.blessPlayer(playerAttacker);
+            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(playerAttacker, "BLESS", new Object[]{target}));
+        }
+    }
+
+    public static void blessPlayer(Player player) {
+        Blessed.blessPlayer(player, false);
+    }
+
+    public static void blessPlayer(Player player, boolean respectDeepWounds) {
+        List<PotionEffectType> playerDebuffs = Blessed.getActiveDebuffs(player);
+        if (playerDebuffs.size() > 0) {
+            if (respectDeepWounds && player.hasMetadata("deepWounds") && ((MetadataValue)player.getMetadata("deepWounds").get(0)).asLong() > System.currentTimeMillis()) {
+                player.sendMessage((Object)ChatColor.DARK_RED + "** DEEP WOUNDS " + (Object)ChatColor.GRAY + "(NO BLESS)" + (Object)ChatColor.DARK_RED + " **");
+                return;
+            }
+            ArmorSet as = CosmicArmorSetsAPI.getArmorSet((Player)player);
+            if (as != null && as.equals((Object)ArmorSet.KOTH)) {
+                long nextBlessedTextTick;
+                long l = nextBlessedTextTick = player.hasMetadata("nextBlessedTextTick") ? ((MetadataValue)player.getMetadata("nextBlessedTextTick").get(0)).asLong() : 0L;
+                if ((long) MinecraftServer.currentTick >= nextBlessedTextTick) {
+                    player.setMetadata("nextBlessedTextTick", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServer.currentTick + 160)));
+                    player.sendMessage(ChatColor.YELLOW.toString() + (Object)ChatColor.BOLD + "** BLESSED **");
                 }
             } else {
-                player.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "** BLESSED **");
+                player.sendMessage(ChatColor.YELLOW.toString() + (Object)ChatColor.BOLD + "** BLESSED **");
             }
             PlayerPotionEffects.untrackPotionEffect(player, playerDebuffs.get(0));
         }
     }
 
-    public static List<PotionEffectType> getActiveDebuffs(final Player p) {
-        final List<PotionEffectType> result = new ArrayList<PotionEffectType>();
-        for (final PotionEffect pe : p.getActivePotionEffects()) {
-            if (Blessed.debuffs.contains(pe.getType())) {
-                result.add(pe.getType());
-            }
+    public static List<PotionEffectType> getActiveDebuffs(Player p) {
+        ArrayList<PotionEffectType> result = new ArrayList<PotionEffectType>();
+        for (PotionEffect pe : p.getActivePotionEffects()) {
+            if (!debuffs.contains((Object)pe.getType())) continue;
+            result.add(pe.getType());
         }
         return result;
     }
-
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!(target instanceof Player) || !(user instanceof Player)) {
-            return;
-        }
-        final Player playerAttacker = (Player) user;
-        final double random = Math.random();
-        final double chance = 0.03 * enchantLevel;
-        if (random < chance) {
-            if (user.hasMetadata("deepWounds") && user.getMetadata("deepWounds").get(0).asLong() > System.currentTimeMillis()) {
-                playerAttacker.sendMessage(ChatColor.DARK_RED + "** DEEP WOUNDS " + ChatColor.GRAY + "(NO BLESS)" + ChatColor.DARK_RED + " **");
-                return;
-            }
-            Bleed.clearBleedEffect((LivingEntity) playerAttacker);
-            playerAttacker.playSound(playerAttacker.getLocation(), Sound.SPLASH, 1.2f, 2.0f);
-            blessPlayer(playerAttacker);
-            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(playerAttacker, "BLESS", new Object[]{target}));
-        }
-    }
 }
+

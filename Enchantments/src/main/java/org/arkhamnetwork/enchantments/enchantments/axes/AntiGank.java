@@ -1,3 +1,20 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
@@ -6,6 +23,7 @@ import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -15,9 +33,9 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 import java.util.HashSet;
-import java.util.UUID;
 
-public class AntiGank extends CustomEnchantment {
+public class AntiGank
+extends CustomEnchantment {
     private static final String antiGankNextReset_MetadataKey = "antiGank_nextReset";
     private static final String antiGankUniqueEnemies_MetadataKey = "antiGank_uniqueEnemies";
     private static final int ticksToCheck = 120;
@@ -29,37 +47,41 @@ public class AntiGank extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (player.hasMetadata("antiGank_nextReset")) {
-            if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("antiGank_nextReset").get(0).asLong()) {
-                player.removeMetadata("antiGank_uniqueEnemies", (Plugin) Enchantments.getInstance());
-                player.setMetadata("antiGank_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        HashSet enemies;
+        if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
+            if ((long)MinecraftServerUtils.getCurrentServerTick() > ((MetadataValue)player.getMetadata(antiGankNextReset_MetadataKey).get(0)).asLong()) {
+                player.removeMetadata(antiGankUniqueEnemies_MetadataKey, (Plugin)Enchantments.getInstance());
+                player.setMetadata(antiGankNextReset_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServerUtils.getCurrentServerTick() + 120)));
                 return;
             }
         } else {
-            player.setMetadata("antiGank_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
+            player.setMetadata(antiGankNextReset_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServerUtils.getCurrentServerTick() + 120)));
         }
-        final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
+        HashSet hashSet = enemies = player.hasMetadata(antiGankUniqueEnemies_MetadataKey) ? (HashSet)((MetadataValue)player.getMetadata(antiGankUniqueEnemies_MetadataKey).get(0)).value() : new HashSet();
         if (enemies.size() >= 6 - level) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * Math.min(1.5, 1.0 + 0.1 * enemies.size()));
-            final Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
+            e.setDamage(e.getDamage() * Math.min(1.5, 1.0 + 0.1 * (double)enemies.size()));
+            Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)86, (int)2001);
+            return;
         }
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(attacker instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("antiGank_nextReset")) {
-            if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("antiGank_nextReset").get(0).asLong()) {
-                player.removeMetadata("antiGank_uniqueEnemies", (Plugin) Enchantments.getInstance());
+        if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
+            if ((long)MinecraftServerUtils.getCurrentServerTick() > ((MetadataValue)player.getMetadata(antiGankNextReset_MetadataKey).get(0)).asLong()) {
+                player.removeMetadata(antiGankUniqueEnemies_MetadataKey, (Plugin)Enchantments.getInstance());
             }
         } else {
-            player.setMetadata("antiGank_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
+            player.setMetadata(antiGankNextReset_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServerUtils.getCurrentServerTick() + 120)));
         }
-        final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
-        final Player pAttacker = (Player) attacker;
+        HashSet enemies = player.hasMetadata(antiGankUniqueEnemies_MetadataKey) ? (HashSet)((MetadataValue)player.getMetadata(antiGankUniqueEnemies_MetadataKey).get(0)).value() : new HashSet();
+        Player pAttacker = (Player)attacker;
         enemies.add(pAttacker.getUniqueId());
-        player.setMetadata("antiGank_uniqueEnemies", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enemies));
+        player.setMetadata(antiGankUniqueEnemies_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enemies));
     }
 }
+

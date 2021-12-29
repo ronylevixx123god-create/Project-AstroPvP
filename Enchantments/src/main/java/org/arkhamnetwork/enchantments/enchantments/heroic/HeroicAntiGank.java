@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -13,51 +14,54 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import java.text.DecimalFormat;
 import java.util.HashSet;
-import java.util.UUID;
 
 public class HeroicAntiGank extends HeroicCustomEnchantment {
-    private DecimalFormat df;
+    private static final String antiGankNextReset_MetadataKey = "antiGank_nextReset";
+    private static final String antiGankUniqueEnemies_MetadataKey = "antiGank_uniqueEnemies";
+    private static final int ticksToCheck = 120;
 
     public HeroicAntiGank() {
         super("Righteous Anti Gank", "Anti Gank", GeneralUtil.axe, 2);
         this.max = 4;
+        this.base = 20.0;
+        this.interval = 5.0;
     }
 
-
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (player.hasMetadata("antiGankHeroic_nextReset")) {
-            if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("antiGankHeroic_nextReset").get(0).asLong()) {
-                player.removeMetadata("antiGankHeroic_uniqueEnemies", (Plugin) Enchantments.getInstance());
-                player.setMetadata("antiGankHeroic_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        HashSet enemies;
+        if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
+            if ((long) MinecraftServerUtils.getCurrentServerTick() > ((MetadataValue)player.getMetadata(antiGankNextReset_MetadataKey).get(0)).asLong()) {
+                player.removeMetadata(antiGankUniqueEnemies_MetadataKey, (Plugin) Enchantments.getInstance());
+                player.setMetadata(antiGankNextReset_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServerUtils.getCurrentServerTick() + 120)));
                 return;
             }
         } else {
-            player.setMetadata("antiGankHeroic_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
+            player.setMetadata(antiGankNextReset_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServerUtils.getCurrentServerTick() + 120)));
         }
-        final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGankHeroic_uniqueEnemies") ? player.getMetadata("antiGankHeroic_uniqueEnemies").get(0).value() : new HashSet<UUID>());
-        if (enemies.size() >= 2 && Math.random() < 0.2) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
-            final Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
+        HashSet hashSet = enemies = player.hasMetadata(antiGankUniqueEnemies_MetadataKey) ? (HashSet)((MetadataValue)player.getMetadata(antiGankUniqueEnemies_MetadataKey).get(0)).value() : new HashSet();
+        if (enemies.size() >= 2) {
+            e.setDamage(e.getDamage() * (((Player)playerHit).getItemInHand().getType().name().endsWith("_SWORD") ?  Math.min(2.0, 1.0 + 0.1 * (double)enemies.size()) : (Math.min(1.6, 1.0 + 0.1 * (double)enemies.size()))));
+            Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)86, (int)2001);
+            return;
         }
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(attacker instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("antiGankHeroic_nextReset")) {
-            if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("antiGankHeroic_nextReset").get(0).asLong()) {
-                player.removeMetadata("antiGankHeroic_uniqueEnemies", (Plugin) Enchantments.getInstance());
+        if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
+            if ((long)MinecraftServerUtils.getCurrentServerTick() > ((MetadataValue)player.getMetadata(antiGankNextReset_MetadataKey).get(0)).asLong()) {
+                player.removeMetadata(antiGankUniqueEnemies_MetadataKey, (Plugin)Enchantments.getInstance());
             }
         } else {
-            player.setMetadata("antiGankHeroic_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
+            player.setMetadata(antiGankNextReset_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(MinecraftServerUtils.getCurrentServerTick() + 120)));
         }
-        final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGankHeroic_uniqueEnemies") ? player.getMetadata("antiGankHeroic_uniqueEnemies").get(0).value() : new HashSet<UUID>());
-        final Player pAttacker = (Player) attacker;
+        HashSet enemies = player.hasMetadata(antiGankUniqueEnemies_MetadataKey) ? (HashSet)((MetadataValue)player.getMetadata(antiGankUniqueEnemies_MetadataKey).get(0)).value() : new HashSet();
+        Player pAttacker = (Player)attacker;
         enemies.add(pAttacker.getUniqueId());
-        player.setMetadata("antiGankHeroic_uniqueEnemies", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enemies));
+        player.setMetadata(antiGankUniqueEnemies_MetadataKey, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enemies));
     }
 }
-

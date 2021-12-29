@@ -1,9 +1,23 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Location
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -11,7 +25,8 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class ArrowBreak extends CustomEnchantment {
+public class ArrowBreak
+extends CustomEnchantment {
     public ArrowBreak() {
         super("Arrow Break", GeneralUtil.axe, 2);
         this.max = 6;
@@ -19,18 +34,19 @@ public class ArrowBreak extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    @SneakyThrows
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        if (e instanceof EntityDamageByEntityEvent) {
-            final EntityDamageByEntityEvent edbee = (EntityDamageByEntityEvent) e;
-            if (edbee.getDamager() instanceof Projectile && Math.random() < (0.1 + 0.04 * level) / 2.0) {
-                if (!(edbee.getDamager() instanceof Player)) return;
-                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayer((Player) edbee.getDamager(),edbee.getDamager().getLocation(), 0,0,0,0.6f,16);
-                ((Player) player).playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
-                e.setCancelled(true);
-                e.setDamage(0.0);
-                edbee.getDamager().remove();
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        EntityDamageByEntityEvent edbee;
+        if (e instanceof EntityDamageByEntityEvent && (edbee = (EntityDamageByEntityEvent)e).getDamager() instanceof Projectile && Math.random() < (0.1 + 0.04 * (double)level) / 2.0) {
+            try {
+                ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), edbee.getDamager().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 16);
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
+            ((Player)player).playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
+            e.setCancelled(true);
+            e.setDamage(0.0);
+            edbee.getDamager().remove();
         }
     }
 }
+

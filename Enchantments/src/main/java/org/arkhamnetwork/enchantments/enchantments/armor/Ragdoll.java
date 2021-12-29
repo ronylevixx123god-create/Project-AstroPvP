@@ -1,3 +1,16 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.World$Environment
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.IronGolem
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.util.Vector
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -10,7 +23,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
-public class Ragdoll extends CustomEnchantment {
+public class Ragdoll
+extends CustomEnchantment {
     public Ragdoll() {
         super("Ragdoll", GeneralUtil.armor, 3);
         this.max = 4;
@@ -18,7 +32,7 @@ public class Ragdoll extends CustomEnchantment {
         this.interval = 10.0;
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player && attacker instanceof LivingEntity) {
             if (attacker instanceof IronGolem) {
                 return;
@@ -26,15 +40,16 @@ public class Ragdoll extends CustomEnchantment {
             if (player.getWorld().getEnvironment() == World.Environment.THE_END || GeneralUtil.isKOTHWorld(player.getWorld())) {
                 return;
             }
-            final Player p = (Player) player;
-            if (Math.random() < level * 0.125) {
-                GeneralUtil.pushAwayEntity(attacker, (Entity) p, 1.5 + 0.5 * level);
+            Player p = (Player)player;
+            if (Math.random() < (double)level * 0.125) {
+                GeneralUtil.pushAwayEntity(attacker, (Entity)p, 1.5 + 0.5 * (double)level);
             }
         }
     }
 
-    private void pushAwayEntity(final LivingEntity center, final Entity entity, final double speed) {
-        final Vector unitVector = entity.getLocation().toVector().subtract(center.getLocation().toVector()).normalize();
+    private void pushAwayEntity(LivingEntity center, Entity entity, double speed) {
+        Vector unitVector = entity.getLocation().toVector().subtract(center.getLocation().toVector()).normalize();
         entity.setVelocity(unitVector.multiply(speed));
     }
 }
+

@@ -1,3 +1,20 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.compat.ASound;
@@ -11,6 +28,7 @@ import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -18,9 +36,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.text.DecimalFormat;
-
-public class IceAspect extends CustomEnchantment {
+public class IceAspect
+extends CustomEnchantment {
     public IceAspect() {
         super("IceAspect", GeneralUtil.swords, 2);
         this.max = 3;
@@ -28,27 +45,25 @@ public class IceAspect extends CustomEnchantment {
         this.interval = 3.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (playerHit.hasPotionEffect(PotionEffectType.SLOW)) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.035;
-        final int time = 2 * level-1;
+        double random = Math.random();
+        double chance = 0.075 * (double)level;
+        int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
-            final Location l = playerHit.getLocation();
-            if (!new CustomEnchantProcOnEntityEvent(player, playerHit, (Event) e, this, level).callEvent()) {
+            Location l = playerHit.getLocation();
+            if (!new CustomEnchantProcOnEntityEvent(player, playerHit, (Event)e, this, level).callEvent()) {
                 return;
             }
             if (playerHit.hasMetadata("immune_freeze")) {
-                ((Player) playerHit).sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "Ice Aspect blocked!" + CC.DarkGrayB + "] *");
+                ((Player)playerHit).sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + (Object)ChatColor.GRAY + "Ice Aspect blocked!" + CC.DarkGrayB + "] *");
                 return;
             }
 
-
-
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
-                playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
+                playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE SLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
 
@@ -63,7 +78,10 @@ public class IceAspect extends CustomEnchantment {
                 return;
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
-            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
+
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
+            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
         }
     }
 }
+
