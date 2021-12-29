@@ -186,15 +186,16 @@ implements Runnable {
     public void captureKOTH(Player player) throws ParseException, UnirestException, IOException {
         FPlayer fplayer;
         this.capped = true;
+        this.playerCapped = player;
+        this.playerCapping = null;
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lTHE KOTH HAS BEEN CAPTURED BY: &d&n" + this.getNameOfFlagCapper() + "&r &e&l*&6&l*&c&l*"));
         Bukkit.broadcastMessage(ChatColor.GRAY.toString() + "A " + ChatColor.UNDERLINE + "AstroPvP KOTH Lootbag" + ChatColor.GRAY + " has been added to " + player.getName() + "'s inventory. Prevent them from escaping the /warp koth arena alive to steal the rewards!");
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(CC.translate("&e&l(Koth)&e He also received a &f10$ Buycraft Giftcard &ein his &f/giftcards&e."));
+        Bukkit.broadcastMessage(CC.translate("&e&l(KOTH)&e " + this.playerCapped.getName() +  " received a &f10$ Buycraft Giftcard &ein his &f/giftcards&e for capping Desert K.O.T.H"));
         Bukkit.broadcastMessage("");
         this.logWinner(player);
-        this.playerCapped = player;
-        this.playerCapping = null;
+
         Location l = this.playerCapped.getEyeLocation();
         for (int i = 0; i < 10; ++i) {
             Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), () -> RandomFireworks.getManager().launchRandomFirework(l), 20 * i);
