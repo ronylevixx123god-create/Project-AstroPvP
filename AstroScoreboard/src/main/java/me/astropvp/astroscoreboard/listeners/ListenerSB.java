@@ -97,7 +97,7 @@ public class ListenerSB implements Listener {
             for (Player player : faction1Players) {
                 for (Player other : factions2Players) {
                     try {
-                        PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other) + " ");
+                        PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other));
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
@@ -111,8 +111,8 @@ public class ListenerSB implements Listener {
 
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
             for (Player player : allPlayers) {
-                PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining) + " ");
-                PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrefix(playerJoining, player) + " ");
+                PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining));
+                PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrefix(playerJoining, player));
 
             }
         });

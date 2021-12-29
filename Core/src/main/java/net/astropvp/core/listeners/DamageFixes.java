@@ -20,7 +20,7 @@ import org.bukkit.inventory.ItemStack;
 public class DamageFixes implements Listener {
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
@@ -51,6 +51,7 @@ public class DamageFixes implements Listener {
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
                 if (protLevel == 6) decrease += 6;
+                if (protLevel == 5) decrease += 3;
             }
         }
         return decrease * 0.01;

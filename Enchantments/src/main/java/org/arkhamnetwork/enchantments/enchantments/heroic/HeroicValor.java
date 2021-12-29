@@ -10,7 +10,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HeroicValor extends HeroicCustomEnchantment{
     public HeroicValor() {
-        super("Martry Valor","Valor", GeneralUtil.armor, 2);
+        super("Martyr Valor","Valor", GeneralUtil.armor, 2);
         this.max = 5;
         this.base = 20.0D;
         this.interval = 5.0D;

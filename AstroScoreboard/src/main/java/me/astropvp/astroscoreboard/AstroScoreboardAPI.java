@@ -63,7 +63,7 @@ public class AstroScoreboardAPI {
         if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fp.getFaction().getTag());
         } else {
-            faction = "-";
+            faction = "";
         }
 
         String color = FactionUtils.isWilderness(fp.getFaction()) ? CC.White : fp.getRelationTo(fother).getColor().toString();
@@ -108,8 +108,10 @@ public class AstroScoreboardAPI {
 
         if (FactionUtils.getFaction(other).focusedPlayer == fp) {
             return CC.translate("&e&k") + faction;
-        } else {
+        } else if (factionName.isWilderness()) {
             return color + faction + rankColor;
+        } else {
+            return color + faction + rankColor + " ";
         }
     }
 
