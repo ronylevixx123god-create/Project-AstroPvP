@@ -39,20 +39,20 @@ public class Database {
         this.username = this.config.getString("sql.username");
         this.password = this.config.getString("sql.password");
         this.database = this.config.getString("sql.database");
-        this.url = "jdbc:mysql://" + this.host + ":3308/" + this.database + "?autoReconnect=true";
+        this.url = "jdbc:mysql://" + this.host + ":3306/" + this.database + "?autoReconnect=true";
     }
 
     public Database(String host, String username, String password, String database) {
         this.username = username;
         this.password = password;
         this.database = database;
-        this.url = "jdbc:mysql://" + host + ":3308/" + database + "?autoReconnect=true";
+        this.url = "jdbc:mysql://" + host + ":3306/" + database + "?autoReconnect=true";
     }
 
     public Database(String host, String username, String password) {
         this.username = username;
         this.password = password;
-        this.url = "jdbc:mysql://" + host + ":3308?autoReconnect=true";
+        this.url = "jdbc:mysql://" + host + ":3306?autoReconnect=true";
     }
 
     /*

@@ -95,17 +95,14 @@ final class EnderpearlCooldownListener
     }
 
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEnderpearlTeleport(PlayerTeleportEvent e) {
         if (e.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
             boolean teleblock;
             Player pl = e.getPlayer();
             boolean bl = teleblock = pl.hasMetadata("teleblock") && pl.getMetadata("teleblock").get(0).asLong() > System.currentTimeMillis();
             if (AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.CHRISTMAS_BOOTS_SLIPPERS)) teleblock = false;
-            WorldGuardPlugin worldGuard = WorldGuardUtils.getWorldGuard();
-            RegionManager regionManager = worldGuard.getRegionManager(e.getTo().getWorld());
-            ApplicableRegionSet set = regionManager.getApplicableRegions(e.getTo());
-            if (!set.allows(DefaultFlag.ENDERPEARL)) e.setCancelled(true);
+
                 if (!EnderpearlCooldown.isEnderpearlCooldownOver(e.getPlayer()) || teleblock) {
                 e.setCancelled(true);
                 if (teleblock) {

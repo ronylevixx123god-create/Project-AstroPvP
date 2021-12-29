@@ -7,6 +7,7 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
@@ -79,9 +80,13 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
+            if (plugin.getWaitingForAfkGrindingVerification().contains(e.getDamager().getUniqueId())) {
+                e.setCancelled(true);
+                e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will resolve it."));
+                return;
+            }
 
 
-            //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             int amount = mobStackerUtils.getStackSize(entity);
             if (amount <= 1) {
                 mobStackerUtils.removeStackedMob(entity);
@@ -91,27 +96,21 @@ public class EntityStackerListener implements Listener {
             mobStackerUtils.setStackSize(entity, amount);
 
 
-
-            //}, 8L);
-
             Player p = (Player) e.getDamager();
 
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
 
 
-            //Economy.add(p.getName(), 27);
-
-            //PlayerUtils.neutralizeKnockback((LivingEntity) entity);
+            EconomyUtils.depositBalance(p, 27);
 
 
-            double exp = 200;
+            double exp = 100;
 
-            //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
             PlayerData data = manager.getPlayerData(p);
 
 
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
-                exp = exp * 1.5;
+                exp +=50;
 
 
                 if (Math.random() < 0.05) {
@@ -131,44 +130,44 @@ public class EntityStackerListener implements Listener {
             }
 
             if (p.getInventory().firstEmpty() != -1) {
-                    blazeLoot(p);
+                blazeLoot(p);
             }
 
 
-            if (p.getItemInHand().getType() == Material.DIAMOND_SWORD && p.getItemInHand().getItemMeta().hasLore()) {
-                exp = exp + 50;
+            if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Master Inquisitive")) {
+                exp +=50;
+            } else if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Inquisitive")) {
+                exp +=100;
+
             }
 
             if (isOnCosmicClient) {
-                exp = exp * 1.5;
+                exp +=50;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MEDIEVAL_SWORD_KING)) {
-                exp = exp * 2;
+                exp +=100;
             }
 
-            /*try {
-                if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
-                    exp = exp * 1.5;
-                }
-            } catch (Exception exxx) {
 
-            }*/
+            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
+                exp +=50;
+            }
+
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
-                exp = exp * 1.75;
+                exp +=75;
             }
 
 
             p.giveExp((int) exp);
 
+            plugin.addPlayerToAfkGrinding(p);
 
         }
 
 
     }
-
-
 
 
     @EventHandler
@@ -186,7 +185,6 @@ public class EntityStackerListener implements Listener {
             return;
         }
         ;
-        //if (((Creature) e.getEntity()).getHealth() - e.getDamage() > 1) return;
         StackedMobDeathEvent stackedMobDeathEvent = new StackedMobDeathEvent(entity, e.getDamager());
         try {
             Bukkit.getPluginManager().callEvent(stackedMobDeathEvent);
@@ -203,14 +201,8 @@ public class EntityStackerListener implements Listener {
             try {
 
                 if (num >= 0 && num <= 0.02) {
-                    if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ &e&lNova &f&lCrate Key"));
-                    }
                     p.getInventory().addItem(stellarKey);
                 } else if (num >= 0 && num <= 0.05) {
-                    if (GrindingMessagesUtil.isPlayerIndicating(p)) {
-                        p.sendMessage(CC.translate("&b&lGrinding &f&l➥ &a+ &c&lStellar &f&lCrate Key"));
-                    }
                     p.getInventory().addItem(novaKey);
                 }
             } catch (IllegalArgumentException ex) {

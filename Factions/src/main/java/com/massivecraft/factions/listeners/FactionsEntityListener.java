@@ -491,6 +491,7 @@ public class FactionsEntityListener
                     if (!(entity instanceof Enderman)) break block7;
                     if (this.stopEndermanBlockManipulation(loc)) {
                         event.setCancelled(true);
+
                     }
                     break block8;
                 }
@@ -501,6 +502,7 @@ public class FactionsEntityListener
                 if ((!faction.isWarZone() || !Conf.warZoneBlockFireballs) && !faction.isSafeZone()) break block8;
             }
             event.setCancelled(true);
+
         }
     }
 

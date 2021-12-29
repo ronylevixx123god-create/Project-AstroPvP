@@ -22,6 +22,7 @@ public class AbilityData {
     private String uuid;
     private Location location;
     private AbilityType abilityType;
+    private long lastActivated = 0;
 
     public AbilityData(String uuid) {
         this.uuid = uuid;
@@ -38,6 +39,10 @@ public class AbilityData {
 
     public static String getUUID(int x, int y, int z) {
         return x + "_" + y + "_" + z;
+    }
+
+    public boolean isActive() {
+        return System.currentTimeMillis() < lastActivated + 3600000;
     }
 
 }

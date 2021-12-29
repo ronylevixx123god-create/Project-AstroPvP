@@ -17,7 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 
 public class ItemSpawner {
-    private static int spawnerLimit = 100000;
 
     public static ItemStack getItem(EntityType creatureType, int amount) {
         ItemStack item = new ItemStack(Material.MOB_SPAWNER);
@@ -67,6 +66,6 @@ public class ItemSpawner {
     }
 
     public static int getSpawnerLimit() {
-        return spawnerLimit;
+        return 100;
     }
 }

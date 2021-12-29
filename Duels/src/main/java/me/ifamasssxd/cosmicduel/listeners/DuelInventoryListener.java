@@ -22,14 +22,15 @@ package me.ifamasssxd.cosmicduel.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
+
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.UUID;
+
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.Arena;
-import me.ifamasssxd.cosmicduel.struct.QueueManager;
 import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
@@ -61,7 +62,7 @@ public class DuelInventoryListener implements Listener {
             priority = EventPriority.HIGHEST
     )
     public void onInventoryClickSettings(InventoryClickEvent e) {
-        Player p = (Player)e.getWhoClicked();
+        Player p = (Player) e.getWhoClicked();
         if (e.getInventory().getTitle().equalsIgnoreCase("Duel Settings")) {
             e.setCancelled(true);
             e.setResult(Result.DENY);
@@ -96,8 +97,8 @@ public class DuelInventoryListener implements Listener {
                 e.getClickedInventory().removeItem(new ItemStack[]{item});
                 ListIterator var4 = e.getClickedInventory().iterator();
 
-                while(var4.hasNext()) {
-                    ItemStack items = (ItemStack)var4.next();
+                while (var4.hasNext()) {
+                    ItemStack items = (ItemStack) var4.next();
                     if (items != null && items.getType() != Material.AIR && this.isDuelKitItem(items)) {
                         e.getClickedInventory().removeItem(new ItemStack[]{items});
                     }
@@ -106,7 +107,7 @@ public class DuelInventoryListener implements Listener {
                 boolean found = false;
                 ItemStack[] armor = p.getInventory().getArmorContents();
 
-                for(int i = 0; i < armor.length; ++i) {
+                for (int i = 0; i < armor.length; ++i) {
                     ItemStack is = armor[i];
                     if (is != null && this.isDuelKitItem(is)) {
                         armor[i] = null;
@@ -132,8 +133,8 @@ public class DuelInventoryListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event) {
         ListIterator var2 = event.getPlayer().getInventory().iterator();
 
-        while(var2.hasNext()) {
-            ItemStack item = (ItemStack)var2.next();
+        while (var2.hasNext()) {
+            ItemStack item = (ItemStack) var2.next();
             if (item != null && this.isDuelKitItem(item)) {
                 event.getPlayer().getInventory().removeItem(new ItemStack[]{item});
             }
@@ -142,7 +143,7 @@ public class DuelInventoryListener implements Listener {
         boolean change = false;
         ItemStack[] armor = event.getPlayer().getInventory().getArmorContents();
 
-        for(int i = 0; i < armor.length; ++i) {
+        for (int i = 0; i < armor.length; ++i) {
             if (armor[i] != null && this.isDuelKitItem(armor[i])) {
                 change = true;
                 armor[i] = null;
@@ -159,8 +160,8 @@ public class DuelInventoryListener implements Listener {
     public void clearItems(Player player) {
         ListIterator var2 = player.getInventory().iterator();
 
-        while(var2.hasNext()) {
-            ItemStack item = (ItemStack)var2.next();
+        while (var2.hasNext()) {
+            ItemStack item = (ItemStack) var2.next();
             if (item != null && this.isDuelKitItem(item)) {
                 player.getInventory().removeItem(new ItemStack[]{item});
             }
@@ -169,7 +170,7 @@ public class DuelInventoryListener implements Listener {
         boolean change = false;
         ItemStack[] armor = player.getInventory().getArmorContents();
 
-        for(int i = 0; i < armor.length; ++i) {
+        for (int i = 0; i < armor.length; ++i) {
             if (armor[i] != null && this.isDuelKitItem(armor[i])) {
                 change = true;
                 armor[i] = null;
@@ -192,7 +193,7 @@ public class DuelInventoryListener implements Listener {
         List<String> playerNames = Lists.newArrayList();
 
         int index2;
-        for(index2 = inv.getSize() - index; index2 < inv.getSize() - index + enemy.getTeamates().size() + 1; ++index2) {
+        for (index2 = inv.getSize() - index; index2 < inv.getSize() - index + enemy.getTeamates().size() + 1; ++index2) {
             ItemStack item = inv.getItem(index2);
             if (item != null && item.getItemMeta() != null) {
                 playerNames.add(ChatColor.stripColor(item.getItemMeta().getDisplayName()));
@@ -202,8 +203,8 @@ public class DuelInventoryListener implements Listener {
         index2 = 10;
         Iterator var11 = playerNames.iterator();
 
-        while(var11.hasNext()) {
-            String playerName = (String)var11.next();
+        while (var11.hasNext()) {
+            String playerName = (String) var11.next();
             --index2;
             ItemStack item = duel.getStakeInventory().getSkullItem(Bukkit.getPlayer(playerName));
             if (ChatColor.stripColor(item.getItemMeta().getDisplayName()).equalsIgnoreCase(player.getName())) {
@@ -220,7 +221,7 @@ public class DuelInventoryListener implements Listener {
             ignoreCancelled = true
     )
     public void onInventoryClick(InventoryClickEvent e) {
-        Player p = (Player)e.getWhoClicked();
+        Player p = (Player) e.getWhoClicked();
         if (e.getInventory().getName().startsWith("Duel Items:")) {
             e.setCancelled(true);
             e.setResult(Result.DENY);
@@ -253,8 +254,8 @@ public class DuelInventoryListener implements Listener {
                                     this.updateSkullIcon(duel.getStakeInventory().getTeamInventory(p), duel, enemy, CosmicDuel.get().getTeamDataManager().tryFindTeam(enemy.getUniqueId()));
                                     Iterator var8 = data.getTeamates().iterator();
 
-                                    while(var8.hasNext()) {
-                                        UUID teamates = (UUID)var8.next();
+                                    while (var8.hasNext()) {
+                                        UUID teamates = (UUID) var8.next();
                                         Bukkit.getPlayer(teamates).updateInventory();
                                         Bukkit.getPlayer(teamates).sendMessage(CC.translate("&a&l(!) &f" + p.getName() + " &ahas changed the inventory view to &c" + enemyName + "'s &ainventory."));
                                         Bukkit.getPlayer(teamates).playSound(Bukkit.getPlayer(teamates).getLocation(), Sound.CLICK, 0.75F, 0.75F);
@@ -296,11 +297,11 @@ public class DuelInventoryListener implements Listener {
 
     @EventHandler
     public void onThrowPotionFromInventory(InventoryClickEvent event) {
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         NewDuel duel = DuelAPI.getDuel(player);
         if (duel != null && duel.getDuelState() == DuelState.PLAYING && event.getClickedInventory() == null && event.getCursor() != null && event.getCursor().getType() == Material.GLASS_BOTTLE) {
             event.setCancelled(true);
-            player.setItemOnCursor((ItemStack)null);
+            player.setItemOnCursor((ItemStack) null);
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LAVA_POP, 1.0F, 1.0F);
         }
@@ -324,7 +325,7 @@ public class DuelInventoryListener implements Listener {
 
     @EventHandler
     public void onPlayerOpen(InventoryOpenEvent event) {
-        Player player = (Player)event.getPlayer();
+        Player player = (Player) event.getPlayer();
         NewDuel duel = DuelAPI.getDuel(player);
         if (duel != null && duel.getDuelState() != DuelState.IN_QUEUE && duel.getDuelState() != DuelState.WAITING) {
             if (player.getWorld().getName().equals(Arena.getDuelWorldName())) {
@@ -339,12 +340,11 @@ public class DuelInventoryListener implements Listener {
 
     @EventHandler
     public void onPlayerClose(InventoryCloseEvent e) {
-        Player p = (Player)e.getPlayer();
+        Player p = (Player) e.getPlayer();
         TeamData data = CosmicDuel.get().getTeamDataManager().tryFindTeam(p.getUniqueId());
         if (p.hasMetadata("close_exempt")) {
             p.removeMetadata("close_exempt", CosmicDuel.get());
         } else {
-            QueueManager queueManager = CosmicDuel.get().getQueueManager();
             NewDuel d;
             if (e.getInventory().getName().equalsIgnoreCase("Duel Settings")) {
                 if (DuelAPI.hasDuel(p)) {
@@ -363,31 +363,11 @@ public class DuelInventoryListener implements Listener {
                         p.sendMessage(ChatColor.GRAY + "The duel has been cancelled.");
                         DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                     }
-                } else {
-                    d = queueManager.getPreparingDuel(p);
-                    if (d != null) {
-                        queueManager.removeDuelFromPrepareQueue(d);
-                        p.sendMessage(ChatColor.RED + "You have closed the Arena Selection menu and cancelled the Global Queued Duel.");
-                    }
-                }
-            } else if (e.getInventory().getName().contains(p.getName()) && e.getInventory().getName().length() >= 32) {
-                if (DuelAPI.hasDuel(p)) {
-                    d = DuelAPI.getDuel(p);
-                    if (d.getCreateState() == DuelCreateState.STAKES) {
-                        d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
-                        d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
-                        d.setCreateState(DuelCreateState.DONE);
-                        d.getStakeInventory().closeInventory(d);
-                        DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
-                    }
-                }
-            } else if (data != null) {
-                if (data.getLeaderUUID() != null) {
-                if (Bukkit.getPlayer(data.getLeaderUUID()) != null) {
-                    if (e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
-                        String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
+
+                } else if (e.getInventory().getName().contains(p.getName()) && e.getInventory().getName().length() >= 32) {
+                    if (DuelAPI.hasDuel(p)) {
                         d = DuelAPI.getDuel(p);
-                        if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {
+                        if (d.getCreateState() == DuelCreateState.STAKES) {
                             d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
                             d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
                             d.setCreateState(DuelCreateState.DONE);
@@ -395,39 +375,48 @@ public class DuelInventoryListener implements Listener {
                             DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                         }
                     }
-                }
-                }
-            } else if (!e.getInventory().getName().equalsIgnoreCase("Select a Kit") && !e.getInventory().getName().equals("Select a Duel GKit")) {
-                if (e.getInventory().getName().endsWith("Duel Settings")) {
-                    if (DuelAPI.hasPendingInvite(p)) {
-                        DuelAPI.declineDuel(p, e.getInventory().getName().split("'s")[0], true);
-                    }
-                } else if (e.getInventory().getName().contains("'s Death Loot")) {
-                    ListIterator var8 = e.getInventory().iterator();
-
-                    while(var8.hasNext()) {
-                        ItemStack is = (ItemStack)var8.next();
-                        if (is != null && is.getType() != Material.AIR) {
-                            if (p.getInventory().firstEmpty() == -1) {
-                                p.getWorld().dropItem(p.getLocation(), is);
-                            } else {
-                                p.getInventory().addItem(new ItemStack[]{is});
+                } else if (data != null) {
+                    if (data.getLeaderUUID() != null) {
+                        if (Bukkit.getPlayer(data.getLeaderUUID()) != null) {
+                            if (e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
+                                String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
+                                d = DuelAPI.getDuel(p);
+                                if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {
+                                    d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
+                                    d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
+                                    d.setCreateState(DuelCreateState.DONE);
+                                    d.getStakeInventory().closeInventory(d);
+                                    DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
+                                }
                             }
                         }
                     }
-                }
-            } else if (DuelAPI.hasDuel(p)) {
-                d = DuelAPI.getDuel(p);
-                if (d.getCreateState() == DuelCreateState.KIT) {
-                    d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "KITS" + ChatColor.YELLOW + " selection.", false);
-                    d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
-                    DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
-                }
-            } else {
-                d = queueManager.getPreparingDuel(p);
-                if (d != null) {
-                    queueManager.removeDuelFromPrepareQueue(d);
-                    p.sendMessage(ChatColor.RED + "You have closed the Kit Selection menu and cancelled the Global Queued Duel.");
+                } else if (!e.getInventory().getName().equalsIgnoreCase("Select a Kit") && !e.getInventory().getName().equals("Select a Duel GKit")) {
+                    if (e.getInventory().getName().endsWith("Duel Settings")) {
+                        if (DuelAPI.hasPendingInvite(p)) {
+                            DuelAPI.declineDuel(p, e.getInventory().getName().split("'s")[0], true);
+                        }
+                    } else if (e.getInventory().getName().contains("'s Death Loot")) {
+                        ListIterator var8 = e.getInventory().iterator();
+
+                        while (var8.hasNext()) {
+                            ItemStack is = (ItemStack) var8.next();
+                            if (is != null && is.getType() != Material.AIR) {
+                                if (p.getInventory().firstEmpty() == -1) {
+                                    p.getWorld().dropItem(p.getLocation(), is);
+                                } else {
+                                    p.getInventory().addItem(new ItemStack[]{is});
+                                }
+                            }
+                        }
+                    }
+                } else if (DuelAPI.hasDuel(p)) {
+                    d = DuelAPI.getDuel(p);
+                    if (d.getCreateState() == DuelCreateState.KIT) {
+                        d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "KITS" + ChatColor.YELLOW + " selection.", false);
+                        d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
+                        DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
+                    }
                 }
             }
 

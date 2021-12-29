@@ -63,21 +63,21 @@ public class CrystalExtractionItem
             updated = AbilityArmorSet.removeAntiMkitCrystalFromItem(clicked);
             returnCursor = new CustomItemBuilder("ANTI_MKIT", crystalExtractionSuccess, antiMkitCrystalApplied).build();
         }
-        if (updated != null) {
-            e.setCancelled(true);
-            e.setCurrentItem(updated);
-            if (itemStack.getAmount() > 1) {
-                itemStack.setAmount(itemStack.getAmount() - 1);
-                player.setItemOnCursor(itemStack);
-                PlayerUtil.giveOrDropProtectedItem(player, returnCursor, -1);
-            } else {
-                player.setItemOnCursor(returnCursor);
-            }
-            player.sendMessage(CC.GreenB + "(!) " + ItemUtils.getDisplayName(returnCursor) + CC.Green + " extracted from " + ItemUtils.getDisplayName(updated) + CC.Green + "!");
-            ASound.LEVEL_UP.play(player, 10.0f, 1.1f);
-            player.updateInventory();
-            ASound.WITHER_IDLE.play(player, 1.0f, 3.0f);
+        if (returnCursor.getType() == Material.PAPER) return;
+        e.setCancelled(true);
+        e.setCurrentItem(updated);
+        if (itemStack.getAmount() > 1) {
+            itemStack.setAmount(itemStack.getAmount() - 1);
+            player.setItemOnCursor(itemStack);
+            PlayerUtil.giveOrDropProtectedItem(player, returnCursor, -1);
+        } else {
+            player.setItemOnCursor(returnCursor);
         }
+
+        player.sendMessage(CC.GreenB + "(!) " + ItemUtils.getDisplayName(returnCursor) + CC.Green + " extracted from " + ItemUtils.getDisplayName(updated) + CC.Green + "!");
+        ASound.LEVEL_UP.play(player, 10.0f, 1.1f);
+        player.updateInventory();
+        ASound.WITHER_IDLE.play(player, 1.0f, 3.0f);
     }
 }
 

@@ -27,7 +27,7 @@ public class SpawnerShopGUI
         super(player, amount);
     }
 
-    private ArrayList<SpawnerShopUtil> spawners = new ArrayList<>();
+    private final ArrayList<SpawnerShopUtil> spawners = new ArrayList<>();
 
     //TODO Add amount in the lorer
 
@@ -47,12 +47,10 @@ public class SpawnerShopGUI
     protected void setItems() {
         spawners.add(new SpawnerShopUtil(amount, "blaze", 750000));
         spawners.add(new SpawnerShopUtil(amount, "iron_golem", 5000000));
-        spawners.add(new SpawnerShopUtil(amount, "villager", 25000000));
+        spawners.add(new SpawnerShopUtil(amount, "villager", 15000000));
         spawners.add(new SpawnerShopUtil(amount, "witch", 10000000));
         spawners.add(new SpawnerShopUtil(amount, "creeper", 390000));
 
-        for (int i = 0; i < 9; i++) {
-        }
         this.inventory.setItem(0, getItems(0));
         this.inventory.setItem(2, getItems(2));
 
@@ -70,33 +68,33 @@ public class SpawnerShopGUI
     protected ItemStack getItems(int slot) {
         if (slot == 0) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, (short) 0,
-                    CC.translate("&a&lBlaze Spawner"), new String[]{"", CC.translate("&a&l* &fAmount: &a" + amount)
-                            , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("blaze").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Blaze Spawners")});
+                    CC.translate("&a&lBlaze Spawner"), "", CC.translate("&a&l* &fAmount: &a" + amount)
+                    , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("blaze").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Blaze Spawners"));
         }
         if (slot == 2) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, (short) 0,
-                    CC.translate("&a&lIron Golem Spawner"), new String[]{"", CC.translate("&a&l* &fAmount: &a" + amount)
-                            , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("iron_golem").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Iron Golem Spawners")});
+                    CC.translate("&a&lIron Golem Spawner"), "", CC.translate("&a&l* &fAmount: &a" + amount)
+                    , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("iron_golem").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Iron Golem Spawners"));
 
         }
 
         if (slot == 4) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, (short) 0,
-                    CC.translate("&a&lVillager Spawner"), new String[]{"", CC.translate("&a&l* &fAmount: &a" + amount)
-                            , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("villager").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Villager Spawners")});
+                    CC.translate("&a&lVillager Spawner"), "", CC.translate("&a&l* &fAmount: &a" + amount)
+                    , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("villager").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Villager Spawners"));
         }
 
         if (slot == 6) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, (short) 0,
-                    CC.translate("&a&lWitch Spawner"), new String[]{"", CC.translate("&a&l* &fAmount: &a" + amount)
-                            , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("witch").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Witch Spawners")});
+                    CC.translate("&a&lWitch Spawner"), "", CC.translate("&a&l* &fAmount: &a" + amount)
+                    , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("witch").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Witch Spawners"));
 
         }
 
         if (slot == 8) {
             return ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, (short) 0,
-                    CC.translate("&a&lCreeper Spawner"), new String[]{"", CC.translate("&a&l* &fAmount: &a" + amount)
-                            , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("creeper").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Creeper Spawners")});
+                    CC.translate("&a&lCreeper Spawner"), "", CC.translate("&a&l* &fAmount: &a" + amount)
+                    , CC.translate("&a&l* &fPrice: &7$" + DecimalFormat.getInstance().format(getSpawnerFromName("creeper").getTotalPrice())), "", CC.translate("&7&nLeft-Click&7 to buy &f" + amount + " &7Creeper Spawners"));
         }
         return null;
     }
@@ -178,7 +176,7 @@ public class SpawnerShopGUI
 
     public SpawnerShopUtil getSpawnerFromName(String name) {
         for (SpawnerShopUtil spawner : spawners) {
-            if (spawner.getMobName() == name) {
+            if (spawner.getMobName().equals(name)) {
                 return spawner;
             }
         }

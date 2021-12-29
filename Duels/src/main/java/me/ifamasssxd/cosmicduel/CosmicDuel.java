@@ -21,12 +21,10 @@ import me.ifamasssxd.cosmicduel.commands.*;
 import me.ifamasssxd.cosmicduel.inventory.CustomInventory;
 import me.ifamasssxd.cosmicduel.inventory.CustomInventoryListener;
 import me.ifamasssxd.cosmicduel.listeners.*;
-import me.ifamasssxd.cosmicduel.sql.Database;
 import me.ifamasssxd.cosmicduel.struct.*;
 import me.ifamasssxd.cosmicduel.struct.enums.EndReason;
 import me.ifamasssxd.cosmicduel.struct.newduel.DuelLogFormatter;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
-import me.ifamasssxd.cosmicduel.struct.ranked.RankedTopManager;
 import me.ifamasssxd.cosmicduel.tasks.*;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.DuelToggles;
@@ -54,15 +52,11 @@ extends JavaPlugin {
     private static Logger logger;
     private static FileHandler logHandler;
     public DuelToggles duelToggles;
-    private QueueManager queueManager = new QueueManager();
     private DuelHistoryManager duelHistoryManager = new DuelHistoryManager();
-    private RankedTopManager topManager = new RankedTopManager();
-    public static boolean mcMMOEnabled;
     public static boolean queueEnabled;
     public static boolean enchantsEnabled;
     public static boolean envoysEnabled;
-    private Database sqlDatabase;
-    private String serverName = null;
+    private final String serverName = null;
     private TeamDataManager teamDataManager;
 
     public void onEnable() {
@@ -74,26 +68,9 @@ extends JavaPlugin {
         this.registerTasks();
         this.registerListeners();
         this.registerCommands();
-        this.sqlDatabase = new Database(this);
-        if (this.sqlDatabase.isConnected()) {
-            this.setupTables();
-            for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-                new DuelPlayer(pl.getUniqueId(), pl.getName()).loadData(false);
-            }
-        } else {
-            Bukkit.getLogger().severe("Unable to connect to database!");
-        }
+
         this.setupDuelLog();
         queueEnabled = this.getConfig().getBoolean("queueEnabled", false);
-        try {
-            Class.forName("com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI");
-        }
-        catch (Exception e) {
-            Bukkit.getLogger().info("Disabling envoys due to old api..");
-            envoysEnabled = false;
-        }
-        this.topManager.loadTopPlayers();
-        this.topManager.checkDepreciation();
         this.teamDataManager = new TeamDataManager();
     }
 
@@ -101,18 +78,7 @@ extends JavaPlugin {
         logHandler.flush();
         logHandler.close();
         this.duelToggles.save(false);
-        for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-            DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(pl);
-            if (duelPlayer == null) continue;
-            if (duelPlayer.isModifying()) {
-                pl.closeInventory();
-                pl.sendMessage((Object)ChatColor.RED + "Force closing kit editor due to reboot.");
-                pl.getInventory().clear();
-                pl.updateInventory();
-            }
-            duelPlayer.saveData(false);
-            duelPlayer.saveRankedStats(false);
-        }
+
         try {
             CustomInventory.closeInventories();
         }
@@ -126,9 +92,6 @@ extends JavaPlugin {
         }
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             p.removeMetadata("in_duel", (Plugin)this);
-            if (p.hasMetadata("no_mcmmo_skills")) {
-                p.removeMetadata("no_mcmmo_skills", (Plugin)this);
-            }
             p.removeMetadata("spectator", (Plugin)this);
             if (p.getOpenInventory().getTopInventory() == null || !p.getOpenInventory().getTopInventory().getName().startsWith("Duel Items: ")) continue;
             p.closeInventory();
@@ -146,9 +109,7 @@ extends JavaPlugin {
 
     public void initPlugin() {
         this.loadArenaConfigs();
-        if (Bukkit.getPluginManager().isPluginEnabled("mcMMO")) {
-            mcMMOEnabled = true;
-        }
+
         if (!new File("plugins/Enchantments.jar").exists()) {
             enchantsEnabled = false;
         }
@@ -200,9 +161,7 @@ extends JavaPlugin {
         this.getCommand("spectate").setExecutor(new CommandSpectate());
         this.getCommand("duel").setExecutor(new CommandDuel());
         this.getCommand("viewdeathinventory").setExecutor(new CommandViewDeathInventory());
-        this.getCommand("setrankedarena").setExecutor(new CommandSetRankArena());
-        this.getCommand("resetelo").setExecutor(new CommandResetELO());
-        this.getCommand("team").setExecutor((CommandExecutor)new CommandTeam());
+        this.getCommand("team").setExecutor(new CommandTeam());
     }
 
     public void registerListeners() {
@@ -215,12 +174,7 @@ extends JavaPlugin {
         this.registerListener(new CustomInventoryListener());
         this.registerListener(new PotionListener());
         this.registerListener(new SettingsListener());
-        this.registerListener(new CustomKitListener());
         registerListener((Listener)new TeamDuelListener());
-
-        if (enchantsEnabled) {
-            this.registerListener(new GodsetCreationListener());
-        }
     }
 
     private void registerListener(Listener listener) {
@@ -242,10 +196,7 @@ extends JavaPlugin {
         }
     }
 
-    private void setupTables() {
-        this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS duelStats(uuid varchar(64) PRIMARY KEY, customKits longtext, customGodSet longText);", false);
-        this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS `" + this.serverName + "_stats`(uuid varchar(64) PRIMARY KEY, name varchar(16), wins int, losses int, rankedWins int, rankedLosses int, elo double, lastRankedMatch bigint);", false);
-    }
+
 
     public static CosmicDuel get() {
         return instance;
@@ -259,20 +210,9 @@ extends JavaPlugin {
         return this.duelToggles;
     }
 
-    public QueueManager getQueueManager() {
-        return this.queueManager;
-    }
 
     public DuelHistoryManager getDuelHistoryManager() {
         return this.duelHistoryManager;
-    }
-
-    public RankedTopManager getTopManager() {
-        return this.topManager;
-    }
-
-    public Database getSqlDatabase() {
-        return this.sqlDatabase;
     }
 
     public String getServerName() {
@@ -281,7 +221,6 @@ extends JavaPlugin {
 
     static {
         logger = Logger.getLogger("CosmicDuels");
-        mcMMOEnabled = false;
         queueEnabled = false;
         enchantsEnabled = true;
         envoysEnabled = true;

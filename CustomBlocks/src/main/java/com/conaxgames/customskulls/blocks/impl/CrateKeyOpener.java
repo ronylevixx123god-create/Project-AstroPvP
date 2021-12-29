@@ -36,7 +36,7 @@ public class CrateKeyOpener extends CustomBlock {
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&aCost to Mine: &f$" + AbilityType.SECURITY_SYSTEM.getPickupPrice()),
+                CC.translate("&aCost to Mine: &f$" + NumberUtils.formatMoney(AbilityType.SECURITY_SYSTEM.getPickupPrice())),
                 "",
                 CC.translate("&7Right-Click and click confirm"),
                 CC.translate("&7to mass open your CrateKeys."),
@@ -116,7 +116,6 @@ public class CrateKeyOpener extends CustomBlock {
         if (CoreSkulls.getEconomy().has(breaker, AbilityType.SECURITY_SYSTEM.getPickupPrice())) {
             CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.SECURITY_SYSTEM.getPickupPrice());
             breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.SECURITY_SYSTEM.getPickupPrice()));
-            breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.SECURITY_SYSTEM.getName() + " Custom Block"));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -124,7 +123,7 @@ public class CrateKeyOpener extends CustomBlock {
             //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
             p1.getBlock().setType(Material.AIR);
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-            DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
+            DeleteCustomBlocks.func(p2.getLocation(), breaker, this); // delete file and memory.
         } else {
             breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.SECURITY_SYSTEM.getPickupPrice() + " to pick this block up.");
             p1.setCancelled(true);

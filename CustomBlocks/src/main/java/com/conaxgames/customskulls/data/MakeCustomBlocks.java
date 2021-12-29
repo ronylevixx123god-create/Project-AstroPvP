@@ -33,10 +33,13 @@ public class MakeCustomBlocks {
         ymlFile.set("location", block.getLocation());
 
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(block.getLocation()));
+        ymlFile.set("lastActivated", data.getLastActivated());
+
         data.setOwner(player.getUniqueId());
         data.setUuid(AbilityData.getUUID(block.getLocation()));
         data.setLocation(block.getLocation());
         data.setAbilityType(abilityType);
+        data.setLastActivated(data.getLastActivated());
 
         try {
             ymlFile.save(file);
@@ -46,7 +49,7 @@ public class MakeCustomBlocks {
             exception.printStackTrace();
         }
         player.sendMessage("");
-        player.sendMessage(CC.B_GREEN + "*** " + CC.YELLOW + "You placed a " + customBlock.getName() + CC.YELLOW + " Custom Block!" + CC.B_GREEN + " ***");
+        player.sendMessage(CC.translate("&a&l(!)&a You placed a " + customBlock.getName() + "&a Custom Block!"));
         player.sendMessage(CC.GRAY + "Stand in the same chunk as the custom block to gain its respective effects.");
         player.sendMessage("");
     }

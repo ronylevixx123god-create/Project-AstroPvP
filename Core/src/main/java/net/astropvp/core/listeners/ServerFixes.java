@@ -82,28 +82,6 @@ public class ServerFixes implements Listener {
         }
     }
 
-    @EventHandler
-    public void preventBlockGlitch(BlockPlaceEvent event) {
-        if (!event.isCancelled()) return;
-
-        Player player = event.getPlayer();
-        Location location = player.getLocation();
-        Location blockLocation = event.getBlock().getLocation();
-
-        blockLocation.setX(getAccurateCoord(blockLocation.getX()));
-        blockLocation.setZ(getAccurateCoord(blockLocation.getZ()));
-
-        if ((int) location.getX() != (int) blockLocation.getX() ) return;
-
-        if ((int) location.getZ() != (int) blockLocation.getZ()) return;
-
-        player.setVelocity(new Vector(0, -1, 0));
-    }
-
-    private double getAccurateCoord(double coord) {
-        if (coord < 0) return coord + 1.0;
-        return coord;
-    }
 
 
 
@@ -140,7 +118,7 @@ public class ServerFixes implements Listener {
             if (player.hasPermission("commandfix.bypass"))
                 return;
             event.setCancelled(true);
-            player.sendMessage(ChatManager.translate("&8[&a&lAstro&e&lPvP&8] &7Unknown Command. Use the command &f\"/help\" &7for help."));
+            player.sendMessage(ChatManager.translate("&8[&6&lAstro&f&lPvP&8] &7Unknown Command. Use the command &f\"/help\" &7for help."));
         }
     }
 

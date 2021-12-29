@@ -37,6 +37,7 @@
         <module name="Slotbot" />
         <module name="KoTHs" />
         <module name="Duels" />
+        <module name="GiftcardShop" />
         <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />

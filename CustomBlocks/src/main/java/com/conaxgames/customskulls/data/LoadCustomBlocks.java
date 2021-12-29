@@ -30,6 +30,7 @@ public class LoadCustomBlocks {
             String ability = ymlFile.getString("ability");
             Location location = (Location) ymlFile.get("location");
             AbilityType abilityType = AbilityType.valueOf(ability);
+            long lastActivated = ymlFile.getLong("lastActivated");
 
             // This CustomBlock doesn't exist? Oh noes, we better delete it! It's always nice to keep things clean.
             if (CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != abilityType.getMaterial()) {
@@ -45,6 +46,7 @@ public class LoadCustomBlocks {
             data.setUuid(AbilityData.getUUID(location));
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));
+            data.setLastActivated(lastActivated);
 
             // This is a debug message which can be deleted at a later date!
             CoreSkulls.getInstance().info("[CustomSkulls] Put " + data.getAbilityType() + " into memory.");

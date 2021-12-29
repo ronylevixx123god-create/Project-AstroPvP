@@ -19,8 +19,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
-import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
+
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -29,30 +28,10 @@ import org.bukkit.inventory.ItemStack;
 public class WeaponGenerator {
     static Random r = new Random();
 
-    public static ItemStack getRandomKitWeapon() {
-        GlobalKits gkit = GlobalKits.values()[new Random().nextInt(GlobalKits.values().length)];
-        List<ItemStack> items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)gkit, null);
-        for (ItemStack i : items) {
-            if (!GeneralUtil.isWeapon((ItemStack)i)) continue;
-            return i;
-        }
-        for (ItemStack i : items) {
-            if (!GeneralUtil.isArmor((ItemStack)i)) continue;
-            return i;
-        }
-        return (ItemStack)items.get(new Random().nextInt(items.size()));
-    }
+
 
     public static ItemStack generate(ItemRarity ir) {
-        if (ir == ItemRarity.ULTIMATE && Math.random() < 0.2) {
-            return WeaponGenerator.getRandomKitWeapon();
-        }
-        if (ir == ItemRarity.LEGENDARY && Math.random() < 0.35) {
-            return WeaponGenerator.getRandomKitWeapon();
-        }
-        if (ir == ItemRarity.GOD && Math.random() < 0.75) {
-            return WeaponGenerator.getRandomKitWeapon();
-        }
+
         int percent = 0;
         int enchantsAmount = new Random().nextInt(3) + 1;
         HashMap<Enchantment, Integer> enchants = new HashMap<Enchantment, Integer>();

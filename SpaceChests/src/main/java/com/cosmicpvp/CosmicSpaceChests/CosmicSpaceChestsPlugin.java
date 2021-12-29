@@ -9,8 +9,6 @@ import com.cosmicpvp.CosmicSpaceChests.listeners.ChestLootSelectorListener;
 import com.cosmicpvp.CosmicSpaceChests.listeners.EnvoySummonItemListener;
 import com.cosmicpvp.CosmicSpaceChests.listeners.PlayerInteractChestListener;
 import com.cosmicpvp.CosmicSpaceChests.listeners.SpaceFlareListener;
-import com.cosmicpvp.CosmicSpaceChests.listeners.items.EvolutionKitItemListener;
-import com.cosmicpvp.CosmicSpaceChests.listeners.items.KitItemListener;
 import com.cosmicpvp.CosmicSpaceChests.listeners.items.RankItemListener;
 import com.cosmicpvp.CosmicSpaceChests.listeners.items.TitleItemListener;
 import com.cosmicpvp.CosmicSpaceChests.tasks.CosmicEnvoyChestPrunerTask;
@@ -64,8 +62,7 @@ extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new EnvoySummonItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new RankItemListener(), this);
-        this.getServer().getPluginManager().registerEvents(new KitItemListener(), this);
-        this.getServer().getPluginManager().registerEvents(new EvolutionKitItemListener(), this);
+
         this.getServer().getPluginManager().registerEvents(new SpaceFlareListener(), this);
     }
 

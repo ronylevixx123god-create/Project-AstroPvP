@@ -14,7 +14,6 @@ package me.ifamasssxd.cosmicduel.commands;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.listeners.SpectateInventory;
-import me.ifamasssxd.cosmicduel.struct.QueueManager;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import org.bukkit.ChatColor;
@@ -38,11 +37,6 @@ implements CommandExecutor {
         if (DuelAPI.isSpectator(p)) {
             p.sendMessage(ChatColor.RED + "You are already spectating a duel.");
             p.sendMessage(ChatColor.GRAY + "Use /duel leave to leave the current duel.");
-            return true;
-        }
-        QueueManager manager = CosmicDuel.get().getQueueManager();
-        if (manager.getDuel(p) != null || manager.isSearching(p) || manager.getRankedQueue().isInRankedQueue(p)) {
-            p.sendMessage(ChatColor.RED + "You cannot spectate while in queue.");
             return true;
         }
         if (DuelAPI.canDuel(p)) {

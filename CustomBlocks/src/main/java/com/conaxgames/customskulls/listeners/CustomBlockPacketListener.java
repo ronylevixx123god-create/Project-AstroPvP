@@ -37,44 +37,49 @@ public class CustomBlockPacketListener extends PacketAdapter {
 
     @Override
     public void onPacketSending(PacketEvent event) {
-        PacketPlayOutTileEntityData data = (PacketPlayOutTileEntityData) event.getPacket().getHandle();
+        try {
+            PacketPlayOutTileEntityData data = (PacketPlayOutTileEntityData) event.getPacket().getHandle();
+            //Nothing we can do.
+            if(tagField == null)
+                return;
 
-        //Nothing we can do.
-        if(tagField == null)
-            return;
+            NBTTagCompound compound;
+            BlockPosition pos;
+            try{
+                compound = (NBTTagCompound) tagField.get(data);
+                pos = (BlockPosition) posField.get(data);
+            }catch(IllegalAccessException exc)
+            {
+                exc.printStackTrace();
+                return;
+            }
 
-        NBTTagCompound compound;
-        BlockPosition pos;
-        try{
-            compound = (NBTTagCompound) tagField.get(data);
-            pos = (BlockPosition) posField.get(data);
-        }catch(IllegalAccessException exc)
-        {
-            exc.printStackTrace();
-            return;
+            //Not a noteblock.
+            if(!compound.hasKey("note"))
+                return;
+
+            AbilityData abilityData = AbilityData.getAbilityDataMap().get(AbilityData.getUUID(pos.getX(), pos.getY(), pos.getZ()));
+
+            if(abilityData == null)
+                return;
+
+            CustomBlock customBlock = CoreSkulls.customBlocks.get(abilityData.getAbilityType().getName());
+
+            if(customBlock == null)
+                return;
+
+            NBTTagCompound insertTag = new NBTTagCompound();
+            NBTTagCompound customData = new NBTTagCompound();
+            insertTag.set("customBlockData", customData);
+
+            customData.setString("type", customBlock.getIdentifier());
+            customData.setString("facing", EnumDirection.fromAngle(event.getPlayer().getLocation().getYaw()).opposite().name());
+
+            compound.set("tag", insertTag);
+        } catch (ClassCastException ignored) {
+
         }
 
-        //Not a noteblock.
-        if(!compound.hasKey("note"))
-            return;
 
-        AbilityData abilityData = AbilityData.getAbilityDataMap().get(AbilityData.getUUID(pos.getX(), pos.getY(), pos.getZ()));
-
-        if(abilityData == null)
-            return;
-
-        CustomBlock customBlock = CoreSkulls.customBlocks.get(abilityData.getAbilityType().getName());
-
-        if(customBlock == null)
-            return;
-
-        NBTTagCompound insertTag = new NBTTagCompound();
-        NBTTagCompound customData = new NBTTagCompound();
-        insertTag.set("customBlockData", customData);
-
-        customData.setString("type", customBlock.getIdentifier());
-        customData.setString("facing", EnumDirection.fromAngle(event.getPlayer().getLocation().getYaw()).opposite().name());
-
-        compound.set("tag", insertTag);
     }
 }

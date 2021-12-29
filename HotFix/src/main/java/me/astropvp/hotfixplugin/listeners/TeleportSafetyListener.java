@@ -8,6 +8,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import java.util.EnumSet;
 import java.util.Set;
@@ -98,7 +99,7 @@ public class TeleportSafetyListener implements Listener {
     }
     @EventHandler(priority = EventPriority.LOWEST)
     public void onBlockPlaceEnder(BlockPlaceEvent event) {
-        if (event.getBlock().getType() == Material.ENDER_PORTAL_FRAME) {
+        if (event.getBlock().getType() == Material.ENDER_PORTAL_FRAME && !event.getPlayer().getItemInHand().hasItemMeta() && !event.getPlayer().isOp()) {
             event.getPlayer().sendMessage(CC.Red + "You cannot place this block!");
             event.setCancelled(true);
         }
