@@ -1,11 +1,13 @@
 package net.astropvp.giftcardshop.data;
 
 import net.astropvp.giftcardshop.GiftcardShopPlugin;
+import net.astropvp.giftcardshop.struct.Giftcard;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,15 +26,16 @@ public class LoadGiftcards {
             }
             // Load the file into YAML because we need to get some values from it!
             YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file);
-            GiftcardData data = GiftcardShopPlugin.getInstance().getGiftcardData();
 
-            List<String> codes = ymlFile.getStringList("codes");
+
+            String code = ymlFile.getString("code");
             UUID uuid = UUID.fromString(ymlFile.getString("uuid"));
+            String date = ymlFile.getString("creationDate");
+            double amount = ymlFile.getDouble("amount");
 
-            data.getGiftcardDataMap().put(uuid,codes);
+            Giftcard giftcard = new Giftcard(uuid, code, date, amount);
+            GiftcardShopPlugin.getInstance().addGiftcardToList(giftcard);
 
-
-            // This is a debug message which can be deleted at a later date!
             System.out.println("[GiftcardsPlugin] Put " + uuid + " into giftcard codes memory");
         }
     }

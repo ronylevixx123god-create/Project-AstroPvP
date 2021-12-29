@@ -54,13 +54,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Scoreboard implements BoardAdapter {
     private final AstroScoreboardPlugin plugin = AstroScoreboardPlugin.getInstance();
-    private static DateFormat format = new SimpleDateFormat("MM/dd");
     private final Map<String, String> rankOrder = new HashMap<>();
 
     public List<String> getScoreboard(Player player, Board board) {
         return mainBoard(player);
     }
 
+    private static final DateFormat format = new SimpleDateFormat("MM/dd");
     public static String getDateSuffix() {
         return format.format(new Date());
     }

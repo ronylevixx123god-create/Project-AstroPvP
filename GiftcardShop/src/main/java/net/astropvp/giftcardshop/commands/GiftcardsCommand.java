@@ -17,7 +17,7 @@ public class GiftcardsCommand implements CommandExecutor {
         if (!(commandSender instanceof Player)) return false;
         Player sender = (Player)commandSender;
 
-        if (GiftcardShopPlugin.getInstance().getGiftcardData().getGiftcardDataMap().get(sender.getUniqueId()) == null) {
+        if (GiftcardShopPlugin.getInstance().getGiftcards().get(sender.getUniqueId()) == null) {
             sender.sendMessage(CC.translate("&c&l(!)&c You do not have available giftcards!"));
             return false;
         }

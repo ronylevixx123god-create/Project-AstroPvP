@@ -7,6 +7,7 @@ import lombok.Getter;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.giftcardshop.GiftcardShopPlugin;
+import net.astropvp.giftcardshop.struct.Giftcard;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -21,16 +22,16 @@ public class GiftcardMenu {
     private PaginatedGui giftcardsMenu;
 
     public GiftcardMenu(UUID uuid) {
-        this.giftcardsMenu = new PaginatedGui(6,56, "Your Giftcards");
+        this.giftcardsMenu = new PaginatedGui(6,56, "Your Giftcards - " + new Date().toString());
 
-        HashMap<String, Double> codesAndAmount = GiftcardShopPlugin.getInstance().getGiftcardData().getCodesAndAmountMap(uuid);
 
-        for (Map.Entry<String, Double> codeAndAmount : codesAndAmount.entrySet()) {
-            String code = codeAndAmount.getKey();
-            Double amount = codeAndAmount.getValue();
+        for (Giftcard giftcard : GiftcardShopPlugin.getInstance().getGiftcards().get(uuid)) {
+            String code = giftcard.getCode();
+            double amount = giftcard.getAmount();
             ItemStack item = new ItemBuilder(Material.PAPER, CC.translate("&a&lGiftcard"))
                     .addLoreLine("")
                     .addLoreLine(CC.translate("&f&l● &aCode: &f") + code)
+                    .addLoreLine(CC.translate("&f&l● &aCreated: &f") + giftcard.getCreationDate())
                     .addLoreLine(CC.translate("&f&l● &aInitial Amount: &f$") + NumberUtils.formatMoney(amount))
                     .addLoreLine("")
                     .addLoreLine(CC.translate("&7You can use this giftcard on &fbuy.astropvp.net&7."))
@@ -43,6 +44,8 @@ public class GiftcardMenu {
         }
         this.giftcardsMenu.setDefaultClickAction(event -> event.setCancelled(true));
         this.giftcardsMenu.getFiller().fillBorder(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short)7)).name(CC.translate("&7")).build()));
+
+        //ItemStack sortButton = new ItemBuilder(Material.REDSTONE_TORCH_ON, CC.translate("&c&lSort By Date")).addLoreLine(CC.translate("&7Click this button to sort giftcards")).addLoreLine(CC.translate("&7from latest to oledest creation date.")).build();
 
         ItemStack prevPage = new ItemStack(Material.ARROW);
         ItemMeta prevMeta = prevPage.getItemMeta();
@@ -64,6 +67,7 @@ public class GiftcardMenu {
             this.giftcardsMenu.previous();
             event.setCancelled(true);
         }));
+
 
         this.giftcardsMenu.setItem(6, 6, new GuiItem(nextPage, event -> {
             this.giftcardsMenu.next();
