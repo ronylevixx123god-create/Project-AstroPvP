@@ -38,14 +38,14 @@ public class TrapBlockerItem extends CosmicItem
     }
 
     public ItemStack createItem(Player player, Object... objects) {
-        return this.applyItemData((new ItemBuilder(Material.BONE, CC.translate("&c&lTrap Blocker &7(Right-Click)")
+        return this.applyItemData((new ItemBuilder(Material.BONE, CC.translate("&c&lTrap Blocker &7(10x10 radius)")
                 , CC.Gray + ""
                 , CC.translate("&7&nRight-Click&7 to activate"),
                 CC.translate("&7the &cTrap Blocker&7 ability."),
                 CC.Gray + "",
-                CC.translate("&7Players in a &f8x8&7 radius will"),
+                CC.translate("&7Players in a &f10x10&7 radius will"),
                 CC.translate("&7not be able to break/place blocks"),
-                CC.translate("&7anymore for &f15 seconds&7. "),
+                CC.translate("&7and open doors anymore for &f15 seconds&7. "),
                 CC.translate(""),
                 CC.translate("&c&lUSES &f1")
 
@@ -117,9 +117,11 @@ public class TrapBlockerItem extends CosmicItem
                     trappedPlayers.put(p.getUniqueId(), p);
                     trappedPlayersCooldown.put(p.getUniqueId(), p);
                     p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
-                    p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 10, 10);
+                    p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 1, 1);
                     amountOfPlayers++;
                 }
+
+
 
                 Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                     trappedPlayers.remove(p.getUniqueId());
@@ -134,10 +136,16 @@ public class TrapBlockerItem extends CosmicItem
         }
 
         if (amountOfPlayers == 0) {
-            player.setItemInHand(new TrapBlockerItem().createItem(player));
-            player.sendMessage(CC.translate("&c&lTRAP BLOCKER: &cThere are no available nearby enemies."));
-            return;
+            throw new PrefixedException("There are no available nearby enemies.");
         }
+
+        if (item.getAmount() == 1) {
+            player.setItemInHand(null);
+        } else {
+            item.setAmount(item.getAmount() - 1);
+
+        }
+
 
         player.sendMessage(CC.translate("&c&l* TRAP BLOCKED &f" + amountOfPlayers + "&7 nearby enemies &c&l*"));
         for (Player p : trappedPlayers.values()) {
@@ -149,14 +157,10 @@ public class TrapBlockerItem extends CosmicItem
             player.sendMessage(CC.translate("&a&l* YOU CAN NOW USE A NEW TRAP BLOCKER *"));
             trapCooldown.remove(player.getUniqueId());
         }, 2400L);
-        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 10, 10);
 
-        if (item.getAmount() == 1) {
-            player.setItemInHand(null);
-        } else {
-            item.setAmount(item.getAmount() - 1);
+        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1, 1);
 
-        }
+
     }
 
 
