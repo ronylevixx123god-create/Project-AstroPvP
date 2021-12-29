@@ -6,6 +6,7 @@ public enum CollectType {
     DEATH_INVENTORY(Material.ENDER_CHEST),
     SLOTBOT(Material.PAPER),
     CRTAEKEY(Material.TRIPWIRE_HOOK),
+    ITEMFLIP(Material.ENCHANTMENT_TABLE),
     GIVEALL(Material.GOLD_NUGGET);
 
     Material material;
