@@ -1,3 +1,13 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Listener
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -10,7 +20,8 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class CreeperArmor extends CustomEnchantment {
+public class CreeperArmor
+extends CustomEnchantment {
     protected static ConcurrentHashMap<String, Integer> creeperArmor;
 
     public CreeperArmor() {
@@ -18,15 +29,16 @@ public class CreeperArmor extends CustomEnchantment {
         this.max = 3;
         this.base = 25.0;
         this.interval = 0.0;
-        CreeperArmor.creeperArmor = new ConcurrentHashMap<String, Integer>();
-        Bukkit.getPluginManager().registerEvents((Listener) new CreeperArmorListener(), (Plugin) Enchantments.getInstance());
+        creeperArmor = new ConcurrentHashMap();
+        Bukkit.getPluginManager().registerEvents((Listener)new CreeperArmorListener(), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
-        CreeperArmor.creeperArmor.put(player.getName(), enchantLevel);
+    public void applyEquipEffect(Player player, int enchantLevel) {
+        creeperArmor.put(player.getName(), enchantLevel);
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        CreeperArmor.creeperArmor.remove(player.getName());
+    public void applyUnequipEffect(Player player, int enchantLevel) {
+        creeperArmor.remove(player.getName());
     }
 }
+

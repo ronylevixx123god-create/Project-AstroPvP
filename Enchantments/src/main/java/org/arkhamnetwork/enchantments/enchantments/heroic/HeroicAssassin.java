@@ -1,3 +1,14 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.rit.sucy.CustomEnchantment;
@@ -7,47 +18,44 @@ import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
-public class HeroicAssassin extends HeroicCustomEnchantment {
+public class HeroicAssassin
+extends CustomEnchantment {
     public HeroicAssassin() {
-        super("Shadow Assassin", "Assassin", GeneralUtil.swords, 5);
+        super("Shadow Assassin", GeneralUtil.swords, 5);
         this.max = 5;
-        this.base = 15.0D;
-        this.interval = 6.0D;
-        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+        this.base = 15.0;
+        this.interval = 6.0;
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
-            this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Assassin");
+            this.nonHeroicVersion = EnchantmentAPI.getEnchantment((String)"Assassin");
         }, 2L);
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (user.getWorld().equals(target.getWorld())) {
-            double distance = user.getLocation().distance(target.getLocation());
-            double dmgMod = 1.0D;
-            double heroicMult = 2.5D;
-            if (distance < 0.625D) {
-                dmgMod += 0.015D * (double)enchantLevel;
-            }
-
-            if (distance < 1.25D) {
-                dmgMod += 0.015D * (double)enchantLevel;
-            }
-
-            if (distance < 1.875D) {
-                dmgMod += 0.015D * (double)enchantLevel;
-            }
-
-            if (distance < 2.5D) {
-                dmgMod += 0.015D * (double)enchantLevel;
-            }
-
-            if (distance < 3.75D) {
-                dmgMod += 0.015D * (double)enchantLevel;
-            }
-
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * dmgMod);
+        if (!user.getWorld().equals((Object)target.getWorld())) {
+            return;
         }
+        double distance = user.getLocation().distance(target.getLocation());
+        double dmgMod = 1.0;
+        double heroicMult = 2.5;
+        if (distance < 0.25 * heroicMult) {
+            dmgMod += 0.015 * (double)enchantLevel;
+        }
+        if (distance < 0.5 * heroicMult) {
+            dmgMod += 0.015 * (double)enchantLevel;
+        }
+        if (distance < 0.75 * heroicMult) {
+            dmgMod += 0.015 * (double)enchantLevel;
+        }
+        if (distance < 1.0 * heroicMult) {
+            dmgMod += 0.015 * (double)enchantLevel;
+        }
+        if (distance < 1.5 * heroicMult) {
+            dmgMod += 0.015 * (double)enchantLevel;
+        }
+        event.setDamage(event.getDamage() * dmgMod);
     }
 }
+

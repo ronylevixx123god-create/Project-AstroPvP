@@ -1,13 +1,55 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.CoreProtectUtils
+ *  com.massivecraft.factions.Board
+ *  com.massivecraft.factions.FLocation
+ *  com.massivecraft.factions.FPlayer
+ *  com.massivecraft.factions.FPlayers
+ *  com.massivecraft.factions.Faction
+ *  com.massivecraft.factions.FactionWrapper
+ *  com.massivecraft.factions.FactionWrappers
+ *  com.massivecraft.factions.P
+ *  com.massivecraft.factions.struct.FactionPermission
+ *  com.massivecraft.factions.struct.LogTimer$TimerSubType
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  me.ifamasssxd.cosmicguishop.CosmicGUIShop
+ *  net.minecraft.server.v1_7_R4.Blocks
+ *  net.minecraft.server.v1_7_R4.Chunk
+ *  net.minecraft.server.v1_7_R4.ChunkSection
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Chunk
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.OfflinePlayer
+ *  org.bukkit.Sound
+ *  org.bukkit.block.Block
+ *  org.bukkit.block.BlockFace
+ *  org.bukkit.block.BlockState
+ *  org.bukkit.block.CreatureSpawner
+ *  org.bukkit.craftbukkit.v1_7_R4.CraftChunk
+ *  org.bukkit.entity.EntityType
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.block.BlockBreakEvent
+ *  org.bukkit.event.block.BlockEvent
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.material.MaterialData
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
 import com.cosmicpvp.cosmicutils.utils.CoreProtectUtils;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.struct.FactionPermission;
 import com.massivecraft.factions.struct.LogTimer;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import net.minecraft.server.v1_8_R3.Blocks;
 import net.minecraft.server.v1_8_R3.ChunkSection;
@@ -16,6 +58,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.EnchantBreakBlockEvent;
 import org.arkhamnetwork.enchantments.mastery.MasteryAutoSell;
 import org.arkhamnetwork.enchantments.util.BlockUtils;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
@@ -36,218 +79,178 @@ import java.lang.reflect.Field;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Detonate extends CustomEnchantment {
+public class Detonate
+extends CustomEnchantment {
+    private static ConcurrentHashMap<UUID, BlockFace> loggedBlockFaces = new ConcurrentHashMap();
     protected static List<Material> pickaxeMaterials;
     protected static List<Material> spadeMaterials;
-    private static ConcurrentHashMap<UUID, BlockFace> loggedBlockFaces;
-
-    static {
-        Detonate.loggedBlockFaces = new ConcurrentHashMap<UUID, BlockFace>();
-    }
 
     public Detonate() {
         super("Detonate", GeneralUtil.tools, 6);
         this.max = 9;
         this.base = 10.0;
         this.interval = 10.0;
-        Detonate.pickaxeMaterials = new ArrayList<Material>(Arrays.asList(Material.SANDSTONE, Material.STONE, Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.SMOOTH_BRICK, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.NETHERRACK));
-        Detonate.spadeMaterials = new ArrayList<Material>(Arrays.asList(Material.DIRT, Material.SAND, Material.GRAVEL, Material.GRASS, Material.MYCEL, Material.CLAY));
-        Bukkit.getPluginManager().registerEvents((Listener) new DetonateListener(), (Plugin) Enchantments.getInstance());
-        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> this.heroicVersion = EnchantmentAPI.getEnchantment("Atomic Detonate"), 2L);
+        pickaxeMaterials = new ArrayList<Material>(Arrays.asList(new Material[]{Material.SANDSTONE, Material.STONE, Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.SMOOTH_BRICK, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.NETHERRACK}));
+        spadeMaterials = new ArrayList<Material>(Arrays.asList(new Material[]{Material.DIRT, Material.SAND, Material.GRAVEL, Material.GRASS, Material.MYCEL, Material.CLAY}));
+        Bukkit.getPluginManager().registerEvents((Listener)new DetonateListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+            this.heroicVersion = EnchantmentAPI.getEnchantment((String)"Atomic Detonate");
+        }, 2L);
     }
 
-    public static void updateSavedBlockFace(final Player p, final BlockFace b) {
-        Detonate.loggedBlockFaces.put(p.getUniqueId(), b);
-    }
-
-    @SneakyThrows
-    public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
-        if (event instanceof BlockBreakEvent) {
-            final BlockBreakEvent bbe = (BlockBreakEvent) event;
-            if (!bbe.isCancelled()) {
-                final Material type = block.getType();
-                if (type == Material.REDSTONE_COMPARATOR || type == Material.SPONGE || type == Material.REDSTONE_COMPARATOR_ON || type == Material.REDSTONE_COMPARATOR_OFF) {
-                    return;
-                }
-                this.explode(player, bbe.getBlock(), enchantLevel);
+    public void applyToolEffect(Player player, Block block, int enchantLevel, BlockEvent event) {
+        BlockBreakEvent bbe;
+        if (event instanceof BlockBreakEvent && !(bbe = (BlockBreakEvent)event).isCancelled()) {
+            Material type = block.getType();
+            if (type == Material.REDSTONE_COMPARATOR || type == Material.SPONGE || type == Material.REDSTONE_COMPARATOR_ON || type == Material.REDSTONE_COMPARATOR_OFF) {
+                return;
             }
+            this.explode(player, bbe.getBlock(), enchantLevel);
         }
     }
 
-    private BlockFace getBlockFace(final Player p) {
-        return Detonate.loggedBlockFaces.containsKey(p.getUniqueId()) ? Detonate.loggedBlockFaces.get(p.getUniqueId()) : null;
+    public static void updateSavedBlockFace(Player p, BlockFace b) {
+        loggedBlockFaces.put(p.getUniqueId(), b);
     }
 
-    private void explode(final Player pl, final Block b, final int level) throws Exception {
-        final ItemStack pickaxeItem = pl.getItemInHand();
-        final boolean hasAutoSmelt = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Auto Smelt");
-        final boolean hasFuse = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Fuse");
-        final boolean telepathy = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Telepathy");
-        final boolean autoSell = EnchantmentAPI.itemHasEnchantment(pl.getItemInHand(), "Auto Sell");
-        final boolean pickaxe = pl.getItemInHand().getType().name().contains("_PICKAXE");
-        final boolean spade = pl.getItemInHand().getType().name().contains("_SPADE");
+    private BlockFace getBlockFace(Player p) {
+        return loggedBlockFaces.containsKey(p.getUniqueId()) ? loggedBlockFaces.get(p.getUniqueId()) : null;
+    }
+
+    private void explode(Player pl, Block b, int level) {
+        ItemStack pickaxeItem = pl.getItemInHand();
+        boolean hasAutoSmelt = EnchantmentAPI.itemHasEnchantment((ItemStack)pl.getItemInHand(), (String)"Auto Smelt");
+        boolean hasFuse = EnchantmentAPI.itemHasEnchantment((ItemStack)pl.getItemInHand(), (String)"Fuse");
+        boolean telepathy = EnchantmentAPI.itemHasEnchantment((ItemStack)pl.getItemInHand(), (String)"Telepathy");
+        boolean autoSell = EnchantmentAPI.itemHasEnchantment((ItemStack)pl.getItemInHand(), (String)"Auto Sell");
+        boolean pickaxe = pl.getItemInHand().getType().name().contains("_PICKAXE");
+        boolean spade = pl.getItemInHand().getType().name().contains("_SPADE");
         double autoSellMoney = 0.0;
-        final Set<Block> blocks = BlockUtils.getSquare(b, this.getBlockFace(pl), level);
+        Set<Block> blocks = BlockUtils.getSquare(b, this.getBlockFace(pl), level);
         blocks.add(b);
         boolean brokeBlock = false;
         boolean tookDurability = false;
         FPlayer fp = null;
-        for (final Block bl : blocks) {
-            final Material m = bl.getType();
-            if (m != Material.LADDER && m != Material.GLOWSTONE && m != Material.BEDROCK && m != Material.WATER && m != Material.STATIONARY_WATER && m != Material.LAVA && m != Material.STATIONARY_LAVA && m != Material.SIGN && m != Material.SIGN_POST && m != Material.AIR && m != Material.BEDROCK && m != Material.OBSIDIAN && m != Material.SPONGE && m != Material.IRON_DOOR && m != Material.IRON_DOOR_BLOCK && m != Material.WOODEN_DOOR && m != Material.WOOD_DOOR && m != Material.HOPPER && m != Material.ANVIL && m != Material.REDSTONE_COMPARATOR && m != Material.REDSTONE_COMPARATOR_OFF && m != Material.SAND && m != Material.GRAVEL) {
-                if (m == Material.REDSTONE_COMPARATOR_ON) {
-                    continue;
+        for (Block bl : blocks) {
+            BlockState state;
+            Block above;
+            Material aboveType;
+            Material m = bl.getType();
+            if (m == Material.LADDER || m == Material.GLOWSTONE || m == Material.BEDROCK || m == Material.WATER || m == Material.STATIONARY_WATER || m == Material.LAVA || m == Material.STATIONARY_LAVA || m == Material.SIGN || m == Material.SIGN_POST || m == Material.AIR || m == Material.BEDROCK || m == Material.OBSIDIAN || m == Material.SPONGE || m == Material.IRON_DOOR || m == Material.IRON_DOOR_BLOCK || m == Material.WOODEN_DOOR || m == Material.WOOD_DOOR || m == Material.HOPPER || m == Material.ANVIL || m == Material.REDSTONE_COMPARATOR || m == Material.REDSTONE_COMPARATOR_OFF || m == Material.REDSTONE_COMPARATOR_ON || pickaxeMaterials.contains((Object)m) && !pickaxe || spadeMaterials.contains((Object)m) && !spade || (aboveType = (above = bl.getRelative(BlockFace.UP)).getType()) == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF || aboveType == Material.DIODE_BLOCK_ON) continue;
+            FLocation floc = new FLocation(bl.getLocation());
+            Faction f = Board.getFactionAt((FLocation)floc);
+            if (!f.isNone()) {
+                FactionPermission permission;
+                FactionWrapper wrapper = FactionWrappers.get((Faction)f);
+                if (fp == null) {
+                    fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
                 }
-                if (Detonate.pickaxeMaterials.contains(m) && !pickaxe) {
-                    continue;
-                }
-                if (Detonate.spadeMaterials.contains(m) && !spade) {
-                    continue;
-                }
-                final Block above = bl.getRelative(BlockFace.UP);
-                final Material aboveType = above.getType();
-                if (aboveType == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF) {
-                    continue;
-                }
-                if (aboveType == Material.DIODE_BLOCK_ON) {
-                    continue;
-                }
-                final FLocation floc = new FLocation(bl.getLocation());
-                final Faction f = Board.getFactionAt(floc);
-                if (!f.isNone()) {
-                    final FactionWrapper wrapper = FactionWrappers.get(f);
-                    if (fp == null) {
-                        fp = (FPlayer) FPlayers.i.get((OfflinePlayer) pl);
-                    }
-                    final FactionPermission permission = FactionPermission.getFromBlock(new MaterialData(m));
-                    if (permission != null && !f.hasPermission(fp, floc, permission, "interact")) {
-                        continue;
-                    }
-                    if (wrapper.isLocationTracked(floc)) {
-                        if (!wrapper.doesPlayerHaveChunkAccess(floc, fp, true)) {
-                            continue;
-                        }
-                    } else {
-                        if (!fp.getRelationToLocation().isMember()) {
-                            continue;
-                        }
-                        if (!fp.getFactionId().equals(f.getId())) {
-                            continue;
-                        }
-                    }
-                }
-                if (f.isWarZone()) {
-                    continue;
-                }
-                EntityType spawnerType = null;
-                if (m == Material.MOB_SPAWNER) {
-                    final BlockState state = bl.getState();
-                    if (state instanceof CreatureSpawner) {
-                        spawnerType = ((CreatureSpawner) state).getSpawnedType();
-                    }
-                }
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),bl.getLocation(), 0f,1f,0f,0.025f,1);
-
-                if (bl.getDrops(pl.getItemInHand()).size() > 0) {
-                    ItemStack loot = null;
-                    try {
-                        loot = (ItemStack) bl.getDrops(pl.getItemInHand()).toArray()[0];
-                    } catch (Exception err) {
-                        continue;
-                    }
-                    final EnchantBreakBlockEvent enchantEvent = new EnchantBreakBlockEvent(pl, bl, m);
-                    Bukkit.getPluginManager().callEvent((Event) enchantEvent);
-                    if (enchantEvent.isCancelled()) {
-                        continue;
-                    }
-                    if (loot.getType().name().startsWith("REDSTONE_COMPARATOR")) {
-                        loot.setAmount(1);
-                    }
-                    if (hasAutoSmelt && (m == Material.IRON_ORE || m == Material.GOLD_ORE) && hasFuse) {
-                        if (m == Material.IRON_ORE) {
-                            loot.setType(Material.IRON_INGOT);
-                        }
-                        if (m == Material.GOLD_ORE) {
-                            loot.setType(Material.GOLD_INGOT);
-                        }
-                        final CustomEnchantment enchantment = EnchantmentAPI.getEnchantment("Auto Smelt");
-                        final Map<CustomEnchantment, Integer> enchants = (Map<CustomEnchantment, Integer>) EnchantmentAPI.getEnchantments(pl.getItemInHand());
-                        if (enchantment != null && enchants != null) {
-                            final Integer autoSmeltLevel = enchants.get(enchantment);
-                            if (autoSmeltLevel != null) {
-                                loot.setAmount((int) autoSmeltLevel);
-                            }
-                        }
-                    }
-                    brokeBlock = true;
-                    CoreProtectUtils.logBreak(pl.getName(), bl.getLocation(), m.getId(), bl.getData());
-                    bl.setTypeIdAndData(0, (byte) 0, false);
-                    if (loot.getType() == Material.RAILS) {
-                        continue;
-                    }
-                    final double price = autoSell ? (MasteryAutoSell.getSellPrice(loot.getData()) * loot.getAmount()) : 0.0;
-                    if (price > 0.0) {
-                        autoSellMoney += price;
-                    } else if (telepathy && pl.getInventory().firstEmpty() != -1) {
-                        pl.getInventory().addItem(new ItemStack[]{loot});
-                    } else {
-                        pl.getWorld().dropItem(pl.getLocation(), loot);
-                    }
-                } else {
-                    CoreProtectUtils.logBreak(pl.getName(), bl.getLocation(), m.getId(), bl.getData());
-                    bl.breakNaturally(pl.getItemInHand());
-                    tookDurability = true;
-                }
-                if (m != Material.MOB_SPAWNER || f == null || !f.isNormal() || spawnerType == null) {
-                    continue;
-                }
+                if ((permission = FactionPermission.getFromBlock((MaterialData)new MaterialData(m))) != null && !f.hasPermission(fp, floc, permission, "interact") || (!wrapper.isLocationTracked(floc) ? !fp.getRelationToLocation().isMember() || !fp.getFactionId().equals(f.getId()) : !wrapper.doesPlayerHaveChunkAccess(floc, fp, true))) continue;
+            }
+            if (f.isWarZone()) continue;
+            EntityType spawnerType = null;
+            if (m == Material.MOB_SPAWNER && (state = bl.getState()) instanceof CreatureSpawner) {
+                spawnerType = ((CreatureSpawner)state).getSpawnedType();
+            }
+            try {
+                ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 0.025f, 0.025f, 0.1f, 1);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            if (bl.getDrops(pl.getItemInHand()).size() > 0) {
+                double price;
+                ItemStack loot = null;
                 try {
-                    P.p.blockListener.handleSpawnerUpdate(f, pl, new ItemStack(m, 1, spawnerType.getTypeId()), LogTimer.TimerSubType.SPAWNER_BREAK);
-                } catch (Exception e) {
-                    e.printStackTrace();
+                    loot = (ItemStack)bl.getDrops(pl.getItemInHand()).toArray()[0];
                 }
+                catch (Exception err) {
+                    continue;
+                }
+                EnchantBreakBlockEvent enchantEvent = new EnchantBreakBlockEvent(pl, bl, m);
+                Bukkit.getPluginManager().callEvent((Event)enchantEvent);
+                if (enchantEvent.isCancelled()) continue;
+                if (loot.getType().name().startsWith("REDSTONE_COMPARATOR")) {
+                    loot.setAmount(1);
+                }
+                if (hasAutoSmelt && (m == Material.IRON_ORE || m == Material.GOLD_ORE) && hasFuse) {
+                    Integer autoSmeltLevel;
+                    if (m == Material.IRON_ORE) {
+                        loot.setType(Material.IRON_INGOT);
+                    }
+                    if (m == Material.GOLD_ORE) {
+                        loot.setType(Material.GOLD_INGOT);
+                    }
+                    CustomEnchantment enchantment = EnchantmentAPI.getEnchantment((String)"Auto Smelt");
+                    Map enchants = EnchantmentAPI.getEnchantments((ItemStack)pl.getItemInHand());
+                    if (enchantment != null && enchants != null && (autoSmeltLevel = (Integer)enchants.get((Object)enchantment)) != null) {
+                        loot.setAmount(autoSmeltLevel.intValue());
+                    }
+                }
+                brokeBlock = true;
+                CoreProtectUtils.logBreak((String)pl.getName(), (Location)bl.getLocation(), (int)m.getId(), (byte)bl.getData());
+                bl.setTypeIdAndData(0, (byte)0, false);
+                if (loot.getType() == Material.RAILS) continue;
+                double d = price = autoSell ? MasteryAutoSell.getSellPrice(loot.getData()) * (double)loot.getAmount() : 0.0;
+                if (price > 0.0) {
+                    autoSellMoney += price;
+                } else if (telepathy && pl.getInventory().firstEmpty() != -1) {
+                    pl.getInventory().addItem(new ItemStack[]{loot});
+                } else {
+                    pl.getWorld().dropItem(pl.getLocation(), loot);
+                }
+            } else {
+                CoreProtectUtils.logBreak((String)pl.getName(), (Location)bl.getLocation(), (int)m.getId(), (byte)bl.getData());
+                bl.breakNaturally(pl.getItemInHand());
+                tookDurability = true;
+            }
+            if (m != Material.MOB_SPAWNER || f == null || !f.isNormal() || spawnerType == null) continue;
+            try {
+                P.p.blockListener.handleSpawnerUpdate(f, pl, new ItemStack(m, 1, spawnerType.getTypeId()), LogTimer.TimerSubType.SPAWNER_BREAK);
+            }
+            catch (Exception e) {
+                e.printStackTrace();
             }
         }
         if (autoSellMoney > 0.0) {
-            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer) pl, autoSellMoney);
+            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, autoSellMoney);
         }
         if (brokeBlock && !tookDurability && pickaxe) {
             if (pickaxeItem.getDurability() >= pickaxeItem.getType().getMaxDurability() - 1) {
-                if (pickaxeItem.equals((Object) pl.getItemInHand())) {
-                    pl.setItemInHand((ItemStack) null);
+                if (pickaxeItem.equals((Object)pl.getItemInHand())) {
+                    pl.setItemInHand(null);
                 } else {
                     pl.getInventory().removeItem(new ItemStack[]{pickaxeItem});
                 }
                 pl.updateInventory();
                 pl.playSound(pl.getLocation(), Sound.ITEM_BREAK, 1.0f, 1.0f);
-                Bukkit.getLogger().info("Destroying pickaxe " + pickaxeItem + " for " + pl.getName() + " due to durability: " + pickaxeItem.getDurability());
+                Bukkit.getLogger().info("Destroying pickaxe " + (Object)pickaxeItem + " for " + pl.getName() + " due to durability: " + pickaxeItem.getDurability());
             } else {
-                pickaxeItem.setDurability((short) (pickaxeItem.getDurability() + 1));
+                pickaxeItem.setDurability((short)(pickaxeItem.getDurability() + 1));
             }
         }
     }
 
-    private void setBlockSuperFast(final Block b, final int typeId, final byte data) {
-        final Chunk c = b.getChunk();
-        final net.minecraft.server.v1_8_R3.Chunk chunk = ((CraftChunk) c).getHandle();
+    private void setBlockSuperFast(Block b, int typeId, byte data) {
+        Chunk c = b.getChunk();
+        net.minecraft.server.v1_8_R3.Chunk chunk = ((CraftChunk)c).getHandle();
         try {
-            final Field f = chunk.getClass().getDeclaredField("sections");
+            Field f = chunk.getClass().getDeclaredField("sections");
             f.setAccessible(true);
-            final ChunkSection[] sections = (ChunkSection[]) f.get(chunk);
+            ChunkSection[] sections = (ChunkSection[])f.get((Object)chunk);
             ChunkSection chunksection = sections[b.getY() >> 4];
             if (chunksection == null) {
                 if (typeId == 0) {
                     return;
                 }
-                final ChunkSection[] array = sections;
-                final int n = b.getY() >> 4;
-                final ChunkSection chunkSection = new ChunkSection(b.getY() >> 4 << 4, !chunk.world.worldProvider.d());
-                array[n] = chunkSection;
+                ChunkSection chunkSection = new ChunkSection(b.getY() >> 4 << 4, !chunk.world.worldProvider.d());
+                sections[b.getY() >> 4] = chunkSection;
                 chunksection = chunkSection;
             }
             chunksection.setType(b.getX() & 0xF, b.getY() & 0xF, b.getZ() & 0xF, (IBlockData) Blocks.BEDROCK);
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
 }
+

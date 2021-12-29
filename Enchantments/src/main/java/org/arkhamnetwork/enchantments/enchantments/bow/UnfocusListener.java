@@ -1,3 +1,16 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.ChatColor
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.metadata.MetadataValue
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import org.bukkit.ChatColor;
@@ -7,20 +20,21 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.MetadataValue;
 
-class UnfocusListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerDamage(final EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Projectile) {
-            final Projectile pj = (Projectile) e.getDamager();
-            if (pj.getShooter() instanceof Player) {
-                final Player p = (Player) pj.getShooter();
-                if (p.hasMetadata("unfocusEnchantmentExpire") && System.currentTimeMillis() < p.getMetadata("unfocusEnchantmentExpire").get(0).asLong()) {
-                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
-                    p.sendMessage(ChatColor.DARK_GREEN + "** UNFOCUSED [50% BOW DMG] **");
-                }
-            }
+class UnfocusListener
+implements Listener {
+    UnfocusListener() {
+    }
+
+    @EventHandler(priority=EventPriority.HIGHEST)
+    public void onPlayerDamage(EntityDamageByEntityEvent e) {
+        Player p;
+        Projectile pj;
+        if (e.getDamager() instanceof Projectile && (pj = (Projectile)e.getDamager()).getShooter() instanceof Player && (p = (Player)pj.getShooter()).hasMetadata("unfocusEnchantmentExpire") && System.currentTimeMillis() < ((MetadataValue)p.getMetadata("unfocusEnchantmentExpire").get(0)).asLong()) {
+            e.setDamage(e.getDamage() / 2.0);
+            p.sendMessage((Object)ChatColor.DARK_GREEN + "** UNFOCUSED [50% BOW DMG] **");
         }
     }
 }
+

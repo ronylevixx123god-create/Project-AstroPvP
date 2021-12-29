@@ -1,3 +1,14 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Material
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
@@ -7,7 +18,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class Lightning extends CustomEnchantment {
+public class Lightning
+extends CustomEnchantment {
     public Lightning() {
         super("Lightning", new Material[]{Material.BOW}, 2);
         this.max = 3;
@@ -15,15 +27,16 @@ public class Lightning extends CustomEnchantment {
         this.interval = 0.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        final double random = Math.random() * 1.0;
-        final double chance = 0.1 * level;
-        if (random < chance) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        double chance;
+        double random = Math.random() * 1.0;
+        if (random < (chance = 0.1 * (double)level)) {
             if (!(playerHit instanceof Player)) {
                 return;
             }
             playerHit.getLocation().getWorld().strikeLightningEffect(playerHit.getLocation());
-            playerHit.damage(5.0, (Entity) player);
+            playerHit.damage(5.0, (Entity)player);
         }
     }
 }
+

@@ -1,21 +1,15 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.bryside.astroattributes.DragonTitanAttributesAPI;
 import com.bryside.astroattributes.enums.RuneType;
 import com.bryside.astroattributes.objects.RuneCacher;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
-
-import java.util.Objects;
 
 final class RageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

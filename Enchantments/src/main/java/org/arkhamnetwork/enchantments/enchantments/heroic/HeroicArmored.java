@@ -1,3 +1,16 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.inventory.ItemStack
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
@@ -6,39 +19,43 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
-public class HeroicArmored extends HeroicCustomEnchantment {
+public class HeroicArmored
+extends HeroicCustomEnchantment {
     public HeroicArmored() {
         super("Paladin Armored", "Armored");
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (!(player instanceof Player))
+        if (!(player instanceof Player)) {
             return;
+        }
         if (player.hasMetadata("neutralized"))
             return;
         ItemStack i = null;
         if (attacker instanceof Player) {
-            Player pAttacker = (Player) attacker;
+            Player pAttacker = (Player)attacker;
 
             i = pAttacker.getItemInHand();
-            if (Math.random() < level * 0.01D) {
+            if (Math.random() < (double)level * 0.01) {
                 Blessed.blessPlayer((Player)player);
+                Bukkit.getLogger().info("Blessing " + ((Player)player).getName() + " from level " + level + " heroic armored!");
             }
         }
-        double damage_negation = level * 0.02D;
-        if (attacker instanceof Player) {
-
+        double damage_negation = (double)level * 0.03;
+        if(attacker instanceof Player)
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT))
                 damage_negation = level * 0.01875D;
-            if (i != null && i.getType().name().contains("_SWORD") && e
-                    .getDamage() * (1.0D - damage_negation) > 1.0D) {
-                e.setDamage(e.getDamage() * (1.0D - damage_negation));
-            }
+        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
+            e.setDamage(e.getDamage() * (1.0 - damage_negation));
+            Location l = player.getLocation();
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
         }
     }
 }
+

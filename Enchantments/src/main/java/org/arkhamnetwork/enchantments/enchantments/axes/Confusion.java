@@ -1,3 +1,14 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.CustomEnchantment;
@@ -8,7 +19,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Confusion extends CustomEnchantment {
+public class Confusion
+extends CustomEnchantment {
     public Confusion() {
         super("Confusion", GeneralUtil.axe, 2);
         this.max = 3;
@@ -16,16 +28,17 @@ public class Confusion extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (!(playerHit instanceof Player)) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.075 * level;
-        final int time = 2 * level + 4;
-        final int amp = level;
+        double random = Math.random();
+        double chance = 0.075 * (double)level;
+        int time = 2 * level + 4;
+        int amp = level;
         if (random < chance && playerHit instanceof Player) {
-            //playerHit.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 20, amp));
+            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 20, amp));
         }
     }
 }
+

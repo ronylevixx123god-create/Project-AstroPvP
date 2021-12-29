@@ -1,3 +1,18 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.massivecraft.factions.FPlayer
+ *  com.massivecraft.factions.FPlayers
+ *  com.massivecraft.factions.Faction
+ *  com.massivecraft.factions.cmd.CmdFocus
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Material
+ *  org.bukkit.OfflinePlayer
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.massivecraft.factions.FPlayer;
@@ -11,7 +26,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class TargetTracking extends CustomEnchantment {
+public class TargetTracking
+extends CustomEnchantment {
     public TargetTracking() {
         super("Target Tracking", new Material[]{Material.BOW}, 3);
         this.max = 1;
@@ -19,14 +35,15 @@ public class TargetTracking extends CustomEnchantment {
         this.interval = 4.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (playerHit instanceof Player) {
-            final FPlayer fPlayer = (FPlayer) FPlayers.i.get((OfflinePlayer) player);
-            final Faction myFaction = fPlayer.getFaction();
-            final FPlayer targetPlayer = (FPlayer) FPlayers.i.get((OfflinePlayer) playerHit);
+            FPlayer fPlayer = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)player));
+            Faction myFaction = fPlayer.getFaction();
+            FPlayer targetPlayer = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)playerHit));
             if (myFaction.isNormal()) {
-                CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+                CmdFocus.focusPlayer((FPlayer)fPlayer, (Faction)myFaction, (FPlayer)targetPlayer, (boolean)false);
             }
         }
     }
 }
+

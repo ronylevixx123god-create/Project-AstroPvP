@@ -1,3 +1,12 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.CustomEnchantment;
@@ -6,7 +15,8 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class Ravenous extends CustomEnchantment {
+public class Ravenous
+extends CustomEnchantment {
     public Ravenous() {
         super("Ravenous", GeneralUtil.axe, 7);
         this.max = 4;
@@ -14,15 +24,16 @@ public class Ravenous extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        double chance;
         if (!(user instanceof Player)) {
             return;
         }
-        final Player playerAttacker = (Player) user;
-        final double random = Math.random();
-        final double chance = 0.05 * enchantLevel;
-        if (random < chance && playerAttacker.getFoodLevel() < 20) {
+        Player playerAttacker = (Player)user;
+        double random = Math.random();
+        if (random < (chance = 0.05 * (double)enchantLevel) && playerAttacker.getFoodLevel() < 20) {
             playerAttacker.setFoodLevel(playerAttacker.getFoodLevel() + 1);
         }
     }
 }
+
