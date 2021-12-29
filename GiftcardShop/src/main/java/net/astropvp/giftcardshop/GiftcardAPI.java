@@ -46,6 +46,7 @@ public class GiftcardAPI {
         giftcardClickable.add(CC.translate("&a&l(!)&a A giftcard has been added to your &f/giftcards&a."), CC.translate("&a/giftcards"), "/giftcards");
         giftcardClickable.sendToPlayer(player);
         player.sendMessage(CC.translate("&7* The code is &f" + code));
+        System.out.println("[AstroGiftcards] Generated a " + amount + " Giftcard for " + player.getName());
 
 
 

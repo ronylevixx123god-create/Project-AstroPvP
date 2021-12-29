@@ -27,7 +27,7 @@ public class LoadGiftcards {
             GiftcardData data = GiftcardShopPlugin.getInstance().getGiftcardData();
 
             List<String> codes = ymlFile.getStringList("codes");
-            UUID uuid = UUID.fromString(ymlFile.getName());
+            UUID uuid = UUID.fromString(ymlFile.getString("uuid"));
 
             data.getGiftcardDataMap().put(uuid,codes);
 

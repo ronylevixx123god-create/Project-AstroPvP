@@ -38,7 +38,7 @@ public class AddGiftcards {
         }
 
         List<String> codes = giftcardData.getGiftcardDataMap().get(uuid);
-
+        ymlFile.set("uuid", uuid.toString());
         ymlFile.set("codes", codes);
 
 
