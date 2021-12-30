@@ -35,11 +35,11 @@ import org.bukkit.plugin.Plugin;
 
 public class CosmicKOTHAPI {
     public static boolean isKOTHRunning() {
-        return CosmicKOTHPlugin.get_().getKoth() != null && CosmicKOTHPlugin.get_().getKoth().isRunning();
+        return (CosmicKOTHPlugin.get_().getKoth() != null && CosmicKOTHPlugin.get_().getKoth().isRunning());
     }
 
     public static boolean canTeleportToKOTH() {
-        return isKOTHRunning() && !CosmicKOTHPlugin.get_().getKoth().isCapped();
+        return (isKOTHRunning() && !CosmicKOTHPlugin.get_().getKoth().isCapped());
     }
 
     public static ItemStack applyKOTHWeaponSetBonus(ItemStack item, String winner, HeroicWeaponType weaponType, String ability) {
@@ -75,4 +75,3 @@ public class CosmicKOTHAPI {
         Bukkit.getLogger().info("[CosmicKOTH] Launched new KOTH with task ID #" + KET.getTaskId());
     }
 }
-

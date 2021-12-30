@@ -376,7 +376,7 @@ public class Scoreboard implements BoardAdapter {
                 board.add(CC.translate("&f&l● &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
                 board.add("");
             }
-            board.add(CC.translate("&f&l● &6Nearby Players:&c " + player.getNearbyEntities(32, 40, 32).size()));
+            board.add(CC.translate("&f&l● &6Nearby Players:&c " + player.getNearbyEntities(48, 60, 48).size()));
             board.add(CC.translate("&f&l● &6Account:&f " + player.getName()));
             board.add("");
             board.add(CC.translate("&fX&72504&7, &fY&719, &fZ&74638"));

@@ -53,7 +53,6 @@ implements Runnable {
     private boolean running;
 
     public KothEventTask() {
-        this.capped = false;
         this.running = true;
         try {
             this.fireworkField = EntityFireworks.class.getDeclaredField("ticksFlown");
@@ -66,19 +65,11 @@ implements Runnable {
 
             @Override
             public void run() {
-                Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lA KOTH EVENT HAS STARTED &e&l*&6&l*&c&l*"));
-                KothWorldType worldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
-                if (worldType != null) {
-                    Bukkit.broadcastMessage(CC.GreenB + "          Arena: " + CC.Aqua + worldType.getName(true));
-                }
-                Bukkit.broadcastMessage(ChatColor.GRAY + "Use /koth to view event information!");
-                Bukkit.broadcastMessage("");
-                if (worldType == KothWorldType.SANTA_WORKSHOP) {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather world_koth storm");
-                } else {
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "weather world_koth sun");
-                }
+                Bukkit.broadcastMessage((String)"");
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is starting!")));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
+                Bukkit.broadcastMessage((String)"");
                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
                     p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1.2f, 1.6f);
                 }
@@ -101,17 +92,16 @@ implements Runnable {
                 exception.printStackTrace();
             }
             this.advertHandler();
-            this.monsterSpawnHandler();
         }
-        this.scoreboardHandler();
     }
 
     private void advertHandler() {
         if (this.runtime % 300 == 0) {
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lA KOTH EVENT IS RUNNING &e&l*&6&l*&c&l*"));
-            Bukkit.broadcastMessage(ChatColor.GRAY + "Use " + ChatColor.LIGHT_PURPLE + "/koth" + ChatColor.GRAY + " to view event information!");
-            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage((String)"");
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is currently running!")));
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
+            Bukkit.broadcastMessage((String)"");
         }
     }
 
@@ -131,16 +121,7 @@ implements Runnable {
         }
     }
 
-    private void scoreboardHandler() {
-        for (Player p : this.getKothPlayers()) {
-            try {
-                ScoreboardUtils.updateScoreboard(p);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-    }
+
 
     private void playerCapHandler() throws Exception {
         if (this.playerCapping != null && this.playerCapping.isValid() && !this.playerCapping.isDead()) {
@@ -196,12 +177,15 @@ implements Runnable {
         this.running = false;
         this.playerCapped = player;
         this.playerCapping = null;
-        Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(CC.translate("&c&l*&6&l*&e&l* &f&lTHE KOTH HAS BEEN CAPTURED BY: &d&n" + this.getNameOfFlagCapper() + "&r &e&l*&6&l*&c&l*"));
-        Bukkit.broadcastMessage(ChatColor.GRAY.toString() + "A " + ChatColor.UNDERLINE + "AstroPvP KOTH Lootbag" + ChatColor.GRAY + " has been added to " + player.getName() + "'s inventory. Prevent them from escaping the /warp koth arena alive to steal the rewards!");
-        Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(CC.translate("&e&l(KOTH)&e " + this.playerCapped.getName() +  " received a &f10$ Buycraft Giftcard &ein his &f/giftcards&e for capping Desert K.O.T.H"));
-        Bukkit.broadcastMessage("");
+
+        Bukkit.broadcastMessage((String)"");
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe &6Desert koth&f has been Captured!")));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe winner received a &6Koth Lootbag &fand &610$ Buycraft&f.")));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lWinner&7: &f" + this.getNameOfFlagCapper())));
+        Bukkit.broadcastMessage((String)"");
+
         this.logWinner(player);
 
         Location l = this.playerCapped.getEyeLocation();
@@ -243,28 +227,7 @@ implements Runnable {
         }
     }
 
-    private void monsterSpawnHandler() {
-        if (this.runtime % 240 == 0) {
-            int i;
-            int multi = this.runtime / 240;
-            int toSpawn = Math.min(35, 20 + 2 * multi);
-            toSpawn = i = toSpawn / 2;
-            /*while (i > 0) {
-                LivingEntity ent = MonsterUtils.spawnEnvoyMonster(LocationUtils.getNearbyLocation(CosmicKOTHPlugin.get_().getKothCenter(), 20, 2, 6));
-                int nearby = 0;
-                for (Entity entity : ent.getNearbyEntities(4.0, 4.0, 4.0)) {
-                    if (entity.getType() != ent.getType() || ++nearby < 100) continue;
-                    ent.remove();
-                    break;
-                }
-                --i;
-            }*/
-            this.kothBroadcast("");
-            this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** KOTH MONSTERS HAVE SPAWNED! ***");
-            this.kothBroadcast(ChatColor.GRAY + "The longer the KOTH lasts, the more minions spawn!");
-            this.kothBroadcast("");
-        }
-    }
+
 
     public String getNameOfFlagCapper() {
         if (this.playerCapping == null && this.playerCapped == null) {
