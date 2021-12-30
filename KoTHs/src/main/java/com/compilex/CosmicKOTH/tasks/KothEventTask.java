@@ -50,8 +50,11 @@ implements Runnable {
     private Player playerCapping;
     private Player playerCapped = null;
     private int runtime;
+    private boolean running;
 
     public KothEventTask() {
+        this.capped = false;
+        this.running = true;
         try {
             this.fireworkField = EntityFireworks.class.getDeclaredField("ticksFlown");
             this.fireworkField.setAccessible(true);
@@ -81,6 +84,10 @@ implements Runnable {
                 }
             }
         });
+    }
+
+    public boolean isRunning() {
+        return this.running;
     }
 
     @SneakyThrows
@@ -186,6 +193,7 @@ implements Runnable {
     public void captureKOTH(Player player) throws ParseException, UnirestException, IOException {
         FPlayer fplayer;
         this.capped = true;
+        this.running = false;
         this.playerCapped = player;
         this.playerCapping = null;
         Bukkit.broadcastMessage("");

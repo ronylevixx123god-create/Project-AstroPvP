@@ -12,39 +12,61 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-public class LauncherTask
-implements Runnable {
+public class LauncherTask implements Runnable {
     public static int countdown = -1;
 
     public LauncherTask(int secondsUntilKoth) {
         countdown = secondsUntilKoth;
     }
 
-    @Override
     public void run() {
-        if (CosmicKOTHAPI.isKOTHRunning()) {
-            return;
-        }
-        if (--countdown == 300) {
-            this.notifyPlayers("5 MINUTES");
-        }
-        if (countdown == 240) {
-            this.notifyPlayers("4 MINUTES");
-        }
-        if (countdown == 180) {
-            this.notifyPlayers("3 MINUTES");
-        }
-        if (countdown == 120) {
-            this.notifyPlayers("2 MINUTES");
-        }
-        if (countdown == 60) {
-            this.notifyPlayers("1 MINUTE");
-        }
-        if (countdown <= 10 && countdown > 0) {
-            this.notifyPlayers(countdown + " SECONDS");
-        }
-        if (countdown == 0) {
-            CosmicKOTHAPI.resetKOTH();
+        if (!CosmicKOTHAPI.isKOTHRunning()) {
+            --countdown;
+
+            if (countdown == 3560) {
+                this.notifyPlayers("69 MINUTES");
+            }
+
+            if (countdown == 1800) {
+                this.notifyPlayers("30 MINUTES");
+            }
+
+            if (countdown == 900) {
+                this.notifyPlayers("15 MINUTES");
+            }
+
+            if (countdown == 600) {
+                this.notifyPlayers("10 MINUTES");
+            }
+
+            if (countdown == 300) {
+                this.notifyPlayers("5 MINUTES");
+            }
+
+            if (countdown == 240) {
+                this.notifyPlayers("4 MINUTES");
+            }
+
+            if (countdown == 180) {
+                this.notifyPlayers("3 MINUTES");
+            }
+
+            if (countdown == 120) {
+                this.notifyPlayers("2 MINUTES");
+            }
+
+            if (countdown == 60) {
+                this.notifyPlayers("1 MINUTE");
+            }
+
+            if (countdown <= 10 && countdown > 0) {
+                this.notifyPlayers(countdown + " SECONDS");
+            }
+
+            if (countdown == 0) {
+                CosmicKOTHAPI.resetKOTH();
+            }
+
         }
     }
 

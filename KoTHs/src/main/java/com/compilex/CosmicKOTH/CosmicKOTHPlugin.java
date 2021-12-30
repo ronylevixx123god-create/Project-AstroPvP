@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.earth2me.essentials.Essentials
  *  com.massivecraft.factions.Faction
@@ -75,39 +75,88 @@ import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 public class CosmicKOTHPlugin
-extends JavaPlugin {
+        extends JavaPlugin {
 
-    @Getter private static CosmicKOTHPlugin _;
-    @Getter private World world;
-    @Getter @Setter private Location spawn;
-    @Getter @Setter private Location kothCenter;
-    @Getter @Setter private KothEventTask koth;
-    @Getter private Essentials ess3;
-    @Getter @Setter private static boolean isVanillaGalaxy;
-    @Getter @Setter private KothWorldType kothWorldType;
-    @Getter @Setter private Outpost traineeOutpost;
-    @Getter @Setter private Outpost heroOutpost;
-    @Getter @Setter private Outpost cosmonautOutpost;
-    @Getter @Setter private Outpost vanillaOutpost;
-    @Getter @Setter private final List<Outpost> outposts = new ArrayList<Outpost>();
-    @Getter @Setter private Economy economy;
-    @Getter @Setter private DataManager dataManager;
-    @Getter @Setter private File kothBuffsFile;
-    @Getter @Setter private String buffFactionId = "";
-    @Getter @Setter private YamlConfiguration kothBuffsConfig;
-    @Getter @Setter private OutpostManager outpostManager;
-    @Getter @Setter private boolean trophiesEnabled = false;
-    @Getter @Setter private boolean vanillaPlanet = false;
-    @Getter @Setter private boolean cosmicGalaxyPlanet = false;
-    @Getter @Setter private boolean hcfPlanet = false;
-    @Getter @Setter private String baseName = "Outpost";
-    @Getter @Setter private String serverType = "hcf";
-    @Getter @Setter private Map<String, String> cachedMessages = new HashMap<String, String>();
+    @Getter
+    private static CosmicKOTHPlugin _;
+    @Getter
+    private World world;
+    @Getter
+    @Setter
+    private Location spawn;
+    @Getter
+    @Setter
+    private Location kothCenter;
+    @Getter
+    @Setter
+    private KothEventTask koth;
+    @Getter
+    private Essentials ess3;
+    @Getter
+    @Setter
+    private static boolean isVanillaGalaxy;
+    @Getter
+    @Setter
+    private KothWorldType kothWorldType;
+    @Getter
+    @Setter
+    private Outpost traineeOutpost;
+    @Getter
+    @Setter
+    private Outpost heroOutpost;
+    @Getter
+    @Setter
+    private Outpost cosmonautOutpost;
+    @Getter
+    @Setter
+    private Outpost vanillaOutpost;
+    @Getter
+    @Setter
+    private final List<Outpost> outposts = new ArrayList<Outpost>();
+    @Getter
+    @Setter
+    private Economy economy;
+    @Getter
+    @Setter
+    private DataManager dataManager;
+    @Getter
+    @Setter
+    private File kothBuffsFile;
+    @Getter
+    @Setter
+    private String buffFactionId = "";
+    @Getter
+    @Setter
+    private YamlConfiguration kothBuffsConfig;
+    @Getter
+    @Setter
+    private OutpostManager outpostManager;
+    @Getter
+    @Setter
+    private boolean trophiesEnabled = false;
+    @Getter
+    @Setter
+    private boolean vanillaPlanet = false;
+    @Getter
+    @Setter
+    private boolean cosmicGalaxyPlanet = false;
+    @Getter
+    @Setter
+    private boolean hcfPlanet = false;
+    @Getter
+    @Setter
+    private String baseName = "Outpost";
+    @Getter
+    @Setter
+    private String serverType = "hcf";
+    @Getter
+    @Setter
+    private Map<String, String> cachedMessages = new HashMap<String, String>();
 
     public void onEnable() {
         _ = this;
         WorldGuardUtils.hook();
-        this.ess3 = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        this.ess3 = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         isVanillaGalaxy = !new File("plugins/Enchantments.jar").exists();
         this.kothWorldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
         this.kothBuffsConfig = new YamlConfiguration();
@@ -118,8 +167,7 @@ extends JavaPlugin {
         }
         try {
             this.kothBuffsConfig.load(this.kothBuffsFile);
-        }
-        catch (IOException | InvalidConfigurationException e) {
+        } catch (IOException | InvalidConfigurationException e) {
             e.printStackTrace();
         }
         this.buffFactionId = this.kothBuffsConfig.getString("factionId");
@@ -160,11 +208,10 @@ extends JavaPlugin {
         this.kothBuffsConfig.set("factionId", this.getBuffFactionId());
         try {
             this.kothBuffsConfig.save(this.kothBuffsFile);
-        }
-        catch (IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
-            if (CosmicKOTHPlugin.get_().getKoth() != null) {
+        if (CosmicKOTHPlugin.get_().getKoth() != null) {
             Player[] arrplayer = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
             int n = arrplayer.length;
             for (int i = 0; i < n; ++i) {
@@ -219,11 +266,9 @@ extends JavaPlugin {
             for (String entry : newLines) {
                 Files.write(Paths.get("plugins/CosmicKOTH/koth.log"), (entry + "\n").getBytes(), StandardOpenOption.APPEND);
             }
-        }
-        catch (FileNotFoundException ex) {
+        } catch (FileNotFoundException ex) {
             System.out.println("[CosmicKOTH (fixLogs)] Unable to open file 'plugins/CosmicKOTH/koth.log'");
-        }
-        catch (IOException ex2) {
+        } catch (IOException ex2) {
             System.out.println("[CosmicKOTH (fixLogs)] Error reading file 'plugins/CosmicKOTH/koth.log'");
         }
     }
@@ -234,7 +279,7 @@ extends JavaPlugin {
             _.getConfig().set("relaunch", false);
             _.saveConfig();
             Bukkit.getLogger().info("[CosmicKOTH] Server rebooted with an active KOTH, launching a new one.");
-            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
+            Bukkit.getScheduler().runTaskLater(this, new Runnable() {
 
                 @Override
                 public void run() {
@@ -352,9 +397,9 @@ extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new KothLootBagListener(), this);
         Bukkit.getPluginManager().registerEvents(new KothInventoryListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new OutpostWorldListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents(new OutpostWorldListener(), (Plugin) this);
         if (this.isVanillaPlanet()) {
-            this.getServer().getPluginManager().registerEvents(new OutpostPerkVanillaListener(), (Plugin)this);
+            this.getServer().getPluginManager().registerEvents(new OutpostPerkVanillaListener(), (Plugin) this);
         } else if (this.isHcfPlanet()) {
             this.getServer().getPluginManager().registerEvents(new OutpostPerkListener(), this);
         }
@@ -365,7 +410,7 @@ extends JavaPlugin {
         Bukkit.getScheduler().runTaskTimer(this, new KothSanityTask(), 20L, 20L);
     }
 
-    public String getMessage(String msg, String ... args) {
+    public String getMessage(String msg, String... args) {
         String message = this.cachedMessages.get(msg);
         if (message != null) {
             return String.format(message, args);
@@ -375,7 +420,7 @@ extends JavaPlugin {
             Bukkit.getLogger().info("Cant find message to " + msg + "!");
             return "";
         }
-        message = ChatColor.translateAlternateColorCodes((char)'&', (String)message);
+        message = ChatColor.translateAlternateColorCodes((char) '&', (String) message);
         this.cachedMessages.put(msg, message);
         return String.format(message, args);
     }
@@ -383,7 +428,7 @@ extends JavaPlugin {
     private boolean setupEconomy() {
         RegisteredServiceProvider economyProvider = this.getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
-            this.economy = (Economy)economyProvider.getProvider();
+            this.economy = (Economy) economyProvider.getProvider();
         }
         return this.economy != null;
     }
