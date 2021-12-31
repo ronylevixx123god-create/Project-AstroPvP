@@ -23,4 +23,3 @@ public class TimeUtils {
         return second + "s";
     }
 }
-

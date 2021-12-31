@@ -267,9 +267,11 @@ public class CosmicKOTHPlugin
             for (String entry : newLines) {
                 Files.write(Paths.get("plugins/CosmicKOTH/koth.log"), (entry + "\n").getBytes(), StandardOpenOption.APPEND);
             }
-        } catch (FileNotFoundException ex) {
+        }
+        catch (FileNotFoundException ex) {
             System.out.println("[CosmicKOTH (fixLogs)] Unable to open file 'plugins/CosmicKOTH/koth.log'");
-        } catch (IOException ex2) {
+        }
+        catch (IOException ex2) {
             System.out.println("[CosmicKOTH (fixLogs)] Error reading file 'plugins/CosmicKOTH/koth.log'");
         }
     }
@@ -280,7 +282,7 @@ public class CosmicKOTHPlugin
             _.getConfig().set("relaunch", false);
             _.saveConfig();
             Bukkit.getLogger().info("[CosmicKOTH] Server rebooted with an active KOTH, launching a new one.");
-            Bukkit.getScheduler().runTaskLater(this, new Runnable() {
+            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
 
                 @Override
                 public void run() {
@@ -289,7 +291,7 @@ public class CosmicKOTHPlugin
             }, 200L);
         }
         this.registerCenter();
-        /*Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), new Runnable(){
+        Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), new Runnable(){
 
             @Override
             public void run() {
@@ -322,7 +324,7 @@ public class CosmicKOTHPlugin
                     }
                 }, 20L);
             }
-        }, 10L);*/
+        }, 10L);
     }
 
 
@@ -383,27 +385,26 @@ public class CosmicKOTHPlugin
             this.kothCenter = new Location(this.world, middleX, middleY, middleZ);
             Bukkit.getLogger().info(String.format("[CosmicKOTH] found valid kothCenter at %sx, %sy, %sz, minVector: " + minVector + " maxVector: " + maxVector, "" + middleX, "" + middleY, "" + middleZ));
         } else {
-            Bukkit.getLogger().info("unable to find koth_center region inside world_koth!");
+            Bukkit.getLogger().info("unable to find koth_center region inside world");
         }
     }
 
     private void registerCommands() {
         this.getCommand("koth").setExecutor(new CommandKoth());
         this.getCommand("akoth").setExecutor(new CommandAdminKoth());
-        this.getCommand("stronghold").setExecutor(new CommandOutpost());
+        this.getCommand("stronghold").setExecutor((CommandExecutor)new CommandOutpost());
     }
 
     private void registerListeners() {
         Bukkit.getPluginManager().registerEvents(new KothSanityListener(), this);
         Bukkit.getPluginManager().registerEvents(new KothLootBagListener(), this);
         Bukkit.getPluginManager().registerEvents(new KothInventoryListener(), this);
-        Bukkit.getPluginManager().registerEvents(new KothPortalListener(), this);
 
-        this.getServer().getPluginManager().registerEvents(new OutpostWorldListener(), (Plugin) this);
+        this.getServer().getPluginManager().registerEvents((Listener)new OutpostWorldListener(), (Plugin)this);
         if (this.isVanillaPlanet()) {
-            this.getServer().getPluginManager().registerEvents(new OutpostPerkVanillaListener(), (Plugin) this);
+            this.getServer().getPluginManager().registerEvents((Listener)new OutpostPerkVanillaListener(), (Plugin)this);
         } else if (this.isHcfPlanet()) {
-            this.getServer().getPluginManager().registerEvents(new OutpostPerkListener(), this);
+            this.getServer().getPluginManager().registerEvents((Listener)new OutpostPerkListener(), (Plugin)this);
         }
     }
 
@@ -412,7 +413,7 @@ public class CosmicKOTHPlugin
         Bukkit.getScheduler().runTaskTimer(this, new KothSanityTask(), 20L, 20L);
     }
 
-    public String getMessage(String msg, String... args) {
+    public String getMessage(String msg, String ... args) {
         String message = this.cachedMessages.get(msg);
         if (message != null) {
             return String.format(message, args);
@@ -422,7 +423,7 @@ public class CosmicKOTHPlugin
             Bukkit.getLogger().info("Cant find message to " + msg + "!");
             return "";
         }
-        message = ChatColor.translateAlternateColorCodes((char) '&', (String) message);
+        message = ChatColor.translateAlternateColorCodes((char)'&', (String)message);
         this.cachedMessages.put(msg, message);
         return String.format(message, args);
     }
@@ -430,9 +431,8 @@ public class CosmicKOTHPlugin
     private boolean setupEconomy() {
         RegisteredServiceProvider economyProvider = this.getServer().getServicesManager().getRegistration(Economy.class);
         if (economyProvider != null) {
-            this.economy = (Economy) economyProvider.getProvider();
+            this.economy = (Economy)economyProvider.getProvider();
         }
         return this.economy != null;
     }
 }
-

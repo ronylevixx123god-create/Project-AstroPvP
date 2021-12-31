@@ -50,10 +50,8 @@ implements Runnable {
     private Player playerCapping;
     private Player playerCapped = null;
     private int runtime;
-    private boolean running;
 
     public KothEventTask() {
-        this.running = true;
         try {
             this.fireworkField = EntityFireworks.class.getDeclaredField("ticksFlown");
             this.fireworkField.setAccessible(true);
@@ -77,9 +75,6 @@ implements Runnable {
         });
     }
 
-    public boolean isRunning() {
-        return this.running;
-    }
 
     @SneakyThrows
     @Override
@@ -174,9 +169,6 @@ implements Runnable {
     public void captureKOTH(Player player) throws ParseException, UnirestException, IOException {
         FPlayer fplayer;
         this.capped = true;
-        this.running = false;
-        this.playerCapped = player;
-        this.playerCapping = null;
 
         Bukkit.broadcastMessage((String)"");
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
@@ -187,6 +179,8 @@ implements Runnable {
         Bukkit.broadcastMessage((String)"");
 
         this.logWinner(player);
+        this.playerCapped = player;
+        this.playerCapping = null;
 
         Location l = this.playerCapped.getEyeLocation();
         for (int i = 0; i < 10; ++i) {

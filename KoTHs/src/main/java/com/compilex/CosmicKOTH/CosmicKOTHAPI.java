@@ -1,19 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.HeroicWeaponType
- *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
- *  com.google.common.collect.Lists
- *  net.minecraft.server.v1_7_R4.NBTBase
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
- *  org.bukkit.plugin.Plugin
- */
 package com.compilex.CosmicKOTH;
 
 import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
@@ -35,11 +19,11 @@ import org.bukkit.plugin.Plugin;
 
 public class CosmicKOTHAPI {
     public static boolean isKOTHRunning() {
-        return (CosmicKOTHPlugin.get_().getKoth() != null && CosmicKOTHPlugin.get_().getKoth().isRunning());
+        return CosmicKOTHPlugin.get_().getKoth() != null;
     }
 
     public static boolean canTeleportToKOTH() {
-        return (isKOTHRunning() && !CosmicKOTHPlugin.get_().getKoth().isCapped());
+        return CosmicKOTHAPI.isKOTHRunning() && !CosmicKOTHPlugin.get_().getKoth().isCapped();
     }
 
     public static ItemStack applyKOTHWeaponSetBonus(ItemStack item, String winner, HeroicWeaponType weaponType, String ability) {
@@ -51,7 +35,7 @@ public class CosmicKOTHAPI {
         lore.add("");
         lore.add(ChatColor.translateAlternateColorCodes((char)'&', (String)("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH " + CC.WhiteB + "WEAPON BONUS")));
         lore.add(CC.WhiteB + " * " + CC.White + ability);
-        lore.add(CC.GrayI + "(Requires all 4 koth items)");
+        lore.add(CC.GrayI + "(Requires all 4 koth armor items)");
         lore.add("");
         lore.add(CC.AquaB + "(!) " + (Object)ChatColor.AQUA + "Claimed by " + CC.LightPurpleB + winner + (Object)ChatColor.AQUA + " on " + CC.LightPurpleU + KothItemUtils.format.format(new Date()));
         im.setLore(lore);

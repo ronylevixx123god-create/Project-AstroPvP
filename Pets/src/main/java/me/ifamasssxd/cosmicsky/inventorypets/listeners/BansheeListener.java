@@ -26,7 +26,7 @@ public class BansheeListener implements Listener {
 
             if (damager.hasMetadata("banshee_active")) {
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless")) {
-                    event.setDamage(event.getDamage() * 1.30D);
+                    event.setDamage(event.getDamage() * 1.50D);
                 }
                 if (event.getEntity().hasMetadata("champion_ability")) {
                     damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l** &6&l(Champion Ability)"));
