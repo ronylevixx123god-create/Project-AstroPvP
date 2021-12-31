@@ -68,7 +68,7 @@ extends CustomEnchantment {
                 return;
             }
             boolean KOTH_or_duel = player.getWorld().getName().equals("world_koth") || player.getWorld().getName().equals("world_duels") || player.getWorld().getName().equals("world_duels2");
-            double chance = 0.01 + (double)level * 0.05;
+            double chance = 0.001;
             if (chance > 0.02) {
                 chance = 0.02;
             }
@@ -105,7 +105,7 @@ extends CustomEnchantment {
         ig.setCanPickupItems(false);
         ig.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + summoner.getName() + "'s Guardian");
         ig.setCustomNameVisible(true);
-        double customHp = 50 + level * 10;
+        double customHp = 50;
         ig.setMaxHealth(customHp);
         ig.setHealth(customHp);
         ig.getWorld().playSound(ig.getLocation(), Sound.IRONGOLEM_DEATH, 1.0f, 0.55f);

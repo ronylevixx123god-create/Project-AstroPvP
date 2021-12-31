@@ -44,15 +44,15 @@ extends CustomEnchantment {
             for (Entity ent : player.getNearbyEntities(radius, radius, radius)) {
                 Player playerNear;
                 if (!(ent instanceof Player) || !this.isAlly(playerHurt, playerNear = (Player)ent)) continue;
-                GeneralUtil.healPlayer((LivingEntity)playerNear, healAmount);
+//                GeneralUtil.healPlayer((LivingEntity)playerNear, healAmount);
                 try {
-                    ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), playerNear.getEyeLocation().add(0.0, 0.35, 0.0), 0.0f, (float) Math.random(), 0.0f, 0.05f, 1);
+//                    ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), playerNear.getEyeLocation().add(0.0, 0.35, 0.0), 0.0f, (float) Math.random(), 0.0f, 0.05f, 1);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
             }
             try {
-                ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 0.5, 0.0), (float)Math.random() / 2.0f, (float)Math.random() / 2.0f,(float)Math.random() / 2.0f, 0.05f, 3);
+//                ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 0.5, 0.0), (float)Math.random() / 2.0f, (float)Math.random() / 2.0f,(float)Math.random() / 2.0f, 0.05f, 3);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

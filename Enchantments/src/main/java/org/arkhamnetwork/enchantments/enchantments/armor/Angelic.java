@@ -47,7 +47,7 @@ extends CustomEnchantment {
             return;
         double chance;
         double random = Math.random();
-        if (random < (chance = 0.03 * (double)level)) {
+        if (random < (chance = 0.015 * (double)level)) {
             long healDelay = 100L;
             if (level <= 1) {
                 healDelay = 100L;
@@ -65,7 +65,7 @@ extends CustomEnchantment {
                 healDelay = 60L;
             }
             long healDuration = Math.max(healDelay + 2L, (long)level * 20L + (10L + (long)ThreadLocalRandom.current().nextInt(16)));
-            double healAmount = 1.0;
+            double healAmount = 0.5;
             if (player.hasMetadata("angelicTaskID")) {
                 return;
             }

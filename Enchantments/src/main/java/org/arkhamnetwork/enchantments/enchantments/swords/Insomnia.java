@@ -34,7 +34,6 @@ extends CustomEnchantment {
         if (random < chance) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(time * 10, 40), Math.min(level - 1, 2)));
             if (level >= 6) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Math.max(time * 10, 40), 1));
             }
             double multi = 1.0 + (double)level * 0.05;
             e.setDamage(e.getDamage() * multi);

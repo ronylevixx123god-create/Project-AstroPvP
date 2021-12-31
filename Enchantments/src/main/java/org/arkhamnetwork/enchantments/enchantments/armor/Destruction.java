@@ -96,7 +96,6 @@ extends CustomEnchantment {
                             FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
                             if (!fp.getFaction().getRelationTo((RelationParticipator)fplayer.getFaction()).isAtMost(Relation.NEUTRAL) || WorldGuardUtils.isPvPDisabled(p.getLocation())) continue;
                             if (p.getHealth() > 0.0 && !p.isDead()) {
-                                p.damage(level == 5 ? 2.0 : 1.0);
                                 try {
                                     ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
                                 } catch (Exception exception) {
@@ -104,7 +103,6 @@ extends CustomEnchantment {
                                 }
                             }
                             if (level >= 1 && Math.random() <= 0.15) {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, level * 20, level > 2 ? 1 : 0));
                                 try {
                                     ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
                                 } catch (Exception exception) {
@@ -112,7 +110,6 @@ extends CustomEnchantment {
                                 }
                             }
                             if (level >= 2 && Math.random() <= 0.1) {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, level * 20 * 2, level + 1));
                                 try {
                                     ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
                                 } catch (Exception exception) {
@@ -120,7 +117,6 @@ extends CustomEnchantment {
                                 }
                             }
                             if (level < 3 || !(Math.random() <= 0.085)) continue;
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, level * 20 * 2, 1));
                             try {
                                 ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 30);
                             } catch (Exception exception) {

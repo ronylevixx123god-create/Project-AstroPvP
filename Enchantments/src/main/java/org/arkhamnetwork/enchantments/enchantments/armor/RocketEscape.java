@@ -59,8 +59,7 @@ extends CustomEnchantment {
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
-            double dmg = e.getDamage();
-            dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue((Player)player));
+            double dmg = e.getFinalDamage();
             if (player.getWorld().getEnvironment() == World.Environment.THE_END) {
                 return;
             }

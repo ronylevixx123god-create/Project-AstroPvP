@@ -40,7 +40,7 @@ extends CustomEnchantment {
             return;
         double chance;
         double random = Math.random();
-        if (random < (chance = 0.075 * (double)level)) {
+        if (random < (chance = 0.0375 * (double)level)) {
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> GeneralUtil.setPlayerHealth(player, player.getHealth() + 1.0), 1L);
         }
     }

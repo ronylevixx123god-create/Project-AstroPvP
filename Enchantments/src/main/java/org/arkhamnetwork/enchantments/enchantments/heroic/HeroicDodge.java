@@ -42,10 +42,10 @@ extends HeroicCustomEnchantment {
         if (player.hasMetadata("noDefenseProcs"))
             return;
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.05 * (double)level;
+            double chance = 0.005 * (double)level;
             boolean sneaking = ((Player)player).isSneaking();
             if (sneaking) {
-                chance += 0.2;
+                chance *= 1.2;
             }
             if (Math.random() < chance) {
                 e.setCancelled(true);
