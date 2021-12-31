@@ -35,7 +35,6 @@ extends HeroicCustomEnchantment {
             Player pAttacker;
             Player p = (Player)player;
             if (attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
-                pAttacker.damage(0.5 * (double)level);
                 Location l = p.getLocation();
                 WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)81, (int)2001);
             }

@@ -54,7 +54,7 @@ extends CustomEnchantment {
             return;
         double procChance;
         double random;
-        if (player.hasMetadata("diminishEffect")) {
+/*        if (player.hasMetadata("diminishEffect")) {
             double maxDmg = ((MetadataValue)player.getMetadata("diminishEffect").get(0)).asDouble();
             double dmgToDeal = maxDmg;
             if (dmgToDeal > 0.0 && attacker instanceof Player) {
@@ -67,11 +67,11 @@ extends CustomEnchantment {
                 player.removeMetadata("diminishEffect", (Plugin)Enchantments.getInstance());
                 return;
             }
-        }
+        }*/
         if ((random = Math.random()) < (procChance = 0.05 * (double)level)) {
-            e.setDamage(e.getDamage() / 2.0);
-            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(e.getFinalDamage() / 2.0)));
-            ((Player)player).sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "* DIMINISH [" + (Object)ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getFinalDamage() / 2.0) + (Object)ChatColor.BOLD + "] *");
+//            e.setDamage(e.getDamage() / 2.0);
+//            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(e.getFinalDamage() / 2.0)));
+            ((Player)player).sendMessage((Object)ChatColor.LIGHT_PURPLE + "" + (Object)ChatColor.BOLD + "* VENGEFUL DIMINISH [" + (Object)ChatColor.LIGHT_PURPLE + "MAX DMG: " + this.df.format(e.getFinalDamage() / 2.0) + (Object)ChatColor.BOLD + "] *");
         }
     }
 }

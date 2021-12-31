@@ -42,7 +42,7 @@ public class HeroicAegis extends HeroicCustomEnchantment {
         HashSet<UUID> enemies = player.hasMetadata(aegisUniqueEnemies_MetadataKey) ? (HashSet<UUID>) player.getMetadata(aegisUniqueEnemies_MetadataKey).get(0).value() : new HashSet<>();
         Player pAttacker = (Player)attacker;
         if (enemies.size() > 1 && !enemies.contains(pAttacker.getUniqueId())) {
-            e.setDamage(e.getDamage() * 0.5); //Could change this value?
+            e.setDamage(e.getDamage() * 0.2); //Could change this value?
             try {
                 ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 16);
             } catch (Exception exception) {

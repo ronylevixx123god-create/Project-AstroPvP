@@ -41,7 +41,7 @@ extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         int amp;
         double random = Math.random();
-        double chance = 0.04 * (double)level;
+        double chance = 0.0005 * (double)level;
         int time = (int)(Math.random() * (double)level) + 1 * level;
         int n = amp = level > 2 ? 1 : 0;
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
@@ -56,7 +56,7 @@ extends CustomEnchantment {
             }
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             Location l = player.getLocation();
-            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time*20 + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
+            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
 
             WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
         }

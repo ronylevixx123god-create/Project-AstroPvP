@@ -44,27 +44,17 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void diaSwordFix(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+        if (e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             if (damager.getItemInHand() != null) {
-                if (damager.getItemInHand().getType() == Material.DIAMOND_SWORD) {
-                    e.setDamage(e.getDamage() * 0.65);
-                }
+                NBTWrapper wrapper = new NBTWrapper(damager.getItemInHand());
+                NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? wrapper.getCompound("cosmicData") : new NBTTagCompoundBuilder();
+                if(cosmicData.hasKey("dmgIncr"))
+                    e.setDamage(e.getDamage() + cosmicData.getDouble("dmgIncr"));
             }
         }
     }
 
-    @EventHandler
-    public void axeFix(EntityDamageByEntityEvent e) {
-        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
-            Player damager = (Player) e.getDamager();
-            if (damager.getItemInHand() != null) {
-                if (damager.getItemInHand().getType().name().contains("_AXE")) {
-                    e.setDamage(e.getDamage() * 1.25);
-                }
-            }
-        }
-    }
 
 
     @EventHandler

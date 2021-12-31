@@ -72,15 +72,12 @@ extends HeroicCustomEnchantment {
         public void onIceAspectProc(CustomEnchantProcOnEntityEvent event) {
             Integer damagedEquipped;
             if (event.getEnchant() == Enchantments.getInstance().getIceAspectEnchant() && event.getTarget() != null && (damagedEquipped = ((HeroicMetaphysical)this.customEnchant).getEquippedMetaphysical().get(event.getTarget().getUniqueId())) != null) {
-                double chance = 0.2 * damagedEquipped.doubleValue();
-                if (HeroicMetaphysical.this.random.nextDouble() <= chance) {
                     event.setCancelled(true);
                     if (event.getTarget() instanceof Player) {
                         ((Player)event.getTarget()).sendMessage(CC.LightPurpleB + "** POLYMORPHIC METAPHYSICAL (" + CC.Gray + "Ice Aspect blocked!" + CC.LightPurpleB + ") **");
                         DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL *", "METAPHYSICAL");
 
                     }
-                }
             }
         }
     }

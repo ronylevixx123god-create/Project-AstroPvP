@@ -85,8 +85,8 @@ extends CustomEnchantment {
                     if (!(victim instanceof Player)) continue;
                     ((Player)victim).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + p.getName() + " has thrown a Smoke Bomb in an attempt to escape!");
                     ((Player)victim).getWorld().playSound(victim.getLocation(), Sound.FIREWORK_TWINKLE2, 1.6f, 0.75f);
-                    ((Player)victim).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Math.max(level, 3) * 20, Math.min(level, 3)));
-                    ((Player)victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(level, 3) * 20, Math.min(level, 3)));
+/*                    ((Player)victim).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Math.max(level, 3) * 20, Math.min(level, 3)));
+                    ((Player)victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(level, 3) * 20, Math.min(level, 3)));*/
                 }
                 e.setCancelled(true);
                 e.setDamage(0.0);

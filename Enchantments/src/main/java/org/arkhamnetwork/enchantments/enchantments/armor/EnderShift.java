@@ -65,8 +65,7 @@ extends CustomEnchantment {
         if (player instanceof Player) {
             if (player.hasMetadata("neutralized"))
                 return;
-            double dmg = e.getDamage();
-            dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue((Player)player));
+            double dmg = e.getFinalDamage();
             if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player)player)) {
                 Player pl = (Player)player;
                 last_ender_shift.put(pl.getUniqueId().toString(), System.currentTimeMillis());

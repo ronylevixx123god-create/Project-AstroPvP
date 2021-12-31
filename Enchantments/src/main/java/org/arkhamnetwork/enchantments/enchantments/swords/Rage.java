@@ -40,7 +40,7 @@ public class Rage extends CustomEnchantment {
                 hitCombo = 8D;
             }
 
-            if (hitCombo > 1.0D) {
+            if (hitCombo >= 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 + (hitCombo/20)));
                 playRageEffect(target.getEyeLocation(), enchantLevel);
             }

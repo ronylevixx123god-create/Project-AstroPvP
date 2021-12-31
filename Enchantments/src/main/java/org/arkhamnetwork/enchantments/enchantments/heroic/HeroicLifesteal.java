@@ -24,8 +24,8 @@ extends HeroicCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         double random = Math.random();
-        double chance = enchantLevel == 1 ? 0.15 : (enchantLevel == 2 ? 0.2 : (enchantLevel == 3 ? 0.25 : 0.25));
-        int toHeal = enchantLevel == 1 ? 4 : (enchantLevel == 2 ? 6 : (enchantLevel == 3 ? 8 : 4));
+        double chance = enchantLevel == 1 ? 0.075 : (enchantLevel == 2 ? 0.1 : (enchantLevel == 3 ? 0.125 : 0.075));
+        int toHeal = enchantLevel == 1 ? 2 : (enchantLevel == 2 ? 3 : (enchantLevel == 3 ? 4 : 2));
         int health = (int)user.getHealth() + toHeal;
         if ((double)health > user.getMaxHealth()) {
             health = (int)user.getMaxHealth();

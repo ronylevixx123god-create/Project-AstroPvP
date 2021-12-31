@@ -58,7 +58,6 @@ extends CustomEnchantment {
         Player p;
         if (player instanceof Player && cactus.containsKey((p = (Player)player).getName()) && attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
             if(Math.random() < 0.2) {
-                pAttacker.damage(0.5 * (double) level);
                 Location l = p.getLocation();
                 WorldUtil.sendWorldEffect((Block) l.getBlock(), (int) 81, (int) 2001);
             }

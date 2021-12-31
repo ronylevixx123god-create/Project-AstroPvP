@@ -50,7 +50,7 @@ extends CustomEnchantment {
             return;
         }
         double random = Math.random();
-        double chance = 0.075 * (double)level;
+        double chance = 0.002 * (double)level;
         int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();
@@ -80,7 +80,7 @@ extends CustomEnchantment {
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
 
             WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
-            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
+//            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
         }
     }
 }

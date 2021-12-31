@@ -30,10 +30,10 @@ extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         double chance;
         double random = Math.random();
-        if (random < (chance = 0.03 * (double)level) && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
+        if (random < (chance = 0.001 * (double)level) && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
             player.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 30 * level, 1));
             player.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, 30 * level, 1));
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * level, 1));
+//            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 20 * level, 1));
         }
     }
 }

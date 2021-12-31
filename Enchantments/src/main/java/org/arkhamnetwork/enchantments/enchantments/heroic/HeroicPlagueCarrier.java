@@ -33,8 +33,7 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
             if (player.hasMetadata("neutralized"))
                 return;
             Player p = (Player)player;
-            double dmg = e.getDamage();
-            dmg *= (double) ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
+            double dmg = e.getFinalDamage();
             if (player.getHealth() - dmg <= 0.0) {
                 if (p.hasMetadata("PlagueCarrier") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("PlagueCarrier").get(0)).asLong() <= 10000L) {
                     return;

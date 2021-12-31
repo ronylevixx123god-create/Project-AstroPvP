@@ -60,7 +60,7 @@ extends CustomEnchantment {
                 return;
             if (player.hasMetadata("noDefenseProcs"))
                 return;
-            double chance = 0.01 * (double)level;
+            double chance = 0.001;
             if (chance > 0.04) {
                 chance = 0.04;
             }
