@@ -31,7 +31,7 @@ import java.util.UUID;
 
 public class ItemSkinListener implements Listener {
 
-    private Map<Player, UUID> cooldownPlayers;
+    private final Map<Player, UUID> cooldownPlayers;
 
 
     public ItemSkinListener() {
@@ -52,12 +52,13 @@ public class ItemSkinListener implements Listener {
                 return;
             if (typeList.get(0) == null || !AstroItemSkinsAPI.isCorrectType(typeList.get(0), clicked))
                 return;
-            if (cooldownPlayers.containsKey(event.getWhoClicked())) {
+            if (cooldownPlayers.containsKey((Player)event.getWhoClicked())) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
                 return;
             }
+
             if(cursor.getAmount() > 1) {
-                event.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot apply stacked weapon bonuses!");
+                event.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot apply stacked itemskins!");
             }
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
                 for (SkinType type : typeList)
@@ -77,7 +78,7 @@ public class ItemSkinListener implements Listener {
             cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
 
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-                cooldownPlayers.remove(event.getWhoClicked());
+                cooldownPlayers.remove((Player)event.getWhoClicked());
             },20L);
 
         } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked) && isArmorOrWeapon(clicked)) {
@@ -85,11 +86,12 @@ public class ItemSkinListener implements Listener {
             List<SkinType> skinTypes = AstroItemSkinsAPI.getItemSkinByItem(clicked);
             assert skinTypes != null;
 
-            if (cooldownPlayers.containsKey(event.getWhoClicked())) {
+            if (cooldownPlayers.containsKey((Player)event.getWhoClicked())) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
                 return;
             }
 
+            //Bry just added this
 
             for (int i = 0; i < skinTypes.size(); i++) {
                 for (int j = 1; j < skinTypes.size(); j++) {
@@ -102,6 +104,11 @@ public class ItemSkinListener implements Listener {
                         }
 
 
+                        if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR)  {
+                            event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Clear your cursor before removing skins from items!"));
+                            return;
+                        }
+
                         event.setCurrentItem(AstroItemSkinsAPI.removeMultiSkinFromItem(clicked, skinTypes.get(i), skinTypes.get(j)));
 
                         event.setCursor(skinTypes.get(i).getMultiSkin(skinTypes.get(j)));
@@ -109,8 +116,8 @@ public class ItemSkinListener implements Listener {
                         ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
                         cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
                         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-                            cooldownPlayers.remove(event.getWhoClicked());
-                        },20L);
+                            cooldownPlayers.remove((Player)event.getWhoClicked());
+                        },10L);
 
                         return;
                     }
@@ -119,14 +126,19 @@ public class ItemSkinListener implements Listener {
 
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
                 skinTypes.get(0).getItemSkin().onUnequip((Player) event.getWhoClicked());
+
+            if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR)  {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Clear your cursor before removing skins from items!"));
+                return;
+            }
             event.setCurrentItem(AstroItemSkinsAPI.removeItemSkinFromItem(clicked));
             event.setCursor(((SkinType) skinTypes.get(0)).getItem());
             event.setCancelled(true);
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
             cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-                cooldownPlayers.remove(event.getWhoClicked());
-            },20L);
+                cooldownPlayers.remove((Player)event.getWhoClicked());
+            },10L);
 
 
         }
@@ -181,10 +193,12 @@ public class ItemSkinListener implements Listener {
     public void onArmorChange(ArmorEquipEvent event) {
         if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
+            assert skins != null;
             skins.forEach(skin -> skin.getItemSkin().onUnequip(event.getPlayer()));
         }
         if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
+            assert skins != null;
             skins.forEach(skin -> skin.getItemSkin().onEquip(event.getPlayer()));
         }
     }

@@ -23,7 +23,7 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 100;
+    int amountOfExpPerBlaze = 50;
 
     @Override
     public void run() {

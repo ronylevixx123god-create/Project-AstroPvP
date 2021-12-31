@@ -30,9 +30,6 @@ implements Listener {
                     }
                     if (CosmicKOTHAPI.isKOTHRunning()) {
                         e.getWhoClicked().teleport(CosmicKOTHPlugin.get_().getSpawn());
-                    } else {
-                        e.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "No KOTH events are currently running.");
-                        e.getWhoClicked().sendMessage(CC.Gray + "Use /koth to find the next scheduled KOTH.");
                     }
                 }
             }

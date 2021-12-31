@@ -26,7 +26,6 @@ public class KothPortalListener implements Listener {
         if(event.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL) {
             event.setCancelled(true);
             player.teleport(new Location(Bukkit.getWorld("world"), 2422, 120, 4638));
-            player.sendMessage(CC.translate("&e&l(KOTH)&e You have been teleported to the top of koth!"));
         }
     }
 
@@ -37,7 +36,6 @@ public class KothPortalListener implements Listener {
             if (player.getWorld().getName().equals("world") && WorldGuardUtils.getRegionsIn(player.getLocation()).contains("desertkoth2")) {
                 Location location = new Location(Bukkit.getWorld("world"), 2422, 120, 4638);
                 Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), () -> player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 3L);
-                player.sendMessage(CC.translate("&e&l(KOTH)&e You have been teleported to the top of koth!"));
             }
         }
     }
