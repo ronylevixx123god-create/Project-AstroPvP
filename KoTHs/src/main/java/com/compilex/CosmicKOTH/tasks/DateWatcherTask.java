@@ -77,7 +77,7 @@ public class DateWatcherTask
         Calendar c = Calendar.getInstance();
         for (Calendar event : events) {
             if (c.get(7) != event.get(7) || c.get(11) != event.get(11)) continue;
-            Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(901), 20L, 20L);
+            //Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(901), 20L, 20L);
             this.ranThisSession = true;
         }
     }

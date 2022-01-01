@@ -165,7 +165,7 @@ public class AstroSet
         if (this.isBlockedOutpostWorld(damaged)) {
             return false;
         }
-        this.modifyDamage(damaged, event, -5.0, multiplier);
+        this.modifyDamage(damaged, event, -3.0, multiplier);
         return false;
     }
 
@@ -174,7 +174,7 @@ public class AstroSet
         if (!(event.getEntity() instanceof Player)) {
             return false;
         }
-        this.modifyDamage(damager, event, 7.5, applied);
+        this.modifyDamage(damager, event, 7, applied);
 
         if (Math.random() < 0.01) {
             if (this.isBlockedOutpostWorld(damager)) {
@@ -195,10 +195,13 @@ public class AstroSet
                     if (!(nearbyEnt instanceof Player) || (fpNear = FPlayers.i.get(pNear = (Player) nearbyEnt)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                         continue;
                     pNear.sendMessage("");
-                    pNear.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "** ASTRO KILLER (" + ChatColor.GRAY + fp.getNameAsync() + " [6s]" + ChatColor.GREEN + ChatColor.BOLD + ") **");
+                    pNear.sendMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "** ASTRO CAGE (" + ChatColor.GRAY + fp.getNameAsync() + " [6s]" + ChatColor.GREEN + ChatColor.BOLD + ") **");
                     pNear.sendMessage("");
+                    pNear.getLocation().getWorld().playSound(pNear.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+
                 }
-                damager.getLocation().getWorld().playSound(damager.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
+                damager.getLocation().getWorld().playSound(damager.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+
                 this.activateFalloutKillerAbility(damager, (Player) event.getEntity());
             }
         }

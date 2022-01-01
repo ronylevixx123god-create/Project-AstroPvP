@@ -40,18 +40,6 @@ implements Listener {
                 e.setCancelled(true);
                 LivingEntity le = (LivingEntity)e.getEntity();
                 le.damage((double)Math.min(7, 4 + enchantLevel));
-
-                try {
-                    ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), le.getEyeLocation(), 0.15f, 0.15f, 0.15f, 0.1f, 30);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-
-                try {
-                    ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), le.getEyeLocation(), 0.5f, 0.5f, 0.5f, 0.1f, 20);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
                 if (le instanceof Player) {
                     ((Player)le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);

@@ -16,6 +16,9 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
@@ -68,11 +71,19 @@ extends CustomEnchantment {
             if (!this.isWearingHeroic((Player)playerHit)) {
                 return;
             }
+            if (LunaSet.isLunarStriked((Player) playerHit)) return;
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player)p, (int)4);
             }
             double increase = 0.1 * (double)level;
-            e.setDamage(e.getDamage() * (1.0 + increase));
+
+            if (CosmicArmorSetsAPI.hasCrystalApplied((Player) player, ArmorSet.LUNA)) {
+                increase *= 1.1;
+            }
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
+                increase += 1.3;
+            }
+                e.setDamage(e.getDamage() * (1.0 + increase));
         }
     }
 

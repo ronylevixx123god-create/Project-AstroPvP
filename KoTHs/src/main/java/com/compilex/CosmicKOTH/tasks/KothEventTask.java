@@ -25,6 +25,7 @@ import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
@@ -50,6 +51,7 @@ implements Runnable {
     private Player playerCapping;
     private Player playerCapped = null;
     private int runtime;
+    private boolean running;
 
     public KothEventTask() {
         try {
@@ -73,6 +75,10 @@ implements Runnable {
                 }
             }
         });
+    }
+
+    public boolean isRunning() {
+        return this.running;
     }
 
 
@@ -169,7 +175,7 @@ implements Runnable {
     public void captureKOTH(Player player) throws ParseException, UnirestException, IOException {
         FPlayer fplayer;
         this.capped = true;
-
+        this.running = false;
         Bukkit.broadcastMessage((String)"");
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe &6Desert koth&f has been Captured!")));
@@ -200,6 +206,9 @@ implements Runnable {
         }
 
         GiftcardAPI.createGiftCard(this.playerCapped, 10);
+        Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(3600), 20L, 20L);
+
+
     }
 
     public void logWinner(Player p) {

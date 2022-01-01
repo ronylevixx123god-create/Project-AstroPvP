@@ -150,16 +150,18 @@ public class SetBonusListener
             }
             if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
                 return;
-            if (damaged != null && WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
-                if(WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
-                    if(bonuses.containsKey(ArmorSet.ENGINEER)) {
-                        if(bonuses.get(ArmorSet.ENGINEER) == 1) {
+            assert damager != null;
+            if (WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
+                if (WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
+                    assert bonuses != null;
+                    if (bonuses.containsKey(ArmorSet.ENGINEER)) {
+                        if (bonuses.get(ArmorSet.ENGINEER) == 1) {
                             bonuses.remove(ArmorSet.ENGINEER);
                         } else {
                             bonuses.put(ArmorSet.ENGINEER, bonuses.get(ArmorSet.ENGINEER) - 1);
                         }
                     }
-                    event.getDamager().sendMessage(CC.RedB + " ** " + CC.GoldB + "ENGINEER CRYSTAL BLOCKED ("  + CC.RedB + "DEMON WEAPON BONUS" + CC.GoldB + ")" + CC.RedB + " ** ");
+                    event.getDamager().sendMessage(CC.translate("&6&l* &4&lDemon Weaponbonus &7Blocked " + event.getEntity().getName() + "'s &6Engineer Crystal &l*"));
                 }
             }
             if (bonuses != null && !bonuses.isEmpty()) {

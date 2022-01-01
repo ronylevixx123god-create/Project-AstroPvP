@@ -69,7 +69,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
     public static void vanishPlayer(final Player damaged, int enchantLevel) throws NoSuchFieldException, IllegalAccessException {
         final double seconds = enchantLevel;
         damaged.setMetadata("feign_vanish", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis() + seconds * 1000.0D));
-        damaged.setMetadata("feign_hits_max", new FixedMetadataValue(Enchantments.getInstance(), enchantLevel));
+        damaged.setMetadata("feign_hits_max", new FixedMetadataValue(Enchantments.getInstance(), 1));
         deathCooldown.put(damaged.getUniqueId(), System.currentTimeMillis() + 10000L);
         EntityPlayer player = ((CraftPlayer)damaged).getHandle();
         EntityPlayer fake = new EntityPlayer(player.server, (WorldServer)player.world, player.getProfile(), new PlayerInteractManager(player.world));
@@ -115,16 +115,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         },30L);
         damaged.sendTitle(new Title(CC.RedB + "Feign Death", CC.Red + NumberUtils.formatSeconds(seconds), 10, 25, 10));
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-            boolean isHoldingGoblinAxe = false;
-            if (CosmicArmorSetsAPI.getArmorSet(pl) != null) {
-                if (CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.GOBLIN) {
-                    if (pl.getItemInHand() != null && pl.getItemInHand().getType().name().contains("AXE") && (new NBTWrapper(pl.getItemInHand())).getString("cosmicType").equals("GOBLIN_WEAPON"))
-                        isHoldingGoblinAxe = true;
-                }
-
-            }
-
-            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE) && !isHoldingGoblinAxe)
+            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
                 pl.hidePlayer(damaged);
         }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);

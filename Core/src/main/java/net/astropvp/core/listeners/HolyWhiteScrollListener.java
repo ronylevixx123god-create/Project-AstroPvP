@@ -16,9 +16,11 @@ import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.google.common.collect.Lists;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Objects;
 
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.CollectType;
@@ -56,25 +58,25 @@ public class HolyWhiteScrollListener implements Listener {
                 if (cursor.getconaxData() != null)
                     return;
                 NBTWrapper wrapper = (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) ? new NBTWrapper(e.getCurrentItem()) : null;
-                AstroCore.getInstance().getHolyWhitescrollItem().onInventoryClick((Player)e.getWhoClicked(), e.getCursor(), cursor, wrapper, e.getCurrentItem(), e);
+                AstroCore.getInstance().getHolyWhitescrollItem().onInventoryClick((Player) e.getWhoClicked(), e.getCursor(), cursor, wrapper, e.getCurrentItem(), e);
             } catch (CosmicException e2) {
-                ((Player)e.getWhoClicked()).sendMessage(e2.getMessage());
+                ((Player) e.getWhoClicked()).sendMessage(e2.getMessage());
                 e.setCancelled(true);
             }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerDeath(PlayerDeathEvent e) {
-        if(e.getEntity().getKiller() == null)
+        if (e.getEntity().getKiller() == null)
             return;
-        if(e.getKeepInventory())
+        if (e.getKeepInventory())
             return;
         if (!e.getEntity().getLocation().getWorld().getName().equals("world") && !e.getEntity().getLocation().getWorld().getName().equals("flat"))
             return;
         if (!e.getEntity().getKiller().getLocation().getWorld().getName().equals("world") && !e.getEntity().getKiller().getLocation().getWorld().getName().equals("flat"))
             return;
         //if ((e.getEntity() != null && e.getEntity() == null) || (e.getEntity().getKiller() != null && e.getEntity().getKiller() == null))
-            //return;
+        //return;
         Player killer = e.getEntity().getKiller();
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
         boolean controlling = (killer != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsCosmonautOutpost(killer));
@@ -87,7 +89,9 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 boolean isControlling = (controlling && Math.random() > 0.1D);
-                boolean isMonopolied = (wearingMonopolyMask && Math.random() <= (killerIsControllingFrozen ? 0.48D : 0.33D));
+                double monoChance = (killerIsControllingFrozen ? 0.48D : 0.33D);
+                if (CosmicArmorSetsAPI.hasCrystalApplied(e.getEntity().getPlayer(), ArmorSet.ASTRO)) monoChance += 0.05;
+                boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;
                 if (killer != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.DIMENSIONAL_TRAVELER) {
@@ -104,12 +108,6 @@ public class HolyWhiteScrollListener implements Listener {
                             isKilledHoldingTravAxe = true;
                     }
                 assert killer != null;
-                if (CosmicArmorSetsAPI.getArmorSet(killer) != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.ULTRA && Math.random() < 0.2D) {
-                    e.getEntity().sendMessage(CC.AquaB + "* ULTRA NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
-                    killer.sendMessage(CC.AquaB + "* ULTRA NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Ultra Armor Set procing.");
-                    continue;
-                }
                 if (!isBansheed && !isControlling && !isMonopolied && !isTravAxe) {
                     savedItems.add(i);
                     continue;
@@ -117,7 +115,7 @@ public class HolyWhiteScrollListener implements Listener {
                 (new ItemStack[1])[0] = i;
 
                 if (isMonopolied && !isKilledHoldingTravAxe) {
-                    if (AstroItemSkinsAPI.hasSkinEquipped(e.getEntity().getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved you from getting monoed &a&l*"));
                         continue;
@@ -129,7 +127,7 @@ public class HolyWhiteScrollListener implements Listener {
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
-                    if (killerIsControllingFrozen && Math.random() <0.1) {
+                    if (killerIsControllingFrozen && Math.random() < 0.1) {
                         e.getEntity().sendMessage(CC.RedB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                     } else {
@@ -146,15 +144,9 @@ public class HolyWhiteScrollListener implements Listener {
                     continue;
                 }
                 if (isBansheed) {
-                    if (e.getEntity().hasMetadata("champion_ability")) {
-                        e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *" + CC.GoldB + " (Champion Ability)");
-                        killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *" + CC.GoldB + " (Champion Ability)");
-                        Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing + Champ ability.");
-                    } else {
-                        e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                        killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                        Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing.");
-                    }
+                    e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                    killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Banshee RKO procing.");
                     continue;
                 }
                 if (!isTravAxe)
@@ -192,9 +184,9 @@ public class HolyWhiteScrollListener implements Listener {
         if (toReturn != null) {
             for (ItemStack i : toReturn) {
                 Bukkit.getLogger().info("[CosmicDungeons (HolyWhiteScroll)] Player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ") respawned with Holy White Scroll item: " + i);
-                e.getPlayer().getInventory().addItem(new ItemStack[] { HolyWhiteScrollUtils.removeHolyWhitescroll(i) });
+                e.getPlayer().getInventory().addItem(HolyWhiteScrollUtils.removeHolyWhitescroll(i));
             }
-            Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(e.getPlayer(), "HOLY_WHITESCROLL_DEATH", new Object[] { toReturn }));
+            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(e.getPlayer(), "HOLY_WHITESCROLL_DEATH", new Object[]{toReturn}));
         }
     }
 }
