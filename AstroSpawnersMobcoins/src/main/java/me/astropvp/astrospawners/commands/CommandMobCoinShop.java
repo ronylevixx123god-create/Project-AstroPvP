@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.struct.MobCoinShopItems;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
@@ -59,66 +60,19 @@ public class CommandMobCoinShop implements CommandExecutor {
         double balance = ((data == null) ? 0 : data.getCoins());
 
 
-        if (sender.hasPermission("astrocore.apollo")) {
-            if (chests.containsKey("PremadeMeta"))
-                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(4000));
-            if (chests.containsKey("NewGenSkin"))
-                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1200));
-            if (chests.containsKey("Backpack"))
-                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(800));
-            if (chests.containsKey("AstroNote"))
-                values.put(((MysteryChest)chests.get("AstroNote")).createClaimableItem(false), Integer.valueOf(1600));
-            //Normal Items
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(2400));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(4800));
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(6400));
-            values.put(CrateKeyItem.getItem(CrateType.valueOf("WINTER")), Integer.valueOf(30000));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("holy_water").createItem(((Player) sender).getPlayer(), 35), Integer.valueOf(1600));
-
-
-
-
-
-        } else {
-            if (chests.containsKey("PremadeMeta"))
-                values.put(((MysteryChest)chests.get("PremadeMeta")).createClaimableItem(false), Integer.valueOf(5000));
-            if (chests.containsKey("NewGenSkin"))
-                values.put(((MysteryChest)chests.get("NewGenSkin")).createClaimableItem(false), Integer.valueOf(1500));
-            if (chests.containsKey("Backpack"))
-                values.put(((MysteryChest)chests.get("Backpack")).createClaimableItem(false), Integer.valueOf(1000));
-            if (chests.containsKey("AstroNote"))
-                values.put(((MysteryChest)chests.get("AstroNote")).createClaimableItem(false), Integer.valueOf(2000));
-
-            //Normal items
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("rogue_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("slotbot_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("revoke_scratchcard").createItem(((Player) sender).getPlayer()), Integer.valueOf(3000));
-            values.put(CrateKeyItem.getItem(CrateType.APOLLO), Integer.valueOf(6000));
-            values.put(CosmicSlotBotAPI.createSlotBotItem(), Integer.valueOf(8000));
-            values.put(CrateKeyItem.getItem(CrateType.valueOf("WINTER")), 35000);
-            values.put(CosmicSkyCustomItems.get().getItemManager().getCustomItem("holy_water").createItem(((Player) sender).getPlayer(), 35), Integer.valueOf(2000));
-
-
-
-
-
-
+        for (MobCoinShopItems item : MobCoinShopItems.values()) {
+            values.put(item.getItemStack(), item.getPrice((Player) sender));
         }
 
 
 
-        //LOOT TABLE
-
-        //
 
 
         int x = 0;
         for (Map.Entry<ItemStack, Integer> entry : values.entrySet()) {
             ItemStack item = entry.getKey();
             ItemMeta meta = item.getItemMeta();
-            int price = ((Integer)entry.getValue()).intValue();
+            int price = ((Integer) entry.getValue()).intValue();
             List<String> lore = meta.hasLore() ? meta.getLore() : Lists.newArrayList();
             lore.add("");
             if (sender.hasPermission("astrocore.apollo")) {
@@ -133,11 +87,10 @@ public class CommandMobCoinShop implements CommandExecutor {
             NBTWrapper wrapper = new NBTWrapper(item);
             NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder();
             builder.setInt("cost", Integer.valueOf(price));
-            item = wrapper.setNBTBase("shopData", (NBTBase)builder.get()).build();
+            item = wrapper.setNBTBase("shopData", (NBTBase) builder.get()).build();
             inventory.setItem(x, item);
             x++;
         }
-
 
 
         ItemStack coinsItem = new ItemBuilder(Material.DOUBLE_PLANT).name(CC.translate("&e&lMobcoins Shop")).addLoreLine(CC.translate("&7Welcome to the mobcoins shop."))
@@ -145,13 +98,13 @@ public class CommandMobCoinShop implements CommandExecutor {
                 .addLoreLine(CC.translate(CC.GreenB) + "* TOTAL: " + CC.White + NumberUtils.formatMoney(balance) + " Mob Coins").build();
 
         inventory.setItem(31, coinsItem);
-        for (int i = 27; i<inventory.getSize(); i++) {
+        for (int i = 27; i < inventory.getSize(); i++) {
             if (inventory.getItem(i) == null) {
                 inventory.setItem(i, getFillerItem());
             }
         }
 
-        ((Player)sender).openInventory(inventory);
+        ((Player) sender).openInventory(inventory);
         return false;
     }
 
