@@ -58,7 +58,6 @@ extends CustomEnchantment {
         this.max = 3;
         this.base = 25.0;
         this.interval = 5.0;
-        Bukkit.getPluginManager().registerEvents((Listener)new EnderShiftEvents(), (Plugin)Enchantments.getInstance());
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
@@ -91,13 +90,6 @@ extends CustomEnchantment {
 
                     @Override
                     public void run() {
-                        if (Bukkit.getPlayer((UUID)UUID.fromString(uuid)) != null) {
-                            try {
-                                ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), Bukkit.getPlayer(uuid).getLocation(), (float) Math.random() * 1.0f,(float) Math.random() * 1.0f, (float) Math.random() * 1.0f, 1.25f, 100);
-                            } catch (Exception exception) {
-                                exception.printStackTrace();
-                            }
-                        }
                         ender_shifters.remove(uuid);
                     }
                 }, (long)(20 * (level + 7) + 10));
@@ -116,27 +108,7 @@ extends CustomEnchantment {
         return ender_shifters.contains(pl.getUniqueId().toString());
     }
 
-    private static class EnderShiftEvents
-    implements Listener {
-        private EnderShiftEvents() {
-        }
 
-        @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
-        public void onPlayerShootBow(EntityShootBowEvent e) {
-            if (e.getEntity() instanceof Player && EnderShift.isEnderShifting((Player)e.getEntity())) {
-                e.setCancelled(true);
-                ((Player)e.getEntity()).playSound(e.getEntity().getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 0.54f);
-            }
-        }
 
-        @EventHandler(priority=EventPriority.LOWEST)
-        public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
-            if (e.getDamager() instanceof Player && EnderShift.isEnderShifting((Player)e.getDamager())) {
-                e.setCancelled(true);
-                e.setDamage(0.0);
-                ((Player)e.getDamager()).playSound(e.getDamager().getLocation(), Sound.ENDERMAN_TELEPORT, 1.0f, 0.54f);
-            }
-        }
-    }
 }
 

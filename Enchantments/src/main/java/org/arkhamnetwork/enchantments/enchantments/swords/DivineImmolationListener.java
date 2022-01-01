@@ -39,7 +39,7 @@ implements Listener {
             if (System.currentTimeMillis() - ((MetadataValue)e.getEntity().getMetadata("divineFire").get(0)).asLong() < (long)((4 + enchantLevel) * 1000)) {
                 e.setCancelled(true);
                 LivingEntity le = (LivingEntity)e.getEntity();
-                le.damage((double)Math.min(7, 4 + enchantLevel));
+                le.damage(2);
                 if (le instanceof Player) {
                     ((Player)le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);

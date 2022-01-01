@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
+import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -23,17 +24,12 @@ public class BansheeListener implements Listener {
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
-
             if (damager.hasMetadata("banshee_active")) {
+                if (LunaSet.isLunarStriked((Player) event.getEntity())) return;
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless")) {
                     event.setDamage(event.getDamage() * 1.50D);
                 }
-                if (event.getEntity().hasMetadata("champion_ability")) {
-                    damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l** &6&l(Champion Ability)"));
-                } else {
-                    damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l**"));
-
-                }
+                damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l**"));
             }
         }
     }

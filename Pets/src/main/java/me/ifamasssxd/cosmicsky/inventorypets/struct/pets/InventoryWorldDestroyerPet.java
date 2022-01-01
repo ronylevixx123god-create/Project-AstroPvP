@@ -62,8 +62,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     private double cageDuration = 5.0;
 
 
-
-
     public int getCooldown(int level) {
         return 300;
     }
@@ -76,9 +74,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         return 5;
     }
 
-    public boolean playerHasApollo(Player pl) {
-        return (CosmicArmorSetsAPI.getBonusCrystalsEquipped(pl).containsKey(ArmorSet.APOLLO) || CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.APOLLO);
-    }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
@@ -119,9 +114,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             }
         }
 
-        if (playerHasApollo(player)) {
-            cageDuration = 7.5;
-        } else if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+        if (MaskUtils.hasMaskEquipped(player, "ELF")) {
             cageDuration = 7.5;
         } else {
             cageDuration = 5.0;
@@ -137,14 +130,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("Could not find a valid target!");
         /*if (CageCooldown.isOnCageCooldown(target))
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");*/
-        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D && !playerHasApollo(player)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D) {
             petItem.setLastUsed(System.currentTimeMillis());
 
-            if (playerHasApollo(player)) {
-                target.sendMessage(CC.translate("&c&l* CHAD SUNGLASSES &a&lBYPASSED &7[&c" + player.getName() + "&cApollo Set&7] &c&l*"));
-                player.sendMessage(CC.translate("&a&l* BYPASSED CHAD SUNGLASSED FROM &c&n" + target.getName() + "&a&l *"));
-                return true;
-            }
+
             player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
@@ -171,26 +160,18 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
         petItem.setLastUsed(System.currentTimeMillis());
         cagePlayer(player, target);
-        if (playerHasApollo(player)) {
-            Player finalTarget = target;
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
-                PermissionsAPI.getPermissionUser(finalTarget.getUniqueId()).getPermissionNodes().remove("verus.bypass");
+
+
+        Player finalTarget1 = target;
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
+            try {
+                PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
+            } catch (Exception e) {
+            }
 
-            }, (long) (this.cageDuration + this.cageDuration) * 20L);
-        } else {
+        }, (long) this.cageDuration * 20L);
 
-
-            Player finalTarget1 = target;
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
-                try {
-                    PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                    PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                } catch (Exception e) {
-                }
-
-            }, (long) this.cageDuration * 20L);
-        }
         return true;
     }
 
@@ -199,7 +180,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
             if (!(entity instanceof Player))
                 continue;
-            Player p = (Player)entity;
+            Player p = (Player) entity;
             if (p.hasMetadata("spectator"))
                 continue;
             list.add(p);
@@ -219,19 +200,19 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
     private static List<Location> setOutside(Location baseLocation, Material material) {
         List<Location> locs = new ArrayList<>(Arrays.asList(baseLocation
-                .clone().add(0.0D, 0.0D, -1.0D), baseLocation
-        .clone().add(1.0D, 0.0D, 0.0D), baseLocation
-        .clone().add(1.0D, 0.0D, -1.0D), baseLocation
-        .clone().add(1.0D, 0.0D, 1.0D), baseLocation
-        .clone().add(1.0D, 0.0D, 2.0D), baseLocation
-        .clone().add(0.0D, 0.0D, 2.0D), baseLocation
-        .clone().add(-1.0D, 0.0D, 2.0D), baseLocation
-        .clone().add(-2.0D, 0.0D, 2.0D), baseLocation
-        .clone().add(-2.0D, 0.0D, 0.0D), baseLocation
-        .clone().add(-2.0D, 0.0D, 1.0D),
+                        .clone().add(0.0D, 0.0D, -1.0D), baseLocation
+                        .clone().add(1.0D, 0.0D, 0.0D), baseLocation
+                        .clone().add(1.0D, 0.0D, -1.0D), baseLocation
+                        .clone().add(1.0D, 0.0D, 1.0D), baseLocation
+                        .clone().add(1.0D, 0.0D, 2.0D), baseLocation
+                        .clone().add(0.0D, 0.0D, 2.0D), baseLocation
+                        .clone().add(-1.0D, 0.0D, 2.0D), baseLocation
+                        .clone().add(-2.0D, 0.0D, 2.0D), baseLocation
+                        .clone().add(-2.0D, 0.0D, 0.0D), baseLocation
+                        .clone().add(-2.0D, 0.0D, 1.0D),
                 baseLocation
                         .clone().add(-2.0D, 0.0D, -1.0D), baseLocation
-                .clone().add(-1.0D, 0.0D, -1.0D)));
+                        .clone().add(-1.0D, 0.0D, -1.0D)));
         return setWithLocations(material, locs);
     }
 
@@ -242,7 +223,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             if (loc.getBlock().getType() == Material.AIR) {
                 filteredLocations.add(loc);
                 loc.getBlock().setType(material);
-                loc.getBlock().setMetadata("cage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), "cage"));
+                loc.getBlock().setMetadata("cage", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), "cage"));
             }
         }
         return filteredLocations;
@@ -265,7 +246,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.4F);
         locations.addAll(list);
 
-        scheduler.scheduleSyncDelayedTask((Plugin)CosmicSkyInventoryPets.get(), (Runnable)(new BukkitRunnable() {
+        scheduler.scheduleSyncDelayedTask((Plugin) CosmicSkyInventoryPets.get(), (Runnable) (new BukkitRunnable() {
             int count = 0;
 
             public void run() {
@@ -282,13 +263,13 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 }
                 this.count++;
             }
-        }).runTaskTimer((Plugin)CosmicSkyInventoryPets.get(), 20L, 20L));
+        }).runTaskTimer((Plugin) CosmicSkyInventoryPets.get(), 20L, 20L));
     }
 
     public static String stringLocation(Location loc) {
-        int x = (int)loc.getX();
-        int y = (int)loc.getY();
-        int z = (int)loc.getZ();
+        int x = (int) loc.getX();
+        int y = (int) loc.getY();
+        int z = (int) loc.getZ();
         String world = loc.getWorld().getName();
         String result = String.valueOf(world) + " " + x + " " + y + " " + z;
         return result;

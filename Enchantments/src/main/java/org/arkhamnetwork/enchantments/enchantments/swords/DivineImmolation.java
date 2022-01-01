@@ -71,7 +71,7 @@ public class DivineImmolation
         }
         Player p = (Player) player;
         double radius = 1.0 * (double) level;
-        double damage = Math.floor((double) level * 1.25);
+        double damage = 2;
         if (!GeneralUtil.isSword(p.getItemInHand())) {
             return;
         }
@@ -81,6 +81,7 @@ public class DivineImmolation
         if (p.hasMetadata("soulTrap") && ((MetadataValue) p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
             return;
         }
+        if (!(playerHit instanceof Player)) return;
         if (KillTrackerAPI.hasGodMode((Player) p) && KillTrackerAPI.getAllSouls((Player) p) > 0) {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue) p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player) p, (int) 20);

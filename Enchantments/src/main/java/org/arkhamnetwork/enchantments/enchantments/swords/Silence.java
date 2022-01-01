@@ -55,7 +55,6 @@ public class Silence
 extends CustomEnchantment {
     public Silence() {
         super("Silence", GeneralUtil.swords_and_bow, 2);
-        Bukkit.getServer().getPluginManager().registerEvents((Listener)new SilenceListener(), (Plugin)Enchantments.getInstance());
         this.max = 4;
         this.base = 20.0;
         this.interval = 5.0;
@@ -99,6 +98,8 @@ extends CustomEnchantment {
             if((enchantLevel + solitudeLevel) * 20 * 0.6 < durationTicks && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.SUMMER_2021_HELMET)) {
                 durationTicks = (enchantLevel + solitudeLevel) * 20L;
             }
+            if ((durationTicks / 20) <= 0) return;
+
             DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* SILENCE " + CC.Gray + "[" + durationTicks/20 + "s] " + CC.DarkPurpleB +  "*", "SILENCE");
 
             pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)true));
