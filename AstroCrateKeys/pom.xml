@@ -41,7 +41,6 @@
         <!-- ConaxGames repos -->
 
 
-
         <!-- New Cosmic Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -73,6 +72,13 @@
             <artifactId>Enchantments</artifactId>
             <version>0.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Collect</artifactId>
+            <version>0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Lootboxes</artifactId>
@@ -90,7 +96,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Factions</artifactId>
+            <artifactId>Factionss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
@@ -293,18 +299,18 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/worldedit-bukkit-6.1.7.3.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>ccollect</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Collect.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.mattstudios.utils</groupId>
+            <artifactId>matt-framework-gui</artifactId>
+            <version>2.0.3.3</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

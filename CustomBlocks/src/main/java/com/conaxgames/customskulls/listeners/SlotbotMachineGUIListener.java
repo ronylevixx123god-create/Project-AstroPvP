@@ -122,7 +122,7 @@ public class SlotbotMachineGUIListener implements Listener {
                     a--;
                 }
 
-                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p).add(new CollectCategory(CollectType.SLOTBOT, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GreenB + "Personal Slotbot Machine Loot"));
+                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId()).add(new CollectCategory(CollectType.SLOTBOT, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GreenB + "Personal Slotbot Machine Loot", System.currentTimeMillis()));
                 p.sendMessage("");
                 p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The SlotBot Loot has been put into your &f/collect&b."));
                 p.sendMessage("");

@@ -121,7 +121,7 @@ public class CrateKeyGUIListener implements Listener {
                     }
                 }
 
-                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p).add(new CollectCategory(CollectType.CRTAEKEY, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GoldB + "CrateKey Opener Loot"));
+                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId()).add(new CollectCategory(CollectType.CRTAEKEY, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GoldB + "CrateKey Opener Loot", System.currentTimeMillis()));
                 p.sendMessage("");
                 p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The CrateKey Loot has been put into your &f/collect&b."));
                 p.sendMessage("");

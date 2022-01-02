@@ -8,6 +8,7 @@ import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.PlayerCollect;
+import net.astropvp.utils.TimeUtil;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -58,12 +59,12 @@ public class CollectInventory {
             event.setCancelled(true);
         }));
 
-        PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player);
+        PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player.getUniqueId());
         List<CollectCategory> categories = collect.getCategories();
         for (CollectCategory cat : categories) {
             collectUI.addItem(new GuiItem(getCategoryItem(player, cat), event -> {
                 if (event.getClick() == ClickType.SHIFT_RIGHT) {
-                    CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player).remove(cat);
+                    CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player.getUniqueId()).remove(cat);
                     player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
                     CollectInventory collectInventory = new CollectInventory(player);
                     collectInventory.getCollectUI().open(player);
@@ -76,7 +77,8 @@ public class CollectInventory {
     }
 
     private ItemStack getCategoryItem(Player player, CollectCategory cat) {
-        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&a&lLeft-Click&7 to open inventory"), CC.translate("&c&lSHIFT Right-Click&7 to remove inventory")).build();
+        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&a&lLeft-Click&7 to open inventory"), CC.translate("&c&lSHIFT Right-Click&7 to remove inventory"), "", CC.translate("&6&lExpires in&7: &f") +
+                ((cat.getTimeCollected() + 86400000) - System.currentTimeMillis() <= 0 ? "Now" : TimeUtil.millisToRoundedTime( (cat.getTimeCollected() + 86400000) - System.currentTimeMillis()))).build();
     }
 
 

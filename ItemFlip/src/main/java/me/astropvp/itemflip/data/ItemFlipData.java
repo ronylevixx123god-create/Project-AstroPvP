@@ -84,7 +84,7 @@ public class ItemFlipData {
             items.addAll(((ItemFlipPlayerData) this.getData().get(0)).getItems());
             items.addAll(((ItemFlipPlayerData) this.getData().get(1)).getItems());
 
-            CollectPlugin.getInstance().getCollectManager().getPlayerCollect(winner).add(new CollectCategory(CollectType.ITEMFLIP, items.toArray(new ItemStack[items.size() - 1]), CC.RedB + loser.getName() + "'s ItemFlip Items"));
+            CollectPlugin.getInstance().getCollectManager().getPlayerCollect(winner.getUniqueId()).add(new CollectCategory(CollectType.ITEMFLIP, items.toArray(new ItemStack[items.size() - 1]), CC.RedB + loser.getName() + "'s ItemFlip Items", System.currentTimeMillis()));
 
 
 
