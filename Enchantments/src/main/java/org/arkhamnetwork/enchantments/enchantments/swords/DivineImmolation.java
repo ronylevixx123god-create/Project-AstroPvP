@@ -71,7 +71,7 @@ public class DivineImmolation
         }
         Player p = (Player) player;
         double radius = 1.0 * (double) level;
-        double damage = 2;
+        double damage = 1;
         if (!GeneralUtil.isSword(p.getItemInHand())) {
             return;
         }

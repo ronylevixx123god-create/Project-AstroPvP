@@ -47,10 +47,10 @@ extends HeroicCustomEnchantment {
                     return;
                 }
                 double damageToReflect = finalDamage * reduceDamage;
-                e.setDamage(e.getDamage() * (1.0 - reduceDamage));
+                //e.setDamage(e.getDamage() * (1.0 - reduceDamage));
                 double reflectChance = 0.08 * (double)level + (player.isBlocking() ? 0.05 : 0.0);
                 if (Math.random() < reflectChance && attacker instanceof Player) {
-                    player.sendMessage(CC.GreenB + "* BLOCKED [" + NumberUtils.formatSeconds((double)finalDamage) + " DMG] *");
+                    player.sendMessage(CC.GreenB + "* REFLECTIVE BLOCKED [" + NumberUtils.formatSeconds((double)finalDamage) + " DMG] *");
                     try {
                         ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.75f, 0.75f, 0.75f, 0.1f, 25);
                     } catch (Exception exception) {

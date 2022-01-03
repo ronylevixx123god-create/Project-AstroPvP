@@ -61,18 +61,15 @@ extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        int solitudeLevel = 0;
-        if (EnchantmentAPI.getEnchantments((ItemStack)user.getEquipment().getItemInHand()).containsKey((Object)EnchantmentAPI.getEnchantment((String)"Solitude"))) {
-            solitudeLevel = (Integer)EnchantmentAPI.getEnchantments((ItemStack)user.getEquipment().getItemInHand()).get((Object)EnchantmentAPI.getEnchantment((String)"Solitude"));
-        }
+        int solitudeLevel = 3;
         double chance = (double)(enchantLevel + solitudeLevel) * 0.02;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player)target;
             if (!new CustomEnchantProcOnEntityEvent(user, (LivingEntity)pTarget, (Event)event, this, enchantLevel).callEvent()) {
                 return;
             }
-            if (pTarget.hasMetadata("immune_silence") && user instanceof Player && Math.random() < 0.75) {
-                ((Player)user).sendMessage(CC.RedB + "* SILENCE BLOCKED [" + CC.Gray + pTarget.getName() + CC.RedB + "] *");
+            if (user instanceof Player && CosmicArmorSetsAPI.hasCrystalApplied((Player) user, ArmorSet.DRAGON_SLAYER) && Math.random() < 0.75) {
+                ((Player)user).sendMessage(CC.YellowB + "* DRAGON SILENCE BLOCKED [" + CC.Gray + pTarget.getName() + CC.YellowB + "] *");
                 return;
             }
             long durationTicks = (enchantLevel + solitudeLevel) * 20L;
