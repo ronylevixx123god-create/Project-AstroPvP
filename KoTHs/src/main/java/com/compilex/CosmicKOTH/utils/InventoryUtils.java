@@ -83,12 +83,10 @@ public class InventoryUtils {
                 lore.add(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GRAY + "This KOTH has been capped by " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + KET.getPlayerCapped().getName() + "!");
             }
         } else {
-            if (LauncherTask.countdown != -1) {
+            if (LauncherTask.countdown != 0) {
                 lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Next Scheduled KOTH: " + ChatColor.RED.toString() + ChatColor.BOLD.toString() + TimeUtils.getSecondsAsString(LauncherTask.countdown));
-            } else {
-                lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Next Scheduled KOTH: " + (Object)ChatColor.RED + ChatColor.BOLD.toString() + DateWatcherTask.getTimeUntilNextKOTH());
             }
-        }
+            }
         lore.add("");
         lore.add(CC.GoldB + "Winner Reward:");
         lore.add(CC.WhiteB + "● " + CC.Gray + "1x Koth Lootbag");

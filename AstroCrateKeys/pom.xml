@@ -74,7 +74,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>net.astropvp</groupId>
             <artifactId>Collect</artifactId>
             <version>0.1</version>
         </dependency>

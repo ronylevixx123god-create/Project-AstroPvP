@@ -28,7 +28,7 @@ implements Listener {
                     if (e.getSlot() != 4) {
                         return;
                     }
-                    if (CosmicKOTHAPI.isKOTHRunning()) {
+                    if (CosmicKOTHAPI.canTeleportToKOTH()) {
                         e.getWhoClicked().teleport(CosmicKOTHPlugin.get_().getSpawn());
                     }
                 }

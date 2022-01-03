@@ -67,10 +67,10 @@ public class AstroSpawners extends JavaPlugin {
                 EntityUtils.clearAllEntities();
             }
         }, 100L);
-        System.out.println("Done saving mobcoins data!");
+
         EntityUtils.onEnable();
         new SpawnerCustomItem("spawner", "<amount> <entity>");
-        manager2 = new PlayerDataManager(this);
+        //manager2 = new PlayerDataManager(this);
 
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())
@@ -112,10 +112,10 @@ public class AstroSpawners extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
 
         getSpawnerManager().save();
-        for (Player p : Bukkit.getOnlinePlayers()) {
+        /*for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
             AstroSpawners.getInstance().getManager().savePlayerData(data);
-        }
+        }*/
         MobStackerUtils.onDisable();
         EntityUtils.clearAllEntities();
 
@@ -133,9 +133,9 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new CombineSpawnersInventoryListener());
         registerListener(new EntityStackerListener(this));
         registerListener(new MobSpawnerListener());
-        registerListener(new MobCoinShopListener());
+        //registerListener(new MobCoinShopListener());
         registerListener(new PlayerDataOnJoin());
-        registerListener(new ClickMobcoinsNoteListener());
+        //registerListener(new ClickMobcoinsNoteListener());
         registerListener(new GrindingGuiClose());
     }
 
@@ -144,15 +144,15 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("givespawner").setExecutor(new CommandGiveSpawner());
         getCommand("clearmobs").setExecutor(new CommandClearHashMap());
         getCommand("checkmobs").setExecutor(new CommandCheckHashMap());
-        getCommand("savemobcoins").setExecutor(new SaveMobCoinsCommand());
-        getCommand("addmobcoins").setExecutor(new CommandAddMobcoins());
+        //getCommand("savemobcoins").setExecutor(new SaveMobCoinsCommand());
+        //getCommand("addmobcoins").setExecutor(new CommandAddMobcoins());
 
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
 
 
 
-        getCommand("mobcoinshop").setExecutor((CommandExecutor) new CommandMobCoinShop());
-        getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
+        //getCommand("mobcoinshop").setExecutor((CommandExecutor) new CommandMobCoinShop());
+        //getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
         getCommand("factionstop").setExecutor((CommandExecutor)new CommandFactionsTop());
         getCommand("adminfactionstop").setExecutor((CommandExecutor)new CommandAdminFactionsTop());
     }

@@ -71,9 +71,7 @@ public class DateWatcherTask
         if (this.ranThisSession) {
             return;
         }
-        if (LauncherTask.countdown != -1) {
-            return;
-        }
+
         Calendar c = Calendar.getInstance();
         for (Calendar event : events) {
             if (c.get(7) != event.get(7) || c.get(11) != event.get(11)) continue;

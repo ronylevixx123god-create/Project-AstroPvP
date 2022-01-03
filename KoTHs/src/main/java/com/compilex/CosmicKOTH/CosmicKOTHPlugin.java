@@ -24,12 +24,9 @@ import com.compilex.CosmicKOTH.cmds.CommandAdminKoth;
 import com.compilex.CosmicKOTH.cmds.CommandKoth;
 import com.compilex.CosmicKOTH.listeners.KothInventoryListener;
 import com.compilex.CosmicKOTH.listeners.KothLootBagListener;
-import com.compilex.CosmicKOTH.listeners.KothPortalListener;
 import com.compilex.CosmicKOTH.listeners.KothSanityListener;
 import com.compilex.CosmicKOTH.struct.KothWorldType;
-import com.compilex.CosmicKOTH.tasks.DateWatcherTask;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
-import com.compilex.CosmicKOTH.tasks.KothSanityTask;
 import com.compilex.CosmicKOTH.tasks.LauncherTask;
 import com.compilex.CosmicKOTH.utils.LocationUtils;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
@@ -203,6 +200,8 @@ public class CosmicKOTHPlugin
         this.outpostManager = new OutpostManager();
         this.outpostManager.loadOutposts(this);
         this.trophiesEnabled = new File("plugins/CosmicHCFTrophies.jar").exists();
+        Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(3600), 20L, 20L);
+
     }
 
     public void onDisable() {
@@ -282,13 +281,6 @@ public class CosmicKOTHPlugin
             _.getConfig().set("relaunch", false);
             _.saveConfig();
             Bukkit.getLogger().info("[CosmicKOTH] Server rebooted with an active KOTH, launching a new one.");
-            Bukkit.getScheduler().runTaskLater(this, new Runnable(){
-
-                @Override
-                public void run() {
-                    Bukkit.getScheduler().runTaskTimerAsynchronously(CosmicKOTHPlugin.get_(), new LauncherTask(601), 20L, 20L);
-                }
-            }, 200L);
         }
         this.registerCenter();
         Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), new Runnable(){
@@ -409,8 +401,7 @@ public class CosmicKOTHPlugin
     }
 
     private void registerTasks() {
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new DateWatcherTask(), 1200L, 600L);
-        Bukkit.getScheduler().runTaskTimer(this, new KothSanityTask(), 20L, 20L);
+        //Bukkit.getScheduler().runTaskTimerAsynchronously(this, new DateWatcherTask(), 1200L, 600L);
     }
 
     public String getMessage(String msg, String ... args) {

@@ -13,12 +13,10 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.integration.Econ;
 import com.reliableplugins.printer.Printer;
 import com.reliableplugins.printer.PrinterPlayer;
-import me.astropvp.astroendgrinding.data.EndPlayerData;
-import me.astropvp.astroendgrinding.enums.MonsterType;
-import me.astropvp.astroendgrinding.utils.TimeUtils;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
@@ -512,32 +510,6 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-        if (player.getLocation().getWorld().getName().equals("world_the_end")) {
-            int endPlayers = 0;
-            int totalKills = 0;
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.getWorld().getName().equals("world_the_end")) {
-                    endPlayers++;
-                }
-            }
-            List<String> board = new LinkedList<>();
-            EndPlayerData data = EndPlayerData.findPlayer(player);
-            PlayerDataManager manager = AstroSpawners.getInstance().getManager();
-            PlayerData dataCoins = manager.getPlayerData(player);
-            board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&5&lEnd Grinding"));
-            for (MonsterType type : MonsterType.values()) {
-                totalKills += data.getKills(type);
-            }
-            board.add(CC.translate("&d Kills&7: &f") + totalKills);
-            board.add(CC.translate("&d End Players&7: &f") + endPlayers);
-            board.add(CC.translate("&d Time Spent&7: &f" + TimeUtils.format(data.getTimeInEnd())));
-            board.add(CC.translate("&d Mobcoins&7:&f " + NumberFormat.getIntegerInstance().format(dataCoins.getCoins()) + "⛁"));
-
-            board.add("");
-            board.add(CC.White + "play.astropvp.net");
-            return board;
-        }
 /*
         if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
             List<String> board = new LinkedList<>();
@@ -566,8 +538,16 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add(" ");
-        board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Mobcoins");
-        board.add(CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
+
+        if (!FactionUtils.getFaction(player).isWilderness()) {
+            Faction faction = FactionUtils.getFaction(player);
+            board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
+            board.add(CC.translate("&a" + faction.getOnlinePlayers().size() + " &7/ 15"));
+        } else {
+            board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
+            board.add(CC.Gray + "play.astropvp.net");
+
+        }
 
         /*board.add("");
         board.add(CC.GreenB + player.getName());

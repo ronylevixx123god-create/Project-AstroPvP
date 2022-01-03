@@ -23,7 +23,7 @@ public class CosmicKOTHAPI {
     }
 
     public static boolean canTeleportToKOTH() {
-        return (isKOTHRunning() && !CosmicKOTHPlugin.get_().getKoth().isCapped());
+        return (CosmicKOTHPlugin.get_().getKoth() != null && !CosmicKOTHPlugin.get_().getKoth().isCapped());
     }
 
     public static ItemStack applyKOTHWeaponSetBonus(ItemStack item, String winner, HeroicWeaponType weaponType, String ability) {
@@ -54,6 +54,7 @@ public class CosmicKOTHAPI {
             Bukkit.getScheduler().cancelTask(oldTaskId);
         }
         KothEventTask KET = new KothEventTask();
+        KET.running = true;
         KET.setTaskId(Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)KET, 20L, 20L).getTaskId());
         CosmicKOTHPlugin.get_().setKoth(KET);
         Bukkit.getLogger().info("[CosmicKOTH] Launched new KOTH with task ID #" + KET.getTaskId());

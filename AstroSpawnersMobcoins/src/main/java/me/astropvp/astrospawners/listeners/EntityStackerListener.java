@@ -50,8 +50,7 @@ public class EntityStackerListener implements Listener {
     private final MobStackerUtils mobStackerUtils;
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
-    private final ItemStack novaKey = CrateKeyItem.getItem(CrateType.NOVA);
-    private final ItemStack stellarKey = CrateKeyItem.getItem(CrateType.STELLAR);
+    private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
 
 
     public EntityStackerListener(AstroSpawners plugin) {
@@ -110,23 +109,7 @@ public class EntityStackerListener implements Listener {
 
 
             if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
-                exp +=50;
-
-
-                if (Math.random() < 0.05) {
-                    data.setCoins(data.getCoins() + 2);
-                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&6+2 Mobcoins &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
-
-                } else {
-                    ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
-                    data.setCoins(data.getCoins() + 1);
-
-                }
-
-            } else {
-                data.setCoins(data.getCoins() + 1);
-                ActionBarMessageUtils.sendMessage((Player) e.getDamager(), CC.translate("&a+1 Mobcoin &7(Total: &f&n") + data.getCoins() + CC.Gray + ")");
-
+                exp += 50;
             }
 
             if (p.getInventory().firstEmpty() != -1) {
@@ -199,11 +182,8 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-
                 if (num >= 0 && num <= 0.02) {
-                    p.getInventory().addItem(stellarKey);
-                } else if (num >= 0 && num <= 0.05) {
-                    p.getInventory().addItem(novaKey);
+                    p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ex) {
             }

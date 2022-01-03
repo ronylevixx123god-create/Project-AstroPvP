@@ -51,7 +51,7 @@ implements Runnable {
     private Player playerCapping;
     private Player playerCapped = null;
     private int runtime;
-    private boolean running;
+    public static boolean running;
 
     public KothEventTask() {
         try {
@@ -77,8 +77,8 @@ implements Runnable {
         });
     }
 
-    public boolean isRunning() {
-        return this.running;
+    public static boolean isRunning() {
+        return running;
     }
 
 

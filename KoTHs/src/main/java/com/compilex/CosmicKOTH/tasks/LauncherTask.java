@@ -16,10 +16,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
 public class LauncherTask implements Runnable {
-    public static int countdown = -1;
+    public static int countdown;
 
     public LauncherTask(int secondsUntilKoth) {
-        countdown = secondsUntilKoth;
+        this.countdown = secondsUntilKoth;
     }
 
     public void run() {
@@ -65,9 +65,18 @@ public class LauncherTask implements Runnable {
 
         if (countdown == 0) {
             CosmicKOTHAPI.resetKOTH();
+
         }
 
+        if (countdown < 0) {
+            countdown = 0;
+        }
+
+
+
     }
+
+
 
     private void notifyPlayers(String delay) {
         Bukkit.broadcastMessage((String) "");

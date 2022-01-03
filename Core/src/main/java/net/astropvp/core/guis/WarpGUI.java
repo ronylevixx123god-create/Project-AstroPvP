@@ -42,7 +42,6 @@ public class WarpGUI {
 
         ItemStack desert = new ItemBuilder(Material.SAND, CC.translate("&6&lDesert Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack crates = new ItemBuilder(Material.CHEST, CC.translate("&b&lCrates Warp"), CC.translate("&7Click to teleport to this warp")).build();
-        ItemStack end = new ItemBuilder(Material.ENDER_STONE, CC.translate("&d&lEnd Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack nebula;
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
@@ -58,8 +57,7 @@ public class WarpGUI {
 
         expShopUI.setItem(1, 1, new GuiItem((desert), event -> player.performCommand("warp desert")));
         expShopUI.setItem(1, 2, new GuiItem((crates), event -> player.performCommand("warp crates")));
-        expShopUI.setItem(1, 3, new GuiItem((end), event -> player.performCommand("warp end")));
-        expShopUI.setItem(1, 4, new GuiItem((nebula), event -> player.performCommand("warp nebula")));
+        expShopUI.setItem(1, 3, new GuiItem((nebula), event -> player.performCommand("warp nebula")));
 
 
 

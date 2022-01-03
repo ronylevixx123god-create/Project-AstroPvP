@@ -17,17 +17,7 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 public class KothPortalListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onPortalEnter(PlayerTeleportEvent event) {
-        if(event.getTo() == null) {
-            return;
-        }
-        Player player = event.getPlayer();
-        if(event.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL) {
-            event.setCancelled(true);
-            player.teleport(new Location(Bukkit.getWorld("world"), 2422, 120, 4638));
-        }
-    }
+
 
     @EventHandler
     public void onPortalEnter(EntityPortalEnterEvent event) {

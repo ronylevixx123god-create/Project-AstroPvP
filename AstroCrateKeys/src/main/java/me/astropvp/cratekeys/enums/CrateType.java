@@ -3,12 +3,9 @@ package me.astropvp.cratekeys.enums;
 import com.cosmicpvp.cosmicutils.utils.CC;
 
 public enum CrateType {
-    NOVA("Nova", "&e"),
-    STELLAR("Stellar", "&c"),
-    BUNDLE("Bundle", "&d"),
-    APOLLO("Apollo", "&b"),
-    WINTER("Winter", "&3");
-
+    ASTRO("Astro", "&a"),
+    LEGENDARY("Legendary", "&6"),
+    GODLY("Godly", "&4");
     private final String name;
 
     private final String prefix;

@@ -38,9 +38,7 @@ public class CoreSkulls extends JavaPlugin {
     private static Field bukkitCommand;
     @Getter private static Economy economy = null;
     @Getter
-    private static final ItemStack novaKey = CrateKeyItem.getItem(CrateType.NOVA);
-    @Getter
-    private static final ItemStack stellarKey = CrateKeyItem.getItem(CrateType.STELLAR);
+    private static final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
     public static MobStackerUtils mobStackerUtils;
