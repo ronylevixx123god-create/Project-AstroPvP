@@ -79,6 +79,8 @@ public class AstroScoreboardAPI {
                 rankColor = ChatColor.LIGHT_PURPLE;
                 break;
             case "admin":
+                rankColor = ChatColor.RED;
+                break;
             case "mod":
                 rankColor = ChatColor.BLUE;
                 break;

@@ -32,12 +32,6 @@ public class ServerFixes implements Listener {
             event.setCancelled(true);
     }
 
-    @EventHandler
-    public void onEntitySpawn3(EntitySpawnEvent event) {
-        if (event.getEntity() instanceof org.bukkit.entity.IronGolem && !event.getEntity().hasMetadata("guardianSummoner")) {
-            ((IronGolem) event.getEntity()).setHealth(1);
-        }
-    }
 
     @EventHandler
     public void onDmg(EntityDamageEvent e) {
@@ -45,6 +39,20 @@ public class ServerFixes implements Listener {
         if (ent instanceof org.bukkit.entity.Blaze &&
                 e.getCause() == EntityDamageEvent.DamageCause.DROWNING)
             e.setCancelled(true);
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void clickBed(PlayerBedEnterEvent e) {
+                e.setCancelled(true);
+
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onBlockplace(BlockPlaceEvent e) {
+        if (e.getBlock().getType() == Material.BED) {
+            e.getPlayer().sendMessage(CC.Red + "You cannot place this block!");
+            e.setCancelled(true);
+        }
     }
 
 
