@@ -48,7 +48,6 @@ extends CustomEnchantment {
             event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
             Location l = target.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)Material.MYCEL.getId(), (int)2001);
         }
     }
 }

@@ -67,7 +67,11 @@ extends CustomEnchantment {
     }
 
     public static int getBleedStack(LivingEntity le) {
-        return le.hasMetadata("bleedStack") ? ((MetadataValue)le.getMetadata("bleedStack").get(0)).asInt() : 0;
+        int stack = le.hasMetadata("bleedStack") ? ((MetadataValue)le.getMetadata("bleedStack").get(0)).asInt() : 0;
+        if (stack >= 5) {
+            stack = 5;
+        }
+        return stack;
     }
 
     public static void clearBleedEffect(LivingEntity le) {
@@ -84,7 +88,6 @@ extends CustomEnchantment {
         int bleedStack = Bleed.getBleedStack(le) / 2;
         if (le instanceof Player) {
             Player p = (Player)le;
-            p.setWalkSpeed((float)((double)0.2f - 0.005 * (double)bleedStack));
             for (Entity ent : p.getNearbyEntities(7.0, 7.0, 7.0)) {
                 Player pEnt;
                 if (ent.getEntityId() == leDamager.getEntityId() || !(ent instanceof Player) || !ent.hasMetadata("bloodLust") || !GeneralUtil.isAlly(p, pEnt = (Player)ent)) continue;
@@ -107,7 +110,6 @@ extends CustomEnchantment {
 
     private void playBleedEffect(Location loc, int bleedStack) {
         for (int i = Math.max(1, bleedStack / 2); i > 0; --i) {
-            WorldUtil.sendWorldEffect((Block)loc.getBlock(), (int)Material.REDSTONE_BLOCK.getId(), (int)2001);
         }
     }
 }

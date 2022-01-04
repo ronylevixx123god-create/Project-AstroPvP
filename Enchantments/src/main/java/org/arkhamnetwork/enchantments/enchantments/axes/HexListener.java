@@ -37,6 +37,9 @@ implements Listener {
         LivingEntity damager = (LivingEntity)e.getDamager();
         if (Hex.isHexed(damager) && e.getFinalDamage() > 0.0) {
             double damage = Math.min(e.getFinalDamage(), (double)(5 + Math.max(0, Hex.getHexLevel(damager) - 2)));
+            if (damage > 2) {
+                damage = 2;
+            }
             damager.damage(damage);
             if (damager instanceof Player) {
                 ((Player)damager).sendMessage((Object)ChatColor.DARK_PURPLE + "* HEX [" + (Object)ChatColor.RED + this.df.format(damage) + (Object)ChatColor.DARK_PURPLE + " DMG] *");

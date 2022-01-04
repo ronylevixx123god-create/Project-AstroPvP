@@ -5,7 +5,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 public enum CrateType {
     ASTRO("Astro", "&a"),
     LEGENDARY("Legendary", "&6"),
-    GODLY("Godly", "&4");
+    GODLY("Godly", "&4"),
+    OP("OP", "&8");
     private final String name;
 
     private final String prefix;

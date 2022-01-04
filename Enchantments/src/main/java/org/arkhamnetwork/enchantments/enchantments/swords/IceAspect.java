@@ -79,7 +79,6 @@ extends CustomEnchantment {
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
 
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
 //            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
         }
     }

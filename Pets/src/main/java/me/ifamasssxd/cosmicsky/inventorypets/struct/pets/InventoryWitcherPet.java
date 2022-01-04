@@ -148,7 +148,7 @@ public class InventoryWitcherPet extends InventoryPet {
                     player.setWalkSpeed(0.2F);
                 }
             }
-        }, 60L);
+        }, 100L);
 
         Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {

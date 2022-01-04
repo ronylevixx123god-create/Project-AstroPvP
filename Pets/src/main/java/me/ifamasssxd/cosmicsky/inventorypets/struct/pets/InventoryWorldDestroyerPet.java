@@ -149,13 +149,13 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("&4&l*** WORLD DESTROYER PET [&6" + target.getName() + "s&4&l] - CAGED! **"));
+        player.sendMessage(CC.translate("&a&l*** WORLD DESTROYER PET [&f" + target.getName() + "s&a&l] - CAGED! **"));
         player.sendMessage("");
 
         target.sendMessage("");
-        target.sendMessage(CC.translate("&4&l*** " + player.getName() + "&4&l's WORLD DESTROYER PET [&6" + cageDuration + "s&4&l] - CAGE! **"));
+        target.sendMessage(CC.translate("&a&l*** " + player.getName() + "&a&l's WORLD DESTROYER PET [&f" + cageDuration + "s&a&l] - CAGE! **"));
         target.sendMessage("");
-        DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&e&l* WORLD DESTROYER [&77s&e&l] *"), "RKO");
+        DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&a&l* WORLD DESTROYER [&77s&a&l] *"), "RKO");
         CageCooldownUtils.enterCageCooldown(target);
 
         petItem.setLastUsed(System.currentTimeMillis());

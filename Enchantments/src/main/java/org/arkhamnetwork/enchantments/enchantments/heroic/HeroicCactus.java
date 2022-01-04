@@ -14,6 +14,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -36,7 +37,6 @@ extends HeroicCustomEnchantment {
             Player p = (Player)player;
             if (attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
                 Location l = p.getLocation();
-                WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)81, (int)2001);
             }
             double d = thornNegateChance = level == 1 ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {

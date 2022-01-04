@@ -42,9 +42,8 @@ extends HeroicCustomEnchantment {
             Player pAttacker = (Player)attacker;
 
             i = pAttacker.getItemInHand();
-            if (Math.random() < (double)level * 0.01) {
+            if (Math.random() < (double)level * 0.003) {
                 Blessed.blessPlayer((Player)player);
-                Bukkit.getLogger().info("Blessing " + ((Player)player).getName() + " from level " + level + " heroic armored!");
             }
         }
         double damage_negation = (double)level * 0.03;
@@ -54,7 +53,6 @@ extends HeroicCustomEnchantment {
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
         }
     }
 }

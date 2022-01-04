@@ -21,7 +21,6 @@ import me.ifamasssxd.cosmicbosses.tasks.BossUpdateTask;
 import me.ifamasssxd.cosmicbosses.utils.MapUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -73,12 +72,6 @@ public class CosmicBosses extends JavaPlugin {
         this.eggEnabled = this.getConfig().getBoolean("eggEnabled", false);
         this.naturalSpawnEnabled = this.getConfig().getBoolean("naturalSpawn", false);
         this.scoreboardEnabled = this.getConfig().getBoolean("scoreboardEnabled", true);
-            try {
-                final FactionUpgrade upgrade = FactionUpgrade.CONQUEST_MASTERY;
-                Bukkit.getLogger().info("Hook loaded for Faction Upgrades.");
-            } catch (Exception e) {
-                Bukkit.getLogger().info("Unable to load new faction ugprade support!");
-            }
         this.loadBosses();
         this.blockChangeManager = new BlockChangeManager();
         RewardInventory.loadBossRewards(this);
@@ -117,7 +110,7 @@ public class CosmicBosses extends JavaPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossTickTask(), 1L, 1L);
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BleedTask(), 0L, 10L);
         this.task = new BossSpawnTask();
-        final int delay = 72000;
+        final int delay = 72000; //72000
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) this.task, (long) delay, (long) delay);
     }
 
@@ -173,7 +166,7 @@ public class CosmicBosses extends JavaPlugin {
     }
 
     public boolean isNaturalSpawnEnabled() {
-        return false;//this.naturalSpawnEnabled;
+        return this.naturalSpawnEnabled;//this.naturalSpawnEnabled;
     }
 
     public boolean isScoreboardEnabled() {

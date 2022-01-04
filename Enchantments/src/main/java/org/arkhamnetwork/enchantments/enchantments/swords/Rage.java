@@ -38,13 +38,13 @@ public class Rage extends CustomEnchantment {
                 return;
             double mod = 0.06D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0D;
-            if (hitCombo > 6.0D)
-                hitCombo = 6.0D;
+            if (hitCombo > 5.0D)
+                hitCombo = 5.0D;
 
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
-                event.setDamage(event.getDamage() * hitCombo);
+                event.setDamage(event.getDamage() * hitCombo * 0.70);
                 target.setMetadata("effectedByRage", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
-                playRageEffect(target.getEyeLocation(), enchantLevel);
+                //playRageEffect(target.getEyeLocation(), enchantLevel);
             }
             if (target instanceof Player) {
                 addPVPHitCombo((Player)user);

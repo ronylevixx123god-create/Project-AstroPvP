@@ -161,7 +161,7 @@ public abstract class Boss extends Equipable implements Healable {
             }
             return;
         }
-        if (event.getDamager() instanceof Player && CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
+        if (event.getDamager() instanceof Player) {
             int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)event.getDamager(), "HEROIC_BOSS_MASTERY");
             double mult = 1.0D;
             if (heroicLevel > 0) {
@@ -290,31 +290,23 @@ public abstract class Boss extends Equipable implements Healable {
         if (this instanceof me.ifamasssxd.cosmicbosses.bosses.soulreaper.SoulReaper || this instanceof me.ifamasssxd.cosmicbosses.bosses.holidayspirit.HolidaySpirit || this instanceof me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.BattlefieldSnowman || this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut || this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki || this instanceof me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination || (this instanceof me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater && getEntity().getWorld().getName().equals(CosmicBosses.battlefieldWorld)))
             return;
         if (this.naturallySpawned) {
-            str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + getColor(false) + "defend DecimateMC!";
+            str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + getColor(false) + "defend AstroPvP!";
         } else {
-            str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned nearby, defend DecimateMC!";
+            str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned nearby, defend AstroPvP!";
         }
         if (this instanceof me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon)
             str1 = CC.RedB + "(!) " + CC.Red + "A " + CC.DarkRedB + CC.Underline + getCustomName() + CC.Red + " has been awoken in the Ender Dimension. Travel to " + CC.DarkRed + "/warp end" + CC.Red + " to subdue it before it finds a way into the Cosmonaut realm!";
         Location loc = getLocation();
         String debug = ChatColor.YELLOW + "Spawning boss " + getCustomName() + ChatColor.YELLOW + " at " + ChatColor.YELLOW + ChatColor.BOLD.toString() + "x" + loc.getBlockX() + " y" + loc.getBlockY() + " z" + loc.getBlockZ() + "!";
-        List<Player> pls = this.naturallySpawned ? (List)Arrays.asList((Object[])new Collection[] { Bukkit.getOnlinePlayers() }) : Lists.newArrayList();
-        if (!this.naturallySpawned)
-            for (Entity ent : getEntity().getNearbyEntities(32.0D, 32.0D, 32.0D)) {
-                if (ent instanceof Player) {
-                    Player pl = (Player)ent;
-                    pls.add(pl);
-                }
-            }
+        Collection<? extends Player> pls = this.naturallySpawned ? Bukkit.getOnlinePlayers() : Bukkit.getOnlinePlayers();
+
         boolean dragon = this instanceof me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
-        Iterator<Player> iterator3 = pls.iterator();
-        while (iterator3.hasNext()) {
-            Player pl = iterator3.next();
+        for (Player pl : pls) {
             pl.sendMessage("");
             pl.sendMessage(str1);
             pl.playSound(pl.getLocation(), dragon ? Sound.ENDERDRAGON_GROWL : Sound.CHICKEN_EGG_POP, 4.0F, 1.2F);
             pl.sendMessage("");
-            if (pl.hasPermission("cosmicbosses.alert.coords"))
+            if (pl.isOp())
                 pl.sendMessage(debug);
         }
         Bukkit.getLogger().info("Spawning boss " + getCustomName() + " at " + getLocation().toString() + "!");
@@ -507,14 +499,11 @@ public abstract class Boss extends Equipable implements Healable {
         if (topDamage.size() > 0) {
             Player most = topDamage.get(0);
             if (most != null) {
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "fquests give TOP_DOG " + most.getName());
                 Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(most, "BOSS_TOP_DAMAGE", new Object[] { this.bossType.name(), getEntity() }));
             }
         }
         int placement = 1;
         for (Player player : topDamage) {
-            if (placement++ == 1)
-                FactionPointUtils.giveFactionPoints(FactionUtils.getFaction(player), player, "boss_death", new Object[] { getName(), getEntity() });
             boolean noRoom = false;
             if (title != null && this.random.nextInt(100) == 0 && !addItem(player, title))
                 noRoom = true;

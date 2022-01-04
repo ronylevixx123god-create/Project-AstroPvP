@@ -107,8 +107,6 @@ extends HeroicCustomEnchantment {
 
     private void playBleedEffect(Location loc, int bleedStack) {
         for (int i = Math.max(1, bleedStack / 2); i > 0; --i) {
-            WorldUtil.sendWorldEffect((Block)loc.getBlock(), (int)Material.REDSTONE_BLOCK.getId(), (int)2001);
-            WorldUtil.sendWorldEffect((Block)loc.getBlock(), (int)Material.BEDROCK.getId(), (int)2001);
         }
     }
 }

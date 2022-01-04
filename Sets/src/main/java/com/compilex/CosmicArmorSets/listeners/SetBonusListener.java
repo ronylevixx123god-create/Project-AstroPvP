@@ -87,9 +87,6 @@ public class SetBonusListener
     }
 
 
-
-
-
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerChangeWorld(PlayerChangedWorldEvent event) {
         ((SupremeArmorSet) ArmorSet.SUPREME.getArmorSetInfo()).onPlayerEvent(event);
@@ -118,7 +115,7 @@ public class SetBonusListener
             ArmorSet damagerArmorSet = CosmicArmorSetsAPI.getArmorSet(damager);
             if (bonuses == null) return;
 
-            if(AstroItemSkinsAPI.hasSkinEquipped((Player) event.getDamager(), SkinType.COSMIC_CITIZEN_BOOTS))
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) event.getDamager(), SkinType.COSMIC_CITIZEN_BOOTS))
                 event.setDamage(event.getDamage() * 1.2);
             if (damagerArmorSet != null && (event.getDamager() instanceof Player || damagerArmorSet.getArmorSetInfo().supportsBowDamage() && event.getDamager() instanceof Projectile)) {
                 damagerArmorSet.getArmorSetInfo().onPlayerAttacked(damager, event);
@@ -135,7 +132,7 @@ public class SetBonusListener
         if (event.getEntity() instanceof Player) {
             Player damaged = (Player) event.getEntity();
             ArmorSet damagedArmorSet = CosmicArmorSetsAPI.getArmorSet(damaged);
-            Map<ArmorSet, Integer> bonuses  = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager);
+            Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager);
             int reduceLevel;
             if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) event.getEntity(), "HEROIC_ARMOR_SET")) > 0) {
                 event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (reduceLevel == 1 ? 0.9 : (reduceLevel == 2 ? 0.85 : (reduceLevel == 3 ? 0.8 : (reduceLevel == 4 ? 0.75 : 1.0)))));
@@ -150,23 +147,25 @@ public class SetBonusListener
             }
             if (CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager) == null)
                 return;
-            assert damager != null;
-            if (WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
-                if (WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15) {
-                    assert bonuses != null;
-                    if (bonuses.containsKey(ArmorSet.ENGINEER)) {
-                        if (bonuses.get(ArmorSet.ENGINEER) == 1) {
-                            bonuses.remove(ArmorSet.ENGINEER);
-                        } else {
-                            bonuses.put(ArmorSet.ENGINEER, bonuses.get(ArmorSet.ENGINEER) - 1);
+            if (damager == null) return;
+            if (damager.getItemInHand() != null) {
+                if (WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand())) {
+                    if (WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.05) {
+                        assert bonuses != null;
+                        if (bonuses.containsKey(ArmorSet.ENGINEER)) {
+                            if (bonuses.get(ArmorSet.ENGINEER) == 1) {
+                                bonuses.remove(ArmorSet.ENGINEER);
+                            } else {
+                                bonuses.put(ArmorSet.ENGINEER, bonuses.get(ArmorSet.ENGINEER) - 1);
+                            }
                         }
+                        event.getDamager().sendMessage(CC.translate("&6&l* &4&lDemon Weaponbonus &7Blocked " + event.getEntity().getName() + "'s &6Engineer Crystal &l*"));
                     }
-                    event.getDamager().sendMessage(CC.translate("&6&l* &4&lDemon Weaponbonus &7Blocked " + event.getEntity().getName() + "'s &6Engineer Crystal &l*"));
                 }
             }
             if (bonuses != null && !bonuses.isEmpty()) {
                 for (Map.Entry<ArmorSet, Integer> ent : bonuses.entrySet()) {
-                    if(ent.getKey() == ArmorSet.ENGINEER && WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15)
+                    if (ent.getKey() == ArmorSet.ENGINEER && WeaponBonusUtils.hasWeaponBonus(damager.getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(damager.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.15)
                         continue;
                     ent.getKey().getArmorSetInfo().onPlayerDamagedBonus(damaged, ent.getValue(), event);
                 }

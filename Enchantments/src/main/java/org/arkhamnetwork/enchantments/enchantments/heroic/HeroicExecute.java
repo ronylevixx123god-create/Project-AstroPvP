@@ -23,7 +23,7 @@ public class HeroicExecute extends HeroicCustomEnchantment{
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 6.0) {
+        if (target.getHealth() > 8.0) {
             return;
         }
         if (GeneralUtil.isEffectedByRage(target)) {
@@ -31,7 +31,7 @@ public class HeroicExecute extends HeroicCustomEnchantment{
         }
         double random = Math.random();
         double chance = 0.04 * (double)level;
-        double mod = 5.0;
+        double mod = 2.5;
         if (random < chance) {
             e.setDamage(e.getDamage() * mod);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");

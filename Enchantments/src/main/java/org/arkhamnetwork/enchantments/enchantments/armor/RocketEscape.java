@@ -26,6 +26,8 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -71,7 +73,13 @@ extends CustomEnchantment {
             if (player.getWorld().getName().equals("world_koth")) {
                 return;
             }
-            if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player)player)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_BACKPACK)) {
+                player.sendMessage(CC.translate("&c&l ** &7" + attacker.getName() + "'s Rocket Escape: &4&lBLOCKED &7[Cursed Wings] &c&l**"));
+                attacker.sendMessage(CC.translate("&c&l ** &7Rocket Escape: &4&lBLOCKED &7[" + player.getName() + "'s Cursed Wings] &c&l**"));
+                return;
+            }
+
+                if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player)player)) {
                 Player pl = (Player)player;
                 last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
                 if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - ((MetadataValue)pl.getMetadata("sabotage").get(0)).asLong() <= 1000L) {

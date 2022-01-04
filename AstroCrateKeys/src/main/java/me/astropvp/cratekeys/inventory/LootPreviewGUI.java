@@ -84,6 +84,7 @@ public class LootPreviewGUI {
             itemBuilder.addLoreLine("");
             itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
+            this.expShopUI.addItem(new GuiItem(itemBuilder.build()));
         }
 
 

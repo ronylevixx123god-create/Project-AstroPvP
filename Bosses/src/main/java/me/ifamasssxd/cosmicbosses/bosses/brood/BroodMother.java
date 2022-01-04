@@ -3,6 +3,8 @@ package me.ifamasssxd.cosmicbosses.bosses.brood;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.google.common.collect.Lists;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.entities.SpiderBoss;
 import me.ifamasssxd.cosmicbosses.struct.BlockModifier;
@@ -29,6 +31,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -51,11 +54,11 @@ public class BroodMother extends Boss {
         this.walkFails = 0;
         this.modifier = new BlockModifier();
         this.attack = new WebAttack(this, this.modifier);
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.ULTIMATE));
+        ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
+        OPKey.setAmount(1);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+
     }
 
     @Override

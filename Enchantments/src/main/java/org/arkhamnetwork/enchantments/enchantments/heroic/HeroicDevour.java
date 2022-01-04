@@ -31,9 +31,9 @@ public class HeroicDevour extends HeroicCustomEnchantment {
             event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", (MetadataValue)new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object)System.currentTimeMillis()));
             Location l = target.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int) Material.MYCEL.getId(), (int)2001);
             if(Math.random() < 0.05)
                 user.setHealth(user.getHealth() + 1.0);
+            WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
         }
     }
 }

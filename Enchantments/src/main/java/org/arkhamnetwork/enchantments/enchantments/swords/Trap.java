@@ -99,7 +99,6 @@ extends CustomEnchantment {
                 }
             }, 35L);
             Location l = ptarget.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)80, (int)2001);
         }
     }
 
@@ -119,7 +118,6 @@ extends CustomEnchantment {
             Player p;
             if (e.getEntity() instanceof Player && (p = (Player)e.getEntity()).getWalkSpeed() == 0.0f && !p.isOp()) {
                 Location l = p.getLocation();
-                WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)80, (int)2001);
             }
         }
     }

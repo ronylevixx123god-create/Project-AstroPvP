@@ -73,7 +73,6 @@ extends CustomEnchantment {
                 le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)duration * 20, level - 1));
                 Location l = playerHit.getLocation().add(0.0, 0.5, 0.0);
                 int blockId = playerHit.getLocation().getBlock().getTypeId();
-                WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)(blockId != 0 ? blockId : 1), (int)2001);
             }
         }
     }

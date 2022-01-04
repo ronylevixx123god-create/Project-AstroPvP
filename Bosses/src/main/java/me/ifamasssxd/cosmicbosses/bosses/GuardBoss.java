@@ -36,13 +36,12 @@ public interface GuardBoss {
 
     default void onDamage(final Boss boss, final EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
-            if (CosmicBosses.getInstance().isFactionUpgradesEnabled()) {
                 final int level = FactionUpgradeAPI.getPerkLevel((Player) event.getDamager(), FactionUpgrade.CONQUEST_MASTERY);
                 if (level > 0) {
                     final double mult = (level == 1) ? 1.5 : ((level == 2) ? 2.0 : ((level == 3) ? 2.5 : ((level == 4) ? 3.0 : 1.0)));
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * mult);
                 }
-            }
+
             return;
         }
         if (event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof Player) {

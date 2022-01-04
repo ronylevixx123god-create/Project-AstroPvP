@@ -46,7 +46,7 @@ extends CustomEnchantment {
         }
         double random = Math.random();
         double chance = 0.04 * (double)level;
-        double mod = 3.0;
+        double mod = 2.0;
         if (random < chance) {
             e.setDamage(e.getDamage() * mod);
             Location l = target.getLocation();

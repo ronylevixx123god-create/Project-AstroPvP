@@ -62,7 +62,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         int solitudeLevel = 3;
-        double chance = (double)(enchantLevel + solitudeLevel) * 0.02;
+        double chance = (double)(enchantLevel + solitudeLevel) * 0.03;
         if (Math.random() < chance && target instanceof Player) {
             final Player pTarget = (Player)target;
             if (!new CustomEnchantProcOnEntityEvent(user, (LivingEntity)pTarget, (Event)event, this, enchantLevel).callEvent()) {

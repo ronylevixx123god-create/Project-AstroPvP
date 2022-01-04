@@ -55,6 +55,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.github.paperspigot.Title;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -104,8 +105,8 @@ extends CustomEnchantment {
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
-            double dmg = e.getDamage();
-            if (Phoenix.procPhoenix((Player)player, attacker, level, dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue((Player)player)))) {
+            double dmg = e.getFinalDamage();
+            if (Phoenix.procPhoenix((Player)player, attacker, level, dmg)) {
                 e.setDamage(0.0);
                 e.setCancelled(true);
             }
@@ -136,7 +137,14 @@ extends CustomEnchantment {
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player)damager).getName());
                 return false;
             }
-            if (damager != null && damager instanceof Player && damager.hasMetadata("Banshee") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+            if (damager != null && damager instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)damager), (String)"THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
+                ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player)damager).getName());
+                return false;
+            }
+            if (damager != null && damager instanceof Player && damager.hasMetadata("banshee_scrolls") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                 player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [&4BANSHEE RKO] *");
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* BANSHEE RKO [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
@@ -172,6 +180,8 @@ extends CustomEnchantment {
                 player.sendMessage((Object)ChatColor.GRAY + "You have " + (Object)ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls((Player)player) + (Object)ChatColor.GRAY + " souls left.");
                 player.sendMessage("");
                 DamageIndicatorUtils.sendDamageIndicator((Player) player, CC.translate( "&c&l* PHOENIX *"), "PHOENIX");
+                Title title = new Title(CC.translate("&c&l** PHOENIX**"), CC.translate("&7You have &n" + KillTrackerAPI.getAllSouls((Player)player) + "&7 souls left." ), 3, 30, 3);
+                player.sendTitle(title);
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
                 for (Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (!(ent instanceof Player)) continue;
