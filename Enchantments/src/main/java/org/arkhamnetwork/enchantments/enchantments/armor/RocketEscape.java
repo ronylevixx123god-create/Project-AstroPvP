@@ -73,6 +73,7 @@ extends CustomEnchantment {
             if (player.getWorld().getName().equals("world_koth")) {
                 return;
             }
+            if (!(attacker instanceof Player)) return;
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_BACKPACK)) {
                 player.sendMessage(CC.translate("&c&l ** &7" + attacker.getName() + "'s Rocket Escape: &4&lBLOCKED &7[Cursed Wings] &c&l**"));
                 attacker.sendMessage(CC.translate("&c&l ** &7Rocket Escape: &4&lBLOCKED &7[" + player.getName() + "'s Cursed Wings] &c&l**"));

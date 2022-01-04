@@ -7,10 +7,7 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
@@ -39,10 +36,8 @@ import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
-import net.minecraft.server.v1_8_R3.EntityInsentient;
-import net.minecraft.server.v1_8_R3.PathfinderGoal;
-import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
-import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
+import net.astropvp.core.utils.InventoryUtils;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -547,7 +542,7 @@ public abstract class Boss extends Equipable implements Healable {
     }
 
     private boolean addItem(Player player, ItemStack item) {
-        player.getInventory().addItem(new ItemStack[] { item.clone() });
+        PlayerUtil.giveOrDropProtectedItem(player, item.clone(), 1);
         return true;
     }
 
@@ -605,13 +600,15 @@ public abstract class Boss extends Equipable implements Healable {
         p.sendMessage(StringUtils.getCenteredMessage(ChatColor.RED + ChatColor.BOLD.toString() + "TOP DAMAGE DEALT"));
         int index = 0;
         int sent = 0;
-        int totalDamage = getTotalDamageTaken(playerMap);
         for (Map.Entry<Player, Integer> entry : playerMap.entrySet()) {
             if (sent >= 5)
                 continue;
             Player topDamageDealer = entry.getKey();
-            int damage = ((Integer)entry.getValue()).intValue();
-            double percent = damage / totalDamage * 100.0D;
+            double damage = getDamageTracker().get(topDamageDealer.getUniqueId());
+            double percent = (damage / getMaxHealth()) * 100.0D;
+            if (percent > 100) {
+                percent = 100;
+            }
             sent++;
             String message = ChatColor.GREEN + ChatColor.BOLD.toString() + ++index + ". " + ChatColor.GREEN + topDamageDealer.getName() + ChatColor.GREEN + ChatColor.BOLD.toString() + " - " + this.format.format(percent) + "%";
             if (items.containsKey(topDamageDealer.getUniqueId()))
@@ -624,7 +621,12 @@ public abstract class Boss extends Equipable implements Healable {
                 if (shown >= 10)
                     break;
                 Player pl = entry2.getKey();
-                double percent = ((Integer)entry2.getValue()).intValue() / totalDamage * 100.0D;
+                double damage = getDamageTracker().get(pl.getUniqueId());
+
+                double percent = (damage / getMaxHealth()) * 100.0D;
+                if (percent > 100) {
+                    percent = 100;
+                }
                 index++;
                 String message = StringUtils.getCenteredMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + index + ". " + ChatColor.GREEN + pl.getName() + ChatColor.GREEN + ChatColor.BOLD.toString() + " - " + this.format.format(percent) + "%");
                 p.sendMessage(message);
@@ -634,30 +636,7 @@ public abstract class Boss extends Equipable implements Healable {
     }
 
     public String getLootString(List<ItemStack> items) {
-        int ldp = 0;
-        int ultimates = 0;
-        int godly = 0;
-        for (ItemStack item : items) {
-            if (item.getItemMeta().getDisplayName().contains("Legendary")) {
-                ldp++;
-                continue;
-            }
-            if (item.getItemMeta().getDisplayName().contains("Ultimate")) {
-                ultimates++;
-                continue;
-            }
-            if (!item.getItemMeta().getDisplayName().contains("Godly"))
-                continue;
-            godly++;
-        }
-        String retr = "";
-        if (ultimates > 0)
-            retr = ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + ultimates + "x ULTIMATE ";
-        if (ldp > 0)
-            retr = retr + ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + ldp + "x LEGENDARY";
-        if (godly > 0)
-            retr = retr + ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + godly + "x GODLY";
-        return retr.trim();
+        return ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "OP Key" + "";
     }
 
     public LinkedList<Player> getTopDamage(int amount, boolean checkDamage) {

@@ -93,7 +93,7 @@ public class BroodMother extends Boss {
         e.setMaxHealth((double) this.getMaxHealth());
         e.setHealth(e.getMaxHealth());
         this.setEnt(e);
-        e.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 3));
+        e.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, Integer.MAX_VALUE, 50));
         e.setCustomName(this.getDifficulty().getColor() + ChatColor.BOLD.toString() + this.getCustomName());
         e.setCustomNameVisible(true);
         this.entity = e;
@@ -131,7 +131,6 @@ public class BroodMother extends Boss {
             if (e == null || !e.isValid()) {
                 ent.remove();
             } else if (e.getTicksLived() >= 140 && this.getMinions().size() > 7 && this.random.nextInt(100) < 25) {
-                e.setVelocity(e.getVelocity().add(new Vector(0, 5, 0)));
                 final org.bukkit.entity.Entity entity;
                 Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicBosses.getInstance(), () -> {
                     if (e != null && e.isValid()) {
@@ -317,7 +316,7 @@ public class BroodMother extends Boss {
 
     @Override
     public int getMaxHealth() {
-        return 2000;
+        return 2500;
     }
 
     @Override

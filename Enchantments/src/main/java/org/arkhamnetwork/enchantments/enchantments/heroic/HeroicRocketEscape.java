@@ -81,6 +81,8 @@ extends HeroicCustomEnchantment {
             if (player.getWorld().getName().equals("world_koth")) {
                 return;
             }
+            if (!(target instanceof Player)) return;
+
             if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player)player)) {
                 Player pl = (Player)player;
                 RocketEscape.last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());

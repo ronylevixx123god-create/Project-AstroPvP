@@ -77,7 +77,7 @@ public class KingSlime extends Boss {
 
     @Override
     public int getMaxHealth() {
-        return 1500;
+        return 2000;
     }
 
     @Override

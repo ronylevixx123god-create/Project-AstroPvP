@@ -31,10 +31,7 @@ public class BossSpawnTask implements Runnable
         }
         BossType type = null;
         final int chance = this.random.nextInt(100);
-        if (chance < 40) {
-            type = BossType.BROOD_MOTHER;
-        }
-        else if (chance < 70) {
+        if (chance < 70) {
             type = BossType.KING_SLIME;
         }
         else if (chance < 85) {
