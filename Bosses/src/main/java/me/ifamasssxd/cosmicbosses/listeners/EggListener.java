@@ -48,6 +48,12 @@ public class EggListener implements Listener {
                     p.sendMessage(ChatColor.RED + "You must spawn this boss at the highest Y coordinate.");
                     return;
                 }
+
+                if (!WorldGuardUtils.getRegionsIn(block.getLocation()).contains("spawnwarzone")) {
+                    p.sendMessage(CC.translate("&c&l(!)&c You must spawn this boss in the /spawn warzone!"));
+                    return;
+                }
+
                 if ((p.isOp() && p.isSneaking()) || (above.isEmpty() && above.getRelative(BlockFace.UP).isEmpty() && WorldGuardUtils.isPvPEnabled(block.getLocation()) && BossUtils.isWarzone(block.getLocation()))) {
                     if (Boss.bosses.values().stream().filter(Boss::isBossSpawned).count() > 10L) {
                         p.sendMessage(CC.RedB + "(!) " + CC.Red + "There are currently too many active bosses to summon this creature!");

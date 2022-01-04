@@ -23,14 +23,14 @@ public class CommandBossRewards implements CommandExecutor {
         final Player player = (Player) sender;
         final RewardInventory rewardInventory = RewardInventory.getRewardInventory(player);
         if (rewardInventory == null) {
-            player.sendMessage(ChatColor.RED + "You do not have me.astropvp.cratekeys.items in your claim.");
+            player.sendMessage(ChatColor.RED + "You do not have items in your claim.");
             return true;
         }
         final boolean expired = rewardInventory.getExpirationTime() > 0L && rewardInventory.getExpirationTime() < System.currentTimeMillis();
         if (expired) {
-            Bukkit.getLogger().info("Expiring previous collect me.astropvp.cratekeys.items for " + player.getName() + "!");
+            Bukkit.getLogger().info("Expiring previous collect items for " + player.getName() + "!");
             RewardInventory.removeRewardInventory(player);
-            sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You had expired me.astropvp.cratekeys.items inside your /collect!");
+            sender.sendMessage(CC.RedB + "(!) " + CC.Red + "You had expired items inside your /bossrewards!");
             sender.sendMessage(CC.Gray + "Items can only be stored for 24h.");
             return true;
         }
@@ -42,12 +42,12 @@ public class CommandBossRewards implements CommandExecutor {
                 PlayerUtil.giveOrDropProtectedItem(player, item, -1);
                 items.remove(0);
             }
-            player.sendMessage(CC.RedB + "You had > 54 me.astropvp.cratekeys.items in your /collect, 9 have been given to you or dropped at your feet to make room.");
-            player.sendMessage(CC.Gray + "Please re-run /collect to receive additional me.astropvp.cratekeys.items.");
+            player.sendMessage(CC.RedB + "You had > 54 items in your bossrewards, 9 have been given to you or dropped at your feet to make room.");
+            player.sendMessage(CC.Gray + "Please re-run bossrewards to receive additional items.");
             return true;
         }
         if (space < rewardInventory.getItems().size()) {
-            player.sendMessage(ChatColor.RED + "You must have " + ChatColor.RED + ChatColor.UNDERLINE.toString() + rewardInventory.getItems().size() + ChatColor.RED + " empty me.astropvp.cratekeys.inventory slots to claim these me.astropvp.cratekeys.items.");
+            player.sendMessage(ChatColor.RED + "You must have " + ChatColor.RED + ChatColor.UNDERLINE.toString() + rewardInventory.getItems().size() + ChatColor.RED + " empty inventory slots to claim these items.");
             return true;
         }
         for (final ItemStack is : rewardInventory.getItems()) {
@@ -56,7 +56,7 @@ public class CommandBossRewards implements CommandExecutor {
         RewardInventory.removeRewardInventory(player);
         player.updateInventory();
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 1.4f);
-        player.sendMessage(CC.GreenB + "(!) " + CC.Green + "Rewards added to your me.astropvp.cratekeys.inventory!");
+        player.sendMessage(CC.GreenB + "(!) " + CC.Green + "Rewards added to your inventory!");
         return false;
     }
 

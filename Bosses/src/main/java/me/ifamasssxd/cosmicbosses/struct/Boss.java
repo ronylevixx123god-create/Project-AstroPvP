@@ -289,11 +289,7 @@ public abstract class Boss extends Equipable implements Healable {
         String str1;
         if (this instanceof me.ifamasssxd.cosmicbosses.bosses.soulreaper.SoulReaper || this instanceof me.ifamasssxd.cosmicbosses.bosses.holidayspirit.HolidaySpirit || this instanceof me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.BattlefieldSnowman || this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut || this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki || this instanceof me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination || (this instanceof me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater && getEntity().getWorld().getName().equals(CosmicBosses.battlefieldWorld)))
             return;
-        if (this.naturallySpawned) {
-            str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + getColor(false) + "defend AstroPvP!";
-        } else {
-            str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned nearby, defend AstroPvP!";
-        }
+        str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + getColor(false) + "defend AstroPvP!";
         if (this instanceof me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon)
             str1 = CC.RedB + "(!) " + CC.Red + "A " + CC.DarkRedB + CC.Underline + getCustomName() + CC.Red + " has been awoken in the Ender Dimension. Travel to " + CC.DarkRed + "/warp end" + CC.Red + " to subdue it before it finds a way into the Cosmonaut realm!";
         Location loc = getLocation();
@@ -551,10 +547,6 @@ public abstract class Boss extends Equipable implements Healable {
     }
 
     private boolean addItem(Player player, ItemStack item) {
-        if (player.getWorld().getName().startsWith("world_duel") || player.getInventory().firstEmpty() == -1) {
-            RewardInventory.addReward(player, item.clone());
-            return false;
-        }
         player.getInventory().addItem(new ItemStack[] { item.clone() });
         return true;
     }
