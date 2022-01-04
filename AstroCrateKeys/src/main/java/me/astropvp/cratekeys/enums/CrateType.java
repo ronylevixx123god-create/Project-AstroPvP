@@ -6,7 +6,7 @@ public enum CrateType {
     ASTRO("Astro", "&a"),
     LEGENDARY("Legendary", "&6"),
     GODLY("Godly", "&4"),
-    OP("OP", "&8");
+    OP("OP", "&e");
     private final String name;
 
     private final String prefix;

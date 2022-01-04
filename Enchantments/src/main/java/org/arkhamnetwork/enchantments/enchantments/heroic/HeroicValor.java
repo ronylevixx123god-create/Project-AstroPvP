@@ -20,7 +20,7 @@ public class HeroicValor extends HeroicCustomEnchantment{
         if (!(player instanceof Player)) {
             return;
         }
-        double damage_negation = (double)level * 0.05;
+        double damage_negation = (double)level * 0.08;
         double hp_threshold = level * 4 + 6;
         if (player.getHealth() <= hp_threshold  && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));

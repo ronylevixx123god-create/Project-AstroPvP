@@ -57,7 +57,6 @@ extends CustomEnchantment {
                 exception.printStackTrace();
             }
 
-            player.getWorld().playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.35f);
         }
     }
 

@@ -35,8 +35,6 @@ extends HeroicCustomEnchantment {
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("neutralized"))
-            return;
         ItemStack i = null;
         if (attacker instanceof Player) {
             Player pAttacker = (Player)attacker;
@@ -49,7 +47,7 @@ extends HeroicCustomEnchantment {
         double damage_negation = (double)level * 0.03;
         if(attacker instanceof Player)
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT))
-                damage_negation = level * 0.01875;
+                damage_negation = level * 0.03;
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();

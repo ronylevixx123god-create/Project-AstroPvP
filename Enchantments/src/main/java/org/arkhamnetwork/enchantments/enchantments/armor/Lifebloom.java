@@ -65,7 +65,6 @@ extends CustomEnchantment {
                     if (!(ent instanceof Player) || !this.isAlly(p, pEnt = (Player)ent)) continue;
                     allies.add(pEnt);
                 }
-                p.getWorld().playSound(p.getLocation(), Sound.ORB_PICKUP, 2.0f, 0.75f);
                 try {
                     ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation().add(0.0, 1.0, 0.0), 1.4f, 1.4f, 1.4f, 0.1f, 65);
                 } catch (Exception exception) {
@@ -74,7 +73,6 @@ extends CustomEnchantment {
                 for (Player ally : allies) {
                     ally.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + p.getName() + "'s Lifebloom was activated, fight on!");
                     GeneralUtil.setPlayerHealth((LivingEntity)ally, ally.getMaxHealth());
-                    ally.getWorld().playSound(ally.getLocation(), Sound.ORB_PICKUP, 1.5f, 0.75f);
                     if (level >= 4) {
                         ally.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120, level - 4));
                     }

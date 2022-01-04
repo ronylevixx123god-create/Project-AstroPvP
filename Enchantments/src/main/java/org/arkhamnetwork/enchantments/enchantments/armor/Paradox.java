@@ -131,7 +131,6 @@ extends CustomEnchantment {
                         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + cost + " Soul Gems");
                         p.sendMessage((Object)ChatColor.GRAY + "You have " + (Object)ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls((Player)p) + (Object)ChatColor.GRAY + " souls left.");
                     }
-                    p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 }
             } else {
                 try {

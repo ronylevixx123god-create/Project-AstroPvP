@@ -55,7 +55,6 @@ extends CustomEnchantment {
             for (PotionEffect pe : Lists.newArrayList(player.getActivePotionEffects())) {
                 if (!pe.getType().getName().equals("BLINDNESS") || pe.getAmplifier() > maxBlindLevelToRemove) continue;
                 player.removePotionEffect(PotionEffectType.BLINDNESS);
-                player.playSound(player.getLocation(), Sound.FIZZ, 1.0f, 0.6f);
                 try {
                     ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 20);
                 } catch (Exception exception) {

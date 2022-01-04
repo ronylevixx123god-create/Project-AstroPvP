@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.utils.CC
  *  com.rit.sucy.CustomEnchantment
@@ -48,7 +48,7 @@ import java.util.HashSet;
 import java.util.UUID;
 
 public class RocketEscape
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public static HashMap<String, Long> last_rocket_escape = new HashMap();
     public static HashSet<UUID> rocket_escapists = new HashSet();
 
@@ -74,18 +74,19 @@ extends CustomEnchantment {
                 return;
             }
             if (!(attacker instanceof Player)) return;
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_BACKPACK)) {
-                player.sendMessage(CC.translate("&c&l ** &7" + attacker.getName() + "'s Rocket Escape: &4&lBLOCKED &7[Cursed Wings] &c&l**"));
-                attacker.sendMessage(CC.translate("&c&l ** &7Rocket Escape: &4&lBLOCKED &7[" + player.getName() + "'s Cursed Wings] &c&l**"));
-                return;
-            }
 
-                if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player)player)) {
-                Player pl = (Player)player;
+            if (player.getHealth() - dmg <= 0.0 && this.canEscape((Player) player)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.HALLOWEEN_BACKPACK)) {
+                    player.sendMessage(CC.translate("&c&l ** &7" + attacker.getName() + "'s Rocket Escape: &4&lBLOCKED &7[Cursed Wings] &c&l**"));
+                    attacker.sendMessage(CC.translate("&c&l ** &7Rocket Escape: &4&lBLOCKED &7[" + player.getName() + "'s Cursed Wings] &c&l**"));
+                    return;
+                }
+
+                Player pl = (Player) player;
                 last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
-                if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - ((MetadataValue)pl.getMetadata("sabotage").get(0)).asLong() <= 1000L) {
-                    int sabotageLevel = ((MetadataValue)pl.getMetadata("sabotageLevel").get(0)).asInt();
-                    double negationChance = (double)sabotageLevel * 0.1;
+                if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - ((MetadataValue) pl.getMetadata("sabotage").get(0)).asLong() <= 1000L) {
+                    int sabotageLevel = ((MetadataValue) pl.getMetadata("sabotageLevel").get(0)).asInt();
+                    double negationChance = (double) sabotageLevel * 0.1;
                     if (Math.random() < negationChance) {
                         pl.sendMessage(CC.RedB + " ** " + CC.Gray + "Rocket Escape:" + CC.RedB + " SABOTAGED **");
                         return;
@@ -94,10 +95,10 @@ extends CustomEnchantment {
                 e.setCancelled(true);
                 e.setDamage(0.0);
                 pl.sendMessage("");
-                pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
+                pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
                 pl.sendMessage("");
                 pl.playSound(pl.getLocation(), Sound.EXPLODE, 1.0f, 0.54f);
-                pl.setMetadata("no_fall_damage", (MetadataValue)new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object)true));
+                pl.setMetadata("no_fall_damage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
                 pl.setVelocity(new Vector(0, pl.getWorld().getName().equals("world_duels") || pl.getWorld().getName().equals("world_duels2") ? 2 + level : 4 + level * 2, 0));
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW);
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW_DIGGING);
@@ -106,17 +107,17 @@ extends CustomEnchantment {
                 rocket_escapists.add(uuid);
                 Location loc = pl.getLocation();
                 try {
-                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f,(float)Math.random() * 2.0f, 1.25f, 69);
+                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
 
                     @Override
                     public void run() {
-                        if (Bukkit.getPlayer((UUID)uuid) != null) {
+                        if (Bukkit.getPlayer((UUID) uuid) != null) {
                             try {
-                                ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f,(float)Math.random() * 2.0f, 1.25f, 69);
+                                ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }
@@ -124,7 +125,7 @@ extends CustomEnchantment {
                         }
                         rocket_escapists.remove(uuid);
                     }
-                }, (long)(20 * (level + 2) + 5));
+                }, (long) (20 * (level + 2) + 5));
             }
         }
     }
