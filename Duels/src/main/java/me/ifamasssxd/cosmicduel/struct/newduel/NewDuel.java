@@ -133,8 +133,6 @@ public abstract class NewDuel {
 
     public abstract void onConfirmedQueue();
 
-    public abstract void resetMcMMO(Player var1);
-
     public void sendMessage(String msg, boolean includeSpectators) {
         for (Player p : this.players) {
             p.sendMessage(msg);

@@ -24,6 +24,7 @@ import com.compilex.CosmicKOTH.cmds.CommandAdminKoth;
 import com.compilex.CosmicKOTH.cmds.CommandKoth;
 import com.compilex.CosmicKOTH.listeners.KothInventoryListener;
 import com.compilex.CosmicKOTH.listeners.KothLootBagListener;
+import com.compilex.CosmicKOTH.listeners.KothPortalListener;
 import com.compilex.CosmicKOTH.listeners.KothSanityListener;
 import com.compilex.CosmicKOTH.struct.KothWorldType;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
@@ -188,6 +189,7 @@ public class CosmicKOTHPlugin
         Bukkit.getPluginManager().registerEvents(new OutpostWarpMenuListener(), this);
         Bukkit.getPluginManager().registerEvents(new OutpostRewardsListener(), this);
         Bukkit.getPluginManager().registerEvents(new OutpostSanityListener(), this);
+        Bukkit.getPluginManager().registerEvents(new KothPortalListener(), this);
 
         this.getCommand("outposts").setExecutor(new CommandOutposts());
         this.getCommand("aoutposts").setExecutor(new CommandAoutposts());

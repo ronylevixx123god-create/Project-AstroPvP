@@ -48,9 +48,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.gmail.nossr50.api.PartyAPI;
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
-import com.gmail.nossr50.util.StringUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
@@ -155,7 +152,6 @@ public class ClassicDuel extends NewDuel {
         clearChat(player);
         resetPlayerStats(player);
         applySettings(player);
-        checkMcmmoParty(player);
         removeVanish(player);
     }
 
@@ -341,14 +337,6 @@ public class ClassicDuel extends NewDuel {
         }
     }
 
-    private void checkMcmmoParty(Player p) {
-
-        if (this.settings.hasSetting(Setting.MCMMO) && PartyAPI.inParty(p)) {
-            String name = PartyAPI.getPartyName(p);
-            PartyAPI.removeFromParty(p);
-            p.setMetadata("mcmmo_party", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), name));
-        }
-    }
 
     private void clearChat(Player p) {
         for (int i = 0; i < 35; i++)
@@ -404,7 +392,6 @@ public class ClassicDuel extends NewDuel {
         if (!this.ending && createSpectator && !willDuelEnd()) {
             prepareSpectator(player);
         } else {
-            resetMcMMO(player);
             returnPlayerToStartLocation(player);
         }
         returnItems(player, (reason == Reason.RELOAD));
@@ -457,17 +444,7 @@ public class ClassicDuel extends NewDuel {
         this.originalLocation.remove(p.getUniqueId());
     }
 
-    public void resetMcMMO(Player p) {
 
-        if (!this.settings.hasSetting(Setting.MCMMO))
-            p.removeMetadata("no_mcmmo_skills", (Plugin)CosmicDuel.get());
-        if (p.hasMetadata("mcmmo_party") && p.getMetadata("mcmmo_party").size() > 0) {
-            String name = ((MetadataValue)p.getMetadata("mcmmo_party").get(0)).asString();
-            if (PartyAPI.inParty(p))
-                return;
-            PartyAPI.addToParty(p, name);
-        }
-    }
 
     public List<Player> getPlayers() {
         return this.players;
@@ -507,7 +484,6 @@ public class ClassicDuel extends NewDuel {
             return;
         this.spectators.remove(p);
         resetPlayer(p);
-        resetMcMMO(p);
         returnPlayerToStartLocation(p);
         if (p.hasPotionEffect(PotionEffectType.POISON))
             p.removePotionEffect(PotionEffectType.POISON);

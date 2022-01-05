@@ -1,7 +1,6 @@
 package me.ifamasssxd.cosmicduel;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.gmail.nossr50.api.PartyAPI;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicduel.listeners.SpectateInventory;
 import me.ifamasssxd.cosmicduel.struct.*;

@@ -6,9 +6,6 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
-import com.gmail.nossr50.api.PartyAPI;
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
-import com.gmail.nossr50.util.StringUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rit.sucy.EnchantmentAPI;
@@ -528,7 +525,6 @@ public class TeamDuel extends NewDuel {
         if (!this.ending && createSpectator && !willDuelEnd(player)) {
             prepareSpectator(player);
         } else {
-            resetMcMMO(player);
             returnPlayerToStartLocation(player);
         }
         returnItems(player, (reason == Reason.RELOAD));
@@ -600,17 +596,7 @@ public class TeamDuel extends NewDuel {
         this.originalLocation.remove(p.getUniqueId());
     }
 
-    public void resetMcMMO(Player p) {
 
-        if (!this.settings.hasSetting(Setting.MCMMO))
-            p.removeMetadata("no_mcmmo_skills", CosmicDuel.get());
-        if (p.hasMetadata("mcmmo_party") && p.getMetadata("mcmmo_party").size() > 0) {
-            String name = p.getMetadata("mcmmo_party").get(0).asString();
-            if (PartyAPI.inParty(p))
-                return;
-            PartyAPI.addToParty(p, name);
-        }
-    }
 
     public List<Player> getPlayers() {
         return this.players;
@@ -653,7 +639,6 @@ public class TeamDuel extends NewDuel {
             return;
         this.spectators.remove(p);
         resetPlayer(p);
-        resetMcMMO(p);
         returnPlayerToStartLocation(p);
         if (p.hasPotionEffect(PotionEffectType.POISON))
             p.removePotionEffect(PotionEffectType.POISON);

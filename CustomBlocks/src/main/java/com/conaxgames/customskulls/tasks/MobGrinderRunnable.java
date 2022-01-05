@@ -16,6 +16,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -60,7 +61,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             //ADD LOOT TO THE CHEST
             double chance = Math.random();
 
-             if (chance < 0.03) {
+             if (chance < 0.045) {
                 chest.getInventory().addItem(CoreSkulls.getAstroKey());
             }
             if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {

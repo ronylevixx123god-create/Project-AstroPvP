@@ -21,7 +21,6 @@ package me.ifamasssxd.cosmicduel.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -118,7 +117,6 @@ public class CommandDuel implements CommandExecutor {
                             p.sendMessage(this.red + ChatColor.RED + "You are not spectating a duel.. resetting player data.");
                             p.removeMetadata("spectator", CosmicDuel.get());
                             PlayerUtils.setCollides(p, true);
-                            BleedTimerTask.remove(p);
                             if (!VanishUtils.isVanished(p))
                                 for (Player pl3 : Bukkit.getOnlinePlayers())
                                     pl3.showPlayer(p);

@@ -16,7 +16,6 @@
  */
 package me.ifamasssxd.cosmicduel.struct.newduel;
 
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.utils.DuelUtils;
 import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;

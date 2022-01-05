@@ -19,7 +19,7 @@ public class KothPortalListener implements Listener {
 
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPortalEnter(EntityPortalEnterEvent event) {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
@@ -27,6 +27,21 @@ public class KothPortalListener implements Listener {
                 Location location = new Location(Bukkit.getWorld("world"), 2422, 120, 4638);
                 Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), () -> player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 3L);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onPortalEnter(PlayerTeleportEvent event) {
+        if(event.getTo() == null) {
+            return;
+        }
+        Player player = event.getPlayer();
+        if(event.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL) {
+            event.setCancelled(true);
+
+            Location location = new Location(Bukkit.getWorld("world"), 2422, 120, 4638);
+
+            Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), () -> player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 3L);
         }
     }
 }

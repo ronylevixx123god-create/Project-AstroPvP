@@ -165,14 +165,6 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>mcmmo</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/mcMMO.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.conaxgames</groupId>
             <artifactId>shop</artifactId>
             <version>0.1</version>
             <scope>system</scope>
