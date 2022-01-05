@@ -1,3 +1,17 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDeathEvent
+ *  org.bukkit.event.entity.EntityTargetEvent
+ *  org.bukkit.metadata.MetadataValue
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -9,23 +23,31 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityTargetEvent;
+import org.bukkit.metadata.MetadataValue;
 
-final class UndeadRuseListener implements Listener {
+final class UndeadRuseListener
+implements Listener {
+    UndeadRuseListener() {
+    }
+
     @EventHandler
-    public void onEntityDamage(final EntityDamageByEntityEvent e) {
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
+        Player pSummoner;
+        String summoner;
+        Player p;
         if (e.getEntity() instanceof Player && e.getDamager().hasMetadata("undeadruseSummoner")) {
-            final Player p = (Player) e.getEntity();
-            final String summoner = e.getDamager().getMetadata("undeadruseSummoner").get(0).asString();
-            final Player pSummoner = Bukkit.getPlayer(summoner);
+            p = (Player)e.getEntity();
+            summoner = ((MetadataValue)e.getDamager().getMetadata("undeadruseSummoner").get(0)).asString();
+            pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner))) {
                 e.setCancelled(true);
                 e.setDamage(0.0);
             }
         }
         if (e.getEntity().hasMetadata("undeadruseSummoner") && e.getDamager() instanceof Player) {
-            final Player p = (Player) e.getDamager();
-            final String summoner = e.getEntity().getMetadata("undeadruseSummoner").get(0).asString();
-            final Player pSummoner = Bukkit.getPlayer(summoner);
+            p = (Player)e.getDamager();
+            summoner = ((MetadataValue)e.getEntity().getMetadata("undeadruseSummoner").get(0)).asString();
+            pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner))) {
                 e.setCancelled(true);
                 e.setDamage(0.0);
@@ -34,22 +56,23 @@ final class UndeadRuseListener implements Listener {
     }
 
     @EventHandler
-    public void onEntityTarget(final EntityTargetEvent e) {
+    public void onEntityTarget(EntityTargetEvent e) {
         if (e.getTarget() instanceof Player && e.getEntity().hasMetadata("undeadruseSummoner")) {
-            final Player p = (Player) e.getTarget();
-            final String summoner = e.getEntity().getMetadata("undeadruseSummoner").get(0).asString();
-            final Player pSummoner = Bukkit.getPlayer(summoner);
+            Player p = (Player)e.getTarget();
+            String summoner = ((MetadataValue)e.getEntity().getMetadata("undeadruseSummoner").get(0)).asString();
+            Player pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner) || p.hasMetadata("spectator"))) {
                 e.setCancelled(true);
             }
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityDeath(final EntityDeathEvent e) {
+    @EventHandler(priority=EventPriority.LOWEST)
+    public void onEntityDeath(EntityDeathEvent e) {
         if (e.getEntity().hasMetadata("undeadruseSummoner")) {
             e.getDrops().clear();
             e.getEntity().remove();
         }
     }
 }
+

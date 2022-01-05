@@ -1,29 +1,36 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.Sound
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import javafx.scene.control.Skin;
-import lombok.SneakyThrows;
-import me.astropvp.astroparticles.utils.ParticleUtils;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
-import me.astropvp.astropvpskins.enums.SkinType;
-import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.enchantments.armor.Cactus;
-import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
+import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -32,103 +39,75 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
 
-public class HeroicBleed extends HeroicCustomEnchantment {
-    private DecimalFormat df;
+public class HeroicBleed
+extends HeroicCustomEnchantment {
+    private DecimalFormat df = new DecimalFormat("#.##");
 
     public HeroicBleed() {
         super("Deep Bleed", "Bleed", GeneralUtil.axe, 2);
-        this.df = new DecimalFormat("#.##");
         this.max = 6;
     }
 
-    public static int getBleedStack(LivingEntity le) {
-        return le.hasMetadata("bleedStack") ? ((MetadataValue) le.getMetadata("bleedStack").get(0)).asInt() : 0;
-    }
-
-    public static void clearBleedEffect(LivingEntity le) {
-        le.removeMetadata("bleedStack", (Plugin) Enchantments.getInstance());
-        if (le instanceof Player) {
-            //((Player) le).setWalkSpeed(0.2F);
-        } else {
-            le.removePotionEffect(PotionEffectType.SLOW);
-        }
-    }
-
-    @SneakyThrows
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-
-        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
-            double bleedChance = 0.04D * enchantLevel;
-            if (Math.random() < bleedChance && getBleedStack(target) < getMaxBleedStack(enchantLevel))
-                GeneralCooldown.enterCooldown((Player) user);
-            try {
-                addBleedStack(user, target);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
+            double bleedChance = 0.08 * (double)enchantLevel + 0.4;
+            if (Math.random() < bleedChance && HeroicBleed.getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
+                this.addBleedStack(user, target);
             }
         }
     }
 
     private int getMaxBleedStack(int level) {
-        return 5;
+        return 20;
     }
 
-    private void addBleedStack(LivingEntity leDamager, LivingEntity le) throws Exception {
-        if (!(leDamager instanceof Player)) return;
-        le.setMetadata("bleedStack", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(getBleedStack(le) + 1)));
-        int bleedStack = Math.max(1, getBleedStack(le) / 2);
-        if (le instanceof Player) {
-            Player p = (Player) le;
-            if(!MaskType.hasEquipped(p, "HOLY")) {
-                //p.setWalkSpeed((float) (0.20000000298023224D - 0.0075D * bleedStack));
+    public static int getBleedStack(LivingEntity le) {
+        return le.hasMetadata("bleedStack") ? ((MetadataValue)le.getMetadata("bleedStack").get(0)).asInt() : 0;
+    }
 
-                if (bleedStack >= 5 && bleedStack % 5 == 0)
-                    p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");
-            }
-            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_AMULET_SNOWFLAKE)) {
-                return;
-            }
-            for (Entity ent : p.getNearbyEntities(7.0D, 7.0D, 7.0D)) {
-                if (ent.getEntityId() == leDamager.getEntityId())
-                    continue;
-                if (!(ent instanceof Player) || !ent.hasMetadata("bloodLust"))
-                    continue;
-                Player pEnt = (Player) ent;
-                if (!GeneralUtil.isAlly(p, pEnt))
-                    continue;
-                int bloodLustLevel = ((MetadataValue) pEnt.getMetadata("bloodLust").get(0)).asInt();
-                if (Math.random() >= 0.2D + bloodLustLevel * 0.05D)
-                    continue;
-                double amountToHeal = Math.max(4.0D, bleedStack * 0.1D * bloodLustLevel);
-                if(AstroItemSkinsAPI.hasSkinEquipped((Player) leDamager, SkinType.CHRISTMAS_AXE_SNOWFLAKE)) {
-                    amountToHeal = amountToHeal/1.5; //fuck knows...
+    public static void clearBleedEffect(LivingEntity le) {
+        le.removeMetadata("bleedStack", (Plugin)Enchantments.getInstance());
+        if (le instanceof Player) {
+            ((Player)le).setWalkSpeed(0.2f);
+        } else {
+            le.removePotionEffect(PotionEffectType.SLOW);
+        }
+    }
+
+    private void addBleedStack(LivingEntity leDamager, LivingEntity le) {
+        le.setMetadata("bleedStack", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(HeroicBleed.getBleedStack(le) + 1)));
+        int bleedStack = Math.max(1, HeroicBleed.getBleedStack(le) / 2);
+        if (le instanceof Player) {
+            Player p = (Player)le;
+            if(!MaskType.hasEquipped(p, "HOLY")) {
+//                p.setWalkSpeed((float) ((double) 0.2f - 0.0075 * (double) bleedStack));
+                if (bleedStack >= 5 && bleedStack % 5 == 0) {
+                    p.sendMessage((Object) ChatColor.RED + "** DEEP BLEED [" + (Object) ChatColor.DARK_RED + "-" + this.df.format((double) bleedStack * 0.0075 / (double) 0.2f * 100.0) + (Object) ChatColor.RED + "% Speed] **");
                 }
-                if (Math.random() < 0.1) {
-                    GeneralUtil.healPlayer((LivingEntity) pEnt, amountToHeal);
+            }
+            for (Entity ent : p.getNearbyEntities(7.0, 7.0, 7.0)) {
+                Player pEnt;
+                if (ent.getEntityId() == leDamager.getEntityId() || !(ent instanceof Player) || !ent.hasMetadata("bloodLust") || !GeneralUtil.isAlly(p, pEnt = (Player)ent)) continue;
+                int bloodLustLevel = ((MetadataValue)pEnt.getMetadata("bloodLust").get(0)).asInt();
+                if (!(Math.random() < 0.2 + (double)bloodLustLevel * 0.05)) continue;
+                double amountToHeal = Math.max(4.0, (double)bleedStack * 0.1 * (double)bloodLustLevel);
+                GeneralUtil.healPlayer((LivingEntity)pEnt, amountToHeal);
+                try {
+                    de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation(), 0.075f, 0.075f, 0.075f, 0.1f, 10);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
                 }
-                playBleedEffect(pEnt.getLocation(), bleedStack);
-                de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayer(pEnt.getPlayer(), pEnt.getLocation(),0,0,0,0.075F, 10);
-                pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4F, 0.6F);
+                pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         } else {
-            if (le instanceof Player) {
-                if (!MaskType.hasEquipped((Player) le, "HOLY")) {
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
-                }
-            }
+//            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
         }
-
-        if (Math.random() < 0.1) {
-
-                    playBleedEffect(le.getLocation().add(0.0D, 1.0D, 0.0D), bleedStack);
-                }
-
-
+        this.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
     }
 
     private void playBleedEffect(Location loc, int bleedStack) {
-        for (int i = Math.max(1, bleedStack / 2); i > 0; i--) {
-            WorldUtil.sendWorldEffect(loc.getBlock(), Material.BEDROCK.getId(), 2001);
+        for (int i = Math.max(1, bleedStack / 2); i > 0; --i) {
         }
     }
 }
+

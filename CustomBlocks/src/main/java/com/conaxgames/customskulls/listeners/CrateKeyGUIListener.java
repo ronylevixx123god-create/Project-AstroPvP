@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CrateKeyAPI;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
@@ -120,7 +121,7 @@ public class CrateKeyGUIListener implements Listener {
                     }
                 }
 
-                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p).add(new CollectCategory(CollectType.CRTAEKEY, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GoldB + "CrateKey Opener Loot"));
+                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId()).add(new CollectCategory(CollectType.CRTAEKEY, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GoldB + "CrateKey Opener Loot", System.currentTimeMillis()));
                 p.sendMessage("");
                 p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The CrateKey Loot has been put into your &f/collect&b."));
                 p.sendMessage("");
@@ -137,6 +138,12 @@ public class CrateKeyGUIListener implements Listener {
                 p.sendMessage(CC.translate("&c&l- $" +NumberUtils.formatMoney(price)));
                 p.closeInventory();
                 p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5,5);
+
+                try {
+                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),e.getWhoClicked().getLocation(), 2,2,2,0.05f,40);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

@@ -55,7 +55,6 @@ public class SkeletonBoss extends EntitySkeleton {
 
         final float f11 = 16.0f;
         if (this.getGoalTarget() == null) {
-            System.out.println("Target null!");
             final Entity target = this.findTarget();
             if (target != null) {
                 final EntityTargetEvent event = new EntityTargetEvent((org.bukkit.entity.Entity) this.getBukkitEntity(), (org.bukkit.entity.Entity) target.getBukkitEntity(), EntityTargetEvent.TargetReason.CLOSEST_PLAYER);
@@ -78,7 +77,6 @@ public class SkeletonBoss extends EntitySkeleton {
             this.world.getServer().getPluginManager().callEvent((Event) event2);
             if (!event2.isCancelled()) {
                 if (event2.getTarget() == null) {
-                    System.out.println("target dead");
                     this.setGoalTarget(null);
                 } else {
                     this.setGoalTarget((EntityLiving) ((CraftEntity) event2.getTarget()).getHandle());
@@ -93,7 +91,7 @@ public class SkeletonBoss extends EntitySkeleton {
             this.getNavigation().d = this.getNavigation().a(this.getGoalTarget());
         } else if (((this.getNavigation().d == null && this.random.nextInt(180) == 0) || this.random.nextInt(120) == 0) && this.aU < 100) {
             this.bQ();
-        }*/
+        }
         final int i = MathHelper.floor(this.getBoundingBox().b + 0.5);
         this.pitch = 0.0f;
         /*if (this.getNavigation().d != null && this.random.nextInt(100) != 0) {

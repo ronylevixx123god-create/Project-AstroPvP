@@ -21,7 +21,6 @@ package me.ifamasssxd.cosmicduel.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import com.google.common.collect.Lists;
 
 import java.util.List;
@@ -32,7 +31,6 @@ import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.DuelInvite;
 import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
-import me.ifamasssxd.cosmicduel.struct.QueueManager;
 import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
@@ -40,10 +38,8 @@ import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.EndReason;
 import me.ifamasssxd.cosmicduel.struct.enums.Reason;
 import me.ifamasssxd.cosmicduel.struct.newduel.ClassicDuel;
-import me.ifamasssxd.cosmicduel.struct.newduel.GlobalQueuePopInventory;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
-import me.ifamasssxd.cosmicduel.struct.ranked.RankedTopManager;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import org.apache.commons.lang.StringUtils;
@@ -77,7 +73,6 @@ public class CommandDuel implements CommandExecutor {
             p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel commands while the server is rebooting.");
             return true;
         }
-        QueueManager manager = CosmicDuel.get().getQueueManager();
         if (args.length == 1) {
             if (args[0].equalsIgnoreCase("help")) {
                 sendHelp(p);
@@ -122,37 +117,16 @@ public class CommandDuel implements CommandExecutor {
                             p.sendMessage(this.red + ChatColor.RED + "You are not spectating a duel.. resetting player data.");
                             p.removeMetadata("spectator", CosmicDuel.get());
                             PlayerUtils.setCollides(p, true);
-                            BleedTimerTask.remove(p);
                             if (!VanishUtils.isVanished(p))
                                 for (Player pl3 : Bukkit.getOnlinePlayers())
                                     pl3.showPlayer(p);
                         }
                     } else {
-                        NewDuel duel2 = manager.getDuel(p);
-                        if (duel2 != null) {
-                            manager.removeDuelFromQueue(duel2);
-                            p.sendMessage(ChatColor.RED + "You have been removed from the Global Duel Queue.");
-                            return true;
-                        }
-                        if (manager.isSearching(p)) {
-                            manager.removePlayerFromQueue(p);
-                            p.sendMessage(ChatColor.RED + "You have been removed from the Global Duel Queue.");
-                            return true;
-                        }
-                        if (manager.getRankedQueue().isInRankedQueue(p)) {
-                            manager.getRankedQueue().removeFromQueue(p);
-                            p.sendMessage(ChatColor.RED + "You have been removed from the Ranked Duel Queue.");
-                            return true;
-                        }
                         p.sendMessage(this.red + ChatColor.RED + "You are not in a duel.");
                     }
                     return true;
                 }
-                GlobalQueuePopInventory queue = (GlobalQueuePopInventory) p.getMetadata("in_ranked_queue_menu").get(0).value();
-                if (queue != null) {
-                    queue.declineDuel(p, true, true);
-                    return true;
-                }
+
                 p.removeMetadata("in_ranked_queue_menu", CosmicDuel.get());
                 p.sendMessage(ChatColor.RED + "Your duel queue menu data has been cleared!");
                 return true;
@@ -293,19 +267,6 @@ public class CommandDuel implements CommandExecutor {
                 }
                 String p_name = args[1];
                 DuelAPI.sendSettings(p, p_name);
-            } else if (args[0].equalsIgnoreCase("top")) {
-                if (!StringUtils.isNumeric(args[1])) {
-                    p.sendMessage(ChatColor.RED + "Please enter a valid page number.");
-                    return true;
-                }
-                int page = Integer.parseInt(args[1]);
-                RankedTopManager rankedTop2 = CosmicDuel.get().getTopManager();
-                if (rankedTop2.isLoading()) {
-                    p.sendMessage(ChatColor.RED + "Please wait while the top players are being loaded...");
-                    return true;
-                }
-                rankedTop2.showTop(p, page);
-                return true;
             }
         } else if (args.length == 0) {
             p.sendMessage(CC.translate("&c&l(!) &cUsage: /duel <player>"));
@@ -340,8 +301,8 @@ public class CommandDuel implements CommandExecutor {
     private List<Player> getBothTeamPlayers(TeamData a, TeamData b) {
         List<Player> players = Lists.newArrayList();
         players.add(Bukkit.getPlayer(a.getLeaderUUID()));
-        a.getTeamates().stream().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
-        b.getTeamates().stream().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
+        a.getTeamates().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
+        b.getTeamates().forEach(teammate -> players.add(Bukkit.getPlayer(teammate)));
         return players;
     }
 

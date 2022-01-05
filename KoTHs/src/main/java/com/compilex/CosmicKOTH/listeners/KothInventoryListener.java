@@ -28,11 +28,8 @@ implements Listener {
                     if (e.getSlot() != 4) {
                         return;
                     }
-                    if (CosmicKOTHAPI.isKOTHRunning()) {
+                    if (CosmicKOTHAPI.canTeleportToKOTH()) {
                         e.getWhoClicked().teleport(CosmicKOTHPlugin.get_().getSpawn());
-                    } else {
-                        e.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "No KOTH events are currently running.");
-                        e.getWhoClicked().sendMessage(CC.Gray + "Use /koth to find the next scheduled KOTH.");
                     }
                 }
             }

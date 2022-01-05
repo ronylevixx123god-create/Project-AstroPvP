@@ -75,7 +75,7 @@ implements Runnable {
                 p.setAllowFlight(true);
                 continue;
             }
-            if (p.isOp() || CosmicDuel.get().getQueueManager().getDuel(p) != null || !p.getWorld().getName().equals(Arena.getDuelWorldName())) continue;
+            if (p.isOp() || !p.getWorld().getName().equals(Arena.getDuelWorldName())) continue;
             p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), (Object)""));
             p.teleport(((World)Bukkit.getWorlds().get(0)).getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             p.removeMetadata("ignore_combat_tag", (Plugin)CosmicDuel.get());

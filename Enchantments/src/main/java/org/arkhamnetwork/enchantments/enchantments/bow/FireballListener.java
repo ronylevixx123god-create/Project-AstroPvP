@@ -1,6 +1,27 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.earth2me.essentials.User
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Location
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.EnderDragon
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.ProjectileHitEvent
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.zencode.shortninja.staffplus.StaffPlus
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.earth2me.essentials.User;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -17,24 +38,30 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-final class FireballListener implements Listener {
+final class FireballListener
+implements Listener {
+    FireballListener() {
+    }
+
     @EventHandler
-    public void onEntityDamage(final EntityDamageEvent e) {
+    public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity().hasMetadata("hellfire")) {
             e.setCancelled(true);
             e.setDamage(0.0);
-            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
-                ((Player) ((EntityDamageByEntityEvent) e).getDamager()).playSound(e.getEntity().getLocation(), Sound.FIRE, 1.0f, 0.7f);
+            if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
+                ((Player)((EntityDamageByEntityEvent)e).getDamager()).playSound(e.getEntity().getLocation(), Sound.FIRE, 1.0f, 0.7f);
                 e.getEntity().remove();
             }
         }
     }
 
     @EventHandler
-    public void onProjectileHit(final ProjectileHitEvent e) throws Exception {
+    public void onProjectileHit(ProjectileHitEvent e) {
         if (e.getEntity().hasMetadata(Hellfire.hellfireEncahntmentMetadata)) {
-            final Location loc = e.getEntity().getLocation();
+            Location loc = e.getEntity().getLocation();
             if (e.getEntity().getPassenger() != null) {
                 e.getEntity().getPassenger().remove();
             }
@@ -42,68 +69,62 @@ final class FireballListener implements Listener {
                 return;
             }
             loc.getWorld().playSound(loc, Sound.FIRE, 1.0f, 0.85f);
-            final int level = e.getEntity().getMetadata(Hellfire.hellfireEncahntmentMetadata).get(0).asInt();
+            final int level = ((MetadataValue)e.getEntity().getMetadata(Hellfire.hellfireEncahntmentMetadata).get(0)).asInt();
             final boolean duelWorld = loc.getWorld().getName().equals("world_duels2");
             int radius = level * 2;
             if (duelWorld) {
                 radius /= 2;
             }
-            final String enchantment_owner = e.getEntity().hasMetadata(Hellfire.hellfireEncahntmentOwnerMetadata) ? e.getEntity().getMetadata(Hellfire.hellfireEncahntmentOwnerMetadata).get(0).asString() : null;
-            final Player owner = Bukkit.getPlayer(enchantment_owner);
-            for (final Entity ent : e.getEntity().getNearbyEntities((double) radius, (double) radius, (double) radius)) {
-                if (ent.hasMetadata("spectator")) {
-                    continue;
+            String enchantment_owner = e.getEntity().hasMetadata(Hellfire.hellfireEncahntmentOwnerMetadata) ? ((MetadataValue)e.getEntity().getMetadata(Hellfire.hellfireEncahntmentOwnerMetadata).get(0)).asString() : null;
+            Player owner = Bukkit.getPlayer(enchantment_owner);
+            for (Entity ent : e.getEntity().getNearbyEntities((double)radius, (double)radius, (double)radius)) {
+                Player pEnt;
+                User u;
+                if (ent.hasMetadata("spectator") || !(ent instanceof LivingEntity) || ent.hasMetadata("do_not_clear") || enchantment_owner != null && ent instanceof Player && (((Player)ent).getName().equals(enchantment_owner) || this.isAlly((Player)ent, owner) || !this.canHurt((Player)ent, owner)) || !(ent instanceof Player) || ent instanceof Player && ((u = Hellfire.ess3.getUser(pEnt = (Player)ent)).isGodModeEnabled() || u.isVanished() || WorldGuardUtils.isPvPDisabled(ent.getLocation()) || ent instanceof EnderDragon)) continue;
+                if (ent instanceof LivingEntity) {
+                    ((LivingEntity)ent).setFireTicks(((LivingEntity)ent).getFireTicks() + level * 20);
                 }
-                if (!(ent instanceof LivingEntity) || ent.hasMetadata("do_not_clear")) {
-                    continue;
-                }
-                if (enchantment_owner != null && ent instanceof Player) {
-                    if (((Player) ent).getName().equals(enchantment_owner) || this.isAlly((Player) ent, owner)) {
-                        continue;
-                    }
-                    if (!this.canHurt((Player) ent, owner)) {
-                        continue;
-                    }
-                }
-                if (!(ent instanceof Player)) {
-                    continue;
-                }
-                final Player pEnt = (Player) ent;
-                final User u = Hellfire.ess3.getUser(pEnt);
-                if (u.isGodModeEnabled() || u.isVanished()) {
-                    continue;
-                }
-                if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
-                    continue;
-                }
-                if (ent instanceof EnderDragon) {
-                    continue;
-                }
-                ent.setFireTicks(ent.getFireTicks() + level * 20);
-                final LivingEntity le = (LivingEntity) ent;
-                if (Bukkit.getPlayer(enchantment_owner) != null) {
-                    Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
-                        if (!le.isDead()) {
-                            final int dmg = 1 + level;
-                            le.damage(duelWorld ? (dmg / 1.5) : ((double) dmg));
+                final LivingEntity le = (LivingEntity)ent;
+                if (Bukkit.getPlayer((String)enchantment_owner) != null) {
+                    Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
+                        @Override
+                        public void run() {
+                            if (!le.isDead()) {
+                                int dmg = 1 + level;
+                                le.damage(duelWorld ? (double)dmg / 1.5 : (double)dmg);
+                            }
                         }
                     }, 1L);
                 }
-                final Location eloc = ent.getLocation().add(0.0, 1.0, 0.0);
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),eloc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 16);
-
+                Location eloc = ent.getLocation().add(0.0, 1.0, 0.0);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), eloc, (float) Math.random(), (float) Math.random(), (float)Math.random(), 0.5f, 16);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
-            de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(),loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 8);
-            de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(),loc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.25f, 45);
+            try {
+                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float)Math.random(), 0.5f, 8);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            try {
+                de.inventivegames.particle.ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float) Math.random(), (float)Math.random(), 0.25f, 45);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+
             e.getEntity().remove();
         }
     }
 
-    private boolean isAlly(final Player p1, final Player p2) {
+    private boolean isAlly(Player p1, Player p2) {
         return GeneralUtil.isAlly(p1, p2);
     }
 
-    private boolean canHurt(final Player p1, final Player p2) {
+    private boolean canHurt(Player p1, Player p2) {
         return GeneralUtil.isEnemy(p1, p2);
     }
 }
+

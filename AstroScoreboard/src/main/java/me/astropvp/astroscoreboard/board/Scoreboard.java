@@ -13,12 +13,10 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.integration.Econ;
 import com.reliableplugins.printer.Printer;
 import com.reliableplugins.printer.PrinterPlayer;
-import me.astropvp.astroendgrinding.data.EndPlayerData;
-import me.astropvp.astroendgrinding.enums.MonsterType;
-import me.astropvp.astroendgrinding.utils.TimeUtils;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
@@ -54,13 +52,13 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Scoreboard implements BoardAdapter {
     private final AstroScoreboardPlugin plugin = AstroScoreboardPlugin.getInstance();
-    private static DateFormat format = new SimpleDateFormat("MM/dd");
     private final Map<String, String> rankOrder = new HashMap<>();
 
     public List<String> getScoreboard(Player player, Board board) {
         return mainBoard(player);
     }
 
+    private static final DateFormat format = new SimpleDateFormat("MM/dd");
     public static String getDateSuffix() {
         return format.format(new Date());
     }
@@ -92,19 +90,19 @@ public class Scoreboard implements BoardAdapter {
 
     public String getTitle(Player player) {
         FPlayer fplayer = FactionUtils.getFPlayer(player);
-        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
-            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
-                if(entity.hasMetadata("boss")) {
-                    if(Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST)) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
                         return DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP ? CC.GoldB + "Mother Of Yijki" : CC.LightPurpleB + "Mother Of Yijki";
                     }
                 }
             }
         }
-        if(DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
-            for(Entity entity : player.getNearbyEntities(32, 32, 32)) {
-                if(entity.hasMetadata("boss")) {
-                    if(Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
+        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
                         return CC.GoldB + "The Corrupt Cosmonaut";
                     }
                 }
@@ -122,12 +120,19 @@ public class Scoreboard implements BoardAdapter {
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
-        }else if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
+        }
+        if (DuelAPI.getDuel(player) != null && (DuelAPI.getDuel(player).getDuelState() == DuelState.STARTING || DuelAPI.getDuel(player).getDuelState() == DuelState.PLAYING)) {
             if (DuelAPI.getDuel(player).getDuelType() == DuelType.ONE_VS_ONE) {
                 return CC.translate("&6&l1v1 Duel &7" + getDateSuffix());
             }
+        }
+        KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
 
-        } else if(!FactionUtils.isWilderness(fplayer.getFaction())) {
+        if (koth != null && WorldGuardUtils.getRegionsIn(player) != null && (WorldGuardUtils.getRegionsIn(player).contains("desertkoth") || WorldGuardUtils.getRegionsIn(player).contains("desertkoth2"))) {
+            return CC.translate("&6&lDesert KOTH &7" + getDateSuffix());
+        }
+
+        if (!FactionUtils.isWilderness(fplayer.getFaction())) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
@@ -239,9 +244,6 @@ public class Scoreboard implements BoardAdapter {
                 }
             }
         }
-
-
-
 
 
         if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
@@ -363,17 +365,19 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-
-        if (CosmicKOTHAPI.isKOTHRunning() && player.getLocation().getWorld().getName().equals("world_koth")) {
-            KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
+        KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
+        if (koth != null && WorldGuardUtils.getRegionsIn(player) != null && (WorldGuardUtils.getRegionsIn(player).contains("desertkoth") || WorldGuardUtils.getRegionsIn(player).contains("desertkoth2"))) {
             List<String> board = new LinkedList<>();
             board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&a&lKOTH Event"));
             if (koth.getPlayerCapping() != null) {
-                board.add(CC.translate("&a Capper&7: &f" + koth.getPlayerCapping().getName()));
-                board.add(CC.translate("&a Time Left&7: &f") + koth.getSecondsUntilCap() + "s");
+                board.add(CC.translate("&f&l● &6Capper&7: &e" + koth.getPlayerCapping().getName()));
+                board.add(CC.translate("&f&l● &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
+                board.add("");
             }
-            board.add(CC.translate("&a Location&7: &7X37, Y52, Z-28"));
+            board.add(CC.translate("&f&l● &6Nearby Players:&c " + player.getNearbyEntities(48, 60, 48).size()));
+            board.add(CC.translate("&f&l● &6Account:&f " + player.getName()));
+            board.add("");
+            board.add(CC.translate("&fX&72504&7, &fY&719, &fZ&74638"));
             board.add("");
             board.add(CC.White + "play.astropvp.net");
             return board;
@@ -506,32 +510,6 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
-        if (player.getLocation().getWorld().getName().equals("world_the_end")) {
-            int endPlayers = 0;
-            int totalKills = 0;
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (p.getWorld().getName().equals("world_the_end")) {
-                    endPlayers++;
-                }
-            }
-            List<String> board = new LinkedList<>();
-            EndPlayerData data = EndPlayerData.findPlayer(player);
-            PlayerDataManager manager = AstroSpawners.getInstance().getManager();
-            PlayerData dataCoins = manager.getPlayerData(player);
-            board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&5&lEnd Grinding"));
-            for (MonsterType type : MonsterType.values()) {
-                totalKills += data.getKills(type);
-            }
-            board.add(CC.translate("&d Kills&7: &f") + totalKills);
-            board.add(CC.translate("&d End Players&7: &f") + endPlayers);
-            board.add(CC.translate("&d Time Spent&7: &f" + TimeUtils.format(data.getTimeInEnd())));
-            board.add(CC.translate("&d Mobcoins&7:&f " + NumberFormat.getIntegerInstance().format(dataCoins.getCoins()) + "⛁"));
-
-            board.add("");
-            board.add(CC.White + "play.astropvp.net");
-            return board;
-        }
 /*
         if (WorldGuardUtils.inRegion(player.getLocation(), "infernalfull")) {
             List<String> board = new LinkedList<>();
@@ -560,8 +538,16 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add(" ");
-        board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "Mobcoins");
-        board.add(CC.White + NumberFormat.getIntegerInstance().format(data.getCoins()) + "⛁");
+
+        if (!FactionUtils.getFaction(player).isWilderness()) {
+            Faction faction = FactionUtils.getFaction(player);
+            board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
+            board.add(CC.translate("&a" + faction.getOnlinePlayers().size() + " &7/ 15"));
+        } else {
+            board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
+            board.add(CC.Gray + "play.astropvp.net");
+
+        }
 
         /*board.add("");
         board.add(CC.GreenB + player.getName());
@@ -582,7 +568,6 @@ public class Scoreboard implements BoardAdapter {
 
         return board;
     }
-
 
 
     public long getInterval() {

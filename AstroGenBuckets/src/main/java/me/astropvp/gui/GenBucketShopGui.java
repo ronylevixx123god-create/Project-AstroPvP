@@ -76,10 +76,10 @@ public class GenBucketShopGui {
             player.getInventory().addItem(netherrackGenBucket.getItem(GenBucketDirection.VERTICAL, 100.0D));
             event.setCancelled(true);
         }));
-/*        expShopUI.setItem(2, 5, new GuiItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 15000), event -> {
+        expShopUI.setItem(2, 5, new GuiItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 15000), event -> {
             player.getInventory().addItem(lavaGenBucket.getItem(GenBucketDirection.VERTICAL, 15000.0D));
             event.setCancelled(true);
-        }));*/
+        }));
 
 
     }

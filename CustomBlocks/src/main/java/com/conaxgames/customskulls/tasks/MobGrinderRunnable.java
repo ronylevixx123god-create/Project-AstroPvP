@@ -16,6 +16,7 @@ import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,14 +24,17 @@ import java.util.Arrays;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 100;
+    int amountOfExpPerBlaze = 50;
 
     @Override
     public void run() {
         for (MobGrinderCache mobGrinderCache : CoreSkulls.getGrinderBlocks()) {
             if (mobGrinderCache == null) continue;
+            if (!mobGrinderCache.getAbilityData().isActive()) continue;
             boolean playerFound = mobGrinderCache.isPlayerNearby();
             if (!playerFound) continue;
+
+
 
             Location chestLocation = mobGrinderCache.getChestLocation();
 
@@ -53,23 +57,18 @@ public class MobGrinderRunnable extends BukkitRunnable {
             if (!stackedBlazesFound) continue;
 
 
+
             //ADD LOOT TO THE CHEST
             double chance = Math.random();
-            if (chance < 0.01) {
-                chest.getInventory().addItem(CoreSkulls.getStellarKey());
-            } else if (chance < 0.03) {
-                chest.getInventory().addItem(CoreSkulls.getNovaKey());
 
+             if (chance < 0.045) {
+                chest.getInventory().addItem(CoreSkulls.getAstroKey());
             }
             if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {
                 chest.getInventory().addItem(ExpBottles.getXpBottle(amountOfExpPerBlaze, "Mob Grinder"));
             }
-            if (!chest.getInventory().contains(Material.DOUBLE_PLANT)) {
-                chest.getInventory().addItem(MobCoinUtils.createCoinsNote("Mob Grinder", 1));
-            }
+
             int expBottle = -1;
-            int mobcoin = -1;
-            boolean mobCoinsFound = false;
             boolean expBottleFound = false;
 
             for (int i = 0; i < chest.getInventory().getSize(); i++) {
@@ -78,23 +77,15 @@ public class MobGrinderRunnable extends BukkitRunnable {
                     continue;
                 }
 
-                if (expBottleFound && mobCoinsFound) break;
+                if (expBottleFound) break;
 
-                if (MobCoinUtils.isCoinsNote(itemStack) && !mobCoinsFound) {
-                    mobcoin = i;
-                    mobCoinsFound = true;
-                }
 
-                if (ExpBottles.isXpBottle(itemStack) && !expBottleFound) {
+                if (ExpBottles.isXpBottle(itemStack)) {
                     expBottle = i;
                     expBottleFound = true;
                 }
 
-                if (expBottle == -1 || mobcoin == -1) continue;
-
-                if (Math.random() < 0.15) {
-                    chest.getInventory().setItem(mobcoin, MobCoinUtils.createCoinsNote("Mob Grinder", MobCoinUtils.getCoinsAmountFromNote(chest.getInventory().getItem(mobcoin)) + 1));
-                }
+                if (expBottle == -1) continue;
 
 
                 chest.getInventory().setItem(expBottle, ExpBottles.getXpBottle(ExpBottles.getXpAmount(chest.getInventory().getItem(expBottle)) + amountOfExpPerBlaze, "Mob Grinder"));

@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
+import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -15,6 +16,7 @@ public class BloodhoundListener implements Listener {
          Player damager = (Player)event.getDamager();
          Player entity = (Player)event.getEntity();
          if (entity.hasMetadata("bloodHoundNoBless")) {
+            if (LunaSet.isLunarStriked((Player) event.getEntity())) return;
             if (entity.getMetadata("bloodHoundNoBless").get(0).asString().equals("ancient")) {
                entity.sendMessage(CC.translate("&3&L* LEVIATHAN'S CURSE &7(1.5x DMG) &3&l*"));
             }

@@ -1,3 +1,15 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -10,22 +22,24 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class BloodLust extends CustomEnchantment {
+public class BloodLust
+extends CustomEnchantment {
     public BloodLust() {
         super("Blood Lust", GeneralUtil.chestplates, 2);
         this.max = 6;
-        this.base = 17.0D;
-        this.interval = 4.0D;
+        this.base = 17.0;
+        this.interval = 4.0;
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
     }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
-        player.setMetadata("bloodLust", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(enchantLevel)));
+        player.setMetadata("bloodLust", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
-        player.removeMetadata("bloodLust", (Plugin) Enchantments.getInstance());
+        player.removeMetadata("bloodLust", (Plugin)Enchantments.getInstance());
     }
 }
+

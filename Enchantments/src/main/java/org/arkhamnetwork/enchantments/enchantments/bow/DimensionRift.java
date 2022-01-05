@@ -1,16 +1,40 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.massivecraft.factions.Board
+ *  com.massivecraft.factions.FLocation
+ *  com.rit.sucy.CustomEnchantment
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Location
+ *  org.bukkit.Material
+ *  org.bukkit.block.Block
+ *  org.bukkit.block.Chest
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.entity.Projectile
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.ProjectileLaunchEvent
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.potion.PotionEffectType
+ *  org.bukkit.scheduler.BukkitTask
+ *  org.bukkit.util.Vector
+ */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -26,12 +50,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-public class DimensionRift extends CustomEnchantment {
-    public static HashMap<Integer, HashMap<Location, Material>> blockRevertTasks;
-
-    static {
-        DimensionRift.blockRevertTasks = new HashMap<Integer, HashMap<Location, Material>>();
-    }
+public class DimensionRift
+extends CustomEnchantment {
+    public static HashMap<Integer, HashMap<Location, Material>> blockRevertTasks = new HashMap();
 
     public DimensionRift() {
         super("Dimension Rift", new Material[]{Material.BOW}, 3);
@@ -40,9 +61,9 @@ public class DimensionRift extends CustomEnchantment {
         this.interval = 4.0;
     }
 
-    @SneakyThrows
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (Math.random() > level * 0.05) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        int x;
+        if (Math.random() > (double)level * 0.05) {
             return;
         }
         if (!(e.getDamager() instanceof Projectile)) {
@@ -52,70 +73,87 @@ public class DimensionRift extends CustomEnchantment {
             return;
         }
         final HashMap<Location, Material> blocks = new HashMap<Location, Material>();
-        final Location enemyLoc = playerHit.getLocation().subtract(0.0, 1.0, 0.0).clone();
+        Location enemyLoc = playerHit.getLocation().subtract(0.0, 1.0, 0.0).clone();
         if (playerHit.getWorld().getName().equals("world_koth") || player.getWorld().getName().startsWith("dungeon")) {
             return;
         }
-        final FLocation fL = new FLocation(enemyLoc);
-        if (Board.getFactionAt(fL).isNormal()) {
+        FLocation fL = new FLocation(enemyLoc);
+        if (Board.getFactionAt((FLocation)fL).isNormal()) {
             return;
         }
         if (WorldGuardUtils.getRegionName(playerHit.getLocation()).equals("")) {
             return;
         }
-        for (int x = (level >= 4) ? -1 : 0; x <= 1; ++x) {
-            for (int z = (level >= 3) ? -1 : 0; z <= 1; ++z) {
-                final Location l = enemyLoc.clone().add((double) x, 0.0, (double) z);
-                final Material m = l.getBlock().getType();
+        int n = x = level >= 4 ? -1 : 0;
+        while (x <= 1) {
+            int z;
+            int n2 = z = level >= 3 ? -1 : 0;
+            while (z <= 1) {
+                Location l = enemyLoc.clone().add((double)x, 0.0, (double)z);
+                Material m = l.getBlock().getType();
                 if ((m.isBlock() || m == Material.AIR) && !(l.getBlock().getState() instanceof Chest) && m != Material.SOUL_SAND && m != Material.WEB && m != Material.BEDROCK && m != Material.ENDER_PORTAL && m != Material.PORTAL) {
+                    Location lAbove;
+                    Material mAbove;
                     blocks.put(l.clone(), m);
                     l.getBlock().setType(Material.SOUL_SAND);
-                    de.inventivegames.particle.ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), l.getBlock().getLocation(), 0f,1f,0f,0.75f,10);
+                    try {
+                        ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 10);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
 
-                    if (Math.random() < level * 0.1) {
-                        final Location lAbove = l.getBlock().getLocation().add(0.0, 1.0, 0.0);
-                        final Material mAbove = lAbove.getBlock().getType();
-                        if ((mAbove.isBlock() || mAbove == Material.AIR) && !(lAbove.getBlock().getState() instanceof Chest) && mAbove != Material.SOUL_SAND && mAbove != Material.WEB && mAbove != Material.BEDROCK && mAbove != Material.ENDER_PORTAL && mAbove != Material.PORTAL) {
-                            blocks.put(lAbove.clone(), mAbove);
-                            lAbove.getBlock().setType(Material.WEB);
-                            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), lAbove.clone(), 0f,0.5f,0f,0.7f,10);
-
+                    if (Math.random() < (double)level * 0.1 && ((mAbove = (lAbove = l.getBlock().getLocation().add(0.0, 1.0, 0.0)).getBlock().getType()).isBlock() || mAbove == Material.AIR) && !(lAbove.getBlock().getState() instanceof Chest) && mAbove != Material.SOUL_SAND && mAbove != Material.WEB && mAbove != Material.BEDROCK && mAbove != Material.ENDER_PORTAL && mAbove != Material.PORTAL) {
+                        blocks.put(lAbove.clone(), mAbove);
+                        lAbove.getBlock().setType(Material.WEB);
+                        try {
+                            ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), lAbove.clone().add(0.0, 0.5, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 10);
+                        } catch (Exception exception) {
+                            exception.printStackTrace();
                         }
+
                     }
                 }
+                ++z;
             }
+            ++x;
         }
-        final BukkitTask bt = Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        final BukkitTask bt = Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
             @Override
             public void run() {
-                final HashSet<Player> playersToBoost = new HashSet<Player>();
-                for (final Map.Entry<Location, Material> data : blocks.entrySet()) {
-                    final Location l = data.getKey();
-                    for (final Player p : l.getWorld().getPlayers()) {
-                        if (!playersToBoost.contains(p) && p.getWorld().equals(l.getWorld()) && Math.abs(p.getLocation().getChunk().getX() - l.getChunk().getX()) <= 1 && Math.abs(p.getLocation().getChunk().getZ() - l.getChunk().getZ()) <= 1 && p.getLocation().distanceSquared(l) <= 4.0) {
-                            playersToBoost.add(p);
-                        }
+                HashSet<Player> playersToBoost = new HashSet<Player>();
+                for (Map.Entry data : blocks.entrySet()) {
+                    Location l = (Location)data.getKey();
+                    for (Player p : l.getWorld().getPlayers()) {
+                        if (playersToBoost.contains((Object)p) || !p.getWorld().equals((Object)l.getWorld()) || Math.abs(p.getLocation().getChunk().getX() - l.getChunk().getX()) > 1 || Math.abs(p.getLocation().getChunk().getZ() - l.getChunk().getZ()) > 1 || !(p.getLocation().distanceSquared(l) <= 4.0)) continue;
+                        playersToBoost.add(p);
                     }
-                    data.getKey().getBlock().setType((Material) data.getValue());
-                    for (final Player p : playersToBoost) {
+                    ((Location)data.getKey()).getBlock().setType((Material)data.getValue());
+                    WorldUtil.sendWorldEffect((Block)((Location)data.getKey()).getBlock(), (int)((Material)data.getValue()).getId(), (int)2001);
+                    for (Player p : playersToBoost) {
                         p.removePotionEffect(PotionEffectType.JUMP);
                         p.setVelocity(new Vector(0.0, 0.5, 0.0));
                     }
                 }
             }
-        }, (long) (level * 15 + 40));
-        DimensionRift.blockRevertTasks.put(bt.getTaskId(), (HashMap<Location, Material>) blocks.clone());
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        }, (long)(level * 15 + 40));
+        blockRevertTasks.put(bt.getTaskId(), (HashMap)blocks.clone());
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
             @Override
             public void run() {
-                DimensionRift.blockRevertTasks.remove(bt.getTaskId());
+                blockRevertTasks.remove(bt.getTaskId());
             }
-        }, (long) (level * 15 + 40 + 1));
+        }, (long)(level * 15 + 40 + 1));
     }
 
-    @SneakyThrows
-    public void applyProjectileEffect(final LivingEntity player, final int level, final ProjectileLaunchEvent e) {
-        de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0f,0.5f,0f,0.7f,16);
+    public void applyProjectileEffect(LivingEntity player, int level, ProjectileLaunchEvent e) {
+        try {
+            ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.7f, 0.7f, 0.7f, 0.7f, 16);
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
 
     }
 }
+

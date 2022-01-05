@@ -38,7 +38,7 @@ public class EndLogicnessListener implements Listener {
 	static {
 		allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms",
 		"koth", "ft", "filter", "r", "bless","blessme", "response", "end", "bless", "heal", "cf", "coinflip", "jackpot",
-		"feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless"));
+		"feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "f home"));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

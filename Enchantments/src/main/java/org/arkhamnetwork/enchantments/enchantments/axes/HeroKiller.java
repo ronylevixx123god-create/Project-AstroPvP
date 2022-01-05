@@ -1,15 +1,30 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
+ *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.rit.sucy.CustomEnchantment
+ *  com.rit.sucy.EnchantmentAPI
+ *  me.ifamasssxd.killtracker.KillTrackerAPI
+ *  org.bukkit.Material
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.metadata.MetadataValue
+ */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -17,10 +32,11 @@ import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.MetadataValue;
 
-public class HeroKiller extends CustomEnchantment {
+public class HeroKiller
+extends CustomEnchantment {
     public HeroKiller() {
         super("Hero Killer", GeneralUtil.axe, 2);
         this.max = 3;
@@ -28,78 +44,56 @@ public class HeroKiller extends CustomEnchantment {
         this.interval = 10.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
         if (!(playerHit instanceof Player)) {
             return;
         }
-
-        if (!(player instanceof Player)) return;
-        final Player p = (Player) player;
-        final ItemStack used = p.getItemInHand();
-        if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
+        Player p = (Player)player;
+        ItemStack used = p.getItemInHand();
+        if (used == null || !EnchantmentAPI.itemHasEnchantment((ItemStack)used, (String)this.enchantName)) {
             return;
         }
-        if (p.hasMetadata("lastItemHeldChange") && MinecraftServerUtils.getCurrentServerTick() - p.getMetadata("lastItemHeldChange").get(0).asLong() <= 5L) {
-            return;
-        }
-        if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {
-            return;
-        }
-
         if(p.hasMetadata("witcher_ability"))
             return;
-
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
-        if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
-            if (!isWearingHeroic((Player) playerHit))
+        if (p.hasMetadata("lastItemHeldChange") && (long)MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() <= 5L) {
+            return;
+        }
+        if (p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
+            return;
+        }
+        if (KillTrackerAPI.hasGodMode((Player)p) && KillTrackerAPI.getAllSouls((Player)p) > 0) {
+            if (!this.isWearingHeroic((Player)playerHit)) {
                 return;
-
-            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
-                KillTrackerAPI.removeSoulsFromGems(p, 4);
             }
+            if (LunaSet.isLunarStriked((Player) playerHit)) return;
+            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
+                KillTrackerAPI.removeSoulsFromGems((Player)p, (int)4);
+            }
+            double increase = 0.1 * (double)level;
 
-
-            double increase = 0.01 * level;
-
-
+            if (CosmicArmorSetsAPI.hasCrystalApplied((Player) player, ArmorSet.LUNA)) {
+                increase *= 1.1;
+            }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-
-                if (player == null || !(player instanceof Player) || playerHit == null || !(playerHit instanceof Player))
-                    return;
-
-                if (((Player) player).getItemInHand() == null || ((Player) playerHit).getItemInHand() == null) return;
-
-                if (!(WeaponBonusUtils.hasWeaponBonus(((Player) playerHit).getItemInHand()))) {
-                    if (!(WeaponBonusUtils.getWeaponBonusByItem(((Player) playerHit).getItemInHand()) == WeaponBonusType.REFORGED && Math.random() < 0.4)) {
-                        if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) playerHit).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
-                            increase *= 1.1;
-                        }
-                    }
-                }
-                if (!(e.getDamager() instanceof Player)) return;
-                if (((Player) e.getDamager()).getItemInHand() == null) return;
-                if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master"))
-                    increase *= (((1.2 * 5) / 100) + 1);
+                increase += 1.3;
             }
-            e.setDamage(e.getDamage() * (1 + increase));
+                e.setDamage(e.getDamage() * (1.0 + increase));
         }
     }
 
-
-    private boolean isWearingHeroic(final Player player) {
-        for (final ItemStack armor : player.getInventory().getArmorContents()) {
-            if (armor != null) {
-                final Material type = armor.getType();
-                if ((type == Material.LEATHER_BOOTS || type == Material.LEATHER_LEGGINGS || type == Material.LEATHER_CHESTPLATE || type == Material.LEATHER_HELMET) && new NBTWrapper(armor).getString("cosmicType").equals("HEROIC_ARMOR")) {
-                    return true;
-                }
-            }
+    private boolean isWearingHeroic(Player player) {
+        for (ItemStack armor : player.getInventory().getArmorContents()) {
+            Material type;
+            if (armor == null || (type = armor.getType()) != Material.LEATHER_BOOTS && type != Material.LEATHER_LEGGINGS && type != Material.LEATHER_CHESTPLATE && type != Material.LEATHER_HELMET || !new NBTWrapper(armor).getString("cosmicType").equals("HEROIC_ARMOR")) continue;
+            return true;
         }
         return false;
     }
 }
+

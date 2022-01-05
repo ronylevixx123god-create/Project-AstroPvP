@@ -5,7 +5,9 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import lombok.Getter;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
@@ -21,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
+@Getter
 public abstract class CustomBlock {
     private final String identifier;
     private final String name;
@@ -39,6 +42,31 @@ public abstract class CustomBlock {
     public String getName() {
         return name;
     }
+
+    public ItemStack getCustomBlockItem() {
+        ItemBuilderUtils item = new ItemBuilderUtils(new ItemBuilder(this.material, this.getName()).addLoreLines(addLore()).build());
+
+
+
+        NBTWrapper nbtItem = new NBTWrapper(item.toItemStack());
+
+
+        NBTTagCompoundBuilder cosmicData = nbtItem.hasKey("cosmicData") ? new NBTTagCompoundBuilder(nbtItem.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+
+        NBTTagCompoundBuilder cosmicData2 = cosmicData.hasKey("customBlockData") ? new NBTTagCompoundBuilder(cosmicData.getNBTBase("customBlockData")) : new NBTTagCompoundBuilder();
+
+
+        nbtItem.setString("cosmicType", "custom_block");
+        cosmicData2.setString("type", abilityType.getName());
+
+        cosmicData.setNBTBase("customBlockData", cosmicData2.get());
+
+        nbtItem.setNBTBase("cosmicData", cosmicData.get());
+
+        return nbtItem.build();
+    }
+
+
 
     public String getIdentifier() {
         return identifier;

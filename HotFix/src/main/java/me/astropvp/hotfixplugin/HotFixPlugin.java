@@ -22,7 +22,7 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportSafetyListener(), this);
         getCommand("fixslot").setExecutor(new FixSlotsCommand());
-        Bukkit.getPluginManager().registerEvents(new CannonFix(), this);
+        //Bukkit.getPluginManager().registerEvents(new CannonFix(), this);
         new ProtocolListener();
 
     }

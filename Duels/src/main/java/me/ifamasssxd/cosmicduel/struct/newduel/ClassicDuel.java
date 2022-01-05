@@ -48,17 +48,13 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.gmail.nossr50.api.PartyAPI;
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
-import com.gmail.nossr50.util.StringUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.listeners.DuelListener;
 import me.ifamasssxd.cosmicduel.listeners.SpectateInventory;
-import me.ifamasssxd.cosmicduel.struct.CustomGKit;
-import me.ifamasssxd.cosmicduel.struct.CustomKit;
+
 import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
@@ -156,7 +152,6 @@ public class ClassicDuel extends NewDuel {
         clearChat(player);
         resetPlayerStats(player);
         applySettings(player);
-        checkMcmmoParty(player);
         removeVanish(player);
     }
 
@@ -256,39 +251,6 @@ public class ClassicDuel extends NewDuel {
                     winner.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You defeated " + loser.getName() + " in a Ranked Duel!");
                     loser.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have been defeated by " + winner.getName() + " in a Ranked Duel!");
                 }
-                DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(winner);
-                DuelPlayer loserPlayer = DuelPlayer.getDuelPlayer(loser);
-                if (duelPlayer != null && loserPlayer != null) {
-                    if (isRanked()) {
-                        double biggest = Math.max(duelPlayer.getElo(), loserPlayer.getElo());
-                        double lowest = Math.min(duelPlayer.getElo(), loserPlayer.getElo());
-                        double extraWin = (1.0D - lowest / biggest) * 2.0D * 10.0D;
-                        double toGain = Math.max(1.0D, (duelPlayer.getElo() > loserPlayer.getElo()) ? (10.0D - extraWin) : (10.0D + extraWin)) * 5.0D;
-                        double extraLoss = (1.0D - lowest / biggest) * 2.0D * 8.0D;
-                        double toLose = Math.max(1.0D, (loserPlayer.getElo() < duelPlayer.getElo()) ? (8.0D - extraLoss) : (8.0D + extraLoss)) * 5.0D;
-                        double beforeElo = duelPlayer.getElo();
-                        duelPlayer.setRankedWins(duelPlayer.getRankedWins() + 1);
-                        duelPlayer.setElo(duelPlayer.getElo() + toGain);
-                        winner.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + Math.round(toGain) + " ELO " + ChatColor.GRAY + "(" + (int)beforeElo + " -> " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + (int)duelPlayer.getElo() + ChatColor.GRAY + " ELO)");
-                        double loserBeforeElo = loserPlayer.getElo();
-                        loserPlayer.setRankedLosses(loserPlayer.getRankedLosses() + 1);
-                        loserPlayer.setElo(loserPlayer.getElo() - toLose);
-                        loser.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "- " + Math.round(toLose) + " ELO " + ChatColor.GRAY + "(" + (int)loserBeforeElo + " -> " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + (int)loserPlayer.getElo() + ChatColor.GRAY + " ELO)");
-                        loserPlayer.setLastRankedMatch(System.currentTimeMillis());
-                        duelPlayer.setLastRankedMatch(System.currentTimeMillis());
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + winner.getName() + " rankedduels 1");
-                    } else {
-                        duelPlayer.setWins(duelPlayer.getWins() + 1);
-                        loserPlayer.setLosses(loserPlayer.getLosses() + 1);
-                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + winner.getName() + " unrankedduels 1");
-                    }
-                    loserPlayer.saveRankedStats(true);
-                    duelPlayer.saveRankedStats(true);
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", new Object[] { Boolean.valueOf(isRanked()), loser }));
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", new Object[] { Boolean.valueOf(isRanked()), winner }));
-                }
-                winner.sendMessage("");
-                loser.sendMessage("");
                 Title titleWinner = new Title(CC.translate("&a&lWinner"), CC.translate("&7") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
                 Title titleLoser = new Title(CC.translate("&c&lYou Lost"), CC.translate("&7Winner: ") + winner.getName(), 10, 40, 10);
@@ -375,15 +337,6 @@ public class ClassicDuel extends NewDuel {
         }
     }
 
-    private void checkMcmmoParty(Player p) {
-        if (!CosmicDuel.mcMMOEnabled)
-            return;
-        if (this.settings.hasSetting(Setting.MCMMO) && PartyAPI.inParty(p)) {
-            String name = PartyAPI.getPartyName(p);
-            PartyAPI.removeFromParty(p);
-            p.setMetadata("mcmmo_party", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), name));
-        }
-    }
 
     private void clearChat(Player p) {
         for (int i = 0; i < 35; i++)
@@ -439,7 +392,6 @@ public class ClassicDuel extends NewDuel {
         if (!this.ending && createSpectator && !willDuelEnd()) {
             prepareSpectator(player);
         } else {
-            resetMcMMO(player);
             returnPlayerToStartLocation(player);
         }
         returnItems(player, (reason == Reason.RELOAD));
@@ -463,8 +415,7 @@ public class ClassicDuel extends NewDuel {
         p.setFallDistance(0.0F);
         p.setHealth(p.getMaxHealth());
         p.spigot().setCollidesWithEntities(true);
-        if (CosmicDuel.mcMMOEnabled)
-            BleedTimerTask.remove((LivingEntity)p);
+
         if (!VanishUtils.isVanished(p))
             for (Player pl : Bukkit.getOnlinePlayers())
                 pl.showPlayer(p);
@@ -493,18 +444,7 @@ public class ClassicDuel extends NewDuel {
         this.originalLocation.remove(p.getUniqueId());
     }
 
-    public void resetMcMMO(Player p) {
-        if (!CosmicDuel.mcMMOEnabled)
-            return;
-        if (!this.settings.hasSetting(Setting.MCMMO))
-            p.removeMetadata("no_mcmmo_skills", (Plugin)CosmicDuel.get());
-        if (p.hasMetadata("mcmmo_party") && p.getMetadata("mcmmo_party").size() > 0) {
-            String name = ((MetadataValue)p.getMetadata("mcmmo_party").get(0)).asString();
-            if (PartyAPI.inParty(p))
-                return;
-            PartyAPI.addToParty(p, name);
-        }
-    }
+
 
     public List<Player> getPlayers() {
         return this.players;
@@ -544,7 +484,6 @@ public class ClassicDuel extends NewDuel {
             return;
         this.spectators.remove(p);
         resetPlayer(p);
-        resetMcMMO(p);
         returnPlayerToStartLocation(p);
         if (p.hasPotionEffect(PotionEffectType.POISON))
             p.removePotionEffect(PotionEffectType.POISON);
@@ -574,17 +513,15 @@ public class ClassicDuel extends NewDuel {
     }
 
     public void applySettings(Player p) {
-        if (!this.settings.hasSetting(Setting.MCMMO) && CosmicDuel.mcMMOEnabled)
-            p.setMetadata("no_mcmmo_skills", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), ""));
+
         if (this.kit != Kit.BYOB) {
             wipePlayer(p);
             applyKit(p);
         } else {
             boolean hadDisabledItems = false;
-            for (ListIterator<ItemStack> listIterator = p.getInventory().iterator(); listIterator.hasNext(); ) {
-                ItemStack is = listIterator.next();
+            for (ItemStack is : p.getInventory()) {
                 if (is != null && is.getType() != Material.AIR && (isDisabledDuelItem(is) || !isValidItem(is))) {
-                    p.getInventory().removeItem(new ItemStack[] { is });
+                    p.getInventory().removeItem(new ItemStack[]{is});
                     hadDisabledItems = true;
                 }
             }
@@ -614,14 +551,9 @@ public class ClassicDuel extends NewDuel {
     public void applyKit(Player p) {
         List<ItemStack> list;
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(p);
-        if (isRanked()) {
-            list = duelPlayer.getCustomGodSet().getKitItems(true, false);
-            list.add(new ItemStack(Material.ENDER_PEARL, 16));
-            list.add(new ItemStack(Material.ARROW, 64));
-            list.add(new ItemStack(Material.GOLDEN_APPLE, 1));
-        } else {
+
             list = getKit().getItems();
-        }
+
         boolean hadDisabledItems = false;
         int potionsToAdd = 0;
         for (ItemStack is : list) {
@@ -766,39 +698,11 @@ public class ClassicDuel extends NewDuel {
         onStart();
     }
 
-    public void onQueuePop() {
-        this.inQueueMenu = true;
-        if (isRanked()) {
-            final GlobalQueuePopInventory inv = (new GlobalQueuePopInventory(this)).prepareQueue();
-            inv.alertOfQueue();
-            (new BukkitRunnable() {
-                public void run() {
-                    if (!inv.wasAccepted() && inv.duel != null) {
-                        Player player = inv.getWhoDidntAccept();
-                        if (player == null) {
-                            DuelAPI.cancelDuel(inv.duel, CancelReason.DENY_QUEUE_POP);
-                        } else {
-                            inv.declineDuel(player, true, true);
-                        }
-                    }
-                }
-            }).runTaskLater((Plugin)CosmicDuel.get(), 900L);
-        } else {
-            final QueuePopInventory inv2 = new QueuePopInventory(this);
-            inv2.prepareQueue();
-            inv2.alertOfQueue();
-            (new BukkitRunnable() {
-                public void run() {
-                    if (!inv2.wasAccepted() && inv2.duel != null)
-                        DuelAPI.cancelDuel(inv2.duel, CancelReason.DENY_QUEUE_POP);
-                }
-            }).runTaskLater((Plugin)CosmicDuel.get(), 200L);
-        }
-    }
+
 
     private static int id = 1;
 
     private boolean ending;
 
-    private DecimalFormat format;
+    private final DecimalFormat format;
 }

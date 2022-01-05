@@ -76,9 +76,7 @@ implements Listener {
         for (Player p : d.getPlayers()) {
             DuelPlayer dp;
             p_names = p_names + (Object)ChatColor.YELLOW + p.getName();
-            if (d.isRanked() && (dp = DuelPlayer.getDuelPlayer(p)) != null) {
-                p_names = p_names + (Object)ChatColor.GRAY + " (" + (int)dp.getElo() + ")";
-            }
+
             if (index != d.getPlayers().size() - 1) {
                 p_names = p_names + (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + " vs ";
             }
@@ -96,9 +94,7 @@ implements Listener {
         for (Player p : d.getPlayers()) {
             DuelPlayer dp;
             p_names = p_names + (Object)ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + p.getName();
-            if (d.isRanked() && (dp = DuelPlayer.getDuelPlayer(p)) != null) {
-                p_names = p_names + (Object)ChatColor.GRAY + " (" + (int)dp.getElo() + ")";
-            }
+
             if (index != d.getPlayers().size() - 1) {
                 p_names = p_names + (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + " vs ";
             }

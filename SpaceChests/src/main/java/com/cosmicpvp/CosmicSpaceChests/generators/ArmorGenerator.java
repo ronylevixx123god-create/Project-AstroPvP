@@ -16,8 +16,7 @@ import com.cosmicpvp.CosmicSpaceChests.utils.ItemBuilder;
 import com.cosmicpvp.CosmicSpaceChests.utils.MiscUtil;
 import java.util.List;
 import java.util.Random;
-import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
-import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
+
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -26,30 +25,9 @@ import org.bukkit.inventory.ItemStack;
 public class ArmorGenerator {
     static Random r = new Random();
 
-    public static ItemStack getRandomKitArmor() {
-        GlobalKits gkit = GlobalKits.values()[new Random().nextInt(GlobalKits.values().length)];
-        List<ItemStack> items = CosmicGlobalKitsAPI.getGlobalKitItems((GlobalKits)gkit, null);
-        for (ItemStack i : items) {
-            if (!GeneralUtil.isArmor((ItemStack)i)) continue;
-            return i;
-        }
-        for (ItemStack i : items) {
-            if (!GeneralUtil.isWeapon((ItemStack)i)) continue;
-            return i;
-        }
-        return (ItemStack)items.get(new Random().nextInt(items.size()));
-    }
 
     public static ItemStack generate(ItemRarity ir) {
-        if (ir == ItemRarity.ULTIMATE && Math.random() < 0.2) {
-            return ArmorGenerator.getRandomKitArmor().clone();
-        }
-        if (ir == ItemRarity.LEGENDARY && Math.random() < 0.35) {
-            return ArmorGenerator.getRandomKitArmor().clone();
-        }
-        if (ir == ItemRarity.GOD && Math.random() < 0.75) {
-            return ArmorGenerator.getRandomKitArmor().clone();
-        }
+
         ArmorType type = ArmorType.DIAMOND;
         ArmorPiece piece = ArmorGenerator.getPiece();
         int percent = 0;

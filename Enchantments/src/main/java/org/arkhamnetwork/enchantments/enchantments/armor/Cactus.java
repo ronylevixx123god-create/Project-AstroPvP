@@ -1,3 +1,18 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Bukkit
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
@@ -6,38 +21,46 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Cactus extends CustomEnchantment {
+public class Cactus
+extends CustomEnchantment {
     protected static ConcurrentHashMap<String, Integer> cactus;
 
     public Cactus() {
         super("Cactus", GeneralUtil.armor, 2);
         this.max = 2;
-        this.base = 20.0D;
-        this.interval = 5.0D;
-        cactus = new ConcurrentHashMap<>();
-        Bukkit.getPluginManager().registerEvents(new CactusListener(), (Plugin) Enchantments.getInstance());
+        this.base = 20.0;
+        this.interval = 5.0;
+        cactus = new ConcurrentHashMap();
+        Bukkit.getPluginManager().registerEvents((Listener)new CactusListener(), (Plugin)Enchantments.getInstance());
     }
 
+    public void applyEquipEffect(Player player, int enchantLevel) {
+        cactus.put(player.getName(), enchantLevel);
+    }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
         cactus.remove(player.getName());
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (player.hasMetadata("neutralized"))
+        if(player.hasMetadata("noDefenseProcs"))
             return;
-        if (player instanceof Player) {
-            if (attacker instanceof Player) {
-                Player pAttacker = (Player) attacker;
-                pAttacker.damage(0.5D * level);
+        Player pAttacker;
+        Player p;
+        if (player instanceof Player && cactus.containsKey((p = (Player)player).getName()) && attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
+            if(Math.random() < 0.2) {
+                Location l = p.getLocation();
             }
         }
     }
 }
+

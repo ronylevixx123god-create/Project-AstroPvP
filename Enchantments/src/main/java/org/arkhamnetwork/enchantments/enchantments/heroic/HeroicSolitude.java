@@ -1,19 +1,17 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
-public class HeroicSolitude extends HeroicCustomEnchantment {
+public class HeroicSolitude extends HeroicCustomEnchantment{
     public HeroicSolitude() {
-        super("Perfect Solitude", "Solitude", GeneralUtil.weapons, 2);
+        super("Perfect Solitude","Solitude", GeneralUtil.swords, 2);
         this.max = 3;
         this.base = 15.0;
         this.interval = 15.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
     }
 }

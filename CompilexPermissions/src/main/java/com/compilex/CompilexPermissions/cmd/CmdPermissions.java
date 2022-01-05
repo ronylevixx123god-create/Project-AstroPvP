@@ -107,7 +107,7 @@ implements CommandExecutor {
             });
             return true;
         }
-        if (!(!(sender instanceof Player) || (pName = (p = (Player)sender).getName()).equals("MYCQ") || pName.equals("Bryside") || pName.equals("KingJeanFTW") || pName.equals("MattHawkk"))) {
+        if (!(!(sender instanceof Player) || (pName = (p = (Player)sender).getName()).equals("Bryside") || pName.equals("KingJeanFTW") || pName.equals("MattHawkk"))) {
             p.sendMessage(ChatColor.RED + "You are not authorized to use that command.");
             p.sendMessage(ChatColor.GRAY + "Please contact an administrator.");
             return true;
@@ -123,7 +123,7 @@ implements CommandExecutor {
                         String userName = args[1];
                         final String permissionName = args[3];
                         String serverName = PermissionsConfig.SERVER_NAME;
-                        UUID uUID = userUUID = cached_uuid.containsKey(userName) ? cached_uuid.get(userName) : null;
+                        UUID uUID = userUUID = cached_uuid.getOrDefault(userName, null);
                         if (userUUID == null) {
                             try {
                                 userUUID = Bukkit.getPlayerExact(userName) != null ? Bukkit.getPlayerExact(userName).getUniqueId() : Bukkit.getOfflinePlayer(userName).getUniqueId();

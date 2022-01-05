@@ -1,3 +1,26 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.player.PlayerQuitEvent
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -13,6 +36,7 @@ import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
@@ -22,80 +46,80 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class Trap extends CustomEnchantment {
+public class Trap
+extends CustomEnchantment {
     public Trap() {
         super("Trap", GeneralUtil.swords, 2);
         this.max = 3;
         this.base = 15.0;
         this.interval = 3.0;
-        Bukkit.getPluginManager().registerEvents((Listener) new TrapEvents(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener)new TrapEvents(), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity target, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
+        double chance;
         if (!(target instanceof Player)) {
             return;
         }
-        if (((Player) player).getWalkSpeed() < 0.2f) {
+        if (((Player)player).getWalkSpeed() < 0.2f) {
             return;
         }
-        final double random = Math.random();
-        double chance = 0.04 * level;
-        if (random < chance) {
-            final Player ptarget = (Player) target;
-            if (target.hasMetadata("metaphysicalEnchant")) {
-                final int metaphysicalLevel = target.getMetadata("metaphysicalEnchant").get(0).asInt();
-                chance -= metaphysicalLevel * 0.025;
-                if (random > chance) {
-                    ptarget.sendMessage(ChatColor.DARK_GRAY + "" + ChatColor.BOLD + "** METAPHYSICAL (" + ChatColor.DARK_GRAY + "Trap blocked!" + ChatColor.BOLD + ") **");
-                    return;
-                }
+        double random = Math.random();
+        if (random < (chance = 0.04 * (double)level)) {
+            int metaphysicalLevel;
+            final Player ptarget = (Player)target;
+            if (target.hasMetadata("metaphysicalEnchant") && random > (chance -= (double)(metaphysicalLevel = ((MetadataValue)target.getMetadata("metaphysicalEnchant").get(0)).asInt()) * 0.025)) {
+                ptarget.sendMessage((Object)ChatColor.DARK_GRAY + "" + (Object)ChatColor.BOLD + "** METAPHYSICAL (" + (Object)ChatColor.DARK_GRAY + "Trap blocked!" + (Object)ChatColor.BOLD + ") **");
+                return;
             }
-
-
-            if (!new CustomEnchantProcOnEntityEvent(player, target, (Event) e, this, level).callEvent()) {
+            if (!new CustomEnchantProcOnEntityEvent(player, target, (Event)e, this, level).callEvent()) {
                 return;
             }
             if (target.hasMetadata("immune_freeze")) {
-                ptarget.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "Trap blocked!" + CC.DarkGrayB + "] *");
+                ptarget.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + (Object)ChatColor.GRAY + "Trap blocked!" + CC.DarkGrayB + "] *");
                 return;
             }
-
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(ptarget))) {
                 ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &eTrap &e&l*"));
                 return;
             }
-
             ptarget.setWalkSpeed(0.0f);
+            ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You have been trapped by " + ((Player)player).getName() + "!");
             DamageIndicatorUtils.sendDamageIndicator((Player) ptarget, CC.AquaB + "* TRAP " + CC.Gray + "[" + 3.25 + "]" + CC.AquaB + "*" + CC.DarkPurpleB +  "*", "TRAP");
-            ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have been trapped by " + ((Player) player).getName() + "!");
-            Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+
+            Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
                 @Override
                 public void run() {
                     ptarget.setWalkSpeed(0.2f);
-                    ptarget.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You are no longer trapped!");
+                    ptarget.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You are no longer trapped!");
                 }
             }, 35L);
-            final Location l = ptarget.getLocation();
+            Location l = ptarget.getLocation();
         }
     }
 
-    private static class TrapEvents implements Listener {
+    private static class TrapEvents
+    implements Listener {
+        private TrapEvents() {
+        }
+
         @EventHandler
-        public void onPlayerQuit(final PlayerQuitEvent e) {
-            final Player pl = e.getPlayer();
+        public void onPlayerQuit(PlayerQuitEvent e) {
+            Player pl = e.getPlayer();
             pl.setWalkSpeed(0.2f);
         }
 
-        @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-        public void onEntityDamage(final EntityDamageEvent e) {
-            if (e.getEntity() instanceof Player) {
-                final Player p = (Player) e.getEntity();
-                if (p.getWalkSpeed() == 0.0f && !p.isOp()) {
-                    final Location l = p.getLocation();
-                }
+        @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+        public void onEntityDamage(EntityDamageEvent e) {
+            Player p;
+            if (e.getEntity() instanceof Player && (p = (Player)e.getEntity()).getWalkSpeed() == 0.0f && !p.isOp()) {
+                Location l = p.getLocation();
             }
         }
     }
 }
+

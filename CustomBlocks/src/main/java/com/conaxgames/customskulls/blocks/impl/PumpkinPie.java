@@ -12,6 +12,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
+import de.inventivegames.particle.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Material;
@@ -38,7 +39,7 @@ public class PumpkinPie extends CustomBlock {
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&eCost to Mine: &f$" + AbilityType.THANKSGIVING_PIE.getPickupPrice()),
+                CC.translate("&eCost to Mine: &f$" + NumberUtils.formatMoney(AbilityType.THANKSGIVING_PIE.getPickupPrice())),
                 "",
                 CC.translate("&7Receive all of the following"),
                 CC.translate("&7buffs when standing in the same chunk."),
@@ -65,6 +66,12 @@ public class PumpkinPie extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
+        p0.sendMessage(CC.translate("&e&l(!)&e You will get the Pumpkin pie Buffs when standing in this chunk."));
+        try {
+            ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p1.getClickedBlock().getLocation(), 2,2,2,0.05f,40);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -119,7 +126,6 @@ public class PumpkinPie extends CustomBlock {
         if (CoreSkulls.getEconomy().has(breaker, AbilityType.THANKSGIVING_PIE.getPickupPrice())) {
             CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.THANKSGIVING_PIE.getPickupPrice());
             breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.THANKSGIVING_PIE.getPickupPrice()));
-            breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.THANKSGIVING_PIE.getName() + " Custom Block"));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
             p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -127,7 +133,7 @@ public class PumpkinPie extends CustomBlock {
             //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
             p1.getBlock().setType(Material.AIR);
             p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-            DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
+            DeleteCustomBlocks.func(p2.getLocation(), breaker, this); // delete file and memory.
         } else {
             breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.THANKSGIVING_PIE.getPickupPrice() + " to pick this block up.");
             p1.setCancelled(true);

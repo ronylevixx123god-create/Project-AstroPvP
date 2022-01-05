@@ -126,9 +126,7 @@ public class InventoryBansheePet extends InventoryPet {
 
         int duration;
 
-        if (playerHasApollo(player)) {
-            duration = 12;
-        } else if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+if (MaskUtils.hasMaskEquipped(player, "ELF")) {
             duration = 12;
         } else {
             duration = 8;
@@ -179,9 +177,7 @@ public class InventoryBansheePet extends InventoryPet {
         return false;
     }
 
-    public boolean playerHasApollo(Player pl) {
-        return CosmicArmorSetsAPI.getBonusCrystalsEquipped(pl).containsKey(ArmorSet.APOLLO) || CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.APOLLO;
-    }
+
 
     public static void startBansheeEffect(Player player, Player enemy) {
 

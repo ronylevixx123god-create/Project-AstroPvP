@@ -86,9 +86,7 @@ public class InventoryWitcherPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         int sum = petItem.getLevel() * 2;
 
-        if (playerHasApollo(player)) {
-            sum *= 1.5;
-        } else if(MaskUtils.hasMaskEquipped(player, "ELF")) {
+ if(MaskUtils.hasMaskEquipped(player, "ELF")) {
             sum*=1.5;
         }
 
@@ -114,11 +112,7 @@ public class InventoryWitcherPet extends InventoryPet {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
                 continue;
             }*/
-            if (playerHasApollo(p)) {
-                player.sendMessage(CC.translate("&f&l* &7&n" + p.getName() + "&f&l APOLLO SET BLOCKED WITCHER *"));
-                p.sendMessage(CC.translate("&f&l* BLOCKED &7&n" + player.getName() + "&r &f&lWITCHER PET *"));
-                continue;
-            }
+
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));
             p.playSound(p.getLocation(), Sound.GHAST_MOAN, 2.0F, 2.0F);
             p.setWalkSpeed(0.0F);
@@ -154,7 +148,7 @@ public class InventoryWitcherPet extends InventoryPet {
                     player.setWalkSpeed(0.2F);
                 }
             }
-        }, 60L);
+        }, 100L);
 
         Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
@@ -237,7 +231,5 @@ public class InventoryWitcherPet extends InventoryPet {
                 Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + 9.999999747378752E-5D);
     }
 
-    public static boolean playerHasApollo(Player pl) {
-        return CosmicArmorSetsAPI.getBonusCrystalsEquipped(pl).containsKey(ArmorSet.APOLLO) || CosmicArmorSetsAPI.getArmorSet(pl) == ArmorSet.APOLLO;
-    }
+
 }

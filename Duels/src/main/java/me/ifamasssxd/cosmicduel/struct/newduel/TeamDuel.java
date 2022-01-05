@@ -6,12 +6,10 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
-import com.gmail.nossr50.api.PartyAPI;
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
-import com.gmail.nossr50.util.StringUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rit.sucy.EnchantmentAPI;
+
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,12 +18,12 @@ import java.util.ListIterator;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
+
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.listeners.DuelListener;
 import me.ifamasssxd.cosmicduel.listeners.SpectateInventory;
-import me.ifamasssxd.cosmicduel.struct.CustomGKit;
-import me.ifamasssxd.cosmicduel.struct.CustomKit;
+
 import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.TeamData;
@@ -183,7 +181,6 @@ public class TeamDuel extends NewDuel {
         clearChat(player);
         resetPlayerStats(player);
         applySettings(player);
-        checkMcmmoParty(player);
         removeVanish(player);
     }
 
@@ -349,21 +346,6 @@ public class TeamDuel extends NewDuel {
                         winner.sendMessage(CC.translate("&a&l(!) &aUse &n/duel collect&a to collect your winnings!"));
                     }
                 }
-                DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(winner);
-                DuelPlayer loserPlayer = DuelPlayer.getDuelPlayer(loser);
-                if (duelPlayer != null && loserPlayer != null) {
-
-                    duelPlayer.setWins(duelPlayer.getWins() + 1);
-                    loserPlayer.setLosses(loserPlayer.getLosses() + 1);
-                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contest add " + winner.getName() + " unrankedduels 1");
-
-                    loserPlayer.saveRankedStats(true);
-                    duelPlayer.saveRankedStats(true);
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", new Object[] { Boolean.valueOf(isRanked()), loser }));
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", new Object[] { Boolean.valueOf(isRanked()), winner }));
-                }
-                winner.sendMessage("");
-                loser.sendMessage("");
 
                 Title titleWinner = new Title(CC.translate("&a&lWinner"), CC.translate("&7") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
@@ -458,8 +440,8 @@ public class TeamDuel extends NewDuel {
         return item;
     }
 
-    private void awardBounty(Player winner, Player loser) {}
-
+    private void awardBounty(Player winner, Player loser) {
+    }
 
 
     private void clearArena() {
@@ -472,15 +454,6 @@ public class TeamDuel extends NewDuel {
         }
     }
 
-    private void checkMcmmoParty(Player p) {
-        if (!CosmicDuel.mcMMOEnabled)
-            return;
-        if (this.settings.hasSetting(Setting.MCMMO) && PartyAPI.inParty(p)) {
-            String name = PartyAPI.getPartyName(p);
-            PartyAPI.removeFromParty(p);
-            p.setMetadata("mcmmo_party", new FixedMetadataValue(CosmicDuel.get(), name));
-        }
-    }
 
     private void clearChat(Player p) {
         for (int i = 0; i < 35; i++)
@@ -515,7 +488,7 @@ public class TeamDuel extends NewDuel {
     public void onEnd(boolean cancelDuel) {
         this.duelState = DuelState.ENDED;
         for (Object pl1 : Lists.newArrayList(getPlayers())) {
-            Player pl = (Player)pl1;
+            Player pl = (Player) pl1;
             removePlayer(pl, Reason.WIN, false);
         }
         clearSpectators();
@@ -552,7 +525,6 @@ public class TeamDuel extends NewDuel {
         if (!this.ending && createSpectator && !willDuelEnd(player)) {
             prepareSpectator(player);
         } else {
-            resetMcMMO(player);
             returnPlayerToStartLocation(player);
         }
         returnItems(player, (reason == Reason.RELOAD));
@@ -596,8 +568,6 @@ public class TeamDuel extends NewDuel {
         p.setFallDistance(0.0F);
         p.setHealth(p.getMaxHealth());
         p.spigot().setCollidesWithEntities(true);
-        if (CosmicDuel.mcMMOEnabled)
-            BleedTimerTask.remove(p);
         if (!VanishUtils.isVanished(p))
             for (Player pl : Bukkit.getOnlinePlayers())
                 pl.showPlayer(p);
@@ -617,7 +587,7 @@ public class TeamDuel extends NewDuel {
                 CombatLog.unflagCombat(p);
                 if (p.hasMetadata("cl_combat"))
                     p.removeMetadata("cl_combat", Arkkit.get());
-            },5L);
+            }, 5L);
         } else {
             CombatLog.unflagCombat(p);
         }
@@ -626,18 +596,7 @@ public class TeamDuel extends NewDuel {
         this.originalLocation.remove(p.getUniqueId());
     }
 
-    public void resetMcMMO(Player p) {
-        if (!CosmicDuel.mcMMOEnabled)
-            return;
-        if (!this.settings.hasSetting(Setting.MCMMO))
-            p.removeMetadata("no_mcmmo_skills", CosmicDuel.get());
-        if (p.hasMetadata("mcmmo_party") && p.getMetadata("mcmmo_party").size() > 0) {
-            String name = p.getMetadata("mcmmo_party").get(0).asString();
-            if (PartyAPI.inParty(p))
-                return;
-            PartyAPI.addToParty(p, name);
-        }
-    }
+
 
     public List<Player> getPlayers() {
         return this.players;
@@ -680,7 +639,6 @@ public class TeamDuel extends NewDuel {
             return;
         this.spectators.remove(p);
         resetPlayer(p);
-        resetMcMMO(p);
         returnPlayerToStartLocation(p);
         if (p.hasPotionEffect(PotionEffectType.POISON))
             p.removePotionEffect(PotionEffectType.POISON);
@@ -717,15 +675,13 @@ public class TeamDuel extends NewDuel {
     }
 
     public void applySettings(Player p) {
-        if (!this.settings.hasSetting(Setting.MCMMO) && CosmicDuel.mcMMOEnabled)
-            p.setMetadata("no_mcmmo_skills", new FixedMetadataValue(CosmicDuel.get(), ""));
+
         if (this.kit != Kit.BYOB) {
             wipePlayer(p);
             applyKit(p);
         } else {
             boolean hadDisabledItems = false;
-            for (ListIterator<ItemStack> listIterator = p.getInventory().iterator(); listIterator.hasNext(); ) {
-                ItemStack is = listIterator.next();
+            for (ItemStack is : p.getInventory()) {
                 if (is != null && is.getType() != Material.AIR && (isDisabledDuelItem(is) || !isValidItem(is))) {
                     p.getInventory().removeItem(is);
                     hadDisabledItems = true;
@@ -751,20 +707,15 @@ public class TeamDuel extends NewDuel {
         Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicDuel.get(), () -> {
             if (p.isValid())
                 PlayerPotionEffectListener.rescanPlayerArmor(p);
-        },4L);
+        }, 4L);
     }
 
     public void applyKit(Player p) {
         List<ItemStack> list;
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(p);
-        if (isRanked()) {
-            list = duelPlayer.getCustomGodSet().getKitItems(true, false);
-            list.add(new ItemStack(Material.ENDER_PEARL, 16));
-            list.add(new ItemStack(Material.ARROW, 64));
-            list.add(new ItemStack(Material.GOLDEN_APPLE, 1));
-        } else {
-            list = getKit().getItems();
-        }
+
+        list = getKit().getItems();
+
         boolean hadDisabledItems = false;
         int potionsToAdd = 0;
         for (ItemStack is : list) {
@@ -788,7 +739,7 @@ public class TeamDuel extends NewDuel {
             p.getInventory().addItem(is);
         }
         if (isRanked()) {
-            ItemStack potion = new ItemStack(Material.POTION, 1, (short)16421);
+            ItemStack potion = new ItemStack(Material.POTION, 1, (short) 16421);
             potion = KitUtils.addDuelWatermark(potion);
             for (int i = 0; i < p.getInventory().getSize(); i++) {
                 if (p.getInventory().getItem(i) == null || p.getInventory().getItem(i).getType() == Material.AIR)
@@ -796,7 +747,7 @@ public class TeamDuel extends NewDuel {
             }
         }
         for (int j = 0; j < potionsToAdd; j++) {
-            p.getInventory().addItem(new ItemStack(Material.POTION, 1, (short)16421));
+            p.getInventory().addItem(new ItemStack(Material.POTION, 1, (short) 16421));
         }
         p.updateInventory();
         if (hadDisabledItems)
@@ -905,35 +856,6 @@ public class TeamDuel extends NewDuel {
         onStart();
     }
 
-    public void onQueuePop() {
-        this.inQueueMenu = true;
-        if (isRanked()) {
-            final GlobalQueuePopInventory inv = (new GlobalQueuePopInventory(this)).prepareQueue();
-            inv.alertOfQueue();
-            (new BukkitRunnable() {
-                public void run() {
-                    if (!inv.wasAccepted() && inv.duel != null) {
-                        Player player = inv.getWhoDidntAccept();
-                        if (player == null) {
-                            DuelAPI.cancelDuel(inv.duel, CancelReason.DENY_QUEUE_POP);
-                        } else {
-                            inv.declineDuel(player, true, true);
-                        }
-                    }
-                }
-            }).runTaskLater(CosmicDuel.get(), 900L);
-        } else {
-            final QueuePopInventory inv2 = new QueuePopInventory(this);
-            inv2.prepareQueue();
-            inv2.alertOfQueue();
-            (new BukkitRunnable() {
-                public void run() {
-                    if (!inv2.wasAccepted() && inv2.duel != null)
-                        DuelAPI.cancelDuel(inv2.duel, CancelReason.DENY_QUEUE_POP);
-                }
-            }).runTaskLater(CosmicDuel.get(), 200L);
-        }
-    }
 
     private static int id = 1;
 

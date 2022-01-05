@@ -59,17 +59,15 @@
         <module>bah</module>
         <module>Carnage</module>
         <module>FactionShields</module>
-        <module>AstroTournaments</module>
-        <module>Test</module>
-        <module>Faction</module>
+
         <module>Factionss</module>
         <module>AstroEvents</module>
         <module>AstroCollectors</module>
         <module>CoolPlugin</module>
         <module>AstroPearls</module>
-        <module>Christmas</module>
         <module>Christmass</module>
         <module>AstroGamble</module>
+        <module>GiftcardShop</module>
     </modules>
 
     <build>

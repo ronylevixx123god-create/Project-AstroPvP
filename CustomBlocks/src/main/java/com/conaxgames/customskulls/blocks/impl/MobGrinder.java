@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
+import com.conaxgames.customskulls.guis.MainCustomBlockGUI;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
@@ -36,14 +37,15 @@ public class MobGrinder extends CustomBlock {
 
 
     public MobGrinder() {
-        super("TRIALS_FAME_AND_FORTUNE", CC.translate("&c&lAuto Mob Grinder"), Material.NOTE_BLOCK, AbilityType.TRIALS_FAME_AND_FORTUNE);
+        super("BLAZE_STONE_TOTEM", CC.translate("&c&lAuto Mob Grinder"), Material.NOTE_BLOCK, AbilityType.BLAZE_STONE_TOTEM);
 
     }
 
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&cCost to Mine: &f$" + AbilityType.TRIALS_FAME_AND_FORTUNE.getPickupPrice()),
+                CC.translate("&cCost to Mine: &f$" + NumberUtils.formatMoney( AbilityType.BLAZE_STONE_TOTEM.getPickupPrice())),
+                CC.translate("&cActivate Price: &f$" + NumberUtils.formatMoney(AbilityType.BLAZE_STONE_TOTEM.getPricePerAction())),
                 "",
                 CC.translate("&7Automatically grinds Blazes"),
                 CC.translate("&7in a 1 block radius from the block."),
@@ -78,6 +80,9 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
+        MainCustomBlockGUI mainCustomBlockGUI = new MainCustomBlockGUI(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())), p1.getClickedBlock());
+        mainCustomBlockGUI.getCustomBlockGui().open(p1.getPlayer());
+        p1.getPlayer().sendMessage(CC.translate("&a&l(!)&a Opening the Custom Block menu..."));
     }
 
     @Override
@@ -116,7 +121,7 @@ public class MobGrinder extends CustomBlock {
             return;
         }
         if (fPlayer.getRelationToLocation().isMember()) {
-            MakeCustomBlocks.newFileItem(p0, AbilityType.TRIALS_FAME_AND_FORTUNE, p1.getBlock(), this);
+            MakeCustomBlocks.newFileItem(p0, AbilityType.BLAZE_STONE_TOTEM, p1.getBlock(), this);
             fPlayer.getPlayer().sendMessage(CC.translate("&c&l* &cIt can take up to 30 seconds for this block to enable."));
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");
@@ -133,10 +138,9 @@ public class MobGrinder extends CustomBlock {
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.TRIALS_FAME_AND_FORTUNE.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.TRIALS_FAME_AND_FORTUNE.getPickupPrice());
-                breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.TRIALS_FAME_AND_FORTUNE.getPickupPrice()));
-                breaker.sendMessage(CC.translate("&a&l(!)&a You broke a " + AbilityType.TRIALS_FAME_AND_FORTUNE.getName() + " Custom Block"));
+            if (CoreSkulls.getEconomy().has(breaker, AbilityType.BLAZE_STONE_TOTEM.getPickupPrice())) {
+                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.BLAZE_STONE_TOTEM.getPickupPrice());
+                breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.BLAZE_STONE_TOTEM.getPickupPrice()));
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
                 p1.getBlock().getDrops().clear(); // clears the events item stack
@@ -144,9 +148,9 @@ public class MobGrinder extends CustomBlock {
                 //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
                 p1.getBlock().setType(Material.AIR);
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-                DeleteCustomBlocks.func(p2.getLocation()); // delete file and memory.
+                DeleteCustomBlocks.func(p2.getLocation(), breaker, this); // delete file and memory.
             } else {
-                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.TRIALS_FAME_AND_FORTUNE.getPickupPrice() + " to pick this block up.");
+                breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.BLAZE_STONE_TOTEM.getPickupPrice() + " to pick this block up.");
                 p1.setCancelled(true);
             }
         } else {

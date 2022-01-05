@@ -51,12 +51,12 @@ public class MobSpawnerListener implements Listener {
 
         EntityType type = ItemSpawner.getEntityTypeFromItem(item);
 
-        if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
+/*        if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));
             event.getPlayer().sendMessage(CC.translate("&cPlease stack it on the existing spawner."));
             event.setCancelled(true);
             return;
-        }
+        }*/
 
         if (type == null) {
             event.setCancelled(true);

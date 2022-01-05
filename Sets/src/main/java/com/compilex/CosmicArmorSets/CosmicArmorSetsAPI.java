@@ -90,6 +90,19 @@ public class CosmicArmorSetsAPI {
         return retr;
     }
 
+
+    public static boolean hasCrystalApplied(Player player, ArmorSet armorSet) {
+        for (ItemStack itemStack : player.getInventory().getArmorContents()) {
+            if (itemStack == null ) continue;
+            if (itemStack.getType() == Material.AIR) continue;
+            List<ArmorSet> crystals = ArmorSet.getFromArmorBonusCrystal(itemStack);
+            if (crystals == null) continue;
+            if (crystals.isEmpty()) continue;
+            if (crystals.contains(armorSet)) return true;
+        }
+        return false;
+    }
+
     public static ItemStack[] getArmorSet(ArmorSet as) {
         ItemStack[] item = new ItemStack[]{as.getArmorSetInfo().getHelmet(true), as.getArmorSetInfo().getChestplate(true), as.getArmorSetInfo().getLeggings(true), as.getArmorSetInfo().getBoots(true)};
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {

@@ -283,6 +283,7 @@ public class AstroCore extends JavaPlugin {
 
         this.getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
         this.getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
+        this.getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
 
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
@@ -611,7 +612,6 @@ public class AstroCore extends JavaPlugin {
         pm.registerEvents(new CommandAliases(), this);
         pm.registerEvents(new FirstJoin(), this);
         pm.registerEvents(new CombatLogBlock(), this);
-        pm.registerEvents(new DamageFixes(), this);
         pm.registerEvents(new LastManStandingListener(), this);
         pm.registerEvents(new PayListener(), this);
     }

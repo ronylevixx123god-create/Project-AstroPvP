@@ -2,35 +2,42 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
-public class HeroicExecute extends HeroicCustomEnchantment {
+public class HeroicExecute extends HeroicCustomEnchantment{
     public HeroicExecute() {
-        super("Permanent Execute", "Execute", GeneralUtil.swords, 2);
+        super("Permanent Execute","Execute", GeneralUtil.swords, 2);
         this.max = 7;
+        this.base = 15.0;
+        this.interval = 3.0;
     }
 
     public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
-        if (!(target instanceof Player))
+        if (!(target instanceof Player)) {
             return;
-        if (target.getHealth() >= 8.0D)
+        }
+        if (target.getHealth() > 8.0) {
             return;
-        if (GeneralUtil.isEffectedByRage(target))
+        }
+        if (GeneralUtil.isEffectedByRage(target)) {
             return;
+        }
         double random = Math.random();
-        double chance = 0.02D * level;
-        double mod = (level)*0.25;
+        double chance = 0.04 * (double)level;
+        double mod = 2.5;
         if (random < chance) {
-            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");
             e.setDamage(e.getDamage() * mod);
+            DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");
+
+            Location l = target.getLocation();
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int) Material.REDSTONE_WIRE.getId(), (int)2001);
         }
     }
 }

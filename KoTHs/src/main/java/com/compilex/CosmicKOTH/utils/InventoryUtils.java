@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
  *  com.google.common.collect.Lists
@@ -51,19 +51,19 @@ public class InventoryUtils {
 
     public static ItemStack getKothInventoryItem() {
         String status = CosmicKOTHAPI.canTeleportToKOTH() ? ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "OPEN" : ChatColor.RED.toString() + ChatColor.BOLD.toString() + "CLOSED";
-        ItemStack item = new ItemStack(Material.GOLD_HELMET);
+        ItemStack item = new ItemStack(Material.BEACON);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.GreenB + "KOTH Information");
+        meta.setDisplayName(CC.GoldB + "Desert KOTH Information " + CC.Gray + "(/warp desert)");
         ArrayList lore = Lists.newArrayList();
         lore.add("");
         lore.add(CC.WhiteB + "KOTH Status: " + status);
+        lore.add(CC.WhiteB + "Location: " + CC.GoldB + "Desert warp " + CC.Gray + "(X2504, Y19, Z4638)");
         KothWorldType worldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
         if (CosmicKOTHAPI.isKOTHRunning()) {
             KothEventTask KET = CosmicKOTHPlugin.get_().getKoth();
             if (worldType != null) {
-                lore.add(CC.WhiteB + "Arena: " + CC.GreenB + worldType.getName(true));
+                lore.add(CC.WhiteB + "Arena: " + CC.GoldB + worldType.getName(true));
             }
-            lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Players: " + (Object)ChatColor.GREEN + KET.getKothPlayers().size());
             lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Runtime: " + (Object)ChatColor.GREEN + TimeUtils.getSecondsAsString(KET.getRuntime()));
             String flagStatus = null;
             if (KET.getPlayerCapped() != null) {
@@ -76,29 +76,28 @@ public class InventoryUtils {
                 flagStatus = ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "UNCLAIMED";
             }
             lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Flag: " + flagStatus);
+            lore.add("");
             if (CosmicKOTHAPI.canTeleportToKOTH()) {
                 lore.add(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GRAY + "Use " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + "/warp koth" + (Object)ChatColor.GRAY + " to join the event!");
             } else {
                 lore.add(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GRAY + "This KOTH has been capped by " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + KET.getPlayerCapped().getName() + "!");
             }
         } else {
-            if (LauncherTask.countdown != -1) {
+            if (LauncherTask.countdown != 0) {
                 lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Next Scheduled KOTH: " + ChatColor.RED.toString() + ChatColor.BOLD.toString() + TimeUtils.getSecondsAsString(LauncherTask.countdown));
-            } else {
-                lore.add(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "Next Scheduled KOTH: " + (Object)ChatColor.RED + ChatColor.BOLD.toString() + DateWatcherTask.getTimeUntilNextKOTH());
             }
-            lore.add(CC.WhiteB + "Arena: " + CC.GreenB + "Mount Olympus");
-        }
+            }
         lore.add("");
-        lore.add(CC.GreenB + "Winner Reward:");
-        lore.add(CC.WhiteB + "* " + CC.Gray + "1x Koth Lootbag");
+        lore.add(CC.GoldB + "Winner Reward:");
+        lore.add(CC.WhiteB + "● " + CC.Gray + "1x Koth Lootbag");
+        lore.add(CC.WhiteB + "● " + CC.Yellow + "10$ Buycraft Giftcard");
         lore.add("");
-        lore.add(CC.translate("&a&lFaction Bonus:"));
-        lore.add(CC.translate("&f&l* &7+10% Outgoing Damage"));
-        lore.add(CC.translate("&f&l* &7+10% Crystal Apply Chance"));
-        lore.add(CC.translate("&f&l* &7+5% Chance to keep Slot-Bot tickets on roll"));
+        lore.add(CC.translate("&6&lFaction Bonus:"));
+        lore.add(CC.translate("&f&l● &7+10% Outgoing Damage"));
+        lore.add(CC.translate("&f&l● &7+10% Crystal Apply Chance"));
+        lore.add(CC.translate("&f&l● &7+5% Chance to keep Slot-Bot tickets on roll"));
 
-        meta.setLore((List)lore);
+        meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
     }
@@ -114,7 +113,7 @@ public class InventoryUtils {
     public static ItemStack getGuide() {
         ItemStack item = new ItemStack(Material.BOOK);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.GreenB + CC.Bold + "King of the Hill");
+        meta.setDisplayName(CC.GoldB + CC.Bold + "King of the Hill");
         ArrayList lore = Lists.newArrayList();
         lore.add("");
         lore.add(CC.Gray + "KOTH is a " + CC.White + "popular factions minigame " + CC.Gray + "where");

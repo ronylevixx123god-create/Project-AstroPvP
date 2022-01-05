@@ -73,8 +73,6 @@ public class CosmicArmorSetsPlugin
         Bukkit.getServer().getPluginManager().registerEvents(new SetBonusListener(), this);
         this.getServer().getPluginManager().registerEvents(new MasteryShardListener(), this);
         this.getServer().getPluginManager().registerEvents(new ArmorSetCrystalTinkererListener(), this);
-        getServer().getPluginManager().registerEvents(new NebulaSetListener(), this);
-        getServer().getPluginManager().registerEvents(new SantaListener(), this);
     }
 
     public Map<Player, CachedArmorSet<AbilityArmorSet>> getPlayerAbilityArmorSets() {

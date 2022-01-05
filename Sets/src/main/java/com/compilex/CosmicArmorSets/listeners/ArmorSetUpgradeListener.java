@@ -150,11 +150,7 @@ public class ArmorSetUpgradeListener
                     NBTWrapper wrapper = new NBTWrapper(retItem);
                     NBTTagCompoundBuilder display = wrapper.hasKey("display") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("display")) : new NBTTagCompoundBuilder();
                     int color = 0;
-                    if (clickedArmorSet == ArmorSet.ULTRA) {
-                        color = 12104883;
-                    } else if (clickedArmorSet == ArmorSet.CHAMPION) {
-                        color = 16420882;
-                    } else if (clickedArmorSet == ArmorSet.ANCIENT) {
+                     if (clickedArmorSet == ArmorSet.ANCIENT) {
                         color = 3650995;
                     } else if (clickedArmorSet == ArmorSet.MOTHER_OF_YIJKI) {
                         color = 0xFFFFFF;
@@ -176,8 +172,6 @@ public class ArmorSetUpgradeListener
                         color = 15176967;
                     } else if (clickedArmorSet == ArmorSet.OMNI) {
                         color = 0x0027FF;
-                    } else if (clickedArmorSet == ArmorSet.APOLLO) {
-                        color = 0x000000;
                     }
                     display.setInt("color", color);
                     wrapper.setNBTBase("display", display.get());

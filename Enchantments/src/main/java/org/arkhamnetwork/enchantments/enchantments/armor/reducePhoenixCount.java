@@ -1,3 +1,14 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Player
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.scheduler.BukkitRunnable
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -8,13 +19,17 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-final class reducePhoenixCount extends BukkitRunnable {
+final class reducePhoenixCount
+extends BukkitRunnable {
+    reducePhoenixCount() {
+    }
+
     public void run() {
         Bukkit.getLogger().info("[Enchantments (Phoenix)] Reducing all phoenixProcs by 1.");
-        for (final Player p : Bukkit.getServer().getOnlinePlayers()) {
-            if (p.hasMetadata("phoenixProcs")) {
-                p.setMetadata("phoenixProcs", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) Math.max(0, p.getMetadata("phoenixProcs").get(0).asInt() - 1)));
-            }
+        for (Player p : Bukkit.getOnlinePlayers()) {
+            if (!p.hasMetadata("phoenixProcs")) continue;
+            p.setMetadata("phoenixProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)Math.max(0, ((MetadataValue)p.getMetadata("phoenixProcs").get(0)).asInt() - 1)));
         }
     }
 }
+

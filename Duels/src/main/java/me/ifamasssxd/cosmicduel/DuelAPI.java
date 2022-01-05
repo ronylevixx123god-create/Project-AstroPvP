@@ -1,7 +1,6 @@
 package me.ifamasssxd.cosmicduel;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.gmail.nossr50.api.PartyAPI;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicduel.listeners.SpectateInventory;
 import me.ifamasssxd.cosmicduel.struct.*;
@@ -252,7 +251,6 @@ public class DuelAPI {
             }
         }
         duel.setCreateState(DuelCreateState.QUEUE_POP);
-        duel.onQueuePop();
     }
 
     public static boolean inSameDuel(Player p1, Player p2) {
@@ -341,7 +339,6 @@ public class DuelAPI {
     }
 
     public static boolean checkStatus(Player player, Player target) {
-        QueueManager queueManager = CosmicDuel.get().getQueueManager();
         try {
             if (isRebooting()) {
                 player.sendMessage(ChatColor.RED + "You cannot duel while the server is rebooting.");
@@ -380,22 +377,8 @@ public class DuelAPI {
                 }
             return false;
         }
-        if (queueManager.getPreparingDuel(player) != null) {
-            player.sendMessage(red + ChatColor.RED + "You are currently preparing a global queue duel.");
-            return false;
-        }
-        if (queueManager.isSearching(player)) {
-            player.sendMessage(ChatColor.RED + "You are currently in the Global Duel Queue.");
-            return false;
-        }
-        if (queueManager.getRankedQueue().isInRankedQueue(player)) {
-            player.sendMessage(ChatColor.RED + "You are currently in the Ranked Duel Queue.");
-            return false;
-        }
-        if (queueManager.getDuel(player) != null) {
-            player.sendMessage(red + ChatColor.RED + "You are currently in the Global Duel Queue.");
-            return false;
-        }
+
+
         if (getDuel(player) != null) {
             player.sendMessage(ChatColor.RED + "You are in a duel already.");
             return false;
@@ -409,22 +392,7 @@ public class DuelAPI {
             player.sendMessage(ChatColor.RED + "You are in combat and cannot duel at this time.");
             return false;
         }
-        if (queueManager.getPreparingDuel(target) != null) {
-            player.sendMessage(red + ChatColor.RED + target.getName() + " is currently preparing a global queue duel.");
-            return false;
-        }
-        if (queueManager.getDuel(target) != null) {
-            player.sendMessage(red + ChatColor.RED + target.getName() + " is currently in the Global Duel Queue.");
-            return false;
-        }
-        if (queueManager.isSearching(target)) {
-            player.sendMessage(ChatColor.RED + target.getName() + " is currently in the Global Duel Queue.");
-            return false;
-        }
-        if (queueManager.getRankedQueue().isInRankedQueue(target)) {
-            player.sendMessage(ChatColor.RED + target.getName() + " is currently in the Global Duel Queue.");
-            return false;
-        }
+
         NewDuel targetDuel = getDuel(target);
         if (targetDuel != null) {
             if (targetDuel.getCreateState() != DuelCreateState.DONE) {
@@ -485,11 +453,7 @@ public class DuelAPI {
             player.sendMessage(red + ChatColor.RED + "That player has items in their collection bin and cannot duel.");
             return false;
         }
-        if (CosmicDuel.mcMMOEnabled && PartyAPI.inSameParty(player, target)) {
-            player.sendMessage(red + ChatColor.RED + "You are in the same party as that player.");
-            player.sendMessage(ChatColor.GRAY + "Use /party leave to leave your current party.");
-            return false;
-        }
+
         return true;
     }
 
@@ -590,8 +554,6 @@ public class DuelAPI {
 
     public static boolean hasDuel(Player p) {
         if (p.hasMetadata("in_duel")) {
-            if (queueManager.getPreparingDuel(p) != null || queueManager.getDuel(p) != null || queueManager.isSearching(p) || queueManager.getRankedQueue().isInRankedQueue(p))
-                return false;
             NewDuel d = getDuel(p);
             if (d == null) {
                 p.removeMetadata("in_duel", CosmicDuel.get());
@@ -637,7 +599,6 @@ public class DuelAPI {
 
     private static Boolean arkkit = null;
 
-    private static final QueueManager queueManager = CosmicDuel.get().getQueueManager();
 
     public enum InviteType {
         INVITER, INVITED

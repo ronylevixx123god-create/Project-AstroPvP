@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import de.inventivegames.particle.ParticleEffect;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
@@ -121,7 +122,7 @@ public class SlotbotMachineGUIListener implements Listener {
                     a--;
                 }
 
-                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p).add(new CollectCategory(CollectType.SLOTBOT, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GreenB + "Personal Slotbot Machine Loot"));
+                CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId()).add(new CollectCategory(CollectType.SLOTBOT, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GreenB + "Personal Slotbot Machine Loot", System.currentTimeMillis()));
                 p.sendMessage("");
                 p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The SlotBot Loot has been put into your &f/collect&b."));
                 p.sendMessage("");
@@ -138,6 +139,11 @@ public class SlotbotMachineGUIListener implements Listener {
                 p.sendMessage(CC.translate("&c&l- $" +NumberUtils.formatMoney(price)));
                 p.closeInventory();
                 p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5,5);
+                try {
+                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),e.getWhoClicked().getLocation(), 2,2,2,0.05f,40);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
             }
         }
     }

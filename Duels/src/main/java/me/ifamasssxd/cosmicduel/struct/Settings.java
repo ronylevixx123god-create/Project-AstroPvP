@@ -22,7 +22,6 @@ package me.ifamasssxd.cosmicduel.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
-import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.inventory.CustomInventory;
@@ -70,14 +69,7 @@ public class Settings {
         }
         this.settings = new ClassInventory("Duel Settings", 4);
         this.updateSettingsInventory();
-        QueueManager queueManager = CosmicDuel.get().getQueueManager();
-        this.settings.setCallback((inventory, event) -> {
-            if (duel.isGlobalQueued() && !event.getPlayer().hasMetadata("close_exempt") && duel.getCreateState() != DuelCreateState.ARENA && duel.getCreateState() != DuelCreateState.KIT) {
-                Player player = (Player)event.getPlayer();
-                player.sendMessage((Object)ChatColor.RED + "You closed the settings and have been removed from the Global Duel Queue.");
-                queueManager.removeDuelFromPrepareQueue(duel);
-            }
-        });
+
     }
 
     public void updateSettingsInventory() {
@@ -137,10 +129,6 @@ public class Settings {
             event.setCancelled(true);
             event.setResult(Event.Result.DENY);
             Player p = (Player)event.getWhoClicked();
-            if (s == Setting.MCMMO && !CosmicDuel.mcMMOEnabled) {
-                p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "mcMMO is not enabled on this server.");
-                return;
-            }
             p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
             this.toggleSetting(s);
         });
@@ -252,31 +240,18 @@ public class Settings {
             ci.addEnchantment(EnchantUtils.getCustomEnchant(), 1);
         }
         CustomInventoryItem item = new CustomInventoryItem(ci.buildItem());
-        item.setCallback(new CustomInventoryItemCallback(){
-
-            @Override
-            public void inventoryClickEvent(CustomInventory inventory, CustomInventoryItem customItem, InventoryClickEvent event) {
-                if (DuelAPI.getArenaQueueSize(arena) >= DuelAPI.MAX_ARENA_QUEUE) {
-                    p.sendMessage((Object)ChatColor.RED + "This arena currently has a full queue.");
-                    return;
-                }
-                event.setCancelled(true);
-                p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
-                Settings.this.getDuel().setArena(arena);
-                event.getCurrentItem().addEnchantment(EnchantUtils.getCustomEnchant(), 1);
-                if (Settings.this.getDuel().isGlobalQueued()) {
-                    Settings.this.getDuel().setCreateState(DuelCreateState.PLAYER_SELECT);
-                    QueueManager queueManager = CosmicDuel.get().getQueueManager();
-                    p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
-                    p.sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "Searching for players in Global Duel Queue...");
-                    p.setMetadata("close_exempt", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), (Object)""));
-                    p.closeInventory();
-                    queueManager.queueDuel(Settings.this.getDuel());
-                    return;
-                }
-                Settings.this.invitePlayer(p);
-                CosmicDuel.logMessage("Setting arena to " + arena.getName() + " for duel id " + Settings.this.getDuel().getDuelID());
+        item.setCallback((inventory, customItem, event) -> {
+            if (DuelAPI.getArenaQueueSize(arena) >= DuelAPI.MAX_ARENA_QUEUE) {
+                p.sendMessage((Object)ChatColor.RED + "This arena currently has a full queue.");
+                return;
             }
+            event.setCancelled(true);
+            p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+            Settings.this.getDuel().setArena(arena);
+            event.getCurrentItem().addEnchantment(EnchantUtils.getCustomEnchant(), 1);
+
+            Settings.this.invitePlayer(p);
+            CosmicDuel.logMessage("Setting arena to " + arena.getName() + " for duel id " + Settings.this.getDuel().getDuelID());
         });
         return item;
     }
@@ -312,9 +287,6 @@ public class Settings {
     }
 
     public void toggleSetting(Setting s) {
-        if (!CosmicDuel.mcMMOEnabled && s == Setting.MCMMO) {
-            return;
-        }
 
         if (this.getDuel().getKit() != Kit.BYOB && s == Setting.DROPITEMS) {
             return;

@@ -44,7 +44,8 @@ public class GiveAllManager {
 
     public static void doGiveAll() {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p);
+            if (!p.isOnline()) continue;
+            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId());
             boolean b = false;
             CollectCategory giveall = null;
             for (CollectCategory cat : collect.getCategories()) {
@@ -67,7 +68,7 @@ public class GiveAllManager {
 
                 ItemStack[] items = new ItemStack[1];
                 items[0] = giveAllItem.createClaimableItem(false);
-                collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Loot"));
+                collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Loot", System.currentTimeMillis()));
             }
             nextGiveAll = 2400;
         }

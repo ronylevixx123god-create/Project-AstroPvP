@@ -65,7 +65,7 @@ public class SpiderSpawn extends BossAbility {
         if (ent instanceof LivingEntity) {
             final LivingEntity li = (LivingEntity) ent;
             li.setCustomName(this.getBoss().getColor(true) + "Brood Spawn");
-            li.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
+            //li.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
             if (li.getEquipment() != null) {
                 li.getEquipment().setItemInHandDropChance(0.0f);
                 li.getEquipment().setHelmetDropChance(0.0f);

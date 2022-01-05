@@ -1,3 +1,13 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -10,7 +20,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Poison extends CustomEnchantment {
+public class Poison
+extends CustomEnchantment {
     public Poison() {
         super("Poison", GeneralUtil.swords, 5);
         this.max = 3;
@@ -18,14 +29,15 @@ public class Poison extends CustomEnchantment {
         this.interval = 6.0;
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        final int time = (int) (Math.random() * enchantLevel * 20.0);
-        final double random = Math.random();
-        final double chance = 0.1 * enchantLevel;
-        if (random < chance) {
-            if (target instanceof Player)
-                DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
-            target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, 3, enchantLevel - 1));
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        double chance;
+        int time = (int)(Math.random() * (double)enchantLevel * 20.0);
+        double random = Math.random();
+        if (random < (chance = 0.1 * (double)enchantLevel)) {
+            target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, time, enchantLevel - 1));
+            DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
+
         }
     }
 }
+

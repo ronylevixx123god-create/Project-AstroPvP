@@ -1,10 +1,22 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
+ *  com.rit.sucy.CustomEnchantment
+ *  me.ifamasssxd.killtracker.KillTrackerAPI
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -17,7 +29,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class Sabotage extends CustomEnchantment {
+public class Sabotage
+extends CustomEnchantment {
     public Sabotage() {
         super("Sabotage", GeneralUtil.swords, 2);
         this.max = 5;
@@ -25,34 +38,29 @@ public class Sabotage extends CustomEnchantment {
         this.interval = 10.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
-        final Player p = (Player) player;
+        Player p = (Player)player;
         if (!GeneralUtil.isSword(p.getItemInHand())) {
             return;
         }
-        if (!(playerHit instanceof Player)) {
+        if (p.hasMetadata("lastItemHeldChange") && (long)MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue)p.getMetadata("lastItemHeldChange").get(0)).asLong() <= 5L) {
             return;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CORRUPT_BOOTS)) {
+        if (p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
             return;
         }
-        if (p.hasMetadata("lastItemHeldChange") && MinecraftServerUtils.getCurrentServerTick() - p.getMetadata("lastItemHeldChange").get(0).asLong() <= 5L) {
-            return;
-        }
-        if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {
-            return;
-        }
-        if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
-            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
-                KillTrackerAPI.removeSoulsFromGems(p, 8);
+        if (KillTrackerAPI.hasGodMode((Player)p) && KillTrackerAPI.getAllSouls((Player)p) > 0) {
+            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
+                KillTrackerAPI.removeSoulsFromGems((Player)p, (int)8);
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* SABOTAGE *" + CC.RedB +  "*", "SABOTAGE");
 
-            playerHit.setMetadata("sabotage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-            playerHit.setMetadata("sabotageLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
+            playerHit.setMetadata("sabotage", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
+            playerHit.setMetadata("sabotageLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
         }
     }
 }
+

@@ -1,42 +1,23 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.rit.sucy.CustomEnchantment;
-import com.rit.sucy.EnchantmentAPI;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.plugin.Plugin;
 
-public class HeroicInsanity extends CustomEnchantment {
+public class HeroicInsanity extends HeroicCustomEnchantment{
     public HeroicInsanity() {
-        super("Extreme Insanity", GeneralUtil.axe, 8);
+        super("Extreme Insanity","Insanity", GeneralUtil.axe, 2);
         this.max = 8;
         this.base = 20.0;
         this.interval = 5.0;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
-            public void run() {
-                HeroicInsanity.this.heroicEnchantment = true;
-                HeroicInsanity.this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Insanity");
-            }
-        }, 2L);
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        final boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
+    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
         if (!enemyHasSword) {
             return;
         }
-
-        if (Math.random() < 0.1) {
-            final double mod = 1.0 + (0.04 * level);
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
-        }
-        GeneralCooldown.enterCooldown((Player) player);
+        double mod = 1.0 + 0.03 * (double)level;
+        e.setDamage(e.getDamage() * mod);
     }
 }
-

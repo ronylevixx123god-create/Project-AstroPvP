@@ -16,7 +16,6 @@
  */
 package me.ifamasssxd.cosmicduel.struct.newduel;
 
-import com.gmail.nossr50.runnables.skills.BleedTimerTask;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.utils.DuelUtils;
 import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
@@ -106,9 +105,7 @@ public class StoredPlayer {
         p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 3.0f, 1.0f);
         p.setHealth(p.getMaxHealth());
         this.restored = true;
-        if (CosmicDuel.mcMMOEnabled) {
-            BleedTimerTask.remove((LivingEntity)p);
-        }
+
     }
 }
 

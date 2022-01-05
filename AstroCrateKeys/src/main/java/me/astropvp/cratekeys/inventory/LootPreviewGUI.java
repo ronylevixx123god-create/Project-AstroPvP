@@ -2,32 +2,25 @@ package me.astropvp.cratekeys.inventory;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
-import me.astropvp.cratekeys.data.Filter;
 import me.astropvp.cratekeys.enums.CrateType;
 
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class LootPreviewGUI {
     private PaginatedGui expShopUI;
     private CrateType type;
-    private final Filter filter;
 
 
 
@@ -42,13 +35,6 @@ public class LootPreviewGUI {
 
         this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
 
-        if (AstroCrateKeysPlugin.getFilters().containsKey(player.getUniqueId()) && AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).containsKey(type)) {
-            this.filter = AstroCrateKeysPlugin.getFilters().get(player.getUniqueId()).get(type);
-        } else {
-            player.sendMessage(CC.translate("&cAn error appeared, please report this to an administrator!"));
-            this.filter = null;
-            return;
-        }
 
 
 
@@ -96,25 +82,9 @@ public class LootPreviewGUI {
 
             ItemBuilder itemBuilder = new ItemBuilder(item);
             itemBuilder.addLoreLine("");
-            itemBuilder.addLoreLine(CC.translate("&a&lCHANCE: &f") + chance + "%");
+            itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
-            if (filter.isBlockedItem(item)) {
-                itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: &aTrue"));
-            } else {
-                itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: &cFalse"));
-            }
-            itemBuilder.addLoreLine("");
-            expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
-                if (filter.isBlockedItem(item)) {
-                    filter.removeBlockedLootItem(item);
-                } else {
-                    filter.addBlockedLootItem(item);
-
-                }
-                LootPreviewGUI filterGUI = new LootPreviewGUI(player, type);
-                filterGUI.getLootGUI().open(player);
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
-            }));
+            this.expShopUI.addItem(new GuiItem(itemBuilder.build()));
         }
 
 

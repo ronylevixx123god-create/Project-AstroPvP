@@ -14,7 +14,6 @@
  */
 package me.ifamasssxd.cosmicduel.struct.newduel;
 
-import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.struct.Arena;
 import me.ifamasssxd.cosmicduel.struct.Kit;
@@ -49,7 +48,6 @@ public abstract class NewDuel {
     protected Stakes stakes = new Stakes();
     protected Settings settings;
     protected Kit kit = Kit.BYOB;
-    protected GlobalKits customGKit;
     protected Arena arena;
     protected DuelState duelState = DuelState.IN_QUEUE;
     boolean isRanked = false;
@@ -77,9 +75,6 @@ public abstract class NewDuel {
         this.pendingInvites = pendingInvites;
     }
 
-    public boolean isValidCustomMatch() {
-        return this.customGKit != null;
-    }
 
     public abstract String getName();
 
@@ -135,11 +130,8 @@ public abstract class NewDuel {
 
     public abstract void resetEnvoys();
 
-    public abstract void onQueuePop();
 
     public abstract void onConfirmedQueue();
-
-    public abstract void resetMcMMO(Player var1);
 
     public void sendMessage(String msg, boolean includeSpectators) {
         for (Player p : this.players) {
@@ -201,13 +193,6 @@ public abstract class NewDuel {
         this.kit = kit;
     }
 
-    public GlobalKits getCustomGKit() {
-        return this.customGKit;
-    }
-
-    public void setCustomGKit(GlobalKits customGKit) {
-        this.customGKit = customGKit;
-    }
 
     public Arena getArena() {
         return this.arena;

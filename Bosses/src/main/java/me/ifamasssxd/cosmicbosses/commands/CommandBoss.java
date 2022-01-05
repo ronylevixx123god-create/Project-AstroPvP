@@ -42,10 +42,7 @@ public class CommandBoss implements CommandExecutor {
         }
         if (args.length != 2 && args.length != 3) {
             if (args.length == 1) {
-                if (args[0].equalsIgnoreCase("spawntask")) {
-                    //CosmicBosses.getInstance().getTask().run();
-                    return true;
-                }
+
                 if (args[0].equalsIgnoreCase("list")) {
                     sender.sendMessage("");
                     for (final Boss boss : Boss.bosses.values()) {
@@ -81,6 +78,7 @@ public class CommandBoss implements CommandExecutor {
             sender.sendMessage("egg enabled: " + CosmicBosses.getInstance().isEggEnabled());
             return true;
         }
+
         if (args[0].equalsIgnoreCase("togglespawn")) {
             CosmicBosses.getInstance().setNaturalSpawnEnabled(value);
             CosmicBosses.getInstance().getConfig().set("naturalSpawn", (Object) value);

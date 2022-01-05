@@ -1,91 +1,50 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Location
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ *  org.bukkit.metadata.MetadataValue
+ */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
-import me.astropvp.astroparticles.utils.ParticleUtils;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.MetadataValue;
 
-public class DivineImmolationListener implements Listener {
+public class DivineImmolationListener
+implements Listener {
+    public DivineImmolationListener() {
+    }
+
     @EventHandler
-    public void onEntityDamage(EntityDamageEvent e) throws Exception {
-        if (!(e.getEntity() instanceof Player)) {
-            return;
-        }
-
-
-        if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER) {
-
-
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
-                e.getEntity().sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Divine Immolation &c&l*"));
-                return;
-            }
-
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
-                e.getEntity().sendMessage(CC.translate("&e&l* SOUL HARVESTER &fBlocked &cDivine Immolation &e&l*"));
-                return;
-            }
-            final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
-            if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (3 + enchantLevel) * 1000) {
-                final LivingEntity le = (LivingEntity) e.getEntity();
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
+            int enchantLevel = ((MetadataValue)e.getEntity().getMetadata("divineFireLevel").get(0)).asInt();
+            if (System.currentTimeMillis() - ((MetadataValue)e.getEntity().getMetadata("divineFire").get(0)).asLong() < (long)((4 + enchantLevel) * 1000)) {
+                LivingEntity le = (LivingEntity)e.getEntity();
+                //le.damage(2);
                 if (le instanceof Player) {
-                    if (((Player) e.getEntity()).getGameMode() == GameMode.CREATIVE || ((Player) e.getEntity()).getGameMode() == GameMode.SPECTATOR) {
-                        return;
-                    }
+                    ((Player)le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
+                    ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
                 }
-
-                double damage = 2.5;
-
-
-                if (!(le.getKiller() instanceof Player)) return;
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) le.getKiller(), SkinType.VALENTINES_2021_HELMET)) {
-                    if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) e.getEntity()).getItemInHand()) == WeaponBonusType.REFORGED && Math.random()<0.5) {
-                        if (!(CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player) e.getEntity()).containsKey(ArmorSet.SANTA)) && Math.random() < 0.35) {
-
-                            damage = 3;
-                        }
-                    } else {
-                        damage = 2.5;
-                    }
-                }
-
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.SUMMER_2021_SWORD)) {
-                    damage = 3.5;
-                }
-
-
-
-                if (WeaponBonusUtils.hasWeaponBonus(((Player) e.getEntity()).getKiller().getItemInHand())) {
-                    if (WeaponBonusUtils.getWeaponBonusByItem(((Player) ((Player) e.getEntity()).getKiller()).getItemInHand())==(WeaponBonusType.DEMON)) {
-                        damage *= 1.15;
-                    }
-                }
-
-                le.damage((double) damage);
-
-
-                if (le instanceof Player) {
-                    ((Player) le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
-                    ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
-                }
-
-
             }
         }
     }
 }
+

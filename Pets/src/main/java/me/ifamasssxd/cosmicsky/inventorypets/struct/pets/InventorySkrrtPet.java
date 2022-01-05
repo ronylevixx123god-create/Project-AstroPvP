@@ -130,12 +130,7 @@ public class InventorySkrrtPet extends InventoryPet {
 
             FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
             FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
-            if(CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GOBLIN || CosmicArmorSetsAPI.getBonusCrystalsEquipped(p).containsKey(ArmorSet.GOBLIN) && Math.random() <= 0.35) {
-                p.sendMessage(CC.translate("&6&l*&e&l*&6&l* &e&lGOBLIN ARMOR SET &7(Blocked " + p.getName() + "'s Skrrt Pet) &6&l*&e&l*&6&l*"));
-                p.playSound(player.getLocation(), Sound.VILLAGER_YES, 0.5f, 0.5f);
-                player.sendMessage(CC.translate("&4&l** SKRRT BLOCKED &7(" + player.getName() + "'s Goblin Armor Set) &4&l**"));
-                return;
-            }
+
             if (SkrrtCooldownUtils.isOnSkrrtCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on &nSkrrt Cooldown&c, this lasts for 60s!"));
                 return;

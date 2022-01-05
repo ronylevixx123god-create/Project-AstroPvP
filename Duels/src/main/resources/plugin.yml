@@ -16,10 +16,6 @@ commands:
     description: Sets the duel world.
   viewdeathinventory:
     description: View death me.astropvp.cratekeys.inventory.
-  setrankedarena:
-    description: Rank arena.
-  resetelo:
-    description: Reset all online players elo
   team:
     aliases: ['dteam', 'teamduel']
     description: Base command for creating a team

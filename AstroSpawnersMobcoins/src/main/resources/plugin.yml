@@ -10,12 +10,6 @@ commands:
   givespawner:
     description: /givespawner
     aliases: [givespawners]
-  mobcoinshop:
-    description: /mobcoinshop
-    aliases: [transfer, mshop]
-  mobcoins:
-    description: /mobcoins
-    aliases: [coins, mcoins]
   clearmobs:
     description: Removes all mobs and hasmap
   checkmobs:
@@ -26,8 +20,6 @@ commands:
   savemobcoins:
     description: Save mobcoi,s
     aliases: [savemc, smc]
-  addmobcoins:
-    description: Adds mobcoins
   factionstop:
     description: /factionstop
     aliases: [ftop, ftopp]

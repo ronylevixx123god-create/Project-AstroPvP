@@ -1,3 +1,17 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.scheduler.BukkitTask
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -15,21 +29,25 @@ import org.bukkit.scheduler.BukkitTask;
 import java.util.HashMap;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class Angelic extends CustomEnchantment {
-    HashMap<String, BukkitTask> playerTasks;
+public class Angelic
+extends CustomEnchantment {
+    HashMap<String, BukkitTask> playerTasks = new HashMap();
 
     public Angelic() {
         super("Angelic", GeneralUtil.armor, 2);
-        this.playerTasks = new HashMap<String, BukkitTask>();
         this.max = 5;
         this.base = 15.0;
         this.interval = 3.0;
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        final double random = Math.random();
-        final double chance = 0.015 * level;
-        if (random < chance) {
+    public void applyDefenseEffect(final LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        if(player.hasMetadata("neutralized"))
+            return;
+        if(player.hasMetadata("noDefenseProcs"))
+            return;
+        double chance;
+        double random = Math.random();
+        if (random < (chance = 0.015 * (double)level)) {
             long healDelay = 100L;
             if (level <= 1) {
                 healDelay = 100L;
@@ -46,20 +64,22 @@ public class Angelic extends CustomEnchantment {
             if (level >= 5) {
                 healDelay = 60L;
             }
-            final long healDuration = Math.max(healDelay + 2L, level * 20L + (10L + ThreadLocalRandom.current().nextInt(16)));
-            final double healAmount = 1.0;
+            long healDuration = Math.max(healDelay + 2L, (long)level * 20L + (10L + (long)ThreadLocalRandom.current().nextInt(16)));
+            double healAmount = 0.5;
             if (player.hasMetadata("angelicTaskID")) {
                 return;
             }
-            final int taskID = new RegenerationTask((Player) player, healDuration, healDelay, healAmount).runTaskTimer((Plugin) Enchantments.getInstance(), 0L, healDelay).getTaskId();
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+            final int taskID = new RegenerationTask((Player)player, healDuration, healDelay, healAmount).runTaskTimer((Plugin)Enchantments.getInstance(), 0L, healDelay).getTaskId();
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), new Runnable(){
+
                 @Override
                 public void run() {
                     Bukkit.getScheduler().cancelTask(taskID);
-                    Bukkit.getScheduler().runTaskAsynchronously((Plugin) Enchantments.getInstance(), () -> player.removeMetadata("angelicTaskID", (Plugin) Enchantments.getInstance()));
+                    Bukkit.getScheduler().runTask((Plugin)Enchantments.getInstance(), () -> player.removeMetadata("angelicTaskID", (Plugin)Enchantments.getInstance()));
                 }
             }, healDuration);
-            player.setMetadata("angelicTaskID", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) taskID));
+            player.setMetadata("angelicTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)taskID));
         }
     }
 }
+

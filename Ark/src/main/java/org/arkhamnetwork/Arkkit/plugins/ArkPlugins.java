@@ -7,6 +7,7 @@ import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
+import org.arkhamnetwork.Arkkit.patches.trading.BetterTrade;
 
 public enum ArkPlugins {
     ANTI_DUPE(new AntiDupe(Arkkit.get()), "Blocks many common dupe exploits, adds /scanchests"),
@@ -30,7 +31,7 @@ public enum ArkPlugins {
     PVP_POTION_EFFECTS(new PvPPotionEffects(Arkkit.get()), "Clear potion effects whenever a player goes between a pvp and non-pvp WG flagged area."),
     NO_CURSOR_DROP(new NoCursorDrop(Arkkit.get()), "Prevents users from losing item being held on cursor on inventory close."),
     NO_ENCHANTMENT_TABLE_BOOKS(new NoEnchantmentTableBooks(Arkkit.get()), "Prevents users from enchanting books on enchantment tables."),
-
+    BETTER_TRADE(new BetterTrade(Arkkit.get()), "A much safer trade system made in 2018 using OOP."),
     ENCHANTMENT_ANVIL_FIX(new EnchantmentAnvilFix(Arkkit.get()), "Disables EnchantmentAPI anvil and enchantment table mechanics."),
     SMARTER_ESSENTIALS(new SmarterEssentials(Arkkit.get()), "Prevents /tpaccept exploitation into enemy faction bases."),
     CHUNK_LOAD_FLUSH(new ChunkLoadFlush(Arkkit.get()), "Removes entities in chunks when they are loaded."),

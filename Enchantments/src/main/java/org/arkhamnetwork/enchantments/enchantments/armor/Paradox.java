@@ -1,11 +1,33 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
+ *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.earth2me.essentials.Essentials
+ *  com.rit.sucy.CustomEnchantment
+ *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
+ *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
+ *  me.ifamasssxd.killtracker.KillTrackerAPI
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.GameMode
+ *  org.bukkit.Location
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
@@ -21,13 +43,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Paradox extends CustomEnchantment {
+public class Paradox
+extends CustomEnchantment {
     int soulCost;
-    Essentials ess;
     private boolean cosmicOutposts;
     private boolean factionUpgrades;
+    Essentials ess;
 
     public Paradox() {
         super("Paradox", GeneralUtil.armor, 2);
@@ -39,97 +61,87 @@ public class Paradox extends CustomEnchantment {
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
     }
 
-    @SneakyThrows
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
+        if(player.hasMetadata("witcher_ability"))
+            return;
         if (e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.02 * level;
-        final int radius = 8 + level * 4;
-        final List<Player> affectedPlayers = new ArrayList<Player>();
+        if (player.hasMetadata("neutralized"))
+            return;
+        double random = Math.random();
+        double chance = 0.1 * (double)level;
+        int radius = 8 + level * 4;
+        ArrayList<Player> affectedPlayers = new ArrayList<Player>();
         if (random < chance) {
-            final Player p = (Player) player;
-            double amountToHeal = Math.round(e.getDamage() * (level) / 10);
-            if(amountToHeal > 20) {
-                amountToHeal = 20;
-            }
+            Player p = (Player)player;
+            double amountToHeal = e.getDamage() * (double)(level / 10);
             int cost = this.soulCost;
-            if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
+            if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost((Player)p)) {
                 cost /= 2;
             }
             if (this.factionUpgrades) {
                 try {
-                    final int heroic = UpgradeUtils.getUpgradeLevel(p, "HEROIC_SOUL_MASTERY");
+                    int heroic = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_SOUL_MASTERY");
                     if (heroic > 0) {
-                        cost *= (int) ((heroic == 1) ? 0.7 : ((heroic == 2) ? 0.55 : 1.0));
+                        cost = (int)((double)cost * (heroic == 1 ? 0.7 : (heroic == 2 ? 0.55 : 1.0)));
                     } else {
-                        final int perkLevel = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.SOUL_MASTER);
+                        int perkLevel = FactionUpgradeAPI.getPerkLevel((Player)p, (FactionUpgrade)FactionUpgrade.SOUL_MASTER);
                         if (perkLevel == 1) {
-                            cost *= (int) 0.95;
+                            cost = (int)((double)cost * 0.95);
                         }
                         if (perkLevel == 2) {
-                            cost *= (int) 0.9;
+                            cost = (int)((double)cost * 0.9);
                         }
                         if (perkLevel == 3) {
-                            cost *= (int) 0.75;
+                            cost = (int)((double)cost * 0.75);
                         }
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception heroic) {
+                    // empty catch block
                 }
             }
-            if (KillTrackerAPI.hasSoulAmount(p, cost)) {
+            if (KillTrackerAPI.hasSoulAmount((Player)p, (int)cost)) {
                 int highImpactPlayers = 0;
-                for (final Entity ent : p.getNearbyEntities((double) radius, (double) (radius + 128), (double) radius)) {
-                    if (ent.hasMetadata("spectator")) {
-                        continue;
-                    }
-                    if (!(ent instanceof Player)) {
-                        continue;
-                    }
-                    final Player pEnt = (Player) ent;
-                    if (!GeneralUtil.isAlly(p, pEnt) || pEnt.getGameMode() != GameMode.SURVIVAL) {
-                        continue;
-                    }
+                for (Entity ent : p.getNearbyEntities((double)radius, (double)(radius + 128), (double)radius)) {
+                    Player pEnt;
+                    if (ent.hasMetadata("spectator") || !(ent instanceof Player) || !GeneralUtil.isAlly(p, pEnt = (Player)ent) || pEnt.getGameMode() != GameMode.SURVIVAL) continue;
                     affectedPlayers.add(pEnt);
-                    if (pEnt.getHealth() + amountToHeal > pEnt.getMaxHealth()) {
-                        continue;
-                    }
+                    if (!(pEnt.getHealth() + amountToHeal <= pEnt.getMaxHealth())) continue;
                     ++highImpactPlayers;
                 }
                 if (highImpactPlayers > 0) {
-                    KillTrackerAPI.removeSoulsFromGems(p, cost);
-                    for (final Player pEnt2 : affectedPlayers) {
+                    KillTrackerAPI.removeSoulsFromGems((Player)p, (int)cost);
+                    for (Player pEnt : affectedPlayers) {
                         try {
-                            de.inventivegames.particle.ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt2.getLocation(), 0,0,0,0.64f,20);
+                            ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 20);
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
-
-                        GeneralUtil.healPlayer((LivingEntity) pEnt2, amountToHeal);
-                        pEnt2.playSound(pEnt2.getLocation(), Sound.EAT, 1.0f, 2.0f);
-                        pEnt2.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + p.getName() + "] (+" + amountToHeal + "HP) **");
+                        GeneralUtil.healPlayer((LivingEntity)pEnt, amountToHeal);
+                        pEnt.playSound(pEnt.getLocation(), Sound.EAT, 1.0f, 2.0f);
+                        pEnt.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + p.getName() + "] (+" + amountToHeal + "HP) **");
                     }
-                    p.sendMessage(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + affectedPlayers.size() * amountToHeal + " -> HP]  **");
-                    if (KillTrackerAPI.getAllSouls(p) % 100 == 0 || KillTrackerAPI.getAllSouls(p) < 10) {
+                    p.sendMessage(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + (double)affectedPlayers.size() * amountToHeal + " -> HP]  **");
+                    if (KillTrackerAPI.getAllSouls((Player)p) % 100 == 0 || KillTrackerAPI.getAllSouls((Player)p) < 10) {
                         p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + cost + " Soul Gems");
-                        p.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(p) + ChatColor.GRAY + " souls left.");
+                        p.sendMessage((Object)ChatColor.GRAY + "You have " + (Object)ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls((Player)p) + (Object)ChatColor.GRAY + " souls left.");
                     }
-                    p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 }
             } else {
                 try {
-                    de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0f, 0.5f, 0f, 0.3f, 30);
+                    ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0.4f, 0.4f, 0.4f, 0.1f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-
                 p.playSound(p.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
             }
         }
     }
 }
+

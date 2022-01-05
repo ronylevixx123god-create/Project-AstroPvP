@@ -1,14 +1,16 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.earth2me.essentials.Essentials;
-import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.*;
+import com.earth2me.essentials.*;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.*;
+import org.arkhamnetwork.enchantments.*;
+import org.bukkit.event.*;
+import org.bukkit.plugin.*;
 
-public class Immortal extends CustomEnchantment {
+public class Immortal extends CustomEnchantment
+{
     protected static boolean cosmicOutposts;
     protected static boolean factionUpgrades;
     Essentials ess;
@@ -20,7 +22,7 @@ public class Immortal extends CustomEnchantment {
         this.interval = 3.0;
         Immortal.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
         Immortal.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
-        this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-        Bukkit.getPluginManager().registerEvents((Listener) new ImmortalListener(), (Plugin) Enchantments.getInstance());
+        this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        Bukkit.getPluginManager().registerEvents((Listener)new ImmortalListener(), (Plugin) Enchantments.getInstance());
     }
 }

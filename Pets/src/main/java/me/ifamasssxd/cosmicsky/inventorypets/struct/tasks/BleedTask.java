@@ -30,7 +30,7 @@ public class BleedTask implements Runnable {
                         if (ent.getHealth() - 1.0D <= 0.0D) {
                            ent.setHealth(0.0D);
                         } else {
-                           ent.setHealth(ent.getHealth() - 1.0D);
+                           ent.setHealth(ent.getHealth() - 1.5D);
                         }
                      }
                   } else {

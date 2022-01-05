@@ -1,3 +1,12 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.entity.Player
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -8,7 +17,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class AntiGravity extends CustomEnchantment {
+public class AntiGravity
+extends CustomEnchantment {
     public AntiGravity() {
         super("Anti Gravity", GeneralUtil.boots, 2);
         this.max = 3;
@@ -16,11 +26,12 @@ public class AntiGravity extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    public void applyEquipEffect(final Player player, final int level) {
+    public void applyEquipEffect(Player player, int level) {
         PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(this, level), new PotionEffect(PotionEffectType.JUMP, Integer.MAX_VALUE, level + 2));
     }
 
-    public void applyUnequipEffect(final Player player, final int level) {
+    public void applyUnequipEffect(Player player, int level) {
         PlayerPotionEffects.untrackPotionEffect(player, new SpecificCustomEnchantment(this, level));
     }
 }
+

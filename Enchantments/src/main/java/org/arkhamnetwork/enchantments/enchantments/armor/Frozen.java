@@ -1,3 +1,17 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Location
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -8,13 +22,15 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class Frozen extends CustomEnchantment {
+public class Frozen
+extends CustomEnchantment {
     public Frozen() {
         super("Frozen", GeneralUtil.armor, 2);
         this.max = 3;
@@ -22,27 +38,28 @@ public class Frozen extends CustomEnchantment {
         this.interval = 3.0;
     }
 
-    public void applyDefenseEffect(final Player player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        final double random = Math.random();
-        final double chance = 0.04 * level;
-        final int time = (int) (Math.random() * level) + 1 * level;
-        final int amp = (level > 2) ? 1 : 0;
-
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        int amp;
+        double random = Math.random();
+        double chance = 0.0005 * (double)level;
+        int time = (int)(Math.random() * (double)level) + 1 * level;
+        int n = amp = level > 2 ? 1 : 0;
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
-
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_HELMET)) {
                 attacker.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
                 return;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
-                attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
+                attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE SLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
-            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time*20 + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
+            attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
+            Location l = player.getLocation();
+            DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
 
-            //attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
-            final Location l = player.getLocation();
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
         }
     }
 }
+

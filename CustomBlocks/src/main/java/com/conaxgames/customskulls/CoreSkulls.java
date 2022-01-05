@@ -38,9 +38,7 @@ public class CoreSkulls extends JavaPlugin {
     private static Field bukkitCommand;
     @Getter private static Economy economy = null;
     @Getter
-    private static final ItemStack novaKey = CrateKeyItem.getItem(CrateType.NOVA);
-    @Getter
-    private static final ItemStack stellarKey = CrateKeyItem.getItem(CrateType.STELLAR);
+    private static final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
     public static MobStackerUtils mobStackerUtils;
@@ -99,7 +97,7 @@ public class CoreSkulls extends JavaPlugin {
         customBlocks.put("LEVIATHAN_TOTEM", new LeviathanTotem());
         customBlocks.put("HALLOWEEN_CANDLES", new HalloweenCandle());
         customBlocks.put("COSMIC_TOKEN_GENERATOR", new SlotbotMachine());
-        customBlocks.put("TRIALS_FAME_AND_FORTUNE", new MobGrinder());
+        customBlocks.put("BLAZE_STONE_TOTEM", new MobGrinder());
         customBlocks.put("SECURITY_SYSTEM", new CrateKeyOpener());
     }
 

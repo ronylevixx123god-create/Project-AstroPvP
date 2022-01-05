@@ -23,11 +23,15 @@ public class CollectCategory implements Serializable {
 
     private String name;
 
+    private final long timeCollected;
 
-    public CollectCategory(CollectType type, ItemStack[] items, String name) {
+
+
+    public CollectCategory(CollectType type, ItemStack[] items, String name, long timeCollected) {
         this.type = type;
         this.items = items;
         this.name = name;
+        this.timeCollected = timeCollected;
     }
 
     public CollectType getType() {
@@ -38,8 +42,14 @@ public class CollectCategory implements Serializable {
         return name;
     }
 
+    public long getTimeCollected() {
+        return timeCollected;
+    }
 
 
+    public boolean isExpired() {
+        return System.currentTimeMillis() > timeCollected + 86400000;
+    }
 
     public ItemStack[] removeItem(ItemStack item) {
         for (int i = 0; i < items.length; i++) {

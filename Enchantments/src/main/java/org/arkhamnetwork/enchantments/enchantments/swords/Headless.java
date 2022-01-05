@@ -1,7 +1,31 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  net.minecraft.util.org.apache.commons.lang3.text.WordUtils
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.Material
+ *  org.bukkit.command.CommandSender
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.EventHandler
+ *  org.bukkit.event.EventPriority
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageByEntityEvent
+ *  org.bukkit.event.entity.PlayerDeathEvent
+ *  org.bukkit.inventory.ItemStack
+ *  org.bukkit.inventory.meta.ItemMeta
+ *  org.bukkit.inventory.meta.SkullMeta
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.rit.sucy.CustomEnchantment;
-import org.apache.commons.lang.WordUtils;
+import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -25,74 +49,75 @@ import org.bukkit.plugin.Plugin;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-public class Headless extends CustomEnchantment {
+public class Headless
+extends CustomEnchantment {
     public Headless() {
         super("Headless", GeneralUtil.swords, 7);
         this.max = 3;
         this.base = 30.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents((Listener) new HeadlessEvents(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener)new HeadlessEvents(), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        double chance;
         if (!(target instanceof Player)) {
             return;
         }
-        final Player ptarget = (Player) target;
-        final double random = Math.random();
-        final double chance = 0.03 * enchantLevel;
-        if (random < chance) {
+        Player ptarget = (Player)target;
+        double random = Math.random();
+        if (random < (chance = 0.03 * (double)enchantLevel)) {
             HeadlessEvents.headlessEnchant.add(ptarget.getName());
         }
     }
 
-    private static class HeadlessEvents implements Listener {
-        private static HashSet<String> headlessEnchant;
-        private static Calendar calendar;
+    private static class HeadlessEvents
+    implements Listener {
+        private static HashSet<String> headlessEnchant = new HashSet();
+        private static Calendar calendar = Calendar.getInstance(TimeZone.getDefault());
 
-        static {
-            HeadlessEvents.headlessEnchant = new HashSet<String>();
-            HeadlessEvents.calendar = Calendar.getInstance(TimeZone.getDefault());
+        private HeadlessEvents() {
         }
 
-        @EventHandler(priority = EventPriority.LOW)
-        public void onPlayerDeath(final PlayerDeathEvent e) {
-            final Player p_dead = e.getEntity();
-            if (HeadlessEvents.headlessEnchant.contains(p_dead.getName())) {
+        @EventHandler(priority=EventPriority.LOW)
+        public void onPlayerDeath(PlayerDeathEvent e) {
+            Player p_dead = e.getEntity();
+            if (headlessEnchant.contains(p_dead.getName())) {
                 Bukkit.getLogger().info("HEADLESS ENCH -- Dropping skull of " + p_dead.getName() + "!");
                 if (p_dead.getKiller() != null && p_dead.getKiller() instanceof Player) {
                     e.getDrops().add(this.getPlayerHead(p_dead.getName(), p_dead.getKiller()));
                     if (Bukkit.getPluginManager().isPluginEnabled("CosmicContests") && !p_dead.getKiller().hasMetadata("cosmicContests_gotHead_" + p_dead.getName())) {
-                        Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), "contests add " + p_dead.getKiller().getName() + " headsCollected 1");
-                        p_dead.getKiller().setMetadata("cosmicContests_gotHead_" + p_dead.getName(), (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
+                        Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("contests add " + p_dead.getKiller().getName() + " headsCollected 1"));
+                        p_dead.getKiller().setMetadata("cosmicContests_gotHead_" + p_dead.getName(), (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)true));
                     }
                 } else {
                     e.getDrops().add(GeneralUtil.getPlayerHead(p_dead.getName()));
                 }
-                HeadlessEvents.headlessEnchant.remove(p_dead.getName());
+                headlessEnchant.remove(p_dead.getName());
             }
         }
 
-        private ItemStack getPlayerHead(final String p_name, final Player pKiller) {
-            final ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
-            final SkullMeta sm = (SkullMeta) is.getItemMeta();
+        private ItemStack getPlayerHead(String p_name, Player pKiller) {
+            ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
+            SkullMeta sm = (SkullMeta)is.getItemMeta();
             sm.setOwner(p_name);
-            sm.setDisplayName(ChatColor.WHITE + "Skull of " + p_name);
-            final SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
-            final String monthName = month_date.format(HeadlessEvents.calendar.getTime());
-            sm.setLore(new ArrayList(Arrays.asList(ChatColor.GRAY + "Defeated by " + ChatColor.WHITE + pKiller.getName() + ChatColor.GRAY + " on ", ChatColor.WHITE + monthName + " " + HeadlessEvents.calendar.get(5) + ", " + HeadlessEvents.calendar.get(1) + ChatColor.GRAY + " at ", ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + ChatColor.GRAY + " with a(n) ", ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
-            is.setItemMeta((ItemMeta) sm);
+            sm.setDisplayName((Object)ChatColor.WHITE + "Skull of " + p_name);
+            SimpleDateFormat month_date = new SimpleDateFormat("MMMM");
+            String monthName = month_date.format(calendar.getTime());
+            sm.setLore(new ArrayList<String>(Arrays.asList((Object)ChatColor.GRAY + "Defeated by " + (Object)ChatColor.WHITE + pKiller.getName() + (Object)ChatColor.GRAY + " on ", (Object)ChatColor.WHITE + monthName + " " + calendar.get(5) + ", " + calendar.get(1) + (Object)ChatColor.GRAY + " at ", (Object)ChatColor.WHITE + "" + pKiller.getLocation().getBlockX() + ", " + pKiller.getLocation().getBlockY() + ", " + pKiller.getLocation().getBlockZ() + (Object)ChatColor.GRAY + " with a(n) ", (Object)ChatColor.WHITE + this.getItemName(pKiller.getItemInHand()) + "!")));
+            is.setItemMeta((ItemMeta)sm);
             return is;
         }
 
-        private String getItemName(final ItemStack i) {
+        private String getItemName(ItemStack i) {
             if (i == null || i.getType() == Material.AIR) {
                 return "Fists";
             }
             if (i.hasItemMeta() && i.getItemMeta().hasDisplayName()) {
                 return i.getItemMeta().getDisplayName();
             }
-            return WordUtils.capitalize(i.getType().name());
+            return WordUtils.capitalize((String)i.getType().name());
         }
     }
 }
+

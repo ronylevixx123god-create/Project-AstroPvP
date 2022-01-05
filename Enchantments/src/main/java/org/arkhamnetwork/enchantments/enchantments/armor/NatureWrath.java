@@ -1,15 +1,45 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
+ *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.earth2me.essentials.Essentials
+ *  com.rit.sucy.CustomEnchantment
+ *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
+ *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
+ *  me.ifamasssxd.killtracker.KillTrackerAPI
+ *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
+ *  org.bukkit.Bukkit
+ *  org.bukkit.ChatColor
+ *  org.bukkit.GameMode
+ *  org.bukkit.Location
+ *  org.bukkit.Sound
+ *  org.bukkit.entity.EnderCrystal
+ *  org.bukkit.entity.Entity
+ *  org.bukkit.entity.LivingEntity
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Event
+ *  org.bukkit.event.Listener
+ *  org.bukkit.event.entity.EntityDamageEvent
+ *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
+ *  org.bukkit.metadata.FixedMetadataValue
+ *  org.bukkit.metadata.MetadataValue
+ *  org.bukkit.plugin.Plugin
+ *  org.bukkit.potion.PotionEffect
+ *  org.bukkit.potion.PotionEffectType
+ *  org.zencode.shortninja.staffplus.StaffPlus
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
-import lombok.SneakyThrows;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
+import de.inventivegames.particle.ParticleEffect;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
@@ -19,6 +49,7 @@ import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.mastery.MasteryPoltergeist;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -27,18 +58,20 @@ import org.bukkit.entity.EnderCrystal;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.List;
 
-public class NatureWrath extends CustomEnchantment {
+public class NatureWrath
+extends CustomEnchantment {
     int soulCost;
     Essentials ess;
     boolean cosmicOutposts;
@@ -50,64 +83,65 @@ public class NatureWrath extends CustomEnchantment {
         this.base = 15.0;
         this.interval = 3.0;
         this.soulCost = 75;
-        this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
-        this.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
+        this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        this.cosmicOutposts = new File("plugins/CosmicOutposts.jar").exists();
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
-        Bukkit.getPluginManager().registerEvents((Listener) new NatureWrathListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener)new NatureWrathListener(), (Plugin)Enchantments.getInstance());
     }
 
-    @SneakyThrows
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
         if (e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.001 * level;
-        final boolean KOTH = player.getWorld().getName().equals("world_koth");
+        double random = Math.random();
+        double chance = 0.004 * (double)level;
+        boolean KOTH = player.getWorld().getName().equals("world_koth");
         if (random < chance) {
-            final Player p = (Player) player;
-            if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {
+            int cost;
+            Player p = (Player)player;
+            if (p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
                 return;
-            }
-            if(p.hasMetadata("witcher_ability"))
-                return;
-            int cost = KOTH ? (this.soulCost * 2) : this.soulCost;
-            if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
-                cost /= 2;
             }
             if (MaskUtils.hasMaskEquipped((Player) player, "THANOS")) {
                 return;
             }
-
-                if (this.factionUpgrades) {
+            if(p.hasMetadata("witcher_ability"))
+                return;
+            int n = cost = KOTH ? this.soulCost * 2 : this.soulCost;
+            if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost((Player)p)) {
+                cost /= 2;
+            }
+            if (this.factionUpgrades) {
                 try {
-                    final int heroicLevel = UpgradeUtils.getUpgradeLevel(p, "HEROIC_SOUL_MASTERY");
+                    int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_SOUL_MASTERY");
                     if (heroicLevel > 0) {
-                        cost *= (int) ((heroicLevel == 1) ? 0.7 : ((heroicLevel == 2) ? 0.55 : 1.0));
+                        cost = (int)((double)cost * (heroicLevel == 1 ? 0.7 : (heroicLevel == 2 ? 0.55 : 1.0)));
                     } else {
-                        final int perkLevel = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.SOUL_MASTER);
+                        int perkLevel = FactionUpgradeAPI.getPerkLevel((Player)p, (FactionUpgrade)FactionUpgrade.SOUL_MASTER);
                         if (perkLevel == 1) {
-                            cost *= (int) 0.95;
+                            cost = (int)((double)cost * 0.95);
                         }
                         if (perkLevel == 2) {
-                            cost *= (int) 0.9;
+                            cost = (int)((double)cost * 0.9);
                         }
                         if (perkLevel == 3) {
-                            cost *= (int) 0.75;
+                            cost = (int)((double)cost * 0.75);
                         }
                     }
-                } catch (Exception ex) {
+                }
+                catch (Exception exception) {
+                    // empty catch block
                 }
             }
-            if (KillTrackerAPI.hasSoulAmount(p, cost)) {
-                KillTrackerAPI.removeSoulsFromGems(p, cost);
+            if (KillTrackerAPI.hasSoulAmount((Player)p, (int)cost)) {
+                KillTrackerAPI.removeSoulsFromGems((Player)p, (int)cost);
                 p.sendMessage("");
                 p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** NATURE'S WRATH **");
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + cost + " Soul Gems");
-                p.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(p) + ChatColor.GRAY + " souls left.");
+                p.sendMessage((Object)ChatColor.GRAY + "You have " + (Object)ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls((Player)p) + (Object)ChatColor.GRAY + " souls left.");
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.65f);
                 p.sendMessage("");
                 this.procNaturesWrath(p, attacker, level, e, 1.0);
@@ -117,104 +151,83 @@ public class NatureWrath extends CustomEnchantment {
                     }
                 }
             } else {
-                de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0,1,0,0.4f,20);
-
+                try {
+                    ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0.4f, 0.4f, 0.4f, 0.1f, 20);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 p.playSound(p.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
             }
         }
     }
 
-    public int procNaturesWrath(final Player playerWhoProced, final LivingEntity affected, final int level, final EntityDamageEvent e, final double durationModifier) throws Exception {
-        final int radius = 8 + level * 5;
-        final List<String> affectedPlayers = new ArrayList<String>();
-        final boolean KOTH = playerWhoProced.getWorld().getName().equals("world_koth");
-        for (final Entity ent : playerWhoProced.getNearbyEntities((double) radius, (double) radius, (double) radius)) {
-            if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
-                continue;
-            }
-            if (ent.hasMetadata("spectator")) {
-                continue;
-            }
-            if (ent instanceof EnderCrystal) {
-                continue;
-            }
+    public int procNaturesWrath(Player playerWhoProced, LivingEntity affected, int level, EntityDamageEvent e, double durationModifier) {
+        int radius = 8 + level * 5;
+        ArrayList<String> affectedPlayers = new ArrayList<String>();
+        boolean KOTH = playerWhoProced.getWorld().getName().equals("world_koth");
+        for (Entity ent : playerWhoProced.getNearbyEntities((double)radius, (double)radius, (double)radius)) {
+            Player pEnt;
+            if (WorldGuardUtils.isPvPDisabled(ent.getLocation()) || ent.hasMetadata("spectator") || ent instanceof EnderCrystal) continue;
             if (ent instanceof LivingEntity && !(ent instanceof Player) && !ent.hasMetadata("do_not_clear")) {
                 ent.getWorld().strikeLightningEffect(ent.getLocation());
-                de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f, 1f,0f, 0.6f, 10);
-                de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation(), 0f, 1f,0f, 0.6f, 30);
+                try {
+                    ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0.6f, 0.6f, 0.6f, 0.1f, 10);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                try {
+                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 35);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
                 ent.remove();
-            } else {
-                if (!(ent instanceof Player)) {
-                    continue;
-                }
-                final Player pEnt = (Player) ent;
-                if (GeneralUtil.isAtleastTruce(playerWhoProced, pEnt) || pEnt.hasMetadata("natureWrathTask") || pEnt.getGameMode() != GameMode.SURVIVAL || this.ess.getUser(pEnt).isGodModeEnabled()) {
-                    continue;
-                }
-                final CustomEnchantProcOnEntityEvent event = new CustomEnchantProcOnEntityEvent(playerWhoProced, pEnt, e, this, level);
-                boolean freeze = true;
-                if (!event.callEvent()) {
-                    if (event.getEvent() == null) {
-                        continue;
-                    }
-                    freeze = false;
-                }
-                affectedPlayers.add(pEnt.getName());
-                pEnt.getWorld().strikeLightningEffect(pEnt.getLocation());
-                final double dodge = MasteryPoltergeist.getChanceToProc(pEnt);
-                if (dodge > 0.0 && freeze) {
-                    freeze = false;
-                    pEnt.sendMessage(CC.DarkRedB + "* POLTERGEIST [" + CC.Gray + "Immune: Nature's Wrath" + CC.DarkRedB + "] *");
-                }
-
-
-                if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.CUPID_AMULET)) {
-                    freeze = false;
-                    pEnt.sendMessage(CC.translate("&c&l* CUPID AMULET BLOCKED &7[Natures Wrath] &c&l*"));
-                }
-
-                if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
-                    pEnt.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
-                    freeze = false;
-                }
-
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) pEnt, SkinType.VALENTINES_2021_HELMET)) {
-                    pEnt.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
-                    freeze = false;
-                }
-                if (freeze) {
-                    pEnt.setWalkSpeed(0.0f);
-                    pEnt.removePotionEffect(PotionEffectType.JUMP);
-                    pEnt.removePotionEffect(PotionEffectType.SLOW);
-                    pEnt.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (7 + level) * 20, 128));
-                    pEnt.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (7 + level) * 20, 128));
-                    pEnt.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, (7 + level) * 20, 2));
-                }
-                pEnt.playSound(pEnt.getLocation(), Sound.ENDERDRAGON_GROWL, 2.0f, 2.0f);
-                final NatureWrathTask nwt = new NatureWrathTask(pEnt, level);
-                nwt.runTaskTimer((Plugin) Enchantments.getInstance(), 20L, 20L);
-                pEnt.setMetadata("lastNatureWrathEffect", new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-                pEnt.setMetadata("natureWrathTask", new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) nwt));
+                continue;
             }
+            if (!(ent instanceof Player) || GeneralUtil.isAtleastTruce(playerWhoProced, pEnt = (Player)ent) || pEnt.hasMetadata("natureWrathTask") || pEnt.getGameMode() != GameMode.SURVIVAL || this.ess.getUser(pEnt).isGodModeEnabled()) continue;
+            CustomEnchantProcOnEntityEvent event = new CustomEnchantProcOnEntityEvent((LivingEntity)playerWhoProced, (LivingEntity)pEnt, (Event)e, this, level);
+            boolean freeze = true;
+            if (!event.callEvent()) {
+                if (event.getEvent() == null) continue;
+                freeze = false;
+            }
+            affectedPlayers.add(pEnt.getName());
+            pEnt.getWorld().strikeLightningEffect(pEnt.getLocation());
+            double dodge = MasteryPoltergeist.getChanceToProc(pEnt);
+            if (dodge > 0.0 && freeze) {
+                freeze = false;
+                pEnt.sendMessage(CC.DarkRedB + "* POLTERGEIST [" + CC.Gray + "Immune: Nature's Wrath" + CC.DarkRedB + "] *");
+            }
+            if (freeze) {
+                pEnt.setWalkSpeed(0.0f);
+                pEnt.removePotionEffect(PotionEffectType.JUMP);
+                pEnt.removePotionEffect(PotionEffectType.SLOW);
+                pEnt.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (7 + level) * 20, 128));
+                pEnt.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (7 + level) * 20, 128));
+                pEnt.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, (7 + level) * 20, 2));
+            }
+            pEnt.playSound(pEnt.getLocation(), Sound.ENDERDRAGON_GROWL, 2.0f, 2.0f);
+            NatureWrathTask nwt = new NatureWrathTask(pEnt, level);
+            nwt.runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 20L);
+            pEnt.setMetadata("lastNatureWrathEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
+            pEnt.setMetadata("natureWrathTask", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)nwt));
         }
         final String[] players = affectedPlayers.toArray(new String[affectedPlayers.size()]);
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+
             @Override
             public void run() {
-                for (final String s : players) {
-                    if (Bukkit.getPlayer(s) != null) {
-                        final Player p = Bukkit.getPlayer(s);
-                        if (p.hasMetadata("natureWrathTask")) {
-                            final NatureWrathTask nwt = (NatureWrathTask) p.getMetadata("natureWrathTask").get(0).value();
-                            nwt.cancel();
-                            p.setWalkSpeed(0.2f);
-                            p.removeMetadata("natureWrathTask", (Plugin) Enchantments.getInstance());
-                        }
-                    }
+                for (String s : players) {
+                    Player p;
+                    if (Bukkit.getPlayer((String)s) == null || !(p = Bukkit.getPlayer((String)s)).hasMetadata("natureWrathTask")) continue;
+                    NatureWrathTask nwt = (NatureWrathTask)((Object)((MetadataValue)p.getMetadata("natureWrathTask").get(0)).value());
+                    nwt.cancel();
+                    p.setWalkSpeed(0.2f);
+                    p.removeMetadata("natureWrathTask", (Plugin)Enchantments.getInstance());
                 }
             }
-        }, (long) ((KOTH ? ((7 + level) * 5L) : ((7 + level) * 20L)) * durationModifier));
+        }, (long)((double)(KOTH ? (long)(7 + level) * 5L : (long)(7 + level) * 20L) * durationModifier));
         return affectedPlayers.size();
     }
 }
+

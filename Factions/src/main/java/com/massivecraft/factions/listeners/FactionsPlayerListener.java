@@ -474,6 +474,7 @@ public class FactionsPlayerListener implements Listener {
         onPlayerInteractNew(spoofedEvent);
         if (spoofedEvent.useItemInHand() == Event.Result.DENY || spoofedEvent.useInteractedBlock() == Event.Result.DENY) {
             event.setCancelled(true);
+
             //AsyncPacketSenderThread.queuePacket(((CraftPlayer)player).getHandle(), (Packet)new PacketPlayOutBlockChange(block.getX(), block.getY(), block.getZ(), (World)((CraftWorld)player.getWorld()).getHandle()));
             if (FactionPermissions.debug)
                 Bukkit.getLogger().info("Cancelling " + event.getPlayer().getName() + " Bucket fill event: " + spoofedEvent.useItemInHand() + " block: " + spoofedEvent.useInteractedBlock());

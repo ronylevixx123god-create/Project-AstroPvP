@@ -118,7 +118,7 @@ public class KothSanityListener implements Listener {
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.WEB && e.getPlayer().getWorld().getName().equals("world_koth")) {
+        if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.WEB && e.getPlayer().getWorld().getName().equals("world")) {
             e.setCancelled(true);
             e.setUseItemInHand(Event.Result.DENY);
             e.setUseInteractedBlock(Event.Result.DENY);
@@ -136,7 +136,7 @@ public class KothSanityListener implements Listener {
 
     @EventHandler
     public void onBlockPhysics(BlockPhysicsEvent e) {
-        if (e.getBlock().getWorld().getName().equals("world_koth")) {
+        if (e.getBlock().getWorld().getName().equals("world")) {
             e.setCancelled(true);
         }
     }
@@ -200,35 +200,6 @@ public class KothSanityListener implements Listener {
         }
         if (e.getEntity().getWorld().getName().contains("_koth")) {
             this.recentKothDeaths.asMap().putIfAbsent(e.getEntity().getUniqueId(), System.currentTimeMillis());
-        }
-    }
-
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onPlayerTeleport(PlayerTeleportEvent event) {
-        Long lastDeath;
-        if (event.getFrom() != null && event.getTo() != null && event.getTo().getWorld().getName().contains("_koth") && !event.getTo().getWorld().getName().equals(event.getFrom().getWorld().getName()) && (lastDeath = (Long)this.recentKothDeaths.asMap().get(event.getPlayer().getUniqueId())) != null) {
-            int secondsLeft;
-            long timeToLookFor = this.getTimeTillReturn(event.getPlayer());
-            long timeSinceDeath = System.currentTimeMillis() - lastDeath;
-            if (timeSinceDeath < timeToLookFor && (secondsLeft = (int)((timeToLookFor - timeSinceDeath) / 1000L)) > 0) {
-                if (!event.getPlayer().isOp()) {
-                    event.setCancelled(true);
-                }
-                event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot return to the KOTH world for another " + CC.RedU + TimeUtils.formatSeconds((long)secondsLeft) + CC.Red + " due to your recent death!");
-            }
-        }
-    }
-
-    private long getTimeTillReturn(Player player) {
-        return player.hasPermission("cosmicpvp.heroic") ? TimeUnit.MINUTES.toMillis(5L) : TimeUnit.MINUTES.toMillis(8L);
-    }
-
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
-    public void onPlayerTelportMonitor(PlayerTeleportEvent event) {
-        Player player = event.getPlayer();
-        if (event.getTo() != null && event.getFrom() != null && event.getTo().getWorld().getName().contains("_koth") && !event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
-            long minutesToReturn = this.getTimeTillReturn(event.getPlayer()) / 1000L;
-            player.sendMessage(CC.RedB + "(!) " + CC.Red + "Upon Death you will be " + CC.RedU + "unable" + CC.Red + " to return to the KOTH world for " + CC.RedB + minutesToReturn / 60L + CC.Red + " minutes!");
         }
     }
 

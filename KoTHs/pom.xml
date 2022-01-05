@@ -41,6 +41,8 @@
             <scope>provided</scope>
         </dependency>
 
+
+
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
             <artifactId>VaultAPI</artifactId>
@@ -82,6 +84,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicFactionQuests.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>gc</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/GiftcardShop-1.0.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

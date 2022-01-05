@@ -1,3 +1,13 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.Bukkit
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.Listener
+ *  org.bukkit.plugin.Plugin
+ */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
@@ -10,7 +20,8 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.concurrent.ConcurrentHashMap;
 
-public class Commander extends CustomEnchantment {
+public class Commander
+extends CustomEnchantment {
     protected static ConcurrentHashMap<String, Integer> commanders;
     private CommanderTask commanderTask;
 
@@ -19,16 +30,18 @@ public class Commander extends CustomEnchantment {
         this.max = 5;
         this.base = 20.0;
         this.interval = 5.0;
-        Commander.commanders = new ConcurrentHashMap<String, Integer>();
-        Bukkit.getPluginManager().registerEvents((Listener) new CommanderListener(), (Plugin) Enchantments.getInstance());
-        (this.commanderTask = new CommanderTask()).runTaskTimer((Plugin) Enchantments.getInstance(), 20L, 160L);
+        commanders = new ConcurrentHashMap();
+        Bukkit.getPluginManager().registerEvents((Listener)new CommanderListener(), (Plugin)Enchantments.getInstance());
+        this.commanderTask = new CommanderTask();
+        this.commanderTask.runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 160L);
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
-        Commander.commanders.put(player.getName(), enchantLevel);
+    public void applyEquipEffect(Player player, int enchantLevel) {
+        commanders.put(player.getName(), enchantLevel);
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        Commander.commanders.remove(player.getName());
+    public void applyUnequipEffect(Player player, int enchantLevel) {
+        commanders.remove(player.getName());
     }
 }
+

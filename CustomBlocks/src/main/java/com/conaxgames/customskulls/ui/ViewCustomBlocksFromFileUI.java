@@ -30,6 +30,7 @@ public class ViewCustomBlocksFromFileUI {
                             .addLoreLine(CC.GOLD + "Owner: " + CC.YELLOW + data.getOwner())
                             .addLoreLine(CC.GOLD + "Type: " + CC.YELLOW + data.getAbilityType())
                             .addLoreLine(CC.GOLD + "Location: ")
+                            .addLoreLine(CC.GOLD + "Last Activated: " + CC.YELLOW + data.getLastActivated())
                             .addLoreLine(CC.GOLD + " " + CC.YELLOW + data.getLocation().getBlockX())
                             .addLoreLine(CC.GOLD + " " + CC.YELLOW + data.getLocation().getBlockY())
                             .addLoreLine(CC.GOLD + " " + CC.YELLOW + data.getLocation().getBlockZ())

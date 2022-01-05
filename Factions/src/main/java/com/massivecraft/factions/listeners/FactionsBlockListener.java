@@ -42,14 +42,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPistonExtendEvent;
-import org.bukkit.event.block.BlockPistonRetractEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.block.*;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.material.MaterialData;
+import org.bukkit.util.Vector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -189,7 +188,7 @@ public class FactionsBlockListener
             }
         }
         if (deny) {
-            if (!justCheck && !TimeUtil.isOnCooldown(player, "lastInteractMsg")) {
+            if (!justCheck) {
                 me.msg("<b>You can't " + action + " in the territory of " + otherFaction.getTag(myFaction));
                 TimeUtil.setCooldown(player, "lastInteractMsg", 1);
             }
@@ -265,30 +264,40 @@ public class FactionsBlockListener
         return permission;
     }
 
-    @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOW)
     public void onBlockPlace(BlockPlaceEvent event) {
         if (event.getBlockPlaced().getType() == Material.FIRE) {
             return;
         }
         if (!FactionsBlockListener.playerCanBuildDestroyBlock(event.getPlayer(), event.getBlock().getLocation(), new MaterialData(event.getBlockPlaced().getType()), "build", false)) {
             event.setCancelled(true);
+            Player player = event.getPlayer();
+            Location location = player.getLocation();
+            Location blockLocation = event.getBlock().getLocation();
+
+            blockLocation.setX(getAccurateCoord(blockLocation.getX()));
+            blockLocation.setZ(getAccurateCoord(blockLocation.getZ()));
+
+            if ((int) location.getX() != (int) blockLocation.getX()) return;
+
+            if ((int) location.getZ() != (int) blockLocation.getZ()) return;
+
+            player.setVelocity(new Vector(0, -1, 0));
         }
+
+
+    }
+
+
+    private double getAccurateCoord(double coord) {
+        if (coord < 0) return coord + 1.0;
+        return coord;
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
     public void onBlockBreak(BlockBreakEvent event) {
         if (!FactionsBlockListener.playerCanBuildDestroyBlock(event.getPlayer(), event.getBlock().getLocation(), new MaterialData(event.getBlock().getType()), "destroy", false)) {
             event.setCancelled(true);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onPlayerPlace(BlockPlaceEvent event) {
-        FPlayer fplayer;
-        Faction at;
-        ItemStack item = event.getItemInHand();
-        if (item != null && item.getType() == Material.MOB_SPAWNER && (at = Board.getFactionAt(new FLocation(event.getBlockPlaced()))) != null && at.isNormal() && (fplayer = FPlayers.i.get(event.getPlayer())) != null && at.getRelationTo(fplayer.getFaction()).isAtLeast(Relation.TRUCE)) {
-            this.handleSpawnerUpdate(at, event.getPlayer(), item, LogTimer.TimerSubType.SPAWNER_PLACE);
         }
     }
 

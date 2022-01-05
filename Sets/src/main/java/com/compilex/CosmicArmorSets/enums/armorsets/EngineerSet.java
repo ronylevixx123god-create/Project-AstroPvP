@@ -5,15 +5,19 @@ import com.compilex.CosmicArmorSets.enums.ArmorSetInfo;
 import com.compilex.CosmicArmorSets.enums.OtherPlayerEventListenerSet;
 import com.compilex.CosmicArmorSets.enums.WeaponedArmorSet;
 import com.compilex.CosmicArmorSets.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.minecraft.server.v1_8_R3.World;
 import net.minecraft.server.v1_8_R3.*;
@@ -28,6 +32,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
@@ -37,42 +42,61 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 
 public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmorSet, OtherPlayerEventListenerSet {
+    public static HashMap<Entity, Player> blocksAndPlayers = new HashMap<>();
+
     public static HashMap<Entity, Player> blocksAndProccer = Maps.newHashMap();
-    private final ChatColor color;
-    private final Set<FallingBlock> fallingBlocks = Collections.newSetFromMap(new WeakHashMap<>());
+
+    public static List<String> uuidsE = new ArrayList<>();
+
+    public static List<String> entityList = new ArrayList<>();
+
+    private ChatColor color;
 
     public EngineerSet() {
         this.color = ChatColor.GOLD;
-        Bukkit.getPluginManager().registerEvents(this, Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(this, (Plugin)Enchantments.getInstance());
     }
 
     public void onEquip(Player player) {
-        //EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
     }
 
     public void onUnequip(Player player) {
-        //EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+        EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
     }
 
     public ItemStack getHelmet(boolean applyTransmog) {
         ItemStack kothItem = createArmor(Material.DIAMOND_HELMET, "Engineer Face Mask", "helmet");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
+        NBTWrapper wrapper = new NBTWrapper(applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem);
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        cosmicData.setString("armorSet", "engineer");
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        return wrapper.build();
     }
 
     public ItemStack getChestplate(boolean applyTransmog) {
         ItemStack kothItem = createArmor(Material.DIAMOND_CHESTPLATE, "Engineer Explosion-Proof Vest", "chestplate");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
+        NBTWrapper wrapper = new NBTWrapper(applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem);
+        com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        cosmicData.setString("armorSet", "engineer");
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        return wrapper.build();
     }
 
     public ItemStack getLeggings(boolean applyTransmog) {
         ItemStack kothItem = createArmor(Material.DIAMOND_LEGGINGS, "Engineer Protective Chaps", "leggings");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
+        NBTWrapper wrapper = new NBTWrapper(applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem);
+        com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        cosmicData.setString("armorSet", "engineer");
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        return wrapper.build();
     }
 
     public ItemStack addEnchants(ItemStack item, List<String> enchants, double heroic) {
@@ -109,176 +133,123 @@ public class EngineerSet extends ArmorSetInfo implements Listener, WeaponedArmor
 
     public ItemStack getBoots(boolean applyTransmog) {
         ItemStack kothItem = createArmor(Material.DIAMOND_BOOTS, "Engineer Steel Toed Boots", "boots");
-        return applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem;
+        NBTWrapper wrapper = new NBTWrapper(applyTransmog ? EnchantmentBook.applyTransmogScroll(kothItem) : kothItem);
+        com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        cosmicData.setString("armorSet", "engineer");
+        wrapper.setNBTBase("cosmicData", (NBTBase)cosmicData.get());
+        return wrapper.build();
     }
 
     public List<String> getEquipDescription() {
-        return Lists.newArrayList(CC.GoldB + "ENGINEER SET BONUS:", CC.GoldB + " * " + CC.Gold + "Enemies deal 35% less damage to you.", CC.GoldB + " * " + CC.Gold + "Invisible on /near (Coming Soon)", CC.GoldB + " * " + CC.Gold + "Immune to Teleblock", CC.GoldB + " * " + CC.Gold + "Gears IV", CC.GoldB + " * " + CC.Gold + "B-2 Bomber Passive ability");
+        return (List<String>)Lists.newArrayList(new String[] { "&7", "&6&lENGINEER SET BONUS", "&6&l* &6Enemies deal 35% less damage to you", "&6&l* &6Invisible on /near", "&6&l* &6Immune to Teleblock", "&6&l* &6Gears IV", "&6&l* &6B-2 Bomber Passive Ability", "&7" }).stream().map(CC::translate).collect(Collectors.toList());
     }
 
     public boolean onPlayerDamaged(Player damaged, EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player)) {
-            return false;
-        }
-        if (Math.random() <= 0.04) {
+        if (ThreadLocalRandom.current().nextInt(100) <= 4)
             onEngineerAbility(damaged);
-        }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.65D);
+        //DecimateCore.getInstance().getDamageUtils().setDamageReduce(35.0D, event, "&6&lEngineer Armor Set");
         return true;
     }
 
+    public void addEntityUUIDE(UUID id) {
+        String uuid = id.toString();
+        uuidsE.add(uuid);
+    }
+
+    public void removeEntityBlockE(UUID id) {
+        String uuid = id.toString();
+        if (uuidsE.contains(uuid))
+            entityList.remove(uuid);
+    }
+
+    public boolean containsBlockE(UUID id) {
+        String uuid = id.toString();
+        return uuidsE.contains(uuid);
+    }
 
     public void onEngineerAbility(Player player) {
-        List<Player> affected = player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> ent instanceof Player)
-                .filter(e -> !GeneralUtil.isAtleastTruce(player, (Player) e)).filter(e -> ((Player) e).getGameMode() != GameMode.CREATIVE).map(e -> (Player) e).collect(Collectors.toList()), players = affected;
+        List<Entity> affected = (List<Entity>)player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> {
+            if (!(ent instanceof Player))
+                return false;
+            Player p = (Player)ent;
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VIRUS_HELMET_HAZMAT)) {
+                p.sendMessage(CC.translate("&2&l* PRISON BREAK &7(Hazmat Helmet) &2&l*"));
+                return false;
+            }
+            if (p.hasMetadata("immune_freeze")) {
+                p.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "B-2 Bomb blocked!" + CC.DarkGrayB + "] *");
+                return false;
+            }
+            Relation relation = FactionUtils.getRelationTo((RelationParticipator)FactionUtils.getFaction(p), (RelationParticipator)FactionUtils.getFaction(player));
+            return (relation != Relation.TRUCE && relation != Relation.MEMBER && relation != Relation.ALLY);
+        }).collect(Collectors.toList());
+        for (Entity ent2 : affected) {
+            FallingBlock block = ent2.getWorld().spawnFallingBlock(ent2.getLocation().add(0.0D, 10.0D, 0.0D), Material.TNT, (byte)9);
+            addEntityUUIDE(block.getUniqueId());
+            blocksAndPlayers.put(block, (Player)ent2);
+            blocksAndProccer.put(block, player);
+        }
         player.sendMessage(CC.translate("&a&l* B-2 BOMBER DEPLOYED [&7" + affected.size() + " &7players&a&l] *"));
-        for (Player enemy : affected) {
-            enemy.sendMessage(CC.translate("&6&l* B-2 BOMB, RUN! &7(" + player.getName() + ") &6&l*"));
-            //this.fallingBlocks.add(createFallingBlock(enemy.getLocation().add(0, 5, 0), player,FactionUtils.getFaction(player)));
+    }
+
+    @EventHandler
+    public void onEntityChangeBlockEngineer(EntityChangeBlockEvent event) {
+        if (event.getEntity() instanceof FallingBlock && containsBlockE(event.getEntity().getUniqueId())) {
+            event.setCancelled(true);
+            FallingBlock block = (FallingBlock)event.getEntity();
+            Player plr = blocksAndPlayers.get(block);
+            plr.playSound(plr.getLocation(), Sound.ZOMBIE_WOOD, 10.0F, 1.2F);
+            plr.setWalkSpeed(0.0F);
+            plr.sendMessage(CC.translate("&c&l* B-2 BOMBED [&7" + ((Player)blocksAndProccer.get(block)).getName() + "&7 (Frozen for 3s)&c&l] *"));
+            blocksAndPlayers.remove(block, plr);
+            blocksAndProccer.remove(block, blocksAndProccer.get(block));
+            Location loc = event.getEntity().getLocation();
+            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> plr.setWalkSpeed(0.2F), 60L);
+            removeEntityBlockE(event.getEntity().getUniqueId());
         }
-    }
-
-    private FallingBlock createFallingBlock(Location location, final Player original, final Faction faction) {
-        final Material mat = Material.TNT;
-        EntityFallingBlock block = new EntityFallingBlock(location, (World) location.getWorld(), location.getX(), location.getY(), location.getZ(), Block.getById(mat.getId()).getBlockData()) {
-            boolean damagedPlayed = false;
-
-            @SneakyThrows
-            public void die() {
-                if (isAlive() && this.damagedPlayed) {
-                    this.world.getWorld().playEffect(getBukkitEntity().getLocation(), Effect.STEP_SOUND, mat.getId());
-                }
-                try {
-                    de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), this.getBukkitEntity().getLocation(), 0f, 0.5f, 0f, 0.6f, 5);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-                this.bukkitEntity.getLocation().getWorld().playSound(this.bukkitEntity.getLocation(), Sound.ZOMBIE_WOOD, 1.2F, 0.9f);
-                super.die();
-            }
-
-            public void h() {
-                if (this.ticksLived >= 1) {
-                    try {
-                        List<net.minecraft.server.v1_8_R3.Entity> arraylist = this.world.getEntities(this, this.getBoundingBox());
-                        int killed = 0;
-                        for (net.minecraft.server.v1_8_R3.Entity ent : arraylist) {
-                            if (!isAlive())
-                                break;
-                            if (ent instanceof EntityHuman) {
-                                CraftPlayer player = (CraftPlayer) ent.getBukkitEntity();
-                                if (player.getGameMode() == GameMode.CREATIVE || player.equals(original) || player.isDead() ||
-                                        EssentialsUtils.isInGodMode(player) || player.hasMetadata("spectator") || player.hasMetadata("NPC") || player.getHealth() <= 0.0D || !WorldGuardUtils.isPvPEnabled(player.getLocation())) {
-                                    continue;
-                                }
-                                if (faction.isNormal() && faction.getRelationTo(FPlayers.i.get(player)).isAtLeast(Relation.TRUCE)) {
-                                    continue;
-                                }
-                                if (player.hasMetadata("b2-bombed")) {
-                                    die();
-                                    continue;
-                                }
-                                player.setWalkSpeed(0.0f);
-                                player.sendMessage(CC.translate("&c&l* B-2 BOMBED [&7" + original.getName() + " (Frozen for 3s)&c&l] *"));
-                                player.setMetadata("b2-bombed", new FixedMetadataValue(CosmicArmorSetsPlugin.get_(), true));
-                                Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicArmorSetsPlugin.get_(), () -> {
-                                    if (player.isOnline())
-                                        unfreeze(player);
-                                }, 3 * 20);
-                                this.damagedPlayed = true;
-                                killed++;
-                            }
-                        }
-                        if (killed > 0) {
-                            die();
-                            Bukkit.getLogger().info("Damaging " + killed + " players damage from falling block!");
-                            return;
-                        }
-                        if (this.ticksLived % 20 == 0) {
-                            if (this.world.getType(new BlockPosition(this.locX, (int) this.locY, (int) this.locZ)) == Blocks.WEB || this.world.getType(new BlockPosition(this.locX, (int) this.locY - 1, (int) this.locZ)) == Blocks.WEB) {
-                                die();
-                            }
-                        }
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
-                super.h();
-                if (this.onGround && isAlive()) {
-                    die();
-                }
-            }
-        };
-        block.ticksLived = 1;
-        ((CraftWorld) location.getWorld()).getHandle().addEntity(block, CreatureSpawnEvent.SpawnReason.CUSTOM);
-        FallingBlock fallingBlock = (FallingBlock) block.getBukkitEntity();
-        fallingBlock.setMetadata("b2Bomber", new FixedMetadataValue(CosmicBosses.getInstance(), faction.getId()));
-        fallingBlock.setDropItem(false);
-        return fallingBlock;
-    }
-
-    public void onPlayerEvent(Event event) {
-        if (event instanceof EntityChangeBlockEvent) {
-            org.bukkit.entity.Entity falling = ((EntityChangeBlockEvent) event).getEntity();
-            if (this.fallingBlocks.remove(falling)) {
-                ((EntityChangeBlockEvent) event).setCancelled(true);
-                falling.remove();
-            }
-        } else if (event instanceof PlayerQuitEvent) {
-            unfreeze(((PlayerQuitEvent) event).getPlayer());
-        } else if (event instanceof PlayerTeleportEvent) {
-            unfreeze(((PlayerTeleportEvent) event).getPlayer());
-        }
-    }
-
-    private void unfreeze(Player player) {
-        player.removeMetadata("b2-bombed", CosmicArmorSetsPlugin.get_());
-        player.setWalkSpeed(0.2f);
     }
 
     public boolean onPlayerAttacked(Player damager, EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player)) {
-            return false;
-        }
-/*        double chance = 4.0D;
-        if (ThreadLocalRandom.current().nextDouble(200.0D) <= chance) {
-            if (Math.random() < 0.05) {
-                onEngineerAbility(damager);
-            }
-        }*/
-        return false;
+        double chance = 0.75D;
+        if (ThreadLocalRandom.current().nextDouble(101.0D) <= chance)
+            onEngineerAbility(damager);
+        return true;
     }
 
-    @Override
     public boolean onPlayerDamagedBonus(Player damaged, int multiplier, EntityDamageByEntityEvent event) {
-        if (!(event.getEntity() instanceof Player)) {
-            return false;
-        }
         if (event.isCancelled())
             return false;
-        if (damaged.getWorld().getName().contains("dungeon"))
-            return false;
-        if (Math.random() < 0.01)
+        if ((ThreadLocalRandom.current().nextInt(100) + 1) <= 0.45D)
             onEngineerAbility(damaged);
-        this.modifyDamage(damaged, event, -4.0, multiplier);
-        return false;
+         modifyDamage(damaged, event, -9.0D, multiplier);
+         return false;
     }
 
-    @Override
     public boolean onPlayerAttackedBonus(Player damager, int multiplier, EntityDamageByEntityEvent event) {
+        if (isBlockedOutpostWorld((Entity)damager))
+            return false;
+        modifyDamage(damager, event, 5.0D, multiplier);
         return false;
     }
 
     public ItemStack createArmor(Material material, String itemName, String loreType) {
         String bold = this.color + CC.Bold + "* " + this.color;
-        ItemStack armor = ItemUtils.buildItem(material, (short) 0, this.color + CC.Bold + itemName + CC.Reset, this.color + CC.Italic + "Next-gen Gnometech " + loreType + " for demolition specialists", "", this.color + CC.Bold + "ENGINEER SET BONUS", bold + "Enemies deal 35% less damage to you.", bold + "Invisible on /near", bold + "Immune to Teleblock", bold + "Gears IV", bold + "B-2 Bomber Passive Ability", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer set items" + CC.Gray + ")");
-        armor.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5);
+        ItemStack armor = ItemUtils.buildItem(material, (short)0, this.color + CC.Bold + itemName + CC.Reset, new String[] { this.color + CC.Italic + "Next-gen Gnometech " + loreType + " for demolition specialists", "", this.color + CC.Bold + "ENGINEER SET BONUS", bold + "Enemies deal 35% less damage to you.", bold + "Invisible on /near", bold + "Immune to Teleblock", bold + "Gears IV", bold + "B-2 Bomber Passive Ability", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer set items" + CC.Gray + ")" });
+        armor.addUnsafeEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4);
         armor.addUnsafeEnchantment(Enchantment.DURABILITY, 3);
         return armor;
     }
 
-    @Override
     public ItemStack getWeapon(boolean p0) {
-        return (new NBTWrapper((new ItemBuilder(Material.DIAMOND_SWORD, CC.GoldB + "Engineer Hammer", CC.Gray + "A titan-forged grandmaster", CC.Gray + "warhammer that crushes all.", "", CC.GoldB + "ENGINEER WEAPON BONUS", CC.Gold + "Deal +15% damage to all enemies.", CC.Gold + "120% B-2 Bomber Ability", CC.Gold + "Immune to World Destroyer Pet", CC.Gold + "Immune to Shockwave, Obliterate, Guardians", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer items." + CC.Gray + ")")).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build())).setString("cosmicType", "ENGINEER_SWORD").build();
+        NBTWrapper wrapper = (new NBTWrapper((new ItemBuilder(Material.DIAMOND_SWORD, CC.GoldB + "Engineer Hammer", new String[] { CC.Gray + "A titan-forged grandmaster", CC.Gray + "warhammer that crushes all.", "", CC.GoldB + "ENGINEER WEAPON BONUS", CC.Gold + "Deal +15% damage to all enemies.", CC.Gold + "120% B-2 Bomber Ability", CC.Gold + "Immune to World Destroyer Pet", CC.Gold + "Immune to Shockwave, Obliterate, Guardians", CC.Gray + "(" + CC.GrayI + "Requires all 4 engineer items." + CC.Gray + ")" })).enchant(Enchantment.DAMAGE_ALL, 5).enchant(Enchantment.DURABILITY, 3).build())).setString("cosmicType", "ENGINEER_SWORD");
+        com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder compound = wrapper.getCompoundOrCreate("cosmicData");
+        compound.setString("armorSet", "engineer");
+        wrapper.setNBTBase("cosmicData", (NBTBase)compound.get());
+        return wrapper.build();
+    }
+
+    @Override
+    public void onPlayerEvent(Event var1) {
+
     }
 }

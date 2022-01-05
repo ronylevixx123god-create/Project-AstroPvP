@@ -1,71 +1,71 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
-import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import lombok.SneakyThrows;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
 import org.arkhamnetwork.enchantments.enchantments.axes.CorruptDamageTask;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-public class HeroicCorrupt extends HeroicCustomEnchantment {
+public class HeroicCorrupt extends HeroicCustomEnchantment{
     public HeroicCorrupt() {
-        super("Maliciously Corrupt","Corrupt" ,GeneralUtil.axe, 2);
+        super("Maliciously Corrupt","Corrupt", GeneralUtil.axe, 2);
         this.max = 4;
         this.base = 15.0;
         this.interval = 5.0;
     }
 
-    public static boolean isCorrupted(final LivingEntity e) {
-        return e.hasMetadata("corruptEnchantExpire") && e.getMetadata("corruptEnchantExpire").get(0).asLong() > System.currentTimeMillis();
-    }
-
-    public static int getCorruptLevel(final LivingEntity e) {
-        if (!isCorrupted(e)) {
-            return 0;
-        }
-        return e.getMetadata("corruptEnchantLevel").get(0).asInt();
-    }
-
-    @SneakyThrows
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        double chance;
         if (!(playerHit instanceof Player)) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 6.0 + 0.02 * level;
-        if (random < chance && (!playerHit.hasMetadata("corruptEnchantExpire") || playerHit.getMetadata("corruptEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
-            playerHit.setMetadata("corruptEnchantExpire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 2 * 1000)));
-            playerHit.setMetadata("corruptEnchantLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
+        double random = Math.random();
+        if (random < (chance = 5.0 + 0.02 * (double)level) && (!playerHit.hasMetadata("corruptEnchantExpire") || ((MetadataValue)playerHit.getMetadata("corruptEnchantExpire").get(0)).asLong() < System.currentTimeMillis())) {
+            playerHit.setMetadata("corruptEnchantExpire", (MetadataValue)new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object)(System.currentTimeMillis() + (long)(level * 2 * 1000))));
+            playerHit.setMetadata("corruptEnchantLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
             try {
-                de.inventivegames.particle.ParticleEffect.PORTAL.sendToPlayer((Player) playerHit, playerHit.getEyeLocation(), 0, 0, 0, 0.7f, 16);
+                ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 20);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            if (EnchantmentAPI.itemHasEnchantment(((Player) playerHit).getItemInHand(), "Inversion")) {
+            if (EnchantmentAPI.itemHasEnchantment((ItemStack)((Player)playerHit).getItemInHand(), (String)"Inversion")) {
                 return;
             }
             if (playerHit.hasMetadata("corruptTaskID")) {
                 return;
             }
-            final int damageAmount = (level >= 3) ? 4 : 2;
-            final int damageInterval = level;
-            final int taskID = new CorruptDamageTask((Player) playerHit, damageInterval, damageAmount).runTaskTimer((Plugin) Enchantments.getInstance(), 0L, (long) (damageInterval * 20)).getTaskId();
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+            int damageAmount = level >= 3 ? 2 : 1;
+            int damageInterval = level;
+            final int taskID = new CorruptDamageTask((Player)playerHit, damageInterval, damageAmount).runTaskTimer((Plugin)Enchantments.getInstance(), 0L, damageInterval * 20).getTaskId();
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), new Runnable(){
+
                 @Override
                 public void run() {
                     Bukkit.getScheduler().cancelTask(taskID);
-                    Bukkit.getScheduler().runTask((Plugin) Enchantments.getInstance(), () -> playerHit.removeMetadata("corruptTaskID", (Plugin) Enchantments.getInstance()));
+                    Bukkit.getScheduler().runTask((Plugin)Enchantments.getInstance(), () -> playerHit.removeMetadata("corruptTaskID", (Plugin)Enchantments.getInstance()));
                 }
-            }, (long) Math.pow(level, 2.0) * 20L);
-            playerHit.setMetadata("corruptTaskID", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) taskID));
+            }, (long)Math.pow(level, 2.0) * 20L);
+            playerHit.setMetadata("corruptTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)taskID));
         }
+    }
+
+    public static boolean isCorrupted(LivingEntity e) {
+        return e.hasMetadata("corruptEnchantExpire") && ((MetadataValue)e.getMetadata("corruptEnchantExpire").get(0)).asLong() > System.currentTimeMillis();
+    }
+
+    public static int getCorruptLevel(LivingEntity e) {
+        if (!Corrupt.isCorrupted(e)) {
+            return 0;
+        }
+        return (e.getMetadata("corruptEnchantLevel").get(0)).asInt();
     }
 }

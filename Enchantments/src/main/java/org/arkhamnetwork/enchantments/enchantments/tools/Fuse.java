@@ -1,3 +1,12 @@
+/*
+ * Decompiled with CFR 0.150.
+ * 
+ * Could not load the following classes:
+ *  com.rit.sucy.CustomEnchantment
+ *  org.bukkit.block.Block
+ *  org.bukkit.entity.Player
+ *  org.bukkit.event.block.BlockEvent
+ */
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
 import com.rit.sucy.CustomEnchantment;
@@ -6,7 +15,8 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.block.BlockEvent;
 
-public class Fuse extends CustomEnchantment {
+public class Fuse
+extends CustomEnchantment {
     public Fuse() {
         super("Fuse", GeneralUtil.pickaxe, 6);
         this.max = 1;
@@ -14,6 +24,7 @@ public class Fuse extends CustomEnchantment {
         this.interval = 10.0;
     }
 
-    public void applyToolEffect(final Player player, final Block block, final int enchantLevel, final BlockEvent event) {
+    public void applyToolEffect(Player player, Block block, int enchantLevel, BlockEvent event) {
     }
 }
+

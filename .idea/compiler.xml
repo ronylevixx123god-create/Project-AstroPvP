@@ -7,7 +7,6 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="AstroTournaments" />
         <module name="CustomBlocks" />
         <module name="BlackAuctionHouse" />
         <module name="ItemSkins" />
@@ -37,6 +36,7 @@
         <module name="Slotbot" />
         <module name="KoTHs" />
         <module name="Duels" />
+        <module name="GiftcardShop" />
         <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
@@ -80,6 +80,7 @@
       <module name="AstroClientComms" target="8" />
       <module name="AstroPvPGenBuckets" target="1.8" />
       <module name="AstroSpawners" target="1.8" />
+      <module name="AstroTournaments" target="8" />
       <module name="Backpacks" target="8" />
       <module name="Christmas" target="8" />
       <module name="ClientComms" target="8" />

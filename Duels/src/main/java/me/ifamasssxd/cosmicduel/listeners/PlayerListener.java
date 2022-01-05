@@ -41,7 +41,6 @@ import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.*;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
-import me.ifamasssxd.cosmicduel.struct.newduel.GlobalQueuePopInventory;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.tasks.DuelArenaTask;
 import me.ifamasssxd.cosmicduel.utils.CollectionBin;
@@ -92,52 +91,27 @@ implements Listener {
                 }
             }.runTaskLater((Plugin)CosmicDuel.get(), 60L);
         }
-        new DuelPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName()).loadData(true);
+        new DuelPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName());
     }
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         NewDuel duel;
-        Player player;
         e.setQuitMessage((String)null);
         if (e.getPlayer().getOpenInventory() != null && e.getPlayer().getOpenInventory().getTopInventory() != null && e.getPlayer().getOpenInventory().getTopInventory().getName().endsWith("'s Death Loot")) {
             e.getPlayer().getOpenInventory().getTopInventory().clear();
             Bukkit.getLogger().info("Cleared the exploited duel inventory for " + e.getPlayer().getName());
         }
-        if ((player = e.getPlayer()).hasMetadata("in_ranked_queue_menu") && player.getMetadata("in_ranked_queue_menu").size() > 0) {
-            GlobalQueuePopInventory queue = (GlobalQueuePopInventory)((MetadataValue)player.getMetadata("in_ranked_queue_menu").get(0)).value();
-            if (queue != null) {
-                queue.declineDuel(player, true, true);
-            } else {
-                player.removeMetadata("in_ranked_queue_menu", (Plugin)CosmicDuel.get());
-                player.sendMessage((Object)ChatColor.RED + "Your duel queue menu data has been cleared!");
-            }
-        }
-        if ((duel = DuelAPI.getDuel(player)) != null) {
-            if (DuelAPI.isDuelQueued(duel)) {
-                DuelAPI.cancelDuel(duel, CancelReason.LEFT_IN_QUEUE);
-                return;
-            }
-            duel.removePlayer(player, Reason.LEFT_DUEL, false);
-        } else {
-            DuelPlayer duelPlayer;
+
+
             DuelInvite duelInvite;
+            Player player = e.getPlayer();
             duel = DuelAPI.getDuelSpectating(player);
             if (duel != null) {
                 duel.removeSpectator(player);
                 return;
             }
-            QueueManager queueManager = CosmicDuel.get().getQueueManager();
-            NewDuel globalQueuedDuel = queueManager.getDuel(player);
-            if (globalQueuedDuel != null) {
-                queueManager.removeDuelFromQueue(globalQueuedDuel);
-            }
-            if (queueManager.isSearching(player)) {
-                queueManager.removePlayerFromQueue(player);
-            }
-            if (queueManager.getRankedQueue().isInRankedQueue(player)) {
-                queueManager.getRankedQueue().removeFromQueue(player);
-            }
+
             if ((duelInvite = DuelAPI.getDuelInvite(player, DuelAPI.InviteType.INVITED)) != null) {
                 DuelAPI.declineDuel(player, duelInvite.getInviter(), false);
                 return;
@@ -146,12 +120,10 @@ implements Listener {
             if (duelInvite != null) {
                 DuelAPI.invite_timer.remove(duelInvite);
             }
-            if ((duelPlayer = DuelPlayer.getDuelPlayer(player)) != null) {
-                duelPlayer.saveData(true);
-                duelPlayer.saveRankedStats(true);
+            if (DuelPlayer.getDuelPlayer(player) != null) {
                 DuelPlayer.removeDuelPlayer(player);
             }
-        }
+
     }
 
     @EventHandler(priority=EventPriority.LOWEST)
@@ -264,14 +236,7 @@ implements Listener {
             if (!e.isCancelled() && p.getOpenInventory() != null && p.getOpenInventory().getTopInventory() != null && p.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("Select an Arena")) {
                 p.closeInventory();
             }
-            if (p.hasMetadata("in_ranked_queue_menu") && p.getMetadata("in_ranked_queue_menu").size() > 0 && !e.isCancelled()) {
-                e.setCancelled(true);
-                GlobalQueuePopInventory queue = (GlobalQueuePopInventory)((MetadataValue)p.getMetadata("in_ranked_queue_menu").get(0)).value();
-                if (queue != null) {
-                    queue.declineDuel(p, true, true);
-                    return;
-                }
-            }
+
             if (DuelAPI.hasDuel(p)) {
                 NewDuel d = DuelAPI.getDuel(p);
                 if (e.getCause() == EntityDamageEvent.DamageCause.VOID) {

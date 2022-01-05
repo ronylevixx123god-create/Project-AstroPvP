@@ -3,6 +3,8 @@ package me.ifamasssxd.cosmicbosses.bosses.plaguebloater;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.google.common.collect.Lists;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossMessage;
@@ -39,11 +41,14 @@ public class PlagueBloater extends Boss {
         super(location, bossType);
         this.plagueBomb = new PlagueBomb(this);
         this.plagueCarrier = new PlagueCarriers(this);
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
-        this.getLootPool().add(CosmicSpaceChestsAPI.getDropPackageChest(ItemRarity.LEGENDARY));
+        ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
+        OPKey.setAmount(1);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+
     }
 
     @Override
@@ -261,7 +266,7 @@ public class PlagueBloater extends Boss {
 
     @Override
     public int getMaxHealth() {
-        return 2500;
+        return 3500;
     }
 
     @Override
