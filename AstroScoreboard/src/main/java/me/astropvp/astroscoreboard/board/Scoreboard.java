@@ -1,10 +1,7 @@
 package me.astropvp.astroscoreboard.board;
 
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.dungeons.events.AbandonedShipEvents;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
-import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
 import com.compilex.CosmicOutposts.outpost.Outpost;
@@ -15,29 +12,26 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.integration.Econ;
-import com.reliableplugins.printer.Printer;
 import com.reliableplugins.printer.PrinterPlayer;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
-import me.bryside.WildPvPPlugin;
-import me.bryside.match.CageMatch;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
-import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
-import me.ifamasssxd.cosmicduel.struct.TeamData;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelType;
-import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
-import org.arkhamnetwork.enchantments.enchantments.axes.Corrupt;
-import org.bukkit.Bukkit;
+import net.astropvp.astroevents.AstroEvents;
+import net.astropvp.astroevents.game.MiniGameRegister;
+import net.astropvp.astroevents.game.MiniGameState;
+import net.astropvp.astroevents.game.MiniGameType;
+import net.astropvp.astroevents.game.games.ParkourMiniGame;
+import net.astropvp.astroevents.game.games.SumoMiniGame;
+import net.astropvp.astroevents.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Entity;
@@ -45,7 +39,6 @@ import org.bukkit.entity.Player;
 
 import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
@@ -508,6 +501,47 @@ public class Scoreboard implements BoardAdapter {
             board.add("");
             board.add(CC.White + "play.astropvp.net");
             return board;
+        }
+
+        if (player.getLocation().getWorld().getName().equals("events_world")) {
+            List<String> board = new LinkedList<>();
+            board.add("");
+
+            MiniGameRegister miniGameRegister = AstroEvents.getInstance().getMiniGameRegister();
+
+            if (miniGameRegister.getMiniGame(MiniGameType.SUMO) != null && miniGameRegister.getMiniGame(MiniGameType.PARKOUR) != null) {
+                SumoMiniGame sumoMiniGame = (SumoMiniGame) miniGameRegister.getMiniGame(MiniGameType.SUMO);
+                ParkourMiniGame parkourMiniGame = (ParkourMiniGame) miniGameRegister.getMiniGame(MiniGameType.PARKOUR);
+
+                if (sumoMiniGame.isParticipant(player)) {
+                    board.add(CC.translate(CC.White + "● " + "&6&lSumo Event"));
+                    board.add("");
+                    board.add(CC.translate("&6* &7Status: &6" + Utils.toNiceString(sumoMiniGame.getMiniGameState().name())));
+                    board.add(CC.translate("&6* &7Participants: &6" + sumoMiniGame.getParticipants().size()  + "&8/&6" + sumoMiniGame.getMaxPlayers()));
+                    board.add(CC.translate("&6* &7Spectators: &6" + sumoMiniGame.getSpectators().size()));
+
+                    if (sumoMiniGame.getMiniGameState() == MiniGameState.IN_PROGRESS) {
+                        board.add("");
+                        if (sumoMiniGame.getDuelPlayers().getLeft() != null && sumoMiniGame.getDuelPlayers().getLeft().getPlayer() != null)
+                            board.add(CC.translate("&6* &7First Fighter: &6" + sumoMiniGame.getDuelPlayers().getLeft().getPlayer().getName()));
+                        if (sumoMiniGame.getDuelPlayers().getRight() != null && sumoMiniGame.getDuelPlayers().getRight().getPlayer() != null)
+                            board.add(CC.translate("&6* &7Second Fighter: &6" + sumoMiniGame.getDuelPlayers().getRight().getPlayer().getName()));
+                    }
+
+                    board.add("");
+                    board.add(CC.White + "play.astropvp.net");
+                    return board;
+                } else if (parkourMiniGame.isParticipant(player)) {
+                    board.add(CC.translate(CC.White + "● " + "&6&lParkour Event"));
+                    board.add("");
+                    board.add(CC.translate("&6* &7Status: &6" + Utils.toNiceString(parkourMiniGame.getMiniGameState().name())));
+                    board.add(CC.translate("&6* &7Participants: &6" + parkourMiniGame.getParticipants().size()  + "&8/&6" + parkourMiniGame.getMaxPlayers()));
+                    board.add(CC.translate("&6* &7Spectators: &6" + parkourMiniGame.getSpectators().size()));
+                    board.add("");
+                    board.add(CC.White + "play.astropvp.net");
+                    return board;
+                }
+            }
         }
 
 /*

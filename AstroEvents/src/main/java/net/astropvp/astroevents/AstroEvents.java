@@ -18,6 +18,9 @@ import java.util.List;
 @Getter
 public class AstroEvents extends JavaPlugin {
 
+    @Getter
+    private static AstroEvents instance;
+
     private ConfigManager configManager;
     private MiniGameRegister miniGameRegister;
     private MiniGameManager miniGameManager;
@@ -26,6 +29,8 @@ public class AstroEvents extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        instance = this;
+
         this.configManager = new ConfigManager(this);
         this.configManager.setupFiles();
 
@@ -43,6 +48,7 @@ public class AstroEvents extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        instance = null;
         this.getMiniGameRegister().unregisterAll();
     }
 

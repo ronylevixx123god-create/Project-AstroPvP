@@ -370,6 +370,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicDungeons.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>net.astropvp.astroevents</groupId>
+            <artifactId>AstroEvents</artifactId>
+            <version>1.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
 </project>
