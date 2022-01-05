@@ -237,6 +237,10 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         return this.spectators.stream().anyMatch(spectator -> spectator.getPlayer().equals(player));
     }
 
+    public void sendMessageToAllParticipants(String message) {
+        this.getParticipants().forEach((uuid, player) -> player.sendMessage(message));
+    }
+
     public boolean isSpectator(T sumoPlayer) {
         return this.spectators.contains(sumoPlayer);
     }

@@ -61,6 +61,12 @@ public class SumoEventCommand extends BaseCommand {
         }
 
         sumoMiniGame.joinMiniGame(sender);
+        sumoMiniGame.sendMessageToAllParticipants(languageFile.getString("messages.event.player-joined")
+                .replace("{game}", "Sumo")
+                .replace("{player}", sender.getName())
+                .replace("{amount}", String.valueOf(sumoMiniGame.getParticipants().size()))
+                .replace("{max}", String.valueOf(sumoMiniGame.getMaxPlayers()))
+        );
     }
 
     @Subcommand("leave")
@@ -76,6 +82,12 @@ public class SumoEventCommand extends BaseCommand {
         }
 
         sumoMiniGame.leaveMiniGame(sender);
+        sumoMiniGame.sendMessageToAllParticipants(languageFile.getString("messages.event.player-left")
+                .replace("{game}", "Sumo")
+                .replace("{player}", sender.getName())
+                .replace("{amount}", String.valueOf(sumoMiniGame.getParticipants().size()))
+                .replace("{max}", String.valueOf(sumoMiniGame.getMaxPlayers()))
+        );
     }
 
     @HelpCommand
