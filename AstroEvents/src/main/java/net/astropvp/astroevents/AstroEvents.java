@@ -7,6 +7,7 @@ import net.astropvp.astroevents.commands.AdminEventsCommand;
 import net.astropvp.astroevents.commands.EventsCommand;
 import net.astropvp.astroevents.commands.ParkourEventCommand;
 import net.astropvp.astroevents.commands.SumoEventCommand;
+import net.astropvp.astroevents.game.MiniGameManager;
 import net.astropvp.astroevents.game.MiniGameRegister;
 import net.astropvp.astroevents.utils.configuration.ConfigManager;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -19,6 +20,7 @@ public class AstroEvents extends JavaPlugin {
 
     private ConfigManager configManager;
     private MiniGameRegister miniGameRegister;
+    private MiniGameManager miniGameManager;
     private PaperCommandManager commandManager;
     private List<BaseCommand> commands;
 
@@ -32,6 +34,9 @@ public class AstroEvents extends JavaPlugin {
 
         this.commandManager = new PaperCommandManager(this);
         this.commandManager.enableUnstableAPI("help");
+
+        this.miniGameManager = new MiniGameManager(this);
+        this.miniGameManager.startAutoMiniGameTask();
 
         this.registerCommands();
     }

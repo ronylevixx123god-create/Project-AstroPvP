@@ -22,6 +22,7 @@ public class SumoDeathCheckTask extends BukkitRunnable {
         }
 
         if (this.miniGame.getDuelPlayers().getLeft() == null || miniGame.getDuelPlayers().getRight() == null) return;
+        if (!this.miniGame.getDuelPlayers().getLeft().getPlayer().isOnline() || !this.miniGame.getDuelPlayers().getLeft().getPlayer().isOnline()) return;
 
         if (this.isPlayerInWater(this.miniGame.getDuelPlayers().getLeft())) {
             this.miniGame.choseWinner(this.miniGame.getDuelPlayers().getRight().getPlayer(), this.miniGame.getDuelPlayers().getLeft().getPlayer());

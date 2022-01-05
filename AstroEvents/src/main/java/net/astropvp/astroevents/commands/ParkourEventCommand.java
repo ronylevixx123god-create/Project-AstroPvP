@@ -52,6 +52,11 @@ public class ParkourEventCommand extends BaseCommand {
             return;
         }
 
+        if (!Utils.isInventoryEmpty(sender)) {
+            sender.sendMessage(Utils.color(languageFile.getString("messages.event.inventory-empty")));
+            return;
+        }
+
         parkourMiniGame.joinMiniGame(sender);
     }
 

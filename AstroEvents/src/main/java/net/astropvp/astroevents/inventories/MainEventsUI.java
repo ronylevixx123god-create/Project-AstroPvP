@@ -8,10 +8,12 @@ import net.astropvp.astroevents.game.MiniGameState;
 import net.astropvp.astroevents.game.MiniGameType;
 import net.astropvp.astroevents.utils.Utils;
 import net.astropvp.astroevents.utils.item.ItemBuilder;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 
 public class MainEventsUI {
 
@@ -19,8 +21,23 @@ public class MainEventsUI {
     private final PaginatedGui eventsUI;
 
     public MainEventsUI(AstroEvents plugin, Player player) {
-        this.eventsUI = new PaginatedGui(1, 9, "Events Menu");
+        this.eventsUI = new PaginatedGui(3, 27, "Events Menu");
         this.eventsUI.setDefaultClickAction(event -> event.setCancelled(true));
+
+        BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(plugin, () -> eventsUI.updateItem(4, new GuiItem(
+                new ItemBuilder(Material.CHEST)
+                        .setName("&6&lAstro Events Menu")
+                        .addLore(
+                                "&7In this menu you can find out when the next event",
+                                "&7will happen as well as which event is currently active",
+                                "",
+                                "&6* &7Next event: &6" + Utils.toNiceString(plugin.getMiniGameManager().getNextMiniGame().name()),
+                                "&6* &7Next event will happen in &6" + plugin.getMiniGameManager().getTimeUntilNextMiniGame()
+                        )
+                        .colorize()
+                        .build())), 20L, 20L);
+
+        this.eventsUI.setCloseGuiAction(event -> runnable.cancel());
 
         plugin.getMiniGameRegister().getMiniGames().forEach(((miniGameType, miniGame) -> {
 
@@ -50,8 +67,23 @@ public class MainEventsUI {
                         .colorize()
                         .build();
             }
+
+            this.eventsUI.setItem(4, new GuiItem(
+                    new ItemBuilder(Material.CHEST)
+                            .setName("&6&lAstro Events Menu")
+                            .addLore(
+                                    "&7In this menu you can find out when the next event",
+                                    "&7will happen as well as which event is currently active",
+                                    "",
+                                    "&6* &7Next event: &6" + Utils.toNiceString(plugin.getMiniGameManager().getNextMiniGame().name()),
+                                    "&6* &7Next event will happen in &6" + plugin.getMiniGameManager().getTimeUntilNextMiniGame()
+                            )
+                            .colorize()
+                            .build()
+            ));
+
             if (miniGameType == MiniGameType.PARKOUR) {
-                this.eventsUI.setItem(3, new GuiItem(itemStack, event -> {
+                this.eventsUI.setItem(23, new GuiItem(itemStack, event -> {
                     if (event.isLeftClick()) {
                         if (miniGame.getMiniGameState() == MiniGameState.STARTING)
                             miniGame.joinMiniGame(player);
@@ -62,7 +94,7 @@ public class MainEventsUI {
                     }
                 }));
             } else {
-                this.eventsUI.setItem(5, new GuiItem(itemStack, event -> {
+                this.eventsUI.setItem(21, new GuiItem(itemStack, event -> {
                     if (event.isLeftClick()) {
                         if (miniGame.getMiniGameState() == MiniGameState.STARTING)
                         miniGame.joinMiniGame(player);

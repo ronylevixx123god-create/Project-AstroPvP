@@ -4,12 +4,15 @@ import net.minecraft.server.v1_8_R3.IChatBaseComponent;
 import net.minecraft.server.v1_8_R3.PacketPlayOutChat;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.Stream;
 
 public class Utils {
 
@@ -117,4 +120,25 @@ public class Utils {
         }
     }
 
+    public static boolean isInventoryEmpty(Player player) {
+        return Stream.of(player.getInventory().getContents()).allMatch(itemStack -> itemStack == null || itemStack.getType() == Material.AIR) &&
+                Stream.of(player.getInventory().getArmorContents()).allMatch(itemStack -> itemStack == null || itemStack.getType() == Material.AIR);
+    }
+
+    public static String getSecondsAsString(long seconds) {
+        int day = (int)TimeUnit.SECONDS.toDays(seconds);
+        long hours = TimeUnit.SECONDS.toHours(seconds) - (day * 24L);
+        long minute = TimeUnit.SECONDS.toMinutes(seconds) - TimeUnit.SECONDS.toHours(seconds) * 60L;
+        long second = TimeUnit.SECONDS.toSeconds(seconds) - TimeUnit.SECONDS.toMinutes(seconds) * 60L;
+        if (day > 0) {
+            return day + "d " + hours + "h " + minute + "m " + second + "s";
+        }
+        if (hours > 0L) {
+            return hours + "h " + minute + "m " + second + "s";
+        }
+        if (minute > 0L) {
+            return minute + "m " + second + "s";
+        }
+        return second + "s";
+    }
 }

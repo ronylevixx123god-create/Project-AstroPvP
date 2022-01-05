@@ -163,25 +163,21 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
     }
 
     public void choseWinner(Player winner, Player loser) {
-        if (this.getParticipants().size() <= 2) {
+        this.getDuelPlayers().clear();
+
+        if (loser.isOnline()) {
+            SumoPlayer sumoPlayer = super.getParticipant(loser);
+            this.addSpectator(sumoPlayer);
+        }
+
+        if (this.getParticipants().size() <= 1) {
             this.stopMiniGame();
             this.giveWinnerRewards(winner);
             Bukkit.broadcastMessage(Utils.color(super.getConfiguration().getString("win-message").replace("{player}", winner.getName())));
             return;
         }
 
-        SumoPlayer sumoPlayer = super.getParticipant(loser);
-
         winner.teleport(this.getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-
-        winner.setAllowFlight(true);
-        winner.setFlying(true);
-
-        this.getDuelPlayers().clear();
-
-        if (sumoPlayer.getPlayer() != null) {
-            this.addSpectator(sumoPlayer);
-        }
 
         this.nextFight();
     }
@@ -223,9 +219,9 @@ public class SumoMiniGame extends MiniGame<SumoPlayer> {
         return this.getOpposingPlayer(sumoPlayer.getPlayer());
     }
 
-    public SumoPlayer getOpposingPlayer(Player sumoPlayer) {
-        if (!this.isInDuel(sumoPlayer)) return null;
-        return sumoPlayer.equals(this.duelPlayers.getLeft().getPlayer()) ? this.duelPlayers.getRight() : this.duelPlayers.getLeft();
+    public SumoPlayer getOpposingPlayer(Player player) {
+        if (!this.isInDuel(player)) return null;
+        return player.equals(this.duelPlayers.getLeft().getPlayer()) ? this.duelPlayers.getRight() : this.duelPlayers.getLeft();
     }
 
     public boolean isInDuel(Player sumoPlayer) {

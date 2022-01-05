@@ -166,20 +166,6 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
         event.setCancelled(true);
     }
 
-/*    @EventHandler
-    public void onDamageWhileInGame(EntityDamageEvent event) {
-        if (!isValidParticipant(event.getEntity())) return;
-        if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
-        event.setCancelled(true);
-    }
-
-    @EventHandler
-    public void onDamageFromPlayerWhileInGame(EntityDamageByEntityEvent event) {
-        if (!isValidParticipant(event.getEntity())) return;
-        if (this.getParticipant((Player) event.getEntity()).isDamageEnabled()) return;
-        event.setCancelled(true);
-    }*/
-
     @EventHandler
     public void onInventoryInteract(InventoryClickEvent event) {
         if (!isValidParticipant(event.getWhoClicked())) return;

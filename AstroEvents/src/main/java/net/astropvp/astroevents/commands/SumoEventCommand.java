@@ -55,6 +55,11 @@ public class SumoEventCommand extends BaseCommand {
             return;
         }
 
+        if (!Utils.isInventoryEmpty(sender)) {
+            sender.sendMessage(Utils.color(languageFile.getString("messages.event.inventory-empty")));
+            return;
+        }
+
         sumoMiniGame.joinMiniGame(sender);
     }
 
