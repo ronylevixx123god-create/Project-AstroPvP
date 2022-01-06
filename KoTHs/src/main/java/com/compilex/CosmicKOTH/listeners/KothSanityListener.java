@@ -117,36 +117,13 @@ public class KothSanityListener implements Listener {
     }
 
     @EventHandler(priority=EventPriority.LOWEST)
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.hasItem() && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK) && e.getItem().getType() == Material.WEB && e.getPlayer().getWorld().getName().equals("world")) {
-            e.setCancelled(true);
-            e.setUseItemInHand(Event.Result.DENY);
-            e.setUseInteractedBlock(Event.Result.DENY);
-            e.getPlayer().setItemInHand((ItemStack)null);
-            e.getPlayer().sendMessage("" + (Object)ChatColor.RED + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "The KOTH arena absorbs your cobweb blocks!");
-        }
-    }
-
-    @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
         if (e.getMessage().equalsIgnoreCase("/warp koth")) {
             e.setMessage("/koth warp");
         }
     }
 
-    @EventHandler
-    public void onBlockPhysics(BlockPhysicsEvent e) {
-        if (e.getBlock().getWorld().getName().equals("world")) {
-            e.setCancelled(true);
-        }
-    }
 
-    @EventHandler(priority=EventPriority.LOWEST)
-    public void onPlayerAttemptSalvage(PlayerInteractEvent e) {
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getClickedBlock().getType() == Material.IRON_BLOCK && e.getClickedBlock().getWorld().getName().equals(CosmicKOTHPlugin.get_().getWorld().getName())) {
-            e.setCancelled(true);
-        }
-    }
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPreviewInventoryClickLOWEST(InventoryClickEvent e) {
@@ -164,50 +141,5 @@ public class KothSanityListener implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onPlayerDamagedByKoth(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player && (event.getDamager().hasMetadata("envoyMonster") || event.getDamager() instanceof Projectile && ((Projectile)event.getDamager()).getShooter() instanceof LivingEntity && ((LivingEntity) ((Projectile)event.getDamager()).getShooter()).hasMetadata("envoyMonster"))) {
-            //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
-        }
-    }
-
-    @EventHandler(priority=EventPriority.LOW)
-    public void onEntityDamageByFall(EntityDamageEvent e) {
-        if (e.getCause() == EntityDamageEvent.DamageCause.FALL && CosmicKOTHPlugin.get_().getWorld() != null && e.getEntity().getWorld().equals((Object)CosmicKOTHPlugin.get_().getWorld())) {
-            e.setCancelled(true);
-            e.setDamage(0.0);
-        }
-    }
-
-    @EventHandler(ignoreCancelled=true)
-    public void onPlayerPickupItem(PlayerPickupItemEvent e) {
-        if (CosmicKOTHPlugin.get_().getKoth() != null && e.getItem().hasMetadata("kothLootbag")) {
-            CosmicKOTHPlugin.get_().getKoth().kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + (Object)ChatColor.UNDERLINE + e.getPlayer().getName() + (Object)ChatColor.GREEN + " has picked up the CosmicPvP Koth Lootbag!");
-        }
-    }
-
-    @EventHandler
-    public void onPlayerDeath(PlayerDeathEvent e) {
-        ItemStack toRemove = null;
-        for (ItemStack i : e.getDrops()) {
-            if (!RewardUtils.isKOTHLootbag(i)) continue;
-            toRemove = i;
-        }
-        if (toRemove != null) {
-            e.getDrops().remove((Object)toRemove);
-            Item j = e.getEntity().getWorld().dropItem(e.getEntity().getLocation(), toRemove);
-            j.setMetadata("kothLootbag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
-        }
-        if (e.getEntity().getWorld().getName().contains("_koth")) {
-            this.recentKothDeaths.asMap().putIfAbsent(e.getEntity().getUniqueId(), System.currentTimeMillis());
-        }
-    }
-
-    @EventHandler
-    public void onPlayerDropItem(PlayerDropItemEvent e) {
-        if (RewardUtils.isKOTHLootbag(e.getItemDrop().getItemStack())) {
-            e.getItemDrop().setMetadata("kothLootbag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicKOTHPlugin.get_(), (Object)true));
-        }
-    }
 }
 
