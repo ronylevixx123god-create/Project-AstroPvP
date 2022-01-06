@@ -284,6 +284,8 @@ public class AstroCore extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
         this.getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
         this.getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
+        this.getServer().getPluginManager().registerEvents(new DamageFixes(), this);
+
 
 
         this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
