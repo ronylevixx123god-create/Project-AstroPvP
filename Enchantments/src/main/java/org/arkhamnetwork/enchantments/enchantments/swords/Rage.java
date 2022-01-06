@@ -38,8 +38,8 @@ public class Rage extends CustomEnchantment {
                 return;
             double mod = 0.06D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0D;
-            if (hitCombo > 5.0D)
-                hitCombo = 5.0D;
+            if (hitCombo > 4.0D)
+                hitCombo = 4.0D;
 
             if (hitCombo > 1.0D && !GeneralUtil.isEffectedByDevour(target)) {
                 event.setDamage(event.getDamage() * hitCombo * 0.70);

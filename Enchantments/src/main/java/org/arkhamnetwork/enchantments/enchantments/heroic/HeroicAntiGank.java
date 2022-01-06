@@ -43,7 +43,6 @@ public class HeroicAntiGank extends HeroicCustomEnchantment {
         if (enemies.size() >= 2) {
             e.setDamage(e.getDamage() * (((Player)playerHit).getItemInHand().getType().name().endsWith("_SWORD") ?  Math.min(2.0, 1.0 + 0.1 * (double)enemies.size()) : (Math.min(1.6, 1.0 + 0.1 * (double)enemies.size()))));
             Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)86, (int)2001);
             return;
         }
     }

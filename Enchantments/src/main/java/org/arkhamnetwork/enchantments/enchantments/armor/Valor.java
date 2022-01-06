@@ -41,7 +41,6 @@ extends CustomEnchantment {
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.IRON_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)41, (int)2001);
         }
     }
 }

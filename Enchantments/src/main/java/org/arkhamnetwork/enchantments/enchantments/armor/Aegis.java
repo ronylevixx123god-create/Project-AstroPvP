@@ -58,7 +58,7 @@ extends CustomEnchantment {
         HashSet enemies = player.hasMetadata(aegisUniqueEnemies_MetadataKey) ? (HashSet)((MetadataValue)player.getMetadata(aegisUniqueEnemies_MetadataKey).get(0)).value() : new HashSet();
         Player pAttacker = (Player)attacker;
         if (enemies.size() > 8 - level && !enemies.contains(pAttacker.getUniqueId())) {
-            e.setDamage(e.getDamage() * 0.5);
+            //e.setDamage(e.getDamage() * 0.5);
             try {
                 ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 16);
             } catch (Exception exception) {

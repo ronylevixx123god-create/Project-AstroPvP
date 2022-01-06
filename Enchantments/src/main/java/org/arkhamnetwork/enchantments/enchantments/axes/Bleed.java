@@ -55,7 +55,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
-            double bleedChance = 0.08 * (double)enchantLevel + 0.4;
+            double bleedChance = 0.04 * (double)enchantLevel + 0.4;
             if (Math.random() < bleedChance && Bleed.getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
                 this.addBleedStack(user, target);
             }
@@ -102,8 +102,6 @@ extends CustomEnchantment {
                 }
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
-        } else {
-            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
         }
         this.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
     }

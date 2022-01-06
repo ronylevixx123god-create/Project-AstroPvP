@@ -25,7 +25,6 @@ public class HeroicValor extends HeroicCustomEnchantment{
         if (player.getHealth() <= hp_threshold  && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)41, (int)2001);
         }
     }
 }

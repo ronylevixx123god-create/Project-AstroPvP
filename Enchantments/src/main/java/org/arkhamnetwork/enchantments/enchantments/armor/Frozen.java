@@ -58,7 +58,6 @@ extends CustomEnchantment {
             Location l = player.getLocation();
             DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
 
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
         }
     }
 }

@@ -51,7 +51,6 @@ extends CustomEnchantment {
             e.setDamage(e.getDamage() * mod);
             Location l = target.getLocation();
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)Material.REDSTONE_WIRE.getId(), (int)2001);
         }
     }
 }

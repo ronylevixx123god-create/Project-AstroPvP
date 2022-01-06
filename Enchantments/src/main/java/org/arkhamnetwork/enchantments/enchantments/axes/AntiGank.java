@@ -62,7 +62,6 @@ extends CustomEnchantment {
         if (enemies.size() >= 6 - level) {
             e.setDamage(e.getDamage() * Math.min(1.5, 1.0 + 0.1 * (double)enemies.size()));
             Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)86, (int)2001);
             return;
         }
     }

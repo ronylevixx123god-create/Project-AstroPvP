@@ -6,6 +6,7 @@ import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
@@ -13,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
 public class DamageFixes implements Listener {
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
@@ -22,7 +23,7 @@ public class DamageFixes implements Listener {
         }
     }
 
-    @EventHandler
+    @EventHandler()
     public void elfMaskReHeal(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
@@ -30,6 +31,7 @@ public class DamageFixes implements Listener {
             if (MaskUtils.hasMaskEquipped(phurt, "ELF") && Math.random() <= 0.15) {
                 e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK HEAL ABILITY &a&l*"));
                 e.setCancelled(true);
+                ((Player) e.getEntity()).setHealth(((Player) e.getEntity()).getMaxHealth());
 
             }
         }

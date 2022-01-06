@@ -115,7 +115,6 @@ extends HeroicCustomEnchantment {
                 }
             }, (long)((int)durationTicks));
             Location l = ptarget.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)80, (int)2001);
         }
     }
 }

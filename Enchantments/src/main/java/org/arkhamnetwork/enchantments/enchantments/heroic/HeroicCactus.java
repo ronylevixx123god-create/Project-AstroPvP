@@ -36,7 +36,10 @@ extends HeroicCustomEnchantment {
             Player pAttacker;
             Player p = (Player)player;
             if (attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
-                Location l = p.getLocation();
+                if (Math.random() < 0.5) {
+                    Location l = p.getLocation();
+                    attacker.damage(0.5);
+                }
             }
             double d = thornNegateChance = level == 1 ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {

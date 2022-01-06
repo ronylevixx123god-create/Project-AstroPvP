@@ -47,7 +47,6 @@ extends CustomEnchantment {
         if (i != null && i.getType() == Material.BOW && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)133, (int)2001);
         }
     }
 }

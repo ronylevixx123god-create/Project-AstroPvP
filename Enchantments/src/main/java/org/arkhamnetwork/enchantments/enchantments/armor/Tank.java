@@ -49,7 +49,6 @@ extends CustomEnchantment {
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)42, (int)2001);
         }
     }
 }

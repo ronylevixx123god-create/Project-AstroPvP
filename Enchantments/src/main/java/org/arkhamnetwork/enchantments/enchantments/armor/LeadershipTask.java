@@ -54,7 +54,6 @@ extends BukkitRunnable {
             }
             p.setMetadata("leadershipLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)x));
             if (x <= 0 || l.getWorld().getName().equals("world_duels") || l.getWorld().getName().equals("world_duels2") || l.getWorld().getName().equals("cosmic-pvparenas")) continue;
-            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)Material.SNOW_BLOCK.getId(), (int)2001);
         }
     }
 

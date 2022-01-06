@@ -44,10 +44,12 @@ extends CustomEnchantment {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
-            double mod = (double)Bleed.getBleedStack(target) * 0.015 + (double)enchantLevel * 0.1 + 1.0;
-            event.setDamage(event.getDamage() * mod);
-            target.setMetadata("effectedByDevour", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
-            Location l = target.getLocation();
+            if (!GeneralUtil.isSword(((Player) user).getItemInHand())) {
+                double mod = (double) Bleed.getBleedStack(target) * 0.015 + (double) enchantLevel * 0.1 + 1.0;
+                event.setDamage(event.getDamage() * mod);
+                target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                Location l = target.getLocation();
+            }
         }
     }
 }

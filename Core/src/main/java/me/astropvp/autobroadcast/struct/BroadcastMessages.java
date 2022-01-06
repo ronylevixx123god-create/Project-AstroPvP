@@ -13,9 +13,7 @@ public enum BroadcastMessages {
     STORE(ChatColor.GREEN + "&7Make sure to check the &f&l55% SALE&7 on the store &7(/buy)&7."),
     CLIENT(ChatColor.GREEN + "&7With the &fAstro Client&7 you will get 1.5x EXP and Mobcoins!."),
     NEBULA(ChatColor.GREEN + "&7You can buy the &d&lNebula &7Rank on the &fStore &7(/buy)&7."),
-    LBFILTER(ChatColor.GREEN + "&7Did you know that you can filter &fLootbox Loot &7with the command &f\"/lbfilter\"&7."),
-    MOBCOINS(ChatColor.GREEN + "&7You can spend your mobcoins in &f/transfer&7.");
-
+    LBFILTER(ChatColor.GREEN + "&7Did you know that you can filter &fLootbox Loot &7with the command &f\"/lbfilter\"&7.");
     String message;
 
     private BroadcastMessages(String message) {
