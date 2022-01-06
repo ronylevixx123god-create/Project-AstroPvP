@@ -1,6 +1,7 @@
 package me.astropvp.astroscoreboard.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.cmd.killtracker.KillHandler;
 import me.bryside.WildPvPPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -42,4 +43,6 @@ public class PlayerListener implements Listener {
 		}
 		
 	}
+
+
 }

@@ -1,7 +1,4 @@
-name: FactionShields
-main: net.astropvp.FactionShieldsPlugin
+name: AstroFactionShields
+main: net.astropvp.FactionShield
 version: 0.1.0
-commands:
-  factionshield:
-    description: Opens the faction shield GUI.
-    aliases: [fs]
+depend: [Factions]

@@ -1,5 +1,7 @@
 package com.massivecraft.factions.cmd.killtracker;
 
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.P;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

@@ -110,6 +110,10 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
         }
 
+        if (player.getLocation().getWorld().getName().equals("events_world")) {
+            return CC.translate("&6&lAstro&f&lPvP &7" + getDateSuffix());
+        }
+
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             return CC.translate("&b&lFrozen Stronghold &7" + getDateSuffix());
 
@@ -129,7 +133,9 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
-        return CC.translate("&6&lAstro&f&lPvP &7" + getDateSuffix());
+
+
+            return CC.translate("&6&lAstro&f&lPvP &7" + getDateSuffix());
     }
 
 
@@ -514,29 +520,29 @@ public class Scoreboard implements BoardAdapter {
                 ParkourMiniGame parkourMiniGame = (ParkourMiniGame) miniGameRegister.getMiniGame(MiniGameType.PARKOUR);
 
                 if (sumoMiniGame.isParticipant(player)) {
-                    board.add(CC.translate(CC.White + "● " + "&6&lSumo Event"));
+                    board.add(CC.translate(CC.White + "&6&lSumo Event"));
                     board.add("");
-                    board.add(CC.translate("&6* &7Status: &6" + Utils.toNiceString(sumoMiniGame.getMiniGameState().name())));
-                    board.add(CC.translate("&6* &7Participants: &6" + sumoMiniGame.getParticipants().size()  + "&8/&6" + sumoMiniGame.getMaxPlayers()));
-                    board.add(CC.translate("&6* &7Spectators: &6" + sumoMiniGame.getSpectators().size()));
+                    board.add(CC.translate("&6● &7Status: &6" + Utils.toNiceString(sumoMiniGame.getMiniGameState().name())));
+                    board.add(CC.translate("&6● &7Participants: &6" + sumoMiniGame.getParticipants().size()  + "&8/&6" + sumoMiniGame.getMaxPlayers()));
+                    board.add(CC.translate("&6● &7Spectators: &6" + sumoMiniGame.getSpectators().size()));
 
                     if (sumoMiniGame.getMiniGameState() == MiniGameState.IN_PROGRESS) {
                         board.add("");
                         if (sumoMiniGame.getDuelPlayers().getLeft() != null && sumoMiniGame.getDuelPlayers().getLeft().getPlayer() != null)
-                            board.add(CC.translate("&6* &7First Fighter: &6" + sumoMiniGame.getDuelPlayers().getLeft().getPlayer().getName()));
+                            board.add(CC.translate("&6● &7First Fighter: &6" + sumoMiniGame.getDuelPlayers().getLeft().getPlayer().getName()));
                         if (sumoMiniGame.getDuelPlayers().getRight() != null && sumoMiniGame.getDuelPlayers().getRight().getPlayer() != null)
-                            board.add(CC.translate("&6* &7Second Fighter: &6" + sumoMiniGame.getDuelPlayers().getRight().getPlayer().getName()));
+                            board.add(CC.translate("&6● &7Second Fighter: &6" + sumoMiniGame.getDuelPlayers().getRight().getPlayer().getName()));
                     }
 
                     board.add("");
                     board.add(CC.White + "play.astropvp.net");
                     return board;
                 } else if (parkourMiniGame.isParticipant(player)) {
-                    board.add(CC.translate(CC.White + "● " + "&6&lParkour Event"));
+                    board.add(CC.translate(CC.White + "&6&lParkour Event"));
                     board.add("");
-                    board.add(CC.translate("&6* &7Status: &6" + Utils.toNiceString(parkourMiniGame.getMiniGameState().name())));
-                    board.add(CC.translate("&6* &7Participants: &6" + parkourMiniGame.getParticipants().size()  + "&8/&6" + parkourMiniGame.getMaxPlayers()));
-                    board.add(CC.translate("&6* &7Spectators: &6" + parkourMiniGame.getSpectators().size()));
+                    board.add(CC.translate("&6● &7Status: &6" + Utils.toNiceString(parkourMiniGame.getMiniGameState().name())));
+                    board.add(CC.translate("&6● &7Participants: &6" + parkourMiniGame.getParticipants().size()  + "&8/&6" + parkourMiniGame.getMaxPlayers()));
+                    board.add(CC.translate("&6● &7Spectators: &6" + parkourMiniGame.getSpectators().size()));
                     board.add("");
                     board.add(CC.White + "play.astropvp.net");
                     return board;
@@ -569,14 +575,14 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.GOLD + ChatColor.BOLD.toString() + "Balance");
         board.add(ChatColor.WHITE.toString() + "$" + NumberUtils.formatMoney((long) Econ.econ.getBalance((OfflinePlayer) player)));
         board.add(" ");
-        board.add(ChatColor.RED + ChatColor.BOLD.toString() + "XP");
+        board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
-        board.add(" ");
+        board.add("");
 
         if (!FactionUtils.getFaction(player).isWilderness()) {
             Faction faction = FactionUtils.getFaction(player);
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
-            board.add(CC.translate("&a" + faction.getOnlinePlayers().size() + " &7/ 15"));
+            board.add(CC.translate("&a" + faction.getOnlinePlayers().size() + " &7/ 20"));
         } else {
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
             board.add(CC.Gray + "play.astropvp.net");

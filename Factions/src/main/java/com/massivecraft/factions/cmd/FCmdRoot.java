@@ -79,7 +79,6 @@ public class FCmdRoot extends FCommand {
   //  public CmdInvSee cmdInvSee = new CmdInvSee();
     private CmdColeader cmdColeader = new CmdColeader();
     private CmdLookup cmdLookup = new CmdLookup();
-    private CmdStatus cmdStatus = new CmdStatus();
     private CmdFocus cmdFocus = new CmdFocus();
     private CmdUnfocus cmdUnfocus = new CmdUnfocus();
     private CmdShowClaims cmdShowClaims = new CmdShowClaims();
@@ -172,7 +171,6 @@ public class FCmdRoot extends FCommand {
         this.addSubCommand(this.cmdOwnerUnclaim);
         this.addSubCommand(this.cmdLookup);
         this.addSubCommand(this.cmdColeader);
-        this.addSubCommand(this.cmdStatus);
         this.addSubCommand(this.cmdFocus);
         this.addSubCommand(this.cmdUnfocus);
         this.addSubCommand(this.cmdShowClaims);

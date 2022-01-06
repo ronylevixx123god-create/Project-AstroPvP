@@ -13,6 +13,7 @@ import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.Relation;
 import com.massivecraft.factions.struct.Role;
 import mkremins.fanciful.FancyMessage;
+import net.astropvp.FactionShield;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
@@ -85,27 +86,14 @@ public class CmdShow extends FCommand {
                     }
                 }).runTask(P.getP());
                 String allyList;
-                if (P.p.factionPointsEnabled) {
-                    Long points = FactionsPointsAPI.getPoints(finalFaction);
-                    if (points == null) {
-                        points = 0L;
-                    }
 
-                    this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aFaction Points: <p>&f%s"), this.df.format(points));
-                    allyList = FactionsCoreChunkAPI.getWhenRaidableString(finalFaction);
-                    if (allyList != null) {
-                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aRaid Cooldown: <p>&f%s"), allyList);
-                    }
-
-                    if (myFaction != null && myFaction.equals(finalFaction)) {
-                        FLocation coreChunk = FactionsCoreChunkAPI.getCoreChunk(myFaction);
-                        this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aCore Chunk: <p>&f%s"), coreChunk == null ? "N/A" : FLocation.chunkToBlock((int) coreChunk.getX()) + "x, " + FLocation.chunkToBlock((int) coreChunk.getZ()) + "z");
-                    }
-                }
+                this.msg(CC.translate("&aShield: " + (FactionShield.getPlugin().isFactionShieldActive(finalFaction) ? "&a&lENABLED" : "&c&lDISABLED")));
 
                 if (Conf.bankEnabled) {
                     this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aBank Balance: <p>&f$%s"), this.df.format(econ));
                 }
+
+
 
                 if (finalFaction.isPermanent()) {
                     this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aThis faction is permanent, remaining even with no members."));

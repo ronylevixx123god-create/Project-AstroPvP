@@ -125,7 +125,7 @@ public class CommandSlotBot implements CommandExecutor {
                         sender.sendMessage(String.valueOf(CC.Green) + "Dropped " + amount + " slot bot tickets at " + player.getName() + "'s location.");
                         return false;
                     }
-                    player.getInventory().addItem(new ItemStack[]{item2});
+                    player.getInventory().addItem(item2);
                     sender.sendMessage(String.valueOf(CC.Green) + "Gave " + player.getName() + " " + amount + " slot bot tickets");
                     return false;
                 }
