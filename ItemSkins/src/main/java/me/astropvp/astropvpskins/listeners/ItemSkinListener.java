@@ -1,10 +1,12 @@
 package me.astropvp.astropvpskins.listeners;
 
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -23,11 +25,9 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class ItemSkinListener implements Listener {
 
@@ -36,6 +36,19 @@ public class ItemSkinListener implements Listener {
 
     public ItemSkinListener() {
         this.cooldownPlayers = new HashMap<>();
+    }
+
+    public ItemStack applyBackpackSkin(final ItemStack item, SkinType skinType) {
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = (meta.getLore() == null) ? new ArrayList<String>() : meta.getLore();
+        for (final String line : lore) {
+            if (line.equals(CC.translate("&3&l+ BACKPACK [&8N/A&3&l]"))) {
+                lore.set(lore.indexOf(line), CC.translate("&3&l+ BACKPACK [&b" + CC.strip(skinType.getDisplay()) + "&3&l]"));
+            }
+        }
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
     }
 
     @EventHandler
@@ -52,24 +65,39 @@ public class ItemSkinListener implements Listener {
                 return;
             if (typeList.get(0) == null || !AstroItemSkinsAPI.isCorrectType(typeList.get(0), clicked))
                 return;
-            if (cooldownPlayers.containsKey((Player)event.getWhoClicked())) {
+            if (cooldownPlayers.containsKey((Player) event.getWhoClicked())) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
                 return;
             }
 
-            if(cursor.getAmount() > 1) {
+            if (cursor.getAmount() > 1) {
                 event.getWhoClicked().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot apply stacked itemskins!");
             }
+
+            if (typeList.get(0).getItemSkinType() == ItemSkinType.BACKPACK && !AstroItemSkinsAPI.hasBackpackSocket(clicked)) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!) &cYou need a Backpack socket to apply this backpack skin!"));
+                event.setCancelled(true);
+                return;
+            }
+
+
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
                 for (SkinType type : typeList)
                     type.getItemSkin().onEquip((Player) event.getWhoClicked());
             if (typeList.size() == 1) {
-                event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked));
+                if (typeList.get(0).getItemSkinType() == ItemSkinType.BACKPACK) {
+                    event.setCurrentItem(((SkinType) typeList.get(0)).applyBackpack(clicked));
+                    event.setCurrentItem(applyBackpackSkin(event.getCurrentItem(), typeList.get(0)));
+                } else {
+
+                    event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked));
+                }
+
             } else {
                 event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked, typeList.get(1)));
             }
-            if (event.getCursor().getAmount() >1) {
-                event.getCursor().setAmount(event.getCursor().getAmount()-1);
+            if (event.getCursor().getAmount() > 1) {
+                event.getCursor().setAmount(event.getCursor().getAmount() - 1);
             } else {
                 event.setCursor(null);
             }
@@ -77,16 +105,20 @@ public class ItemSkinListener implements Listener {
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
             cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-                cooldownPlayers.remove((Player)event.getWhoClicked());
-            },20L);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
+                cooldownPlayers.remove((Player) event.getWhoClicked());
+            }, 20L);
 
-        } else if (event.getClick().isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked) && isArmorOrWeapon(clicked)) {
+        } else if (event.getClick().
+
+                isRightClick() && AstroItemSkinsAPI.hasItemSkin(clicked) &&
+
+                isArmorOrWeapon(clicked)) {
 
             List<SkinType> skinTypes = AstroItemSkinsAPI.getItemSkinByItem(clicked);
             assert skinTypes != null;
 
-            if (cooldownPlayers.containsKey((Player)event.getWhoClicked())) {
+            if (cooldownPlayers.containsKey((Player) event.getWhoClicked())) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
                 return;
             }
@@ -104,7 +136,7 @@ public class ItemSkinListener implements Listener {
                         }
 
 
-                        if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR)  {
+                        if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR) {
                             event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Clear your cursor before removing skins from items!"));
                             return;
                         }
@@ -115,9 +147,9 @@ public class ItemSkinListener implements Listener {
                         event.setCancelled(true);
                         ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
                         cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
-                        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-                            cooldownPlayers.remove((Player)event.getWhoClicked());
-                        },10L);
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
+                            cooldownPlayers.remove((Player) event.getWhoClicked());
+                        }, 10L);
 
                         return;
                     }
@@ -127,18 +159,22 @@ public class ItemSkinListener implements Listener {
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
                 skinTypes.get(0).getItemSkin().onUnequip((Player) event.getWhoClicked());
 
-            if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR)  {
+            if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Clear your cursor before removing skins from items!"));
                 return;
+            }
+
+            if (skinTypes.get(0).getItemSkinType() == ItemSkinType.BACKPACK) {
+                event.setCurrentItem(removeBackpackSkin(clicked));
             }
             event.setCurrentItem(AstroItemSkinsAPI.removeItemSkinFromItem(clicked));
             event.setCursor(((SkinType) skinTypes.get(0)).getItem());
             event.setCancelled(true);
             ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.BAT_TAKEOFF, 1.0F, 10.0F);
             cooldownPlayers.put((Player) event.getWhoClicked(), event.getWhoClicked().getUniqueId());
-            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-                cooldownPlayers.remove((Player)event.getWhoClicked());
-            },10L);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
+                cooldownPlayers.remove((Player) event.getWhoClicked());
+            }, 10L);
 
 
         }
@@ -146,9 +182,22 @@ public class ItemSkinListener implements Listener {
 
     }
 
+    public static ItemStack removeBackpackSkin(final ItemStack item) {
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = meta.getLore();
+        for (final String line : lore) {
+            if (line.startsWith(CC.translate("&3&l+ BACKPACK ["))) {
+                lore.set(lore.indexOf(line), CC.translate("&3&l+ BACKPACK [&8N/A&3&l]"));
+            }
+        }
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
     public boolean isArmorOrWeapon(ItemStack item) {
         String type = item.getType().name();
-        return type.endsWith("_HELMET") || type.endsWith("_LEGGINGS") || type.endsWith("_CHESTPLATE")|| type.endsWith("_BOOTS")
+        return type.endsWith("_HELMET") || type.endsWith("_LEGGINGS") || type.endsWith("_CHESTPLATE") || type.endsWith("_BOOTS")
                 || type.endsWith("_SWORD") || type.endsWith("AXE");
     }
 

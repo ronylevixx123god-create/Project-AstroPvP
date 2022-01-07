@@ -24,6 +24,10 @@ public class KothPortalListener implements Listener {
         if (event.getEntity() instanceof Player) {
             Player player = (Player) event.getEntity();
             if (player.getWorld().getName().equals("world") && WorldGuardUtils.getRegionsIn(player.getLocation()).contains("desertkoth2")) {
+                if (CombatLog.inCombat(player)) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You cannot enter the koth exit portal while in combat"));
+                    return;
+                }
                 Location location = new Location(Bukkit.getWorld("world"), 2422, 120, 4638);
                 Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), () -> player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 3L);
             }
@@ -38,6 +42,11 @@ public class KothPortalListener implements Listener {
         Player player = event.getPlayer();
         if(event.getCause() == PlayerTeleportEvent.TeleportCause.END_PORTAL) {
             event.setCancelled(true);
+
+            if (CombatLog.inCombat(player)) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot enter the koth exit portal while in combat"));
+                return;
+            }
 
             Location location = new Location(Bukkit.getWorld("world"), 2422, 120, 4638);
 

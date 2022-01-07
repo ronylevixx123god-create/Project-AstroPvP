@@ -249,6 +249,9 @@ public enum SkinType {
         this.lore.addAll(extra);
     }
 
+    public String getDisplay() {
+        return this.display;
+    }
     public String getDisplayName() { return CC.WhiteB + "Item Skin (" + this.display + CC.WhiteB + ")"; }
     public String getName() { return this.display; }
     public String getAppliedLore() { return CC.WhiteB + "ITEM SKIN: " + this.display; }
@@ -282,6 +285,25 @@ public enum SkinType {
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "item_skin");
+        return wrapper.build();
+    }
+
+    public ItemStack applyBackpack(ItemStack item) {
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        if(!cosmicData.hasKey("itemSkinType")) {
+            cosmicData.setString("itemSkinType", name());
+        } else {
+            String[] current = cosmicData.getString("itemSkinType").split(",");
+            List<String> strings = new ArrayList<>(Arrays.asList(current));
+            strings.add(name());
+            String s = Arrays.toString(strings.toArray());
+            s = s.replace("[", "");
+            s = s.replace("]", "");
+            s = s.replace(" ", "");
+            cosmicData.setString("itemSkinType", s);
+        }
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();
     }
 
