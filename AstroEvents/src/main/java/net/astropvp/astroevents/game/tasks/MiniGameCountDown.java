@@ -21,12 +21,12 @@ public class MiniGameCountDown extends BukkitRunnable {
     public void run() {
 
         if (miniGame.getMiniGameState() != MiniGameState.STARTING) {
-            this.miniGame.stopMiniGame();
             this.cancel();
             return;
         }
 
         if (disableCountdown <= 0) {
+            this.miniGame.stopMiniGame();
             this.cancel();
             return;
         }
