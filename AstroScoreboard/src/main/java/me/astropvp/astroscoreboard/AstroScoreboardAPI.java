@@ -48,7 +48,7 @@ public class AstroScoreboardAPI {
         if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fPlayer.getFaction().getTag());
         } else {
-            faction = "zzzzzz";
+            faction = "zzzz";
         }
         //return faction;
         return faction + rankOrder.get(rank);

@@ -56,7 +56,7 @@ public class CombatLogBlock implements Listener {
     public void duelfix(final PlayerCommandPreprocessEvent event) {
         final Player player = event.getPlayer();
         final String msg = event.getMessage().toLowerCase();
-        if (player.getLocation().getWorld().getName().equals("world_duels") && !msg.equalsIgnoreCase("/fix")) {
+        if (player.getLocation().getWorld().getName().equals("world_duels") && !msg.equalsIgnoreCase("/fix") && !msg.equalsIgnoreCase("/duel leave")) {
             if (!player.isOp()) {
                 event.setCancelled(true);
                 event.setMessage("/null");
