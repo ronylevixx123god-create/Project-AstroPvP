@@ -14,7 +14,7 @@ public class MiniGameCountDown extends BukkitRunnable {
     public MiniGameCountDown(MiniGame<?> miniGame) {
         this.miniGame = miniGame;
         this.countdown = miniGame.getCountdownTime();
-        this.disableCountdown = 600;
+        this.disableCountdown = 300;
     }
 
     @Override
