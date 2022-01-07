@@ -37,7 +37,6 @@ extends BukkitRunnable {
             return;
         }
         p.damage(amount);
-        WorldUtil.sendWorldEffect((Block)p.getLocation().add(0.0, 1.0, 0.0).getBlock(), (int)Material.REDSTONE_WIRE.getId(), (int)2001);
     }
 }
 

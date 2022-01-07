@@ -31,7 +31,7 @@ import java.text.DecimalFormat;
 public class Rogue extends CustomEnchantment {
 
     public Rogue() {
-        super("Rogue", GeneralUtil.swords, 2);
+        super("Rogue", GeneralUtil.weapons, 2);
         this.max = 3;
         this.base = 10.0;
         this.interval = 10.0;
@@ -39,9 +39,6 @@ public class Rogue extends CustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (!CommandEnchDust.soulEnabled) {
-            return;
-        }
         if (!(player instanceof Player)) // rooThink
             return;
         if (!(playerHit instanceof Player)) return;
@@ -49,17 +46,12 @@ public class Rogue extends CustomEnchantment {
             playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
             return;
         }
-        if (!KillTrackerAPI.hasGodMode((Player) player))
-            return;
         if (player.hasMetadata("noSoulProcs"))
             return;
         if (player.hasMetadata("witcher_ability"))
             return;
         final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
-        if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
-            return;
-        }
         if (this.isPlayerBehind(p, playerHit)) {
             double multi = 1.0D + 0.166666666666666D * (double) level + Math.random() / 2.0D;
             final int soulCost = 150;

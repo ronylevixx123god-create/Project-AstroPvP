@@ -15,6 +15,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.rit.sucy.CustomEnchantment;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -37,7 +38,7 @@ extends CustomEnchantment {
         double chance = 0.05 * (double)level;
         final double healthGain = level;
         if (Math.random() < chance) {
-            if (playerHit instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)playerHit), (String)"NECROMANCER")) {
+            if (playerHit instanceof Player && MaskType.hasEquipped((Player)((Player)playerHit), (String)"NECROMANCER")) {
                 return;
             }
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){

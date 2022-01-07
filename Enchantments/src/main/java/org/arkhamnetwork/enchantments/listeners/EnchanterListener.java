@@ -8,6 +8,7 @@ import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
 import com.google.common.collect.Lists;
 import com.rit.sucy.enchanting.EListener;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.core.guis.SpawnerShopGUI;
 import org.arkhamnetwork.Arkkit.patches.ItemNametag;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
@@ -190,7 +191,7 @@ public class EnchanterListener implements Listener {
                 if (enchantment instanceof MasteryCustomEnchantment) {
                     MasteryCustomEnchantment enchant = (MasteryCustomEnchantment) enchantment;
                     Player damaged = (Player) event.getEntity();
-                    boolean riftMask = MaskUtils.hasMaskEquipped(damaged, "RIFT");
+                    boolean riftMask = MaskType.hasEquipped(damaged, "RIFT");
                     int masteryReflect = Reflect.getReflectLevel((LivingEntity) damaged, "mastery");
                     if (!enchant.canStack()) {
                         if (riftMask && Math.random() <= 0.5D)

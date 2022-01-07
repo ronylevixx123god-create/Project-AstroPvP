@@ -26,6 +26,7 @@ import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
 import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -57,7 +58,7 @@ implements Listener {
                 if (CosmicArmorSetsAPI.getArmorSet((Player)pHurt) == ArmorSet.RANGER) {
                     return;
                 }
-                if (MaskUtils.hasMaskEquipped((Player)pHurt, (String)"GLITCH")) {
+                if (MaskType.hasEquipped((Player)pHurt, (String)"GLITCH")) {
                     return;
                 }
                 Map equipped = CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player)pHurt);

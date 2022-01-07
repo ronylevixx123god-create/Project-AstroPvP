@@ -10,6 +10,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -31,7 +32,7 @@ extends HeroicCustomEnchantment {
             health = (int)user.getMaxHealth();
         }
         if (random < chance) {
-            if (target instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)target), (String)"NECROMANCER")) {
+            if (target instanceof Player && MaskType.hasEquipped((Player)((Player)target), (String)"NECROMANCER")) {
                 return;
             }
             GeneralUtil.setPlayerHealth(user, health);

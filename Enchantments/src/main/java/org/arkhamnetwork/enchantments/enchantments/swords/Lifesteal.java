@@ -12,6 +12,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.rit.sucy.CustomEnchantment;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -28,7 +29,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         double random = Math.random();
-        if (target instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)target), (String)"NECROMANCER")) {
+        if (target instanceof Player && MaskType.hasEquipped((Player)((Player)target), (String)"NECROMANCER")) {
             return;
         }
         double chance = enchantLevel > 3 ? 0.3 : 0.1 * (double)enchantLevel;

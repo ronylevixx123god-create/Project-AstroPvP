@@ -36,7 +36,7 @@ extends HeroicCustomEnchantment {
             Player pAttacker;
             Player p = (Player)player;
             if (attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
-                if (Math.random() < 0.5) {
+                if (Math.random() < 0.3) {
                     Location l = p.getLocation();
                     attacker.damage(0.5);
                 }

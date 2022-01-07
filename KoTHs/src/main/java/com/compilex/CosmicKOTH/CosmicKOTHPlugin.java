@@ -202,7 +202,7 @@ public class CosmicKOTHPlugin
         this.outpostManager = new OutpostManager();
         this.outpostManager.loadOutposts(this);
         this.trophiesEnabled = new File("plugins/CosmicHCFTrophies.jar").exists();
-        Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(3700), 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(7400), 20L, 20L);
 
     }
 

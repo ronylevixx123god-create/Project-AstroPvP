@@ -30,17 +30,14 @@ extends HeroicCustomEnchantment {
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("neutralized"))
-            return;
         ItemStack i = null;
         if (attacker instanceof Player) {
             Player pAttacker = (Player)attacker;
             i = pAttacker.getItemInHand();
         }
-        double damage_negation = (double)level * 0.0225;
-        if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
+        double damage_negation = 0.45;
+        if (i != null && i.getType().name().contains("_AXE")) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
-            Location l = player.getLocation();
         }
     }
 }

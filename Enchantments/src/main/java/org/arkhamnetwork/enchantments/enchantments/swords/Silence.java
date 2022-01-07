@@ -34,6 +34,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -82,7 +83,7 @@ extends CustomEnchantment {
 
             }
 
-            if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pTarget)) && (!MaskUtils.hasMaskEquipped(pTarget, "WITCHER"))) {
+            if (pTarget.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.HALLOWEEN_BACKPACK) && (!GoldenAdmirer.isAdmirerSilenced(pTarget)) && (!MaskType.hasEquipped(pTarget, "WITCHER"))) {
                 durationTicks = (long) (durationTicks * 0.25);
             }
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CORRUPT_HELMET)) {

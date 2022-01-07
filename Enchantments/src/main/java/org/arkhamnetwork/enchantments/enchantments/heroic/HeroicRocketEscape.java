@@ -30,6 +30,7 @@ import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.enchantments.armor.RocketEscape;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -100,7 +101,7 @@ extends HeroicCustomEnchantment {
                         pl.sendMessage(CC.translate("&c&l ** &7Rocket Escape: &4&lBLOCKED &7[" + target.getName() + "'s Cursed Wings] &c&l**"));
                         return;
                     }
-                    if(MaskUtils.hasMaskEquipped((Player) target, "TERMINATOR") && Math.random() < 0.05) {
+                    if(MaskType.hasEquipped((Player) target, "TERMINATOR") && Math.random() < 0.05) {
                         pl.sendMessage(CC.translate("&4&l ** &7Guided Rocket Escape &4&lBLOCKED &7(" + target.getName() + "'s Terminator Mask)"));
                         target.sendMessage(CC.translate("&4&l ** &7" + pl.getName() + "'s Guided Rocket Escape &4&lBLOCKED &7(Terminator Mask)"));
                         return;

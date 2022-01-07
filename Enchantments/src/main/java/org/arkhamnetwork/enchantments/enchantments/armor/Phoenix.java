@@ -126,18 +126,17 @@ extends CustomEnchantment {
             boolean canUse = canUsePhoenix(player, level);
             if (!canUse) {
                 if (120L - (System.currentTimeMillis() - ((Long)last_phoenix.get(player.getUniqueId().toString())).longValue()) / 1000L != 0L)
-                    player.sendMessage("");
                 player.sendMessage(CC.translate("&c&l** PHOENIX ON COOLDOWN ** &7[" + TimeUtils.formatSeconds(120L - (System.currentTimeMillis() - ((Long)last_phoenix.get(player.getUniqueId().toString())).longValue()) / 1000L) + "]"));
-                player.sendMessage("");
             }
-            if (damager != null && damager instanceof Player && Math.random() <= 0.5 && MaskUtils.hasMaskEquipped((Player)((Player)damager), (String)"DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+            if (damager != null && damager instanceof Player && Math.random() <= 0.5 && MaskType.hasEquipped((Player)((Player)damager), (String)"DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                 player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player)damager).getName());
                 return false;
             }
-            if (damager != null && damager instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)damager), (String)"THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+            if (damager != null && damager instanceof Player && MaskType.hasEquipped((Player) damager, (String)"THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                 player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());

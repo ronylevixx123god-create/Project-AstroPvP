@@ -206,7 +206,7 @@ implements Runnable {
         }
 
         GiftcardAPI.createGiftCard(this.playerCapped, 10);
-        Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(3600), 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer((Plugin)CosmicKOTHPlugin.get_(), (Runnable)new LauncherTask(7400), 20L, 20L);
 
 
     }

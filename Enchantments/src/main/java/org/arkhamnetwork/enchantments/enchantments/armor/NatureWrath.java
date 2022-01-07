@@ -40,6 +40,7 @@ import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
@@ -105,7 +106,7 @@ extends CustomEnchantment {
             if (p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
                 return;
             }
-            if (MaskUtils.hasMaskEquipped((Player) player, "THANOS")) {
+            if (MaskType.hasEquipped((Player) player, "THANOS")) {
                 return;
             }
             if(p.hasMetadata("witcher_ability"))
