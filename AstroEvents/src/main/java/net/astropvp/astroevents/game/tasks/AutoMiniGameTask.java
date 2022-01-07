@@ -2,6 +2,7 @@ package net.astropvp.astroevents.game.tasks;
 
 import net.astropvp.astroevents.game.MiniGame;
 import net.astropvp.astroevents.game.MiniGameManager;
+import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class AutoMiniGameTask extends BukkitRunnable {
@@ -16,6 +17,12 @@ public class AutoMiniGameTask extends BukkitRunnable {
 
     @Override
     public void run() {
+
+        if (Bukkit.getOnlinePlayers().size() == 0) {
+            Bukkit.getConsoleSender().sendMessage("&6[AstroEvents] Not enough online players to start the event");
+            return;
+        }
+
         this.miniGame.startMiniGameCountDown();
         this.miniGameManager.setLastMiniGameTime(System.currentTimeMillis());
     }
