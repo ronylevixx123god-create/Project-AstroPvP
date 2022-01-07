@@ -49,32 +49,11 @@ extends CustomEnchantment {
                 HeroicInquisitive.this.nonHeroicVersion = EnchantmentAPI.getEnchantment((String)"Inquisitive");
             }
         }, 2L);
-        Bukkit.getPluginManager().registerEvents((Listener)new InquisitiveEvents(), (Plugin)Enchantments.getInstance());
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        double chance;
-        if (target instanceof Player) {
-            return;
-        }
-        double random = Math.random();
-        if (random < (chance = 0.075 * (double)enchantLevel * 2.0)) {
-            target.setMetadata("inquisitive_enchant_heroic", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
-        }
+        //coded in spawners plugin
     }
 
-    private class InquisitiveEvents
-    implements Listener {
-        private InquisitiveEvents() {
-        }
-
-        @EventHandler(priority=EventPriority.HIGH)
-        public void onEntityDeath(EntityDeathEvent e) {
-            if (e.getEntity().hasMetadata("inquisitive_enchant_heroic")) {
-                double multiple = 1.0 + 0.25 * ((MetadataValue)e.getEntity().getMetadata("inquisitive_enchant_heroic").get(0)).asDouble();
-                e.setDroppedExp((int)((double)e.getDroppedExp() * (multiple *= 2.0)));
-            }
-        }
-    }
 }
 

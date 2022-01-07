@@ -146,12 +146,7 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>KoTHs</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Conquest</artifactId>
@@ -162,7 +157,7 @@
         <!-- System Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>guard</artifactId>
+            <artifactId>guarsd</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/WorldGuard.jar</systemPath>
@@ -173,6 +168,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/WorldBorder.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>koth</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/KoTHs-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

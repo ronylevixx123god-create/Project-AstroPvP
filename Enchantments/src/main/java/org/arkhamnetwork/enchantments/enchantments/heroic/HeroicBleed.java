@@ -50,7 +50,7 @@ extends HeroicCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
-            double bleedChance = 0.08 * (double)enchantLevel + 0.4;
+            double bleedChance = 0.06 * (double)enchantLevel + 0.4;
             if (Math.random() < bleedChance && HeroicBleed.getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
                 this.addBleedStack(user, target);
             }

@@ -8,6 +8,7 @@ package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.Conf;
 
+import java.io.IOException;
 import java.util.Collections;
 
 public class FCmdRoot extends FCommand {
@@ -188,7 +189,7 @@ public class FCmdRoot extends FCommand {
     }
 
     @Override
-    public void perform() {
+    public void perform() throws IOException {
         this.commandChain.add(this);
         this.cmdHelp.execute(this.sender, this.args, this.commandChain);
     }

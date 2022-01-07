@@ -1,5 +1,6 @@
 package com.massivecraft.factions.cmd;
 
+import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.cosmicpvp.factionpoints.FactionsCoreChunkAPI;
@@ -19,6 +20,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.Collection;
 import java.util.Iterator;
@@ -41,7 +43,7 @@ public class CmdShow extends FCommand {
         this.senderMustBeAdmin = false;
     }
 
-    public void perform() {
+    public void perform() throws IOException {
         Faction myFaction = this.fme.getFaction();
         Faction finalFaction = myFaction;
         if (this.argIsSet(0)) {
@@ -88,6 +90,7 @@ public class CmdShow extends FCommand {
                 String allyList;
 
                 this.msg(CC.translate("&aShield: " + (FactionShield.getPlugin().isFactionShieldActive(finalFaction) ? "&a&lENABLED" : "&c&lDISABLED")));
+                this.msg(CC.translate("&aKoth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(finalFaction)));
 
                 if (Conf.bankEnabled) {
                     this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aBank Balance: <p>&f$%s"), this.df.format(econ));

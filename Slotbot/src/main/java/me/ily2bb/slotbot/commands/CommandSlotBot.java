@@ -86,6 +86,8 @@ public class CommandSlotBot implements CommandExecutor {
                         SlotBotPlugin.getInstance().saveConfig();
                         SlotBotPlugin.getInstance().loadConfig();
                         player.sendMessage(String.valueOf(CC.Green) + "Found item... Deleting " + item.getAmount() + " " + display);
+                        SlotBotPlugin.setMap(Utils.getMap());
+
                         return false;
                     }
                 }
@@ -97,6 +99,8 @@ public class CommandSlotBot implements CommandExecutor {
                     SlotBotPlugin.getInstance().getConfig().set("items", (Object) list3);
                     SlotBotPlugin.getInstance().saveConfig();
                     SlotBotPlugin.getInstance().loadConfig();
+                    SlotBotPlugin.setMap(Utils.getMap());
+
                     ((Player) sender).sendMessage(String.valueOf(CC.Green) + "Cleared all slot bot rewards...");
                     return false;
                 }

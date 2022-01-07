@@ -31,7 +31,9 @@
 package com.massivecraft.factions.listeners;
 
 import com.astropvp.cc.player.CosmicPlayers;
+import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
 import com.earth2me.essentials.utils.DateUtil;
 import com.google.common.collect.Lists;
@@ -59,6 +61,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerChatEvent;
 
 import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -228,7 +231,7 @@ public class FactionsChatListener implements Listener {
             priority = EventPriority.MONITOR,
             ignoreCancelled = true
     )
-    public void onPlayerChatMonitor(PlayerChatEvent event) {
+    public void onPlayerChatMonitor(PlayerChatEvent event) throws IOException {
         FPlayer follower = FPlayers.i.get(event.getPlayer().getUniqueId().toString());
         double balance;
         User user;
@@ -243,21 +246,6 @@ public class FactionsChatListener implements Listener {
         int seasonalWins;
         List<SeasonalWin> seasonalWinDetails;
         List<FancyMessage> seasonalHoverInfo = null;
-        if (ArkPlugins.SEASONAL_PREFIXES.getArkPlugin().isRunning()) {
-            seasonalWins = SeasonalPrefixes.getSeasonalWins(event.getPlayer());
-            seasonalWinDetails = SeasonalPrefixes.getSeasonalWinDetails(event.getPlayer());
-            if (seasonalWins > 0) {
-                seasonalHoverInfo = Lists.newArrayList();
-                seasonalHoverInfo.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + event.getPlayer().getName() + "'s faction has " + ChatColor.valueOf(Conf.hoverChatColor) + ChatColor.UNDERLINE + seasonalWins + ChatColor.valueOf(Conf.hoverNames) + " Seasonal Planet trophies!"));
-
-                for (SeasonalWin win : seasonalWinDetails) {
-                    seasonalHoverInfo.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Planet: " + ChatColor.valueOf(Conf.hoverChatColor) + win.getPlanet()));
-                    seasonalHoverInfo.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Faction: " + ChatColor.valueOf(Conf.hoverChatColor) + win.getFaction()));
-                    seasonalHoverInfo.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Map: " + ChatColor.valueOf(Conf.hoverChatColor) + "#" + win.getSeason()));
-                    seasonalHoverInfo.add(new FancyMessage(ChatColor.valueOf(Conf.hoverChatColor) + "----------"));
-                }
-            }
-        }
 
         List<FancyMessage> creatorHoverInfo = null;
         String channelName = null;
@@ -272,8 +260,8 @@ public class FactionsChatListener implements Listener {
 
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Power: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getPowerRounded() + ChatColor.valueOf(Conf.hoverSlashColor) + "/" + ChatColor.valueOf(Conf.hoverChatColor) + (int)Conf.powerPlayerMax));
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Logged in: " + ChatColor.valueOf(Conf.hoverChatColor) + DateUtil.formatDateDiff(user.getLastLogin()) + " ago"));
+        player_faction_info.add(new FancyMessage(CC.translate("&eFaction Koth Wins: &6") + CosmicKOTHAPI.getFactionKothWins(FactionUtils.getFaction(event.getPlayer()))));
         player_faction_info.add(new FancyMessage(CC.translate("&eCosmic Client: ") + ((CosmicPlayers.get().getCosmicPlayer(event.getPlayer()).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗")));
-
         event.setCancelled(true);
 
         Player player;
