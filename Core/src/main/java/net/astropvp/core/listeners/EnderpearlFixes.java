@@ -1,7 +1,7 @@
 package net.astropvp.core.listeners;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import org.bukkit.event.*;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import java.util.EnumSet;
 import java.util.Set;
@@ -36,6 +36,7 @@ public class EnderpearlFixes implements Listener {
         if (!(event.getEntity().getShooter() instanceof Player)) {
             return;
         }
+
         Player player = (Player)((Object)event.getEntity().getShooter());
         Block hitBlock = this.getBlockHitting(event.getEntity().getLocation(), event.getEntity().getVelocity());
         if (hitBlock == null) {
