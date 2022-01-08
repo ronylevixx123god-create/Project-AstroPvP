@@ -43,7 +43,7 @@ public class AstroScoreboardAPI {
     public static String getTeamName(Player player) {
         Random random = new Random();
 
-        int value = random.nextInt(1000000 + 1) + 1;
+        int value = random.nextInt(10000000 + 1) + 1;
         FPlayer fPlayer = FPlayers.i.get(player);
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
         String faction;

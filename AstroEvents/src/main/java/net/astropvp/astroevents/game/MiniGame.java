@@ -1,5 +1,6 @@
 package net.astropvp.astroevents.game;
 
+import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -8,6 +9,7 @@ import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.utils.Utils;
 import net.astropvp.astroevents.utils.configuration.AbstractConfig;
+import net.astropvp.giftcardshop.GiftcardAPI;
 import org.bukkit.*;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Entity;
@@ -22,7 +24,9 @@ import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.potion.PotionEffect;
+import org.json.simple.parser.ParseException;
 
+import java.io.IOException;
 import java.util.*;
 
 @Getter
@@ -198,6 +202,15 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
 
     public void giveWinnerRewards(Player player) {
         this.getRewardCommands().forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("{player}", player.getName())));
+        try {
+            GiftcardAPI.createGiftCard(player, 5);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (UnirestException e) {
+            e.printStackTrace();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     public void giveWinnerRewards(T miniGamePlayer) {

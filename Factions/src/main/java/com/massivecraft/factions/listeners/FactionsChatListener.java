@@ -261,6 +261,7 @@ public class FactionsChatListener implements Listener {
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Power: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getPowerRounded() + ChatColor.valueOf(Conf.hoverSlashColor) + "/" + ChatColor.valueOf(Conf.hoverChatColor) + (int)Conf.powerPlayerMax));
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Logged in: " + ChatColor.valueOf(Conf.hoverChatColor) + DateUtil.formatDateDiff(user.getLastLogin()) + " ago"));
         player_faction_info.add(new FancyMessage(CC.translate("&eFaction Koth Wins: &6") + CosmicKOTHAPI.getFactionKothWins(FactionUtils.getFaction(event.getPlayer()))));
+
         player_faction_info.add(new FancyMessage(CC.translate("&eCosmic Client: ") + ((CosmicPlayers.get().getCosmicPlayer(event.getPlayer()).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗")));
         event.setCancelled(true);
 
