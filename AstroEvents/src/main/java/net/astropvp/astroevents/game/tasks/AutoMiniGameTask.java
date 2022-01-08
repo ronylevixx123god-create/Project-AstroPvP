@@ -17,13 +17,14 @@ public class AutoMiniGameTask extends BukkitRunnable {
 
     @Override
     public void run() {
-
         if (Bukkit.getOnlinePlayers().size() == 0) {
             Bukkit.getConsoleSender().sendMessage("&6[AstroEvents] Not enough online players to start the event");
+            this.miniGameManager.setLastMiniGameTime(System.currentTimeMillis());
             return;
         }
 
         this.miniGame.startMiniGameCountDown();
         this.miniGameManager.setLastMiniGameTime(System.currentTimeMillis());
+
     }
 }
