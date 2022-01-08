@@ -319,16 +319,17 @@ implements CommandExecutor {
         randomPanels.add(randomAdditionPanels.get(0));
         for (i = 0; i < this.extraChests.entrySet().size(); ++i) {
             Map.Entry<Location, Boolean> entry = new ArrayList<>(this.extraChests.entrySet()).get(i);
+            if(!(entry.getKey().getBlock().getState() instanceof Chest)) {
+                BlockState state = entry.getKey().getBlock().getState();
+                state.setType(Material.CHEST);
+                state.update(true);
+            }
             if (i == 0) {
-                if(!(entry.getKey().getBlock().getState() instanceof Chest)) {
-                    BlockState state = entry.getKey().getBlock().getState();
-                    state.setType(Material.CHEST);
-                    state.update(true);
-                }
                 ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getClockOfReturning());
                 continue;
             }
-            if (!(Math.random() < 0.7)) continue;
+            if (!(Math.random() < 0.7))
+                continue;
             ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getTotemOfUndying());
         }
         for (i = 0; i < 8; ++i) {
