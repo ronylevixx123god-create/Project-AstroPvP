@@ -13,6 +13,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -36,7 +37,9 @@ extends HeroicCustomEnchantment {
             Player pAttacker;
             Player p = (Player)player;
             if (attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
-                if (Math.random() < 0.3) {
+                double heroicCactusChance = CustomConfig.get().getDouble("heroicCactusChance");
+
+                if (Math.random() < heroicCactusChance) {
                     Location l = p.getLocation();
                     attacker.damage(0.5);
                 }

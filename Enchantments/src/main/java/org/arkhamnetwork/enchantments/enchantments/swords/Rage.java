@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.arkhamnetwork.enchantments.util.RageUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -38,11 +39,14 @@ public class Rage extends CustomEnchantment {
                 return;
             double mod = 0.08D * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0D;
-            if (hitCombo > 5.0D)
-                hitCombo = 5.0D;
+            double rageCap = CustomConfig.get().getDouble("rageComboCap");
+            double rageMulti = CustomConfig.get().getDouble("rageMultiplier");
+
+            if (hitCombo > rageCap)
+                hitCombo = rageCap;
 
             if (hitCombo > 1.0D) {
-                event.setDamage(event.getDamage() * hitCombo * 0.70);
+                event.setDamage(event.getDamage() * hitCombo * rageMulti);
                 target.setMetadata("effectedByRage", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
                 //playRageEffect(target.getEyeLocation(), enchantLevel);
             }

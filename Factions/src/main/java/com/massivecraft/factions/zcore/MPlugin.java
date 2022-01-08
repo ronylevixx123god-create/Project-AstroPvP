@@ -13,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.*;
 import java.util.logging.Level;
@@ -133,7 +134,7 @@ public abstract class MPlugin
         return true;
     }
 
-    public boolean handleCommand(CommandSender sender, String commandString, boolean testOnly) {
+    public boolean handleCommand(CommandSender sender, String commandString, boolean testOnly) throws IOException {
         return this.handleCommand(sender, commandString, testOnly, false);
     }
 
@@ -156,7 +157,9 @@ public abstract class MPlugin
                     return true;
                 }
                 if (async) {
-                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, () -> command.execute(sender, args));
+                    Bukkit.getServer().getScheduler().scheduleSyncDelayedTask(this, () -> {
+                        command.execute(sender, args);
+                    });
                 } else {
                     command.execute(sender, args);
                 }
@@ -167,8 +170,14 @@ public abstract class MPlugin
     }
 
     public boolean handleCommand(CommandSender sender, String commandString) {
-        return this.handleCommand(sender, commandString, false);
+        try {
+            return this.handleCommand(sender, commandString, false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return true;
     }
+
 
     public void preAutoSave() {
     }

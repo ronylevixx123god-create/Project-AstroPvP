@@ -17,6 +17,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -44,12 +45,14 @@ extends HeroicCustomEnchantment {
                 Blessed.blessPlayer((Player)player);
             }
         }
-        double damage_negation = (double)level * 0.03;
+
+
+        double heroicArmoredNegation = CustomConfig.get().getDouble("heroicArmoredNegation");
         if(attacker instanceof Player)
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT))
-                damage_negation = level * 0.03;
-        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage() * (1.0 - damage_negation));
+                heroicArmoredNegation+=0.03;
+        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - heroicArmoredNegation) > 1.0) {
+            e.setDamage(e.getDamage() * (1.0 - 0.12));
             Location l = player.getLocation();
         }
     }

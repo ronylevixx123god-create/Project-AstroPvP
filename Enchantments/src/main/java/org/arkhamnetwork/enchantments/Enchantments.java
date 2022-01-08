@@ -15,6 +15,7 @@ import org.arkhamnetwork.enchantments.enchantments.bow.*;
 import org.arkhamnetwork.enchantments.enchantments.heroic.*;
 import org.arkhamnetwork.enchantments.enchantments.swords.*;
 import org.arkhamnetwork.enchantments.enchantments.tools.*;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.arkhamnetwork.enchantments.items.EMPPulseItem;
 import org.arkhamnetwork.enchantments.items.OmniBlackscroll;
 import org.arkhamnetwork.enchantments.listeners.*;
@@ -103,6 +104,10 @@ public class Enchantments extends EnchantPlugin {
 
         (new File("plugins/Enchantments/config.yml")).delete();
         saveDefaultConfig();
+        CustomConfig.setup();
+        CustomConfig.get().options().copyDefaults(true);
+        CustomConfig.save();
+
         try {
             getConfig().load("plugins/Enchantments/config.yml");
         } catch (IOException | InvalidConfigurationException e) {
@@ -166,6 +171,7 @@ public class Enchantments extends EnchantPlugin {
         getCommand("alchemist").setExecutor(new CommandAlchemist());
         getCommand("apply").setExecutor(new CommandApply());
         getCommand("blackscroll").setExecutor(new CommandBlackscroll());
+        getCommand("enchreload").setExecutor(new EnchReloadCommand());
     }
 
     public IceAspect getIceAspectEnchant() {

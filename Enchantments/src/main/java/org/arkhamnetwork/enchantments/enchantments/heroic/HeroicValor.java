@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
@@ -20,7 +21,9 @@ public class HeroicValor extends HeroicCustomEnchantment{
         if (!(player instanceof Player)) {
             return;
         }
-        double damage_negation = (double)level * 0.1;
+        double heroicValorNegation = CustomConfig.get().getDouble("heroicValorNegation");
+
+        double damage_negation = heroicValorNegation;
         double hp_threshold = level * 4 + 6;
         if (player.getHealth() <= hp_threshold  && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));

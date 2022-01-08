@@ -33,15 +33,15 @@ public class PlayerListener implements Listener {
 		CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
 		CC.translate("\n&6Store&7: &fbuy.astropvp.net\n" + "&6Discord&7: &fdiscord.astropvp.net" + "\n"));
 	}
-	
+
 	@EventHandler(priority = EventPriority.HIGHEST)
 	public void onQuit(PlayerQuitEvent event) {
 		Player player = event.getPlayer();
 		Scoreboard board = player.getScoreboard();
 		if(board != null) {
-			board.getTeams().forEach(Team::unregister);
+			board.getTeams().forEach(team -> team.unregister());
 		}
-		
+
 	}
 
 

@@ -448,13 +448,14 @@ public class P extends MPlugin {
     }
 
     @Override
-    public boolean handleCommand(CommandSender sender, String commandString, boolean testOnly) {
+    public boolean handleCommand(CommandSender sender, String commandString, boolean testOnly) throws IOException {
         if (sender instanceof Player && FactionsPlayerListener.preventCommand(commandString, (Player) sender)) {
             return true;
         }
         return super.handleCommand(sender, commandString, testOnly);
     }
 
+    @SneakyThrows
     public boolean onCommand(CommandSender sender, Command command, String label, String[] split) {
         if (split == null || split.length == 0) {
             return true;
@@ -470,7 +471,7 @@ public class P extends MPlugin {
     public void handleFactionTagExternally(boolean notByFactions) {
     }
 
-    public boolean shouldLetFactionsHandleThisChat(AsyncPlayerChatEvent event) {
+    public boolean shouldLetFactionsHandleThisChat(AsyncPlayerChatEvent event) throws IOException {
         if (event == null) {
             return false;
         }
@@ -500,7 +501,7 @@ public class P extends MPlugin {
         return me.getChatMode().isAtLeast(ChatMode.ALLIANCE);
     }
 
-    public boolean isFactionsCommand(String check) {
+    public boolean isFactionsCommand(String check) throws IOException {
         if (check == null || check.isEmpty()) {
             return false;
         }

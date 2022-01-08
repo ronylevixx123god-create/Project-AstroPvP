@@ -5,6 +5,7 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -44,7 +45,9 @@ public class MasteryNeutralize extends CustomEnchantment {
 
 
 
-        if (Math.random() <= 0.0015D * enchantLevel) {
+        double neutralizeChance = CustomConfig.get().getDouble("neutralizeChance");
+
+        if (Math.random() <= neutralizeChance) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.RUINS_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage(CC.translate("&5&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s NEUTRALIZE &7(Lost Amulet) &5&l*"));

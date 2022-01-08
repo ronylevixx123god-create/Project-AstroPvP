@@ -13,6 +13,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.bukkit.Location;
 import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
@@ -35,7 +36,8 @@ extends HeroicCustomEnchantment {
             Player pAttacker = (Player)attacker;
             i = pAttacker.getItemInHand();
         }
-        double damage_negation = 0.45;
+        double damage_negation = CustomConfig.get().getDouble("heroicTankNegation");
+        ;
         if (i != null && i.getType().name().contains("_AXE")) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));
         }

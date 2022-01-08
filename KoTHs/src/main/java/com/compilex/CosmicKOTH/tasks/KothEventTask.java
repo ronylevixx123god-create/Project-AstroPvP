@@ -2,6 +2,7 @@ package com.compilex.CosmicKOTH.tasks;
 
 import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
+import com.compilex.CosmicKOTH.files.CustomConfig;
 import com.compilex.CosmicKOTH.struct.KothWorldType;
 import com.compilex.CosmicKOTH.utils.*;
 import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
@@ -185,6 +186,7 @@ implements Runnable {
         Bukkit.broadcastMessage((String)"");
 
         this.logWinner(player);
+        this.logFactionWin(player);
         this.playerCapped = player;
         this.playerCapping = null;
 
@@ -228,7 +230,26 @@ implements Runnable {
         catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
+
     }
+
+    public void logFactionWin(Player p) throws IOException {
+        String factionId = FactionUtils.getFactionId(p);
+        int kothWins = 1;
+
+        if (CustomConfig.get().contains(factionId)) {
+            kothWins = CustomConfig.get().getInt(factionId)+1;
+        }
+        CustomConfig.get().set(factionId, kothWins);
+
+        CustomConfig.save();
+        CustomConfig.reload();
+
+    }
+
 
 
 

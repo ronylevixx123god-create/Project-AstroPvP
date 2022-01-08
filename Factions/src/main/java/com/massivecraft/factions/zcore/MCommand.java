@@ -15,6 +15,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
@@ -99,14 +100,18 @@ public abstract class MCommand<T extends MPlugin> {
         if (!this.isEnabled()) {
             return;
         }
-        this.perform();
+        try {
+            this.perform();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void execute(CommandSender sender, List<String> args) {
         this.execute(sender, args, new ArrayList<>());
     }
 
-    public abstract void perform();
+    public abstract void perform() throws IOException;
 
     public boolean validCall(CommandSender sender, List<String> args) {
         if (!this.validSenderType(sender, true)) {

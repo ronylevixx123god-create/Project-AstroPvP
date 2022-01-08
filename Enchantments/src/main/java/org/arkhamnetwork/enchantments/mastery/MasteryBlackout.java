@@ -6,6 +6,7 @@ import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.files.CustomConfig;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -43,7 +44,9 @@ public class MasteryBlackout extends CustomEnchantment {
             enchantLevel = 5;
         }
 
-        if (Math.random() <= 0.0015D * enchantLevel) {
+        double blackoutChance = CustomConfig.get().getDouble("blackoutChance");
+
+        if (Math.random() <= blackoutChance) {
             int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
             if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
                 multi = 1;
