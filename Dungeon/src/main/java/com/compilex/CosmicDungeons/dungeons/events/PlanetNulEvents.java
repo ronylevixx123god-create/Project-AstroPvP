@@ -281,8 +281,8 @@ implements CommandExecutor {
                 this.put(new Location(PlanetNulEvents.this.dungeon.getWorld(), 811.0, 198.0, 455.0), false);
             }
         };
-        this.mazeLevers = new HashMap<Location, List<Location>>();
-        this.mazeLeversCooldown = new HashMap<Location, Long>();
+        this.mazeLevers = new HashMap<>();
+        this.mazeLeversCooldown = new HashMap<>();
         this.loadRegionTriggerEvents();
     }
 
@@ -320,6 +320,11 @@ implements CommandExecutor {
         for (i = 0; i < this.extraChests.entrySet().size(); ++i) {
             Map.Entry<Location, Boolean> entry = new ArrayList<>(this.extraChests.entrySet()).get(i);
             if (i == 0) {
+                if(!(entry.getKey().getBlock().getState() instanceof Chest)) {
+                    BlockState state = entry.getKey().getBlock().getState();
+                    state.setType(Material.CHEST);
+                    state.update(true);
+                }
                 ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getClockOfReturning());
                 continue;
             }
@@ -327,7 +332,7 @@ implements CommandExecutor {
             ((Chest)entry.getKey().getBlock().getState()).getInventory().addItem(this.getTotemOfUndying());
         }
         for (i = 0; i < 8; ++i) {
-            Location chestLocation = (Location)chestLocationsCopy.get(i);
+            Location chestLocation = chestLocationsCopy.get(i);
             Block block = chestLocation.getBlock();
             BlockState state = block.getState();
             state.setType(Material.CHEST);
