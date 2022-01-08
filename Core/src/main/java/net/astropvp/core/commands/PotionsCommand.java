@@ -1,9 +1,11 @@
 package net.astropvp.core.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.PotsCooldown;
 import net.astropvp.core.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,7 +17,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class PotionsCommand implements CommandExecutor {
     private AstroCore plugin;
-    private PotsCooldown cooldown = new PotsCooldown();
+    //private PotsCooldown cooldown = new PotsCooldown();
     private Utils utils = new Utils();
 
     public PotionsCommand(AstroCore plugin) {
@@ -29,7 +31,13 @@ public class PotionsCommand implements CommandExecutor {
             return true;
         }
         Player p = (Player) sender;
-        if (cooldown.getCooldown(p)) return false;
+
+        if (CombatLog.inCombat(p)) {
+            p.sendMessage(CC.Red + "You cannot type /pots while in combat");
+            return false;
+        }
+
+        //if (cooldown.getCooldown(p)) return false;
 
         int amount = 0;
         for (ItemStack itemStack : p.getInventory().getContents()) {
@@ -52,7 +60,7 @@ public class PotionsCommand implements CommandExecutor {
             p.playSound(p.getLocation(), Sound.VILLAGER_YES, 10, 1);
             utils.sendMessage(p, "&c&l- $" + utils.format(cost));
             utils.sendMessage(p, "&a+" + amount + "&a Instant Health II Pots");
-            cooldown.enterCooldown(p);
+            //cooldown.enterCooldown(p);
             return true;
         } else {
             utils.sendMessage(p, "&cYou don't have enough money, requires $" + utils.format(cost) + "!");

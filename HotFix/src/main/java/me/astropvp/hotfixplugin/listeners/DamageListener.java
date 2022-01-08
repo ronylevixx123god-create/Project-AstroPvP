@@ -42,7 +42,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+/*    @EventHandler(priority = EventPriority.MONITOR)
     public void diaSwordFix(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
@@ -53,11 +53,11 @@ public class DamageListener implements Listener {
                     e.setDamage(e.getDamage() + cosmicData.getDouble("dmgIncr"));
             }
         }
-    }
+    }*/
 
 
 
-    @EventHandler
+/*    @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
@@ -82,7 +82,7 @@ public class DamageListener implements Listener {
                 }
             }
         }
-    }
+    }*/
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
