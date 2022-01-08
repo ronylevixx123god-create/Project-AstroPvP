@@ -26,7 +26,7 @@ public class EnderpearlFixes implements Listener {
         }
     }
 
-    private static final Set<Material> PASSABLE_MATERIALS = EnumSet.of(Material.ENCHANTMENT_TABLE, new Material[]{Material.STONE_SLAB2, Material.STEP, Material.WOOD_STEP, Material.FENCE_GATE, Material.ACACIA_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.JUNGLE_FENCE_GATE, Material.SPRUCE_FENCE_GATE, Material.DAYLIGHT_DETECTOR, Material.DAYLIGHT_DETECTOR_INVERTED});
+    private static final Set<Material> PASSABLE_MATERIALS = EnumSet.of(Material.ENCHANTMENT_TABLE, new Material[]{Material.STONE_SLAB2, Material.STEP, Material.WOOD_STEP, Material.FENCE_GATE, Material.ACACIA_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.JUNGLE_FENCE_GATE, Material.SPRUCE_FENCE_GATE, Material.DAYLIGHT_DETECTOR, Material.DAYLIGHT_DETECTOR_INVERTED, Material.STONE_PLATE,  Material.GOLD_PLATE,  Material.WOOD_PLATE,  Material.IRON_PLATE,  Material.ENDER_CHEST,  Material.CHEST,  Material.TRAPPED_CHEST});
 
     @EventHandler
     public void on(ProjectileHitEvent event) {
