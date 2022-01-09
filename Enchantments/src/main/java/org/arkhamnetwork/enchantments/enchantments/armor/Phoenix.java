@@ -108,7 +108,6 @@ extends CustomEnchantment {
             double dmg = e.getFinalDamage();
             if (Phoenix.procPhoenix((Player)player, attacker, level, dmg)) {
                 e.setDamage(0.0);
-                e.setCancelled(true);
             }
         }
     }

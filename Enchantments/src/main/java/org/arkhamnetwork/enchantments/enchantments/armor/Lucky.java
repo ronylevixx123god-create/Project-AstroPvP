@@ -37,7 +37,6 @@ extends CustomEnchantment {
             double dmg = e.getDamage();
             dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
-                e.setCancelled(true);
                 e.setDamage(0.0);
                 try {
                     ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0.3f, 0.3f, 0.3f, 0.1f, 30);

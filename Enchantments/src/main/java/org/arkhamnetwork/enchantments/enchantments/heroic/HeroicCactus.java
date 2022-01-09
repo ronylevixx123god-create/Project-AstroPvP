@@ -46,7 +46,6 @@ extends HeroicCustomEnchantment {
             }
             double d = thornNegateChance = level == 1 ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {
-                e.setCancelled(true);
                 e.setDamage(0.0);
             }
         }

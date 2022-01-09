@@ -72,6 +72,8 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
             return;
         }
 
+
+
         if (player.getTotalExperience() < 50000) {
             player.sendMessage(CC.translate("&c&l(!) &cYou need 50,000 XP to be able to apply the Heroic Enchantment Coder."));
             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);

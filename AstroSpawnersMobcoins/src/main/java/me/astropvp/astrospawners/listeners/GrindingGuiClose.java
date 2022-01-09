@@ -18,7 +18,7 @@ public class GrindingGuiClose implements Listener {
             Bukkit.getScheduler().runTaskLater(AstroSpawners.getInstance(), () -> {
                 AntiAFKGrindingGUI antiAFKGrindingGUI = new AntiAFKGrindingGUI((Player) e.getPlayer());
                 antiAFKGrindingGUI.getAntiAfkGrindingGui().open(e.getPlayer());
-            }, 1L);
+            }, 2L);
         }
 
     }

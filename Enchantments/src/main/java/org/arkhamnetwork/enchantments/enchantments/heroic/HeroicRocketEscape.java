@@ -107,7 +107,6 @@ extends HeroicCustomEnchantment {
                         return;
                     }
                 }
-                event.setCancelled(true);
                 event.setDamage(0.0);
                 pl.sendMessage("");
                 pl.sendMessage(CC.GreenB + "(!) " + CC.Green + "Your Guided Rocket Escape boots have activated, flight temporarily enabled, recover while they last!");

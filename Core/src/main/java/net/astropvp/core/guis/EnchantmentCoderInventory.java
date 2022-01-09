@@ -27,12 +27,12 @@ public class EnchantmentCoderInventory {
 
     public Inventory getInventory() {
         Inventory inventory = Bukkit.createInventory(null, 54, CC.translate("&8Heroic Enchantment Coder"));
-        inventory.setItem(13, getDisplayItem(Material.DIAMOND_HELMET));
-        inventory.setItem(22, getDisplayItem(Material.DIAMOND_CHESTPLATE));
-        inventory.setItem(31, getDisplayItem(Material.DIAMOND_LEGGINGS));
-        inventory.setItem(40, getDisplayItem(Material.DIAMOND_BOOTS));
-        inventory.setItem(20, getDisplayItem(Material.DIAMOND_SWORD));
-        inventory.setItem(24, getDisplayItem(Material.DIAMOND_AXE));
+        inventory.setItem(13, getDisplayItem(Material.LEATHER_HELMET));
+        inventory.setItem(22, getDisplayItem(Material.LEATHER_CHESTPLATE));
+        inventory.setItem(31, getDisplayItem(Material.LEATHER_LEGGINGS));
+        inventory.setItem(40, getDisplayItem(Material.LEATHER_BOOTS));
+        inventory.setItem(20, getDisplayItem(Material.GOLD_AXE));
+        inventory.setItem(24, getDisplayItem(Material.GOLD_AXE));
         ItemStack pane = getItemPane();
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);

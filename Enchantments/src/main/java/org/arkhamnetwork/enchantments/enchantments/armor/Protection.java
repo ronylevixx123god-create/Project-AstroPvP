@@ -101,13 +101,12 @@ extends CustomEnchantment {
                                 }
                             }
                             if (level >= 2 && Math.random() <= 0.1) {
-                                p.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, level * 20 * 2, level + 1));
                                 try {
                                     ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
                                 } catch (Exception exception) {
                                     exception.printStackTrace();
                                 }                            }
-                            if (level < 3 || !(Math.random() <= 0.085)) continue;
+                            if (level < 3 || !(Math.random() <= 0.005)) continue;
                             p.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, level * 20 * 2, level + 1));
                             try {
                                 ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 30);

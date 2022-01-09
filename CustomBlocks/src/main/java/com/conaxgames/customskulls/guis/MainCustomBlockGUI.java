@@ -29,7 +29,7 @@ public class MainCustomBlockGUI {
         ItemStack activateButton = new ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
                 .addLoreLine("")
                 .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((data.getLastActivated() + 3600000) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.millisToRoundedTime( (data.getLastActivated() + 3600000) - System.currentTimeMillis()))))
-                .addLoreLine(CC.translate("&f&l● &6Status: " + (data.isActive() ? "&a&lACTIVE" : "&c&lUNACTIVE")))
+                .addLoreLine(CC.translate("&f&l● &6Status: " + (data.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
                 .addLoreLine(CC.translate("&f&l● &6Price: &e$" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())))
                 .addLoreLine("")
                 .addLoreLine(CC.translate("&7Click to activate this custom block"))
