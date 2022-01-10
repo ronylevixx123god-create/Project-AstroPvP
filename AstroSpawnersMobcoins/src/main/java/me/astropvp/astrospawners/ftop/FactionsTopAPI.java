@@ -52,7 +52,7 @@ public class FactionsTopAPI {
         if (type == EntityType.IRON_GOLEM)
             return 5000000L;
         if (type == EntityType.VILLAGER)
-            return 25000000L;
+            return 15000000L;
         if (type == EntityType.ZOMBIE)
             return 85000L;
         if (type == EntityType.SKELETON)

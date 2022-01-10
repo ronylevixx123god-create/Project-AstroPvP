@@ -57,7 +57,6 @@ public class MasteryLifesteal extends MasteryCustomEnchantment {
                     GeneralUtil.reducePlayerHealth(nearbyPlayer, toSteal);
                     GeneralUtil.healPlayer((LivingEntity) damaged, toSteal);
                     if (nearbyPlayer.isDead()) {
-                        event.setCancelled(true);
                         return;
                     }
                     nearbyPlayer.playEffect(EntityEffect.HURT);

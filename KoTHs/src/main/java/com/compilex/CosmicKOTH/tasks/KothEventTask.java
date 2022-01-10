@@ -1,14 +1,8 @@
 package com.compilex.CosmicKOTH.tasks;
 
-import com.compilex.CosmicArmorSets.enums.AbilityArmorSet;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
-import com.compilex.CosmicKOTH.files.CustomConfig;
-import com.compilex.CosmicKOTH.struct.KothWorldType;
-import com.compilex.CosmicKOTH.utils.*;
-import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.MaskBuilder;
+import com.compilex.CosmicKOTH.customfiles.CustomConfig;
 import com.cosmicpvp.cosmicutils.utils.*;
-import com.google.common.collect.Lists;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -23,7 +17,6 @@ import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftFirework;
 import org.bukkit.entity.*;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -36,10 +29,8 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class KothEventTask
 implements Runnable {

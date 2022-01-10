@@ -27,7 +27,9 @@ public class LauncherTask implements Runnable {
             return;
         }
 
-        if (--countdown == 1800) {
+        countdown--;
+
+        if (countdown == 1800) {
             this.notifyPlayers("30 Minutes");
         }
 
@@ -68,9 +70,11 @@ public class LauncherTask implements Runnable {
 
         }
 
-        if (countdown < 0) {
+        /*if (countdown < 0) {
             countdown = 0;
-        }
+        }*/
+
+
 
 
 

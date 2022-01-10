@@ -22,7 +22,7 @@ package com.compilex.CosmicKOTH;
 
 import com.compilex.CosmicKOTH.cmds.CommandAdminKoth;
 import com.compilex.CosmicKOTH.cmds.CommandKoth;
-import com.compilex.CosmicKOTH.files.CustomConfig;
+import com.compilex.CosmicKOTH.customfiles.CustomConfig;
 import com.compilex.CosmicKOTH.listeners.KothInventoryListener;
 import com.compilex.CosmicKOTH.listeners.KothLootBagListener;
 import com.compilex.CosmicKOTH.listeners.KothPortalListener;
@@ -204,6 +204,7 @@ public class CosmicKOTHPlugin
         this.outpostManager.loadOutposts(this);
         this.trophiesEnabled = new File("plugins/CosmicHCFTrophies.jar").exists();
         Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(7400), 20L, 20L);
+
 
         CustomConfig.setup();
         CustomConfig.save();

@@ -127,7 +127,6 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
                     if (fac != null && faction != null && WorldGuardUtils.isPvPEnabled(entity.getLocation())) {
                         Relation rel = fac.getRelationTo((RelationParticipator) faction);
                         if (rel != Relation.ENEMY) {
-                            event.setCancelled(true);
                             this.pendingHighestToUncancel.add(damager.getUniqueId());
                         }
                     }
@@ -136,7 +135,6 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
                     e.getEntity().hasMetadata("noFallDamageHorrify")) {
                 long time = ((MetadataValue) e.getEntity().getMetadata("noFallDamageHorrify").get(0)).asLong();
                 if (time > System.currentTimeMillis()) {
-                    e.setCancelled(true);
                     e.setDamage(0.0D);
                 }
                 e.getEntity().removeMetadata("noFallDamageHorrify", (Plugin) Enchantments.getInstance());
@@ -155,7 +153,6 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
                         if (!WorldGuardUtils.isPvPEnabled(e.getEntity().getLocation()) ||
                                 !WorldGuardUtils.isPvPEnabled(e.getDamager().getLocation()))
                             return;
-                        event.setCancelled(false);
                     }
                 }
             }

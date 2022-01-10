@@ -1,4 +1,4 @@
-package com.compilex.CosmicKOTH.files;
+package com.compilex.CosmicKOTH.customfiles;
 
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;

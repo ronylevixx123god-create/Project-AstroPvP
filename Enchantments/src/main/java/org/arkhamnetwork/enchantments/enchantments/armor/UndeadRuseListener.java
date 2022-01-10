@@ -60,7 +60,6 @@ implements Listener {
             String summoner = ((MetadataValue)e.getEntity().getMetadata("undeadruseSummoner").get(0)).asString();
             Player pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner) || p.hasMetadata("spectator"))) {
-                e.setCancelled(true);
             }
         }
     }

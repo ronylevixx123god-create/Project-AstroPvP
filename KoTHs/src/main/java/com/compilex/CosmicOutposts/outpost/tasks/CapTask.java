@@ -453,7 +453,7 @@ implements Runnable {
             if (!p.getWorld().equals(this.outpost.getWorld()))
                 continue;
             if (WorldGuardUtils.getRegionName(p.getLocation()).equals(Outpost.OUTPOST_CAP_REGION) &&
-                    p.getGameMode() == GameMode.SURVIVAL && !CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished())
+                    p.getGameMode() == GameMode.SURVIVAL && !CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished() && !p.isDead())
                 l.add(p);
         }
         return l;

@@ -28,7 +28,7 @@ public class SpawnersFix implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.08) {
             ((Player) e.getDamager()).getInventory().addItem(astroKey);
         }
         }

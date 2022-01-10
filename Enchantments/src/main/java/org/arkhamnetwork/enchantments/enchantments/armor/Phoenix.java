@@ -165,11 +165,7 @@ extends CustomEnchantment {
             int soulCost = Phoenix.getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount((Player)player, (int)soulCost) && Phoenix.canUsePhoenix(player, level)) {
                 KillTrackerAPI.removeSoulsFromGems((Player)player, (int)soulCost);
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.THANKSGIVING_AMULET_AUTUMN)) {
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                } else {
-                    player.sendMessage(CC.translate("&e&l* AUTUMN AMULET &7Ignored 1st &cPhoenix &7Cooldown &e&l*"));
-                }
+                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 player.setMetadata("phoenixProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(player.hasMetadata("phoenixProcs") ? ((MetadataValue)player.getMetadata("phoenixProcs").get(0)).asInt() + 1 : 1)));
                 GeneralUtil.setPlayerHealth((LivingEntity)player, player.getMaxHealth());
                 player.sendMessage("");

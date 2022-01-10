@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
@@ -11,7 +12,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astrospawners.AstroSpawners;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -92,6 +92,17 @@ public class DamageListener implements Listener {
         }
     }*/
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void antiNearCrash(PlayerCommandPreprocessEvent e) {
+        if (e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) {
+            if (e.getPlayer().getNearbyEntities(132, 32, 32).size() > 5) {
+                e.getPlayer().sendMessage(CC.translate("&c&l(!)&c There are &n" + e.getPlayer().getNearbyEntities(32, 32, 32).size() + "&c nearby players!"));
+                e.setMessage("/null");
+                e.setCancelled(true);
+            }
+        }
+    }
+
 
 
     @EventHandler
@@ -104,7 +115,7 @@ public class DamageListener implements Listener {
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {
                 if (armor.getType().name().startsWith("DIAMOND_")) {
-                    dmgBuff+=2;
+                    dmgBuff+=5;
                 }
             }
             e.setDamage(e.getDamage() * 1+dmgBuff);

@@ -40,9 +40,6 @@ public class Rogue extends CustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (!CommandEnchDust.soulEnabled) {
-            return;
-        }
         if (!(player instanceof Player)) // rooThink
             return;
         if (!(playerHit instanceof Player)) return;
@@ -50,12 +47,6 @@ public class Rogue extends CustomEnchantment {
             playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
             return;
         }
-        if (!KillTrackerAPI.hasGodMode((Player) player))
-            return;
-        if (player.hasMetadata("noSoulProcs"))
-            return;
-        if (player.hasMetadata("witcher_ability"))
-            return;
         final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {

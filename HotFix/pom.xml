@@ -166,6 +166,13 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>keys</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCrateKeys.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>worldguard</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -263,6 +270,20 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>keys</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCrateKeys.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>spana</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

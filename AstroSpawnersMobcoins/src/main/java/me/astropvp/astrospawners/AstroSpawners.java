@@ -155,6 +155,8 @@ public class AstroSpawners extends JavaPlugin {
         //getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
         getCommand("factionstop").setExecutor((CommandExecutor)new CommandFactionsTop());
         getCommand("adminfactionstop").setExecutor((CommandExecutor)new CommandAdminFactionsTop());
+        getCommand("clearafk").setExecutor((CommandExecutor)new CommandClearAfkGrinders());
+
     }
 
     public void addPlayerToAfkGrinding(Player p) {
@@ -168,7 +170,7 @@ public class AstroSpawners extends JavaPlugin {
         }
 
         int amount = afkGrinders.get(uuid);
-        if (amount == 5000) {
+        if (amount >= 5000) {
             AntiAFKGrindingGUI antiAFKGrindingGUI = new AntiAFKGrindingGUI(p);
             antiAFKGrindingGUI.getAntiAfkGrindingGui().open(p);
         }

@@ -1,21 +1,15 @@
 package com.compilex.CosmicKOTH;
 
 import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
-import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
-import com.compilex.CosmicKOTH.files.CustomConfig;
+import com.compilex.CosmicKOTH.customfiles.CustomConfig;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
 import com.compilex.CosmicKOTH.utils.KothItemUtils;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Paths;
-import java.nio.file.StandardOpenOption;
 import java.util.Date;
 import java.util.List;
 

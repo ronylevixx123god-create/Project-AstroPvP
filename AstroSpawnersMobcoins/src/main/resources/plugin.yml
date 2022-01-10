@@ -26,3 +26,6 @@ commands:
   adminfactionstop:
     description: /adminfactionstop
     aliases: [aftop]
+  clearafk:
+    description: /clearafk
+    aliases: [ clearafkgrinders ]

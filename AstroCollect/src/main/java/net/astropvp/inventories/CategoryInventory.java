@@ -1,6 +1,7 @@
 package net.astropvp.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
@@ -107,6 +108,12 @@ public class CategoryInventory {
         for (ItemStack item : category.getItems()) {
             categoryInventory.addItem(new GuiItem(item, event -> {
 
+
+                if (player.getInventory().firstEmpty() == -1) {
+                    player.sendMessage(CC.translate("&c&l(!)&c Please clear some inventory space and try again!"));
+                    event.setCancelled(true);
+                    return;
+                }
 
 
                 player.getInventory().addItem(item);

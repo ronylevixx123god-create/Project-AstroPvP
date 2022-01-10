@@ -179,7 +179,7 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.1) {
+                if (num >= 0 && num <= 0.07) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ex) {

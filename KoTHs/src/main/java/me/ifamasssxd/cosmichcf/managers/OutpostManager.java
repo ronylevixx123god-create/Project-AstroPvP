@@ -417,7 +417,7 @@ public class OutpostManager {
                 }
                 playersinRegions.forEach((pl, regions) -> {
                     for (Outpost outpost : OutpostManager.this.outposts) {
-                        if (!outpost.isInsideSellRoom((Player)pl, (Set<String>)regions) || pl.isOp() || pl.hasPermission("arkkit.staff.hidden")) continue;
+                        if (!outpost.isInsideSellRoom((Player)pl, (Set<String>)regions) || pl.isOp() || pl.hasPermission("arkkit.staff.hidden") || pl.isDead()) continue;
                         if (outpost.getLastFactionToCap() == null) {
                             outpost.teleportToMain((Player)pl);
                             pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You are not allowed to be inside the Outpost Sell Room!");

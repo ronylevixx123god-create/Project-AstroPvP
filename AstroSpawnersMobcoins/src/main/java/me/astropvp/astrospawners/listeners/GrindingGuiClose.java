@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.guis.AntiAFKGrindingGUI;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,8 +17,10 @@ public class GrindingGuiClose implements Listener {
     public void onClose(InventoryCloseEvent e) {
         if (AstroSpawners.getInstance().getWaitingForAfkGrindingVerification().contains(e.getPlayer().getUniqueId())) {
             Bukkit.getScheduler().runTaskLater(AstroSpawners.getInstance(), () -> {
-                AntiAFKGrindingGUI antiAFKGrindingGUI = new AntiAFKGrindingGUI((Player) e.getPlayer());
-                antiAFKGrindingGUI.getAntiAfkGrindingGui().open(e.getPlayer());
+                AstroSpawners.getInstance().getAfkGrinders().put(e.getPlayer().getUniqueId(), 1);
+                AstroSpawners.getInstance().getWaitingForAfkGrindingVerification().remove(e.getPlayer().getUniqueId());
+                e.getPlayer().sendMessage(CC.translate("&a&l(!)&a You have completed the anti afk grinding captcha! You can now enjoy grinding again."));
+                e.getPlayer().closeInventory();
             }, 2L);
         }
 
