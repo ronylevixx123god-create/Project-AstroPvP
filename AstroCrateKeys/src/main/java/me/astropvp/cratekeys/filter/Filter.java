@@ -2,11 +2,12 @@ package me.astropvp.cratekeys.filter;
 
 import lombok.Getter;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 @Getter
 public abstract class Filter<T> {
-    private String name;
+    private transient String name;
 
     private HashMap<T, Boolean> filterMap;
 

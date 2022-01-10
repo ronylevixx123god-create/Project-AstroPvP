@@ -7,6 +7,7 @@ import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 
 import me.astropvp.cratekeys.filter.FilterManager;
+import me.astropvp.cratekeys.filter.FilterPlayer;
 import me.astropvp.cratekeys.filter.impl.CrateKeyFilter;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
@@ -78,7 +79,8 @@ public class LootPreviewGUI {
 
         expShopUI.setItem(6, 5, new GuiItem(createGUIItem(), event -> expShopUI.close(player)));
 
-        CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
+        FilterPlayer filterPlayer = FilterManager.getInstance().getFilterPlayer(player);
+        CrateKeyFilter filter = filterPlayer.hasFilter("crate_key_" + type.name().toLowerCase()) ? (CrateKeyFilter) filterPlayer.getFilter("crate_key_" + type.name().toLowerCase()) : (CrateKeyFilter) filterPlayer.registerFilter(new CrateKeyFilter(type));
         for (Map.Entry<ItemStack, Double> entry : itemList.entrySet()) {
             ItemStack item = entry.getKey().clone();
             double chance = entry.getValue();
