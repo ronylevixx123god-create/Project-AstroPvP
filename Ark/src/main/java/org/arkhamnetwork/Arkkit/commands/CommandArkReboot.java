@@ -31,6 +31,7 @@ public class CommandArkReboot
         implements CommandExecutor {
     public static boolean restart_task_exists = false;
     private PlayerDataManager manager;
+    private ServerRebootTask serverRebootTask;
 
     public CommandArkReboot() {
         Bukkit.getPluginManager().registerEvents(new ArkRebootListener(), Arkkit.get());
@@ -42,6 +43,14 @@ public class CommandArkReboot
             return true;
         }
 
+        if (args[0].equalsIgnoreCase("cancel")) {
+            sender.sendMessage("Cancelled reboot task;");
+            this.serverRebootTask.cancel();
+            return true;
+        }
+
+
+
         if (restart_task_exists) {
             sender.sendMessage(ChatColor.YELLOW + "There is already a pending restart task running.");
             return true;
@@ -49,9 +58,9 @@ public class CommandArkReboot
 
         manager = new PlayerDataManager(AstroSpawners.getInstance());
         restart_task_exists = true;
-        new ServerRebootTask(false).runTaskTimer(Arkkit.get(), 20L, 20L);
+        this.serverRebootTask = new ServerRebootTask(false);
+        this.serverRebootTask.runTaskTimer(Arkkit.get(), 20L, 20L);
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "savemc");
         return true;
     }
 }

@@ -33,7 +33,6 @@ extends CustomEnchantment {
         double procChance;
         double random = Math.random();
         if (random < (procChance = 0.015 * (double)level) && player.getHealth() - e.getFinalDamage() <= (double)(4 + level)) {
-            e.setCancelled(true);
             e.setDamage(0.0);
             GeneralUtil.healPlayer(player, 5 + level);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");

@@ -107,6 +107,8 @@ public class MobSpawnerListener implements Listener {
                         event.setCancelled(true);
                         return;
                     }
+
+
                     //CHANGED
                     event.setCancelled(true);
                     Player player = event.getPlayer();
@@ -129,6 +131,13 @@ public class MobSpawnerListener implements Listener {
                                         if (!allowSpawners) {
                                             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Spawner placement has been disabled!"));
                                             event.getPlayer().sendMessage(CC.translate("&7You can no longer place FTOP value."));
+                                            event.setCancelled(true);
+                                            return;
+                                        }
+
+                                        if (event.getItemInHand().getAmount() > 1) {
+                                            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place stacked spawners!"));
+                                            event.getPlayer().sendMessage(CC.translate("&7Combine them by drag and dropping them together"));
                                             event.setCancelled(true);
                                             return;
                                         }

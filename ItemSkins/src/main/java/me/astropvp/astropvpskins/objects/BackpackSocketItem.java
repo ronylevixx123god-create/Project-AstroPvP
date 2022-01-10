@@ -49,6 +49,11 @@ public class BackpackSocketItem extends CosmicItem implements InventoryInteracta
             player.sendMessage(CC.translate("&c&l(!) &cThis socket type (Backpack) can only be added to Chestplate armor items."));
             return;
         }
+
+        if (clicked.getType() != Material.LEATHER_CHESTPLATE) {
+            player.sendMessage(CC.translate("&c&l(!) &cYou can only apply this to heroic chestplates!."));
+            return;
+        }
         if (clickedWrapper != null && clickedWrapper.getconaxData() != null && clickedWrapper.getconaxData().hasKey("hasBackpackSocket")) {
             player.sendMessage(CC.translate("&c&l(!) &cThis item already has a Backpack socket on it."));
             return;

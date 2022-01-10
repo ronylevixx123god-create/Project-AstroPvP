@@ -39,7 +39,6 @@ implements Listener {
     @EventHandler
     public void onEntityExplode(EntityExplodeEvent e) {
         if (e.getEntity() != null && e.getEntity().hasMetadata("plagueCarrier")) {
-            e.setCancelled(true);
             e.setYield(0.0f);
             int level = ((MetadataValue)e.getEntity().getMetadata("plagueCarrier").get(0)).asInt();
             Location loc = e.getLocation();

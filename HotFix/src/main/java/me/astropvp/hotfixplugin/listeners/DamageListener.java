@@ -8,14 +8,16 @@ import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.struct.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astrospawners.AstroSpawners;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import org.apache.commons.lang.StringUtils;
+import org.arkhamnetwork.Arkkit.libs.JSONMessage;
+import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.enchantments.enchantments.swords.Block;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,12 +27,12 @@ import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerVelocityEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
+
+import java.util.UUID;
 
 public class DamageListener implements Listener {
 
@@ -39,6 +41,41 @@ public class DamageListener implements Listener {
         if (event.getMessage().toLowerCase().contains("jndi")) {
             event.setMessage("/null");
             event.setCancelled(true);
+        }
+    }
+
+    private String getFormattedName(ItemStack hand) {
+        if (hand == null || hand.getType() == Material.AIR) {
+            return "their fists!";
+        }
+        if (hand.hasItemMeta() && hand.getItemMeta().hasDisplayName()) {
+            return hand.getItemMeta().getDisplayName();
+        }
+        if (hand.getType() == Material.TNT) {
+            return "TNT";
+        }
+        return StringUtils.capitaliseAllWords(hand.getType().name().toLowerCase().replace("_", " "));
+    }
+
+    @EventHandler
+    public void killMsg(EntityDeathEvent e) {
+        if (e.getEntity() instanceof Player && e.getEntity().getKiller() != null) {
+            Player killer = e.getEntity().getKiller();
+            Player died = (Player) e.getEntity();
+
+
+            JSONMessage message = new JSONMessage("", ChatColor.GRAY);
+            message.addText(CC.translate("&c" + killer.getName() + "&e killed &c" + died.getName() + " &eusing "));
+            if (killer.getItemInHand() == null || killer.getItemInHand().getType() == Material.AIR) {
+                message.addText(this.getFormattedName(null));
+            } else {
+                message.addItem(killer.getItemInHand(), ItemLinking.formatColors(ChatColor.WHITE + this.getFormattedName(killer.getItemInHand())).getText());
+            }
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                message.sendToPlayer(player);
+
+            }
+
         }
     }
 
@@ -57,32 +94,24 @@ public class DamageListener implements Listener {
 
 
 
-/*    @EventHandler
+    @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
 
+            double dmgBuff = 0;
 
-            if (damaged.getInventory().getHelmet() != null) {
-                if (damaged.getInventory().getHelmet().getType() == Material.DIAMOND_HELMET) {
-                    damaged.setHealth(damaged.getHealth() - 18);
-                }
-            } else if (damaged.getInventory().getChestplate() != null) {
-                if (damaged.getInventory().getChestplate().getType() == Material.DIAMOND_CHESTPLATE) {
-                    damaged.setHealth(damaged.getHealth() - 18);
-                }
-            } else if (damaged.getInventory().getLeggings() != null) {
-                if (damaged.getInventory().getLeggings().getType() == Material.DIAMOND_LEGGINGS) {
-                    damaged.setHealth(damaged.getHealth() - 18);
-                }
-            } else if (damaged.getInventory().getBoots() != null) {
-                if (damaged.getInventory().getBoots().getType() == Material.DIAMOND_BOOTS) {
-                    damaged.setHealth(damaged.getHealth() - 18);
+            for (ItemStack armor : damaged.getInventory().getArmorContents()) {
+                if (armor.getType().name().startsWith("DIAMOND_")) {
+                    dmgBuff+=2;
                 }
             }
+            e.setDamage(e.getDamage() * 1+dmgBuff);
+
         }
-    }*/
+    }
+
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {

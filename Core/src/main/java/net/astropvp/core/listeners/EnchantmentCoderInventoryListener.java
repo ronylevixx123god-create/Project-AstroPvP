@@ -79,6 +79,18 @@ public class EnchantmentCoderInventoryListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
+            if (EnchantmentBook.getEnchantment(item).name().equalsIgnoreCase("rogue")) {
+                player.sendMessage(CC.translate("&c&l(!) &cYou cannot use this book in enchant encoders!"));
+                player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);
+                event.setCancelled(true);
+                return;
+            }
+            if (EnchantmentBook.getEnchantment(item).name().equalsIgnoreCase("revoke")) {
+                player.sendMessage(CC.translate("&c&l(!) &cYou cannot use this book in enchant encoders!"));
+                player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);
+                event.setCancelled(true);
+                return;
+            }
             if (!isMaterialApplicable(type, enchantment)) {
                 player.sendMessage(CC.translate("&c&l(!) &cBook is not applicable to the item!"));
                 player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);

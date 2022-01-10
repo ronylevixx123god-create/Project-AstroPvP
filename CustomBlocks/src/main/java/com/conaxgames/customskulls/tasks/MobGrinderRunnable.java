@@ -35,7 +35,6 @@ public class MobGrinderRunnable extends BukkitRunnable {
             if (!playerFound) continue;
 
 
-
             Location chestLocation = mobGrinderCache.getChestLocation();
 
             if (chestLocation.getChunk().getEntities().length == 0) continue;
@@ -57,11 +56,13 @@ public class MobGrinderRunnable extends BukkitRunnable {
             if (!stackedBlazesFound) continue;
 
 
-
             //ADD LOOT TO THE CHEST
             double chance = Math.random();
+            if (chance < 0.02) {
+                chest.getInventory().addItem(CoreSkulls.getLegKey());
 
-             if (chance < 0.04) {
+            } else if
+            (chance < 0.2) {
                 chest.getInventory().addItem(CoreSkulls.getAstroKey());
             }
             if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {

@@ -16,7 +16,6 @@ final class acenstoralListener implements Listener {
     @EventHandler
     public void onEntityDamage(final EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager().hasMetadata("acenstoralSummoner")) {
-            e.setCancelled(true);
         }
     }
 
@@ -36,7 +35,6 @@ final class acenstoralListener implements Listener {
     @EventHandler
     public void onEntityTarget(final EntityTargetEvent e) {
         if (e.getTarget() instanceof Player && e.getEntity().hasMetadata("acenstoralSummoner")) {
-            e.setCancelled(true);
             e.setTarget((Entity) null);
         }
     }

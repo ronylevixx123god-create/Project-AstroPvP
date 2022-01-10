@@ -40,7 +40,6 @@ implements Listener {
             summoner = ((MetadataValue)e.getDamager().getMetadata("undeadruseSummoner").get(0)).asString();
             pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner))) {
-                e.setCancelled(true);
                 e.setDamage(0.0);
             }
         }
@@ -49,7 +48,6 @@ implements Listener {
             summoner = ((MetadataValue)e.getEntity().getMetadata("undeadruseSummoner").get(0)).asString();
             pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner))) {
-                e.setCancelled(true);
                 e.setDamage(0.0);
             }
         }

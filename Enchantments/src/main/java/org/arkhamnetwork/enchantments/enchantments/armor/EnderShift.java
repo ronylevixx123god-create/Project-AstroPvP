@@ -68,7 +68,6 @@ extends CustomEnchantment {
             if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player)player)) {
                 Player pl = (Player)player;
                 last_ender_shift.put(pl.getUniqueId().toString(), System.currentTimeMillis());
-                e.setCancelled(true);
                 e.setDamage(0.0);
                 pl.sendMessage("");
                 pl.sendMessage(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.LIGHT_PURPLE + "You were about to die, so you have entered the Ender dimension, escape to safety!");

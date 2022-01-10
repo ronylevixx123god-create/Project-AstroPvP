@@ -68,7 +68,6 @@ extends CustomEnchantment {
     public void applyDefenseEffect(final LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) {
             boolean heal;
-            e.setCancelled(true);
             boolean bl = heal = Math.random() <= (double)level * 0.15;
             if (heal && GeneralUtil.healPlayer(player, e.getDamage())) {
                 try {

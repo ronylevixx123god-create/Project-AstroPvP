@@ -44,7 +44,6 @@ implements Listener {
             String summoner = ((MetadataValue)e.getDamager().getMetadata("guardianSummoner").get(0)).asString();
             Player pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAtleastTruce(p, pSummoner))) {
-                e.setCancelled(true);
                 e.setDamage(0.0);
                 return;
             }
@@ -59,7 +58,6 @@ implements Listener {
                 String summoner = ((MetadataValue)e.getEntity().getMetadata("guardianSummoner").get(0)).asString();
                 Player pSummoner = Bukkit.getPlayer((String)summoner);
                 if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner))) {
-                    e.setCancelled(true);
                     e.setDamage(0.0);
                     return;
                 }
@@ -100,20 +98,16 @@ implements Listener {
         if (e.getTarget() instanceof Player && e.getEntity().hasMetadata("guardianSummoner")) {
             Player p = (Player)e.getTarget();
             if (((MetadataValue)e.getEntity().getMetadata("guardianSummoner").get(0)).asString().equalsIgnoreCase(p.getName())) {
-                e.setCancelled(true);
                 return;
             }
             String summonerName = ((MetadataValue)e.getEntity().getMetadata("guardianSummoner").get(0)).asString();
             Player summonerPlayer = Bukkit.getPlayer((String)summonerName);
             if (summonerPlayer != null && this.isAlly(p, summonerPlayer)) {
-                e.setCancelled(true);
             }
             if (p.hasMetadata("spectator")) {
-                e.setCancelled(true);
             }
         }
         if (e.getTarget() != null && e.getTarget().hasMetadata("combatNPC_PlayerName")) {
-            e.setCancelled(true);
             e.setTarget(null);
         }
     }

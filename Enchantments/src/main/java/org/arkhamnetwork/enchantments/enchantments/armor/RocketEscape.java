@@ -92,7 +92,6 @@ public class RocketEscape
                         return;
                     }
                 }
-                e.setCancelled(true);
                 e.setDamage(0.0);
                 pl.sendMessage("");
                 pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");

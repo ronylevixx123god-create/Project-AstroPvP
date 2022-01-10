@@ -40,6 +40,9 @@ public class CoreSkulls extends JavaPlugin {
     @Getter
     private static final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
 
+    @Getter
+    private static final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
+
     public static Map<UUID, AbilityData> inSlotbotMachine;
     public static MobStackerUtils mobStackerUtils;
     @Getter

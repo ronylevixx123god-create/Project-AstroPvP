@@ -46,7 +46,6 @@ extends CustomEnchantment {
                 chance += 0.15;
             }
             if (Math.random() < chance) {
-                e.setCancelled(true);
                 e.setDamage(0.0);
                 ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*DODGE*");
                 try {

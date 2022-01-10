@@ -100,7 +100,6 @@ extends HeroicCustomEnchantment {
         public void onFoodLoss(FoodLevelChangeEvent event) {
             Player player;
             if (event.getEntity() instanceof Player && (player = (Player)event.getEntity()).getFoodLevel() > event.getFoodLevel() && HeroicImplants.this.implantedPlayers.contains(player.getUniqueId())) {
-                event.setCancelled(true);
             }
         }
     }

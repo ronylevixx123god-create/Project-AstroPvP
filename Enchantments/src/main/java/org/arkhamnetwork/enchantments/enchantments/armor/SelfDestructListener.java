@@ -50,7 +50,6 @@ implements Listener {
     @EventHandler(priority=EventPriority.LOWEST)
     public void onBlockExplode(EntityExplodeEvent e) {
         if (e.getEntity() != null && e.getEntity().hasMetadata("SelfDestructTNT")) {
-            e.setCancelled(true);
             e.setYield(0.0f);
             e.blockList().clear();
             if (WorldGuardUtils.isPvPDisabled(e.getLocation())) {

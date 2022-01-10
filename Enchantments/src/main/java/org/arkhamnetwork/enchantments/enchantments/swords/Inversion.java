@@ -48,7 +48,6 @@ extends CustomEnchantment {
                 }
                 GeneralUtil.healPlayer((LivingEntity)playerHit, heal);
                 e.setDamage(0.0);
-                e.setCancelled(true);
                 try {
                     ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation().add(0.0, 1.0, 0.0), 0.45f, 0.45f, 0.45f, 0.1f, 20);
                 } catch (Exception exception) {

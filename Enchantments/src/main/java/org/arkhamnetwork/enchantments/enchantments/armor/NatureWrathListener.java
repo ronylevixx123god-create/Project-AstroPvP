@@ -40,7 +40,6 @@ implements Listener {
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent e) {
         Player p;
         if (e.getDamager() instanceof Player && ((Player)e.getDamager()).getWalkSpeed() == 0.0f) {
-            e.setCancelled(true);
             try {
                 ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
             } catch (Exception exception) {
@@ -64,7 +63,6 @@ implements Listener {
     @EventHandler
     public void onPlayerShootBow(EntityShootBowEvent e) {
         if (e.getEntity() instanceof Player && ((Player)e.getEntity()).getWalkSpeed() == 0.0f) {
-            e.setCancelled(true);
             try {
                 ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
             } catch (Exception exception) {

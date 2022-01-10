@@ -79,7 +79,7 @@ public class EntityStackerListener implements Listener {
                 if (e.getEntity().getLastDamageCause().getCause() == EntityDamageEvent.DamageCause.FIRE_TICK) return;
             }
 
-            if (plugin.getWaitingForAfkGrindingVerification().contains(e.getDamager().getUniqueId())) {
+            if (AstroSpawners.getInstance().getWaitingForAfkGrindingVerification().contains(e.getDamager().getUniqueId())) {
                 e.setCancelled(true);
                 e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will resolve it."));
                 return;
@@ -133,9 +133,6 @@ public class EntityStackerListener implements Listener {
             }
 
 
-            if (CustomBlockUtil.chunkHasCertainBlock(p, "TREASURE_CHEST")) {
-                exp +=50;
-            }
 
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
@@ -182,7 +179,7 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.015) {
+                if (num >= 0 && num <= 0.1) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ex) {

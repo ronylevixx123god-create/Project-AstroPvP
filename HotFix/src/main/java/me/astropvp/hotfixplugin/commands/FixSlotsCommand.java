@@ -3,6 +3,7 @@ package me.astropvp.hotfixplugin.commands;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import me.astropvp.astrospawners.AstroSpawners;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -17,28 +18,9 @@ public class FixSlotsCommand implements CommandExecutor {
 
         Player sender = ((Player) commandSender).getPlayer();
 
-        if (sender.getItemInHand() == null) {
-            sender.sendMessage(ChatColor.RED + "Empty hand.");
-            return false;
-        }
-        if (sender.getItemInHand().getType() == null) {
-            sender.sendMessage(ChatColor.RED + "Empty hand.");
-            return false;
-        }
-        if (sender.getItemInHand().getType() != Material.PAPER) {
-            sender.sendMessage(ChatColor.RED + "This is not a slotbot ticket.");
-            return false;
-        }
-
-        NBTWrapper wrapper = new NBTWrapper(sender.getItemInHand());
-        if (wrapper.hasKey("xpShopPrice")) {
-            wrapper.remove("xpShopPrice");
-            NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"));
-            sender.setItemInHand(wrapper.setNBTBase("cosmicData", builder.get()).build());
-            sender.sendMessage(CC.translate("&a&l(!)&a Fixed your slotbots!"));
-            return true;
-        }
-        sender.sendMessage(ChatColor.RED + "This is not a broken slotbot ticket.");
+        AstroSpawners.getInstance().getWaitingForAfkGrindingVerification().clear();
+        AstroSpawners.getInstance().getAfkGrinders().clear();
+        sender.sendMessage(CC.Red + "Cleared");
         return false;
     }
 }
