@@ -5,6 +5,8 @@ import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.filter.FilterManager;
+import me.astropvp.cratekeys.filter.impl.CrateKeyFilter;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 import org.bukkit.Material;
@@ -62,7 +64,7 @@ public class CrateKeyInventoryListener implements Listener {
                     ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
 
-                        addItemToPlayer(player, itemStack);
+                        addItemToPlayer(player, itemStack, data);
 
                     amountOfKeys--;
                 }
@@ -71,7 +73,7 @@ public class CrateKeyInventoryListener implements Listener {
             } else {
                 ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
-                    addItemToPlayer(player, itemStack);
+                    addItemToPlayer(player, itemStack, data);
 
 
                 if (player.getItemInHand().getAmount() > 1) {
@@ -102,10 +104,15 @@ public class CrateKeyInventoryListener implements Listener {
         return true;
     }
 
-    public static void addItemToPlayer(Player player, ItemStack item) {
+    public static void addItemToPlayer(Player player, ItemStack item, CrateData data) {
         if (item == null || item.getType() == Material.AIR)
             return;
-
+        CrateType type = data.getCrateType();
+        CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
+        if(filter.isFiltered(item)) {
+            player.sendMessage(CC.translate(item.getItemMeta().getDisplayName() + "&c has been skipped. Right click the crate to edit this filter."));
+            return;
+        }
         player.getInventory().addItem(item);
     }
 }

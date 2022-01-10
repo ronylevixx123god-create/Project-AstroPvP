@@ -6,6 +6,8 @@ import com.google.common.collect.Lists;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 
+import me.astropvp.cratekeys.filter.FilterManager;
+import me.astropvp.cratekeys.filter.impl.CrateKeyFilter;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;
@@ -17,6 +19,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class LootPreviewGUI {
     private PaginatedGui expShopUI;
@@ -75,7 +78,7 @@ public class LootPreviewGUI {
 
         expShopUI.setItem(6, 5, new GuiItem(createGUIItem(), event -> expShopUI.close(player)));
 
-
+        CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
         for (Map.Entry<ItemStack, Double> entry : itemList.entrySet()) {
             ItemStack item = entry.getKey().clone();
             double chance = entry.getValue();
@@ -84,7 +87,13 @@ public class LootPreviewGUI {
             itemBuilder.addLoreLine("");
             itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
-            this.expShopUI.addItem(new GuiItem(itemBuilder.build()));
+            itemBuilder.addLoreLine("&6&lFILTERED: " + (filter.isFiltered(item) ? "&a&lTrue" : "&c&lFalse"));
+            this.expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
+                filter.setFiltered(item, !filter.isFiltered(item));
+                List<String> lore = itemBuilder.build().getItemMeta().getLore();
+                lore = lore.stream().filter(s -> s.startsWith(CC.strip("FILTERED: "))).collect(Collectors.toList());
+                this.expShopUI.getInventory().setItem(event.getSlot(), itemBuilder.lore(lore).build());
+            }));
         }
 
 
