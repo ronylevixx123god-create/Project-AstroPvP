@@ -1,9 +1,10 @@
-package me.astropvp.cratekeys.filter;
+package me.astropvp.cratekeys.filters;
 
 import lombok.Getter;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.UUID;

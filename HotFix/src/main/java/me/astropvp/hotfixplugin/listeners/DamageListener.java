@@ -98,8 +98,8 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 10;
-                if (protLevel == 5) decrease += 8;
+                if (protLevel == 6) decrease += 12;
+                if (protLevel == 5) decrease += 10;
             }
         }
         return decrease * 0.01;
@@ -120,12 +120,11 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
         if (e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) {
-            if (e.getPlayer().getNearbyEntities(132, 32, 32).size() > 5) {
                 e.getPlayer().sendMessage(CC.translate("&c&l(!)&c There are &n" + e.getPlayer().getNearbyEntities(32, 32, 32).size() + "&c nearby players!"));
                 e.setMessage("/null");
                 e.setCancelled(true);
             }
-        }
+
     }
 
 

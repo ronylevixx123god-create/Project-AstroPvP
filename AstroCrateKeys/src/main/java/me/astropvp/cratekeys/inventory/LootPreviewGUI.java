@@ -6,9 +6,10 @@ import com.google.common.collect.Lists;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 
-import me.astropvp.cratekeys.filter.FilterManager;
-import me.astropvp.cratekeys.filter.FilterPlayer;
-import me.astropvp.cratekeys.filter.impl.CrateKeyFilter;
+
+import me.astropvp.cratekeys.filters.FilterManager;
+import me.astropvp.cratekeys.filters.FilterPlayer;
+import me.astropvp.cratekeys.filters.impl.CrateKeyFilter;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;

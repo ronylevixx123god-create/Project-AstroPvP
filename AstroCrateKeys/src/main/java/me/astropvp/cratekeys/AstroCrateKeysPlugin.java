@@ -4,6 +4,7 @@ import me.astropvp.cratekeys.commands.CommandAdminCrate;
 import me.astropvp.cratekeys.commands.CommandGiveCrate;
 import me.astropvp.cratekeys.commands.CommandGiveCrateKey;
 import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.filters.FilterManager;
 import me.astropvp.cratekeys.listeners.CrateKeyInventoryListener;
 import me.astropvp.cratekeys.listeners.CrateLogicListener;
 import me.astropvp.cratekeys.managers.CrateDataManager;
@@ -23,6 +24,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
     public static AstroCrateKeysPlugin AstroCrateKeysPlugin;
     public static FileConfiguration config;
     public static HashMap<CrateType, Map<ItemStack, Double>> cachedCrateLoot;
+    public FilterManager filterManager;
 
 
     public void onEnable() {
@@ -35,6 +37,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
         for (CrateType crateType : CrateType.values()) {
             cachedCrateLoot.put(crateType, AstroCrateKeysAPI.getItems(crateType));
         }
+        this.filterManager = new FilterManager(this);
 
 
     }

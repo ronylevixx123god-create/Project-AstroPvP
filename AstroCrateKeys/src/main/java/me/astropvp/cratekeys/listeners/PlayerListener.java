@@ -1,6 +1,6 @@
 package me.astropvp.cratekeys.listeners;
 
-import me.astropvp.cratekeys.filter.FilterManager;
+import me.astropvp.cratekeys.filters.FilterManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

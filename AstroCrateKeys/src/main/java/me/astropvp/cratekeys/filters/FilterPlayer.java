@@ -1,4 +1,4 @@
-package me.astropvp.cratekeys.filter;
+package me.astropvp.cratekeys.filters;
 
 import com.cosmicpvp.cosmicutils.itembuilder.JsonItemSerializer;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;

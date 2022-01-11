@@ -1,7 +1,7 @@
-package me.astropvp.cratekeys.filter.impl;
+package me.astropvp.cratekeys.filters.impl;
 
 import me.astropvp.cratekeys.enums.CrateType;
-import me.astropvp.cratekeys.filter.Filter;
+import me.astropvp.cratekeys.filters.Filter;
 import org.bukkit.inventory.ItemStack;
 
 public class CrateKeyFilter extends Filter<ItemStack> {
