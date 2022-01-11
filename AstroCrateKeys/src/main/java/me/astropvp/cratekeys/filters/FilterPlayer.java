@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.itembuilder.JsonItemSerializer;
 import com.cosmicpvp.cosmicutils.utils.JSONUtils;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -13,16 +14,17 @@ import org.bukkit.plugin.Plugin;
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.UUID;
 
 @Getter
 public class FilterPlayer {
-    private transient Gson gson = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization().registerTypeAdapter(ItemStack.class, new JsonItemSerializer()).create();
+    private final Gson gson = new GsonBuilder().setPrettyPrinting().enableComplexMapKeySerialization().registerTypeHierarchyAdapter(ItemStack.class, new JsonItemSerializer()).create();
 
     private HashMap<String, Filter<?>> filters;
 
-    private transient Plugin plugin;
+    private Plugin plugin;
 
     private UUID uuid;
 
@@ -33,6 +35,7 @@ public class FilterPlayer {
     }
 
     public boolean hasFilter(String name) {
+
         return this.filters.containsKey(name);
     }
 
@@ -53,7 +56,7 @@ public class FilterPlayer {
             return;
         }
         try {
-            this.filters = (HashMap<String, Filter<?>>) JSONUtils.fromJson(file, filters.getClass(), this.gson);
+            this.filters = (HashMap<String, Filter<?>>) JSONUtils.fromJson(file, new TypeToken<HashMap<String, Filter<?>>>(){}.getType(), this.gson);
         } catch (IOException exception) {
             exception.printStackTrace();
         }
@@ -71,7 +74,7 @@ public class FilterPlayer {
             return;
         }
         try {
-            JSONUtils.saveJSONToFile(file, filters, filters.getClass(), this.gson);
+            JSONUtils.saveJSONToFile(file, filters, new TypeToken<HashMap<String, Filter<?>>>(){}.getType(), this.gson);
         } catch (IOException exception) {
             exception.printStackTrace();
         }

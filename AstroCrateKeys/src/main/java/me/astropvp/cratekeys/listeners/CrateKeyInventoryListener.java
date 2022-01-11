@@ -64,7 +64,7 @@ public class CrateKeyInventoryListener implements Listener {
                     ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
 
-                        addItemToPlayer(player, itemStack, data);
+                    addItemToPlayer(player, itemStack, data);
 
                     amountOfKeys--;
                 }
@@ -73,7 +73,7 @@ public class CrateKeyInventoryListener implements Listener {
             } else {
                 ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
-                    addItemToPlayer(player, itemStack, data);
+                addItemToPlayer(player, itemStack, data);
 
 
                 if (player.getItemInHand().getAmount() > 1) {
@@ -109,8 +109,13 @@ public class CrateKeyInventoryListener implements Listener {
             return;
         CrateType type = data.getCrateType();
         CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
-        if(filter != null && filter.isFiltered(item)) {
-            player.sendMessage(CC.translate(item.getItemMeta().getDisplayName() + "&c has been skipped. Right click the crate to edit this filter."));
+        if (filter != null && filter.isFiltered(item)) {
+            if (!item.hasItemMeta()) {
+                player.sendMessage(CC.translate(item.getType().name() + "&c has been skipped. &cLeft-Click the crate to edit this filter."));
+
+            } else {
+                player.sendMessage(CC.translate(item.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft-Click the crate to edit this filter."));
+            }
             return;
         }
         player.getInventory().addItem(item);

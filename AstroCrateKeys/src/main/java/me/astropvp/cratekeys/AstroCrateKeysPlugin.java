@@ -7,6 +7,7 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.filters.FilterManager;
 import me.astropvp.cratekeys.listeners.CrateKeyInventoryListener;
 import me.astropvp.cratekeys.listeners.CrateLogicListener;
+import me.astropvp.cratekeys.listeners.PlayerListener;
 import me.astropvp.cratekeys.managers.CrateDataManager;
 
 import org.bukkit.Bukkit;
@@ -38,6 +39,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
             cachedCrateLoot.put(crateType, AstroCrateKeysAPI.getItems(crateType));
         }
         this.filterManager = new FilterManager(this);
+        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
 
     }

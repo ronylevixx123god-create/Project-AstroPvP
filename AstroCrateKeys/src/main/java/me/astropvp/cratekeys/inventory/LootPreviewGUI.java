@@ -12,6 +12,7 @@ import me.astropvp.cratekeys.filters.FilterPlayer;
 import me.astropvp.cratekeys.filters.impl.CrateKeyFilter;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -90,13 +91,19 @@ public class LootPreviewGUI {
             itemBuilder.addLoreLine("");
             itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
-            itemBuilder.addLoreLine("&6&lFILTERED: " + (filter.isFiltered(item) ? "&a&lTrue" : "&c&lFalse"));
+            itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: " + (filter.isFiltered(item) ? "&aTrue" : "&cFalse")));
             this.expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
-                filter.setFiltered(item, !filter.isFiltered(item));
-                List<String> lore = itemBuilder.build().getItemMeta().getLore();
-                lore = lore.stream().filter(s -> s.startsWith(CC.strip("FILTERED: "))).collect(Collectors.toList());
-                this.expShopUI.setItem(event.getSlot(), new GuiItem(itemBuilder.lore(lore).build()));
-                this.expShopUI.update();
+
+                if (filter.isFiltered(item)) {
+                    filter.setFiltered(item, false);
+                } else {
+                    filter.setFiltered(item, true);
+                }
+
+
+
+                LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, type);
+                lootPreviewGUI.expShopUI.open(player);
             }));
         }
 

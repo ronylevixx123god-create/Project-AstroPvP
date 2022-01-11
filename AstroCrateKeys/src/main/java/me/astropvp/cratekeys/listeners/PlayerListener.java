@@ -4,6 +4,7 @@ import me.astropvp.cratekeys.filters.FilterManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 public class PlayerListener implements Listener {
@@ -12,4 +13,5 @@ public class PlayerListener implements Listener {
         Player player = e.getPlayer();
         FilterManager.getInstance().unregisterFilterPlayer(player);
     }
+
 }
