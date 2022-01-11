@@ -94,7 +94,8 @@ public class LootPreviewGUI {
                 filter.setFiltered(item, !filter.isFiltered(item));
                 List<String> lore = itemBuilder.build().getItemMeta().getLore();
                 lore = lore.stream().filter(s -> s.startsWith(CC.strip("FILTERED: "))).collect(Collectors.toList());
-                this.expShopUI.getInventory().setItem(event.getSlot(), itemBuilder.lore(lore).build());
+                this.expShopUI.setItem(event.getSlot(), new GuiItem(itemBuilder.lore(lore).build()));
+                this.expShopUI.update();
             }));
         }
 
