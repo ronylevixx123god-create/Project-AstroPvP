@@ -18,6 +18,7 @@ import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.enchantments.enchantments.swords.Block;
 import org.bukkit.*;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -79,6 +80,30 @@ public class DamageListener implements Listener {
         }
     }
 
+        @EventHandler(priority = EventPriority.LOWEST)
+    public void onHitP6(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player phurt = (Player) e.getEntity();
+
+            e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
+        }
+    }
+
+
+
+    public double getProtectionReduction(Player p) {
+        double decrease = 0;
+        for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
+            if (armorPiece == null) continue;
+            if (armorPiece.getType() == Material.AIR) continue;
+            if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
+                int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+                if (protLevel == 6) decrease += 10;
+                if (protLevel == 5) decrease += 8;
+            }
+        }
+        return decrease * 0.01;
+    }
 /*    @EventHandler(priority = EventPriority.MONITOR)
     public void diaSwordFix(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player) {

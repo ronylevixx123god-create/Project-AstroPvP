@@ -71,16 +71,8 @@ public class DivineImmolation
         }
         Player p = (Player) player;
         double radius = 1.0 * (double) level;
-        double damage = 1;
-        if (!GeneralUtil.isSword(p.getItemInHand())) {
-            return;
-        }
-        if (p.hasMetadata("lastItemHeldChange") && (long) MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue) p.getMetadata("lastItemHeldChange").get(0)).asLong() <= 5L) {
-            return;
-        }
-        if (p.hasMetadata("soulTrap") && ((MetadataValue) p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
-            return;
-        }
+        double damage = 1.5;
+
         if (!(playerHit instanceof Player)) return;
         if (KillTrackerAPI.hasGodMode((Player) p) && KillTrackerAPI.getAllSouls((Player) p) > 0) {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue) p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
@@ -116,7 +108,7 @@ public class DivineImmolation
 
                 le.damage(damage);
 
-                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int) (damage * 20.0), 1));
+                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3*20, 1));
                 if (le instanceof Player) {
                     ((Player) le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
                     ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);

@@ -98,16 +98,12 @@ public class InventoryBansheePet extends InventoryPet {
                 if (nearFac != null && nearFac.getRelationTo((RelationParticipator) faction) != Relation.ENEMY && nearFac.getRelationTo((RelationParticipator) faction) != Relation.NEUTRAL)
                     continue;
                 if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.SPRING_2020_AXE)) {
-                    nearPlayer.sendMessage(CC.translate("&c&l* SPIKED BAT SKIN *"));
+                    nearPlayer.sendMessage(CC.translate("&c&l* SPIKED BAT SKIN &7Blocked Banshee &c&l*"));
                     continue;
                 }
-                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(nearPlayer))) {
-                    nearPlayer.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
-                    player.sendMessage(CC.translate("&e&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&e&lWitch Hat&7] &e&l*"));
-                    continue;
-                }
+
                 if (nearPlayer.getItemInHand() != null && WeaponBonusUtils.hasWeaponBonus(nearPlayer.getItemInHand())) {
-                    if (WeaponBonusUtils.getWeaponBonusByItem(nearPlayer.getItemInHand()) ==  WeaponBonusType.DEMON && Math.random() < 0.35) {
+                    if (WeaponBonusUtils.getWeaponBonusByItem(nearPlayer.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.35) {
                         nearPlayer.sendMessage(CC.translate("&4&l* DEMON WEAPON BONUS &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &4&l*"));
                         player.sendMessage(CC.translate("&4&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&4&lDemon Weapon Bonus&7] &4&l*"));
                         continue;
@@ -126,21 +122,25 @@ public class InventoryBansheePet extends InventoryPet {
 
         int duration;
 
-        if (MaskUtils.hasMaskEquipped(player, "ELF")) {
-            duration = 12;
-        } else {
-            duration = 8;
-        }
+        duration = 8;
+
 
         nearbyEnemies.forEach(enemy -> {
             enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
             enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " [7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
             enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            if (!AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(enemy))) {
+                enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+                enemy.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet&7 Holy WhiteScroll Bypass &7[&f" + player.getName() + "&7] &e&l*"));
+
+            }
             enemy.sendMessage("");
             enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
-            enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
-            enemy.sendMessage("");
+            if (!AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(enemy))) {
+
+                enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
+                enemy.sendMessage("");
+            }
 
             DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "s&c&l] *"), "RKO");
 
@@ -178,22 +178,26 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
 
-
     public static void startBansheeEffect(Player player, Player enemy) {
 
         int duration = 8;
         enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
-        enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " 7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
+        enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " [7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
         enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        if (!AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(enemy))) {
+            enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            enemy.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet&7 Holy WhiteScroll Bypass &7[&f" + player.getName() + "&7] &e&l*"));
+
+        }
         enemy.sendMessage("");
         enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
-        enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
-        enemy.sendMessage("");
+        if (!AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(enemy))) {
 
+            enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
+            enemy.sendMessage("");
+        }
 
-
-        DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "&c&l] *"), "RKO");
+        DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "s&c&l] *"), "RKO");
 
 
         CombatLog.flagCombat(player);

@@ -133,11 +133,11 @@ public class InventorySkrrtPet extends InventoryPet {
 
             if (SkrrtCooldownUtils.isOnSkrrtCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on &nSkrrt Cooldown&c, this lasts for 60s!"));
-                return;
+                continue;
             }
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
                 player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
-                return;
+                continue;
             }
             if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
                 player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);

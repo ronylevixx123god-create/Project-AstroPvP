@@ -14,14 +14,14 @@ import org.bukkit.inventory.ItemStack;
 public class DamageFixes implements Listener {
 
 
-    @EventHandler(priority = EventPriority.HIGH)
+/*    @EventHandler(priority = EventPriority.LOWEST)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
 
             e.setDamage(e.getDamage() * (1 - getProtectionReduction(phurt)));
         }
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void damageCap(EntityDamageByEntityEvent e) {
@@ -54,8 +54,8 @@ public class DamageFixes implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 3;
-                if (protLevel == 5) decrease +=1.5;
+                if (protLevel == 6) decrease += 2;
+                if (protLevel == 5) decrease += 1;
             }
         }
         return decrease * 0.01;
