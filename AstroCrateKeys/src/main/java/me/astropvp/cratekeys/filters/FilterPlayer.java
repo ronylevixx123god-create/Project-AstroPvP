@@ -48,14 +48,8 @@ public class FilterPlayer {
     }
 
     public void loadData() {
-        File file = null;
-        try {
-            file = JSONUtils.getOrCreateFile(this.plugin.getDataFolder(), this.uuid + ".json");
-        } catch (IOException exception) {
-            exception.printStackTrace();
-        }
-        if(file == null) {
-            Bukkit.getLogger().info("FAILED TO SAVE FILTER DATA FOR UUID: " + this.uuid +" (SKIPPING)");
+        File file = new File(this.plugin.getDataFolder(), this.uuid + ".json");
+        if(!file.exists()) {
             return;
         }
         try {
