@@ -90,10 +90,12 @@ public class MysteryChestManager
         File folder = this.plugin.getDataFolder();
         if (folder.isDirectory()) {
             for (File found : folder.listFiles()) {
-                if (found == null || !found.getName().endsWith(".json")) continue;
+                if (found == null || !found.getName().endsWith(".json"))
+                    continue;
                 try {
                     MysteryChest chest = (MysteryChest) JSONUtils.fromJson(found, this.token, this.gson);
-                    if (chest == null) continue;
+                    if (chest == null)
+                        continue;
                     this.mysteryChestMap.put(chest.getInternalName(), chest);
                     this.plugin.getLogger().info("Loaded Chest '" + chest.getInternalName() + "' into memory: " + chest.getLootItems().size() + " me.astropvp.cratekeys.items");
                 } catch (Exception e) {

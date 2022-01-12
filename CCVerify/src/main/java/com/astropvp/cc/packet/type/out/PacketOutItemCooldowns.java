@@ -13,9 +13,9 @@ public class PacketOutItemCooldowns implements Packet {
     }
 
     @SerializedName("cooldowns")
-    private Map<String, List<Long>> cooldowns;
+    private Map<String, List<Double>> cooldowns;
 
-    public PacketOutItemCooldowns(Map<String, List<Long>> cooldowns){
+    public PacketOutItemCooldowns(Map<String, List<Double>> cooldowns){
         this.cooldowns = cooldowns;
     }
 }

@@ -8,11 +8,7 @@ import com.astropvp.cc.packet.encryption.PacketSecurity;
 import com.astropvp.cc.packet.handler.PacketHandler;
 import com.astropvp.cc.packet.type.Packet;
 import com.astropvp.cc.packet.type.in.PacketIn;
-import com.astropvp.cc.packet.type.out.PacketOutAllowedEmotes;
-import com.astropvp.cc.packet.type.out.PacketOutFeatureSet;
-import com.astropvp.cc.packet.type.out.PacketOutPlayerHeaders;
-import com.astropvp.cc.packet.type.out.PacketOutSessionKey;
-import com.astropvp.cc.packet.type.out.PacketOutTooltip;
+import com.astropvp.cc.packet.type.out.*;
 import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.astropvp.cc.util.Chat;
@@ -26,15 +22,13 @@ import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import io.netty.buffer.Unpooled;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
+
+import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.managers.InventoryPetManager;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import net.minecraft.server.v1_8_R3.PacketDataSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayInCustomPayload;
 import net.minecraft.server.v1_8_R3.PacketPlayOutCustomPayload;
@@ -143,11 +137,20 @@ public class PacketIO {
     public void addPlayer(Player player) {
         registerPlayer(player);
         CosmicPlayers.get().wrapPlayer(player);
-        queuePacket(player, (Packet)new PacketOutSessionKey("13c9esdEOtLC+JPE+GaWFcF86+MqlLoLaY6yRedTwUp3Fx1NFWDwPnBYjCb3Y83yPV8rujPeaCkARIabBx5Ca+J7FstlvlUN2+j5WpCSFUFDvqjw2KG0k6/WoABk1aHQi0n/sypTUB6ZkG2JnyuaNTQh2ebhc5yMIdeAViwIcyW4t3I5p7+VYjcq9YBX4CfKRJjSZaVyJIFBHouCndqlNicc4PvKcmTnYwj66h6rI4t5Iq97ticrbvXdZifre9IGcVLVhOIpCtiXoLBA06t6beLFhOF8OatYVu86CXvT0TBUaidS2NO+l7Qqk4m9k2fDENna2zpOe237XLBm7uKviA=="));
-        queuePacket(player, (Packet)new PacketOutFeatureSet("COSMICPVP"));
-        queuePacket(player, (Packet)new PacketOutAllowedEmotes(new HashSet(Config.getInst().getEmotes().getAllowedEmotes())));
+        queuePacket(player, new PacketOutSessionKey("13c9esdEOtLC+JPE+GaWFcF86+MqlLoLaY6yRedTwUp3Fx1NFWDwPnBYjCb3Y83yPV8rujPeaCkARIabBx5Ca+J7FstlvlUN2+j5WpCSFUFDvqjw2KG0k6/WoABk1aHQi0n/sypTUB6ZkG2JnyuaNTQh2ebhc5yMIdeAViwIcyW4t3I5p7+VYjcq9YBX4CfKRJjSZaVyJIFBHouCndqlNicc4PvKcmTnYwj66h6rI4t5Iq97ticrbvXdZifre9IGcVLVhOIpCtiXoLBA06t6beLFhOF8OatYVu86CXvT0TBUaidS2NO+l7Qqk4m9k2fDENna2zpOe237XLBm7uKviA=="));
+        queuePacket(player, new PacketOutFeatureSet("COSMICPVP"));
+        queuePacket(player, new PacketOutAllowedEmotes(new HashSet(Config.getInst().getEmotes().getAllowedEmotes())));
+        HashMap<String, List<Double>> cooldowns = new HashMap<>();
+        for(InventoryPets type : InventoryPets.values()) {
+            List<Double> current = new ArrayList<>();
+            for(int i = 0; i < type.getInternalClass().getMaxLevel(); i++) {
+                current.add((double) type.getInternalClass().getCooldown(i + 1));
+            }
+            cooldowns.put(type.name(), current);
+        }
+        queuePacket(player, new PacketOutItemCooldowns(cooldowns));
         if (Config.getInst().getTooltip().isSendDiscordTooltipOnJoin())
-            queuePacket(player, (Packet)new PacketOutTooltip(Chat.c(Config.getInst().getTooltip().getDiscordTooltipTitle()),
+            queuePacket(player, new PacketOutTooltip(Chat.c(Config.getInst().getTooltip().getDiscordTooltipTitle()),
                     Chat.c(Config.getInst().getTooltip().getDiscordTooltipText()), null,
 
                     Config.getInst().getTooltip().getDiscordTooltipItem(), Config.getInst().getTooltip().getDiscordTooltipItemDamage()));
@@ -157,7 +160,7 @@ public class PacketIO {
     public void addPlayerToHeader(Player player) {
         Map<String, List<String>> map = Config.getInst().getHeaders().getAllHeaders();
         for (Map.Entry<String, List<String>> entry : map.entrySet()) {
-            if (player.hasPermission("ccverify." + ((String)entry.getKey()).toLowerCase())) {
+            if (player.hasPermission("ccverify." + entry.getKey().toLowerCase())) {
                 this.headers.put(player.getName(), entry.getValue());
                 break;
             }
