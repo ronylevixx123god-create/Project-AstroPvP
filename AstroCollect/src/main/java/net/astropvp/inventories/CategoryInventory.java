@@ -93,8 +93,8 @@ public class CategoryInventory {
         }));
 
         categoryInventory.setItem(6, 5, new GuiItem(new ItemBuilder(Material.BED, CC.translate("&c&lMain Menu"), CC.translate("&7Click to go to the main menu")).build(), event -> {
-            CollectInventory collectInventory = new CollectInventory(player);
-            collectInventory.getCollectUI().open(player);
+                    CollectInventory collectInventory = new CollectInventory(player);
+                    collectInventory.getCollectUI().open(player);
                 })
         );
 

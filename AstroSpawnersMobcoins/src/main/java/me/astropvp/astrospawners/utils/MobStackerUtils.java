@@ -68,7 +68,7 @@ public class MobStackerUtils {
         int entityStack = 0;
         Entity entity = event.getEntity();
         Location location = event.getSpawner().getLocation();
-        SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().findSpawnerData(location);
+        SpawnerData data = AstroSpawners.getInstance().getSpawnersMap().get(location);
 
         int size = 0;
 

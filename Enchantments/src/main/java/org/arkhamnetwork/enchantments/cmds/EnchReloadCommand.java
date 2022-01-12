@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.cmds;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import org.arkhamnetwork.enchantments.files.CustomConfig;
+import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

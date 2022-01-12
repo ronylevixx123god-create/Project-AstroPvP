@@ -167,7 +167,7 @@ public class AncientArmorSet
         }
         this.modifyDamage(damager, event, 7.0, applied);
 
-        if (Math.random() <= 0.0005 * (double) applied || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.001 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;

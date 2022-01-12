@@ -1,13 +1,10 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
-import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
@@ -15,8 +12,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.WitcherCooldownUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,8 +22,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
@@ -41,14 +34,14 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(String.valueOf(CC.Gray) + "Call upon the deadly screaming Banshee.", "",
-                String.valueOf(CC.WhiteB) + "Ability", String.valueOf(CC.Gray) + "Activates " + CC.DarkRedB + "[Witcher]:",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Immune to almost all knockback (" + (5 * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Teleblocks enemies in a 8x8 radius for (" + (5 * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Negates enemy ragdoll in a 8x8 radius for (" + (5 * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (5 * 2) + "s)",
-                String.valueOf(CC.DarkRedB) + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s", "",
-                String.valueOf(CC.WhiteB) + "Cooldown",
+        return Lists.newArrayList(CC.Gray + "Call upon the deadly screaming Banshee.", "",
+                CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[Witcher]:",
+                CC.DarkRedB + "* " + CC.Gray + "Immune to almost all knockback (" + (5 * 2) + "s)",
+                CC.DarkRedB + "* " + CC.Gray + "Teleblocks enemies in a 8x8 radius for (" + (5 * 2) + "s)",
+                CC.DarkRedB + "* " + CC.Gray + "Negates enemy ragdoll in a 8x8 radius for (" + (5 * 2) + "s)",
+                CC.DarkRedB + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (5 * 2) + "s)",
+                CC.DarkRedB + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s", "",
+                CC.WhiteB + "Cooldown",
                 String.valueOf(CC.Gray) + (getCooldown(5) / 60) + " Minutes");
     }
 
@@ -71,7 +64,7 @@ public class InventoryWitcherPet extends InventoryPet {
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown(5));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
@@ -106,8 +99,10 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation()))
                 continue;
-            if (WitcherCooldownUtils.isOnWitcherCooldown(p))
+            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "witcherCooldown")) {
+                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on witcher cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "witcherCooldown") + "&c."));
                 continue;
+            }
             /*if (WitcherCooldown.isOnWitcherCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
                 continue;
@@ -116,11 +111,12 @@ public class InventoryWitcherPet extends InventoryPet {
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));
             p.playSound(p.getLocation(), Sound.GHAST_MOAN, 2.0F, 2.0F);
             p.setWalkSpeed(0.0F);
-            p.setMetadata("witcher_ability", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+            p.setMetadata("witcher_ability", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
 
-            WitcherCooldownUtils.enterWitcherCooldown(p);
+            int witcherCooldown = 30;
+            CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "witcherCooldown", witcherCooldown * 1000);
             if(!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
-                p.setMetadata("teleblock", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
+                p.setMetadata("teleblock", new FixedMetadataValue(Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
             } else {
                 p.sendMessage(CC.translate("&c&lSNOWFLAKE SLIPPERS: &7Blocked &cTeleblock!"));
             }
@@ -133,14 +129,14 @@ public class InventoryWitcherPet extends InventoryPet {
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
         player.sendMessage("");
-        player.setMetadata("witcher_effect", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
-        player.setMetadata("noknockback", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), null));
+        player.setMetadata("witcher_effect", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
+        player.setMetadata("noknockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
 
         DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");
 
 
 
-        Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 for (Player player : players) {
                     if (player == null || !player.isOnline())
@@ -150,19 +146,19 @@ public class InventoryWitcherPet extends InventoryPet {
             }
         }, 100L);
 
-        Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 if (!player.isOnline())
                     return;
                 if (player.hasMetadata("witcher_effect"))
-                    player.removeMetadata("witcher_effect", (Plugin) CosmicSkyInventoryPets.get());
+                    player.removeMetadata("witcher_effect", CosmicSkyInventoryPets.get());
                 if (player.hasMetadata("noknockback"))
-                    player.removeMetadata("noknockback", (Plugin) CosmicSkyInventoryPets.get());
+                    player.removeMetadata("noknockback", CosmicSkyInventoryPets.get());
                 for (Player player : players) {
                     if (player == null || !player.isOnline())
                         continue;
                     if (player.hasMetadata("witcher_ability"))
-                        player.removeMetadata("witcher_ability", (Plugin) Enchantments.getInstance());
+                        player.removeMetadata("witcher_ability", Enchantments.getInstance());
                     player.setWalkSpeed(0.2F);
                 }
                 player.sendMessage(CC.translate("&4&lPET:  Witcher Pet - WITCHER has worn off! "));
@@ -188,7 +184,7 @@ public class InventoryWitcherPet extends InventoryPet {
     public void addPotionEffectReturn(final Player player, final PotionEffect returned, final PotionEffect add) {
         player.removePotionEffect(returned.getType());
         player.addPotionEffect(add);
-        Bukkit.getScheduler().runTaskLater((Plugin) CosmicSkyInventoryPets.get(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), new Runnable() {
             public void run() {
                 if (player.hasPotionEffect(add.getType()))
                     player.removePotionEffect(add.getType());

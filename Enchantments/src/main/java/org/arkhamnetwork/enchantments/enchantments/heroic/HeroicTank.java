@@ -12,10 +12,7 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import org.arkhamnetwork.enchantments.files.CustomConfig;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
+import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
