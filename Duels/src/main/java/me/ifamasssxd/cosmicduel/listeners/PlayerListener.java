@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.EnumClientCommand
  *  net.minecraft.server.v1_7_R4.PacketPlayInClientCommand
@@ -70,26 +70,26 @@ import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class PlayerListener
-implements Listener {
+        implements Listener {
     @EventHandler
     public void onPlayerJoin(final PlayerJoinEvent e) {
         Player p = e.getPlayer();
         if (p.getWorld().getName().startsWith("world_duel") && DuelArenaTask.arena_regions.contains(WorldGuardUtils.getRegionName(p.getLocation()))) {
-            p.setMetadata("ignore_combat_tag", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), (Object)""));
-            p.teleport(((World)Bukkit.getWorlds().get(0)).getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-            p.removeMetadata("ignore_combat_tag", (Plugin)CosmicDuel.get());
-            p.sendMessage((Object)ChatColor.RED + "You were inside of a duel arena without a duel.");
+            p.setMetadata("ignore_combat_tag", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), (Object) ""));
+            p.teleport(((World) Bukkit.getWorlds().get(0)).getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            p.removeMetadata("ignore_combat_tag", (Plugin) CosmicDuel.get());
+            p.sendMessage((Object) ChatColor.RED + "You were inside of a duel arena without a duel.");
         }
         if (CollectionBin.getCollectionItems(e.getPlayer()).size() > 0) {
-            new BukkitRunnable(){
+            new BukkitRunnable() {
 
                 public void run() {
                     if (e.getPlayer() != null && e.getPlayer().isOnline()) {
                         e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.LEVEL_UP, 1.0f, 0.4f);
-                        e.getPlayer().sendMessage((Object)ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + "You have items inside of your " + (Object)ChatColor.YELLOW + "/duel collect" + (Object)ChatColor.GREEN + " bin.");
+                        e.getPlayer().sendMessage((Object) ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GREEN + "You have items inside of your " + (Object) ChatColor.YELLOW + "/duel collect" + (Object) ChatColor.GREEN + " bin.");
                     }
                 }
-            }.runTaskLater((Plugin)CosmicDuel.get(), 60L);
+            }.runTaskLater((Plugin) CosmicDuel.get(), 60L);
         }
         new DuelPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName());
     }
@@ -97,15 +97,21 @@ implements Listener {
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
         NewDuel duel;
-        e.setQuitMessage((String)null);
+        Player player = e.getPlayer();
+        e.setQuitMessage(null);
         if (e.getPlayer().getOpenInventory() != null && e.getPlayer().getOpenInventory().getTopInventory() != null && e.getPlayer().getOpenInventory().getTopInventory().getName().endsWith("'s Death Loot")) {
             e.getPlayer().getOpenInventory().getTopInventory().clear();
             Bukkit.getLogger().info("Cleared the exploited duel inventory for " + e.getPlayer().getName());
         }
 
-
+        if ((duel = DuelAPI.getDuel(player)) != null) {
+            if (DuelAPI.isDuelQueued(duel)) {
+                DuelAPI.cancelDuel(duel, CancelReason.LEFT_IN_QUEUE);
+                return;
+            }
+            duel.removePlayer(player, Reason.LEFT_DUEL, false);
+        } else {
             DuelInvite duelInvite;
-            Player player = e.getPlayer();
             duel = DuelAPI.getDuelSpectating(player);
             if (duel != null) {
                 duel.removeSpectator(player);
@@ -123,10 +129,10 @@ implements Listener {
             if (DuelPlayer.getDuelPlayer(player) != null) {
                 DuelPlayer.removeDuelPlayer(player);
             }
-
+        }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerDropItem(PlayerDropItemEvent e) {
         if (e.getPlayer().hasMetadata("clear_dropped_items")) {
             e.getItemDrop().remove();
@@ -165,12 +171,12 @@ implements Listener {
             }
             e.setKeepLevel(true);
             System.out.println("EXP: " + p.getExp() + " Level: " + p.getLevel());
-            new BukkitRunnable(){
+            new BukkitRunnable() {
 
                 public void run() {
-                    ((CraftPlayer)p).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
+                    ((CraftPlayer) p).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                 }
-            }.runTaskLater((Plugin)CosmicDuel.get(), 2L);
+            }.runTaskLater((Plugin) CosmicDuel.get(), 2L);
         }
     }
 
@@ -181,7 +187,7 @@ implements Listener {
             NewDuel d = DuelAPI.getDuel(p);
             if (!d.getSettings().hasSetting(Setting.HEALING)) {
                 e.setCancelled(true);
-                p.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Your duel has Healing " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "disabled.");
+                p.sendMessage((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.YELLOW + "Your duel has Healing " + (Object) ChatColor.RED + (Object) ChatColor.UNDERLINE + "disabled.");
                 return;
             }
             ItemStack is = e.getItem();
@@ -204,12 +210,12 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onPlayerDamage(EntityDamageByEntityEvent e) {
         NewDuel duel;
         Player ent;
         Player damager;
-        if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && e.getEntity() instanceof Player && (e.getDamager() instanceof Player || e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) && DuelAPI.inSameDuel(damager = (Player)(e.getDamager() instanceof Projectile ? ((Projectile)e.getDamager()).getShooter() : e.getDamager()), ent = (Player)e.getEntity()) && (duel = DuelAPI.getDuel(ent)).getDuelState() == DuelState.PLAYING && duel.getCreateState() == DuelCreateState.DONE) {
+        if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && e.getEntity() instanceof Player && (e.getDamager() instanceof Player || e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player) && DuelAPI.inSameDuel(damager = (Player) (e.getDamager() instanceof Projectile ? ((Projectile) e.getDamager()).getShooter() : e.getDamager()), ent = (Player) e.getEntity()) && (duel = DuelAPI.getDuel(ent)).getDuelState() == DuelState.PLAYING && duel.getCreateState() == DuelCreateState.DONE) {
             e.setCancelled(false);
             if (!e.isCancelled()) {
                 NewDuel newDuel = duel;
@@ -219,20 +225,20 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.LOW)
+    @EventHandler(priority = EventPriority.LOW)
     public void onPlayerDamageLow(EntityDamageByEntityEvent e) {
         NewDuel d;
         Player ent;
         Player damager;
-        if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && e.getEntity() instanceof Player && (e.getDamager() instanceof Player || e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) && DuelAPI.inSameDuel(damager = (Player)(e.getDamager() instanceof Projectile ? ((Projectile)e.getDamager()).getShooter() : e.getDamager()), ent = (Player)e.getEntity()) && (d = DuelAPI.getDuel(ent)).getDuelState() == DuelState.PLAYING && d.getCreateState() == DuelCreateState.DONE) {
+        if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && e.getEntity() instanceof Player && (e.getDamager() instanceof Player || e.getDamager() instanceof Projectile && ((Projectile) e.getDamager()).getShooter() instanceof Player) && DuelAPI.inSameDuel(damager = (Player) (e.getDamager() instanceof Projectile ? ((Projectile) e.getDamager()).getShooter() : e.getDamager()), ent = (Player) e.getEntity()) && (d = DuelAPI.getDuel(ent)).getDuelState() == DuelState.PLAYING && d.getCreateState() == DuelCreateState.DONE) {
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=false)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = false)
     public void onPlayerDeath(EntityDamageEvent e) {
         if (e.getEntity() instanceof Player) {
-            Player p = (Player)e.getEntity();
+            Player p = (Player) e.getEntity();
             if (!e.isCancelled() && p.getOpenInventory() != null && p.getOpenInventory().getTopInventory() != null && p.getOpenInventory().getTopInventory().getName().equalsIgnoreCase("Select an Arena")) {
                 p.closeInventory();
             }
@@ -268,7 +274,7 @@ implements Listener {
                     return;
                 }
                 if (!e.isCancelled()) {
-                    p.setMetadata("last_damage", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), (Object)(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2L))));
+                    p.setMetadata("last_damage", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), (Object) (System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2L))));
                 }
                 if (d.getGameTimer() >= 300 && !e.isCancelled()) {
                     e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
@@ -277,18 +283,18 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onCommandPreProccess(PlayerTeleportEvent e) {
         if (DuelAPI.hasDuel(e.getPlayer())) {
             NewDuel d = DuelAPI.getDuel(e.getPlayer());
             if (d.getDuelState() == DuelState.IN_QUEUE) {
                 if (e.getTo() != null && e.getTo().getWorld().getName().equals(Arena.getDuelWorldName())) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot teleport to the duel world while in queue.");
+                    e.getPlayer().sendMessage((Object) ChatColor.RED + "You cannot teleport to the duel world while in queue.");
                 }
             } else if (d.getDuelState() != DuelState.ENDED && d.getDuelState() != DuelState.ENDING && !e.getPlayer().isOp() && e.getTo().getWorld() != e.getFrom().getWorld() && e.getFrom().getWorld().getName().equals(Arena.getDuelWorldName())) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot leave the duel world while in a duel!");
+                e.getPlayer().sendMessage((Object) ChatColor.RED + "You cannot leave the duel world while in a duel!");
             }
         } else if (!DuelAPI.isSpectator(e.getPlayer()) && !e.getPlayer().isOp() && !DuelAPI.hasDuel(e.getPlayer()) && e.getFrom() != null && e.getFrom().getWorld() != e.getTo().getWorld() && e.getTo() != null && e.getTo().getWorld() != null && e.getTo().getWorld().getName().equals(Arena.getDuelWorldName())) {
             e.setCancelled(true);
@@ -297,8 +303,8 @@ implements Listener {
 
     public Player getLastPlayerToDamage(Player p) {
         EntityDamageByEntityEvent event;
-        if (p != null && p.getLastDamageCause() != null && p.getLastDamageCause() instanceof EntityDamageByEntityEvent && (event = (EntityDamageByEntityEvent)p.getLastDamageCause()).getDamager() instanceof Player) {
-            Player killer = (Player)event.getDamager();
+        if (p != null && p.getLastDamageCause() != null && p.getLastDamageCause() instanceof EntityDamageByEntityEvent && (event = (EntityDamageByEntityEvent) p.getLastDamageCause()).getDamager() instanceof Player) {
+            Player killer = (Player) event.getDamager();
             return killer;
         }
         return null;

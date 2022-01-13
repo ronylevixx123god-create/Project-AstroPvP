@@ -236,7 +236,7 @@ public class KingSlime extends Boss {
         if (e instanceof EntityDamageByEntityEvent) {
             final EntityDamageByEntityEvent event = (EntityDamageByEntityEvent) e;
             if (event.getDamager().equals(minion) && event.getEntity() instanceof Player) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
+                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2);
             }
         } else if (e instanceof EntityTargetEvent || e instanceof EntityTargetLivingEntityEvent) {
             if (this.getPhase() == Phase.ONE) {
