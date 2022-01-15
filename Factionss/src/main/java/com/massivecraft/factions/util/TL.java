@@ -289,9 +289,9 @@ public enum TL {
     COMMAND_HELP_ADMIN_1("&b/f claim safezone &eclaim land for the safe zone"),
     COMMAND_HELP_ADMIN_2("&b/f claim warzone &eclaim land for the war zone"),
     COMMAND_HELP_ADMIN_3("&b/f autoclaim [safezone|warzone] &etake a guess"),
-    COMMAND_HELP_MOAR_1("Finally some commands for the server admins:"),
-    COMMAND_HELP_MOAR_2("&eMore commands for server admins:"),
-    COMMAND_HELP_MOAR_3("&eEven more commands for server admins:"),
+    COMMAND_HELP_MOAR_1("Finally some net.astropvp.armorsets.commands for the server admins:"),
+    COMMAND_HELP_MOAR_2("&eMore net.astropvp.armorsets.commands for server admins:"),
+    COMMAND_HELP_MOAR_3("&eEven more net.astropvp.armorsets.commands for server admins:"),
     COMMAND_HELP_DESCRIPTION("Display a help page"),
 
     COMMAND_SOTW_DESCRIPTION("Turn sotw on/off"),
@@ -341,7 +341,7 @@ public enum TL {
     COMMAND_ALT_NOTOPEN("%1$s &cis not open to new alts!"),
     COMMAND_ALT_WRONGCODE("%1$s &cis not the correct code for %2$s&c!"),
     COMMAND_ALT_SUCCESS("&e%1$s &esuccessfully joined %2$s &eas an alt."),
-    COMMAND_ALT_USAGE("Faction alt control commands"),
+    COMMAND_ALT_USAGE("Faction alt control net.astropvp.armorsets.commands"),
     COMMAND_ALT_OPENUSAGE("Open a faction to new alts"),
     COMMAND_ALT_CLOSEUSAGE("Close a faction to new alts"),
     COMMAND_ALT_JOINUSAGE("Join a faction as an alt"),
@@ -403,8 +403,8 @@ public enum TL {
     COMMAND_MODIFYPOWER_ADDED("&eAdded &6%1$f &epower to &6%2$s. &eNew total rounded power: &6%3$d"),
     COMMAND_MODIFYPOWER_DESCRIPTION("Modify the power of a faction/player"),
 
-    COMMAND_MONEY_LONG("&eThe faction money commands."),
-    COMMAND_MONEY_DESCRIPTION("Faction money commands"),
+    COMMAND_MONEY_LONG("&eThe faction money net.astropvp.armorsets.commands."),
+    COMMAND_MONEY_DESCRIPTION("Faction money net.astropvp.armorsets.commands"),
 
     COMMAND_MONEYBALANCE_SHORT("show faction balance"),
     COMMAND_MONEYBALANCE_DESCRIPTION("Show your factions current money balance"),
@@ -564,7 +564,7 @@ public enum TL {
     COMMAND_STRIKE_TAKE_DOESNTEXIST("&cThat strike doesn't exist! Try a different index."),
     COMMAND_STRIKE_TAKE_SUCCESS("&eRemoved a strike from %1$s&e."),
 
-    COMMAND_STRIKE_USAGE("Strike commands for factions"),
+    COMMAND_STRIKE_USAGE("Strike net.astropvp.armorsets.commands for factions"),
 
     COMMAND_MISSIONS_USAGE("View and manage missions"),
 
@@ -920,7 +920,7 @@ public enum TL {
 
     REGION_PEACEFUL("peaceful territory"),
     /**
-     * In the player and entity listeners
+     * In the player and entity net.astropvp.armorsets.listeners
      */
     PLAYER_CANTADDTHATITEM("&cYou cant put that item in your f chest!"),
     PLAYER_CANTHURT("&eYou may not harm other players in %s"),

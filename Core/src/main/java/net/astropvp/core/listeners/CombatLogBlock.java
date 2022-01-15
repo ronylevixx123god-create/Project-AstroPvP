@@ -60,7 +60,7 @@ public class CombatLogBlock implements Listener {
             if (!player.isOp()) {
                 event.setCancelled(true);
                 event.setMessage("/null");
-                player.sendMessage(ChatColor.RED + "You cannot use commands during a duel!");
+                player.sendMessage(ChatColor.RED + "You cannot use net.astropvp.armorsets.commands during a duel!");
             }
         }
     }

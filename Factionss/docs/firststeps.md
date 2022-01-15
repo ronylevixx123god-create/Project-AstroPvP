@@ -28,4 +28,4 @@ Now, your faction members can teleport to this location to go back to the base. 
 
 If he so chooses, jeb_ can now `/f join koolkids` and be a part of your faction!
 
-There are many more commands in Factions, detailed on the next page.
+There are many more net.astropvp.armorsets.commands in Factions, detailed on the next page.

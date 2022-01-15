@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  com.massivecraft.factions.Faction
  *  me.ifamasssxd.cosmichcf.api.HCFOutpostAPI
- *  me.ifamasssxd.cosmichcf.struct.OutpostType
+ *  me.ifamasssxd.cosmichcf.net.astropvp.armorsets.struct.OutpostType
  */
 package com.cosmicpvp.cosmicutils.utils;
 

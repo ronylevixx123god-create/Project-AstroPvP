@@ -56,7 +56,7 @@ patches:
   # Prevents destruction of entities and blocks that have an me.astropvp.cratekeys.inventory actively being viewed, Fixes a dupe exploit on Factions.
   anti_inventory_hijack: true
 
-  # Adds a number of custom aliases/hooks and me.astropvp.cratekeys.commands for ArkhamNetwork such as /sidekick and /powers.
+  # Adds a number of custom aliases/hooks and me.astropvp.cratekeys.net.astropvp.armorsets.commands for ArkhamNetwork such as /sidekick and /powers.
   arkham_commands: false
 
   # Global cross-server alert system. Supports LilyPad only.
@@ -137,7 +137,7 @@ patches:
   # Enables /cmotd command along with a custom, configurable, delayed MOTD.
   custom_motd: false
 
-  # Enables /createtitle and /addcreatetitle me.astropvp.cratekeys.commands to purchase and create custom player titles.
+  # Enables /createtitle and /addcreatetitle me.astropvp.cratekeys.net.astropvp.armorsets.commands to purchase and create custom player titles.
   create_title: false
 
   # Multiplies vanilla xp drops by specified amount, default 2x.
@@ -170,7 +170,7 @@ patches:
   # Disables EnchantmentAPI anvil and enchantment table mechanics.
   enchantment_anvil_fix: false
 
-  # Enables per-warp /aliase me.astropvp.cratekeys.commands. So /warp test will become /test, useful in prison server configurations.
+  # Enables per-warp /aliase me.astropvp.cratekeys.net.astropvp.armorsets.commands. So /warp test will become /test, useful in prison server configurations.
   essentials_warp_aliases: false
 
   # Enables /addhomes to add extra essentials /homes to players.
@@ -206,7 +206,7 @@ patches:
   # Enables some goofy 4th of July celebrations
   july_freedom: false
 
-  # Enables player gambling me.astropvp.cratekeys.commands such as /roll.
+  # Enables player gambling me.astropvp.cratekeys.net.astropvp.armorsets.commands such as /roll.
   gamble: false
 
   # Makes creative gamemode persist between worlds.
@@ -472,7 +472,7 @@ patches:
   # Enables voting rewards and tracking.
   voting: false
 
-  # Enables some VIP youtuber me.astropvp.cratekeys.commands.
+  # Enables some VIP youtuber me.astropvp.cratekeys.net.astropvp.armorsets.commands.
   youtubers: false
 
   # Enables showcase expander me.astropvp.cratekeys.items.
@@ -526,11 +526,11 @@ patches:
 
   # Enables an array of WorldBorder fixes, incl. proper piston handling.
   world_border_fixes: false
-  # Enables /home gui that allows for customizable home icons.
+  # Enables /home net.astropvp.armorsets.gui that allows for customizable home icons.
   home_gui: false
-  # Enables /f warp gui that allows for customizable warp icons.
+  # Enables /f warp net.astropvp.armorsets.gui that allows for customizable warp icons.
   warp_gui: false
-  # Enables /pv gui that allows for customizable vault icons and names.
+  # Enables /pv net.astropvp.armorsets.gui that allows for customizable vault icons and names.
   vault_gui: false
   #Detect extremely obvious anti knockback hacks by checking their height after receiving a packet.
   antikb_detection: false

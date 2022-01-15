@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.entity.Player
  *  org.bukkit.event.entity.EntityDamageByEntityEvent

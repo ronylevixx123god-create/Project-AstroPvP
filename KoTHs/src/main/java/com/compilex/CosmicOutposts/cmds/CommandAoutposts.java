@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.me.astropvp.cratekeys.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.Boss
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.me.astropvp.cratekeys.enums.BossType
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command

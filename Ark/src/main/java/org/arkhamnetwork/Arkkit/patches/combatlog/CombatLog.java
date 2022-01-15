@@ -2,10 +2,10 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.DecimalFormatType
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.UpgradeUtils
  *  com.sk89q.worldedit.Vector
  *  com.sk89q.worldguard.bukkit.WorldGuardPlugin
  *  com.sk89q.worldguard.protection.flags.DefaultFlag

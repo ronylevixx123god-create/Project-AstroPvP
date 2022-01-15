@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  org.arkhamnetwork.enchantments.Enchantments
  *  org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent
  *  org.bukkit.entity.Player

@@ -6,7 +6,7 @@
  *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.ArmorSet
  *  com.compilex.CosmicDungeons.DungeonsAPI
  *  com.compilex.CosmicDungeons.DungeonsRewardsAPI
- *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.killtracker.KillTrackerAPI
  *  org.arkhamnetwork.Arkkit.patches.Halloween

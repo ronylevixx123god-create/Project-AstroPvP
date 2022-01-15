@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.VanishUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.VanishUtils
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringUtils
@@ -70,7 +70,7 @@ public class CommandDuel implements CommandExecutor {
             return true;
         Player p = (Player) sender;
         if (CosmicDuel.get().isShuttingDown()) {
-            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel commands while the server is rebooting.");
+            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel net.astropvp.armorsets.commands while the server is rebooting.");
             return true;
         }
         if (args.length == 1) {

@@ -3,14 +3,14 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.MaskUtils
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.Factions
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
- *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
+ *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.struct.FactionUpgrade
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

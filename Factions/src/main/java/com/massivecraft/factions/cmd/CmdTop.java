@@ -11,8 +11,8 @@ public class CmdTop extends FCommand {
         this.senderMustBeMember = false;
         this.senderMustBeModerator = false;
         this.senderMustBeAdmin = false;
-        this.setHelpShort("faction top commands");
-        this.helpLong.add(this.p.txt.parseTags("<i>The faction top commands."));
+        this.setHelpShort("faction top net.astropvp.armorsets.commands");
+        this.helpLong.add(this.p.txt.parseTags("<i>The faction top net.astropvp.armorsets.commands."));
     }
 
     @Override

@@ -3,11 +3,11 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
- *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CustomItemBuilder
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.arkhamnetwork.enchantments.MasteryCustomEnchantment

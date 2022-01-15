@@ -5,8 +5,8 @@
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.utils.BossUtils
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.Boss
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.utils.BossUtils
  *  org.arkhamnetwork.enchantments.Enchantments
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

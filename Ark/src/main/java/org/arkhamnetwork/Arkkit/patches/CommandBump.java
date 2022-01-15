@@ -6,7 +6,7 @@
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  org.bukkit.ChatColor
  *  org.bukkit.OfflinePlayer
  *  org.bukkit.command.Command

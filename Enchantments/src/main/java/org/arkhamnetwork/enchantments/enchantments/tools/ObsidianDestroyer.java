@@ -2,13 +2,13 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CoreProtectUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CoreProtectUtils
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.Faction
- *  com.massivecraft.factions.struct.FactionPermission
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.FactionPermission
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.Bukkit
  *  org.bukkit.Location

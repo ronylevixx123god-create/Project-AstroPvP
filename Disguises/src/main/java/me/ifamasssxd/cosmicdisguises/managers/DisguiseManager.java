@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.manager.CacheManager
  *  com.cosmicpvp.cosmicutils.CosmicUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.TimeUtils
  *  com.google.common.collect.Lists
  *  me.libraryaddict.disguise.DisguiseAPI
  *  me.libraryaddict.disguise.disguisetypes.DisguiseType

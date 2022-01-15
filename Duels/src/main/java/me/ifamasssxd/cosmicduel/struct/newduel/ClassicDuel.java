@@ -5,18 +5,18 @@
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.VanishUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.VanishUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldGuardUtils
  *  com.gmail.nossr50.api.PartyAPI
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
  *  com.gmail.nossr50.util.StringUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.factionupgrades.utils.ItemBuilder
+ *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.utils.ItemBuilder
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.arkhamnetwork.Arkkit.patches.CombatLog
  *  org.arkhamnetwork.enchantments.EnchantmentBook
- *  org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener
+ *  org.arkhamnetwork.enchantments.net.astropvp.armorsets.listeners.PlayerPotionEffectListener
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Instrument

@@ -811,7 +811,7 @@ servers:
       default: true
       permissions:
         - -mcmmo.ability.unarmed.berserk
-        - -mcmmo.me.astropvp.cratekeys.commands.ptp
+        - -mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.ptp
         - ChestShop.shop.buy
         - ChestShop.shop.sell
         - essentials.motd
@@ -859,7 +859,7 @@ servers:
         - mcmmo.ability.axes.*
         - mcmmo.ability.acrobatics.*
         - mcmmo.ability.blastmining.*
-        - mcmmo.me.astropvp.cratekeys.commands.inspect.offline
+        - mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.inspect.offline
         - skyblock.group.member
     thug:
       prefix: '&8[&cThug&8]&c'
@@ -1249,7 +1249,7 @@ servers:
         - essentials.warps.pvp
         - essentials.warps.bar
         - -mcmmo.ability.unarmed.berserk
-        - -mcmmo.me.astropvp.cratekeys.commands.ptp
+        - -mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.ptp
         - bukkit.command.tps
         - bm.notify
         - essentials.realname
@@ -1295,7 +1295,7 @@ servers:
         - mcmmo.ability.axes.*
         - mcmmo.ability.acrobatics.*
         - mcmmo.ability.blastmining.*
-        - mcmmo.me.astropvp.cratekeys.commands.inspect.offline
+        - mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.inspect.offline
         - silkspawners.place.*
         - silkspawners.info
         - betterenderchest.user.craft
@@ -1562,7 +1562,7 @@ servers:
         - -essentials.enderchest
         - -mcmmo.ability.axes
         - -mcmmo.skills.unarmed
-        - -mcmmo.me.astropvp.cratekeys.commands.ptp
+        - -mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.ptp
         - -bukkit.command.plugins
         - -factions.perm
         - -prison.mine.reset.broadcast
@@ -2258,7 +2258,7 @@ servers:
         - mcmmo.ability.unarmed.deflect
         - mcmmo.ability.unarmed.disarm
         - mcmmo.ability.unarmed.irongrip
-        - -mcmmo.me.astropvp.cratekeys.commands.ptp
+        - -mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.ptp
         - essentials.warps.potion
         - essentials.msg
         - nametag.group.a
@@ -2896,7 +2896,7 @@ servers:
         - mcmmo.ability.unarmed.deflect
         - mcmmo.ability.unarmed.disarm
         - mcmmo.ability.unarmed.irongrip
-        - -mcmmo.me.astropvp.cratekeys.commands.ptp
+        - -mcmmo.me.astropvp.cratekeys.net.astropvp.armorsets.commands.ptp
         - essentials.warps.potion
         - essentials.msg
         - nametag.group.a

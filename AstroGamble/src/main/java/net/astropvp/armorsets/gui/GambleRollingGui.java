@@ -1,11 +1,9 @@
-package gui;
+package net.astropvp.armorsets.gui;
 
 import lombok.Getter;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
-import org.bukkit.Bukkit;
-import org.bukkit.inventory.ItemStack;
-import struct.Language;
-import struct.Reward;
+import net.astropvp.armorsets.struct.Language;
+import net.astropvp.armorsets.struct.Reward;
 
 @Getter
 public class GambleRollingGui {

@@ -1,4 +1,4 @@
-package gui;
+package net.astropvp.armorsets.gui;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
@@ -9,8 +9,8 @@ import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
-import struct.Language;
-import struct.Reward;
+import net.astropvp.armorsets.struct.Language;
+import net.astropvp.armorsets.struct.Reward;
 
 @Getter
 public class GambleConfirmGui {

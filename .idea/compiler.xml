@@ -18,6 +18,7 @@
         <module name="Bosses" />
         <module name="AstroRevive" />
         <module name="Masks" />
+        <module name="AstroArmorSets" />
         <module name="AstroEvents" />
         <module name="AstroUtils" />
         <module name="Explosive" />

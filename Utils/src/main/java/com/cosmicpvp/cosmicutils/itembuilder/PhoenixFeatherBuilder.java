@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 

@@ -1,0 +1,96 @@
+package net.astropvp.armorsets.listeners;
+
+import com.golfing8.winespigot.armorequip.ArmorEquipEvent;
+import net.astropvp.armorsets.AstroArmorSets;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.armorsets.struct.cache.ArmorSetCache;
+import net.astropvp.core.AstroCore;
+import org.bukkit.Material;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+
+import java.util.Map;
+
+public class ArmorSetApplyListener implements Listener {
+
+    private final AstroArmorSets plugin;
+
+    public ArmorSetApplyListener(AstroArmorSets plugin) {
+        this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onArmorChange(ArmorEquipEvent e) {
+        ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(e.getPlayer()).getCache("armor_set");
+        if (e.getOldArmorPiece() != null && e.getOldArmorPiece().getType() != Material.AIR && AstroArmorSetsAPI.hasSetTypeOnItem(e.getOldArmorPiece())) {
+            cache.removeArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getOldArmorPiece()));
+        }
+
+        if (e.getNewArmorPiece() != null && e.getNewArmorPiece().getType() != Material.AIR && AstroArmorSetsAPI.hasSetTypeOnItem(e.getNewArmorPiece())) {
+            cache.addArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getNewArmorPiece()));
+        }
+
+    }
+
+    @EventHandler
+    public void onAttack(EntityDamageByEntityEvent e) {
+        Entity attacker = e.getDamager();
+        Entity attacked = e.getEntity();
+        ArmorSetCache cache;
+        if (attacker instanceof Player) {
+            cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
+
+            //armor set damaged
+            if (cache.getCurrentArmorSet() != null) {
+                cache.getCurrentArmorSet().getArmorSet().onAttack((Player) attacker, attacked, e);
+            }
+
+            //crystals damaged
+            if (!cache.getCurrentSetCrystals().isEmpty()) {
+                for (Map.Entry<ArmorSetType, Integer> entry : cache.getCurrentSetCrystals().entrySet()) {
+                    ArmorSetType armorSetType = entry.getKey();
+                    int amount = entry.getValue();
+                    armorSetType.getArmorSet().onAttackCrystal((Player) attacker, attacked, e, amount);
+
+                }
+            }
+
+        }
+
+    }
+
+    @EventHandler
+    public void onDamaged(EntityDamageByEntityEvent e) {
+        Entity attacker = e.getDamager();
+        Entity attacked = e.getEntity();
+        ArmorSetCache cache;
+        if (attacked instanceof Player) {
+            cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");
+            //armor set damaged
+            if (cache.getCurrentArmorSet() != null) {
+                cache.getCurrentArmorSet().getArmorSet().onDamaged(attacker, (Player)attacked, e);
+            }
+
+            //crystals damaged
+            if (!cache.getCurrentSetCrystals().isEmpty()) {
+                for (Map.Entry<ArmorSetType, Integer> entry : cache.getCurrentSetCrystals().entrySet()) {
+                    ArmorSetType armorSetType = entry.getKey();
+                    int amount = entry.getValue();
+                    armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
+
+                }
+            }
+        }
+
+    }
+}

@@ -1272,7 +1272,7 @@ public class TransitionConfigV1 {
 
             @Comment("Default Relation allows you to change the default relation for Factions.\n" +
                     "Example usage would be so people can't leave then make a new Faction while Raiding\n" +
-                    "  in order to be able to execute commands if the default relation is neutral.")
+                    "  in order to be able to execute net.astropvp.armorsets.commands if the default relation is neutral.")
             private String defaultRelation = "neutral";
 
             @Comment("If true, disables pistons entirely within faction territory.\n" +

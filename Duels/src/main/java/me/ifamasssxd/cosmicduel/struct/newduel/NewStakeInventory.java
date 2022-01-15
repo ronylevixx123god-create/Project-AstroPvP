@@ -2,9 +2,9 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
  *  com.google.common.collect.Lists
- *  me.ifamasssxd.factionupgrades.utils.ItemBuilder
+ *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.utils.ItemBuilder
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

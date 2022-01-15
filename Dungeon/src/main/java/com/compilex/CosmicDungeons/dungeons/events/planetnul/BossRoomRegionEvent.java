@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut
  *  me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut$BossPhase
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.Boss
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.enums.BossType
  *  org.bukkit.Location
  */
 package com.compilex.CosmicDungeons.dungeons.events.planetnul;

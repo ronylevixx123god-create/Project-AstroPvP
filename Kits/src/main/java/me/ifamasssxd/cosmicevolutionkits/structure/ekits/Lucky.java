@@ -25,14 +25,14 @@
  *  com.cosmicpvp.cosmicutils.itembuilder.RandomizationScrollBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.SpaceChestBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.YijkiStaffBuilder
- *  com.cosmicpvp.cosmicutils.struct.ItemTier
- *  com.cosmicpvp.cosmicutils.struct.LootTable
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CustomItemUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.ItemTier
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.LootTable
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CustomItemUtils
  *  com.google.common.collect.Lists
- *  me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CustomItemBuilder
  *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  me.ifamasssxd.killtracker.me.astropvp.cratekeys.listeners.Tracker
+ *  me.ifamasssxd.killtracker.me.astropvp.cratekeys.net.astropvp.armorsets.listeners.Tracker
  *  org.arkhamnetwork.Arkkit.patches.ExpBottles
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.enchantments.me.astropvp.cratekeys.items.EMPPulseItem

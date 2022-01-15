@@ -4,14 +4,14 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.struct.DecimalFormatType
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.HCFOutpostUtils
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.DecimalFormatType
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.HCFOutpostUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NumberUtils
  *  me.vaqxine.NetworkManager.NetworkManager
  *  net.milkbowl.vault.economy.Economy
  *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.Arkkit.commands.CommandArkReboot
+ *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.commands.CommandArkReboot
  *  org.arkhamnetwork.Arkkit.patches.AntiCrash
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins

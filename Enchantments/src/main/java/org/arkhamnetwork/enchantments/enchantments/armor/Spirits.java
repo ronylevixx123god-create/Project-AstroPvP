@@ -8,7 +8,7 @@
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.Factions
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  com.rit.sucy.CustomEnchantment
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.Bukkit

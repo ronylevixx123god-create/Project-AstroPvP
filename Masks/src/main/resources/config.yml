@@ -33,7 +33,7 @@ AddEntityAnimations: true
 # Please note that this will not remove the dye from their hands. This also does not check if the disguised entity is actually a sheep/wolf and wants a say in its color.
 DyeableSheep: false
 DyeableWolf: false
-# This is only called into action when the disguise is constructed using the me.astropvp.cratekeys.commands.
+# This is only called into action when the disguise is constructed using the me.astropvp.cratekeys.net.astropvp.armorsets.commands.
 # And when the disguise supports that. This will not be used at all for plugins constructing the disguises for instance.
 # Such as prophunt. Its also false because its kind of a retarded feature.
 # This is pretty simple. It shows the players displayname (Name as it appears in chat) above their head.

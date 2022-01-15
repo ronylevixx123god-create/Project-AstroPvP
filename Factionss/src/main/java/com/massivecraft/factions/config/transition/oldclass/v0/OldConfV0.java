@@ -155,10 +155,10 @@ public class OldConfV0 {
 
     public int actionDeniedPainAmount = 1;
 
-    // commands which will be prevented if the player is a member of a permanent faction
+    // net.astropvp.armorsets.commands which will be prevented if the player is a member of a permanent faction
     public Set<String> permanentFactionMemberDenyCommands = new LinkedHashSet<>();
 
-    // commands which will be prevented when in claimed territory of another faction
+    // net.astropvp.armorsets.commands which will be prevented when in claimed territory of another faction
     public Set<String> territoryNeutralDenyCommands = new LinkedHashSet<>();
     public Set<String> territoryEnemyDenyCommands = new LinkedHashSet<>();
     public Set<String> territoryAllyDenyCommands = new LinkedHashSet<>();

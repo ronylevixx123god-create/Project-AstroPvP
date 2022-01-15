@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.StringUtils$DefaultFontInfo
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.StringUtils$DefaultFontInfo
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Player
  */

@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.EssentialsUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.EssentialsUtils
  *  net.minecraft.server.v1_8_R3.Block
  *  net.minecraft.server.v1_8_R3.Entity
  *  net.minecraft.server.v1_8_R3.EntityFallingBlock

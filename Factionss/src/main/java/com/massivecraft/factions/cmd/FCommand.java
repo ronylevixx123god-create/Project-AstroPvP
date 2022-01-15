@@ -17,9 +17,9 @@ import java.util.Map;
 
 public abstract class FCommand {
     public enum CommandVisibility {
-        VISIBLE, // Visible commands are visible to anyone. Even those who don't have permission to use it or is of invalid sender type.
-        SECRET, // Secret commands are visible only to those who can use the command. These commands are usually some kind of admin commands.
-        INVISIBLE // Invisible commands are invisible to everyone, even those who can use the command.
+        VISIBLE, // Visible net.astropvp.armorsets.commands are visible to anyone. Even those who don't have permission to use it or is of invalid sender type.
+        SECRET, // Secret net.astropvp.armorsets.commands are visible only to those who can use the command. These net.astropvp.armorsets.commands are usually some kind of admin net.astropvp.armorsets.commands.
+        INVISIBLE // Invisible net.astropvp.armorsets.commands are invisible to everyone, even those who can use the command.
     }
 
     public FactionsPlugin plugin;

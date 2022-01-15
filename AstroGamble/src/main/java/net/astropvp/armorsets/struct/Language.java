@@ -1,4 +1,4 @@
-package struct;
+package net.astropvp.armorsets.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;

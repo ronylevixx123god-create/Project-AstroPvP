@@ -1,4 +1,4 @@
-package struct;
+package net.astropvp.armorsets.struct;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;

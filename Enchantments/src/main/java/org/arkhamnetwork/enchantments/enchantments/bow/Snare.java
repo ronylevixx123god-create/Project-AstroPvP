@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

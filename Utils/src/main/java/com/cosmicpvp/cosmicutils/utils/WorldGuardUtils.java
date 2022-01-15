@@ -143,7 +143,7 @@ public class WorldGuardUtils {
     public static Set<String> getRegionsIn(Location l) {
         HashSet<String> retr = new HashSet<>();
             //
-            // me.astropvp.cratekeys.utils lol
+            // me.astropvp.cratekeys.net.astropvp.armorsets.utils lol
             //
             RegionManager regionMan = wg.getRegionManager(l.getWorld());
             if (regionMan == null) {

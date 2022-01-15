@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.factions.points.FactionPointUtils
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.Factions
  *  org.bukkit.entity.Player

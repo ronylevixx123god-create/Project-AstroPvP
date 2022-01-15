@@ -94,7 +94,7 @@ implements Listener {
             }
             e.setMessage("/null");
             e.setCancelled(true);
-            p.sendMessage((Object)ChatColor.RED + "You cannot use commands while spectating.");
+            p.sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands while spectating.");
             p.sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
         }
     }

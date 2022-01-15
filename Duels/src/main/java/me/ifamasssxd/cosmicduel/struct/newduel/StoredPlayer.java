@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.gmail.nossr50.runnables.skills.BleedTimerTask
- *  org.arkhamnetwork.enchantments.me.astropvp.cratekeys.listeners.PlayerPotionEffectListener
+ *  org.arkhamnetwork.enchantments.me.astropvp.cratekeys.net.astropvp.armorsets.listeners.PlayerPotionEffectListener
  *  org.bukkit.Bukkit
  *  org.bukkit.Sound
  *  org.bukkit.entity.LivingEntity

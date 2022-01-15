@@ -51,7 +51,7 @@ public class CmdInvite extends FCommand {
             return;
         }
 
-        // Tooltips, colors, and commands only apply to the string immediately before it.
+        // Tooltips, colors, and net.astropvp.armorsets.commands only apply to the string immediately before it.
         FancyMessage message = new FancyMessage(context.fPlayer.describeTo(target, true))
                 .tooltip(TL.COMMAND_INVITE_CLICKTOJOIN.toString())
                 .command("/" + FactionsPlugin.getInstance().conf().getCommandBase().get(0) + " join " + context.faction.getTag())

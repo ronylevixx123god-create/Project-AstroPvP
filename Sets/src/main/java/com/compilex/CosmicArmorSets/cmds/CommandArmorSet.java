@@ -2,10 +2,10 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.compilex.CosmicKOTH.me.astropvp.cratekeys.utils.KothItemUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.compilex.CosmicKOTH.me.astropvp.cratekeys.net.astropvp.armorsets.utils.KothItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor

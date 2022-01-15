@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.ItemSerialization
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemSerialization
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.JSONUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.craftbukkit.libs.com.google.gson.reflect.TypeToken
  *  org.bukkit.inventory.Inventory

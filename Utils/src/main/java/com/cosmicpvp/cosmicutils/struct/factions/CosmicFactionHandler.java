@@ -10,7 +10,7 @@
  *  com.massivecraft.factions.Factions
  *  com.massivecraft.factions.iface.RelationParticipator
  *  com.massivecraft.factions.integration.Econ
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  com.massivecraft.factions.zcore.persist.Entity
  *  com.massivecraft.factions.zcore.persist.PlayerEntity
  *  com.massivecraft.factions.zcore.persist.PlayerEntityCollection

@@ -2,11 +2,11 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.CosmicGUI
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
  *  com.decimatemc.decimatecommons.inventory.InventoryManager
  *  com.decimatemc.decimatelootboxes.DecimateLootboxes
  *  com.decimatemc.decimatelootboxes.api.Lootbox
@@ -21,7 +21,7 @@
  *  fr.neatmonster.nocheatplus.hooks.NCPHook
  *  fr.neatmonster.nocheatplus.hooks.NCPHookManager
  *  me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
  *  net.milkbowl.vault.economy.Economy
  *  org.bukkit.Bukkit
  *  org.bukkit.Location

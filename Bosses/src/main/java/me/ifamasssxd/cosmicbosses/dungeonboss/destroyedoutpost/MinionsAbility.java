@@ -30,7 +30,7 @@ import java.util.*;
 import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
-@Metadata(mv = {1, 1, 11}, bv = {1, 0, 2}, k = 1, d1 = {"\u0000H\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010#\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\t\n\u0002\b\u0002\n\u0002\u0010\u000b\n\u0002\b\u0004\u0018\u00002\b\u0012\u0004\u0012\u00020\u00020\u00012\u00020\u0003B\r\u0012\u0006\u0010\u0004\u001a\u00020\u0002§\u0006\u0002\u0010\u0005J\b\u0010\u0014\u001a\u00020\u0015H\u0016J\b\u0010\u0016\u001a\u00020\u0017H\u0016J\b\u0010\u0018\u001a\u00020\u0019H\u0016J\u000e\u0010\u001a\u001a\b\u0012\u0004\u0012\u00020\b0\u0007H\u0016J\u0006\u0010\u001b\u001a\u00020\u001cJ\b\u0010\u001d\u001a\u00020\u0015H\u0016J\u0010\u0010\u001e\u001a\u00020\u00152\u0006\u0010\u001f\u001a\u00020\u000fH\u0002R \u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\b0\u0007X\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\t\u0010\n\"\u0004\b\u000b\u0010\fR \u0010\r\u001a\b\u0012\u0004\u0012\u00020\u000f0\u000eX\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0011\"\u0004\b\u0012\u0010\u0013§\u0006 "}, d2 = {"Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility;", "Lme/ifamasssxd/cosmicbosses/struct/BossAbility;", "Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;", "Lme/ifamasssxd/cosmicbosses/struct/EntityContainer;", "boss", "(Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;)V", "entitySet", "", "Lorg/bukkit/entity/Entity;", "getEntitySet", "()Ljava/util/Set;", "setEntitySet", "(Ljava/util/Set;)V", "locationLists", "", "Lorg/bukkit/Location;", "getLocationLists", "()Ljava/util/List;", "setLocationLists", "(Ljava/util/List;)V", "clearEntities", "", "getAbilityName", "", "getCooldown", "", "getEntities", "hasBlazesAlive", "", "onAbility", "spawnBlaze", "location", "CosmicBosses"})
+@Metadata(mv = {1, 1, 11}, bv = {1, 0, 2}, k = 1, d1 = {"\u0000H\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\u0018\u0002\n\u0002\b\u0003\n\u0002\u0010#\n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010 \n\u0002\u0018\u0002\n\u0002\b\u0005\n\u0002\u0010\u0002\n\u0000\n\u0002\u0010\u000e\n\u0000\n\u0002\u0010\t\n\u0002\b\u0002\n\u0002\u0010\u000b\n\u0002\b\u0004\u0018\u00002\b\u0012\u0004\u0012\u00020\u00020\u00012\u00020\u0003B\r\u0012\u0006\u0010\u0004\u001a\u00020\u0002§\u0006\u0002\u0010\u0005J\b\u0010\u0014\u001a\u00020\u0015H\u0016J\b\u0010\u0016\u001a\u00020\u0017H\u0016J\b\u0010\u0018\u001a\u00020\u0019H\u0016J\u000e\u0010\u001a\u001a\b\u0012\u0004\u0012\u00020\b0\u0007H\u0016J\u0006\u0010\u001b\u001a\u00020\u001cJ\b\u0010\u001d\u001a\u00020\u0015H\u0016J\u0010\u0010\u001e\u001a\u00020\u00152\u0006\u0010\u001f\u001a\u00020\u000fH\u0002R \u0010\u0006\u001a\b\u0012\u0004\u0012\u00020\b0\u0007X\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\t\u0010\n\"\u0004\b\u000b\u0010\fR \u0010\r\u001a\b\u0012\u0004\u0012\u00020\u000f0\u000eX\u0086\u000e§\u0006\u000e\n\u0000\u001a\u0004\b\u0010\u0010\u0011\"\u0004\b\u0012\u0010\u0013§\u0006 "}, d2 = {"Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility;", "Lme/ifamasssxd/cosmicbosses/net.astropvp.armorsets.struct/BossAbility;", "Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;", "Lme/ifamasssxd/cosmicbosses/net.astropvp.armorsets.struct/EntityContainer;", "boss", "(Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;)V", "entitySet", "", "Lorg/bukkit/entity/Entity;", "getEntitySet", "()Ljava/util/Set;", "setEntitySet", "(Ljava/util/Set;)V", "locationLists", "", "Lorg/bukkit/Location;", "getLocationLists", "()Ljava/util/List;", "setLocationLists", "(Ljava/util/List;)V", "clearEntities", "", "getAbilityName", "", "getCooldown", "", "getEntities", "hasBlazesAlive", "", "onAbility", "spawnBlaze", "location", "CosmicBosses"})
 public final class MinionsAbility extends BossAbility<MotherOfYijki> implements EntityContainer {
     @NotNull
     private Set<Entity> entitySet;
@@ -132,7 +132,7 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         //
         // Original Bytecode:
         //
-        //     1: getfield        me/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility.boss:Lme/ifamasssxd/cosmicbosses/struct/Boss;
+        //     1: getfield        me/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility.boss:Lme/ifamasssxd/cosmicbosses/net.astropvp.armorsets.struct/Boss;
         //     4: dup
         //     5: ifnonnull       18
         //     8: new             Lkotlin/TypeCastException;
@@ -185,7 +185,7 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         //   103: iload           4
         //   105: if_icmpgt       194
         //   108: aload_0         /* this */
-        //   109: getfield        me/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility.boss:Lme/ifamasssxd/cosmicbosses/struct/Boss;
+        //   109: getfield        me/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MinionsAbility.boss:Lme/ifamasssxd/cosmicbosses/net.astropvp.armorsets.struct/Boss;
         //   112: checkcast       Lme/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki;
         //   115: getfield        me/ifamasssxd/cosmicbosses/dungeonboss/destroyedoutpost/MotherOfYijki.entity:Lorg/bukkit/entity/LivingEntity;
         //   118: dup
@@ -196,7 +196,7 @@ public final class MinionsAbility extends BossAbility<MotherOfYijki> implements 
         //   130: iconst_2
 
 
-        //   131: invokestatic    org/arkhamnetwork/Arkkit/me.astropvp.cratekeys.utils/LocationUtils.getNearbyLocation:(Lorg/bukkit/Location;II)Lorg/bukkit/Location;
+        //   131: invokestatic    org/arkhamnetwork/Arkkit/me.astropvp.cratekeys.net.astropvp.armorsets.utils/LocationUtils.getNearbyLocation:(Lorg/bukkit/Location;II)Lorg/bukkit/Location;
         //   134: astore          nearbyLocation
         //   136: aload           nearbyLocation
         //   138: dup

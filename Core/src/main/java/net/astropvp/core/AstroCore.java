@@ -79,6 +79,7 @@ import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.utils.CleanseScroll;
 import net.astropvp.core.utils.ItemUtils;
+import net.astropvp.core.utils.cache.CacheManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -103,6 +104,8 @@ import java.util.logging.Level;
 public class AstroCore extends JavaPlugin {
 
     private static AstroCore instance;
+    private CacheManager cacheManager;
+
     private static Economy econ = null;
     private static Field bukkitCommand;
     private final String consolePrefix = "[AstroCore]";
@@ -262,6 +265,9 @@ public class AstroCore extends JavaPlugin {
 
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
 
+        this.cacheManager = new CacheManager();
+
+
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), ()-> {
             for (Player p : Bukkit.getOnlinePlayers()) {
@@ -274,6 +280,8 @@ public class AstroCore extends JavaPlugin {
                 }
             }
         },50L, 1800L);
+
+
 
 
         this.grindingMessages = new HashMap<>();
@@ -600,6 +608,10 @@ public class AstroCore extends JavaPlugin {
         saveConfig();
 
         instance = null;
+    }
+
+    public CacheManager getCacheManager() {
+        return cacheManager;
     }
 
     public void events() {

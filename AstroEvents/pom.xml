@@ -78,8 +78,8 @@
             <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>me.mattstudios.utils</groupId>
-            <artifactId>matt-framework-gui</artifactId>
+            <groupId>me.mattstudios.net.astropvp.armorsets.utils</groupId>
+            <artifactId>matt-framework-net.astropvp.armorsets.gui</artifactId>
             <version>2.0.3.3</version>
         </dependency>
     </dependencies>
@@ -113,7 +113,7 @@
                 <configuration>
                     <relocations>
                         <relocation>
-                            <pattern>co.aikar.commands</pattern>
+                            <pattern>co.aikar.net.astropvp.armorsets.commands</pattern>
                             <shadedPattern>net.astropvp.acf</shadedPattern>
                         </relocation>
                         <relocation>

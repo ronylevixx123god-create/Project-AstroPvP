@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.itembuilder.EssentialsItemBuilder
  *  com.google.common.collect.Lists
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.enchantments.Enchantment

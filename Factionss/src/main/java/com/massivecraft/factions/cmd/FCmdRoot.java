@@ -233,13 +233,13 @@ public class FCmdRoot extends FCommand implements CommandExecutor {
         this.addSubCommand(this.cmdInspect);
         this.addSubCommand(this.cmdRaidClaim);
         if (FactionsPlugin.getInstance().getLandRaidControl() instanceof PowerControl) {
-            FactionsPlugin.getInstance().getLogger().info("Using POWER for land/raid control. Enabling power commands.");
+            FactionsPlugin.getInstance().getLogger().info("Using POWER for land/raid control. Enabling power net.astropvp.armorsets.commands.");
             this.addSubCommand(this.cmdPermanentPower);
             this.addSubCommand(this.cmdPower);
             this.addSubCommand(this.cmdPowerBoost);
             this.addSubCommand(this.cmdModifyPower);
         } else if (FactionsPlugin.getInstance().getLandRaidControl() instanceof DTRControl) {
-            FactionsPlugin.getInstance().getLogger().info("Using DTR for land/raid control. Enabling DTR commands.");
+            FactionsPlugin.getInstance().getLogger().info("Using DTR for land/raid control. Enabling DTR net.astropvp.armorsets.commands.");
             this.addSubCommand(this.cmdDTR);
         }
         if (FactionsPlugin.getInstance().conf().commands().tnt().isEnable()) {

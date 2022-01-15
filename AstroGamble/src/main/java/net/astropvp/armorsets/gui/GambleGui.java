@@ -1,4 +1,4 @@
-package gui;
+package net.astropvp.armorsets.gui;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
@@ -6,8 +6,8 @@ import me.ifamasssxd.cosmicguishop.utils.NumberUtils;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.inventory.ItemStack;
-import struct.Language;
-import struct.Reward;
+import net.astropvp.armorsets.struct.Language;
+import net.astropvp.armorsets.struct.Reward;
 
 public class GambleGui {
 
