@@ -1,9 +1,9 @@
 package net.astropvp.armorsets.struct;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTItem;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import lombok.Getter;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.sets.PhantomArmorSet;
@@ -15,14 +15,20 @@ import java.util.List;
 
 @Getter
 public enum ArmorSetType {
-    PHANTOM(CC.translate("&c&lPhantom"), new PhantomArmorSet());
+    PHANTOM(CC.translate("&c&lPhantom"), new PhantomArmorSet(), CC.Red);
 
     private final String display;
     private final ArmorSet armorSet;
+    private final String color;
 
-    private ArmorSetType(String display, ArmorSet armorSet) {
+    private ArmorSetType(String display, ArmorSet armorSet, String color) {
         this.display = display;
         this.armorSet = armorSet;
+        this.color = color;
+    }
+
+    public String getFirstDisplayNameLetter() {
+        return this.color + CC.Bold + name().charAt(0);
     }
 
     public List<ItemStack> getItems() {
@@ -39,10 +45,10 @@ public enum ArmorSetType {
 
         for(int i = 0; i < items.size(); ++i) {
             ItemStack item = items.get(i).clone();
-            NBTItem wrapper = new NBTItem(item);
-            NBTCompound cosmicData = wrapper.getOrCreateCompound("cosmicData");
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
             cosmicData.setString("armorSetType", this.name());
-            item = wrapper.getItem();
+            item = wrapper.build();
             List<String> lore = item.getItemMeta().getLore();
             lore.add("");
             lore.addAll(set.getArmorLore());

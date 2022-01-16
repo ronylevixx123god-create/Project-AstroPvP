@@ -4,8 +4,6 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTItem;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -44,7 +42,7 @@ public enum HeroicArmor {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)
                         .addLoreLine("")
-                        .addLoreLine(CC.Gray + "+ " + armor.increase + " Bonus Attack Damage")
+                        .addLoreLine(CC.Gray + "+:" + (int)armor.increase + " Bonus Attack Damage")
                         .addLoreLine(CC.DarkRed + "This weapon is stronger than diamond.")
                         .addEnchantment(Enchantment.DAMAGE_ALL, 5)
                         .addEnchantment(Enchantment.DURABILITY, 3)
@@ -53,17 +51,17 @@ public enum HeroicArmor {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)
                         .addLoreLine("")
-                        .addLoreLine(CC.Gray + "+ " + armor.reduction + " Armor Value")
+                        .addLoreLine(CC.Gray + "+" + (int)armor.reduction + " Armor Value")
                         .addLoreLine(CC.DarkRed + "This armor is stronger than diamond.")
                         .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
                         .addEnchantment(Enchantment.DURABILITY, 3)
                         .build();
             }
 
-            NBTItem wrapper = new NBTItem(item);
-            NBTCompound cosmicData = wrapper.getOrCreateCompound("cosmicData");
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
             cosmicData.setBoolean("heroicArmor", true);
-            items.add(wrapper.getItem());
+            items.add(wrapper.build());
         }
         return items;
     }

@@ -5,8 +5,8 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-import de.tr7zw.nbtapi.NBTCompound;
-import de.tr7zw.nbtapi.NBTItem;
+
+import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.core.AstroCore;
@@ -22,8 +22,8 @@ import java.util.*;
 public class AstroArmorSetsAPI {
     public static ArmorSetType getSetTypeOnItem(ItemStack item) {
         if (item != null && item.getType() != Material.AIR) {
-            NBTItem wrapper = new NBTItem(item);
-            NBTCompound cosmicData = wrapper.getOrCreateCompound("cosmicData");
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
             return cosmicData.hasKey("armorSetType") ? ArmorSetType.valueOf(cosmicData.getString("armorSetType")) : null;
         } else {
             return null;
@@ -32,8 +32,8 @@ public class AstroArmorSetsAPI {
 
     public static boolean hasSetTypeOnItem(ItemStack item) {
         if (item != null && item.getType() != Material.AIR) {
-            NBTItem wrapper = new NBTItem(item);
-            NBTCompound cosmicData = wrapper.getOrCreateCompound("cosmicData");
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
             return cosmicData.hasKey("armorSetType");
         } else {
             return false;
@@ -62,6 +62,53 @@ public class AstroArmorSetsAPI {
                 cache.addArmorSet(getSetTypeOnItem(item));
             }
         }
+    }
+
+    public static List<ArmorSetType> getArmorCrystalsFromCrystalItem(NBTTagCompoundBuilder wrapper) {
+        if (wrapper.hasKey("bonus")) {
+            ArmorSetType set = AstroArmorSetsAPI.armorSetTypeFromName(wrapper.getString("bonus"));
+            if (set != null) {
+                return Collections.singletonList(set);
+            }
+        } else if (wrapper.hasKey("bonuses")) {
+            ArrayList retr2 = Lists.newArrayList();
+            NBTTagListBuilder list = new NBTTagListBuilder(wrapper.getNBTBase("bonuses"));
+            for (int i = 0; i < list.size(); ++i) {
+                ArmorSetType from;
+                String bonus = list.getStringAt(i);
+                if (bonus == null || bonus.isEmpty() || (from = armorSetTypeFromName(bonus)) == null) continue;
+                retr2.add(from);
+            }
+            return retr2;
+        }
+        return Collections.emptyList();
+    }
+
+    public static List<ArmorSetType> getFromArmorBonusCrystal(NBTWrapper wrapper) {
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        if (cosmicData == null) {
+            return null;
+        }
+        List<ArmorSetType> retr = new ArrayList<>();
+        if (cosmicData.hasKey("crystalBonus")) {
+            String upgrade = cosmicData.getString("crystalBonus");
+            if (upgrade == null) {
+                return null;
+            }
+            ArmorSetType from = AstroArmorSetsAPI.armorSetTypeFromName(upgrade);
+            if (from != null) {
+                retr.add(from);
+            }
+        } else if (cosmicData.hasKey("crystalBonuses")) {
+            NBTTagListBuilder list = new NBTTagListBuilder(cosmicData.getNBTBase("crystalBonuses"));
+            for (int i = 0; i < list.size(); ++i) {
+                ArmorSetType from2;
+                String bonus = list.getStringAt(i);
+                if (bonus == null || bonus.isEmpty() || (from2 = AstroArmorSetsAPI.armorSetTypeFromName(bonus)) == null) continue;
+                retr.add(from2);
+            }
+        }
+        return retr;
     }
 
     public static ItemStack applyCrystalToItem(List<ArmorSetType> set, ItemStack item) {
@@ -104,14 +151,18 @@ public class AstroArmorSetsAPI {
         return item;
     }
 
+    public static ItemStack removeCrystalFromItem(ItemStack item) {
+        return removeCrystalFromItem(new NBTWrapper(item));
+    }
+
     public static boolean isHeroic(ItemStack item) {
         if (item == null)
             return false;
         if (!item.getType().name().contains("LEATHER"))
             return false;
 
-        NBTItem wrapper = new NBTItem(item);
-        NBTCompound cosmicData = wrapper.getOrCreateCompound("cosmicData");
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
         return cosmicData.hasKey("heroicArmor");
     }
 
@@ -166,6 +217,11 @@ public class AstroArmorSetsAPI {
             }
         }
         return crystals;
+    }
+
+
+    public static ItemStack createCrystal(List<ArmorSetType> armorSet, double applyChance) {
+        return (new CustomItemBuilder("armorCrystal", armorSet, applyChance)).build();
     }
 
 

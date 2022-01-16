@@ -54,10 +54,7 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add("");
-        message.add(CC.translate("&c&lPHANTOM SET BONUS:"));
-        message.add(CC.translate("&c+25% DMG"));
-        message.add("");
+        message.add(CC.Red + "+5% Damage");
         return message;
     }
 
