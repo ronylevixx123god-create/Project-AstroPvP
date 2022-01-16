@@ -2,9 +2,13 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -33,7 +37,11 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        event.setDamage(event.getDamage() * 1.25D);
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "PhantomSet");
+    }
+
+    public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5, event, "PhantomCrystal", amount);
     }
 
     public List<String> getArmorLore() {
@@ -45,7 +53,12 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public List<String> getArmorCrystalLore() {
-        return null;
+        List<String> message = new ArrayList<>();
+        message.add("");
+        message.add(CC.translate("&c&lPHANTOM SET BONUS:"));
+        message.add(CC.translate("&c+25% DMG"));
+        message.add("");
+        return message;
     }
 
     public List<String> getArmorEquipMessage() {
@@ -57,8 +70,21 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
         return message;
     }
 
-    public ItemStack[] getWeapons() {
-        //code weapon here
-       return null;
+    public List<ItemStack> getWeapons() {
+        List<ItemStack> weapons = new ArrayList<>();
+        ItemStack sword = new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD)
+                .setName(CC.RedB + "Phantom Scythe")
+                .addLoreLines(CC.Gray + "An eerie blade designed to"
+                        , CC.Gray + "cut through the enemies."
+                        , ""
+                        , CC.RedB + "PHANTOM WEAPON BONUS"
+                        , CC.Red + "Deal +10% damage to all enemies."
+                        , CC.Gray + "(" + CC.GrayI + "Requires all 4 phantom items." + CC.Gray + ")")
+                .addEnchantment(Enchantment.DAMAGE_ALL, 5).addEnchantment(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "PHANTOM_SWORD").build();
+
+        weapons.add(sword);
+        return weapons;
     }
+
+
 }

@@ -69,6 +69,7 @@
         <module>AstroGamble</module>
         <module>GiftcardShop</module>
         <module>AstroArmorSets</module>
+        <module>AstroDamageHandler</module>
     </modules>
 
     <build>

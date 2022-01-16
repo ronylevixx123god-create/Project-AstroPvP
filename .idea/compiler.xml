@@ -67,6 +67,7 @@
         <module name="Utils" />
         <module name="WeaponRunes" />
         <module name="AstroGamble" />
+        <module name="AstroDamageHandler" />
         <module name="CompilexPermissions" />
       </profile>
       <profile name="Annotation profile for ProjectAstro" enabled="true">
