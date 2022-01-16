@@ -47,7 +47,7 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
         lore.add(CC.translate("&c&lPHANTOM SET BONUS"));
-        lore.add(CC.translate("&cDeal 25% damage to all enemies."));
+        lore.add(CC.translate("&8● &cDeal 25% damage to all enemies."));
         lore.add(CC.translate("&7(&oRequires all 4 phantom items.&7)"));
         return lore;
     }
@@ -61,8 +61,8 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
     public List<String> getArmorEquipMessage() {
         List<String> message = new ArrayList<>();
         message.add("");
-        message.add(CC.translate("&c&lPHANTOM SET BONUS:"));
-        message.add(CC.translate("&c+25% DMG"));
+        message.add(CC.translate("&c&lPHANTOM SET BONUS"));
+        message.add(CC.translate("&8● &c+25% DMG"));
         message.add("");
         return message;
     }
@@ -75,7 +75,7 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
                         , CC.Gray + "cut through the enemies."
                         , ""
                         , CC.RedB + "PHANTOM WEAPON BONUS"
-                        , CC.Red + "Deal +10% damage to all enemies."
+                        , CC.translate("&8● &cDeal +10% damage to all enemies.")
                         , CC.Gray + "(" + CC.GrayI + "Requires all 4 phantom items." + CC.Gray + ")")
                 .addEnchantment(Enchantment.DAMAGE_ALL, 5).addEnchantment(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "PHANTOM_SWORD").build();
 

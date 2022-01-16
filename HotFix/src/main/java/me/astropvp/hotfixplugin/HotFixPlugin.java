@@ -5,10 +5,14 @@ import me.astropvp.hotfixplugin.commands.FixSlotsCommand;
 import me.astropvp.hotfixplugin.listeners.*;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.DuelAPI;
+import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
+import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Objects;
 
 public class HotFixPlugin extends JavaPlugin {
     private static HotFixPlugin instance;
@@ -27,11 +31,12 @@ public class HotFixPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             for (Player p :Bukkit.getOnlinePlayers()) {
-                if (DuelAPI.hasDuel(p) && !p.getLocation().getWorld().getName().contains("duel")) {
+                if (DuelAPI.hasDuel(p) && !p.getLocation().getWorld().getName().contains("duel") && Objects.requireNonNull(DuelAPI.getDuel(p)).getDuelState() == DuelState.PLAYING) {
                     p.removeMetadata("in_duel", CosmicDuel.get());
+                    DuelAPI.cancelDuel(DuelAPI.getDuel(p), CancelReason.DUEL_END);
                 }
             }
-        }, 20L, 100L);
+        }, 20L, 20L);
 
     }
 

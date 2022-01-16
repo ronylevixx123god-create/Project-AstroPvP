@@ -91,7 +91,7 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
                 if(str.contains("&")) {
                     lore.add(CC.translate("  " + s.getColor() + CC.Bold + "  " + s.getColor() + str));
                 } else {
-                    lore.add("  " + s.getColor() + CC.Bold + "* " + s.getColor() + str);
+                    lore.add("  " + s.getColor() + CC.Bold + "● " + s.getColor() + str);
                 }
             }
         }
@@ -181,7 +181,7 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
             for (ArmorSetType set : sets) {
                 player.sendMessage(" " + set.getDisplay() + ":");
                 for (String line : set.getArmorSet().getArmorCrystalLore()) {
-                    player.sendMessage(CC.GoldB + "  * " + set.getColor() + line);
+                    player.sendMessage(CC.GoldB + "  ● " + set.getColor() + line);
                 }
                 Bukkit.getLogger().info("Applying " + set.name() + " Set Bonus Crystal to " + ItemUtils.getDisplayName(clicked));
             }
