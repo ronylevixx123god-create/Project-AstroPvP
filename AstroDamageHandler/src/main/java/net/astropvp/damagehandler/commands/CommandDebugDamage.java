@@ -11,7 +11,7 @@ import org.bukkit.entity.Player;
 public class CommandDebugDamage implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String string, String[] strings) {
-        if (sender instanceof Player) {
+        if (sender instanceof Player && sender.isOp()) {
             if (AstroDamageHandler.getInstance().getConfig().getBoolean("debug-enabled")) {
                 AstroDamageHandler.getInstance().getConfig().set("debug-enabled", false);
                 sender.sendMessage(CC.Red + "Damage debug disabled!");

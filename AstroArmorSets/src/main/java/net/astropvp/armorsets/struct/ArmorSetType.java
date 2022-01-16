@@ -34,7 +34,7 @@ public enum ArmorSetType {
         items.add(set.getBoots());
 
         if (set instanceof ArmorSetWeapon) {
-            items.addAll(Arrays.asList(((ArmorSetWeapon) set).getWeapons()));
+            items.addAll((((ArmorSetWeapon) set).getWeapons()));
         }
 
         for(int i = 0; i < items.size(); ++i) {
@@ -54,6 +54,8 @@ public enum ArmorSetType {
 
         return items;
     }
+
+
 
 
 }

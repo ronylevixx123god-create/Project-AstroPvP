@@ -14,6 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+import java.util.List;
 import java.util.Map;
 
 public class ArmorSetApplyListener implements Listener {
@@ -32,14 +33,40 @@ public class ArmorSetApplyListener implements Listener {
     @EventHandler
     public void onArmorChange(ArmorEquipEvent e) {
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(e.getPlayer()).getCache("armor_set");
-        if (e.getOldArmorPiece() != null && e.getOldArmorPiece().getType() != Material.AIR && AstroArmorSetsAPI.hasSetTypeOnItem(e.getOldArmorPiece())) {
-            cache.removeArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getOldArmorPiece()));
+
+        //Remove
+        if (e.getOldArmorPiece() != null && e.getOldArmorPiece().getType() != Material.AIR) {
+            if (AstroArmorSetsAPI.hasSetTypeOnItem(e.getOldArmorPiece())) {
+                cache.removeArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getOldArmorPiece()));
+            }
+            if (AstroArmorSetsAPI.isHeroic(e.getOldArmorPiece())) {
+                cache.removeHeroicArmor(e.getOldArmorPiece());
+            }
+
+            if (AstroArmorSetsAPI.hasCrystalsApplied(e.getOldArmorPiece())) {
+                List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(e.getNewArmorPiece());
+                for (ArmorSetType type : crystals) {
+                    cache.removeArmorCrystal(type);
+                }
+            }
         }
 
-        if (e.getNewArmorPiece() != null && e.getNewArmorPiece().getType() != Material.AIR && AstroArmorSetsAPI.hasSetTypeOnItem(e.getNewArmorPiece())) {
-            cache.addArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getNewArmorPiece()));
-        }
+        //Add
+        if (e.getNewArmorPiece() != null && e.getNewArmorPiece().getType() != Material.AIR) {
+            if (AstroArmorSetsAPI.hasSetTypeOnItem(e.getNewArmorPiece())) {
+                cache.addArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getNewArmorPiece()));
+            }
+            if (AstroArmorSetsAPI.isHeroic(e.getNewArmorPiece())) {
+                cache.addHeroicArmor(e.getNewArmorPiece());
+            }
 
+            if (AstroArmorSetsAPI.hasCrystalsApplied(e.getNewArmorPiece())) {
+                List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(e.getNewArmorPiece());
+                for (ArmorSetType type : crystals) {
+                    cache.removeArmorCrystal(type);
+                }
+            }
+        }
     }
 
     @EventHandler
@@ -78,7 +105,7 @@ public class ArmorSetApplyListener implements Listener {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");
             //armor set damaged
             if (cache.getCurrentArmorSet() != null) {
-                cache.getCurrentArmorSet().getArmorSet().onDamaged(attacker, (Player)attacked, e);
+                cache.getCurrentArmorSet().getArmorSet().onDamaged(attacker, (Player) attacked, e);
             }
 
             //crystals damaged

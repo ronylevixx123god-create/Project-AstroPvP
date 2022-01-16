@@ -1,10 +1,13 @@
 package net.astropvp.armorsets.struct.cache;
 
 import lombok.Getter;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.core.utils.cache.Cache;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.HashMap;
 import java.util.Iterator;
@@ -14,6 +17,7 @@ import java.util.Map;
 public class ArmorSetCache extends Cache {
     private final Map<ArmorSetType, Integer> currentArmorSets;
     private final Map<ArmorSetType, Integer> currentSetCrystals;
+    private int heroicPieces;
     private ArmorSetType currentArmorSet;
     private final Player player;
 
@@ -23,6 +27,7 @@ public class ArmorSetCache extends Cache {
         this.currentArmorSets = new HashMap<>();
         this.currentSetCrystals = new HashMap<>();
         this.currentArmorSet = null;
+        this.heroicPieces = 0;
     }
 
     public void addArmorSet(ArmorSetType type) {
@@ -73,4 +78,17 @@ public class ArmorSetCache extends Cache {
             }
         }
     }
+
+    public void addHeroicArmor(ItemStack item) {
+        if (AstroArmorSetsAPI.isHeroic(item)) {
+            this.heroicPieces++;
+        }
+    }
+
+    public void removeHeroicArmor(ItemStack item) {
+        if (!AstroArmorSetsAPI.isHeroic(item)) {
+            this.heroicPieces--;
+        }
+    }
+
 }
