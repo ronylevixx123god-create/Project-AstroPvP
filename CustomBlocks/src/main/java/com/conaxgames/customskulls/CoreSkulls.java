@@ -20,6 +20,7 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
@@ -31,22 +32,24 @@ import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
 
+@Getter
 public class CoreSkulls extends JavaPlugin {
 
-    @Getter public static CoreSkulls instance;
-    public static Map<String, CustomBlock> customBlocks = new HashMap<>();
-    private static Field bukkitCommand;
-    @Getter private static Economy economy = null;
-    @Getter
-    private static final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
+    public static CoreSkulls instance;
 
-    @Getter
-    private static final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
+    public static Map<String, CustomBlock> customBlocks = new HashMap<>();
+
+    private static Field bukkitCommand;
+
+    private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
+
+    private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
 
     public static Map<UUID, AbilityData> inSlotbotMachine;
+
     public static MobStackerUtils mobStackerUtils;
-    @Getter
-    public static ArrayList<MobGrinderCache> grinderBlocks;
+
+    private HashMap<Chunk, MobGrinderCache> grinderBlocks;
 
 
 
@@ -61,11 +64,6 @@ public class CoreSkulls extends JavaPlugin {
             info("Successfully made directory /data/ :)");
         }
 
-        if (!setupEconomy() ) {
-            getServer().getPluginManager().disablePlugin(this);
-            return;
-        }
-
         registerCustomBlocks();
         Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
         getServer().getPluginManager().registerEvents(new UIListener(), this);
@@ -78,7 +76,7 @@ public class CoreSkulls extends JavaPlugin {
         info("CoreSkulls!");
         inSlotbotMachine = new HashMap<>();
         registerTasks();
-        grinderBlocks = new ArrayList<>();
+        this.grinderBlocks = new HashMap<>();
         ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
 
     }
@@ -125,20 +123,6 @@ public class CoreSkulls extends JavaPlugin {
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 30*20);
-    }
-
-
-
-    private boolean setupEconomy() {
-        if (getServer().getPluginManager().getPlugin("Vault") == null) {
-            return false;
-        }
-        RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
-        if (rsp == null) {
-            return false;
-        }
-        economy = rsp.getProvider();
-        return economy != null;
     }
 
 

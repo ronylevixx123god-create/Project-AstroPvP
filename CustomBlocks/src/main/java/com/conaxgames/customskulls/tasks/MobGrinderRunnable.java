@@ -28,7 +28,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        for (MobGrinderCache mobGrinderCache : CoreSkulls.getGrinderBlocks()) {
+        for (MobGrinderCache mobGrinderCache : CoreSkulls.instance.getGrinderBlocks().values()) {
             if (mobGrinderCache == null) continue;
             if (!mobGrinderCache.getAbilityData().isActive()) continue;
             boolean playerFound = mobGrinderCache.isPlayerNearby();
@@ -59,11 +59,11 @@ public class MobGrinderRunnable extends BukkitRunnable {
             //ADD LOOT TO THE CHEST
             double chance = Math.random();
             if (chance < 0.02) {
-                chest.getInventory().addItem(CoreSkulls.getLegKey());
+                chest.getInventory().addItem(CoreSkulls.instance.getLegKey());
 
             } else if
             (chance < 0.15) {
-                chest.getInventory().addItem(CoreSkulls.getAstroKey());
+                chest.getInventory().addItem(CoreSkulls.instance.getAstroKey());
             }
             if (!chest.getInventory().contains(Material.EXP_BOTTLE)) {
                 chest.getInventory().addItem(ExpBottles.getXpBottle(amountOfExpPerBlaze, "Mob Grinder"));
