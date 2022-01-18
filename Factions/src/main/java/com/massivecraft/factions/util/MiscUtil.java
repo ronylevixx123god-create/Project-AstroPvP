@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.utils.BossEggUtils
+ *  me.ifamasssxd.cosmicbosses.me.astropvp.cratekeys.net.astropvp.armorsets.utils.BossEggUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.entity.Creature
  *  org.bukkit.entity.Entity

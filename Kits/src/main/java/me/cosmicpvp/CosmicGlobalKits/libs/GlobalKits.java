@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  org.arkhamnetwork.permissions.ArkhamPermissions
  *  org.bukkit.Bukkit

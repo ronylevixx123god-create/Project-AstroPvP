@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  org.arkhamnetwork.Arkkit.patches.CombatLog
  *  org.bukkit.ChatColor
  *  org.bukkit.command.Command
@@ -16,6 +16,7 @@ package com.compilex.CosmicKOTH.cmds;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.InventoryUtils;
+import com.compilex.CosmicKOTH.utils.KothTopUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
@@ -24,6 +25,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
+
+import java.util.Map;
 
 public class CommandKoth
 implements CommandExecutor {
@@ -35,6 +38,22 @@ implements CommandExecutor {
                 return true;
             }
             player.openInventory(InventoryUtils.getKothInventory());
+        }
+
+        if (args.length == 1 && args[0].equalsIgnoreCase("top")) {
+            Player player = (Player)se;
+            player.sendMessage("");
+            player.sendMessage(CC.translate("&e&lTop Koth Wins"));
+            Map<String, Integer> kothTop = KothTopUtil.getKothTop();
+            int counter = 0;
+            for (Map.Entry<String, Integer> entry : kothTop.entrySet()) {
+                String name = entry.getKey();
+                int wins = entry.getValue();
+                counter++;
+                player.sendMessage(CC.translate("&e&l" + counter + ". &e" + name + " - &f" + wins + " wins"));
+            }
+            player.sendMessage("");
+            return true;
         }
         if (args.length == 1 && args[0].equalsIgnoreCase("warp")) {
             if (CosmicKOTHAPI.isKOTHRunning()) {

@@ -8,8 +8,8 @@
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
- *  com.massivecraft.factions.struct.RolePerm
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.RolePerm
  *  org.bukkit.ChatColor
  *  org.bukkit.Location
  *  org.bukkit.Material

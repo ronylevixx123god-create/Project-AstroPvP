@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
  *  org.bukkit.Location
  *  org.bukkit.block.Block
  *  org.bukkit.entity.LivingEntity
@@ -12,10 +12,7 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import org.arkhamnetwork.enchantments.files.CustomConfig;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
+import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;

@@ -3,10 +3,10 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.struct.LootTable
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.LootTable
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.arkhamnetwork.Arkkit.patches.ItemID

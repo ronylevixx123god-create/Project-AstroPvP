@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
  *  org.bukkit.Bukkit
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.event.Listener

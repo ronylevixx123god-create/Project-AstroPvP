@@ -44,8 +44,8 @@ public class CommandListener implements Listener {
             if (cmd.startsWith(cmdAlias)) {
                 event.setCancelled(true);
 
-                if (Conf.gracePeriod == false) {
-                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lFactionShields: &7You cannot edit your /f shield anymore!"));
+                if (!Conf.gracePeriod) {
+                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lFactionShields: &7You cannot edit your /f shield anymore! This is only available while grace period is enabled!"));
                     event.setCancelled(true);
                     return;
                 }

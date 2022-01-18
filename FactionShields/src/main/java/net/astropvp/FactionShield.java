@@ -56,13 +56,12 @@ public class FactionShield extends JavaPlugin
         return protectedHours != null && protectedHours.contains(Calendar.getInstance(TimeZone.getTimeZone("US/Eastern")).get(11));
     }
 
-    public List getProtectedHours(Faction faction) {
-        final List protectedHours = this.data.getIntegerList(faction.getId());
+    public List<Integer> getProtectedHours(Faction faction) {
+        final List<Integer> protectedHours = this.data.getIntegerList(faction.getId());
         if (protectedHours != null) {
             return protectedHours;
         } else {
-            ArrayList<String> empty = new ArrayList();
-            return empty;
+            return (ArrayList<Integer>) new ArrayList();
         }
 
     }

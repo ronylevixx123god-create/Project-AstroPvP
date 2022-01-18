@@ -6,7 +6,7 @@
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

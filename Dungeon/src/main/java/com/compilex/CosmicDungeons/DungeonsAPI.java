@@ -2,11 +2,11 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.ReflectionUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ReflectionUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
  *  org.arkhamnetwork.Arkkit.patches.chunkgc.ChunkGCTask
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Bukkit

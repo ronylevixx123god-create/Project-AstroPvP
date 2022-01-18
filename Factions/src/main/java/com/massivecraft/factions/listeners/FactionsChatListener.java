@@ -3,11 +3,11 @@
  *
  * Could not load the following classes:
  *  com.compilex.CosmicReputation.ReputationAPI
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  com.earth2me.essentials.User
- *  com.earth2me.essentials.me.astropvp.cratekeys.utils.DateUtil
+ *  com.earth2me.essentials.me.astropvp.cratekeys.net.astropvp.armorsets.utils.DateUtil
  *  com.google.common.collect.Lists
- *  me.ifamasssxd.cosmicduel.struct.DuelPlayer
+ *  me.ifamasssxd.cosmicduel.net.astropvp.armorsets.struct.DuelPlayer
  *  net.milkbowl.vault.economy.Economy
  *  org.arkhamnetwork.Arkkit.libs.SeasonalWin
  *  org.arkhamnetwork.Arkkit.patches.SeasonalPrefixes

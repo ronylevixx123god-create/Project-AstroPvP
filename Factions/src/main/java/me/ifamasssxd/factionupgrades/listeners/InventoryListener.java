@@ -5,7 +5,7 @@
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.Faction
- *  com.massivecraft.factions.struct.Role
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Role
  *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

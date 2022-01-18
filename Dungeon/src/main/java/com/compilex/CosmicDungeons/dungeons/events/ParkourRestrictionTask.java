@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldGuardUtils
  *  me.quantiom.itemskin.skins.boots.ItemSkinRainbowSlides
  *  me.quantiom.util.ItemSkinUtils
  *  org.bukkit.Location

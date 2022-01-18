@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  lilypad.client.connect.api.Connect
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.commands.CommandArkReboot
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.net.astropvp.armorsets.commands.CommandArkReboot
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material

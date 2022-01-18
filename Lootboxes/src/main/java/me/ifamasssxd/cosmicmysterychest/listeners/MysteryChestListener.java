@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
  *  org.bukkit.Bukkit

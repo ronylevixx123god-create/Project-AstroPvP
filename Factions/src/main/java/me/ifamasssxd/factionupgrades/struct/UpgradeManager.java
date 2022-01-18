@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  com.massivecraft.factions.Faction
  *  me.ifamasssxd.factionstop.FactionsTop
- *  me.ifamasssxd.factionstop.struct.TopFaction
+ *  me.ifamasssxd.factionstop.net.astropvp.armorsets.struct.TopFaction
  *  net.minecraft.util.com.google.common.reflect.TypeToken
  *  org.bukkit.Bukkit
  *  org.bukkit.craftbukkit.libs.com.google.gson.Gson

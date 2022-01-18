@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.Faction
@@ -167,7 +167,7 @@ public class AncientArmorSet
         }
         this.modifyDamage(damager, event, 7.0, applied);
 
-        if (Math.random() <= 0.0005 * (double) applied || damager.isOp() && damager.isSneaking()) {
+        if (Math.random() <= 0.001 * (double) applied || damager.isOp() && damager.isSneaking()) {
             this.removeResistance(damager);
             if (this.isBlockedOutpostWorld(damager)) {
                 return false;

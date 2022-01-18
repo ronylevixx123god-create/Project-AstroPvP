@@ -2,12 +2,14 @@ package me.astropvp.astrospawners.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.configs.MakeSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
@@ -78,7 +80,8 @@ public class MobSpawnerListener implements Listener {
                     @Override
                     public void run() {
                         SpawnerData spawnerData = new SpawnerData(type, math);
-                        AstroSpawners.getInstance().getSpawnerManager().add(event.getBlock().getLocation(), spawnerData);
+                        MakeSpawner.newFileItem(event.getBlock().getLocation(), spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
+                        AstroSpawners.getInstance().getSpawnersMap().put(event.getBlock().getLocation(), spawnerData);
                     }
                 });
         event.getPlayer().setItemInHand(spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
@@ -116,7 +119,7 @@ public class MobSpawnerListener implements Listener {
                             (Runnable) new BukkitRunnable() {
                                 @Override
                                 public void run() {
-                                    SpawnerData found = AstroSpawners.getInstance().getSpawnerManager().findSpawnerData(event.getBlockAgainst().getLocation());
+                                    SpawnerData found = AstroSpawners.getInstance().getSpawnersMap().get(event.getBlockAgainst().getLocation());
                                     if (found != null) {
                                         if (found.getSpawnerAmount() >= ItemSpawner.getSpawnerLimit()) {
                                             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not have more than "
@@ -147,6 +150,7 @@ public class MobSpawnerListener implements Listener {
                                                 : amount;
                                         int spawnersLeft = amount - math;
                                         found.setSpawnerAmount(found.getSpawnerAmount() + math);
+                                        MakeSpawner.newFileItem(event.getBlockAgainst().getLocation(), found.getEntityType(), found.getSpawnerAmount());
 
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
@@ -182,7 +186,7 @@ public class MobSpawnerListener implements Listener {
                         (Runnable) new BukkitRunnable() {
                             @Override
                             public void run() {
-                                SpawnerData found = AstroSpawners.getInstance().getSpawnerManager().findSpawnerData(block.getLocation());
+                                SpawnerData found = AstroSpawners.getInstance().getSpawnersMap().get(block.getLocation());
                                 Player player = event.getPlayer();
                                 player.sendMessage("");
                                 player.sendMessage(CC.GreenB + "Spawner Information");
@@ -191,6 +195,7 @@ public class MobSpawnerListener implements Listener {
                                 player.sendMessage(CC.GreenB + " * " + CC.White + "Amount: " + CC.Green
                                         + (found != null ? found.getSpawnerAmount() : 1) + "x");
                                 player.sendMessage("");
+                                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
                             }
                         });
             }

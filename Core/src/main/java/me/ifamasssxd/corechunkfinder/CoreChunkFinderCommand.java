@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.FactionUtils
  *  com.cosmicpvp.factionpoints.CosmicFactionPoints
  *  com.cosmicpvp.factionpoints.FactionsCoreChunkAPI
- *  com.cosmicpvp.factionpoints.struct.CoreChunkData
- *  com.cosmicpvp.factionpoints.struct.ExpiringChunkData
+ *  com.cosmicpvp.factionpoints.net.astropvp.armorsets.struct.CoreChunkData
+ *  com.cosmicpvp.factionpoints.net.astropvp.armorsets.struct.ExpiringChunkData
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.Faction

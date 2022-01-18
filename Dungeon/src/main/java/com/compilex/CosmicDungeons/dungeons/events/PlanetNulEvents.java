@@ -6,12 +6,12 @@
  *  com.boydti.fawe.object.visitor.FastIterator
  *  com.boydti.fawe.util.EditSessionBuilder
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.RandomFireworks
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.RandomFireworks
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TitleManager$TitleColor
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldGuardUtils
  *  com.decimatemc.decimatelootboxes.api.LootboxManager
  *  com.decimatemc.decimatelootboxes.lootbox.DecimateRewardItem
  *  com.earth2me.essentials.User
@@ -23,8 +23,8 @@
  *  com.sk89q.worldedit.EditSession
  *  com.sk89q.worldedit.Vector
  *  com.sk89q.worldedit.regions.CuboidRegion
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.Boss
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.enums.BossType
  *  net.ess3.api.MaxMoneyException
  *  org.arkhamnetwork.Arkkit.libs.JSONMessage
  *  org.arkhamnetwork.enchantments.libs.PlayerPotionEffects

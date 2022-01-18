@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicFund.CosmicFundAPI
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Material

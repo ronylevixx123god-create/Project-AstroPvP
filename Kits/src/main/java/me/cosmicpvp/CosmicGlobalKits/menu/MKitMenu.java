@@ -3,11 +3,11 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicFund.CosmicFundAPI
- *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.InventoryUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.CosmicGUI
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.InventoryItem
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.InventoryUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemBuilder
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

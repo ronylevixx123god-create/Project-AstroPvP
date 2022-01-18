@@ -3,10 +3,10 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
- *  com.cosmicpvp.cosmicutils.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.InventoryItem
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  net.minecraft.util.org.apache.commons.lang3.tuple.ImmutablePair
  *  net.minecraft.util.org.apache.commons.lang3.tuple.Pair

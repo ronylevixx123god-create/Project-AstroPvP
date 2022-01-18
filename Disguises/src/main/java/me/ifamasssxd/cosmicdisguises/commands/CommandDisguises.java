@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.PlayerUtil
  *  me.libraryaddict.disguise.DisguiseAPI
  *  me.libraryaddict.disguise.disguisetypes.DisguiseType
  *  org.apache.commons.lang.StringUtils

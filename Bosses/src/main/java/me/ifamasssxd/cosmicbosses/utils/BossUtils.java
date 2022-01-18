@@ -90,6 +90,10 @@ public class BossUtils {
         if (pl.hasMetadata("NPC")) {
             return false;
         }
+
+        if (pl.hasMetadata("frozenSkrrt")) {
+            return false;
+        }
         if (BossUtils.ess != null && (BossUtils.ess.getUser(pl).isVanished() || BossUtils.ess.getUser(pl).isGodModeEnabled())) {
             return false;
         }

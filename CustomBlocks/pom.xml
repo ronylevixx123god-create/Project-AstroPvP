@@ -114,8 +114,8 @@
             <systemPath>${project.basedir}/lib/Slotbot-0.1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>me.mattstudios.utils</groupId>
-            <artifactId>matt-framework-gui</artifactId>
+            <groupId>me.mattstudios.net.astropvp.armorsets.utils</groupId>
+            <artifactId>matt-framework-net.astropvp.armorsets.gui</artifactId>
             <version>2.0.3.3</version>
         </dependency>
         <dependency>

@@ -4,9 +4,9 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.arkhamnetwork.enchantments.EnchantmentBook

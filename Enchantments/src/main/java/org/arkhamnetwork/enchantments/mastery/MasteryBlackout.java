@@ -2,15 +2,12 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
-import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.files.CustomConfig;
+import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
-import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.FactionUtils
  *  com.google.common.collect.Lists
  *  com.google.common.collect.MapMaker
  *  com.massivecraft.factions.Board

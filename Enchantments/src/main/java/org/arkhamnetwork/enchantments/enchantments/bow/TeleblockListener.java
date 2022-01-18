@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.compilex.CosmicArmorSets.CosmicArmorSetsAPI
  *  com.compilex.CosmicArmorSets.enums.ArmorSet
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
  *  org.bukkit.Sound

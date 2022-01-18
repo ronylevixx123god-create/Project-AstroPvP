@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CoreProtectUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CoreProtectUtils
  *  com.massivecraft.factions.Board
  *  com.massivecraft.factions.FLocation
  *  com.massivecraft.factions.FPlayer
@@ -11,8 +11,8 @@
  *  com.massivecraft.factions.FactionWrapper
  *  com.massivecraft.factions.FactionWrappers
  *  com.massivecraft.factions.P
- *  com.massivecraft.factions.struct.FactionPermission
- *  com.massivecraft.factions.struct.LogTimer$TimerSubType
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.FactionPermission
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.LogTimer$TimerSubType
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
  *  me.ifamasssxd.cosmicguishop.CosmicGUIShop

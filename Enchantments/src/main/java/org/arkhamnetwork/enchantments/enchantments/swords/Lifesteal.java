@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.entity.LivingEntity
  *  org.bukkit.entity.Player

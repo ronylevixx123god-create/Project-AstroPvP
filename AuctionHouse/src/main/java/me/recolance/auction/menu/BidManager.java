@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.CosmicGUI
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.JSONUtils
  *  com.google.common.collect.Lists
  *  net.minecraft.util.com.google.common.reflect.TypeToken
  *  net.minecraft.util.com.google.gson.Gson

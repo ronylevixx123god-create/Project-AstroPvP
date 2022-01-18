@@ -3,9 +3,9 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.bukkit.entity.Player
  *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack

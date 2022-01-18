@@ -8,7 +8,7 @@
  *  com.compilex.CosmicArmorSets.me.astropvp.cratekeys.enums.armorsets.KothArmorSet
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.ItemUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

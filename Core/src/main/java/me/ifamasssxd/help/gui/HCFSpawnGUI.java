@@ -2,11 +2,11 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.LocationUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.CosmicGUI
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.LocationUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

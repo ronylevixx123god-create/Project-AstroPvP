@@ -5,12 +5,11 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.files.CustomConfig;
+import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -18,8 +17,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MasteryNeutralize extends CustomEnchantment {
     public MasteryNeutralize() {

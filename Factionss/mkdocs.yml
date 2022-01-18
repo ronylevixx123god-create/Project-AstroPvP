@@ -34,7 +34,7 @@ nav:
   - Introduction: introduction.md
   - Definitions: definitions.md
   - First Steps: firststeps.md
-  - Commands: commands.md
+  - Commands: net.astropvp.armorsets.commands.md
   - Permissions: permissions.md
   - Permission Nodes: permissionnodes.md
   - Permission Contexts: contexts.md

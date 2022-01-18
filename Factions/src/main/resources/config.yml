@@ -55,7 +55,7 @@ help:
     - '&c/f check &8- &7Manage All Check Settings.'
     - '&c/f weewoo &8- &7Alert all faction members you are being raided.'
     - '&c/f missions &8- &7Open/Manage all mission/objectives to complete!'
-    - '&c/f alts &8- &7Manage All Alts via me.astropvp.cratekeys.commands.'
+    - '&c/f alts &8- &7Manage All Alts via me.astropvp.cratekeys.net.astropvp.armorsets.commands.'
     - '&c/f corner &8- &7Use this command in a corner chunk, to claim your entire buffer.'
     - '&c/f logout &8- &7Safetly logout, hcf style.'
     - '&c/f global &8- &7toggle public chat off and only allow faction based chats.'

@@ -3,8 +3,8 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.HCFOutpostUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.HCFOutpostUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  net.milkbowl.vault.economy.EconomyResponse
  *  org.bukkit.Bukkit

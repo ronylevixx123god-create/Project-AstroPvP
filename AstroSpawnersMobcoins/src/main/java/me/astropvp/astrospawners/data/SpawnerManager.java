@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.*;
 
 import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.configs.MakeSpawner;
 import org.bukkit.*;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
@@ -44,26 +45,12 @@ public class SpawnerManager {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        try {
-            for (Map.Entry<Location, SpawnerData> entry : spawnersMap.entrySet()) {
-                Location location = entry.getKey();
-                SpawnerData spawnerData = entry.getValue();
-                PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("INSERT IGNORE INTO spawner_data(location, type, amount) VALUES (?, ?, ?);");
-                try {
-                    statement.setString(1, LocationUtils.toStringLocation(location));
-                    statement.setString(2, spawnerData.getEntityType().name());
-                    statement.setString(3, Integer.toString(spawnerData.getSpawnerAmount()));
-                    statement.executeUpdate();
-
-                } finally {
-                    /*if (Collections.singletonList(statement).get(0) != null)
-                        statement.close();*/
-                }
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
+        for (Map.Entry<Location, SpawnerData> entry : spawnersMap.entrySet()) {
+            Location location = entry.getKey();
+            SpawnerData spawnerData = entry.getValue();
+            MakeSpawner.newFileItem(location, spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
         }
+
 
     }
 
@@ -77,7 +64,8 @@ public class SpawnerManager {
                 EntityType type = EntityType.valueOf(set.getString("type"));
                 int amount = Integer.parseInt(set.getString("amount"));
                 SpawnerData spawnerData = new SpawnerData(type, amount);
-                AstroSpawners.getInstance().getSpawnerManager().getSpawnersMap().put(location, spawnerData);
+                AstroSpawners.getInstance().getSpawnersMap().put(location, spawnerData);
+                MakeSpawner.newFileItem(location, type, amount);
             }
             this.loading = false;
             statement.close();

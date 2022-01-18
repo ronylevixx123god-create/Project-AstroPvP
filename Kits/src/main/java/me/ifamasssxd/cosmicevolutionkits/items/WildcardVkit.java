@@ -4,13 +4,13 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
  *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
  *  me.ifamasssxd.cosmicskycustoms.exceptions.PrefixedItemException
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.PlayerInteractable
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.World

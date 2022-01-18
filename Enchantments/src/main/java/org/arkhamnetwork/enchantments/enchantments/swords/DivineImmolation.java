@@ -6,7 +6,7 @@
  *  com.rit.sucy.CustomEnchantment
  *  me.ifamasssxd.killtracker.KillTrackerAPI
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
+ *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.GameMode
  *  org.bukkit.Location

@@ -27,7 +27,7 @@ public class ChatColorCommand implements CommandExecutor {
 
         ChatColorGUI chatColorGUI = new ChatColorGUI(player);
         chatColorGUI.open();
-        player.sendMessage(CC.translate("&aOpening the chat color gui..."));
+        player.sendMessage(CC.translate("&aOpening the chat color net.astropvp.armorsets.gui..."));
 
 
         return false;

@@ -2,7 +2,9 @@ package me.astropvp.astrospawners;
 
 import lombok.Getter;
 import me.astropvp.astrospawners.commands.*;
+import me.astropvp.astrospawners.configs.LoadSpawner;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
+import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.ftop.CommandAdminFactionsTop;
 import me.astropvp.astrospawners.ftop.CommandFactionsTop;
 import me.astropvp.astrospawners.ftop.FactionsTopAPI;
@@ -16,6 +18,7 @@ import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.listeners.*;
 import me.astropvp.astrospawners.utils.*;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -23,6 +26,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
 import java.util.*;
 
 public class AstroSpawners extends JavaPlugin {
@@ -38,6 +42,10 @@ public class AstroSpawners extends JavaPlugin {
     private Database sqlDatabase;
     private SpawnerManager spawnerManager;
     private SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
+
+    @Getter
+    private Map<Location, SpawnerData> spawnersMap;
+
 
 
     public MobStackerUtils getMobStackerUtils() {
@@ -58,8 +66,13 @@ public class AstroSpawners extends JavaPlugin {
         registerListeners();
         registerCommands();
 
+        File file = new File(this.getDataFolder() + File.separator + "data");
+        if(!file.exists()) {
+            file.mkdir();
+        }
 
-        System.out.println("Started Saving mobcoins data...");
+
+
 
         Bukkit.getScheduler().runTaskLater(AstroSpawners.getInstance(), (Runnable) new BukkitRunnable() {
             @Override
@@ -72,6 +85,8 @@ public class AstroSpawners extends JavaPlugin {
         new SpawnerCustomItem("spawner", "<amount> <entity>");
         //manager2 = new PlayerDataManager(this);
 
+
+/*
         this.sqlDatabase = new Database(this);
         if(this.sqlDatabase.isConnected())
             Bukkit.getConsoleSender().sendMessage("SQL Database for AstroSpawners Connected");
@@ -83,23 +98,34 @@ public class AstroSpawners extends JavaPlugin {
             this.sqlQueryCustomThread = new SQLQueryCustomThread();
             this.sqlQueryCustomThread.start();
         }
+*/
+
         this.spawnerManager = new SpawnerManager();
 
 
         Bukkit.getConsoleSender().sendMessage("Started Loading Spawner Data");
-        getSpawnerManager().load();
+
+
+        this.spawnersMap = new HashMap<>();
+
+
+        //getSpawnerManager().load();
+        LoadSpawner.load();
+
+
+
+
+        Bukkit.getConsoleSender().sendMessage("Finished loading spawners!");
+
         runTasks();
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);
 
         long minutes = 10;
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
-            getSpawnerManager().save();
-            System.out.println("(!) Started Automaticly Saving Spawners!");
-        },60*20, minutes*60*20);
-
         this.afkGrinders = new HashMap<>();
         this.waitingForAfkGrindingVerification = new ArrayList<>();
+
+
     }
 
     public void loadConfig() {
@@ -111,7 +137,10 @@ public class AstroSpawners extends JavaPlugin {
     public void onDisable() {
         Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
 
-        getSpawnerManager().save();
+        //getSpawnerManager().save();
+
+
+
         /*for (Player p : Bukkit.getOnlinePlayers()) {
             PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
             AstroSpawners.getInstance().getManager().savePlayerData(data);

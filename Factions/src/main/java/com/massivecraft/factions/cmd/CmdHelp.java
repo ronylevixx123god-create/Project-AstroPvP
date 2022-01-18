@@ -191,7 +191,7 @@ public class CmdHelp
         pageLines.add(this.p.txt.parse("<i>worrying about those arrows getting stolen."));
         this.helpPages.add(pageLines);
         pageLines = new ArrayList<>();
-        pageLines.add("Finally some me.astropvp.cratekeys.commands for the server admins:");
+        pageLines.add("Finally some me.astropvp.cratekeys.net.astropvp.armorsets.commands for the server admins:");
         pageLines.add(this.p.cmdBase.cmdBypass.getUseageTemplate(true));
         pageLines.add(this.p.txt.parse("<c>/f claim safezone <i>claim land for the Safe Zone"));
         pageLines.add(this.p.txt.parse("<c>/f claim warzone <i>claim land for the War Zone"));
@@ -202,7 +202,7 @@ public class CmdHelp
         pageLines.add(this.p.cmdBase.cmdPeaceful.getUseageTemplate(true));
         this.helpPages.add(pageLines);
         pageLines = new ArrayList<>();
-        pageLines.add(this.p.txt.parse("<i>More me.astropvp.cratekeys.commands for server admins:"));
+        pageLines.add(this.p.txt.parse("<i>More me.astropvp.cratekeys.net.astropvp.armorsets.commands for server admins:"));
         pageLines.add(this.p.cmdBase.cmdChatSpy.getUseageTemplate(true));
         pageLines.add(this.p.cmdBase.cmdPermanent.getUseageTemplate(true));
         pageLines.add(this.p.cmdBase.cmdPermanentPower.getUseageTemplate(true));
@@ -210,7 +210,7 @@ public class CmdHelp
         pageLines.add(this.p.cmdBase.cmdConfig.getUseageTemplate(true));
         this.helpPages.add(pageLines);
         pageLines = new ArrayList<>();
-        pageLines.add(this.p.txt.parse("<i>Even more me.astropvp.cratekeys.commands for server admins:"));
+        pageLines.add(this.p.txt.parse("<i>Even more me.astropvp.cratekeys.net.astropvp.armorsets.commands for server admins:"));
         pageLines.add(this.p.cmdBase.cmdLock.getUseageTemplate(true));
         pageLines.add(this.p.cmdBase.cmdReload.getUseageTemplate(true));
         pageLines.add(this.p.cmdBase.cmdSaveAll.getUseageTemplate(true));

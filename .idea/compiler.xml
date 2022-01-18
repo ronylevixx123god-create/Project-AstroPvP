@@ -18,6 +18,7 @@
         <module name="Bosses" />
         <module name="AstroRevive" />
         <module name="Masks" />
+        <module name="AstroArmorSets" />
         <module name="AstroEvents" />
         <module name="AstroUtils" />
         <module name="Explosive" />
@@ -66,6 +67,7 @@
         <module name="Utils" />
         <module name="WeaponRunes" />
         <module name="AstroGamble" />
+        <module name="AstroDamageHandler" />
         <module name="CompilexPermissions" />
       </profile>
       <profile name="Annotation profile for ProjectAstro" enabled="true">

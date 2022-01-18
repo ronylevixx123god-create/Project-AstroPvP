@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
  *  org.arkhamnetwork.enchantments.EnchantmentBook

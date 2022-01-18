@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  net.minecraft.server.v1_7_R4.MinecraftServer
- *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.utils.WorldGuardUtils
+ *  org.arkhamnetwork.Arkkit.me.astropvp.cratekeys.net.astropvp.armorsets.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

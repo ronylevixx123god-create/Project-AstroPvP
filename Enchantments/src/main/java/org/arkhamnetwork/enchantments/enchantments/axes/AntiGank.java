@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.Location
  *  org.bukkit.block.Block

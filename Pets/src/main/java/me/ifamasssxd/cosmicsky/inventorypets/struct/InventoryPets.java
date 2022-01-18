@@ -65,7 +65,7 @@ public enum InventoryPets {
    }
 
 
-   public void setPetSkin(String skin) {
+   public void setPetSkin(InventoryPets inventoryPet, String skin) {
       GameProfile profile = new GameProfile(UUID.randomUUID(), this.name().toLowerCase());
       profile.getProperties().put("textures", new Property("textures", skin));
       this.builder = new NBTTagCompoundBuilder();

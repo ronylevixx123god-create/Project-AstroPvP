@@ -11,9 +11,9 @@
  *  com.comphenix.protocol.events.PacketEvent
  *  com.comphenix.protocol.events.PacketListener
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NumberUtils
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_7_R4.Container
  *  net.minecraft.server.v1_7_R4.Entity

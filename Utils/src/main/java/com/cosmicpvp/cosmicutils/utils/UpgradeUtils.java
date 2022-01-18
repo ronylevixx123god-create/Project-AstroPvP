@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
- *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
+ *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.struct.FactionUpgrade
  */
 package com.cosmicpvp.cosmicutils.utils;
 

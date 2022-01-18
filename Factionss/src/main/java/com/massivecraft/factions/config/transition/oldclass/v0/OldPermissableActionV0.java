@@ -40,7 +40,7 @@ public enum OldPermissableActionV0 {
     }
 
     /**
-     * Get the friendly name of this action. Used for editing in commands.
+     * Get the friendly name of this action. Used for editing in net.astropvp.armorsets.commands.
      *
      * @return friendly name of the action as a String.
      */

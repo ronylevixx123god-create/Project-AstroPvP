@@ -2,10 +2,10 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  net.minecraft.server.v1_8_R3.ItemStack
  *  net.minecraft.server.v1_8_R3.NBTCompressedStreamTools

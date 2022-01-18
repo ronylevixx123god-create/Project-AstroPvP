@@ -4,12 +4,12 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.InventoryInteractable
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.InventoryItemType
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
  *  org.bukkit.event.inventory.InventoryClickEvent

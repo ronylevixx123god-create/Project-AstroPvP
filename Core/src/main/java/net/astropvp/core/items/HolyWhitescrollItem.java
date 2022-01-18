@@ -5,13 +5,13 @@
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
  *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.InventoryInteractable
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.InventoryItemType
  *  org.arkhamnetwork.enchantments.EnchantmentBook
  *  org.bukkit.Material
  *  org.bukkit.entity.Player

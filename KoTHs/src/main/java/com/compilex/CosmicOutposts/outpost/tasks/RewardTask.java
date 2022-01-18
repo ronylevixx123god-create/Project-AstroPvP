@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ReflectionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ReflectionUtils
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.Factions
  *  com.massivecraft.factions.integration.Econ
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.me.astropvp.cratekeys.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.Boss
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.me.astropvp.cratekeys.enums.BossType
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.metadata.FixedMetadataValue

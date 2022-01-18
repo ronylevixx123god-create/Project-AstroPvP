@@ -2,10 +2,10 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest
- *  me.ifamasssxd.cosmicmysterychest.struct.MysteryChest
+ *  me.ifamasssxd.cosmicmysterychest.net.astropvp.armorsets.struct.MysteryChest
  *  org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog
  *  org.bukkit.Bukkit
  *  org.bukkit.entity.Player

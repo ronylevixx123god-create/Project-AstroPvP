@@ -5,17 +5,17 @@
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.exceptions.PrefixedException
- *  com.cosmicpvp.cosmicutils.struct.LootTable
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.RandomFireworks
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.LootTable
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.RandomFireworks
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicskycustoms.exceptions.ItemDupedException
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.PlayerInteractable
  *  org.bukkit.Material
  *  org.bukkit.entity.Player
  *  org.bukkit.event.player.PlayerInteractEvent

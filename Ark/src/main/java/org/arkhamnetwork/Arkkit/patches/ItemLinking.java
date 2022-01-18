@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
  *  com.google.common.collect.MapMaker
  *  net.milkbowl.vault.economy.Economy
  *  org.apache.commons.lang.StringUtils

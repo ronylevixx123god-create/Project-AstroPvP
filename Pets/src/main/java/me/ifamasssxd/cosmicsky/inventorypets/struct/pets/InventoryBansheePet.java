@@ -27,6 +27,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.CooldownUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import net.minecraft.server.v1_8_R3.GameProfileSerializer;
@@ -109,6 +110,12 @@ public class InventoryBansheePet extends InventoryPet {
                         continue;
                     }
                 }
+
+                if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
+                    player.sendMessage(CC.translate("&c&lPET: &c" + nearPlayer.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(nearPlayer, "bansheeCooldown") + "&c."));
+                    continue;
+                }
+
                 nearbyEnemies.add(nearPlayer);
             }
         }
@@ -143,7 +150,8 @@ public class InventoryBansheePet extends InventoryPet {
             }
 
             DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "s&c&l] *"), "RKO");
-
+            int bansheeCooldown = 10;
+            CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldown*1000);
         });
         CombatLog.flagCombat(player);
         player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
@@ -156,7 +164,7 @@ public class InventoryBansheePet extends InventoryPet {
 
         (new BukkitRunnable() {
             public void run() {
-                player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
+                player.sendMessage(CC.translate("&4&lPET: BANSHEE - RKO has worn off! "));
                 player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
                 player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
                 EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
@@ -178,6 +186,8 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
 
+
+
     public static void startBansheeEffect(Player player, Player enemy) {
 
         int duration = 8;
@@ -196,7 +206,9 @@ public class InventoryBansheePet extends InventoryPet {
             enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
             enemy.sendMessage("");
         }
+        int bansheeCooldown = 10;
 
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldown*10);
         DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "s&c&l] *"), "RKO");
 
 

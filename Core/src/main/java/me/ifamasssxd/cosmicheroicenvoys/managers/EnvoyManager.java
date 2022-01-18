@@ -3,11 +3,11 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.MiscUtil
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.net.astropvp.armorsets.utils.MiscUtil
  *  io.apice.clientcomms.ClientCommsAPI
  *  io.apice.clientcomms.EventType
- *  me.ifamasssxd.cosmicbosses.struct.Boss
- *  me.ifamasssxd.cosmicbosses.struct.me.astropvp.cratekeys.enums.BossType
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.Boss
+ *  me.ifamasssxd.cosmicbosses.net.astropvp.armorsets.struct.me.astropvp.cratekeys.enums.BossType
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

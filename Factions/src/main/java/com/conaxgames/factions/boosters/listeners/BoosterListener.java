@@ -4,8 +4,8 @@
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.compat.ParamBuilder
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.ReflectionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ReflectionUtils
  *  com.massivecraft.factions.Faction
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins

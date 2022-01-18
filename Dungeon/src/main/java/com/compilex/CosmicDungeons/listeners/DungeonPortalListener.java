@@ -2,22 +2,22 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.utils.TimeUtils
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
- *  com.cosmicpvp.cosmicutils.utils.WorldUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TitleManager
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TitleManager$TitleColor
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
  *  com.gmail.filoghost.holograms.api.Hologram
  *  com.gmail.filoghost.holograms.api.HolographicDisplaysAPI
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  me.ifamasssxd.cosmichcf.api.HCFOutpostAPI
- *  me.ifamasssxd.cosmichcf.struct.OutpostType
+ *  me.ifamasssxd.cosmichcf.net.astropvp.armorsets.struct.OutpostType
  *  me.quantiom.itemskin.skins.boots.ItemSkinRainbowSlides
  *  me.quantiom.util.ItemSkinUtils
  *  org.bukkit.Bukkit

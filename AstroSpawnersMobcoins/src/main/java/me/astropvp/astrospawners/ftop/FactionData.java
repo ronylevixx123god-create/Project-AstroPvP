@@ -48,7 +48,7 @@ public class FactionData {
         this.richestMember[0] = richest;
         this.richestMember[1] = Long.valueOf((long)cash);
         String tag = this.faction.getTag();
-        for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnerManager().getSpawnersMap().entrySet()) {
+        for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
             Location location = entry.getKey();
             SpawnerData spawnerData = entry.getValue();
             if (spawnerData == null) continue;

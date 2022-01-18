@@ -4,7 +4,7 @@
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.killtracker.KillTrackerAPI
  *  org.arkhamnetwork.Arkkit.patches.MysteryMobSpawners

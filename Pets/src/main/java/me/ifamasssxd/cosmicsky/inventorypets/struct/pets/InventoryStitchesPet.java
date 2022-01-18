@@ -2,6 +2,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -82,7 +83,7 @@ public class InventoryStitchesPet extends InventoryPet {
                 return false;
             if (EssentialsUtils.isInGodMode(casted))
                 return false;
-            if (MaskUtils.hasMaskEquipped(casted, "EQUALIZER")) {
+            if (MaskType.hasEquipped(casted, "EQUALIZER")) {
                 player.sendMessage(CC.translate("&2&l(EQUALIZER) &a" + casted.getName() + "&2Immune to Stitches Pet!"));
                 return false;
             }

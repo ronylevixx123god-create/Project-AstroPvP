@@ -2,8 +2,8 @@
  * Decompiled with CFR 0.145.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.TimeUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.command.CommandSender

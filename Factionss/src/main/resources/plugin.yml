@@ -355,4 +355,4 @@ permissions:
   factions.listclaims.other:
     description: List claims of other factions
   factions.alts:
-    description: Usage for the alt commands
+    description: Usage for the alt net.astropvp.armorsets.commands

@@ -75,7 +75,7 @@ public class GenBucketCommand implements CommandExecutor {
                 }
             }
         } else {
-            if (args[0].equalsIgnoreCase("gui") && sender instanceof Player) {
+            if (args[0].equalsIgnoreCase("net.astropvp.armorsets.gui") && sender instanceof Player) {
                 GenBucketShopGui genBucketShopGui = new GenBucketShopGui(((Player) sender).getPlayer());
                 genBucketShopGui.getExpShopUI().open(((Player) sender).getPlayer());
             }
@@ -99,7 +99,7 @@ public class GenBucketCommand implements CommandExecutor {
         messages.add("&a&lDecimateGenBuckets &7|&a&l Command Help");
         messages.add("&a/genbucket give <player> <type> <direction> [amount]");
         messages.add("&a/genbucket list");
-        messages.add("&a/genbucket gui");
+        messages.add("&a/genbucket net.astropvp.armorsets.gui");
         KrizzUtil.sendMessage((CommandSender)sender, (List)messages);
     }
 

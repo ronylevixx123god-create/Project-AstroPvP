@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemBuilder
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

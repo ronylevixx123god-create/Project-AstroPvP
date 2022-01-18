@@ -21,8 +21,8 @@ public class CmdMoney
         this.senderMustBeMember = false;
         this.senderMustBeModerator = false;
         this.senderMustBeAdmin = false;
-        this.setHelpShort("faction money commands");
-        this.helpLong.add(this.p.txt.parseTags("<i>The faction money commands."));
+        this.setHelpShort("faction money net.astropvp.armorsets.commands");
+        this.helpLong.add(this.p.txt.parseTags("<i>The faction money net.astropvp.armorsets.commands."));
         this.addSubCommand(this.cmdMoneyBalance);
         this.addSubCommand(this.cmdMoneyDeposit);
         this.addSubCommand(this.cmdMoneyWithdraw);

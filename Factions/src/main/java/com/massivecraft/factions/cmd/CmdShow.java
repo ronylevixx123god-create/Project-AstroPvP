@@ -88,8 +88,13 @@ public class CmdShow extends FCommand {
                     }
                 }).runTask(P.getP());
                 String allyList;
-
-                this.msg(CC.translate("&aShield: " + (FactionShield.getPlugin().isFactionShieldActive(finalFaction) ? "&a&lENABLED" : "&c&lDISABLED")));
+                StringBuilder shieldHours = new StringBuilder();
+                if (FactionShield.getPlugin().getProtectedHours(finalFaction) != null && !FactionShield.getPlugin().getProtectedHours(finalFaction).isEmpty()) {
+                    for (int hour : FactionShield.getPlugin().getProtectedHours(finalFaction)) {
+                        shieldHours.append(" ").append(hour).append(":00h,");
+                    }
+                }
+                this.msg(CC.translate("&aShield: " + (FactionShield.getPlugin().isFactionShieldActive(finalFaction) ? "&a&lENABLED&7" + shieldHours : "&c&lDISABLED&7" + shieldHours)));
                 this.msg(CC.translate("&aKoth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(finalFaction)));
 
                 if (Conf.bankEnabled) {

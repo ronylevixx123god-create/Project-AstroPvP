@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.gui.CosmicGUI
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.CosmicGUI
  *  com.cosmicpvp.cosmicutils.itembuilder.JsonItemSerializer
- *  com.cosmicpvp.cosmicutils.struct.me.astropvp.cratekeys.managers.CosmicManager
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.me.astropvp.cratekeys.managers.CosmicManager
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.JSONUtils
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.TimeUtils
  *  net.minecraft.util.com.google.gson.Gson
  *  net.minecraft.util.com.google.gson.GsonBuilder
  *  net.minecraft.util.com.google.gson.reflect.TypeToken

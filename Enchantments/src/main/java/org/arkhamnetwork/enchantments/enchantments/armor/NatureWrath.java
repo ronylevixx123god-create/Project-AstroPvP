@@ -3,12 +3,12 @@
  * 
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.UpgradeUtils
  *  com.earth2me.essentials.Essentials
  *  com.rit.sucy.CustomEnchantment
  *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
- *  me.ifamasssxd.factionupgrades.struct.FactionUpgrade
+ *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.struct.FactionUpgrade
  *  me.ifamasssxd.killtracker.KillTrackerAPI
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.Bukkit

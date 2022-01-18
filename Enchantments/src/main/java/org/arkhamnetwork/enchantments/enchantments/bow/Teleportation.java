@@ -6,7 +6,7 @@
  *  com.rit.sucy.EnchantmentAPI
  *  com.rit.sucy.enchanting.EListener
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
+ *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

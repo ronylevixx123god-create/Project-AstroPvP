@@ -3,8 +3,8 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.JSONMessage
  *  org.apache.commons.lang.StringUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Sound

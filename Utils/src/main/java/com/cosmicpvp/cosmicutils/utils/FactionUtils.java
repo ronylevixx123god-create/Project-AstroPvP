@@ -6,7 +6,7 @@
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  */
 package com.cosmicpvp.cosmicutils.utils;
 

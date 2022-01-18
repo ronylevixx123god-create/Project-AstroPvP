@@ -4,13 +4,13 @@
  * Could not load the following classes:
  *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
  *  com.compilex.CosmicOutposts.outpost.enums.OutpostTier
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.WorldGuardUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldGuardUtils
  *  com.google.common.collect.Lists
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
  *  org.bukkit.ChatColor

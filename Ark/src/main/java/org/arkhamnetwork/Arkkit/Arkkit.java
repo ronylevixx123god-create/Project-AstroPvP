@@ -95,7 +95,7 @@ public class Arkkit
     }
 
     private void registerCommands() {
-        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Beginning loading commands...");
+        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Beginning loading net.astropvp.armorsets.commands...");
         getCommand("arkhamreload").setExecutor(new CommandArkReload(this));
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkReload registered");
         getCommand("arkregister").setExecutor(new CommandArkRegister(this));
@@ -110,7 +110,7 @@ public class Arkkit
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkReboot registered");
         getCommand("arkdebug").setExecutor(new CommandArkDebug());
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkDebug registered");
-        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading commands...");
+        Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading net.astropvp.armorsets.commands...");
         Arkkit.get().registerPatch(new ColoredLoreTag(this));
     }
 

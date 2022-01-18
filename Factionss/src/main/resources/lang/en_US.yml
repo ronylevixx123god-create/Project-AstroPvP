@@ -275,9 +275,9 @@ COMMAND:
       '2': '&b/f claim warzone &7claim land for the war zone'
       '3': '&b/f autoclaim [safezone|warzone] &7take a guess'
     MOAR:
-      '1': 'Finally some commands for the server admins:'
-      '2': '&7More commands for server admins:'
-      '3': '&7Even more commands for server admins:'
+      '1': 'Finally some net.astropvp.armorsets.commands for the server admins:'
+      '2': '&7More net.astropvp.armorsets.commands for server admins:'
+      '3': '&7Even more net.astropvp.armorsets.commands for server admins:'
     DESCRIPTION: Display a help page
   SOTW:
     DESCRIPTION: Turn sotw on/off
@@ -334,7 +334,7 @@ COMMAND:
     NOTOPEN: '&8(&c!&8) &7%1$s &cis not open to new alts!'
     WRONGCODE: '&8(&c!&8) &7%1$s &cis not the correct code for %2$s&c!'
     SUCCESS: '&8(&a!&8) &7&7%1$s &7successfully joined %2$s &7as an alt'
-    USAGE: Faction alt control commands
+    USAGE: Faction alt control net.astropvp.armorsets.commands
     OPENUSAGE: Open a faction to new alts
     CLOSEUSAGE: Close a faction to new alts
     JOINUSAGE: Join a faction as an alt
@@ -397,8 +397,8 @@ COMMAND:
     ADDED: '&7Added &a%1$f &7power to &a%2$s &7New total rounded power: &a%3$d'
     DESCRIPTION: Modify the power of a faction/player
   MONEY:
-    LONG: '&7The faction money commands'
-    DESCRIPTION: Faction money commands
+    LONG: '&7The faction money net.astropvp.armorsets.commands'
+    DESCRIPTION: Faction money net.astropvp.armorsets.commands
   MONEYBALANCE:
     SHORT: show faction balance
     DESCRIPTION: Show your factions current money balance
@@ -578,7 +578,7 @@ COMMAND:
       USAGE: Take a strike from a faction We're sorry :(
       DOESNTEXIST: '&8(&c!&8) &7That strike doesn''t exist! Try a different index'
       SUCCESS: '&7Removed a strike from %1$s&7'
-    USAGE: Strike commands for factions
+    USAGE: Strike net.astropvp.armorsets.commands for factions
   STEALTH:
     DESCRIPTION: Toggles stealth mode
     TOGGLE: '&8(&c!&8) &7Stealth mode has been %1$s'

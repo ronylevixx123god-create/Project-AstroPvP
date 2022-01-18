@@ -41,8 +41,8 @@
                 <configuration>
                     <relocations>
                         <relocation>
-                            <pattern>dev.triumphteam.gui</pattern>
-                            <shadedPattern>me.ifamasssxd.cosmicguishop.gui</shadedPattern> <!-- Replace package here here -->
+                            <pattern>dev.triumphteam.net.astropvp.armorsets.gui</pattern>
+                            <shadedPattern>me.ifamasssxd.cosmicguishop.net.astropvp.armorsets.gui</shadedPattern> <!-- Replace package here here -->
                         </relocation>
                     </relocations>
                 </configuration>
@@ -87,7 +87,7 @@
         </dependency>
         <dependency>
             <groupId>dev.triumphteam</groupId>
-            <artifactId>triumph-gui</artifactId>
+            <artifactId>triumph-net.astropvp.armorsets.gui</artifactId>
             <version>3.0.3</version> <!-- replace version here -->
         </dependency>
 

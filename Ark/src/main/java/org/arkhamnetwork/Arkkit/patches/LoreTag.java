@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemUtils
  *  com.google.common.collect.Lists
  *  org.apache.commons.lang.StringEscapeUtils
  *  org.apache.commons.lang.StringUtils

@@ -2,12 +2,12 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.TitleManager
- *  com.cosmicpvp.cosmicutils.utils.TitleManager$TitleColor
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TitleManager
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TitleManager$TitleColor
  *  com.gmail.filoghost.holograms.api.Hologram
  *  com.massivecraft.factions.Faction
  *  me.ifamasssxd.cosmictoggles.CosmicToggles

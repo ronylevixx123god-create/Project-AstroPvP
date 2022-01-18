@@ -5,14 +5,14 @@
  *  com.cosmicpvp.cosmicutils.compat.ASound
  *  com.cosmicpvp.cosmicutils.exceptions.CosmicException
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.GeneralUtil
- *  com.cosmicpvp.cosmicutils.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  me.ifamasssxd.cosmicskycustoms.struct.CosmicItem
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable
- *  me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.GeneralUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NumberUtils
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.CosmicItem
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.InventoryInteractable
+ *  me.ifamasssxd.cosmicskycustoms.net.astropvp.armorsets.struct.InventoryItemType
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.bukkit.Material
  *  org.bukkit.Sound

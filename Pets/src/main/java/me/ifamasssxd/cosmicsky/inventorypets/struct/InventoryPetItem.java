@@ -174,11 +174,10 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
             if (type.getInternalClass().onPetItemInteract(player, itemStack, item, playerInteractEvent)) {
 
 
-                /*
 
-                THIS IS WHEN YOU WNE CHANGE THE NBT FOR COSMIC COOLDOWN!!!
 
-                NBTWrapper wrapper = new NBTWrapper(item.build());
+
+                /*NBTWrapper wrapper = new NBTWrapper(item.build());
 
                 NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
                 cosmicData.setLong("lastUsed", System.currentTimeMillis());
@@ -191,7 +190,36 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
                 ItemStack finalItem = item.build();
 
-                String skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
+                String skinTexture;
+                switch (type){
+                    case FEIGN_DEATH:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwODg1MTk1NywKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZTg3OWNlY2YyZWQ4YWZkNWI1Y2ZkZmVkNzdhMzRlNzUxNTVlMzI0YzA1MmRjN2Y2NzU1ZTEyOWRiODU1ZTgzNiIKICAgIH0KICB9Cn0=";
+                        break;
+                    case BANSHEE:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwNTcwMDYxOSwKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZDVmMzdjMjVmMjcyOTZlNTkzMTA0OTY3YzIzY2YwZTA5ZTJiMTRiZjMzNmQxZjI5YTYzYWE4ZTYwMmNiZDIzOSIKICAgIH0KICB9Cn0=";
+                        break;
+                    case BLOODHOUND:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwNzU4NzkwNywKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzIwNGZiMTJhOTI1MTE2N2UxYzRmMjRiMjY1NDY3ZDdjYjAzMWJkMjRjNWJkYTI5NDNmNzFlMzNkZmNkOTdmZiIKICAgIH0KICB9Cn0=";
+                        break;
+                    case WITCHER:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwNzY4Mjg2NCwKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWFkNjc1MDZmYmVhZGU3MGI3YjhkODI4NjlkMGFkMTUxMDU5NTg2ZTZkZTQ2NjRmYzA1ZTZiMzNiZDQ1NjlkMiIKICAgIH0KICB9Cn0=";
+                        break;
+                    case WORLD_DESTROYER:
+                        skinTexture="eyJ0aW1lc3RhbXAiOjE1OTQ2OTg0NjYxMzYsInByb2ZpbGVJZCI6IjNmNjUzNTNiODlhMzQ5MzE4Nzc1MWI1NzM0YTA4NTUxIiwicHJvZmlsZU5hbWUiOiJIYWthR2FtYmEiLCJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTBiZTY1MTlkYjI0MjFmZTY2MmFkNWFhZmM1YjljMmM0NmM2ZGM5NGIwNjdlODNjNjA0MWEzMTg1MzZiN2Q2ZCJ9fX0=";
+                        break;
+                    case STITCHES:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwNzk3NTg5MywKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZjFiMWQxZjk3MzlhOTBlMjhjNjhhOGYxMTlkZDU2MzM0ZjIxYzhmMWUxN2MwNDc1OWQ0MzFmNjM0OWVhMWY5MiIKICAgIH0KICB9Cn0=";
+                        break;
+                    case SKRRT:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwNzQ5OTkxOSwKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNThhOGMzODg2YWY5ZGIyZTEwMzQ0MDk3OGIxYjRhNDE1Y2VhODk5ZjUwMDkzOTM5MDNjNDQ0MmE4MTc1ZTAyMCIKICAgIH0KICB9Cn0\n";
+                        break;
+
+                    case TITAN:
+                        skinTexture="ewogICJ0aW1lc3RhbXAiIDogMTU5NDcwNzQyMjk4MSwKICAicHJvZmlsZUlkIiA6ICIzZjY1MzUzYjg5YTM0OTMxODc3NTFiNTczNGEwODU1MSIsCiAgInByb2ZpbGVOYW1lIiA6ICJIYWthR2FtYmEiLAogICJ0ZXh0dXJlcyIgOiB7CiAgICAiU0tJTiIgOiB7CiAgICAgICJ1cmwiIDogImh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMjQ1MzI1N2Q4MjdhYTA1YWVhZjU0NjVkMjI5ODM5OTJiYjg1NjU3MDNkYzNjOGY1NjkwMDVjYjI1M2UzYzNkMyIKICAgIH0KICB9Cn0";
+                        break;
+                    default:
+                        skinTexture = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvZmVlOWU2NTY3NDk2NzVlNTYzZGE3MTM1N2MxZjg0OTY3MjQ0YzQyMDUwNDY5NzI5M2NlODc4Y2RiOGEzNiJ9fX0=";
+                }
                 player.getInventory().setItemInHand(SkullUtils.buildSkullNative(finalItem, skinTexture));
                 //player.getInventory().setItemInHand(finalItem);
 

@@ -7,19 +7,19 @@
  *  com.compilex.CosmicArmorSets.enums.HeroicArmorType
  *  com.compilex.CosmicArmorSets.enums.HeroicWeaponType
  *  com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity
- *  com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils
+ *  com.cosmicpvp.CosmicSpaceChests.net.astropvp.armorsets.utils.ItemUtils
  *  com.cosmicpvp.cosmicutils.itembuilder.AbilityArmorSetItemBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.CustomItemBuilder$CustomItemType
  *  com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder
- *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.JSONMessage
- *  com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.utils.UpgradeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.factions.points.FactionPointUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.JSONMessage
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTTagCompoundBuilder
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.UpgradeUtils
  *  com.rit.sucy.CustomEnchantment
  *  com.rit.sucy.EnchantmentAPI
  *  me.ifamasssxd.cosmicconquest.CosmicConquestAPI

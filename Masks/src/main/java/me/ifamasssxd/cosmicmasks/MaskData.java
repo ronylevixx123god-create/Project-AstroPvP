@@ -3,7 +3,7 @@
  * 
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  net.minecraft.server.v1_7_R4.GameProfileSerializer
  *  net.minecraft.server.v1_7_R4.NBTTagCompound
  *  net.minecraft.util.com.mojang.authlib.GameProfile

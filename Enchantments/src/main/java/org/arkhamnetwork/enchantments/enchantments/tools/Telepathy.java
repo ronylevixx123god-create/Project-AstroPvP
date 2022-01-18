@@ -7,7 +7,7 @@
  *  net.minecraft.server.v1_7_R4.Block
  *  net.minecraft.server.v1_7_R4.Item
  *  org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes
- *  org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener
+ *  org.arkhamnetwork.CosmicCustomTNT.net.astropvp.armorsets.listeners.TNTListener
  *  org.bukkit.Material
  *  org.bukkit.block.Block
  *  org.bukkit.enchantments.Enchantment

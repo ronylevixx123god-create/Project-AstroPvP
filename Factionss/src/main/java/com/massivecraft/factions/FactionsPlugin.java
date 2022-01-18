@@ -92,7 +92,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
         return isSOTW;
     }
 
-    // Some utils
+    // Some net.astropvp.armorsets.utils
     private Persist persist;
     private TextUtil txt;
     private WorldUtil worldUtil;
@@ -276,7 +276,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
         this.txt = new TextUtil();
         initTXT();
 
-        // attempt to get first command defined in plugin.yml as reference command, if any commands are defined in there
+        // attempt to get first command defined in plugin.yml as reference command, if any net.astropvp.armorsets.commands are defined in there
         // reference command will be used to prevent "unknown command" console messages
         String refCommand = "";
         try {
@@ -334,7 +334,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
         // start up task which runs the autoLeaveAfterDaysOfInactivity routine
         startAutoLeaveTask(false);
 
-        // Run before initializing listeners to handle reloads properly.
+        // Run before initializing net.astropvp.armorsets.listeners to handle reloads properly.
         if (mcVersion < 1300) { // Before 1.13
             particleProvider = new PacketParticleProvider();
         } else {
@@ -374,7 +374,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
             getServer().getPluginManager().registerEvents(new PortalListenerLegacy(new PortalHandler()), this);
         }
 
-        // since some other plugins execute commands directly through this command interface, provide it
+        // since some other plugins execute net.astropvp.armorsets.commands directly through this command interface, provide it
         this.getCommand(refCommand).setExecutor(cmdBase);
 
         if (conf().commands().fly().isEnable()) {
@@ -505,7 +505,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
         this.metricsLine("factions", () -> Factions.getInstance().getAllFactions().size() - 3);
         this.metricsSimplePie("scoreboard", () -> "" + conf().scoreboard().constant().isEnabled());
 
-        // Event listeners
+        // Event net.astropvp.armorsets.listeners
         this.metricsDrillPie("event_listeners", () -> {
             Set<Plugin> pluginsListening = this.getPlugins(FactionEvent.getHandlerList(), FactionCreateEvent.getHandlerList(), FactionRelationEvent.getHandlerList());
             Map<String, Map<String, Integer>> map = new HashMap<>();
@@ -648,7 +648,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
     }
 
     public void updatesOnJoin(Player player) {
-        /*if (this.updateMessage != null && player.hasPermission(com.massivecraft.factions.struct.Permission.UPDATES.toString())) {
+        /*if (this.updateMessage != null && player.hasPermission(com.massivecraft.factions.net.astropvp.armorsets.struct.Permission.UPDATES.toString())) {
             player.sendMessage(this.updateMessage);
             player.sendMessage(ChatColor.GREEN + "Get it at " + ChatColor.DARK_AQUA + "https://www.spigotmc.org/resources/factionsuuid.1035/");
         }*/

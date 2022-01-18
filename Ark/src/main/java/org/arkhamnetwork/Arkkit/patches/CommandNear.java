@@ -5,13 +5,13 @@
  *  com.earth2me.essentials.CommandSource
  *  com.earth2me.essentials.I18n
  *  com.earth2me.essentials.User
- *  com.earth2me.essentials.me.astropvp.cratekeys.commands.NotEnoughArgumentsException
- *  com.earth2me.essentials.me.astropvp.cratekeys.commands.PlayerNotFoundException
- *  com.earth2me.essentials.me.astropvp.cratekeys.utils.FormatUtil
+ *  com.earth2me.essentials.me.astropvp.cratekeys.net.astropvp.armorsets.commands.NotEnoughArgumentsException
+ *  com.earth2me.essentials.me.astropvp.cratekeys.net.astropvp.armorsets.commands.PlayerNotFoundException
+ *  com.earth2me.essentials.me.astropvp.cratekeys.net.astropvp.armorsets.utils.FormatUtil
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

@@ -2,30 +2,20 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.avaje.ebean.validation.NotNull;
 import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.struct.Relation;
-import com.sun.prism.impl.ps.BaseShaderContext;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
-import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
-import me.ifamasssxd.cosmicsky.inventorypets.managers.BlockModifier;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.CageCooldownUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -35,17 +25,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.stream.Collectors;
 
 public class InventoryWorldDestroyerPet extends InventoryPet {
     public static List<Block> blockList = new ArrayList<Block>();
@@ -138,8 +124,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
         }
-        if (CageCooldownUtils.isOnCageCooldown(target)) {
-            player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on &nCage Cooldown&c, this lasts for 60s!"));
+        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
+            player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(target, "cageCooldown") + "&c."));
             return false;
         }
 
@@ -156,7 +142,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         target.sendMessage(CC.translate("&a&l*** " + player.getName() + "&a&l's WORLD DESTROYER PET [&f" + cageDuration + "s&a&l] - CAGE! **"));
         target.sendMessage("");
         DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&a&l* WORLD DESTROYER [&77s&a&l] *"), "RKO");
-        CageCooldownUtils.enterCageCooldown(target);
+
+        int cageCooldown = 30;
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown*1000);
 
         petItem.setLastUsed(System.currentTimeMillis());
         cagePlayer(player, target);

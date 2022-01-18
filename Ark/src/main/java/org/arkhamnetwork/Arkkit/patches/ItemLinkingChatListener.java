@@ -9,9 +9,9 @@
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.Faction
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.ChatMode
- *  com.massivecraft.factions.struct.Relation
- *  com.massivecraft.factions.struct.Role
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.ChatMode
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Role
  *  org.arkhamnetwork.ArkhamMoneyNotes.ArkhamMoneyNotesAPI
  *  org.arkhamnetwork.permissions.ArkhamPermissions
  *  org.bukkit.Bukkit

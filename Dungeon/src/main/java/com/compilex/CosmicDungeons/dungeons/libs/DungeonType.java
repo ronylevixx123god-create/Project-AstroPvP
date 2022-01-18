@@ -2,7 +2,7 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.struct.factions.points.FactionPointUtils
  *  org.bukkit.ChatColor
  */
 package com.compilex.CosmicDungeons.dungeons.libs;

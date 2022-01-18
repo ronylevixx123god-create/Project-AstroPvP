@@ -5,7 +5,7 @@
  *  com.massivecraft.factions.FPlayer
  *  com.massivecraft.factions.FPlayers
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  net.minecraft.server.v1_7_R4.MinecraftServer
  *  org.arkhamnetwork.enchantments.Enchantments
  */

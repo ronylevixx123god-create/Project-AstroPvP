@@ -6,10 +6,10 @@
  *  com.compilex.CosmicOutposts.outpost.me.astropvp.cratekeys.enums.OutpostTier
  *  com.cosmicpvp.cosmicutils.CosmicUtils
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NBTWrapper
  *  me.ifamasssxd.cosmichcf.api.HCFOutpostAPI
- *  me.ifamasssxd.cosmichcf.struct.OutpostType
+ *  me.ifamasssxd.cosmichcf.net.astropvp.armorsets.struct.OutpostType
  *  net.minecraft.server.v1_7_R4.NBTBase
  *  org.bukkit.Bukkit
  *  org.bukkit.Material

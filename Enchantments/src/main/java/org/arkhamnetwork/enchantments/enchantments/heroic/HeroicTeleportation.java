@@ -2,14 +2,14 @@
  * Decompiled with CFR 0.150.
  * 
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.FactionUtils
- *  com.cosmicpvp.cosmicutils.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.FactionUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NumberUtils
  *  com.massivecraft.factions.iface.RelationParticipator
- *  com.massivecraft.factions.struct.Relation
+ *  com.massivecraft.factions.net.astropvp.armorsets.struct.Relation
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.utils.WorldGuardUtils
+ *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.utils.WorldGuardUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.Location

@@ -129,7 +129,7 @@ public class TextUtil {
     }
 
     // -------------------------------------------- //
-    // Standard utils like UCFirst, implode and repeat.
+    // Standard net.astropvp.armorsets.utils like UCFirst, implode and repeat.
     // -------------------------------------------- //
 
     public static String upperCaseFirst(String string) {

@@ -5,7 +5,7 @@
 Click on any command for more details.
 
 !!! note
-    Some commands take additional arguments.  
+    Some net.astropvp.armorsets.commands take additional arguments.  
     Arguments like &lt;this&gt; are *required*.  
     Arguments like [this] are *optional*.
 
@@ -134,7 +134,7 @@ Click on any command for more details.
 
 ### Old command documentation
 
-This documentation will stay here until all commands are documented in the above manner:
+This documentation will stay here until all net.astropvp.armorsets.commands are documented in the above manner:
 
 Command | Permission | Meaning
 --- | --- | ---
@@ -142,7 +142,7 @@ Command | Permission | Meaning
 `/f ahome <target>` | factions.ahome | Teleport a player to their faction's home.
 `/f announce <message…>` | factions.announce | Send a message to players in your faction.
 `/f autoclaim [faction]` | factions.autoclaim | Auto-claim land when you walk over wilderness for your faction. Admins can specify other factions and claim for them.
-`/f autohelp` | none | Show help for all commands.
+`/f autohelp` | none | Show help for all net.astropvp.armorsets.commands.
 `/f boom [on/off]` | factions.noboom | Toggle peaceful explosions in your faction's territory on or off.
 `/f bypass` | factions.bypass | Set yourself to bypass faction permission checks.
 `/f chat <mode>` | factions.chat | Toggle chat modes or specify which channel you want to be in (public, alliance, faction, truce)
@@ -171,7 +171,7 @@ Command | Permission | Meaning
 `/f mapheight [value]` | factions.mapheight | Set how many lines your /f map will show.
 `/f mod [name]` | factions.mod | Promote a player in your faction to mod.
 `/f modifypower <name> <power>` | factions.modifypower | Modify a player's power. The <power> variable adds power to the player's current power.
-`/f money` | none | Shows help for money commands.
+`/f money` | none | Shows help for money net.astropvp.armorsets.commands.
 `/f money balance [faction]` | factions.money.balance | Check a faction's balance. Default is your own faction.
 `/f money deposit <amount> [faction]` | factions.money.deposit | Deposit money into your faction. Admins can specify other factions and can add money to the specified faction.
 `/f money ff <amount> <factionfrom> <factionto>` | factions.money.f2f | Transfer money from one faction to another.

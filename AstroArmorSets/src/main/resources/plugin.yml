@@ -1,0 +1,7 @@
+name: AstroArmorSets
+main: net.astropvp.armorsets.AstroArmorSets
+version: 1.0
+depend: [CosmicPvPUtils, CosmicSkyCustomItems, NBTAPI]
+commands:
+  heroicarmor:
+    description: command

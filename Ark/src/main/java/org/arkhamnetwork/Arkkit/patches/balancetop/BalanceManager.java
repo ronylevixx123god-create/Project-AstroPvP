@@ -5,7 +5,7 @@
  *  com.compilex.MineBans.api.MineBanAPI
  *  com.google.common.collect.Lists
  *  me.ifamasssxd.cosmicweblink.CosmicWebLinkAPI
- *  me.ifamasssxd.cosmicweblink.struct.DataTypeEnum
+ *  me.ifamasssxd.cosmicweblink.net.astropvp.armorsets.struct.DataTypeEnum
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
  *  org.bukkit.OfflinePlayer

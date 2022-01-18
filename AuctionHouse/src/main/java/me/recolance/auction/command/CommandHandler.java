@@ -3,17 +3,17 @@
  *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NBTWrapper
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NBTWrapper
  *  com.google.common.collect.Lists
  *  me.vaqxine.NetworkManager.NetworkManager
  *  net.milkbowl.vault.economy.Economy
  *  org.arkhamnetwork.Arkkit.Arkkit
- *  org.arkhamnetwork.Arkkit.commands.CommandArkReboot
+ *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.commands.CommandArkReboot
  *  org.arkhamnetwork.Arkkit.patches.AntiCrash
  *  org.arkhamnetwork.Arkkit.patches.ItemID
  *  org.arkhamnetwork.Arkkit.plugins.ArkPlugins
- *  org.arkhamnetwork.Arkkit.utils.TimeUtils
+ *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.utils.TimeUtils
  *  org.arkhamnetwork.CosmicMoneyNotes.ArkhamMoneyNotesAPI
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor
@@ -319,7 +319,7 @@ public class CommandHandler
                         return CommandHandler.handleSelling(player);
                     }
                     case "help":
-                    case "commands": {
+                    case "net.astropvp.armorsets.commands": {
                         if (length != 1) {
                             return CommandHandler.sendNonArg(player, Command.HELP);
                         }
@@ -364,7 +364,7 @@ public class CommandHandler
                         return true;
                     }
                 }
-                Util.message(player, "&cType /ah help to list auction commands.");
+                Util.message(player, "&cType /ah help to list auction net.astropvp.armorsets.commands.");
             }
             case "bid":
             case "bids":

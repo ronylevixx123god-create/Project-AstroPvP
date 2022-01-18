@@ -3,7 +3,7 @@
  *
  * Could not load the following classes:
  *  com.compilex.CompilexPermissions.event.PermissionGroupAddEvent
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.utils.CC
+ *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
  *  com.google.common.collect.MapMaker
  *  org.bukkit.Bukkit
  *  org.bukkit.ChatColor

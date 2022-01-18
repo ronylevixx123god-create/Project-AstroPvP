@@ -148,7 +148,7 @@ public class PacketIO {
             }
             cooldowns.put(type.name(), current);
         }
-        queuePacket(player, new PacketOutItemCooldowns(cooldowns));
+        //queuePacket(player, new PacketOutItemCooldowns(cooldowns));
         if (Config.getInst().getTooltip().isSendDiscordTooltipOnJoin())
             queuePacket(player, new PacketOutTooltip(Chat.c(Config.getInst().getTooltip().getDiscordTooltipTitle()),
                     Chat.c(Config.getInst().getTooltip().getDiscordTooltipText()), null,

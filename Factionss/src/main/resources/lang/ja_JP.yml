@@ -167,9 +167,9 @@ COMMAND:
       '2': <c>/f claim warzone <i>claim land for the War Zone
       '3': <c>/f autoclaim [safezone|warzone] <i>take a guess
     MOAR:
-      '1': 'Finally some commands for the server admins:'
-      '2': '<i>More commands for server admins:'
-      '3': '<i>Even more commands for server admins:'
+      '1': 'Finally some net.astropvp.armorsets.commands for the server admins:'
+      '2': '<i>More net.astropvp.armorsets.commands for server admins:'
+      '3': '<i>Even more net.astropvp.armorsets.commands for server admins:'
   HOME:
     DISABLED: <b>党派ホームは禁止されました・
     TELEPORTDISABLED: <b>党派ホームテレポートは禁止されました・
@@ -244,8 +244,8 @@ COMMAND:
   MODIFYPOWER:
     ADDED: '<i>Added <a>%f <i>power to <a>%s. <i>New total rounded power: <a>%d'
   MONEY:
-    SHORT: faction money commands
-    LONG: <i>The faction money commands.
+    SHORT: faction money net.astropvp.armorsets.commands
+    LONG: <i>The faction money net.astropvp.armorsets.commands.
   MONEYBALANCE:
     SHORT: show faction balance
   MONEYDEPOSIT:

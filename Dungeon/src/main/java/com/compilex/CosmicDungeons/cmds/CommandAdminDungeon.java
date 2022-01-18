@@ -5,9 +5,9 @@
  *  com.cosmicpvp.cosmicutils.itembuilder.PhoenixFeatherBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.SpeedTrinketBuilder
  *  com.cosmicpvp.cosmicutils.itembuilder.YijkiStaffBuilder
- *  com.cosmicpvp.cosmicutils.utils.CC
- *  com.cosmicpvp.cosmicutils.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.PlayerUtil
  *  com.google.common.collect.Lists
  *  org.bukkit.Bukkit
  *  org.bukkit.Location
