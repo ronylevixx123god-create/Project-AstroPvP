@@ -29,12 +29,12 @@ public class GuiListener implements Listener
             return;
         }
         final Player p = (Player)e.getWhoClicked();
-        if (ChatColor.translateAlternateColorCodes('&', this.config.getString("net.astropvp.armorsets.gui.title")).equalsIgnoreCase(e.getClickedInventory().getName())) {
+        if (ChatColor.translateAlternateColorCodes('&', this.config.getString("gui.title")).equalsIgnoreCase(e.getClickedInventory().getName())) {
             e.setResult(Event.Result.DENY);
             int hour = 0;
             boolean found = false;
             for (int i = 0; i < 24; ++i) {
-                if (this.config.getInt("net.astropvp.armorsets.gui.items." + i + ".slot") == e.getSlot()) {
+                if (this.config.getInt("gui.items." + i + ".slot") == e.getSlot()) {
                     found = true;
                     hour = i;
                 }

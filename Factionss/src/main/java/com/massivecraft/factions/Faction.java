@@ -28,7 +28,7 @@ public interface Faction extends EconomyParticipator {
 
     List<String> getPlayerAccess(FLocation fl);
 
-    List<String> getFactionAccess(FLocation fl);
+    List<String> getFactyionAccess(FLocation fl);
 
     Map<Faction, Set<FPlayer>> getFactionWithPlayersWithAccess(Faction owning, Set<String> perms);
 

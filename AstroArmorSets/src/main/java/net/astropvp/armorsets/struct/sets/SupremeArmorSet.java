@@ -49,10 +49,12 @@ public class SupremeArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
-        lore.add(CC.translate("&b&lYETI SET BONUS"));
-        lore.add(CC.translate("&8● &bDeal +10% damage to all enemies."));
-        lore.add(CC.translate("&8● &bEnemies deal 10% less damage to you."));
-        lore.add(CC.translate("&7(&oRequires all 4 yeti items.&7)"));
+        lore.add(CC.translate("&4&lSUPREME SET BONUS"));
+        lore.add(CC.translate("&8● &4Gears IV."));
+        lore.add(CC.translate("&8● &4Deal +15% damage to all enemies."));
+        lore.add(CC.translate("&8● &4Enemy arrows deal 10% less to you."));
+
+        lore.add(CC.translate("&7(&oRequires all 4 supreme items.&7)"));
         return lore;
     }
 

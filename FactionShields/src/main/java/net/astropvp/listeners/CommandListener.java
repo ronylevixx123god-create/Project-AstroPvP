@@ -44,8 +44,8 @@ public class CommandListener implements Listener {
             if (cmd.startsWith(cmdAlias)) {
                 event.setCancelled(true);
 
-                if (Conf.gracePeriod == false) {
-                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lFactionShields: &7You cannot edit your /f shield anymore!"));
+                if (!Conf.gracePeriod) {
+                    event.getPlayer().sendMessage(ChatColor.translateAlternateColorCodes('&', "&a&lFactionShields: &7You cannot edit your /f shield anymore! This is only available while grace period is enabled!"));
                     event.setCancelled(true);
                     return;
                 }
@@ -62,17 +62,17 @@ public class CommandListener implements Listener {
     }
 
     private void openGui(final Player player) {
-        final Inventory inventory = Bukkit.createInventory((InventoryHolder)player, this.config.getInt("net.astropvp.armorsets.gui.rowsize") * 9, ChatColor.translateAlternateColorCodes('&', this.config.getString("net.astropvp.armorsets.gui.title")));
-        final ItemStack fillMaterial = new ItemStack(this.config.getInt("net.astropvp.armorsets.gui.items.fill-material.id"), 1, (short)this.config.getInt("net.astropvp.armorsets.gui.items.fill-material.subid"));
+        final Inventory inventory = Bukkit.createInventory((InventoryHolder)player, this.config.getInt("gui.rowsize") * 9, ChatColor.translateAlternateColorCodes('&', this.config.getString("gui.title")));
+        final ItemStack fillMaterial = new ItemStack(this.config.getInt("gui.items.fill-material.id"), 1, (short)this.config.getInt("gui.items.fill-material.subid"));
         final ItemMeta fillMeta = fillMaterial.getItemMeta();
-        fillMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.config.getString("net.astropvp.armorsets.gui.items.fill-material.name")));
+        fillMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', this.config.getString("gui.items.fill-material.name")));
         fillMaterial.setItemMeta(fillMeta);
         for (int i = 0; i < 24; ++i) {
             if (this.data.getIntegerList(FactionUtils.getFaction(player).getId()).contains(i)) {
-                inventory.setItem(this.config.getInt("net.astropvp.armorsets.gui.items." + i + ".slot"), GuiItems.getHourOnMaterial(i));
+                inventory.setItem(this.config.getInt("gui.items." + i + ".slot"), GuiItems.getHourOnMaterial(i));
             }
             else {
-                inventory.setItem(this.config.getInt("net.astropvp.armorsets.gui.items." + i + ".slot"), GuiItems.getHourOffMaterial(i));
+                inventory.setItem(this.config.getInt("gui.items." + i + ".slot"), GuiItems.getHourOffMaterial(i));
             }
         }
         for (int i = 0; i < inventory.getSize(); ++i) {
