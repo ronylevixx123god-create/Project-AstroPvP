@@ -10,6 +10,7 @@ import com.conaxgames.customskulls.guis.MainCustomBlockGUI;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
@@ -138,8 +139,8 @@ public class MobGrinder extends CustomBlock {
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.BLAZE_STONE_TOTEM.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.BLAZE_STONE_TOTEM.getPickupPrice());
+            if (EconomyUtils.hasBalance(breaker, AbilityType.BLAZE_STONE_TOTEM.getPickupPrice())) {
+                EconomyUtils.withdrawBalance(breaker, AbilityType.BLAZE_STONE_TOTEM.getPickupPrice());
                 breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.BLAZE_STONE_TOTEM.getPickupPrice()));
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());

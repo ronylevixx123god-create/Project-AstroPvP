@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
@@ -129,8 +130,8 @@ public class AstroTrophy extends CustomBlock {
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice());
+            if (EconomyUtils.hasBalance(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice())) {
+                EconomyUtils.withdrawBalance(breaker, AbilityType.COSMIC_TROPHY.getPickupPrice());
                 breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.COSMIC_TROPHY.getPickupPrice()));
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());

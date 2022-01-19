@@ -19,7 +19,7 @@ public class CustomBlockPacketListener extends PacketAdapter {
     private Field posField;
 
     public CustomBlockPacketListener() {
-        super(CoreSkulls.getInstance(), ListenerPriority.HIGHEST, PacketType.Play.Server.TILE_ENTITY_DATA, PacketType.Play.Server.MAP_CHUNK);
+        super(CoreSkulls.instance, ListenerPriority.HIGHEST, PacketType.Play.Server.TILE_ENTITY_DATA, PacketType.Play.Server.MAP_CHUNK);
 
         try{
             tagField = PacketPlayOutTileEntityData.class.getDeclaredField("c");
@@ -32,7 +32,7 @@ public class CustomBlockPacketListener extends PacketAdapter {
             exc.printStackTrace();
         }
 
-        Bukkit.getLogger().info(String.format("[%s] - Registered packet listener!", CoreSkulls.getInstance().getName()));
+        Bukkit.getLogger().info(String.format("[%s] - Registered packet listener!", CoreSkulls.instance.getName()));
     }
 
     @Override

@@ -35,7 +35,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "YijkiCrystal");
+        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "YijkiCrystal", amount);
         //TODO yijki ability
     }
 
@@ -57,8 +57,8 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add(CC.Red + "-5% Incoming Damage");
-        message.add(CC.Red + "20% Revenge of Yijki Ability");
+        message.add(CC.White + "-5% Incoming Damage");
+        message.add(CC.White + "20% Revenge of Yijki Ability");
         return message;
     }
 

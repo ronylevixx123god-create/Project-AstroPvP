@@ -35,6 +35,7 @@ import java.util.*;
 @Getter
 public class CoreSkulls extends JavaPlugin {
 
+    @Getter
     public static CoreSkulls instance;
 
     public static Map<String, CustomBlock> customBlocks = new HashMap<>();
@@ -45,11 +46,11 @@ public class CoreSkulls extends JavaPlugin {
 
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
 
+
     public static Map<UUID, AbilityData> inSlotbotMachine;
 
     public static MobStackerUtils mobStackerUtils;
 
-    private HashMap<Chunk, MobGrinderCache> grinderBlocks;
 
 
 
@@ -76,7 +77,6 @@ public class CoreSkulls extends JavaPlugin {
         info("CoreSkulls!");
         inSlotbotMachine = new HashMap<>();
         registerTasks();
-        this.grinderBlocks = new HashMap<>();
         ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
 
     }
@@ -122,7 +122,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 30*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 10*20);
     }
 
 

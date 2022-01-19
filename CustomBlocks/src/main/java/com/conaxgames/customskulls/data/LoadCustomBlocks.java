@@ -14,7 +14,7 @@ public class LoadCustomBlocks {
     public static void load() {
 
         // Looping through all the files in a directory.
-        File directory = new File(CoreSkulls.getInstance().getDataFolder() + File.separator + "data");
+        File directory = new File(CoreSkulls.instance.getDataFolder() + File.separator + "data");
         File[] files = directory.listFiles();
         if (files == null || files.length == 0) {
             return;
@@ -33,10 +33,10 @@ public class LoadCustomBlocks {
             long lastActivated = ymlFile.getLong("lastActivated");
 
             // This CustomBlock doesn't exist? Oh noes, we better delete it! It's always nice to keep things clean.
-            if (CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != abilityType.getMaterial()) {
-                CoreSkulls.getInstance().info("[CustomSkulls] The block at a location was not the material. We can safely say it's not a CustomBlock.");
-                CoreSkulls.getInstance().info(CoreSkulls.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType().toString());
-                CoreSkulls.getInstance().info(abilityType.getMaterial().toString());
+            if (CoreSkulls.instance.getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != abilityType.getMaterial()) {
+                CoreSkulls.instance.info("[CustomSkulls] The block at a location was not the material. We can safely say it's not a CustomBlock.");
+                CoreSkulls.instance.info(CoreSkulls.instance.getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType().toString());
+                CoreSkulls.instance.info(abilityType.getMaterial().toString());
                 file.delete();
                 continue;
             }
@@ -49,7 +49,7 @@ public class LoadCustomBlocks {
             data.setLastActivated(lastActivated);
 
             // This is a debug message which can be deleted at a later date!
-            CoreSkulls.getInstance().info("[CustomSkulls] Put " + data.getAbilityType() + " into memory.");
+            CoreSkulls.instance.info("[CustomSkulls] Put " + data.getAbilityType() + " into memory.");
         }
     }
 

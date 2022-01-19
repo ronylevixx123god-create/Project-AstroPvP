@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
@@ -124,8 +125,8 @@ public class LeviathanTotem extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (CoreSkulls.getEconomy().has(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice())) {
-            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice());
+        if (EconomyUtils.hasBalance(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice())) {
+            EconomyUtils.withdrawBalance(breaker, AbilityType.LEVIATHAN_TOTEM.getPickupPrice());
             breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.LEVIATHAN_TOTEM.getPickupPrice()));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());

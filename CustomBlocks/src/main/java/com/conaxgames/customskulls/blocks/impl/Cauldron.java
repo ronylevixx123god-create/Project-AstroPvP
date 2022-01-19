@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
@@ -124,8 +125,8 @@ public class Cauldron extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice())) {
-            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice());
+        if (EconomyUtils.hasBalance(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice())) {
+            EconomyUtils.withdrawBalance(breaker, AbilityType.HALLOWEEN_CAULDRON.getPickupPrice());
             breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.HALLOWEEN_CAULDRON.getPickupPrice()));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());

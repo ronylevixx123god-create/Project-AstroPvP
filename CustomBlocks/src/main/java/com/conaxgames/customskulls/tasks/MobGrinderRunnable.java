@@ -15,6 +15,7 @@ import org.bukkit.Material;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Mob;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -28,12 +29,12 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        for (MobGrinderCache mobGrinderCache : CoreSkulls.instance.getGrinderBlocks().values()) {
-            if (mobGrinderCache == null) continue;
+        for (Map.Entry<String ,MobGrinderCache> entry : MobGrinderCacherTask.mobGrinderBlocks.entrySet()) {
+            MobGrinderCache mobGrinderCache = entry.getValue();
+            Location location = mobGrinderCache.getChestLocation();
             if (!mobGrinderCache.getAbilityData().isActive()) continue;
             boolean playerFound = mobGrinderCache.isPlayerNearby();
             if (!playerFound) continue;
-
 
             Location chestLocation = mobGrinderCache.getChestLocation();
 
@@ -53,7 +54,10 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 }
             }
 
-            if (!stackedBlazesFound) continue;
+            if (!stackedBlazesFound) {
+
+                continue;
+            }
 
 
             //ADD LOOT TO THE CHEST

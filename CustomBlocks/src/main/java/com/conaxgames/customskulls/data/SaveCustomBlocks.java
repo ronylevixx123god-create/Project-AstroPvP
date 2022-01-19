@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class SaveCustomBlocks {
     public static void saveCustomBlock(Player player, AbilityType abilityType, Block block) {
-        File file = new File(CoreSkulls.getInstance().getDataFolder().toString() + "/data/" + AbilityData.getUUID(block.getLocation()) + ".yml");
+        File file = new File(CoreSkulls.instance.getDataFolder().toString() + "/data/" + AbilityData.getUUID(block.getLocation()) + ".yml");
 
         if (!file.exists()) {
             return;
@@ -39,7 +39,7 @@ public class SaveCustomBlocks {
             ymlFile.save(file);
         }
         catch (IOException exception) {
-            CoreSkulls.getInstance().info("Unable to save yml file information. Printing stack...");
+            CoreSkulls.instance.info("Unable to save yml file information. Printing stack...");
             exception.printStackTrace();
         }
     }

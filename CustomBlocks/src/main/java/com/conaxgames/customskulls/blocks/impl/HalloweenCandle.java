@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
@@ -127,8 +128,8 @@ public class HalloweenCandle extends CustomBlock {
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
-            if (CoreSkulls.getEconomy().has(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice())) {
-                CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice());
+            if (EconomyUtils.hasBalance(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice())) {
+                EconomyUtils.withdrawBalance(breaker, AbilityType.HALLOWEEN_CANDLES.getPickupPrice());
                 breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.HALLOWEEN_CANDLES.getPickupPrice()));
 
                 ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());

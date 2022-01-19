@@ -8,6 +8,7 @@ import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
@@ -115,8 +116,8 @@ public class SlotbotMachine extends CustomBlock {
             // The block must be in the land to remove it.
             return;
         }
-        if (CoreSkulls.getEconomy().has(breaker, AbilityType.COSMIC_TOKEN_GENERATOR.getPickupPrice())) {
-            CoreSkulls.getEconomy().withdrawPlayer(breaker, AbilityType.COSMIC_TOKEN_GENERATOR.getPickupPrice());
+        if (EconomyUtils.hasBalance(breaker, AbilityType.COSMIC_TOKEN_GENERATOR.getPickupPrice())) {
+            EconomyUtils.withdrawBalance(breaker, AbilityType.COSMIC_TOKEN_GENERATOR.getPickupPrice());
             breaker.sendMessage(CC.B_RED + "-$" + NumberUtils.formatMoney(AbilityType.COSMIC_TOKEN_GENERATOR.getPickupPrice()));
 
             ItemBuilderUtils item = new ItemBuilderUtils(this.getItem()).setLore(this.addLore());
