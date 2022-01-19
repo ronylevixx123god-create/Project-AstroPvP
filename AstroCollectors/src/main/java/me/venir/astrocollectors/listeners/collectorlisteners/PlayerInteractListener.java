@@ -1,5 +1,7 @@
 package me.venir.astrocollectors.listeners.collectorlisteners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
@@ -35,6 +37,10 @@ public class PlayerInteractListener  implements Listener {
             assert collectorLocation != null;
             if (!collectorLocation.equals(location)) return;
             Collector collector = CollectorManager.DELEGATE.getCollector(event.getClickedBlock().getLocation());
+
+            if (FactionUtils.getFaction(event.getPlayer()) != FactionUtils.getFactionAt(collectorLocation) && !event.getPlayer().isOp()) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need to be in the " + FactionUtils.getFactionAt(collectorLocation)) + " to open this collector!");
+            }
 
 
             if (player.isSneaking()) {

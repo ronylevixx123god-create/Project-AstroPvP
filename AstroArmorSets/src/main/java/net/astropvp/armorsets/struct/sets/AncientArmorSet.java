@@ -2,13 +2,29 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.cmd.CmdFocus;
+import com.massivecraft.factions.cmd.CmdUnfocus;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,24 +49,28 @@ public class AncientArmorSet extends ArmorSet {
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "AncientCrystal", amount);
-        //TODO Reduce kb effect
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "AncientSet");
+        attacked.setVelocity(attacked.getVelocity().multiply(0.8));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35, event, "AncientSet");
-        //TODO Ancient Ability
+        if (Math.random() < 0.05 && attacked instanceof Player) {
+            startAncientEffect(attacker, (Player) attacked);
+        }
 
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7, event, "AncientCrystal", amount);
-        //TODO Ancient Ability
+        if (Math.random() < 0.05 && attacked instanceof Player) {
+            startAncientEffect(attacker, (Player) attacked);
+        }
 
     }
 
@@ -89,6 +109,47 @@ public class AncientArmorSet extends ArmorSet {
         return message;
     }
 
+    private void startAncientEffect(final Player player, final Player pTarget) {
 
+        if (pTarget.hasMetadata("banshee_scrolls") || pTarget.hasMetadata("bloodHoundNoBless") || player.hasMetadata("banshee_active")) {
+            return;
+        }
+
+        if (pTarget.getItemInHand() != null && WeaponBonusUtils.hasWeaponBonus(((Player) pTarget).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
+            pTarget.sendMessage(CC.translate("&3&l* BLOCKED ENEMY ANCIENT ABILITY &7(Hero Weapon Bonus) &3&l*"));
+            return;
+        }
+
+        this.focusTargetPlayer(player, pTarget);
+        player.sendMessage("");
+        player.sendMessage(CC.translate(("&3&l      * LEVIATHAN'S CURSE &7(" + pTarget.getName() + ")&3&l *")));
+        player.sendMessage(CC.translate(("&3&l      * &7+150% damage to &f" + pTarget.getName() + "&7 for 10s")));
+        player.sendMessage("");
+        pTarget.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), true));
+        pTarget.setMetadata("bloodHoundNoBless", new FixedMetadataValue(CosmicSkyInventoryPets.get(), "ancient"));
+        pTarget.removePotionEffect(PotionEffectType.SLOW);
+        pTarget.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 200, 0));
+        pTarget.sendMessage("");
+        pTarget.sendMessage(CC.translate(("&3&l* LEVIATHAN'S CURSE &7(" + player.getName() + "'s Ancient Armor Set) &3&l*")));
+        pTarget.sendMessage(CC.translate(("&3&l   * &7+150% damage from " + player.getName() + " for 10s")));
+        pTarget.sendMessage(CC.translate("&3&l      * &710s Silence and Slowness I"));
+        pTarget.sendMessage(CC.translate("&3&l        * &730s visible on /near"));
+        pTarget.sendMessage("");
+        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 10.0f, 10.0f);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
+            pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
+            pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
+            CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
+        },100L);
+
+    }
+
+    private void focusTargetPlayer(Player player, Player pTarget) {
+            FPlayer fPlayer = FPlayers.i.get(player);
+            Faction myFaction = fPlayer.getFaction();
+            FPlayer targetPlayer = FPlayers.i.get(pTarget);
+            CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+
+    }
 
 }

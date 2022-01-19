@@ -117,13 +117,10 @@ implements Runnable {
 
 
     private void playerCapHandler() throws Exception {
-        if (this.playerCapping != null && this.playerCapping.isValid() && !this.playerCapping.isDead()) {
+        if (this.playerCapping != null && this.playerCapping.isValid() && !this.playerCapping.isDead() && this.playerCapping.isOnline()) {
             Player playerCapping = this.playerCapping;
-            this.getClass();
             if (playerCapping.hasMetadata("KOTH_CAPPING_START")) {
-                String regionName;
-                String region = regionName = WorldGuardUtils.getRegionName(this.playerCapping.getLocation());
-                this.getClass();
+                String regionName = WorldGuardUtils.getRegionName(this.playerCapping.getLocation());
                 if (!regionName.equals("koth_center")) {
                     this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.RED + " is no longer capping KOTH!");
                     de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),this.playerCapping.getLocation(), 0,1,0,0.6f,30);
@@ -152,7 +149,6 @@ implements Runnable {
         double lowestDistance = 2.147483647E9;
         for (Player p : this.getKothPlayers()) {
             String regionName2 = WorldGuardUtils.getRegionName(p.getLocation());
-            this.getClass();
             if (!regionName2.equals("koth_center") || CosmicKOTHPlugin.get_().getEss3() != null && CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished() || p.getGameMode() != GameMode.SURVIVAL) continue;
             double dist = p.getLocation().distanceSquared(CosmicKOTHPlugin.get_().getKothCenter());
             if (pClosest != null && dist >= lowestDistance) continue;

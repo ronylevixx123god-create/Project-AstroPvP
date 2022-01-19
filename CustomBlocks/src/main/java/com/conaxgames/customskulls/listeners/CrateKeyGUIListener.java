@@ -121,45 +121,6 @@ public class CrateKeyGUIListener implements Listener {
                     }
                 }
 
-                HashMap<ItemStack, Integer> lootItems = new HashMap<>();
-
-
-                for (ItemStack item : loot) {
-                    ItemStack itemStack1 = item.clone();
-                    itemStack1.setAmount(1);
-                    if (lootItems.containsKey(itemStack1)) {
-                        int currentAmount = lootItems.get(itemStack1);
-                        int newAmount = currentAmount + item.getAmount();
-                        lootItems.put(itemStack1, newAmount);
-                    } else {
-                        lootItems.put(itemStack1, item.getAmount());
-                    }
-                }
-
-
-                loot = new ArrayList<>();
-                for (Map.Entry<ItemStack, Integer> entry : lootItems.entrySet()) {
-                    ItemStack item = entry.getKey();
-                    ItemStack cloneItem = item.clone();
-                    int newAmount = 0;
-                    int amount = entry.getValue();
-
-
-                    while (amount != 0) {
-
-                        if (amount > item.getMaxStackSize()) {
-                            amount -= item.getMaxStackSize();
-                            newAmount = item.getMaxStackSize();
-                        } else {
-                            newAmount = amount;
-                            amount = 0;
-                        }
-
-                        cloneItem.setAmount(newAmount);
-                        loot.add(cloneItem);
-                    }
-                }
-
                 CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId()).add(new CollectCategory(CollectType.CRTAEKEY, loot.toArray(new ItemStack[0]), com.cosmicpvp.cosmicutils.utils.CC.GoldB + "CrateKey Opener Loot", System.currentTimeMillis()));
                 p.sendMessage("");
                 p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The CrateKey Loot has been put into your &f/collect&b."));

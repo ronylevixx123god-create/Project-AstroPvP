@@ -1,9 +1,12 @@
 package net.astropvp.armorsets.struct.sets;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -12,8 +15,11 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 public class LunaArmorSet extends ArmorSet {
+    public static List<UUID> lunaStrikedPlayers = new ArrayList<>();
+
     public ItemStack getHelmet() {
         return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&7&lLuna Helmet")).addLoreLines(CC.translate("&7From the galaxy to astro.")).build();
     }
@@ -33,24 +39,27 @@ public class LunaArmorSet extends ArmorSet {
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(4, event, "LunaCrystal", amount);
-        //TODO luna Ability
+
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "LunaSet");
-        //TODO luna Ability
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(6, event, "LunaSet");
-
+        if (Math.random() < 0.05 && attacked instanceof Player) {
+            lunaStrike((Player) attacked);
+        }
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "LunaCrystal", amount);
-
+        if (Math.random() < 0.05 && attacked instanceof Player) {
+            lunaStrike((Player) attacked);
+        }
     }
 
     public List<String> getArmorLore() {
@@ -85,6 +94,28 @@ public class LunaArmorSet extends ArmorSet {
         message.add("");
         return message;
     }
+
+    public void lunaStrike(Player enemy) {
+        if (isLunarStriked(enemy)) return;
+        lunaStrikedPlayers.add(enemy.getUniqueId());
+        enemy.sendMessage("");
+        enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8&l✰ &7&lLUNA STRIKE ABILITY (" + enemy.getName() + ") &8&l✰")));
+        enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&l* &7Increased Rage Stack Limit")));
+        enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&l* &7Negate " + enemy.getName() + "'s Soul Enchants (5s)")));
+        enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&l* &7Negate all incoming Pet Damage modifiers (5s)")));
+        enemy.sendMessage("");
+
+        Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicArmorSetsPlugin.get_(), () -> {
+            if (isLunarStriked(enemy)) {
+                lunaStrikedPlayers.remove(enemy.getUniqueId());
+            }
+        }, 100L);
+    }
+
+    public static boolean isLunarStriked(Player player) {
+        return lunaStrikedPlayers.contains(player.getUniqueId());
+    }
+
 
 
 

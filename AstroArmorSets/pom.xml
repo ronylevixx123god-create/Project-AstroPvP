@@ -48,6 +48,15 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
+        <artifactId>facs</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+    </dependency>
+
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
         <artifactId>skyitems</artifactId>
         <version>1.0</version>
         <scope>system</scope>

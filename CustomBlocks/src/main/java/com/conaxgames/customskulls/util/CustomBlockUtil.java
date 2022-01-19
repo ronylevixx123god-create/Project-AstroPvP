@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
+import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -42,16 +43,17 @@ public class CustomBlockUtil {
 
     public static List<AbilityData> getBlockDatasInChunk(Player player) {
         List<AbilityData> abilityDataList = new ArrayList<>();
-        Chunk chunk = player.getLocation().getChunk();
-
-        for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
-            if (data == null || data.getLocation() == null) continue;
-            if (data.getAbilityType() == null) continue;
-            if (chunk == null) continue;
-            if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
-                abilityDataList.add(data);
+        Bukkit.getScheduler().runTaskAsynchronously(CoreSkulls.instance, () -> {
+            Chunk chunk = player.getLocation().getChunk();
+            for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
+                if (data == null || data.getLocation() == null) continue;
+                if (data.getAbilityType() == null) continue;
+                if (chunk == null) continue;
+                if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
+                    abilityDataList.add(data);
+                }
             }
-        }
+        });
         return abilityDataList;
     }
 

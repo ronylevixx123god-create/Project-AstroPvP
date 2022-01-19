@@ -26,10 +26,10 @@ public abstract class ArmorSet {
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
     }
 
-    public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
+    public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) throws Exception {
     }
 
-    public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
+    public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) throws Exception {
     }
 
     public void onEquip(Player player) {

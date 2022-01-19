@@ -104,8 +104,8 @@
             <systemPath>${project.basedir}/lib/Essentials.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>me.mattstudios.net.astropvp.armorsets.utils</groupId>
-            <artifactId>matt-framework-net.astropvp.armorsets.gui</artifactId>
+            <groupId>me.mattstudios.utils</groupId>
+            <artifactId>matt-framework-gui</artifactId>
             <version>2.0.3.3</version>
         </dependency>
         <dependency>

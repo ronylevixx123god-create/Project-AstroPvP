@@ -1,12 +1,23 @@
 package net.astropvp.armorsets.struct.sets;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
+import com.compilex.CosmicArmorSets.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.struct.Relation;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
-import org.bukkit.Material;
+import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
+import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -15,6 +26,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
@@ -34,15 +46,19 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
 
-    public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
+    public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) throws Exception {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "YijkiCrystal", amount);
-        //TODO yijki ability
+        if (Math.random() < 0.05 && attacker instanceof Player) {
+            activateYijki(attacker.getLocation(), attacked);
+        }
     }
 
 
-    public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
+    public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) throws Exception {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(30, event, "YijkiSet");
-        //TODO yijki ability
+        if (Math.random() < 0.05 && attacker instanceof Player) {
+            activateYijki(attacker.getLocation(), attacked);
+        }
 
     }
 
@@ -77,7 +93,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
         ItemStack sword = new NBTWrapper(new ItemBuilder(Material.DIAMOND_SWORD)
                 .setName(CC.translate("&f&lYijki World Ender"))
                 .addLoreLines(CC.Gray + "They laughed at you, they"
-                        ,CC.Gray + "An Absolute massive, corruped"
+                        , CC.Gray + "An Absolute massive, corruped"
                         , CC.Gray + "executioner blade imbued with"
                         , CC.Gray + "highly destructive dark magic."
                         , ""
@@ -89,6 +105,59 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
         weapons.add(sword);
         return weapons;
+    }
+
+    public void activateYijki(Location center, Player player) throws Exception {
+        ArrayList<Location> procLocations = new ArrayList<Location>();
+        ArrayList<Player> nearbyPlayers = new ArrayList<Player>();
+        FPlayer fp = FPlayers.i.get(player);
+        for (int i = 0; i < 16; ++i) {
+            Location l = LocationUtils.getNearbyLocation(center, 8, 2, 0);
+            l.getWorld().playSound(l, Sound.WITHER_SPAWN, 1.0f, 0.4f);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone(), 0f, 1f, 0f, 0.7f, 32);
+            de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone(), 0f, 0f, 0f, 0.7f, 32);
+            procLocations.add(l);
+        }
+        for (Entity nearbyEnt : player.getNearbyEntities(32.0, 64.0, 32.0)) {
+            if (!(nearbyEnt instanceof Player)) continue;
+            Player pNear = (Player) nearbyEnt;
+            FPlayer fpNear = FPlayers.i.get(pNear);
+            if (CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player)) continue;
+            if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CUPID_AMULET)) {
+                player.sendMessage(CC.translate("&c&l* Amulet of Angles &7(Blocked Yijki) &c&l*"));
+                continue;
+            }
+            if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                continue;
+            pNear.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "** REVENGE OF YIJKI (" + ChatColor.RED + fp.getNameAsync() + " [1.5s]" + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") **");
+            nearbyPlayers.add(pNear);
+        }
+        Bukkit.getScheduler().runTaskLater(CosmicArmorSetsPlugin.get_(), () -> {
+            for (Location l : procLocations) {
+                l.getWorld().strikeLightningEffect(l);
+                l.getWorld().playSound(l, Sound.WITHER_DEATH, 1.0f, 0.4f);
+                try {
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 0.0f, 0f, 1.2f, 20);
+                    de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), l, 0f, 1.0f, 0f, 1.2f, 20);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+
+                for (Player pNear : nearbyPlayers) {
+                    FPlayer fpNear;
+                    if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = FPlayers.i.get(pNear)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                        continue;
+                    int damage = 16;
+                    try {
+                        if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage)) continue;
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    pNear.setHealth(Math.max(1.0, pNear.getHealth() - (double) damage));
+                }
+            }
+        }, 20L);
     }
 
 

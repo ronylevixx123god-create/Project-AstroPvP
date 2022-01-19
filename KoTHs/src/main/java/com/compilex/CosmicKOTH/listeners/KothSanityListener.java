@@ -93,7 +93,7 @@ public class KothSanityListener implements Listener {
         }
     });
 
-/*    @EventHandler
+    @EventHandler
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         if (event.getDamager() == null) return;
         if (!(event.getDamager() instanceof Player)) return;
@@ -104,8 +104,9 @@ public class KothSanityListener implements Listener {
         if (faction.getId().equals(CosmicKOTHPlugin.get_().getBuffFactionId())) {
             DamageUtils.setDamageIncrease(10, event);
         }
+    }
 
-    }*/
+
 
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent e) {
