@@ -11,11 +11,15 @@ import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
+import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public class CustomBlockUtil {
 
@@ -35,7 +39,6 @@ public class CustomBlockUtil {
     }
 
 
-
     public static Boolean isCustomItem(ItemStack itemStack) {
         NBTItem nbtItem = new NBTItem(itemStack);
         return nbtItem.hasKey("cosmicType") && nbtItem.getString("cosmicType").equals("custom_block");
@@ -43,9 +46,9 @@ public class CustomBlockUtil {
 
     public static List<AbilityData> getBlockDatasInChunk(Player player) {
         List<AbilityData> abilityDataList = new ArrayList<>();
-        Bukkit.getScheduler().runTaskAsynchronously(CoreSkulls.instance, () -> {
+        final Collection<AbilityData> map = AbilityData.getAbilityDataMap().values();
             Chunk chunk = player.getLocation().getChunk();
-            for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
+            for (AbilityData data : map) {
                 if (data == null || data.getLocation() == null) continue;
                 if (data.getAbilityType() == null) continue;
                 if (chunk == null) continue;
@@ -53,20 +56,35 @@ public class CustomBlockUtil {
                     abilityDataList.add(data);
                 }
             }
-        });
         return abilityDataList;
     }
 
     public static Location getClosestChestLocation(Location location) {
-        int radius = 1;
-        Block block = location.getBlock(); //placed block
-        for (int x = -(radius); x <= radius; x++) {
-            for (int y = -(radius); y <= radius; y++) {
-                for (int z = -(radius); z <= radius; z++) {
-                    if (block.getRelative(x, y, z).getType() == Material.CHEST) {
-                        return block.getRelative(x, y, z).getLocation();
-                    }
-                }
+        if (location.clone().add(-1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(-1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(-1, 0, 0).getBlock().getState();
+            if (CustomBlockUtil.isEmpty(chest.getInventory())) {
+                return location.clone().add(-1, 0, 0);
+            }
+        }
+        if (location.clone().add(0, 0, -1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, -1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, -1).getBlock().getState();
+            if (CustomBlockUtil.isEmpty(chest.getInventory())) {
+                return location.clone().add(0, 0, -1);
+            }
+        }
+
+
+        if (location.clone().add(1, 0,0).getBlock().getType() == Material.CHEST || location.clone().add(1, 0,0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(1, 0, 0).getBlock().getState();
+            if (CustomBlockUtil.isEmpty(chest.getInventory())) {
+                return location.clone().add(1, 0,0);
+            }
+        }
+
+        if (location.clone().add(0, 0,1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0,1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, 1).getBlock().getState();
+            if (CustomBlockUtil.isEmpty(chest.getInventory())) {
+                return location.clone().add(0, 0,1);
             }
         }
         return null;
@@ -84,6 +102,15 @@ public class CustomBlockUtil {
             }
         }
         return false;
+    }
+
+    public static boolean isEmpty(Inventory inv) {
+        for (ItemStack item : inv.getContents()) {
+            if (item != null) {
+                return false;
+            }
+        }
+        return true;
     }
 
     public static boolean chunkHasCertainBlock(Player p, String abilityData) {
@@ -130,7 +157,7 @@ public class CustomBlockUtil {
             }
 
             CustomBlock customBlock = CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName());
-        if (CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName()) == null) continue;
+            if (CoreSkulls.customBlocks.get(abilityData2.getAbilityType().getName()) == null) continue;
 
             if (customBlock == null) {
                 return false;

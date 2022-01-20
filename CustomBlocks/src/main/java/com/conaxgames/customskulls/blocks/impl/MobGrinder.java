@@ -6,16 +6,15 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
-import com.conaxgames.customskulls.guis.MainCustomBlockGUI;
+import com.conaxgames.customskulls.guis.GrinderCustomBlockGUI;
+import com.conaxgames.customskulls.struct.MobGrinderCache;
 import com.conaxgames.customskulls.util.CC;
-import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import javafx.util.Pair;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -26,13 +25,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MobGrinder extends CustomBlock {
 
@@ -81,7 +77,12 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
-        MainCustomBlockGUI mainCustomBlockGUI = new MainCustomBlockGUI(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())), p1.getClickedBlock());
+        if (CoreSkulls.instance.getGrinderBlocks().get(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())).getUuid()) == null) {
+            p1.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, data is still loading..."));
+            return;
+        }
+
+        GrinderCustomBlockGUI mainCustomBlockGUI = new GrinderCustomBlockGUI(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())), p1.getClickedBlock());
         mainCustomBlockGUI.getCustomBlockGui().open(p1.getPlayer());
         p1.getPlayer().sendMessage(CC.translate("&a&l(!)&a Opening the Custom Block menu..."));
     }

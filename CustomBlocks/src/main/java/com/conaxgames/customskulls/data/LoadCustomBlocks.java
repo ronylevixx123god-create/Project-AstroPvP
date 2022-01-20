@@ -3,6 +3,7 @@ package com.conaxgames.customskulls.data;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
+import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -47,6 +48,18 @@ public class LoadCustomBlocks {
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));
             data.setLastActivated(lastActivated);
+
+            if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
+                int astroKeys = ymlFile.getInt("astro");
+                int legKeys = ymlFile.getInt("legendary");
+                int godKeys = ymlFile.getInt("godly");
+                double xp =  ymlFile.getInt("xp");
+                data.getCrateKeys().put(CrateType.ASTRO, astroKeys);
+                data.getCrateKeys().put(CrateType.LEGENDARY, legKeys);
+                data.getCrateKeys().put(CrateType.GODLY, godKeys);
+                data.setXp(xp);
+            }
+
 
             // This is a debug message which can be deleted at a later date!
             CoreSkulls.instance.info("[CustomSkulls] Put " + data.getAbilityType() + " into memory.");

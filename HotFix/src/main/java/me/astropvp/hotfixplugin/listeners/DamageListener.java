@@ -119,8 +119,8 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
-        if (e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) {
-                e.getPlayer().sendMessage(CC.translate("&c&l(!)&c There are &n" + e.getPlayer().getNearbyEntities(32, 32, 32).size() + "&c nearby players!"));
+        if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) && WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region")) {
+                e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed in this region!"));
                 e.setMessage("/null");
                 e.setCancelled(true);
             }

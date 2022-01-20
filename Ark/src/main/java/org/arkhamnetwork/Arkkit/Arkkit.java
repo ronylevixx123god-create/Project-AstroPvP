@@ -112,6 +112,7 @@ public class Arkkit
         Bukkit.getConsoleSender().sendMessage(CC.Green + "[Arkkit] ArkDebug registered");
         Bukkit.getConsoleSender().sendMessage(CC.Gold + "[Arkkit] Finished loading net.astropvp.armorsets.commands...");
         Arkkit.get().registerPatch(new ColoredLoreTag(this));
+
     }
 
     private boolean setupEconomy() {

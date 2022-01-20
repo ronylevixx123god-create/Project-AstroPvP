@@ -1,0 +1,184 @@
+package com.conaxgames.customskulls.guis;
+
+import com.conaxgames.customskulls.CoreSkulls;
+import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.data.SaveCustomBlock;
+import com.conaxgames.customskulls.struct.MobGrinderCache;
+import com.conaxgames.customskulls.util.CC;
+import com.conaxgames.customskulls.util.inventoryui.TimeUtil;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import de.inventivegames.particle.ParticleEffect;
+import lombok.Getter;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
+import me.mattstudios.mfgui.gui.guis.Gui;
+import me.mattstudios.mfgui.gui.guis.GuiItem;
+import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+@Getter
+public class GrinderCustomBlockGUI {
+    private final PaginatedGui customBlockGui;
+
+    public GrinderCustomBlockGUI(AbilityData data, Block block) {
+        MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
+
+        this.customBlockGui = new PaginatedGui(5, 27, "Grinder Custom Block Menu");
+        ItemStack activateButton = new ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((data.getLastActivated() + 3600000) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.millisToRoundedTime((data.getLastActivated() + 3600000) - System.currentTimeMillis()))))
+                .addLoreLine(CC.translate("&f&l● &6Status: " + (data.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
+                .addLoreLine(CC.translate("&f&l● &6Price: &e$" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7Click to activate this custom block"))
+                .build();
+
+
+        this.customBlockGui.setDefaultClickAction(event -> event.setCancelled(true));
+
+        this.customBlockGui.setItem(3, 4, new GuiItem(CoreSkulls.customBlocks.get(data.getAbilityType().getName()).getCustomBlockItem()));
+
+        this.customBlockGui.setItem(3, 6, new GuiItem(activateButton, event -> {
+            if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), data.getAbilityType().getPricePerAction())) {
+                EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), data.getAbilityType().getPricePerAction());
+                data.setLastActivated(System.currentTimeMillis());
+                SaveCustomBlock.saveCustomBlock((Player) event.getWhoClicked(), data.getAbilityType(), block);
+                event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock for 1 hour!"));
+                event.getWhoClicked().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())));
+                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.VILLAGER_YES, 20, 20);
+                event.getWhoClicked().closeInventory();
+                try {
+                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), data.getLocation(), 2, 2, 2, 0.05f, 60);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to reactivate this custom block."));
+                event.getWhoClicked().closeInventory();
+            }
+
+        }));
+
+        //Astro key
+        ItemStack astroKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&a&lAstro Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.ASTRO) + "&8)"), CC.translate("&7Click to redeem the astro crate keys")).build();
+        this.customBlockGui.setItem(2, 2, new GuiItem(astroKey, event -> {
+            int astroKeys = mobGrinderCache.getCrateKeys().get(CrateType.ASTRO);
+            if (astroKeys == 0) return;
+            int givenKeys = 0;
+            while (astroKeys != 0) {
+                if (event.getWhoClicked().getInventory().firstEmpty() == -1) {
+                    if (givenKeys != 0) {
+                        event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &a&lAstro &f&lCrate Keys"));
+                    }
+                    event.getWhoClicked().sendMessage(CC.translate("&cClear some inventory space to redeem more"));
+                    return;
+                }
+                event.getWhoClicked().getInventory().addItem(CrateKeyItem.getItem(CrateType.ASTRO));
+
+                givenKeys++;
+                astroKeys--;
+            }
+
+
+            event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " Astro &f&lCrate Keys"));
+            mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, astroKeys);
+            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
+            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
+
+        }));
+
+        //Legendary key
+        ItemStack legKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&6&lLegendary Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY) + "&8)"), CC.translate("&7Click to redeem the legendary crate keys")).build();
+        this.customBlockGui.setItem(3, 2, new GuiItem(legKey, event -> {
+            int legKeys = mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY);
+            if (legKeys == 0) return;
+            int givenKeys = 0;
+            while (legKeys != 0) {
+                if (event.getWhoClicked().getInventory().firstEmpty() == -1) {
+                    if (givenKeys != 0) {
+                        event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &6&lLegendary &f&lCrate Keys"));
+                    }
+                    event.getWhoClicked().sendMessage(CC.translate("&cClear some inventory space to redeem more"));
+
+                    return;
+                }
+                event.getWhoClicked().getInventory().addItem(CrateKeyItem.getItem(CrateType.LEGENDARY));
+                givenKeys++;
+                legKeys--;
+            }
+
+
+            event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &6&llegendary &f&lCrate Keys"));
+            mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, legKeys);
+            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
+            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
+        }));
+
+        //Godly key
+        ItemStack godlyKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&4&lGodly Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.GODLY) + "&8)"), CC.translate("&7Click to redeem the godly crate keys")).build();
+        this.customBlockGui.setItem(4, 2, new GuiItem(godlyKey, event -> {
+            int godlyKeys = mobGrinderCache.getCrateKeys().get(CrateType.GODLY);
+            if (godlyKeys == 0) return;
+            int givenKeys = 0;
+            while (godlyKeys != 0) {
+                if (event.getWhoClicked().getInventory().firstEmpty() == -1) {
+                    if (givenKeys != 0) {
+                        event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &4&lGodly &f&lCrate Keys"));
+                    }
+                    event.getWhoClicked().sendMessage(CC.translate("&cClear some inventory space to redeem more"));
+
+                    return;
+                }
+                event.getWhoClicked().getInventory().addItem(CrateKeyItem.getItem(CrateType.GODLY));
+                givenKeys++;
+                godlyKeys--;
+            }
+
+
+            event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &4&lGodly &f&lCrate Keys"));
+            mobGrinderCache.getCrateKeys().put(CrateType.GODLY, godlyKeys);
+            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
+            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
+
+        }));
+
+        //XPBottle key
+        double xp = mobGrinderCache.getXp();
+        ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + (int) xp + "&8)"), CC.translate("&7Click to redeem the experience")).build();
+        this.customBlockGui.setItem(4, 8, new GuiItem(xpBottle, event -> {
+            if (xp == 0) return;
+
+            if (event.getWhoClicked().getInventory().firstEmpty() == -1) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please clear some inventory space."));
+                return;
+            }
+
+            event.getWhoClicked().getInventory().addItem(ExpBottles.getXpBottle((int) xp, "MobGrinder"));
+
+            event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a You have received an expbottle worth " + NumberUtils.formatMoney(xp) + "XP"));
+            mobGrinderCache.setXp(0);
+            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
+            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
+        }));
+
+
+        this.customBlockGui.getFiller().
+
+                fillBorder(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).
+
+                        name(CC.translate("&7")).
+
+                        build()));
+    }
+
+
+}

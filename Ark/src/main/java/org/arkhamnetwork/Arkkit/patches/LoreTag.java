@@ -97,6 +97,11 @@ public class LoreTag
         this.registerCommand(new CommandGiveLoreTag("giveloretag", "/<command>", "Spawn item lore tag."));
         this.registerCommand(new CommandEditLore("editlore", "/<command>", "Edit an item lore directly."));
         this.registerCommand(new CommandEditName("editname", "/<command>", "Edit an item name directly."));
+        List<String> alias  = new ArrayList<>();
+        alias.add("/enear");
+        alias.add("enear");
+        this.registerCommand(new CommandNear("near", "/<command>", "near.", alias));
+
         super.enable();
     }
 

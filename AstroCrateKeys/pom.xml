@@ -309,8 +309,13 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>me.mattstudios.net.astropvp.armorsets.utils</groupId>
-            <artifactId>matt-framework-net.astropvp.armorsets.gui</artifactId>
+            <groupId>net.astropvp.astroevents</groupId>
+            <artifactId>AstroEvents</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>me.mattstudios.utils</groupId>
+            <artifactId>matt-framework-gui</artifactId>
             <version>2.0.3.3</version>
             <scope>compile</scope>
         </dependency>

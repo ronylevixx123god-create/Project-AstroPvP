@@ -5,12 +5,14 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
+import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 
 public class MakeCustomBlocks {
 
@@ -28,6 +30,7 @@ public class MakeCustomBlocks {
 
         YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file);
 
+
         ymlFile.set("owner", player.getUniqueId().toString());
         ymlFile.set("ability", abilityType.getName());
         ymlFile.set("location", block.getLocation());
@@ -35,16 +38,29 @@ public class MakeCustomBlocks {
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(block.getLocation()));
         ymlFile.set("lastActivated", data.getLastActivated());
 
+        if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
+            ymlFile.set("astro", 0);
+            ymlFile.set("legendary", 0);
+            ymlFile.set("godly", 0);
+            ymlFile.set("xp", 0);
+            data.setLastActivated(data.getLastActivated());
+            data.getCrateKeys().put(CrateType.ASTRO, 0);
+            data.getCrateKeys().put(CrateType.LEGENDARY, 0);
+            data.getCrateKeys().put(CrateType.GODLY, 0);
+            data.setXp(0);
+
+        }
+
         data.setOwner(player.getUniqueId());
         data.setUuid(AbilityData.getUUID(block.getLocation()));
         data.setLocation(block.getLocation());
         data.setAbilityType(abilityType);
-        data.setLastActivated(data.getLastActivated());
+
+
 
         try {
             ymlFile.save(file);
-        }
-        catch (IOException exception) {
+        } catch (IOException exception) {
             CoreSkulls.getInstance().info("Unable to save yml file information. Printing stack...");
             exception.printStackTrace();
         }

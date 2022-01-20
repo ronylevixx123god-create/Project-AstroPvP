@@ -7,6 +7,8 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
+import com.conaxgames.customskulls.data.SaveAllGrinderCustomBlocks;
+import com.conaxgames.customskulls.data.SaveCustomBlock;
 import com.conaxgames.customskulls.listeners.*;
 import com.conaxgames.customskulls.struct.MobGrinderCache;
 import com.conaxgames.customskulls.tasks.MobGrinderCacherTask;
@@ -18,14 +20,10 @@ import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
-import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -52,6 +50,11 @@ public class CoreSkulls extends JavaPlugin {
     public static MobStackerUtils mobStackerUtils;
 
 
+    @Getter
+    public Map<String, MobGrinderCache> grinderBlocks;
+
+
+
 
 
     @Override
@@ -65,12 +68,12 @@ public class CoreSkulls extends JavaPlugin {
             info("Successfully made directory /data/ :)");
         }
 
+
         registerCustomBlocks();
         Collections.singletonList(new AbilityBlocksCommand()).forEach(this:: registerCommand);
         getServer().getPluginManager().registerEvents(new UIListener(), this);
         getServer().getPluginManager().registerEvents(new CustomBlockListener(), this);
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
-        getServer().getPluginManager().registerEvents(new SlotbotMachineGUIListener(), this);
         getServer().getPluginManager().registerEvents(new CrateKeyGUIListener(), this);
         mobStackerUtils = AstroSpawners.getInstance().getMobStackerUtils();
         LoadCustomBlocks.load();
@@ -78,6 +81,9 @@ public class CoreSkulls extends JavaPlugin {
         inSlotbotMachine = new HashMap<>();
         registerTasks();
         ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
+        grinderBlocks = new HashMap<>();
+
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SaveAllGrinderCustomBlocks::saveAllGrinderCustomBlocks,120*20L, 900*20);
 
     }
 
@@ -87,7 +93,8 @@ public class CoreSkulls extends JavaPlugin {
 
     @Override
     public void onDisable() {
-
+        System.out.println("Saving all Grinder Customblocks");
+        SaveAllGrinderCustomBlocks.saveAllGrinderCustomBlocks();
     }
 
     private void registerCustomBlocks() {
@@ -122,7 +129,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 15*20, 10*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 5*20, 10*20);
     }
 
 

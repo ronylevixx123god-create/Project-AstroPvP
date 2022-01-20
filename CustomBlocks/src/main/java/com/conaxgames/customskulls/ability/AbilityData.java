@@ -4,6 +4,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.Location;
 
 import java.util.HashMap;
@@ -23,6 +24,8 @@ public class AbilityData {
     private Location location;
     private AbilityType abilityType;
     private long lastActivated = 0;
+    private Map<CrateType, Integer> crateKeys = new HashMap<>();
+    private double xp = 0;
 
     public AbilityData(String uuid) {
         this.uuid = uuid;
