@@ -1,30 +1,17 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
- *  com.rit.sucy.CustomEnchantment
- *  org.bukkit.Location
- *  org.bukkit.block.Block
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.inventory.ItemStack
- */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.*;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.inventory.*;
+import org.bukkit.*;
 
-public class Tank
-extends CustomEnchantment {
+public class Tank extends CustomEnchantment
+{
     public Tank() {
         super("Tank", GeneralUtil.armor, 2);
         this.max = 4;
@@ -32,24 +19,26 @@ extends CustomEnchantment {
         this.interval = 5.0;
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("noDefenseProcs"))
+        if (player.hasMetadata("noDefenseProcs")) {
             return;
-        if (player.hasMetadata("neutralized"))
+        }
+        if (player.hasMetadata("neutralized")) {
             return;
+        }
         ItemStack i = null;
         if (attacker instanceof Player) {
-            Player pAttacker = (Player)attacker;
+            final Player pAttacker = (Player)attacker;
             i = pAttacker.getItemInHand();
         }
-        double damage_negation = (double)level * 0.01875;
+        final double damage_negation = level * 0.01875;
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage() * (1.0 - damage_negation));
-            Location l = player.getLocation();
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&e&lTank");
+            final Location l = player.getLocation();
+            WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }
     }
 }
-

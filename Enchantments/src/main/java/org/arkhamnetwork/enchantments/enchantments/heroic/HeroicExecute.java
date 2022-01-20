@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
@@ -23,20 +24,21 @@ public class HeroicExecute extends HeroicCustomEnchantment{
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 8.0) {
+        if (target.getHealth() > 12.0) {
             return;
         }
-        if (GeneralUtil.isEffectedByRage(target)) {
-            return;
-        }
-        double random = Math.random();
-        double chance = 0.04 * (double)level;
-        double mod = 2.5;
+        final double random = Math.random();
+        final double chance = 0.05 * level;
         if (random < chance) {
-            e.setDamage(e.getDamage() * mod);
+            int mod = 100;
+            if (level == 1) {
+                mod = 200;
+            }
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * mod), e, "&d&lPermanent Execute");
+            final Location l = target.getLocation();
+            WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");
 
-            Location l = target.getLocation();
         }
     }
 }

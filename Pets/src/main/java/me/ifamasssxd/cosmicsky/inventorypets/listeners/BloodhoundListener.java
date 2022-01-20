@@ -2,6 +2,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
 import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -20,7 +21,7 @@ public class BloodhoundListener implements Listener {
             if (entity.getMetadata("bloodHoundNoBless").get(0).asString().equals("ancient")) {
                entity.sendMessage(CC.translate("&3&L* LEVIATHAN'S CURSE &7(1.5x DMG) &3&l*"));
             }
-            event.setDamage(event.getDamage() * 1.2D);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50, event, "BloodHound");
          }
       }
 

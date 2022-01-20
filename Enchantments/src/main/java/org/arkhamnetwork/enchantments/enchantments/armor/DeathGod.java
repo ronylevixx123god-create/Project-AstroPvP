@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.ChatColor
@@ -19,7 +19,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class DeathGod
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public DeathGod() {
         super("Death God", GeneralUtil.helmets, 2);
         this.max = 3;
@@ -27,18 +27,18 @@ extends CustomEnchantment {
         this.interval = 3.0;
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if(player.hasMetadata("neutralized"))
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+        if (player.hasMetadata("neutralized")) {
             return;
-        double procChance;
-        double random = Math.random();
-        if (random < (procChance = 0.015 * (double)level) && player.getHealth() - e.getFinalDamage() <= (double)(4 + level)) {
-            e.setDamage(0.0);
-            GeneralUtil.healPlayer(player, 5 + level);
+        }
+        final double random = Math.random();
+        final double procChance = 0.025 * level;
+        if (random < procChance && player.getHealth() - e.getFinalDamage() <= 4 + level) {
+            ((Player) player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");
 
-            ((Player)player).sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "* DEATH GOD [" + (Object)ChatColor.GOLD + "+" + (5 + level) + "HP" + (Object)ChatColor.BOLD + "] *");
         }
+
     }
 }
 

@@ -1,122 +1,133 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils
- *  com.rit.sucy.CustomEnchantment
- *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.arkhamnetwork.Arkkit.net.astropvp.armorsets.utils.WorldGuardUtils
- *  org.bukkit.Bukkit
- *  org.bukkit.GameMode
- *  org.bukkit.Location
- *  org.bukkit.Sound
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
-import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.CustomEnchantment;
-import de.inventivegames.particle.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
+import org.bukkit.event.*;
+import org.bukkit.plugin.*;
+import org.bukkit.event.entity.*;
+import org.arkhamnetwork.enchantments.cmds.*;
+import com.cosmicpvp.cosmicutils.nms.*;
+import me.ifamasssxd.killtracker.*;
+import org.bukkit.entity.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.*;
+import org.bukkit.potion.*;
+import org.bukkit.metadata.*;
+import java.util.*;
 
-import java.util.List;
-
-public class DivineImmolation
-        extends CustomEnchantment {
+public class DivineImmolation extends CustomEnchantment
+{
     public DivineImmolation() {
         super("Divine Immolation", GeneralUtil.swords, 2);
         this.max = 4;
         this.base = 10.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents((Listener) new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
-        Player p = (Player) player;
-        double radius = 1.0 * (double) level;
-        double damage = 1.5;
+        if (playerHit.hasMetadata("stacked")) {
+            return;
+        }
+        final Player p = (Player)player;
+        double radius = 1.0 * level;
+        double damage = Math.floor(level * 2);
 
-        if (!(playerHit instanceof Player)) return;
-        if (KillTrackerAPI.hasGodMode((Player) p) && KillTrackerAPI.getAllSouls((Player) p) > 0) {
-            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue) p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
-                KillTrackerAPI.removeSoulsFromGems((Player) p, (int) 20);
+        if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
+            radius += 2.0;
+        }
+        if (player.hasMetadata("leviathanTrophySilence") && player.getMetadata("leviathanTrophySilence").get(0).asLong() > System.currentTimeMillis()) {
+            return;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
+            damage *= 1.25;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
+            damage *= 1.3;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_AMULET)) {
+            damage *= 1.25;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_SWORD)) {
+            damage *= 1.15;
+        }
+
+        if (player.hasMetadata("soulEnchantMultiplier")) {
+            damage *= player.getMetadata("soulEnchantMultiplier").get(0).asDouble();
+        }
+        if (!GeneralUtil.isSword(p.getItemInHand())) {
+            return;
+        }
+        if (player.hasMetadata("witcher_negate") && player.getMetadata("witcher_negate").get(0).asLong() > System.currentTimeMillis()) {
+            return;
+        }
+        if (p.hasMetadata("lastItemHeldChange") && MinecraftServerUtils.getCurrentServerTick() - p.getMetadata("lastItemHeldChange").get(0).asLong() <= 5L) {
+            return;
+        }
+
+        if (Math.random() < 0.1 && AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_AMULET)) {
+            damage = Math.floor(level * 2);
+        }
+        if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
+            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
+                KillTrackerAPI.removeSoulsFromGems(p, 20);
             }
-            List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
+            final List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
             ents.add(playerHit);
-            for (Entity ent : ents) {
-                if (!(ent instanceof LivingEntity)) continue;
-                Player pEnt = null;
-                if (ent instanceof Player) {
-                    pEnt = (Player) ent;
-                }
-                if (pEnt != null && p.getName().equals(pEnt.getName()) || pEnt != null && GeneralUtil.isAtleastTruce(p, pEnt) || pEnt != null && pEnt.getGameMode() != GameMode.SURVIVAL || pEnt != null && !p.canSee(pEnt) || WorldGuardUtils.isPvPDisabled((Location) ent.getLocation()) || ent.hasMetadata("spectator"))
-                    continue;
-                LivingEntity le = (LivingEntity) ent;
+            for (final Entity ent : ents) {
+                if (ent instanceof LivingEntity) {
+                    Player pEnt = null;
+                    if (ent instanceof Player) {
+                        pEnt = (Player)ent;
+                    }
+                    if (pEnt != null && p.getName().equals(pEnt.getName())) {
+                        continue;
+                    }
+                    if (pEnt != null && GeneralUtil.isAtleastTruce(p, pEnt)) {
+                        continue;
+                    }
+                    if (pEnt != null && pEnt.getGameMode() != GameMode.SURVIVAL) {
+                        continue;
+                    }
+                    if (pEnt != null && !p.canSee(pEnt)) {
+                        continue;
+                    }
+                    if (pEnt != null && pEnt.hasMetadata("NPC")) {
+                        continue;
+                    }
+                    if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
+                        continue;
+                    }
+                    if (ent.hasMetadata("spectator")) {
+                        continue;
+                    }
+                    final LivingEntity le = (LivingEntity)ent;
+                    final Player attacker = (Player)player;
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(damage, e, "&c&lDivine Immolation");
+                    if (le instanceof Player) {
+                        ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
+                        ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3*20, 1));
+                    }
+                    double multiplier = 1.0;
+                    if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
+                        multiplier += 0.25;
+                    }
 
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET) && Math.random() < 0.5) {
-                    le.sendMessage(CC.translate("&e&l* SOUL HARVESTER &7[Blocked Divine Immolation&e&l] *"));
-                    continue;
+                    ent.setMetadata("divineFire", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+                    ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin)Enchantments.getInstance(), multiplier * level));
                 }
-
-                if (LunaSet.isLunarStriked((Player) playerHit)) {
-                    continue;
-                }
-
-                if (CosmicArmorSetsAPI.hasCrystalApplied((Player) player, ArmorSet.LUNA)) {
-                    damage *= 1.1;
-                }
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-                    damage += 1.3;
-                }
-
-                le.damage(damage);
-
-                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3*20, 1));
-                if (le instanceof Player) {
-                    ((Player) le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
-                    ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
-                }
-                ent.setMetadata("divineFire", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-                ent.setMetadata("divineFireLevel", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) level));
             }
         }
     }
 }
-

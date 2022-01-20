@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
  *  org.bukkit.entity.LivingEntity
@@ -11,6 +11,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -24,19 +25,13 @@ extends HeroicCustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        double random = Math.random();
-        double chance = enchantLevel == 1 ? 0.075 : (enchantLevel == 2 ? 0.1 : (enchantLevel == 3 ? 0.125 : 0.075));
-        int toHeal = enchantLevel == 1 ? 2 : (enchantLevel == 2 ? 3 : (enchantLevel == 3 ? 4 : 2));
-        int health = (int)user.getHealth() + toHeal;
-        if ((double)health > user.getMaxHealth()) {
-            health = (int)user.getMaxHealth();
-        }
+        final double random = Math.random();
+        final double chance = enchantLevel * 0.01;
         if (random < chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player)((Player)target), (String)"NECROMANCER")) {
                 return;
             }
-            GeneralUtil.setPlayerHealth(user, health);
-        }
+            AstroDamageHandler.getInstance().getDamageHandler().healPlayer(user, 3.0, "&D&lDemonic Lifesteal");        }
     }
 }
 

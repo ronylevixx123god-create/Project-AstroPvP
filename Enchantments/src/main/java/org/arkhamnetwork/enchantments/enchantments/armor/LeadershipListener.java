@@ -12,6 +12,7 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,7 +39,8 @@ implements Listener {
             boolean outpost = e.getDamager().getWorld().getName().startsWith("cosmic-station");
             double incre = Math.min(1.75, 1.0 + (double)level * (koth || outpost ? 0.05 : 0.1));
             double damage = e.getDamage();
-            e.setDamage(e.getDamage() * incre);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(incre*10, e, "Leadership");
+
         }
     }
 }

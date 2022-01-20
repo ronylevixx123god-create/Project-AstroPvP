@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.rit.sucy.CustomEnchantment
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
@@ -32,7 +32,7 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class DoubleStrike
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public DoubleStrike() {
         super("Double Strike", GeneralUtil.swords, 2);
         this.max = 3;
@@ -43,20 +43,20 @@ extends CustomEnchantment {
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double chance;
         double random = Math.random();
-        if (random < (chance = 0.02 * (double)level)) {
-            double dmg = VanillaDamageListener.getLastFinalDamage((Entity)playerHit);
+        if (random < (chance = 0.02 * (double) level)) {
+            double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
             if (dmg == 0.0) {
                 dmg = e.getDamage();
             }
             final double fdmg = dmg;
-            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
 
                 @Override
                 public void run() {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0) {
-                        playerHit.setMetadata("doubleStriked", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
-                        playerHit.damage(fdmg, (Entity)player);
-                        if(playerHit instanceof Player) {
+                        playerHit.setMetadata("doubleStriked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                        playerHit.damage(fdmg, player);
+                        if (playerHit instanceof Player) {
                             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* DOUBLE STRIKE *", "DOUBLE_STRIKE");
                         }
 
@@ -64,7 +64,7 @@ extends CustomEnchantment {
                 }
             }, 2L);
             try {
-                ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 20);
+                ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

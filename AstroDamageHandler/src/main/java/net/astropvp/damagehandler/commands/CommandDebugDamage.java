@@ -14,9 +14,11 @@ public class CommandDebugDamage implements CommandExecutor {
         if (sender instanceof Player && sender.isOp()) {
             if (AstroDamageHandler.getInstance().getConfig().getBoolean("debug-enabled")) {
                 AstroDamageHandler.getInstance().getConfig().set("debug-enabled", false);
+                AstroDamageHandler.getInstance().saveConfig();
                 sender.sendMessage(CC.Red + "Damage debug disabled!");
             } else {
                 AstroDamageHandler.getInstance().getConfig().set("debug-enabled", true);
+                AstroDamageHandler.getInstance().saveConfig();
                 sender.sendMessage(CC.Green + "Damage debug enabled!");
             }
             return true;

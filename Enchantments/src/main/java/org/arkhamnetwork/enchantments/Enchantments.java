@@ -151,7 +151,6 @@ public class Enchantments extends EnchantPlugin {
         getServer().getPluginManager().registerEvents(new ExploitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerPotionEffectListener(), this);
         getServer().getPluginManager().registerEvents(new OmniBlackScrollListener(), this);
-        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) this);
 
     }
 

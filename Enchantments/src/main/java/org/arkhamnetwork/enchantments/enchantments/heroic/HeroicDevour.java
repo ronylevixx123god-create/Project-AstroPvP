@@ -1,42 +1,55 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.*;
+import com.rit.sucy.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.block.Block;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.arkhamnetwork.enchantments.enchantments.axes.*;
+import org.bukkit.metadata.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.*;
 
-public class HeroicDevour extends HeroicCustomEnchantment {
+public class HeroicDevour extends CustomEnchantment
+{
     public HeroicDevour() {
-        super("Vampiric Devour","Devour", GeneralUtil.axe, 2);
+        super("Vampiric Devour", GeneralUtil.axe, 2);
         this.max = 4;
-        this.base = 10.0;
-        this.interval = 8.0;
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+            this.heroicEnchantment = true;
+            this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Devour");
+        }, 2L);
     }
 
-    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-
-        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
-            ((Player) user).playSound(user.getLocation(), Sound.DIG_GRASS, 1, 1);
-
-            if (GeneralUtil.isEffectedByRage(target)) {
-                return;
+    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
+            if (((Player)user).getItemInHand() != null && !EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Lifesteal") && !EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Demonic Lifesteal")) {
+                final double random = Math.random();
+                final double chance = (enchantLevel == 1) ? 0.02 : ((enchantLevel == 2) ? 0.04 : ((enchantLevel == 3) ? 0.14 : 0.22));
+                final int toHeal = (enchantLevel == 1) ? 2 : ((enchantLevel == 2) ? 3 : ((enchantLevel == 3) ? 3 : 4));
+                int health = (int)user.getHealth() + toHeal;
+                if (health > user.getMaxHealth()) {
+                    health = (int)user.getMaxHealth();
+                }
+                if (random < chance) {
+                    AstroDamageHandler.getInstance().getDamageHandler().healPlayer(user, (double)health, "&d&lVampiric Devour");
+                }
             }
-            if (!GeneralUtil.isSword(((Player) user).getItemInHand())) {
-
-                double mod = (double) Bleed.getBleedStack(target) * 0.005 + (double) enchantLevel * 0.1 + 1.0;
-                event.setDamage(event.getDamage() * mod);
-                target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-                Location l = target.getLocation();
+            double bleedStacks = Bleed.getBleedStack(target);
+            if (bleedStacks >= 100.0) {
+                bleedStacks = 99.0;
+            }
+            if (Bleed.getBleedStack(target) > 0) {
+                if (com.cosmicpvp.cosmicutils.utils.GeneralUtil.isEffectedByRage(target)) {
+                    return;
+                }
+                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(bleedStacks + 6.0, event, "&6&lDevour");
+                target.setMetadata("effectedByDevour", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+                final Location l = target.getLocation();
+                WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
             }
         }
     }

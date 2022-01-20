@@ -1,23 +1,27 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
 
-public class HeroicInsanity extends HeroicCustomEnchantment{
+public class HeroicInsanity extends HeroicCustomEnchantment
+{
     public HeroicInsanity() {
-        super("Extreme Insanity","Insanity", GeneralUtil.axe, 2);
+        super("Extreme Insanity", "Insanity", GeneralUtil.axe, 7);
         this.max = 8;
         this.base = 20.0;
         this.interval = 5.0;
     }
 
-    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
+    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+        final boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
         if (!enemyHasSword) {
             return;
         }
-        double mod = 1.0 + 0.03 * (double)level;
-        e.setDamage(e.getDamage() * mod);
+        if (playerHit instanceof Player) {
+            return;
+        }
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 3), e, "&6&lInsanity");
     }
 }

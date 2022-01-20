@@ -7,6 +7,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,7 +28,7 @@ public class BansheeListener implements Listener {
             if (damager.hasMetadata("banshee_active")) {
                 if (LunaSet.isLunarStriked((Player) event.getEntity())) return;
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless") && !event.getDamager().hasMetadata("bloodHoundNoBless")) {
-                    event.setDamage(event.getDamage() * 1.15D);
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50, event, "BansheePet");
                 }
                 damager.sendMessage(CC.translate("&4&l** BANSHEE PET &8➥ &c1.5x DMG &4&l**"));
             }

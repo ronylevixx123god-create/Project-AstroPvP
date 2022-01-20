@@ -111,6 +111,12 @@
         </dependency>
 
         <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>AstroDamageHandler</artifactId>
+            <version>0.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>mas</artifactId>
             <version>0.1</version>

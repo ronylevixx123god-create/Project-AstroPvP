@@ -1,43 +1,36 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
- *  org.bukkit.Location
- *  org.bukkit.block.Block
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.inventory.ItemStack
- */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.inventory.*;
+import org.bukkit.*;
 
-public class HeroicTank
-extends HeroicCustomEnchantment {
+public class HeroicTank extends HeroicCustomEnchantment
+{
     public HeroicTank() {
         super("Reinforced Tank", "Tank");
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (!(player instanceof Player)) {
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+        if (!(player instanceof Player) || !(attacker instanceof Player)) {
             return;
         }
+        if (player.hasMetadata("neutralized")) {
+            return;
+        }
+
         ItemStack i = null;
         if (attacker instanceof Player) {
-            Player pAttacker = (Player)attacker;
+            final Player pAttacker = (Player)attacker;
             i = pAttacker.getItemInHand();
         }
-        double damage_negation = CustomConfig.get().getDouble("heroicTankNegation");
-        ;
-        if (i != null && i.getType().name().contains("_AXE")) {
-            e.setDamage(e.getDamage() * (1.0 - damage_negation));
+        final double damage_negation = level * 0.0225;
+        if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lReinforced Tank");
+            final Location l = player.getLocation();
+            WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }
     }
 }
-

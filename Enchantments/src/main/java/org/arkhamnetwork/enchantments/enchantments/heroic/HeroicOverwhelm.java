@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -27,7 +28,7 @@ public class HeroicOverwhelm extends HeroicCustomEnchantment{
         if (Math.random() < 0.08) {
             target.setMetadata("overwhelm_effect", new FixedMetadataValue(Enchantments.getInstance(), true));
             target.sendMessage(CC.translate("&6&l* STRUCK BY OVERWHELM EFFECT &7[" + user.getName() + "&7]&6&l *"));
-            event.setDamage(event.getDamage() * (1.0 + (enchantLevel/100)));
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((1.0 + (enchantLevel/100))*10, event, "HeroicOverwhelm");
 
             Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
                 target.removeMetadata("overwhelm_effect", Enchantments.getInstance());

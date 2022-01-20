@@ -15,6 +15,7 @@ public class AstroDamageHandler extends JavaPlugin {
         instance = this;
         registerCommands();
         registerListeners();
+        loadConfig();
         this.damageHandler = new AstroDamageHandlerAPI(this);
         System.out.println("[AstroDamageHandler] Plugin has been enabled!");
     }
@@ -34,5 +35,10 @@ public class AstroDamageHandler extends JavaPlugin {
 
     public AstroDamageHandlerAPI getDamageHandler() {
         return damageHandler;
+    }
+
+    public void loadConfig() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
     }
 }

@@ -16,16 +16,6 @@ public class CombatMedic extends CustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (event.isCancelled()) {
-            return;
-        }
 
-        if (Bleed.getBleedStack(user) == 0) {
-            return;
-        }
-
-        if (Math.random() < 0.05) {
-            Bleed.instance.addBleedStack(target, user);
-        }
     }
 }

@@ -17,9 +17,5 @@ public class HeroicInsomnia extends HeroicCustomEnchantment {
         double random = Math.random();
         double chance = 0.025 * (double)level;
         int n = time = level > 1 ? 6 : 4;
-        if (random < chance) {
-            double multi = 1.0 + (double)level * 0.05;
-            e.setDamage(e.getDamage() * multi);
-        }
     }
 }

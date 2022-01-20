@@ -1,24 +1,19 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.Sound
- *  org.bukkit.scheduler.BukkitRunnable
- */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import org.bukkit.Sound;
-import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scheduler.*;
+import org.bukkit.*;
 
-final class BleedTask
-extends BukkitRunnable {
+final class BleedTask extends BukkitRunnable
+{
     BleedEvent event;
-    int x = 0;
+    int x;
 
-    public BleedTask(BleedEvent e) {
+    public BleedTask(final BleedEvent e) {
+        this.x = 0;
         this.event = e;
     }
 
+    @Override
     public void run() {
         if (this.event.ticks <= this.x) {
             this.event.stop();
@@ -31,4 +26,3 @@ extends BukkitRunnable {
         }
     }
 }
-

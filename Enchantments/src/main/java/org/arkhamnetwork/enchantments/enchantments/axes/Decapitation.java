@@ -25,7 +25,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.CustomEnchantment;
-import net.minecraft.util.org.apache.commons.lang3.text.WordUtils;
+import org.apache.commons.lang.WordUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;

@@ -1,38 +1,41 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.CustomEnchantment;
-import org.arkhamnetwork.enchantments.Enchantments;
+import com.rit.sucy.*;
+import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.arkhamnetwork.enchantments.*;
+import org.bukkit.plugin.*;
+import org.bukkit.metadata.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.*;
 
-public class Overwhelm extends CustomEnchantment {
+public class Overwhelm extends CustomEnchantment
+{
     public Overwhelm() {
-        super("Overwhelm", GeneralUtil.axe, 2);
+        super("Overwhelm", GeneralUtil.axe, 7);
         this.max = 4;
-        this.base = 10.0;
-        this.interval = 8.0;
+        this.base = 20.0;
+        this.interval = 5.0;
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (event.isCancelled()) {
+    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+        if (playerHit instanceof Player && Math.random() < 0.1) {
+            disableReflectiveBlock((Player)playerHit, (Player)player, 6);
+        }
+    }
+
+    public static void disableReflectiveBlock(final Player to, final Player from, final int seconds) {
+        if (to.hasMetadata("noReflectiveBlock")) {
             return;
         }
-
-
-        if (target.hasMetadata("overwhelm_effect")) return;
-
-        if (Math.random() < 0.08) {
-            target.setMetadata("overwhelm_effect", new FixedMetadataValue(Enchantments.getInstance(), true));
-            target.sendMessage(CC.translate("&6&l* STRUCK BY OVERWHELM EFFECT &7[" + user.getName() + "&7]&6&l *"));
-
-            Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
-                target.removeMetadata("overwhelm_effect", Enchantments.getInstance());
-                target.sendMessage(CC.translate("&6&l* OVERWHELM EFFECT &c&lEXPIRED &6&l*"));
-            }, 120L);
-        }
+        to.setMetadata("noReflectiveBlock", new FixedMetadataValue((Plugin)Enchantments.getInstance(), from.getName()));
+        to.sendMessage(CC.translate("&c&l* DISABLED REFLECTIVE BLOCK [" + seconds + "s] &7[by " + from.getName() + "] &c&l*"));
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+            if (to != null) {
+                to.removeMetadata("noReflectiveBlock", (Plugin)Enchantments.getInstance());
+            }
+        }, 20 * seconds);
     }
 }

@@ -1,29 +1,15 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.rit.sucy.CustomEnchantment
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.rit.sucy.CustomEnchantment;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+import com.rit.sucy.*;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.arkhamnetwork.enchantments.*;
+import org.bukkit.plugin.*;
+import org.bukkit.metadata.*;
 
-public class BloodLust
-extends CustomEnchantment {
+public class BloodLust extends CustomEnchantment
+{
     public BloodLust() {
         super("Blood Lust", GeneralUtil.chestplates, 2);
         this.max = 6;
@@ -31,15 +17,14 @@ extends CustomEnchantment {
         this.interval = 4.0;
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
     }
 
-    public void applyEquipEffect(Player player, int enchantLevel) {
-        player.setMetadata("bloodLust", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
+    public void applyEquipEffect(final Player player, final int enchantLevel) {
+        player.setMetadata("bloodLust", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enchantLevel));
     }
 
-    public void applyUnequipEffect(Player player, int enchantLevel) {
+    public void applyUnequipEffect(final Player player, final int enchantLevel) {
         player.removeMetadata("bloodLust", (Plugin)Enchantments.getInstance());
     }
 }
-

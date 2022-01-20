@@ -1,23 +1,24 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.*;
 
-public class HeroicBarbarian extends HeroicCustomEnchantment {
+public class HeroicBarbarian extends HeroicCustomEnchantment
+{
     public HeroicBarbarian() {
-        super("Brutal Barbarian", "Barbarian", GeneralUtil.axe, 2);
+        super("Brutal Barbarian", "Barbarian", GeneralUtil.axe, 7);
         this.max = 4;
         this.base = 20.0;
         this.interval = 5.0;
     }
 
-    public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        boolean enemyHasAxe = playerHit.getEquipment().getItemInHand().getType().name().contains("_AXE");
+    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+        final boolean enemyHasAxe = playerHit.getEquipment().getItemInHand().getType().name().contains("_AXE");
         if (!enemyHasAxe) {
             return;
         }
-        double mod = 1.0 + 0.1 * (double)level;
-        e.setDamage(e.getDamage() * mod);
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 2), e, "&6&lBarbarian");
     }
 }

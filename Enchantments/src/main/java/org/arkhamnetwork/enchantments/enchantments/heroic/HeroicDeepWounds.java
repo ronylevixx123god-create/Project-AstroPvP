@@ -1,25 +1,24 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
-import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.arkhamnetwork.enchantments.*;
+import org.bukkit.plugin.*;
+import org.bukkit.metadata.*;
 
-public class HeroicDeepWounds extends HeroicCustomEnchantment {
+public class HeroicDeepWounds extends HeroicCustomEnchantment
+{
     public HeroicDeepWounds() {
-        super("Bloody Deep Wounds","Deep Wounds", GeneralUtil.weapons, 2);
+        super("Bloody Deep Wounds", "Deep Wounds", GeneralUtil.weapons, 2);
         this.max = 3;
         this.base = 15.0;
         this.interval = 15.0;
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        playerHit.setMetadata("deepWounds", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 1500)));
-        final double mod = (Bleed.getBleedStack(playerHit) * 0.005) + (level * 0.01) + 1.0;
-        e.setDamage(e.getDamage() * mod);
+        if (playerHit instanceof Player) {
+            playerHit.setMetadata("deepWounds", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + level * 1500));
+        }
     }
 }

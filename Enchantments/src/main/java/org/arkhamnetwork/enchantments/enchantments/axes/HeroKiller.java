@@ -26,6 +26,7 @@ import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
@@ -75,15 +76,14 @@ extends CustomEnchantment {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player)p, (int)4);
             }
-            double increase = 0.1 * (double)level;
-
+            double increase = level * 5;
             if (CosmicArmorSetsAPI.hasCrystalApplied((Player) player, ArmorSet.LUNA)) {
                 increase *= 1.1;
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 increase += 1.3;
             }
-                e.setDamage(e.getDamage() * (1.0 + increase));
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(increase, e, "&c&lHero Killer");
         }
     }
 

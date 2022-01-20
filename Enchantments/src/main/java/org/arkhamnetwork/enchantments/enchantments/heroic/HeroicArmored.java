@@ -1,57 +1,45 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.block.Block
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.inventory.ItemStack
- */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
-import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
-import org.bukkit.Location;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.arkhamnetwork.enchantments.enchantments.axes.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.inventory.*;
+import org.bukkit.*;
 
-public class HeroicArmored
-extends HeroicCustomEnchantment {
+public class HeroicArmored extends HeroicCustomEnchantment
+{
     public HeroicArmored() {
         super("Paladin Armored", "Armored");
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (!(player instanceof Player)) {
+            return;
+        }
+        if (player.hasMetadata("neutralized")) {
             return;
         }
         ItemStack i = null;
         if (attacker instanceof Player) {
-            Player pAttacker = (Player)attacker;
-
+            final Player pAttacker = (Player)attacker;
+            if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.VALENTINES_2021_BELT)) {
+                return;
+            }
             i = pAttacker.getItemInHand();
-            if (Math.random() < (double)level * 0.003) {
-                Blessed.blessPlayer((Player)player);
+            if (Math.random() < level * 0.01) {
+                Blessed.blessPlayer((Player)player, false);
+                Bukkit.getLogger().info("Blessing " + ((Player)player).getName() + " from level " + level + " heroic armored!");
             }
         }
-
-
-        double heroicArmoredNegation = CustomConfig.get().getDouble("heroicArmoredNegation");
-        if(attacker instanceof Player)
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT))
-                heroicArmoredNegation+=0.03;
-        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - heroicArmoredNegation) > 1.0) {
-            e.setDamage(e.getDamage() * (1.0 - 0.12));
-            Location l = player.getLocation();
+        final double damage_negation = level * 0.01;
+        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&6&lArmored");
+            final Location l = player.getLocation();
+            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
         }
     }
 }
-

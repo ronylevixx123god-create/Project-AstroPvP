@@ -32,11 +32,11 @@ extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        if(!(playerHit instanceof Player))
+        if (!(playerHit instanceof Player)) {
             return;
-        double chance;
-        double random = Math.random();
-        double d = chance = level == 3 ? 0.05 : 0.0175 * (double)level;
+        }
+        final double random = Math.random();
+        final double chance = (level == 3) ? 0.15 : (0.0175 * level);
         if (random < chance) {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 playerHit.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
@@ -48,13 +48,12 @@ extends CustomEnchantment {
                 return;
             }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
-//            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, level > 2 ? 1 : 0));
+            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, level > 2 ? 1 : 0));
             if (level == 4) {
-//                playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, level > 2 ? 1 : 0));
+                playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, level > 2 ? 1 : 0));
             }
-            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.YellowB + "* PARALYZE *" + CC.YellowB +  "*", "PARALYZE");
+            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &7[5s] &5&l*"), "PARALYZE");
 
-            playerHit.damage((double)(1 + level));
         }
     }
 }

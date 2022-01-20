@@ -1,37 +1,19 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
- *  com.rit.sucy.CustomEnchantment
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.block.Block
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
-import com.rit.sucy.CustomEnchantment;
-import org.arkhamnetwork.enchantments.Enchantments;
+import com.rit.sucy.*;
+import java.util.concurrent.*;
+import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.block.Block;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.event.*;
+import org.bukkit.plugin.*;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.*;
 
-import java.util.concurrent.ConcurrentHashMap;
-
-public class Cactus
-extends CustomEnchantment {
+public class Cactus extends CustomEnchantment
+{
     protected static ConcurrentHashMap<String, Integer> cactus;
 
     public Cactus() {
@@ -39,28 +21,30 @@ extends CustomEnchantment {
         this.max = 2;
         this.base = 20.0;
         this.interval = 5.0;
-        cactus = new ConcurrentHashMap();
-        Bukkit.getPluginManager().registerEvents((Listener)new CactusListener(), (Plugin)Enchantments.getInstance());
+        Cactus.cactus = new ConcurrentHashMap<String, Integer>();
+        Bukkit.getPluginManager().registerEvents(new CactusListener(), (Plugin)Enchantments.getInstance());
     }
 
-    public void applyEquipEffect(Player player, int enchantLevel) {
-        cactus.put(player.getName(), enchantLevel);
+    public void applyEquipEffect(final Player player, final int enchantLevel) {
+        Cactus.cactus.put(player.getName(), enchantLevel);
     }
 
-    public void applyUnequipEffect(Player player, int enchantLevel) {
-        cactus.remove(player.getName());
+    public void applyUnequipEffect(final Player player, final int enchantLevel) {
+        Cactus.cactus.remove(player.getName());
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if(player.hasMetadata("noDefenseProcs"))
-            return;
-        Player pAttacker;
-        Player p;
-        if (player instanceof Player && cactus.containsKey((p = (Player)player).getName()) && attacker != null && attacker instanceof Player && (pAttacker = (Player)attacker) != null) {
-            if(Math.random() < 0.2) {
-                Location l = p.getLocation();
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+        if (player instanceof Player) {
+            if (player.hasMetadata("noDefenseProcs")) {
+                return;
+            }
+            final Player p = (Player)player;
+            if (Cactus.cactus.containsKey(p.getName()) && attacker != null && attacker instanceof Player) {
+                final Player pAttacker = (Player)attacker;
+                pAttacker.damage(0.5 * level);
+                final Location l = p.getLocation();
+                WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }
         }
     }
 }
-

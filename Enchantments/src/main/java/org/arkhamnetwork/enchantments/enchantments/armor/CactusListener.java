@@ -1,25 +1,12 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.event.EventHandler
- *  org.bukkit.event.Listener
- *  org.bukkit.event.player.PlayerQuitEvent
- */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.*;
+import org.bukkit.event.*;
 
-final class CactusListener
-implements Listener {
-    CactusListener() {
-    }
-
+final class CactusListener implements Listener
+{
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent e) {
+    public void onPlayerQuit(final PlayerQuitEvent e) {
         Cactus.cactus.remove(e.getPlayer().getName());
     }
 }
-

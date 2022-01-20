@@ -1,67 +1,76 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
-import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
+import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Sound;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
+import org.bukkit.event.entity.*;
+import org.bukkit.entity.*;
+import org.bukkit.*;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.massivecraft.factions.iface.*;
+import com.massivecraft.factions.struct.*;
+import org.arkhamnetwork.enchantments.*;
+import org.bukkit.metadata.*;
+import org.bukkit.plugin.*;
+import java.util.*;
+import org.bukkit.inventory.*;
+import com.rit.sucy.*;
 
-public class MasteryBlackout extends CustomEnchantment {
+public class MasteryBlackout extends MasteryCustomEnchantment
+{
     public MasteryBlackout() {
-        super("Blackout", GeneralUtil.swords, 2);
+        super("Blackout", GeneralUtil.swords, 10);
         this.max = 4;
-        this.base = 25.0D;
-        this.interval = 10.0D;
+        this.base = 25.0;
+        this.interval = 10.0;
     }
 
-
-    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+    public void applyEffect(final LivingEntity player, final LivingEntity target, final int level, final EntityDamageByEntityEvent e) {
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.hasMetadata("blackout")) {
+        if (e.isCancelled()) {
             return;
         }
 
-        Player pTarget = (Player) target;
-
-
-
-        if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.SUMMER_2021_SWORD)) {
-            enchantLevel = 5;
+        final Player pTarget = (Player)target;
+        final Relation relation = FactionUtils.getRelationTo((RelationParticipator)FactionUtils.getFaction((Player)player), (RelationParticipator)FactionUtils.getFaction(pTarget));
+        if (relation != Relation.NEUTRAL && relation != Relation.ENEMY) {
+            return;
         }
-
-        double blackoutChance = CustomConfig.get().getDouble("blackoutChance");
-
-        if (Math.random() <= blackoutChance) {
-            int multi = AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CORRUPT_SWORD) ? 2 : 1;
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget.getPlayer(), SkinType.CHRISTMAS_HELMET_STAR)) {
-                multi = 1;
-            }
-            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.50) {
-                pTarget.sendMessage(CC.translate("&2&l* BLOCKED ") + ((Player) user).getName() + CC.translate("'s BLACKOUT &7(First Aid Fannypack) &2&l*"));
-                ((Player) user).sendMessage(CC.translate("&7&l* &7&l&mBLACKOUT&r &7[Blocked by " + pTarget.getName() + "'s First Aid Fannypack] &7&l*"));
-                return;
-            }
-            pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
-            String text = CC.DarkPurpleB + "* BLACKOUT " + CC.Gray + "[" + (2 + enchantLevel) * multi + "s]" + CC.DarkPurpleB + " *";
-            DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, text, "BLACKOUT");
-            pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + (2 + enchantLevel) * multi + "&7s] &5&l *"));
-            user.sendMessage(CC.translate(text));
-            pTarget.setMetadata("blackout", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), "banana"));
-            Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), () -> target.removeMetadata("blackout", (Plugin) Enchantments.getInstance()), ((4 + enchantLevel * multi) * 20));
+        if (Math.random() < 0.002 * level) {
+            procBlackout((Player) player, pTarget, level);
         }
     }
 
+    private void procBlackout(final Player player, final Player pTarget, final int level) {
+        if (pTarget.hasMetadata("blackout")) {
+            return;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.5) {
+            ((Player)player).sendMessage(CC.translate("&4&l* BLACKOUT BLOCKED * &7[&7" + pTarget.getName() + "'s &a&lFirst Aid Fannypack&7]"));
+            return;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CHRISTMAS_BELT_CRYSTALINE) && Math.random() < 0.2) {
+            player.sendMessage(CC.translate("&4&l* BLACKOUT BLOCKED * &7[" + pTarget.getName() + "'s &c&lCrystalline Band&7]"));
+            return;
+        }
+        if (player.hasMetadata("BlackoutCooldown") && System.currentTimeMillis() - player.getMetadata("BlackoutCooldown").get(0).asLong() <= 30000L) {
+            return;
+        }
+        player.setMetadata("BlackoutCooldown", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+        long durationInTicks = (4 + level) * 20;
+        if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CHRISTMAS_HELMET_STAR)) {
+            durationInTicks *= (long)0.66;
+        }
+        pTarget.sendMessage(CC.translate("&4&L* BLACKOUT &7[" + (int)(durationInTicks / 20L) + "&7s] &4&l *"));
+        player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + (int)(durationInTicks / 20L) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
+        pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + durationInTicks/20 + "&7s] &5&l *"));
+        pTarget.setMetadata("blackout", new FixedMetadataValue((Plugin)Enchantments.getInstance(), "banana"));
+        Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> pTarget.removeMetadata("blackout", (Plugin)Enchantments.getInstance()), AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.CORRUPT_SWORD) ? (durationInTicks * 2L) : durationInTicks);    }
 
+    private int getLevel(final ItemStack piece, final String name) {
+        return EnchantmentAPI.getEnchantments(piece).get(EnchantmentAPI.getEnchantments(piece).keySet().stream().filter(e -> e.name().equals(name)).findFirst().get());
+    }
 }

@@ -14,6 +14,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
@@ -38,7 +39,8 @@ extends CustomEnchantment {
         double minDmgToProc = 10 - level;
         double chance = (double)level * 0.05;
         if (player.getHealth() - dmg <= 0.0 && dmg >= minDmgToProc && Math.random() < chance) {
-            e.setDamage(e.getDamage() / 2.0);
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(100, e, "Resilience");
+
             ((Player)player).sendMessage((Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "** RESILIENCE (" + (Object)ChatColor.DARK_GREEN + "50% DMG TAKEN" + (Object)ChatColor.BOLD + ") **");
         }
     }

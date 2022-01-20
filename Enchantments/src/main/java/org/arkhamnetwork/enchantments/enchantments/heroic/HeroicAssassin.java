@@ -1,27 +1,16 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.rit.sucy.CustomEnchantment
- *  com.rit.sucy.EnchantmentAPI
- *  org.bukkit.Bukkit
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.event.entity.EntityDamageByEntityEvent
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import com.rit.sucy.CustomEnchantment;
-import com.rit.sucy.EnchantmentAPI;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.plugin.Plugin;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.util.*;
+import org.bukkit.*;
+import org.arkhamnetwork.enchantments.*;
+import com.rit.sucy.*;
+import org.bukkit.plugin.*;
+import org.bukkit.entity.*;
+import org.bukkit.event.entity.*;
 
-public class HeroicAssassin
-extends CustomEnchantment {
+public class HeroicAssassin extends CustomEnchantment
+{
     public HeroicAssassin() {
         super("Shadow Assassin", GeneralUtil.swords, 5);
         this.max = 5;
@@ -29,33 +18,29 @@ extends CustomEnchantment {
         this.interval = 6.0;
         Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
-            this.nonHeroicVersion = EnchantmentAPI.getEnchantment((String)"Assassin");
+            this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Assassin");
         }, 2L);
     }
 
-    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!user.getWorld().equals((Object)target.getWorld())) {
+    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+        if (!user.getWorld().equals(target.getWorld())) {
             return;
         }
-        double distance = user.getLocation().distance(target.getLocation());
-        double dmgMod = 1.0;
-        double heroicMult = 2.5;
-        if (distance < 0.25 * heroicMult) {
-            dmgMod += 0.015 * (double)enchantLevel;
+        final double distance = user.getLocation().distance(target.getLocation());
+        if (distance < 0.25) {
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(87.5, event, "&d&lShadow Assassin");
         }
-        if (distance < 0.5 * heroicMult) {
-            dmgMod += 0.015 * (double)enchantLevel;
+        else if (distance < 0.5 && distance > 0.25) {
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50.0, event, "&d&lShadow Assassin");
         }
-        if (distance < 0.75 * heroicMult) {
-            dmgMod += 0.015 * (double)enchantLevel;
+        else if (distance < 0.75 && distance > 0.5) {
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25.0, event, "&d&lShadow Assassin");
         }
-        if (distance < 1.0 * heroicMult) {
-            dmgMod += 0.015 * (double)enchantLevel;
+        else if (distance < 1.0 && distance > 0.75) {
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10.0, event, "&d&lShadow Assassin");
         }
-        if (distance < 1.5 * heroicMult) {
-            dmgMod += 0.015 * (double)enchantLevel;
+        else if (distance < 2.0 && distance > 1.0) {
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5.0, event, "&d&lShadow Assassin");
         }
-        event.setDamage(event.getDamage() * dmgMod);
     }
 }
-

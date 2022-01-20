@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class AstroDamageHandlerAPI {
     private final boolean debug;
@@ -74,7 +75,36 @@ public class AstroDamageHandlerAPI {
         event.setDamage(newDamage);
     }
 
+    public void reduceDamage(double amountInPercentage, EntityDamageEvent event, String instance, int crystalsAmount) {
+        double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage*crystalsAmount);
+        reduceDamage(amountInPercentage, event, instance, decreaseAmount);
+    }
+
+    private void reduceDamage(double amountInPercentage, EntityDamageEvent event, String instance, double decreaseAmount) {
+        double oldDamage = event.getDamage();
+        double newDamage = event.getDamage() * decreaseAmount;
+        if (this.debug) {
+            LivingEntity entity = (LivingEntity) event.getEntity();
+            double oldHealth = entity.getHealth();
+            Bukkit.getScheduler().runTaskLater(plugin, () -> {
+                if (!entity.isDead()) {
+                    double healthDifference = this.getHealthDifference(entity.getHealth(), oldHealth);
+                    String color = healthDifference > 9.0D ? "&4&l" : "&c&l";
+                    this.sendDebugMessage(event.getEntity(), "&c&l↓ Outgoing Damage &7(&c-" + Math.round(amountInPercentage) + "%&7) &7(&a" + (int) oldDamage + " &7-> &c" + (int) newDamage + ") &7(Instance: &f&l" + entity.getName() + "'s " + instance + "&7)");
+                }
+
+            }, 1L);
+        }
+
+        event.setDamage(newDamage);
+    }
+
     public void reduceDamage(double amountInPercentage, EntityDamageByEntityEvent event, String instance) {
+        double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage);
+        reduceDamage(amountInPercentage, event, instance, decreaseAmount);
+    }
+
+    public void reduceDamage(double amountInPercentage, EntityDamageEvent event, String instance) {
         double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage);
         reduceDamage(amountInPercentage, event, instance, decreaseAmount);
     }

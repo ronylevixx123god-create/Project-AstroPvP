@@ -55,7 +55,6 @@ public class PlayerListener implements Listener {
             cDamager.sendHealthBar(damaged);
             CosmicPlayer cDamaged = CosmicPlayers.get().getCosmicPlayer(damaged);
             cDamaged.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
-            cDamager.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
 
             Location place = updateDamageSplatLocation(event.getEntity().getLocation());
 

@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,7 +15,7 @@ public class TitanListener implements Listener {
          Player damager = (Player)event.getDamager();
          Player entity = (Player)event.getEntity();
          if (damager.hasMetadata("immune_to_teleblock")) {
-            event.setDamage(event.getDamage() * 1.25D);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(12, event, "TitanPet");
          }
       }
 

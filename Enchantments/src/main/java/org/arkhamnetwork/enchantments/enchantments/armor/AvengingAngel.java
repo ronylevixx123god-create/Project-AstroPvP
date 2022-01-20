@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
  *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.FactionUtils
@@ -110,7 +110,6 @@ extends CustomEnchantment {
                 double healed = pl.getMaxHealth() - pl.getHealth();
                 GeneralUtil.healPlayer((LivingEntity)pl, healed);
                 pl.sendMessage(CC.YellowB + "* AVENGING ANGEL [" + CC.Gray + "+" + NumberUtils.formatMoney((double)healed) + " HP (" + dead.getName() + ")" + CC.YellowB + " *");
-                PlayerPotionEffects.trackPotionEffect(pl, new SpecificCustomEnchantment(this.customEnchant, angelLevel), new PotionEffect(PotionEffectType.ABSORPTION, 20 * duration, 5));
                 Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
                     PlayerPotionEffects.untrackPotionEffect(pl, new SpecificCustomEnchantment(this.customEnchant, angelLevel));
                     pl.removePotionEffect(PotionEffectType.ABSORPTION);
