@@ -4,7 +4,7 @@ package org.arkhamnetwork.Arkkit.patches.combatlog;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import net.citizensnpcs.api.CitizensAPI;
 import net.citizensnpcs.api.npc.NPC;
 import net.minecraft.server.v1_8_R3.MinecraftServer;

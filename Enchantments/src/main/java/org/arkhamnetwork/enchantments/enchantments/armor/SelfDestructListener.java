@@ -25,7 +25,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
@@ -64,10 +64,10 @@ implements Listener {
             }
             String exploder = ((MetadataValue)e.getEntity().getMetadata("SelfDestructTNT").get(0)).asString();
             Player pExploder = Bukkit.getPlayer((String)exploder);
-            FPlayer fp = pExploder != null ? (FPlayer)FPlayers.i.get((OfflinePlayer)pExploder) : null;
+            FPlayer fp = pExploder != null ? (FPlayer)FPlayers.getInstance().getByPlayer(pExploder) : null;
             for (Entity ent : e.getEntity().getNearbyEntities(4.0, 4.0, 4.0)) {
                 FPlayer fpEnt;
-                if (!(ent instanceof LivingEntity) || ent.hasMetadata("spectator") || ent instanceof Player && fp != null && fp.getRelationTo((RelationParticipator)(fpEnt = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)ent)))).isAtLeast(Relation.TRUCE) || WorldGuardUtils.isPvPDisabled(ent.getLocation())) continue;
+                if (!(ent instanceof LivingEntity) || ent.hasMetadata("spectator") || ent instanceof Player && fp != null && fp.getRelationTo((RelationParticipator)(fpEnt = (FPlayer)FPlayers.getInstance().getByPlayer((Player) ent))).isAtLeast(Relation.TRUCE) || WorldGuardUtils.isPvPDisabled(ent.getLocation())) continue;
                 ((LivingEntity)ent).damage(16.0);
                 ((LivingEntity)ent).setFireTicks(40);
                 GeneralUtil.pushAwayEntity((LivingEntity)ent, e.getEntity(), (double)1.7f);

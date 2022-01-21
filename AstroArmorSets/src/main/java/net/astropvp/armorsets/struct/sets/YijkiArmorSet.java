@@ -10,7 +10,7 @@ import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.struct.ArmorSet;

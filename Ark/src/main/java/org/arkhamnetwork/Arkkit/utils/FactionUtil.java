@@ -17,7 +17,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.bukkit.Location;
 
 public class FactionUtil {
@@ -27,11 +27,11 @@ public class FactionUtil {
 
     public static boolean isNonPermFaction(Location destination) {
         Faction at = FactionUtils.getFactionAt(destination);
-        return at != null && FactionUtil.isNonPermFaction(at);
+        return FactionUtil.isNonPermFaction(at);
     }
 
     public static boolean isNonPermFaction(Faction at) {
-        return at != null && (Boolean) FactionUtils.callFactionMethod(at, "isSafeZone", null) == false && (Boolean) FactionUtils.callFactionMethod(at, "isNone", null) == false && (Boolean) FactionUtils.callFactionMethod(at, "isWarZone", null) == false;
+        return at != null && !((Boolean) FactionUtils.callFactionMethod(at, "isSafeZone", null)) && !((Boolean) FactionUtils.callFactionMethod(at, "isNone", null)) && (Boolean) FactionUtils.callFactionMethod(at, "isWarZone", null) == false;
     }
 
     public static String getTag(Faction faction) {

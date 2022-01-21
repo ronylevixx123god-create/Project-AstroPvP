@@ -37,13 +37,12 @@ package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.Conf;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.*;
+import com.massivecraft.factions.config.ConfigManager;
+import com.massivecraft.factions.config.file.MainConfig;
+import com.massivecraft.factions.perms.Relation;
+import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.ChatMode;
-import com.massivecraft.factions.struct.Relation;
-import com.massivecraft.factions.struct.Role;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
@@ -124,32 +123,32 @@ final class ItemLinkingChatListener
                 ItemLinking.inventoryViews.put(newID, new TimedInventory(System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(10L), this.createCopy(pl)));
             }
             String message = e.getMessage().replaceAll("(?i)" + Pattern.quote(ItemLinking.split.toLowerCase()), ItemLinking.split).replaceAll("(?i)" + Pattern.quote(ItemLinking.bragSplit.toLowerCase()), ItemLinking.bragSplit);
-            FPlayer fplayer = FPlayers.i.get(pl);
+            FPlayer fplayer = FPlayers.getInstance().getByPlayer(pl);
             if (fplayer != null) {
                 Faction faction = fplayer.getFaction();
                 ChatMode chatMode = fplayer.getChatMode();
                 if (chatMode == ChatMode.FACTION) {
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.factionChatFormat, fplayer.describeToAsync(faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getTruceChatFormat(), fplayer.describeTo(faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
                     for (FPlayer fp : faction.getFPlayersWhereOnline(true)) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.factionChatFormat, fplayer.describeToAsync(faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getFactionChatFormat(), fplayer.describeTo(faction).replace(pl.getName(), ""), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("FactionChat: " + String.format(Conf.factionChatFormat, fplayer.describeToAsync(faction).replace(pl.getName(), ""), pl.getName(), message)), pl);
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("FactionChat: " + String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getTruceChatFormat(), fplayer.describeTo(faction).replace(pl.getName(), ""), pl.getName(), message)), pl);
                     return;
                 }
                 if (chatMode == ChatMode.ALLIANCE) {
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.allianceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getAllianceChatFormat(), ChatColor.stripColor(fplayer.getNameAndTag()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
-                    for (FPlayer fp : FPlayers.i.getOnline()) {
+                    for (FPlayer fp : FPlayers.getInstance().getAllFPlayers()) {
                         if (!faction.getFPlayers().contains(fp) && faction.getRelationTo(fp) != Relation.ALLY)
                             continue;
-                        ItemLinking.sendItemViaJSON(String.format(Conf.allianceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getAllianceChatFormat(), ChatColor.stripColor(fplayer.getNameAndTag()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("AllianceChat: " + String.format(Conf.allianceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), message)));
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("AllianceChat: " + String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getAllianceChatFormat(), ChatColor.stripColor(fplayer.getNameAndTag()), message)));
                     return;
                 }
                 if (chatMode == ChatMode.MOD) {
@@ -158,27 +157,27 @@ final class ItemLinkingChatListener
                         return;
                     }
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.modChatFormat, ChatColor.stripColor(fplayer.describeToAsync(faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getModChatFormat(), ChatColor.stripColor(fplayer.describeTo(faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
                     for (FPlayer fp : faction.getFPlayersWhereOnline(true)) {
                         if (!fp.getRole().isAtLeast(Role.MODERATOR)) continue;
-                        ItemLinking.sendItemViaJSON(String.format(Conf.modChatFormat, ChatColor.stripColor(fplayer.describeToAsync(faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getModChatFormat(), ChatColor.stripColor(fplayer.describeTo(faction).replace(pl.getName(), "")), pl.getName(), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("ModChat: " + String.format(Conf.modChatFormat, ChatColor.stripColor(fplayer.describeToAsync(faction).replace(pl.getName(), "")), pl.getName(), message)));
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("ModChat: " + String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getModChatFormat(), ChatColor.stripColor(fplayer.describeTo(faction).replace(pl.getName(), "")), pl.getName(), message)));
                     return;
                 }
                 if (chatMode == ChatMode.TRUCE) {
                     if (pl.hasMetadata("silentMute")) {
-                        ItemLinking.sendItemViaJSON(String.format(Conf.truceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getTruceChatFormat(), ChatColor.stripColor(fplayer.getNameAndTag()), ChatUtils.getFilteredMessage(message, pl, true)), e.getPlayer().getItemInHand(), pl, pl);
                         return;
                     }
-                    for (FPlayer fp : FPlayers.i.getOnline()) {
+                    for (FPlayer fp : FPlayers.getInstance().getAllFPlayers()) {
                         if (!faction.getFPlayers().contains(fp) && faction.getRelationTo(fp) != Relation.TRUCE)
                             continue;
-                        ItemLinking.sendItemViaJSON(String.format(Conf.truceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
+                        ItemLinking.sendItemViaJSON(String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getTruceChatFormat(), ChatColor.stripColor(fplayer.getNameAndTag()), ChatUtils.getFilteredMessage(message, fp.getPlayer(), true)), e.getPlayer().getItemInHand(), fp.getPlayer(), pl);
                     }
-                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("TruceChat: " + String.format(Conf.truceChatFormat, ChatColor.stripColor(fplayer.getNameAndTagAsync()), message)));
+                    Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("TruceChat: " + String.format(FactionsPlugin.getInstance().getConfigManager().getMainConfig().factions().chat().getTruceChatFormat(), ChatColor.stripColor(fplayer.getNameAndTag()), message)));
                     return;
                 }
             }

@@ -2,7 +2,7 @@ package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.massivecraft.factions.struct.Role;
+import com.massivecraft.factions.perms.Role;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import net.astropvp.core.utils.BlocksUtil;

@@ -34,7 +34,7 @@ import com.google.common.collect.Multimap;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -86,14 +86,14 @@ extends CustomEnchantment {
                         if (!player.isValid() || player.isDead() || player.hasMetadata("spectator") || Destruction.this.ess3.getUser(player).isGodModeEnabled()) {
                             return;
                         }
-                        FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+                        FPlayer fplayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
                         for (Entity ent : player.getNearbyEntities((double)radius, (double)radius, (double)radius)) {
                             Player p;
                             if (!(ent instanceof Player) || (p = (Player)ent).getGameMode() != GameMode.SURVIVAL || p.hasMetadata("NPC")) continue;
                             if (p.hasMetadata("spectator") || Destruction.this.ess3.getUser(p).isVanished()) {
                                 return;
                             }
-                            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+                            FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
                             if (!fp.getFaction().getRelationTo((RelationParticipator)fplayer.getFaction()).isAtMost(Relation.NEUTRAL) || WorldGuardUtils.isPvPDisabled(p.getLocation())) continue;
                             if (p.getHealth() > 0.0 && !p.isDead()) {
                                 try {

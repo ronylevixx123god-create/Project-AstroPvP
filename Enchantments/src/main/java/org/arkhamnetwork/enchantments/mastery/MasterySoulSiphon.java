@@ -2,7 +2,7 @@ package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.ArmorSlot;

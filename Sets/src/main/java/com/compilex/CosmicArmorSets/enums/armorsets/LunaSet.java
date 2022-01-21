@@ -12,7 +12,7 @@ import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import org.bukkit.*;
 import org.bukkit.block.Block;

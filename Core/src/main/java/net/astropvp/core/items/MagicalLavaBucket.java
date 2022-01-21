@@ -58,7 +58,7 @@ public class MagicalLavaBucket implements Listener {
         Location location = event.getBlockClicked().getLocation().add(blockFace.getModX(), blockFace.getModY(), blockFace.getModZ());
 
         FLocation fLocation = new FLocation(location);
-        FPlayer fPlayer = FPlayers.i.get(player);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
         Faction faction = fPlayer.getFaction();
 
         if (nbtItem.hasKey("bucketData")) {

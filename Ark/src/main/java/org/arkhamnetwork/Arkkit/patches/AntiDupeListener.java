@@ -178,20 +178,7 @@ final class AntiDupeListener
         return i != null && (GeneralUtil.isArmor(i) || GeneralUtil.isTool(i) || GeneralUtil.isWeapon(i));
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.hasItem() && e.getItem().getType() == Material.ANVIL && (e.getAction() == Action.RIGHT_CLICK_AIR || e.getAction() == Action.RIGHT_CLICK_BLOCK)) {
-            FPlayer fp = FPlayers.i.get(e.getPlayer());
-            FLocation floc = new FLocation(e.getPlayer().getLocation());
-            FactionWrapper wrapper = FactionWrappers.get(Board.getFactionAt(floc).getId());
-            if (!(fp.isInOwnTerritory() || Board.getFactionAt(floc).isNone() || e.getPlayer().isOp() || wrapper.doesPlayerHaveChunkAccess(floc, fp, true))) {
-                e.setCancelled(true);
-                e.setUseInteractedBlock(Event.Result.DENY);
-                e.setUseItemInHand(Event.Result.DENY);
-                Bukkit.getLogger().info("[AntiDupe] Preventing ANVIL->FLOWER POT dupe by " + e.getPlayer().getName() + " at " + e.getPlayer().getLocation());
-            }
-        }
-    }
+
 
     @EventHandler
     public void onBlockPhysics(BlockPhysicsEvent event) {

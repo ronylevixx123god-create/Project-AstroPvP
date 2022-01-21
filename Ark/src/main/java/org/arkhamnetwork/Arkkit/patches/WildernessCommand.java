@@ -13,7 +13,9 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
+import com.massivecraft.factions.data.json.JSONBoard;
 import com.wimbli.WorldBorder.WorldBorder;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -87,7 +89,7 @@ public class WildernessCommand extends ArkPlugin {
     private HashSet<String> getClaimedChunkCoords() {
         String worldNeeded = Bukkit.getWorlds().get(0).getName();
         HashSet<String> map = new HashSet<String>();
-        for (Map.Entry data : Board.dumpAsSaveFormat().entrySet()) {
+        for (Map.Entry data : FactionUtils.dumpAsSaveFormat().entrySet()) {
             if (data.getKey() == null || !data.getKey().equals(worldNeeded)) continue;
             map.addAll(((Map) data.getValue()).keySet());
         }

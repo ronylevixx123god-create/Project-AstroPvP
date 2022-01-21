@@ -25,7 +25,7 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;

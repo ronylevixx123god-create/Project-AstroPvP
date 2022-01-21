@@ -31,7 +31,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
@@ -105,14 +105,14 @@ public class DeathMessages
                     return;
                 }
                 event.setDeathMessage(null);
-                FPlayer player = FPlayers.i.get(killer);
-                FPlayer deadFPlayer = FPlayers.i.get(event.getEntity());
+                FPlayer player = FPlayers.getInstance().getByPlayer(killer);
+                FPlayer deadFPlayer = FPlayers.getInstance().getByPlayer(event.getEntity());
                 Bukkit.getLogger().info("[Arkkit (DeathMessages)] Player " + killer.getName() + " killed " + event.getEntity().getName() + " at " + LocationUtils.convertLocationToString(event.getEntity().getLocation()));
                 for (Entity e : event.getEntity().getNearbyEntities(64.0, 64.0, 64.0)) {
                     Player nearbyPlayer;
                     if (!(e instanceof Player) || WorldGuardUtils.isPvPDisabled((nearbyPlayer = (Player) e).getLocation()) || nearbyPlayer.hasMetadata("deathMessageToggle"))
                         continue;
-                    FPlayer foundFPlayer = FPlayers.i.get(nearbyPlayer);
+                    FPlayer foundFPlayer = FPlayers.getInstance().getByPlayer(nearbyPlayer);
                     this.sendMessage(player, foundFPlayer, deadFPlayer, killer, nearbyPlayer);
                 }
                 this.sendMessage(player, deadFPlayer, deadFPlayer, killer, event.getEntity());

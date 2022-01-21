@@ -15,15 +15,9 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.cmd.CmdFocus;
 import com.rit.sucy.CustomEnchantment;
 import org.bukkit.Material;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class TargetTracking
@@ -36,14 +30,7 @@ extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        if (playerHit instanceof Player) {
-            FPlayer fPlayer = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)player));
-            Faction myFaction = fPlayer.getFaction();
-            FPlayer targetPlayer = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)playerHit));
-            if (myFaction.isNormal()) {
-                CmdFocus.focusPlayer((FPlayer)fPlayer, (Faction)myFaction, (FPlayer)targetPlayer, (boolean)false);
-            }
-        }
+
     }
 }
 

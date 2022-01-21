@@ -104,9 +104,9 @@ extends CustomEnchantment {
                 if (!(player instanceof Player) || !(playerHit instanceof Player)) {
                     return;
                 }
-                FPlayer fPlayer = FPlayers.i.get(player.getUniqueId().toString());
+                FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
                 Faction f = fPlayer.getFaction();
-                Faction fply = FPlayers.i.get(playerHit.getUniqueId().toString()).getFaction();
+                Faction fply = FPlayers.getInstance().getByPlayer(playerHit).getFaction();
                 if (f.isNormal() && fply.isNormal() && (fply.getRelationTo((RelationParticipator)f).isAlly() || fply.equals((Object)f))) {
                     double current_hp;
                     int min_heal = 1 * level;

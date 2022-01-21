@@ -1,23 +1,25 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.compilex.CosmicOutposts.*;
+import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
+import com.rit.sucy.EnchantmentAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.ArmorSlot;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
-import org.bukkit.entity.*;
-import com.compilex.CosmicOutposts.outpost.enums.*;
-import com.rit.sucy.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import me.ifamasssxd.factionupgrades.struct.*;
-import me.ifamasssxd.factionupgrades.*;
-import me.ifamasssxd.killtracker.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.event.entity.*;
-import de.inventivegames.particle.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.metadata.*;
-import org.bukkit.plugin.*;
-import org.bukkit.inventory.*;
-import org.bukkit.event.*;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
 final class ImmortalListener implements Listener
 {
@@ -35,27 +37,7 @@ final class ImmortalListener implements Listener
                     if (Immortal.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
                         soulCost /= 2;
                     }
-                    if (Immortal.factionUpgrades) {
-                        try {
-                            final int heroic = UpgradeUtils.getUpgradeLevel(p, "HEROIC_SOUL_MASTERY");
-                            if (heroic > 0) {
-                                soulCost *= (int)((heroic == 1) ? 0.7 : ((heroic == 2) ? 0.55 : 1.0));
-                            }
-                            else {
-                                final int perkLevel = FactionUpgradeAPI.getPerkLevel(p, FactionUpgrade.SOUL_MASTER);
-                                if (perkLevel == 1) {
-                                    soulCost *= 0;
-                                }
-                                if (perkLevel == 2) {
-                                    soulCost *= 0;
-                                }
-                                if (perkLevel == 3) {
-                                    soulCost *= 0;
-                                }
-                            }
-                        }
-                        catch (Exception ex) {}
-                    }
+
                     soulCost = Math.max(1, soulCost);
                     if (KillTrackerAPI.hasSoulAmount(p, soulCost)) {
                         if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {

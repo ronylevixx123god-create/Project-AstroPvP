@@ -3,7 +3,7 @@ package com.massivecraft.factions.cmd;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.event.FactionFocusEvent;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import com.massivecraft.factions.Faction;

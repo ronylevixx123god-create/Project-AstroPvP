@@ -42,7 +42,7 @@ import com.massivecraft.factions.cmd.CmdShow;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.struct.ChatMode;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Role;
 import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import mkremins.fanciful.FancyMessage;

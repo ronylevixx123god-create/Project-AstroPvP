@@ -51,7 +51,7 @@ import com.cosmicpvp.factionpoints.CosmicFactionPoints;
 import com.cosmicpvp.factionpoints.struct.ExpiringChunkData;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.event.PowerLossEvent;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.util.MiscUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;

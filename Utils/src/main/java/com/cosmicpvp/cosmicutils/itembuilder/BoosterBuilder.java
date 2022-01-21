@@ -1,8 +1,5 @@
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.conaxgames.factions.boosters.enums.BoosterType;
-import com.massivecraft.factions.P;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -25,12 +22,7 @@ public class BoosterBuilder
 
     @Override
     public ItemStack build() {
-        BoosterType type = BoosterType.fromName((String) this.boosterType);
-        if (type == null) {
-            Bukkit.getLogger().info("Unable to find booster type from " + this.boosterType + " (" + this.duration + "s, " + this.multiplier + "x) ! Returning EXP by default!");
-            type = BoosterType.EXP;
-        }
-        return P.getP().getBoosterManager().createBooster(type, this.duration, this.multiplier);
+        return null;
     }
 
     public String getBoosterType() {

@@ -3,8 +3,9 @@ package org.arkhamnetwork.enchantments;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.rit.sucy.EnchantmentAPI;
+import de.inventivegames.particle.ParticleEffect;
 import lombok.SneakyThrows;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,17 +42,12 @@ public class SoulModeTask implements Runnable {
                     int cost = KOTH ? (getSoulCostPerSecond(p) * 2) : getSoulCostPerSecond(p);
                     if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p))
                         cost = Math.max(0, cost / 2);
-                    int heroic = UpgradeUtils.getUpgradeLevel(p, "HEROIC_SOUL_MASTERY");
-                    if (heroic > 0 && cost > 0) {
-                        cost *= (int) ((heroic == 1) ? 0.7D : ((heroic == 2) ? 0.55D : 1.0D));
-                        cost = (int) Math.ceil(cost);
-                    }
                     if (cost > 0) {
                         KillTrackerAPI.removeSoulsFromGems(p, cost);
                         p.setMetadata("lastSoulRemoveEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                         if (!p.hasMetadata("spectator"))
                             //ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 65);
-                            de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
+                            ParticleEffect.SPELL.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
                         p.playSound(p.getLocation(), Sound.EAT, 0.4F, 0.2F);
                         if (KillTrackerAPI.getAllSouls(p) % 100 == 0)
                             p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "** SOULS: " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(p) + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " **");

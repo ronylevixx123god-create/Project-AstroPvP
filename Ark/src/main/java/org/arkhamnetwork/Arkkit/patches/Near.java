@@ -9,7 +9,7 @@ import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
@@ -93,7 +93,7 @@ public class Near
             boolean showHidden = user.canInteractVanished();
             HashMap<Player, Double> distanceMap = new HashMap<Player, Double>();
             Location startLoc = player.getLocation();
-            FPlayer fuser = FPlayers.i.get(user.getBase().getPlayer());
+            FPlayer fuser = FPlayers.getInstance().getByPlayer(user.getBase().getPlayer());
             ArrayList<UUID> discombobulatedUUIDs = new ArrayList<UUID>();
             for (Player pl : Bukkit.getOnlinePlayers()) {
                 double distance;
@@ -108,7 +108,7 @@ public class Near
                     double maxGhostDistance;
                     boolean heroic = pl.hasMetadata("heroicGhostEnchantment");
                     int ghostLevel = pl.getMetadata(heroic ? "heroicGhostEnchantment" : "ghostEnchantment").get(0).asInt();
-                    FPlayer fp = FPlayers.i.get(pl);
+                    FPlayer fp = FPlayers.getInstance().getByPlayer(pl);
                     if (fp.getRelationTo(fuser).isAtMost(Relation.NEUTRAL)) {
                         Relation r = fp.getRelationToLocation();
                         if (ghostLevel >= 1 && r.isMember() || ghostLevel >= 2 && r.isAlly() || ghostLevel >= 3 && r.isTruce())
@@ -126,7 +126,7 @@ public class Near
                     if ((distanceSpoof = 2 + new Random().nextInt((int) Math.min(distance, level * 20))) < distance - 2.0 && new Random().nextBoolean()) {
                         distanceSpoof = -1 * new Random().nextInt((int) distance + 2);
                     }
-                    if ((fp = FPlayers.i.get(pl)).getRelationTo(fuser).isAtMost(Relation.NEUTRAL)) {
+                    if ((fp = FPlayers.getInstance().getByPlayer(pl)).getRelationTo(fuser).isAtMost(Relation.NEUTRAL)) {
                         if (distance + distanceSpoof > radius) continue;
                         distanceMap.put(pl, Math.max(2.0, distance + distanceSpoof));
                         discombobulatedUUIDs.add(pl.getUniqueId());
@@ -142,7 +142,7 @@ public class Near
             }
             sender.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + "There are " + ChatColor.DARK_PURPLE + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + sortedDistance.size() + ChatColor.AQUA + " player(s) nearby:");
             StringBuilder builder = new StringBuilder();
-            FPlayer fpl = FPlayers.i.get(player.getUniqueId().toString());
+            FPlayer fpl = FPlayers.getInstance().getByPlayer(player);
             int MAX_SEND = 30;
             int sent = 0;
             for (Map.Entry<Player, Double> distance : sortedDistance.entrySet()) {
@@ -159,12 +159,12 @@ public class Near
                     }
                     nearbyPlayer.append(discombobulate ? ChatColor.RESET + "" + ChatColor.MAGIC + "rank" : rank);
                 }
-                if ((fplayer = FPlayers.i.get(distance.getKey().getUniqueId().toString())).hasFaction() && fpl.hasFaction() && fplayer.getFaction().isNormal()) {
+                if ((fplayer = FPlayers.getInstance().getByPlayer(distance.getKey())).hasFaction() && fpl.hasFaction() && fplayer.getFaction().isNormal()) {
                     nearbyPlayer.append(fplayer.getFaction().getRelationTo(fpl.getFaction()).getColor().toString());
                 } else {
                     nearbyPlayer.append(ChatColor.WHITE.toString());
                 }
-                nearbyPlayer.append((discombobulate ? ChatColor.MAGIC : "") + distance.getKey().getName() + ChatColor.RESET + ChatColor.AQUA + ChatColor.BOLD.toString() + " (" + ChatColor.DARK_PURPLE + format.format(distance.getValue()) + "m" + ChatColor.AQUA + ChatColor.BOLD.toString() + ")");
+                nearbyPlayer.append(discombobulate ? ChatColor.MAGIC : "").append(distance.getKey().getName()).append(ChatColor.RESET).append(ChatColor.AQUA).append(ChatColor.BOLD.toString()).append(" (").append(ChatColor.DARK_PURPLE).append(format.format(distance.getValue())).append("m").append(ChatColor.AQUA).append(ChatColor.BOLD.toString()).append(")");
                 if (sortedDistance.size() <= 10) {
                     nearbyPlayer.append("\n");
                 } else {

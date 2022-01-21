@@ -12,7 +12,7 @@ import me.ifamasssxd.cosmicskycustoms.exceptions.ItemException;
 import me.ifamasssxd.cosmicskycustoms.exceptions.PrefixedItemException;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.ChatColor;

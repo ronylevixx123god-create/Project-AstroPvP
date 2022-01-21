@@ -32,7 +32,7 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.cache.CacheBuilder;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;

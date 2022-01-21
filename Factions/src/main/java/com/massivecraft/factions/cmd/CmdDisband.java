@@ -24,7 +24,7 @@ import com.massivecraft.factions.event.FactionDisbandEvent;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.listeners.menu.FDisbandConfirm;
 import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.RolePerm;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;

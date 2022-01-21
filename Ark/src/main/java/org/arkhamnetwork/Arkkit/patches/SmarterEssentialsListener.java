@@ -6,7 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import net.ess3.api.events.NickChangeEvent;
 import org.apache.commons.lang3.text.WordUtils;
 import org.bukkit.Bukkit;

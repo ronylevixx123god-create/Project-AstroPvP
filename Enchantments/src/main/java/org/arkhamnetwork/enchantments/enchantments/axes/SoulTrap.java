@@ -25,7 +25,7 @@ import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -60,7 +60,7 @@ extends CustomEnchantment {
         Player pHit = (Player)playerHit;
         double radius = 1.0 * (double)level;
         double chance = 0.07 * (double)level;
-        long duration = level * 4;
+        long duration = level * 4L;
         ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment((ItemStack)used, (String)this.enchantName)) {
             return;

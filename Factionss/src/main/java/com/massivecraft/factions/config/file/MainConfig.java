@@ -3,7 +3,7 @@ package com.massivecraft.factions.config.file;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.config.annotation.Comment;
 import com.massivecraft.factions.config.annotation.WipeOnReload;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.util.MiscUtil;
 import com.massivecraft.factions.util.material.MaterialDb;

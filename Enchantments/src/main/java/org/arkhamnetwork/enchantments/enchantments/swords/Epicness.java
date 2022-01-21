@@ -21,7 +21,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -79,11 +79,11 @@ extends CustomEnchantment {
             return;
         }
         Player p = (Player)le;
-        FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+        FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
         for (Entity ent : p.getNearbyEntities(16.0, 16.0, 16.0)) {
             if (!(ent instanceof Player)) continue;
             Player pEnt = (Player)ent;
-            FPlayer fpEnt = (FPlayer)FPlayers.i.get((OfflinePlayer)pEnt);
+            FPlayer fpEnt = (FPlayer)FPlayers.getInstance().getByPlayer(pEnt);
             if (fp.getFaction().getRelationTo((RelationParticipator)fpEnt.getFaction()).isAtLeast(Relation.TRUCE)) continue;
             pEnt.playSound(pEnt.getLocation(), s, volume, pitch);
         }

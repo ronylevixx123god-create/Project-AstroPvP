@@ -98,18 +98,12 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>fa</artifactId>
+            <artifactId>favtions</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>points</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicFactionPoints.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>items</artifactId>

@@ -1,23 +1,19 @@
 package net.astropvp.core.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
-import me.ifamasssxd.itemfilter.utils.ItemBuilder;
-import net.astropvp.core.utils.GUIBuilder;
+import net.astropvp.core.itemfilter.utils.ItemBuilder;
 import net.astropvp.core.utils.SpawnerGUIBuilder;
 import net.astropvp.core.utils.SpawnerShopUtil;
 import org.bukkit.Bukkit;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
-import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 

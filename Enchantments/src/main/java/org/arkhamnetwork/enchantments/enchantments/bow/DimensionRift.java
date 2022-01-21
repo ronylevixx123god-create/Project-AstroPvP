@@ -24,6 +24,7 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -78,7 +79,7 @@ extends CustomEnchantment {
             return;
         }
         FLocation fL = new FLocation(enemyLoc);
-        if (Board.getFactionAt((FLocation)fL).isNormal()) {
+        if (FactionUtils.getFactionAt((FLocation)fL).isNormal()) {
             return;
         }
         if (WorldGuardUtils.getRegionName(playerHit.getLocation()).equals("")) {

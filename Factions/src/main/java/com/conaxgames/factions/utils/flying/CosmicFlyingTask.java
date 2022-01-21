@@ -37,7 +37,7 @@ import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
 import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;

@@ -34,7 +34,7 @@ import com.earth2me.essentials.commands.PlayerNotFoundException;
 import com.earth2me.essentials.utils.FormatUtil;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -142,7 +142,7 @@ final class CommandNear
         StringBuilder output = new StringBuilder();
         long radiusSquared = radius * radius;
         boolean showHidden = user.canInteractVanished();
-        FPlayer fuser = FPlayers.i.get(user.getBase().getPlayer());
+        FPlayer fuser = FPlayers.getInstance().getByPlayer(user.getBase().getPlayer());
         int counter = 0;
         for (Player p : Bukkit.getOnlinePlayers()) {
             long delta;
@@ -151,7 +151,7 @@ final class CommandNear
             if (player.equals(user) || player.isHidden(user.getBase()) && !showHidden && !user.getBase().canSee(player.getBase()) || (playerLoc = player.getLocation()).getWorld() != world || (delta = (long) playerLoc.distanceSquared(loc)) >= radiusSquared)
                 continue;
             if (p.hasMetadata("ghostEnchantment") || p.hasMetadata("heroicGhostEnchantment")) {
-                FPlayer fp = FPlayers.i.get(p);
+                FPlayer fp = FPlayers.getInstance().getByPlayer(p);
                 if (fp.getRelationTo(fuser).isAtMost(Relation.NEUTRAL)) {
                     continue;
                 }

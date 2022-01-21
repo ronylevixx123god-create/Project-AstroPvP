@@ -1,15 +1,15 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.*;
 import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.event.entity.*;
-import com.massivecraft.factions.*;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.*;
-import com.massivecraft.factions.iface.*;
-import com.massivecraft.factions.struct.*;
 import org.bukkit.potion.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 import java.util.*;
@@ -36,7 +36,7 @@ public class Pummel extends CustomEnchantment
         }
         final int radius = level;
         if (random < chance) {
-            final FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+            final FPlayer fplayer = (FPlayer)FPlayers.getInstance().getByOfflinePlayer((OfflinePlayer)player);
             for (final Entity ent : playerHit.getNearbyEntities(radius, radius, radius)) {
                 if (ent.equals(player)) {
                     continue;
@@ -55,8 +55,8 @@ public class Pummel extends CustomEnchantment
                             continue;
                         }
                     }
-                    final FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
-                    if (fplayer.getRelationTo((RelationParticipator)fp).isAtLeast(Relation.TRUCE)) {
+                    final FPlayer fp = (FPlayer) FPlayers.getInstance().getByOfflinePlayer((OfflinePlayer)p);
+                    if (fplayer.getRelationTo(fp).isAtLeast(Relation.TRUCE)) {
                         continue;
                     }
 

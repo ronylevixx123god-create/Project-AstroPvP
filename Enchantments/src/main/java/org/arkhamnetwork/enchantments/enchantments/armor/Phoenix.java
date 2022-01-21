@@ -35,11 +35,8 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -209,28 +206,6 @@ extends CustomEnchantment {
         }
         if (cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost((Player)player)) {
             soulCost /= 2;
-        }
-        if (factionUpgrades) {
-            try {
-                int heroic = UpgradeUtils.getUpgradeLevel((Player)player, (String)"HEROIC_SOUL_MASTERY");
-                if (heroic > 0) {
-                    soulCost *= (int)(heroic == 1 ? 0.7 : (heroic == 2 ? 0.55 : 1.0));
-                } else {
-                    int perkLevel = FactionUpgradeAPI.getPerkLevel((Player)player, (FactionUpgrade)FactionUpgrade.SOUL_MASTER);
-                    if (perkLevel == 1) {
-                        soulCost *= 0;
-                    }
-                    if (perkLevel == 2) {
-                        soulCost *= 0;
-                    }
-                    if (perkLevel == 3) {
-                        soulCost *= 0;
-                    }
-                }
-            }
-            catch (Exception exception) {
-                // empty catch block
-            }
         }
         soulCost = Math.min(soulCost, 8000);
         return soulCost;

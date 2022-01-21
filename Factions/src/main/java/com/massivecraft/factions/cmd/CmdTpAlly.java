@@ -11,7 +11,7 @@ package com.massivecraft.factions.cmd;
 
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.integration.EssentialsFeatures;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

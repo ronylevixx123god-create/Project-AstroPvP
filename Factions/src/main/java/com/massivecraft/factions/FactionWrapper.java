@@ -2,7 +2,7 @@ package com.massivecraft.factions;
 
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.iface.EconomyParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Role;
 import org.bukkit.Location;
 

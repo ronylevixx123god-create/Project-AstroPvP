@@ -23,7 +23,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -56,11 +56,11 @@ extends CustomEnchantment {
             return;
         double chance = (double)level * 0.02;
         if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && Math.random() < chance) {
-            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)player));
+            FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer((Player) player);
             boolean KOTH = player.getWorld().getName().equals("world_koth");
             for (Entity ent : player.getNearbyEntities((double)level, (double)level, (double)level)) {
                 FPlayer fpEnt;
-                if (!(ent instanceof LivingEntity) || ent instanceof Player && (Enchantments.getEssentials().getUser((Player)ent).isVanished() || (fpEnt = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)ent))).getRelationTo((RelationParticipator)fp).isAtLeast(Relation.ALLY)) || WorldGuardUtils.isPvPDisabled(ent.getLocation())) continue;
+                if (!(ent instanceof LivingEntity) || ent instanceof Player && (Enchantments.getEssentials().getUser((Player)ent).isVanished() || FPlayers.getInstance().getByPlayer((Player) ent).getRelationTo((RelationParticipator)fp).isAtLeast(Relation.ALLY)) || WorldGuardUtils.isPvPDisabled(ent.getLocation())) continue;
                 if (KOTH) {
                     GeneralUtil.pushAwayEntity(player, ent, (double)1.35f);
                 } else {

@@ -28,7 +28,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -68,10 +68,10 @@ extends CustomEnchantment {
                 p.setMetadata("SmokeBomb", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
                 int radius = Math.round((float)level * 1.5f);
                 ArrayList<LivingEntity> victims = new ArrayList<LivingEntity>();
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+                FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
                 for (Entity ent : player.getNearbyEntities((double)radius, (double)radius, (double)radius)) {
                     FPlayer fpEnt;
-                    if (!(ent instanceof LivingEntity) || ent instanceof Player && fp.getRelationTo((RelationParticipator)(fpEnt = (FPlayer)FPlayers.i.get((OfflinePlayer)((Player)ent)))).isAtLeast(Relation.TRUCE)) continue;
+                    if (!(ent instanceof LivingEntity) || ent instanceof Player && fp.getRelationTo(FPlayers.getInstance().getByPlayer((Player) ent)).isAtLeast(Relation.TRUCE)) continue;
                     victims.add((LivingEntity)ent);
                 }
                 try {

@@ -20,7 +20,6 @@ public class AntiBlockGlitch
 
     @Override
     public void enable() {
-        this.registerListener(new AntiBlockGlitchListener());
         this.registerListener(new AntiWitherSpawnerListener());
         //this.registerListener(new AntiGlitchSwordListener());
 

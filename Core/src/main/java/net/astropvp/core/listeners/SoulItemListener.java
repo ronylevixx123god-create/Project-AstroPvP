@@ -1,6 +1,6 @@
 package net.astropvp.core.listeners;
 
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.core.AstroCore;
 import org.arkhamnetwork.Arkkit.patches.EnderpearlCooldown;
 import org.bukkit.ChatColor;

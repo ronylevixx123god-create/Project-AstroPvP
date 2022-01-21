@@ -6,7 +6,7 @@ import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.landraidcontrol.DTRControl;
 import com.massivecraft.factions.landraidcontrol.PowerControl;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.util.TL;
 import org.apache.commons.lang.time.DurationFormatUtils;

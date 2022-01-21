@@ -18,7 +18,7 @@ import com.massivecraft.factions.listeners.menu.faccess.FAccessPlayerMenu;
 import com.massivecraft.factions.struct.FLogType;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.PermissionManager;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 

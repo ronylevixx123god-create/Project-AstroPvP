@@ -20,6 +20,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import org.arkhamnetwork.Arkkit.Arkkit;
@@ -116,7 +117,7 @@ final class ExpBottlesCommand
             return true;
         }
         FLocation pLoc = new FLocation(p.getLocation());
-        if (Board.getFactionAt(pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
+        if (FactionUtils.getFactionAt(pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
             p.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " bottle EXP in Warzones.");
             return true;
         }

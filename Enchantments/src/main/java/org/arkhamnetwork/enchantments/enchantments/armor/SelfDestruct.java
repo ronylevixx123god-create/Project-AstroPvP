@@ -27,8 +27,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -66,12 +65,12 @@ extends CustomEnchantment {
                 }
                 p.setMetadata("SelfDestructing", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
                 int radius = (int)((float)level * 2.5f);
-                FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+                FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
                 ArrayList<LivingEntity> victims = new ArrayList<LivingEntity>();
                 for (Entity ent : player.getNearbyEntities((double)radius, (double)radius, (double)radius)) {
                     Player pEnt;
                     FPlayer fpEnt;
-                    if (!(ent instanceof LivingEntity) || ent instanceof Player && (fpEnt = (FPlayer)FPlayers.i.get((OfflinePlayer)(pEnt = (Player)ent))).getRelationTo((RelationParticipator)fp).isAtLeast(Relation.ALLY)) continue;
+                    if (!(ent instanceof LivingEntity) || ent instanceof Player && FPlayers.getInstance().getByPlayer((Player)ent).getRelationTo(fp).isAtLeast(Relation.ALLY)) continue;
                     victims.add((LivingEntity)ent);
                 }
                 p.getWorld().playSound(p.getLocation(), Sound.EXPLODE, 2.0f, 0.75f);

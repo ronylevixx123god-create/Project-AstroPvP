@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.listeners.menu.ClickableItemStack;
 import com.massivecraft.factions.listeners.menu.GUIMenu;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.zcore.util.ItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.DyeColor;

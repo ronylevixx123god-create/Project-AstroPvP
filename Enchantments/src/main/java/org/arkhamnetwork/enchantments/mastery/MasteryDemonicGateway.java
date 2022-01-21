@@ -1,44 +1,13 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.cosmicpvp.cosmicutils.utils.*;
-import com.google.common.base.Predicate;
 import com.google.common.cache.CacheBuilder;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.struct.Relation;
-import net.minecraft.server.v1_8_R3.*;
-import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
-import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
-import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.arkhamnetwork.enchantments.util.MathHelper;
-import org.bukkit.Material;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.BlockFace;
-import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.*;
-import org.bukkit.event.Event;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
-import java.util.concurrent.ThreadLocalRandom;
 import java.util.concurrent.TimeUnit;
 
 public class MasteryDemonicGateway extends MasteryCustomEnchantment {
@@ -186,7 +155,7 @@ public class MasteryDemonicGateway extends MasteryCustomEnchantment {
                     if (pl == null || pl.hasMetadata("NPC") || pl.hasMetadata("spectator") || pl.getGameMode() != GameMode.SURVIVAL) {
                         return;
                     }
-                    final FPlayer other = FPlayers.i.get(pl);
+                    final FPlayer other = FPlayers.getInstance().getByPlayer(pl);
                     if (other != null && faction != null && other.hasFaction() && other.getFaction().getRelationTo(faction).isAtLeast(Relation.TRUCE)) {
                         return;
                     }

@@ -17,7 +17,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;

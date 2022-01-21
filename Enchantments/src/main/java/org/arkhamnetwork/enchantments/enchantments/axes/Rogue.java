@@ -1,26 +1,18 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
-import me.astropvp.astroparticles.utils.ParticleUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.damagehandler.AstroDamageHandler;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.arkhamnetwork.enchantments.util.ParticleEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;

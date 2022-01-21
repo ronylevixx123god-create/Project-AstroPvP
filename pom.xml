@@ -70,6 +70,7 @@
         <module>GiftcardShop</module>
         <module>AstroArmorSets</module>
         <module>AstroDamageHandler</module>
+        <module>AstroFactions</module>
     </modules>
 
     <build>

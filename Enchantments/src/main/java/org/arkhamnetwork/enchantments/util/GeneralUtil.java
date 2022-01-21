@@ -5,7 +5,7 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.*;
 import org.bukkit.entity.EnderDragon;
@@ -142,13 +142,14 @@ public class GeneralUtil {
         if (p1.hasMetadata("in_duel") || p2.hasMetadata("in_duel")) {
             return false;
         }
-        final FPlayer fp1 = (FPlayer) FPlayers.i.get((OfflinePlayer) p1);
-        final FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
+        final FPlayer fp1 = (FPlayer) FPlayers.getInstance().getByPlayer(p1);
+
+        final FPlayer fp2 = (FPlayer) FPlayers.getInstance().getByPlayer(p2);
         if (!fp1.hasFaction() || !fp2.hasFaction()) {
             return false;
         }
-        final Relation r1 = fp1.getFaction().getRelationTo((RelationParticipator) fp2.getFaction());
-        final Relation r2 = fp2.getFaction().getRelationTo((RelationParticipator) fp1.getFaction());
+        final Relation r1 = fp1.getFaction().getRelationTo(fp2.getFaction());
+        final Relation r2 = fp2.getFaction().getRelationTo(fp1.getFaction());
         return (r1.isAlly() || r1.isMember()) && (r2.isAlly() || r2.isMember());
     }
 
@@ -159,8 +160,8 @@ public class GeneralUtil {
         if (p1.hasMetadata("in_duel") || p2.hasMetadata("in_duel")) {
             return false;
         }
-        final FPlayer fp1 = (FPlayer) FPlayers.i.get((OfflinePlayer) p1);
-        final FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
+        final FPlayer fp1 = (FPlayer) FPlayers.getInstance().getByPlayer(p1);
+        final FPlayer fp2 = (FPlayer) FPlayers.getInstance().getByPlayer(p2);
         if (!fp1.hasFaction() || !fp2.hasFaction()) {
             return false;
         }
@@ -176,7 +177,7 @@ public class GeneralUtil {
         if (p2.hasMetadata("in_duel")) {
             return false;
         }
-        final FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
+        final FPlayer fp2 = (FPlayer) FPlayers.getInstance().getByPlayer(p2);
         if (faction == null || !fp2.hasFaction()) {
             return false;
         }
@@ -195,7 +196,7 @@ public class GeneralUtil {
         if (p2.hasMetadata("in_duel")) {
             return true;
         }
-        final FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
+        final FPlayer fp2 = (FPlayer) FPlayers.getInstance().getByPlayer(p2);
         if (faction == null || !fp2.hasFaction()) {
             return true;
         }
@@ -210,8 +211,8 @@ public class GeneralUtil {
         if (p1.hasMetadata("in_duel") || p2.hasMetadata("in_duel")) {
             return true;
         }
-        final FPlayer fp1 = (FPlayer) FPlayers.i.get((OfflinePlayer) p1);
-        final FPlayer fp2 = (FPlayer) FPlayers.i.get((OfflinePlayer) p2);
+        final FPlayer fp1 = (FPlayer) FPlayers.getInstance().getByPlayer(p1);
+        final FPlayer fp2 = (FPlayer) FPlayers.getInstance().getByPlayer(p2);
         if (!fp1.hasFaction() || !fp2.hasFaction()) {
             return true;
         }

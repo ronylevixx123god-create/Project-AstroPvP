@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.struct.PermissionManager;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.util.AsciiCompass;
 import com.massivecraft.factions.util.TimeUtil;
 import com.massivecraft.factions.zcore.util.DiscUtil;

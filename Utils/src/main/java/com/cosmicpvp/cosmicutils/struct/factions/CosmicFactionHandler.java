@@ -17,21 +17,17 @@
  */
 package com.cosmicpvp.cosmicutils.struct.factions;
 
-import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.google.common.collect.Lists;
+
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.iface.EconomyParticipator;
 import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import lombok.SneakyThrows;
 import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -136,6 +132,11 @@ public class CosmicFactionHandler extends FactionHandler {
     }
 
     @Override
+    public boolean isFocusedPlayer(Faction var1, String var2) {
+        return false;
+    }
+
+    @Override
     public Faction getFactionAt(Location location) {
         return Board.getInstance().getFactionAt((FLocation) new FLocation(location));
     }
@@ -176,6 +177,11 @@ public class CosmicFactionHandler extends FactionHandler {
     }
 
     @Override
+    public void setFocusing(Faction var1, FPlayer var2) throws IllegalAccessException {
+
+    }
+
+    @Override
     public Faction getFaction(FPlayer player, boolean includeWilderness) {
         Faction faction = player.getFaction();
         if (!includeWilderness && faction.isNone()) {
@@ -189,21 +195,7 @@ public class CosmicFactionHandler extends FactionHandler {
         fplayer.getPlayer().sendMessage(msg);
     }
 
-    @Override
-    public boolean isFocusedPlayer(Faction faction, String name) {
-        try {
-            FPlayer focusing = (FPlayer) this.focusPlayerField.get((Object) faction);
-            if (focusing == null) {
-                return false;
-            }
-            if (focusing.getName().equals(name)) {
-                return true;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
+
 
     @SneakyThrows
     @Override
@@ -211,11 +203,7 @@ public class CosmicFactionHandler extends FactionHandler {
         return (FPlayer) ReflectionUtils.getObject(Faction.class, (Object) faction, "focusedPlayer");
     }
 
-    @SneakyThrows
-    @Override
-    public void setFocusing(Faction faction, FPlayer player) {
-        ReflectionUtils.setObject((Object) faction, this.focusPlayerField, (Object) player);
-    }
+
 
     @Override
     public boolean attemptClaim(FPlayer fplayer, Faction faction, Location location, boolean notifyFailure) {

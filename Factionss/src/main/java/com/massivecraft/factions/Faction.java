@@ -3,7 +3,7 @@ package com.massivecraft.factions;
 import com.massivecraft.factions.iface.EconomyParticipator;
 import com.massivecraft.factions.perms.*;
 import com.massivecraft.factions.struct.BanInfo;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.util.LazyLocation;
 import com.massivecraft.factions.util.StrikeInfo;

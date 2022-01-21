@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;

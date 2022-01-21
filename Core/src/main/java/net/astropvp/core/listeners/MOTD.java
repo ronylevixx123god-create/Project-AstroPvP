@@ -1,20 +1,8 @@
 package net.astropvp.core.listeners;
 
-import com.astropvp.cc.CCVerify;
-import com.astropvp.cc.config.Config;
-import com.astropvp.cc.packet.type.out.PacketOutTeamVoiceStatus;
-import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.player.CosmicPlayers;
-import com.astropvp.cc.util.Chat;
-import com.astropvp.cc.voice.EnumChannel;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.massivecraft.factions.Conf;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.utils.ChatManager;
-import net.minecraft.server.v1_8_R3.Packet;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -22,8 +10,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.github.paperspigot.Title;
-
-import java.util.HashSet;
 
 public class MOTD implements Listener {
     @EventHandler
@@ -78,10 +64,12 @@ public class MOTD implements Listener {
             player.sendMessage("");
             player.sendMessage(CC.translate("&f&l  WE RECOMMEND YOU TO USE &6client.astropvp.net &f&lOR &61.8.9"));
             player.sendMessage("");
-            if (Conf.gracePeriod) {
+
+            //TODO Recode: Check for grace in factions
+            /*if (Conf.gracePeriod) {
                 player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. TnT Explosives are Disabled."));
                 player.sendMessage("");
-            }
+            }*/
 
 
 

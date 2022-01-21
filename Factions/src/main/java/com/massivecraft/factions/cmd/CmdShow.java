@@ -11,7 +11,7 @@ import com.massivecraft.factions.*;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Role;
 import mkremins.fanciful.FancyMessage;
 import net.astropvp.FactionShield;

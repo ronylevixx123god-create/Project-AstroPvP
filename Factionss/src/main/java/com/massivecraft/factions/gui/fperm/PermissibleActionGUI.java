@@ -6,7 +6,7 @@ import com.massivecraft.factions.gui.GUI;
 import com.massivecraft.factions.gui.SimpleItem;
 import com.massivecraft.factions.perms.Permissible;
 import com.massivecraft.factions.perms.PermissibleAction;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.util.TL;
 import com.massivecraft.factions.util.material.MaterialDb;
 import org.bukkit.ChatColor;

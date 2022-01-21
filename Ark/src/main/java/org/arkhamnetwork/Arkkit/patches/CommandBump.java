@@ -15,11 +15,12 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -38,9 +39,9 @@ final class CommandBump
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (sender instanceof Player) {
             Player p = (Player) sender;
-            FPlayer fp = FPlayers.i.get(p);
+            FPlayer fp = FPlayers.getInstance().getByPlayer(p);
             FLocation fl = new FLocation(p.getLocation());
-            if (!fp.getRelationToLocation().isAtLeast(Relation.ALLY) && !Board.getFactionAt(fl).isWarZone() && !Board.getFactionAt(fl).isNone()) {
+            if (!fp.getRelationToLocation().isAtLeast(Relation.ALLY) && !FactionUtils.getFactionAt(fl).isWarZone() && !FactionUtils.getFactionAt(fl).isNone()) {
                 p.sendMessage(ChatColor.RED + "You cannot use /bump in enemy territory.");
                 return true;
             }

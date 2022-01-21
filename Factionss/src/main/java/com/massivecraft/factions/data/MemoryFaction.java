@@ -19,7 +19,7 @@ import com.massivecraft.factions.landraidcontrol.LandRaidControl;
 import com.massivecraft.factions.perms.*;
 import com.massivecraft.factions.struct.BanInfo;
 import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.upgrade.FactionUpgrade;
 import com.massivecraft.factions.upgrade.HeroicUpgrade;
 import com.massivecraft.factions.util.*;

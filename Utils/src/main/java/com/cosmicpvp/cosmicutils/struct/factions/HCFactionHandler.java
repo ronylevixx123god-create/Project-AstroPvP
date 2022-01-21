@@ -17,9 +17,10 @@ import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ReflectionUtils;
 import com.google.common.collect.Lists;
+
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -81,7 +82,7 @@ public class HCFactionHandler
     public boolean isInOwnFaction(Player player) {
         Faction at = this.getFactionAt(player.getLocation());
         FPlayer fpla = this.getFPlayer(player);
-        return at != null && fpla != null && (Relation) ReflectionUtils.callReflectionMethod((Object) fpla, this.memoryFPlayerClass, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object) at)) == Relation.MEMBER;
+        return at != null && fpla != null && (Relation) ReflectionUtils.callReflectionMethod(fpla, this.memoryFPlayerClass, "getRelationTo", new ParamBuilder(RelationParticipator.class, (Object) at)) == Relation.MEMBER;
     }
 
     @Override

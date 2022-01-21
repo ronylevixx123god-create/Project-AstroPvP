@@ -24,8 +24,8 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
 import com.cosmicpvp.cosmicutils.utils.CoreProtectUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.struct.FactionPermission;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -61,12 +61,12 @@ extends CustomEnchantment {
                 public void run() {
                     FPlayer fplayer;
                     FLocation faction_loc = new FLocation(event.getClickedBlock().getLocation());
-                    Faction l_faction = Board.getFactionAt((FLocation)faction_loc);
+                    Faction l_faction = FactionUtils.getFactionAt((FLocation)faction_loc);
                     boolean can_build = false;
                     if (l_faction == null || l_faction.isNone()) {
                         can_build = true;
                     }
-                    if (!can_build && l_faction.playerHasOwnershipRights(fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player), faction_loc) && l_faction.hasPermission(fplayer, faction_loc, FactionPermission.OBBY, "destroy")) {
+                    if (!can_build && l_faction.playerHasOwnershipRights(fplayer = (FPlayer)FPlayers.getInstance().getByPlayer(player), faction_loc)) {
                         can_build = true;
                     }
                     if (!can_build || l_faction.isWarZone()) {

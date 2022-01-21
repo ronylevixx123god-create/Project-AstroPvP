@@ -14,7 +14,7 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.cmd.CmdFocus;
 import com.massivecraft.factions.cmd.CmdUnfocus;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import java.util.HashMap;
 import java.util.Iterator;

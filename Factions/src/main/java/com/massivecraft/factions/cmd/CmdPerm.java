@@ -14,7 +14,7 @@ import com.massivecraft.factions.*;
 import com.massivecraft.factions.listeners.menu.fperm.PermMainMenu;
 import com.massivecraft.factions.listeners.menu.fperm.PermMenu;
 import com.massivecraft.factions.listeners.menu.fperm.PlayerPermMenu;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.RolePerm;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

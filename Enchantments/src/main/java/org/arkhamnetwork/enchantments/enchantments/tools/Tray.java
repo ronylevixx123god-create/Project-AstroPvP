@@ -29,7 +29,7 @@ public class Tray extends CustomEnchantment {
     }
 
     public void trayEffect(Block block, int r, Player p) {
-        FPlayer fplayer = FPlayers.i.get(p);
+        FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
         Block target;
         Faction locFac;
 

@@ -7,7 +7,7 @@ import com.massivecraft.factions.cmd.CommandRequirements;
 import com.massivecraft.factions.cmd.FCommand;
 import com.massivecraft.factions.event.FactionRelationEvent;
 import com.massivecraft.factions.event.FactionRelationWishEvent;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.scoreboards.FTeamWrapper;
 import com.massivecraft.factions.struct.Permission;

@@ -36,7 +36,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -78,7 +78,7 @@ extends CustomEnchantment {
             Integer currentTick = ticks.computeIfAbsent(ent.getEntityId(), k -> 0);
             if (currentTick >= required) {
                 ticks.put(ent.getEntityId(), 0);
-                Faction faction = Factions.i.get(((MetadataValue)ent.getMetadata("faction").get(0)).asInt() + "");
+                Faction faction = Factions.getInstance().getFactionById(((MetadataValue)ent.getMetadata("faction").get(0)).asInt() + "");
                 if (faction == null || faction.getFPlayers().size() <= 0) {
                     return;
                 }
@@ -97,7 +97,7 @@ extends CustomEnchantment {
                         FPlayer fpl;
                         long cd;
                         Player player;
-                        if (!(nearby instanceof Player) || (player = (Player)nearby).hasMetadata("heal_cd") && (cd = ((MetadataValue)player.getMetadata("heal_cd").get(0)).asLong()) > System.currentTimeMillis() || (fpl = FPlayers.i.get(player.getUniqueId().toString())) == null || !fpl.hasFaction() || fpl.getRelationTo((RelationParticipator)faction) != Relation.ALLY || player.getHealth() >= player.getMaxHealth() || player.isDead()) continue;
+                        if (!(nearby instanceof Player) || (player = (Player)nearby).hasMetadata("heal_cd") && (cd = ((MetadataValue)player.getMetadata("heal_cd").get(0)).asLong()) > System.currentTimeMillis() || (fpl = FPlayers.getInstance().getByPlayer(player)) == null || !fpl.hasFaction() || fpl.getRelationTo((RelationParticipator)faction) != Relation.ALLY || player.getHealth() >= player.getMaxHealth() || player.isDead()) continue;
                         ++healed;
                         GeneralUtil.healPlayer((LivingEntity)player, toHeal);
                         player.setMetadata("heal_cd", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)((double)System.currentTimeMillis() + (double)required / 20.0 * 1000.0)));
@@ -145,7 +145,7 @@ extends CustomEnchantment {
                     exception.printStackTrace();
                 }
 
-                FPlayer fp = FPlayers.i.get(player.getUniqueId().toString());
+                FPlayer fp = FPlayers.getInstance().getByPlayer((Player) player);
                 String string = facName = fp.hasFaction() ? fp.getFaction().getId() : "";
                 while (acenstoral_count > 0) {
                     --acenstoral_count;

@@ -1,5 +1,8 @@
 package org.arkhamnetwork.enchantments.mastery;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.*;
@@ -7,9 +10,6 @@ import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import com.massivecraft.factions.iface.*;
-import com.massivecraft.factions.struct.*;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.metadata.*;
 import org.bukkit.plugin.*;
@@ -35,7 +35,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         }
 
         final Player pTarget = (Player)target;
-        final Relation relation = FactionUtils.getRelationTo((RelationParticipator)FactionUtils.getFaction((Player)player), (RelationParticipator)FactionUtils.getFaction(pTarget));
+        final Relation relation = FactionUtils.getRelationTo(FactionUtils.getFaction((Player)player), FactionUtils.getFaction(pTarget));
         if (relation != Relation.NEUTRAL && relation != Relation.ENEMY) {
             return;
         }

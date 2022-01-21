@@ -28,9 +28,7 @@ import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -83,28 +81,7 @@ extends CustomEnchantment {
             if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost((Player)p)) {
                 cost /= 2;
             }
-            if (this.factionUpgrades) {
-                try {
-                    int heroic = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_SOUL_MASTERY");
-                    if (heroic > 0) {
-                        cost = (int)((double)cost * (heroic == 1 ? 0.7 : (heroic == 2 ? 0.55 : 1.0)));
-                    } else {
-                        int perkLevel = FactionUpgradeAPI.getPerkLevel((Player)p, (FactionUpgrade)FactionUpgrade.SOUL_MASTER);
-                        if (perkLevel == 1) {
-                            cost = (int)((double)cost * 0.95);
-                        }
-                        if (perkLevel == 2) {
-                            cost = (int)((double)cost * 0.9);
-                        }
-                        if (perkLevel == 3) {
-                            cost = (int)((double)cost * 0.75);
-                        }
-                    }
-                }
-                catch (Exception heroic) {
-                    // empty catch block
-                }
-            }
+
             if (KillTrackerAPI.hasSoulAmount((Player)p, (int)cost)) {
                 int highImpactPlayers = 0;
                 for (Entity ent : p.getNearbyEntities((double)radius, (double)(radius + 128), (double)radius)) {

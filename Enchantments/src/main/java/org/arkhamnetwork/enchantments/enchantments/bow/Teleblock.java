@@ -22,7 +22,7 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

@@ -44,9 +44,8 @@
 package org.arkhamnetwork.enchantments.enchantments.tools;
 
 import com.cosmicpvp.cosmicutils.utils.CoreProtectUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.struct.FactionPermission;
-import com.massivecraft.factions.struct.LogTimer;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
@@ -138,14 +137,11 @@ extends CustomEnchantment {
             Material m = bl.getType();
             if (m == Material.LADDER || m == Material.GLOWSTONE || m == Material.BEDROCK || m == Material.WATER || m == Material.STATIONARY_WATER || m == Material.LAVA || m == Material.STATIONARY_LAVA || m == Material.SIGN || m == Material.SIGN_POST || m == Material.AIR || m == Material.BEDROCK || m == Material.OBSIDIAN || m == Material.SPONGE || m == Material.IRON_DOOR || m == Material.IRON_DOOR_BLOCK || m == Material.WOODEN_DOOR || m == Material.WOOD_DOOR || m == Material.HOPPER || m == Material.ANVIL || m == Material.REDSTONE_COMPARATOR || m == Material.REDSTONE_COMPARATOR_OFF || m == Material.REDSTONE_COMPARATOR_ON || pickaxeMaterials.contains((Object)m) && !pickaxe || spadeMaterials.contains((Object)m) && !spade || (aboveType = (above = bl.getRelative(BlockFace.UP)).getType()) == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF || aboveType == Material.DIODE_BLOCK_ON) continue;
             FLocation floc = new FLocation(bl.getLocation());
-            Faction f = Board.getFactionAt((FLocation)floc);
+            Faction f = FactionUtils.getFactionAt((FLocation)floc);
             if (!f.isNone()) {
-                FactionPermission permission;
-                FactionWrapper wrapper = FactionWrappers.get((Faction)f);
                 if (fp == null) {
-                    fp = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
+                    fp = (FPlayer)FPlayers.getInstance().getByPlayer(pl);
                 }
-                if ((permission = FactionPermission.getFromBlock((MaterialData)new MaterialData(m))) != null && !f.hasPermission(fp, floc, permission, "interact") || (!wrapper.isLocationTracked(floc) ? !fp.getRelationToLocation().isMember() || !fp.getFactionId().equals(f.getId()) : !wrapper.doesPlayerHaveChunkAccess(floc, fp, true))) continue;
             }
             if (f.isWarZone()) continue;
             EntityType spawnerType = null;
@@ -203,13 +199,7 @@ extends CustomEnchantment {
                 bl.breakNaturally(pl.getItemInHand());
                 tookDurability = true;
             }
-            if (m != Material.MOB_SPAWNER || f == null || !f.isNormal() || spawnerType == null) continue;
-            try {
-                P.p.blockListener.handleSpawnerUpdate(f, pl, new ItemStack(m, 1, spawnerType.getTypeId()), LogTimer.TimerSubType.SPAWNER_BREAK);
-            }
-            catch (Exception e) {
-                e.printStackTrace();
-            }
+
         }
         if (autoSellMoney > 0.0) {
             CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, autoSellMoney);

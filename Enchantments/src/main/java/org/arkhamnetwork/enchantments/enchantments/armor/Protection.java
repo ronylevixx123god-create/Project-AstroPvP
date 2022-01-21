@@ -30,7 +30,7 @@ import com.google.common.collect.Multimap;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -78,12 +78,12 @@ extends CustomEnchantment {
                         if (!player.isValid() || player.isDead() || player.hasMetadata("spectator") || player.hasMetadata("in_duel")) {
                             return;
                         }
-                        FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+                        FPlayer fplayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
                         int amountToHeal = level > 4 ? 2 : 1;
                         for (Entity ent : player.getNearbyEntities((double)radius, (double)radius, (double)radius)) {
                             Player p;
                             FPlayer fp;
-                            if (!(ent instanceof Player) || (fp = (FPlayer)FPlayers.i.get((OfflinePlayer)(p = (Player)ent))) == null || fp.getFaction() == null || !fp.getFaction().getRelationTo((RelationParticipator)fplayer.getFaction()).isAtLeast(Relation.ALLY)) continue;
+                            if (!(ent instanceof Player) || (fp = (FPlayer)FPlayers.getInstance().getByPlayer((p = (Player)ent))) == null || fp.getFaction() == null || !fp.getFaction().getRelationTo((RelationParticipator)fplayer.getFaction()).isAtLeast(Relation.ALLY)) continue;
                             if (p.getHealth() + (double)amountToHeal < p.getMaxHealth() && p.getHealth() > 0.0 && !p.isDead()) {
                                 p.setHealth(p.getHealth() + (double)amountToHeal);
                                 try {

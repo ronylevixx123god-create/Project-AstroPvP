@@ -1,11 +1,8 @@
 package net.astropvp.core.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.ifamasssxd.cosmiccoinflip.utils.ItemBuilder;
-import net.astropvp.core.commands.ArmorColorCommand;
+import net.astropvp.core.cosmiccoinflip.utils.ItemBuilder;
 import net.astropvp.core.utils.GUIBuilder;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;

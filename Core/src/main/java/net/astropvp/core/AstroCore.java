@@ -10,15 +10,16 @@ import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.FieldAccessException;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.titles.cmds.CommandTitle;
-import com.cosmicpvp.titles.cmds.CommandTitleSet;
-import com.cosmicpvp.titles.listeners.ChatListener;
-import com.cosmicpvp.titles.listeners.PermissionListener;
-import com.cosmicpvp.titles.listeners.PlayerJoinQuitListener;
-import com.cosmicpvp.titles.listeners.TitleInventoryListener;
-import com.cosmicpvp.titles.sql.SQLConnection;
-import com.cosmicpvp.titles.sql.SQLHandler;
-import com.cosmicpvp.titles.sql.TitleDatabaseManager;
+import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
+import net.astropvp.core.titles.cmds.CommandTitle;
+import net.astropvp.core.titles.cmds.CommandTitleSet;
+import net.astropvp.core.titles.listeners.ChatListener;
+import net.astropvp.core.titles.listeners.PermissionListener;
+import net.astropvp.core.titles.listeners.PlayerJoinQuitListener;
+import net.astropvp.core.titles.listeners.TitleInventoryListener;
+import net.astropvp.core.titles.sql.SQLConnection;
+import net.astropvp.core.titles.sql.SQLHandler;
+import net.astropvp.core.titles.sql.TitleDatabaseManager;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.I18n;
 import com.earth2me.essentials.api.NoLoanPermittedException;
@@ -29,42 +30,31 @@ import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
-import me.astropvp.autogiveall.tasks.AutoGiveAllTask;
-import me.ifamasssxd.betterpay.PayListener;
-import me.ifamasssxd.betterpay.PayToggle;
-import me.ifamasssxd.betterpay.commands.CommandTogglePay;
-import me.ifamasssxd.corechunkfinder.CoreChunkFinderCommand;
-import me.ifamasssxd.cosmiccoinflip.commands.CommandCoinFlip;
-import me.ifamasssxd.cosmiccoinflip.listeners.InventoryListener;
-import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
-import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipMatch;
-import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSetHeroicBossSpawn;
-import me.ifamasssxd.cosmicheroicenvoys.commands.CommandSpawnHeroicBoss;
-import me.ifamasssxd.cosmicheroicenvoys.listeners.EnvoyListener;
-import me.ifamasssxd.cosmicheroicenvoys.managers.EnvoyManager;
-import me.ifamasssxd.cosmicjackpot.commands.CommandJackpot;
-import me.ifamasssxd.cosmicjackpot.listeners.JackpotListener;
-import me.ifamasssxd.cosmicjackpot.struct.JackpotManager;
+import net.astropvp.core.autogiveall.tasks.AutoGiveAllTask;
+import net.astropvp.core.betterpay.PayListener;
+import net.astropvp.core.betterpay.PayToggle;
+import net.astropvp.core.betterpay.commands.CommandTogglePay;
+import net.astropvp.core.cosmiccoinflip.commands.CommandCoinFlip;
+import net.astropvp.core.cosmiccoinflip.listeners.InventoryListener;
+import net.astropvp.core.cosmiccoinflip.struct.CoinFlipManager;
+import net.astropvp.core.cosmiccoinflip.struct.CoinFlipMatch;
+
+import net.astropvp.core.cosmicjackpot.commands.CommandJackpot;
+import net.astropvp.core.cosmicjackpot.listeners.JackpotListener;
+import net.astropvp.core.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmictoggles.commands.CommandScoreboard;
-import me.ifamasssxd.cosmictoggles.commands.CommandToggles;
-import me.ifamasssxd.cosmictoggles.manager.TogglesManager;
-import me.ifamasssxd.help.commands.CommandHelp;
-import me.ifamasssxd.help.commands.CommandHelpEnchants;
-import me.ifamasssxd.help.commands.CommandSpawnMenu;
-import me.ifamasssxd.help.commands.CommandWiki;
-import me.ifamasssxd.help.listeners.CommandListener;
-import me.ifamasssxd.itemfilter.FilterManager;
-import me.ifamasssxd.itemfilter.commands.CommandFilter;
-import me.ifamasssxd.itemfilter.listeners.ItemFilterListener;
-import me.ifamasssxd.killtracker.commands.CommandGiveSoulGem;
-import me.ifamasssxd.killtracker.commands.CommandGiveTracker;
-import me.ifamasssxd.killtracker.commands.CommandWithdrawSouls;
-import me.ifamasssxd.killtracker.listeners.ItemListener;
-import me.ifamasssxd.killtracker.listeners.PlayerListener;
-import me.ifamasssxd.killtracker.listeners.SoulGemListener;
-import me.astropvp.autobroadcast.tasks.AutoBroadcastTask;
-import me.astropvp.autogiveall.struct.GiveAllManager;
+import net.astropvp.core.cosmictoggles.commands.CommandToggles;
+import net.astropvp.core.cosmictoggles.manager.TogglesManager;
+import net.astropvp.core.itemfilter.FilterManager;
+import net.astropvp.core.itemfilter.commands.CommandFilter;
+import net.astropvp.core.itemfilter.listeners.ItemFilterListener;
+import net.astropvp.core.killtracker.commands.CommandGiveSoulGem;
+import net.astropvp.core.killtracker.commands.CommandWithdrawSouls;
+import net.astropvp.core.killtracker.listeners.SoulGemListener;
+import net.astropvp.core.autobroadcast.tasks.AutoBroadcastTask;
+import net.astropvp.core.autogiveall.struct.GiveAllManager;
+import net.astropvp.core.autogiveall.commands.CommandForceGiveAll;
+import net.astropvp.core.autogiveall.commands.CommandNextGiveAll;
 import net.astropvp.core.commands.*;
 import net.astropvp.core.conaxgames.staff.*;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffModeCommand;
@@ -102,240 +92,76 @@ import java.util.logging.Level;
 @Getter
 @Setter
 public class AstroCore extends JavaPlugin {
-
     private static AstroCore instance;
     private CacheManager cacheManager;
-
     private static Economy econ = null;
     private static Field bukkitCommand;
     private final String consolePrefix = "[AstroCore]";
+
     public static AstroCore getInstance() {
         return instance;
     }
 
     private StaffModeManager staffModeManager;
     private StaffModulesRegister staffModulesRegister;
-
-    // Sponges
-    private CommandHelp commandHelp;
     public static String LORE_SUFFIX = ":  ";
     private File spongeDirectory;
-
     private HolyWhiteScrollListener holyWhiteScrollListener;
     private net.astropvp.core.items.HolyWhitescrollItem holyWhitescrollItem;
-    // Jackpot
     private JackpotManager jackpotManager;
     public static Economy economy;
-    // BetterPay
     Essentials ess;
     private PayToggle payToggles;
     ProtocolManager protocolManager;
-
     public static Map<UUID, Player> grindingMessages;
-
     private HashMap<Player, ChatColor> cachedColors;
-
     public HashMap<Player, ChatColor> getCachedColors() {
         return this.cachedColors;
     }
-
     public void addCachedColor(Player player, ChatColor color) {
         cachedColors.put(player, color);
     }
-
-
-    // ItemFilter
-    @Getter private FilterManager filterManager;
-    @Getter private ItemFilterListener itemListener;
-    // PlayerTitles
-    @Getter public TitleDatabaseManager dataManager;
-    @Getter public static boolean hcf;
-// CoreChunkFinder
-    @Getter private boolean tntDebug = false;
-
-    private HashMap<Faction, Integer> claimsOnInfernal;
-
-    public int getClaimsOnInfernal(Faction faction) {
-        if(!this.claimsOnInfernal.containsKey(faction)) {
-            if(this.getConfig().contains("infernal-claims." + faction.getTag())) {
-                this.claimsOnInfernal.put(faction, getConfig().getInt("infernal-claims." + faction));
-            }
-        }
-        return this.claimsOnInfernal.get(faction);
-    }
-
-    public void setClaimsOnInfernal(Faction faction, int i) {
-        this.claimsOnInfernal.put(faction, i);
-    }
-
-    private HashMap<Faction, Integer> claimsOnFrozen;
-
-    public int getClaimsOnFrozen(Faction faction) {
-        if(!this.claimsOnFrozen.containsKey(faction)) {
-            if(this.getConfig().contains("frozen-claims." + faction.getTag())) {
-                this.claimsOnFrozen.put(faction, getConfig().getInt("frozen-claims." + faction));
-            }
-        }
-        return this.claimsOnFrozen.get(faction);
-    }
-
-    public void setClaimsOnFrozen(Faction faction, int i) {
-        this.claimsOnFrozen.put(faction, i);
-    }
-
-    private HashMap<Faction, Integer> claimsOnDesert;
-
-    public int getClaimsOnDesert(Faction faction) {
-        if(!this.claimsOnDesert.containsKey(faction)) {
-            if(this.getConfig().contains("desert-claims." + faction.getTag())) {
-                this.claimsOnDesert.put(faction, getConfig().getInt("desert-claims." + faction));
-            }
-        }
-        return this.claimsOnDesert.get(faction);
-    }
-
-    public void setClaimsOnDesert(Faction faction, int i) {
-        this.claimsOnDesert.put(faction, i);
-    }
-
+    private FilterManager filterManager;
+    private ItemFilterListener itemListener;
+    public TitleDatabaseManager dataManager;
+    public static boolean hcf;
     private SoulItemListener soulItemListener;
-
-    @Getter private EnchantmentCoderManager enchantmentCoderManager;
-
-    // Heroic Envoys
-    @Getter public EnvoyManager envoyManager;
-    // Coin Flips
-    @Getter private CoinFlipManager coinFlipManager;
-    // Cosmic Toggles
-    @Getter private TogglesManager toggleManager = new TogglesManager();
-
-    @Getter private GiveAllManager giveAllManager;
-
-    @Getter @Setter public static TitleManagerAPI titleManagerAPI;
-
+    private EnchantmentCoderManager enchantmentCoderManager;
+    private CoinFlipManager coinFlipManager;
+    private TogglesManager toggleManager = new TogglesManager();
+    private GiveAllManager giveAllManager;
+    @Getter
+    @Setter
+    public static TitleManagerAPI titleManagerAPI;
     private Freeze freezeCommand;
-
-    public net.astropvp.core.items.HolyWhitescrollItem getHolyWhitescrollItem() {
-        return this.holyWhitescrollItem;
-    }
-
-    public static ItemStack getSoulPearl() {
-        return ItemUtils.addGlow(ItemUtils.buildItem(Material.ENDER_PEARL, (short)0, (Object)ChatColor.DARK_PURPLE + "" + (Object)ChatColor.BOLD + "Soul Pearl", (Object)ChatColor.LIGHT_PURPLE + "A rare /dungeon trinket that", (Object)ChatColor.LIGHT_PURPLE + "functions like a normal enderpearl,", (Object)ChatColor.LIGHT_PURPLE + "but costs souls instead of being,", (Object)ChatColor.LIGHT_PURPLE + "consumed on use.", "", (Object)ChatColor.DARK_PURPLE + "" + (Object)ChatColor.UNDERLINE + "Soul Cost:" + (Object)ChatColor.LIGHT_PURPLE + " 5/pearl"));
-    }
-
-    public static ItemStack getHolyWhiteScroll() {
-        return AstroCore.getInstance().getHolyWhitescrollItem().createItem(null, new Object[0]);
-    }
-
-    @Deprecated
-    public static ItemStack getOldHolyWhiteScroll() {
-        return ItemUtils.addGlow(ItemUtils.buildItem(Material.PAPER, (short)0, (Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "Holy White Scroll", (Object)ChatColor.YELLOW + "A legendary /dungeon reward that", (Object)ChatColor.YELLOW + "can be applied to armor/weapons,", (Object)ChatColor.YELLOW + "gives a 100% chance of not losing", (Object)ChatColor.YELLOW + "the blessed item on death.", "", (Object)ChatColor.GOLD + "" + (Object)ChatColor.UNDERLINE + "REQ:" + (Object)ChatColor.YELLOW + " White Scroll"));
-    }
-
 
     @SneakyThrows
     public void onEnable() {
         instance = this;
         getConfig().options().copyDefaults(true);
-
         saveDefaultConfig();
         setupEconomy();
         events();
-        new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
-
         cachedColors = new HashMap<>();
-
         this.enchantmentCoderManager = new EnchantmentCoderManager("plugins/AstroCore/enchantmentcoderdata.json");
         this.enchantmentCoderManager.loadData();
-
         this.staffModeManager = new StaffModeManager();
         this.staffModulesRegister = new StaffModulesRegister(this);
         this.staffModulesRegister.initialize();
-
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new NebulaRank());
-
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new TrapBlockerItem());
-
-
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
-
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
-
         this.cacheManager = new CacheManager();
-
-
-
-        Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), ()-> {
-            for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient()) {
-                    p.sendMessage("");
-                    p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official Suported Astro Version of the &nCosmicClient&c."));
-                    p.sendMessage(CC.translate("&7If you wish to download it, follow the steps in the &f#cc-features&7 channel in our &f/discord&7."));
-                    p.sendMessage("");
-                    p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
-                }
-            }
-        },50L, 1800L);
-
-
-
-
-        this.grindingMessages = new HashMap<>();
+        grindingMessages = new HashMap<>();
         this.claimsOnInfernal = new HashMap<>();
         this.claimsOnDesert = new HashMap<>();
         this.claimsOnFrozen = new HashMap<>();
-
-        this.getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
-        this.getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
-        this.getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
-        this.getServer().getPluginManager().registerEvents(new DamageFixes(), this);
-
-
-
-        this.getServer().getPluginManager().registerEvents(new ChatListener(), this);
-
-        this.getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
-
-        this.getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
-        this.getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
-        getCommand("randomtp").setExecutor(new RandomTpCommand());
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
-
-        Bukkit.getScheduler().runTaskLater(this, ()->
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload vault_gui"), 100L);
-        Bukkit.getScheduler().runTaskLater(this, ()->
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload death_messages"), 100L);
-        Bukkit.getScheduler().runTaskLater(this, ()->
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockcommand remove ver"), 100L);
-
-        if (!Bukkit.getPluginManager().isPluginEnabled("TitleManager")) {
-            Bukkit.getConsoleSender().sendMessage(ChatColor.RED + "[Astro] " + ChatColor.RED + "TitleManager is not loaded.");
-        } else {
-            titleManagerAPI = (TitleManagerAPI) Bukkit.getServer().getPluginManager().getPlugin("TitleManager");
-        }
-
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, ()-> {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "citizens reload");
-        },150L,1200L);
-
-
-        this.commandHelp = new CommandHelp();
-        if (commandHelp.isEnchantsEnabled()) {
-            this.getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
-        }
+        this.filterManager = new FilterManager();
+        this.filterManager.loadFilters();
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunload lava_sponge");
         WorldGuardPlugin.inst().getConfig().set("simulation.sponge.enable", false);
         for (World w : Bukkit.getWorlds()) {
             WorldGuardPlugin.inst().getGlobalStateManager().get(w).simulateSponge = false;
         }
-
-
-        this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
+        this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         this.payToggles = new PayToggle("toggles.yml");
 
         this.jackpotManager = new JackpotManager();
@@ -344,61 +170,10 @@ public class AstroCore extends JavaPlugin {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        this.getServer().getPluginManager().registerEvents(new JackpotListener(), this);
-        this.getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
-        this.getServer().getPluginManager().registerEvents(new DupePatch(), this);
-        this.getServer().getPluginManager().registerEvents(new CustomPearlListener(), this);
-
-
-        //This used to be sync!
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            try {
-                this.jackpotManager.onJackpotTick();
-            } catch (UserDoesNotExistException | NoLoanPermittedException e) {
-                e.printStackTrace();
-            }
-        }, 20L, 20L);
-
-        this.filterManager = new FilterManager();
-        this.filterManager.loadFilters();
-        this.itemListener = new ItemFilterListener();
-        this.getServer().getPluginManager().registerEvents(this.itemListener, this);
-        this.getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
-
 
         this.setupSQL();
         this.dataManager = new TitleDatabaseManager();
         this.dataManager.cacheAllEquippedTitles();
-        hcf = new File("plugins/HCFactions.jar").exists();
-
-        //this.envoyManager = new EnvoyManager();
-        //this.envoyManager.startTimer();
-        this.getCommand("spawnheroicboss").setExecutor(new CommandSpawnHeroicBoss());
-        this.getCommand("setheroicbossspawn").setExecutor(new CommandSetHeroicBossSpawn());
-        getCommand("givepearl").setExecutor(new GivePearlCommand());
-        this.getCommand("armorcolor").setExecutor(new ArmorColorCommand());
-        //this.getCommand("trailer").setExecutor(new TrailerCommand());
-
-        this.getCommand("corechunkfinder").setExecutor(new CoreChunkFinderCommand());
-        this.getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
-        this.getCommand("givebucket").setExecutor(new CommandGiveMagicBucket());
-
-        this.getServer().getPluginManager().registerEvents(new KillTitleSound(), this);
-
-        this.getCommand("givesoulpearl").setExecutor(new SoulPearlCommand());
-
-        this.getCommand("coinflip").setExecutor(new CommandCoinFlip());
-
-        this.getCommand("list").setExecutor(new ListCommand());
-        this.getCommand("grinding").setExecutor((CommandExecutor)new ToggleGrindingMessages());
-        this.getCommand("jackpot").setExecutor(new CommandJackpot());
-        getCommand("chatcolor").setExecutor(new ChatColorCommand());
-        this.getServer().getPluginManager().registerEvents(new InventoryListener(), this);
-        this.getServer().getPluginManager().registerEvents(new WarpCommand(), this);
-        this.getServer().getPluginManager().registerEvents(new me.ifamasssxd.cosmiccoinflip.listeners.PlayerListener(), this);
-
-        this.getServer().getPluginManager().registerEvents(new WorldBorderPearlFix(), this);
-
         this.coinFlipManager = new CoinFlipManager();
         try {
             this.coinFlipManager.loadCoinFlips();
@@ -415,111 +190,20 @@ public class AstroCore extends JavaPlugin {
                 e.printStackTrace();
             }
         }
-
-        //Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
-
         this.toggleManager.loadToggles();
-
-        this.getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
-        this.getServer().getPluginManager().registerEvents(new HolyWhiteScrollListener(), this);
-        this.getServer().getPluginManager().registerEvents(new ThrowableCreeperEggs(), this);
         try {
             Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
-            this.getServer().getPluginManager().registerEvents((Listener)new HolyWhiteScrollCombatLoggerListener(), (Plugin)this);
+            getServer().getPluginManager().registerEvents((Listener) new HolyWhiteScrollCombatLoggerListener(), (Plugin) this);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
 
-        this.holyWhitescrollItem = new HolyWhitescrollItem();
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.holyWhitescrollItem);
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantmentCoderItem());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicEnchantmentCoderItem());
 
-
-
-        this.getServer().getPluginManager().registerEvents(new Freeze(), this);
-        this.getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
-        this.getServer().getPluginManager().registerEvents(new BlockCommand(), this);
-
-
-
-        this.getCommand("togglesb").setExecutor(new CommandScoreboard());
-        this.getCommand("toggles").setExecutor(new CommandToggles());
-        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        this.getServer().getPluginManager().registerEvents(new EnchantmentCoderInventoryListener(), this);
-        this.getServer().getPluginManager().registerEvents(new EnchantmentCoderItemListener(), this);
-
-
-        this.getCommand("filter").setExecutor(new CommandFilter());
-        this.getCommand("wiki").setExecutor(new CommandWiki());
-        this.getCommand("spawnmenu").setExecutor(new CommandSpawnMenu());
-        this.getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
-        this.getCommand("givetracker").setExecutor(new CommandGiveTracker());
-        this.getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
-        this.getCommand("title").setExecutor(new CommandTitle());
-        this.getCommand("titleset").setExecutor(new CommandTitleSet());
-        this.getCommand("forcegiveall").setExecutor(new me.astropvp.autogiveall.commands.CommandForceGiveAll());
-        this.getCommand("nextgiveall").setExecutor(new me.astropvp.autogiveall.commands.CommandNextGiveAll());
-
-        this.getCommand("giveenchantmentcrystal").setExecutor(new GiveEnchantmentCrystalCommand());
-
-        this.getCommand("bless").setExecutor(new Bless());
-        this.getCommand("dupe").setExecutor(new CommandDupe());
-        this.getCommand("heal").setExecutor(new HealCommand());
-        this.getCommand("discord").setExecutor(new DiscordCommand());
-        this.getCommand("pots").setExecutor(new PotionsCommand(this));
-
-        this.getCommand("invsee").setExecutor(new Invsee());
-        this.getCommand("giveall").setExecutor(new GiveallCommand());
-        this.getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
-        this.getCommand("trash").setExecutor(new TrashCommand());
-        this.getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
-        this.getCommand("togglepay").setExecutor(new CommandTogglePay());
-
-        getCommand("phoenix").setExecutor(new PhoenixCommand());
-        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new StaffModeCommand()).forEach(this:: registerCommand);
-
-        this.getServer().getPluginManager().registerEvents(new StaffListeners(), this);
-        this.getServer().getPluginManager().registerEvents(new CommandListener(), this);
-        this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        this.getServer().getPluginManager().registerEvents(new ItemListener(), this);
-        this.getServer().getPluginManager().registerEvents(new SoulGemListener(), this);
-
-        this.getServer().getPluginManager().registerEvents(new ApplyEnchantCrystalListener(), this);
-
-        Bukkit.getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new PlayerJoinQuitListener(this.dataManager), this);
-        Bukkit.getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
-
-        this.getServer().getPluginManager().registerEvents(new EnvoyListener(), this);
-
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)this, (Runnable)new AutoGiveAllTask(), 20L, 20L);
-
-        freezeCommand = new Freeze();
-
-
-        this.protocolManager = ProtocolLibrary.getProtocolManager();
-        this.protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, new PacketType[]{PacketType.Play.Client.TAB_COMPLETE}){
-
-            public void onPacketReceiving(PacketEvent event) {
-                if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
-                    try {
-                        PacketContainer packet = event.getPacket();
-                        String message = ((String)packet.getSpecificModifier(String.class).read(0)).toLowerCase();
-                        if (message.startsWith("/?") && !message.contains("  ") || message.startsWith("/") && !message.contains(" ")
-                        || message.startsWith("/help") && !message.contains("  ") || message.startsWith("/ver") && !message.contains("  ")
-                        || message.startsWith("/bukkit") && !message.contains("  ")) {
-                            event.setCancelled(true);
-                        }
-                    }
-                    catch (FieldAccessException e) {
-                        AstroCore.this.getLogger().log(Level.SEVERE, "bruh", e);
-                    }
-                }
-            }
-        });
+        registerCommands();
+        registerListeners();
+        registerCustomItems();
+        registerTasks();
+        protocolFix();
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");
@@ -542,14 +226,6 @@ public class AstroCore extends JavaPlugin {
         }
         this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
-
-        /*Boss bos;
-        if (this.envoyManager.getBossUUID() != null && this.envoyManager.getBossLocation() != null && (bos = Boss.bosses.get(this.envoyManager.getBossUUID())) != null) {
-            bos.onDeath(null);
-            bos.getEntity().remove();
-            Boss.bosses.remove(bos.getEntity().getUniqueId());
-            System.out.println("Removing boss!");
-        }*/
 
 
         for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
@@ -582,25 +258,22 @@ public class AstroCore extends JavaPlugin {
         this.enchantmentCoderManager.clearData();
 
         Set infernalClaims = this.claimsOnInfernal.entrySet();
-        Iterator infernalIterator = infernalClaims.iterator();
-        while(infernalIterator.hasNext()) {
-            Map.Entry me = (Map.Entry) infernalIterator.next();
+        for (Object infernalClaim : infernalClaims) {
+            Map.Entry me = (Map.Entry) infernalClaim;
             Faction faction = (Faction) me.getKey();
             getConfig().set("infernal-claims." + faction.getTag(), me.getValue());
         }
 
         Set frozenClaims = this.claimsOnFrozen.entrySet();
-        Iterator frozenIterator = frozenClaims.iterator();
-        while(frozenIterator.hasNext()) {
-            Map.Entry me = (Map.Entry) frozenIterator.next();
+        for (Object frozenClaim : frozenClaims) {
+            Map.Entry me = (Map.Entry) frozenClaim;
             Faction faction = (Faction) me.getKey();
             getConfig().set("frozen-claims." + faction.getTag(), me.getValue());
         }
 
         Set desertClaims = this.claimsOnDesert.entrySet();
-        Iterator desertIterator = desertClaims.iterator();
-        while(desertIterator.hasNext()) {
-            Map.Entry me = (Map.Entry) desertIterator.next();
+        for (Object desertClaim : desertClaims) {
+            Map.Entry me = (Map.Entry) desertClaim;
             Faction faction = (Faction) me.getKey();
             getConfig().set("desert-claims." + faction.getTag(), me.getValue());
         }
@@ -616,18 +289,7 @@ public class AstroCore extends JavaPlugin {
 
     public void events() {
         PluginManager pm = getServer().getPluginManager();
-        pm.registerEvents(new DungeonInventoryEvent(), this);
-        pm.registerEvents(new AutoOP(), this);
-        pm.registerEvents(new ServerFixes(), this);
-        pm.registerEvents(new MOTD(), this);
-        pm.registerEvents(new HeroicArmorFix(), this);
-        pm.registerEvents(new ChunkBusterListener(), this);
-        pm.registerEvents(new OmniGemFix(), this);
-        pm.registerEvents(new CommandAliases(), this);
-        pm.registerEvents(new FirstJoin(), this);
-        pm.registerEvents(new CombatLogBlock(), this);
-        pm.registerEvents(new LastManStandingListener(), this);
-        pm.registerEvents(new PayListener(), this);
+
     }
 
     public void showError(Player sender, Throwable exception, String commandLabel) {
@@ -649,59 +311,18 @@ public class AstroCore extends JavaPlugin {
     }
 
 
-    static {
-        hcf = false;
-    }
-
-    public void setTntDebug(boolean tntDebug) {
-        this.tntDebug = tntDebug;
-    }
-
-    private boolean setupEconomy() {
+    private void setupEconomy() {
         if (getServer().getPluginManager().getPlugin("Vault") == null)
-            return false;
+            return;
         RegisteredServiceProvider<Economy> rsp = getServer().getServicesManager().getRegistration(Economy.class);
         if (rsp == null)
-            return false;
+            return;
         econ = rsp.getProvider();
-        return (econ != null);
     }
 
-    public CommandHelp getHelpCommand() {
-        return this.commandHelp;
-    }
-
-    private void buildDB() {
-        this.spongeDirectory = new File("plugins/CosmicSponges/spongeChunks");
-        if (!this.spongeDirectory.exists()) {
-            this.spongeDirectory.mkdirs();
-        }
-        for (World w : Bukkit.getWorlds()) {
-            File subDir = new File("plugins/CosmicSponges/spongeChunks/" + w.getName());
-            subDir.mkdir();
-        }
-    }
 
     public File getSpongeDirectory() {
         return this.spongeDirectory;
-    }
-
-    private void registerCommand(Command cmd) {
-        this.registerCommand(cmd, this.getName());
-    }
-
-    public void registerCommand(Command cmd, String fallback) {
-        try {
-            if (bukkitCommand == null) {
-                bukkitCommand = Bukkit.getServer().getClass().getDeclaredField("commandMap");
-                bukkitCommand.setAccessible(true);
-            }
-            CommandMap commandMap = (CommandMap) bukkitCommand.get(Bukkit.getServer());
-            commandMap.register(cmd.getName(), fallback, cmd);
-        } catch(Exception e){
-            e.printStackTrace();
-
-        }
     }
 
     public TogglesManager getToggleManager() {
@@ -724,4 +345,243 @@ public class AstroCore extends JavaPlugin {
         return this.payToggles;
     }
 
+    public void registerCommands() {
+        getCommand("filter").setExecutor(new CommandFilter());
+        getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
+        getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
+        getCommand("title").setExecutor(new CommandTitle());
+        getCommand("titleset").setExecutor(new CommandTitleSet());
+        getCommand("forcegiveall").setExecutor(new CommandForceGiveAll());
+        getCommand("nextgiveall").setExecutor(new CommandNextGiveAll());
+        getCommand("giveenchantmentcrystal").setExecutor(new GiveEnchantmentCrystalCommand());
+        getCommand("bless").setExecutor(new Bless());
+        getCommand("dupe").setExecutor(new CommandDupe());
+        getCommand("heal").setExecutor(new HealCommand());
+        getCommand("discord").setExecutor(new DiscordCommand());
+        getCommand("pots").setExecutor(new PotionsCommand(this));
+        getCommand("invsee").setExecutor(new Invsee());
+        getCommand("giveall").setExecutor(new GiveallCommand());
+        getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
+        getCommand("trash").setExecutor(new TrashCommand());
+        getCommand("lastmanstanding").setExecutor(new LastManStandingCommand());
+        getCommand("togglepay").setExecutor(new CommandTogglePay());
+        getCommand("toggles").setExecutor(new CommandToggles());
+        getCommand("armorcolor").setExecutor(new ArmorColorCommand());
+        getCommand("spawnershop").setExecutor(new SpawnerShopCommand());
+        getCommand("givebucket").setExecutor(new CommandGiveMagicBucket());
+        getServer().getPluginManager().registerEvents(new KillTitleSound(), this);
+        getCommand("givesoulpearl").setExecutor(new SoulPearlCommand());
+        getCommand("coinflip").setExecutor(new CommandCoinFlip());
+        getCommand("list").setExecutor(new ListCommand());
+        getCommand("grinding").setExecutor(new ToggleGrindingMessages());
+        getCommand("jackpot").setExecutor(new CommandJackpot());
+        getCommand("chatcolor").setExecutor(new ChatColorCommand());
+        getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
+        getCommand("phoenix").setExecutor(new PhoenixCommand());
+        getCommand("randomtp").setExecutor(new RandomTpCommand());
+        freezeCommand = new Freeze();
+
+        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new StaffModeCommand()).forEach(this::registerCommand);
+    }
+
+    public void registerTasks() {
+        new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            try {
+                this.jackpotManager.onJackpotTick();
+            } catch (UserDoesNotExistException | NoLoanPermittedException e) {
+                e.printStackTrace();
+            }
+        }, 20L, 20L);
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), () -> {
+            for (Player p : Bukkit.getOnlinePlayers()) {
+                if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient()) {
+                    p.sendMessage("");
+                    p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official Suported Astro Version of the &nCosmicClient&c."));
+                    p.sendMessage(CC.translate("&7If you wish to download it, follow the steps in the &f#cc-features&7 channel in our &f/discord&7."));
+                    p.sendMessage("");
+                    p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
+                }
+            }
+        }, 50L, 1800L);
+
+        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "citizens reload");
+        }, 150L, 1200L);
+
+        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
+
+        Bukkit.getScheduler().runTaskLater(this, () ->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload vault_gui"), 100L);
+        Bukkit.getScheduler().runTaskLater(this, () ->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload death_messages"), 100L);
+        Bukkit.getScheduler().runTaskLater(this, () ->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockcommand remove ver"), 100L);
+    }
+
+    public void registerListeners() {
+        getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
+        getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
+        getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
+        getServer().getPluginManager().registerEvents(new DamageFixes(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
+        getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
+        getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
+        getServer().getPluginManager().registerEvents(new StaffListeners(), this);
+        getServer().getPluginManager().registerEvents(new SoulGemListener(), this);
+        getServer().getPluginManager().registerEvents(new ApplyEnchantCrystalListener(), this);
+        getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
+        getServer().getPluginManager().registerEvents(new PlayerJoinQuitListener(this.dataManager), this);
+        getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
+        getServer().getPluginManager().registerEvents(new DungeonInventoryEvent(), this);
+        getServer().getPluginManager().registerEvents(new AutoOP(), this);
+        getServer().getPluginManager().registerEvents(new ServerFixes(), this);
+        getServer().getPluginManager().registerEvents(new MOTD(), this);
+        getServer().getPluginManager().registerEvents(new HeroicArmorFix(), this);
+        getServer().getPluginManager().registerEvents(new ChunkBusterListener(), this);
+        getServer().getPluginManager().registerEvents(new OmniGemFix(), this);
+        getServer().getPluginManager().registerEvents(new CommandAliases(), this);
+        getServer().getPluginManager().registerEvents(new FirstJoin(), this);
+        getServer().getPluginManager().registerEvents(new CombatLogBlock(), this);
+        getServer().getPluginManager().registerEvents(new LastManStandingListener(), this);
+        getServer().getPluginManager().registerEvents(new PayListener(), this);
+        getServer().getPluginManager().registerEvents(new Freeze(), this);
+        getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockCommand(), this);
+        getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
+        getServer().getPluginManager().registerEvents(new HolyWhiteScrollListener(), this);
+        getServer().getPluginManager().registerEvents(new ThrowableCreeperEggs(), this);
+        getServer().getPluginManager().registerEvents(new EnchantmentCoderInventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new EnchantmentCoderItemListener(), this);
+        getServer().getPluginManager().registerEvents(new InventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new WarpCommand(), this);
+        getServer().getPluginManager().registerEvents(new PlayerListener(), this);
+        getServer().getPluginManager().registerEvents(new WorldBorderPearlFix(), this);
+        getServer().getPluginManager().registerEvents(new JackpotListener(), this);
+        getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
+        getServer().getPluginManager().registerEvents(new DupePatch(), this);
+        getServer().getPluginManager().registerEvents( new ItemFilterListener(), this);
+        getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
+    }
+
+    public void registerCustomItems() {
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicUpgrade());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new NebulaRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new TrapBlockerItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWhitescrollItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantmentCoderItem());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicEnchantmentCoderItem());
+    }
+
+    public void protocolFix() {
+        this.protocolManager = ProtocolLibrary.getProtocolManager();
+        this.protocolManager.addPacketListener(new PacketAdapter(this, ListenerPriority.NORMAL, PacketType.Play.Client.TAB_COMPLETE) {
+
+            public void onPacketReceiving(PacketEvent event) {
+                if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
+                    try {
+                        PacketContainer packet = event.getPacket();
+                        String message = ((String) packet.getSpecificModifier(String.class).read(0)).toLowerCase();
+                        if (message.startsWith("/?") && !message.contains("  ") || message.startsWith("/") && !message.contains(" ")
+                                || message.startsWith("/help") && !message.contains("  ") || message.startsWith("/ver") && !message.contains("  ")
+                                || message.startsWith("/bukkit") && !message.contains("  ")) {
+                            event.setCancelled(true);
+                        }
+                    } catch (FieldAccessException e) {
+                        AstroCore.this.getLogger().log(Level.SEVERE, "bruh", e);
+                    }
+                }
+            }
+        });
+    }
+
+    private void registerCommand(Command cmd) {
+        this.registerCommand(cmd, this.getName());
+    }
+
+    public void registerCommand(Command cmd, String fallback) {
+        try {
+            if (bukkitCommand == null) {
+                bukkitCommand = Bukkit.getServer().getClass().getDeclaredField("commandMap");
+                bukkitCommand.setAccessible(true);
+            }
+            CommandMap commandMap = (CommandMap) bukkitCommand.get(Bukkit.getServer());
+            commandMap.register(cmd.getName(), fallback, cmd);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+        }
+    }
+
+    private HashMap<Faction, Integer> claimsOnInfernal;
+
+    public int getClaimsOnInfernal(Faction faction) {
+        if (!this.claimsOnInfernal.containsKey(faction)) {
+            if (this.getConfig().contains("infernal-claims." + faction.getTag())) {
+                this.claimsOnInfernal.put(faction, getConfig().getInt("infernal-claims." + faction));
+            }
+        }
+        return this.claimsOnInfernal.get(faction);
+    }
+
+    public void setClaimsOnInfernal(Faction faction, int i) {
+        this.claimsOnInfernal.put(faction, i);
+    }
+
+    private HashMap<Faction, Integer> claimsOnFrozen;
+
+    public int getClaimsOnFrozen(Faction faction) {
+        if (!this.claimsOnFrozen.containsKey(faction)) {
+            if (this.getConfig().contains("frozen-claims." + faction.getTag())) {
+                this.claimsOnFrozen.put(faction, getConfig().getInt("frozen-claims." + faction));
+            }
+        }
+        return this.claimsOnFrozen.get(faction);
+    }
+
+    public void setClaimsOnFrozen(Faction faction, int i) {
+        this.claimsOnFrozen.put(faction, i);
+    }
+
+    private HashMap<Faction, Integer> claimsOnDesert;
+
+    public int getClaimsOnDesert(Faction faction) {
+        if (!this.claimsOnDesert.containsKey(faction)) {
+            if (this.getConfig().contains("desert-claims." + faction.getTag())) {
+                this.claimsOnDesert.put(faction, getConfig().getInt("desert-claims." + faction));
+            }
+        }
+        return this.claimsOnDesert.get(faction);
+    }
+
+    public void setClaimsOnDesert(Faction faction, int i) {
+        this.claimsOnDesert.put(faction, i);
+    }
+
+    public HolyWhitescrollItem getHolyWhitescrollItem() {
+        return this.holyWhitescrollItem;
+    }
+
+    public static ItemStack getSoulPearl() {
+        return ItemUtils.addGlow(ItemUtils.buildItem(Material.ENDER_PEARL, (short) 0, (Object) ChatColor.DARK_PURPLE + "" + (Object) ChatColor.BOLD + "Soul Pearl", (Object) ChatColor.LIGHT_PURPLE + "A rare /dungeon trinket that", (Object) ChatColor.LIGHT_PURPLE + "functions like a normal enderpearl,", (Object) ChatColor.LIGHT_PURPLE + "but costs souls instead of being,", (Object) ChatColor.LIGHT_PURPLE + "consumed on use.", "", (Object) ChatColor.DARK_PURPLE + "" + (Object) ChatColor.UNDERLINE + "Soul Cost:" + (Object) ChatColor.LIGHT_PURPLE + " 5/pearl"));
+    }
+
+    public static ItemStack getHolyWhiteScroll() {
+        return AstroCore.getInstance().getHolyWhitescrollItem().createItem(null);
+    }
+
+    @Deprecated
+    public static ItemStack getOldHolyWhiteScroll() {
+        return ItemUtils.addGlow(ItemUtils.buildItem(Material.PAPER, (short) 0, (Object) ChatColor.GOLD + "" + (Object) ChatColor.BOLD + "Holy White Scroll", (Object) ChatColor.YELLOW + "A legendary /dungeon reward that", (Object) ChatColor.YELLOW + "can be applied to armor/weapons,", (Object) ChatColor.YELLOW + "gives a 100% chance of not losing", (Object) ChatColor.YELLOW + "the blessed item on death.", "", (Object) ChatColor.GOLD + "" + (Object) ChatColor.UNDERLINE + "REQ:" + (Object) ChatColor.YELLOW + " White Scroll"));
+    }
 }

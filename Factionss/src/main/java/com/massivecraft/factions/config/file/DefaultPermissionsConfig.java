@@ -3,7 +3,7 @@ package com.massivecraft.factions.config.file;
 import com.massivecraft.factions.config.annotation.Comment;
 import com.massivecraft.factions.config.annotation.ConfigName;
 import com.massivecraft.factions.perms.Permissible;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.perms.Role;
 
 public class DefaultPermissionsConfig {

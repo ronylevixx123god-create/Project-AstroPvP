@@ -24,8 +24,6 @@ package org.arkhamnetwork.Arkkit.patches;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.Faction;
-import markehme.factionsplus.Cmds.CmdWarp;
-import markehme.factionsplus.extras.Warp;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -83,13 +81,7 @@ final class HomeSanityListener
                 }
             }
         }
-        if (this.factionsPlus && (faction = FactionUtils.getFaction(e.getPlayer())) != null && ((Boolean) FactionUtils.callFactionMethod(faction, "isNormal", null)).booleanValue()) {
-            for (Warp w : CmdWarp.getWarps(faction)) {
-                if (this.isValidHome(w.getLocation())) continue;
-                Bukkit.getLogger().info("[Arkkit (SmarterEssentials)] Deleted invalid /f warp '" + w.getName() + "' (" + w.getLocation() + ") for faction " + e.getPlayer().getName() + " (" + FactionUtils.getFactionId(e.getPlayer()) + ")");
-                CmdWarp.removeWarp(faction, w.getName());
-            }
-        }
+
     }
 
     @EventHandler(priority = EventPriority.LOW)

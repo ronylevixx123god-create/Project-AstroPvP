@@ -13,6 +13,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
@@ -67,7 +68,7 @@ final class ExpOrbsCommand
             return true;
         }
         FLocation pLoc = new FLocation(p.getLocation());
-        if (!p.isOp() && Board.getFactionAt(pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
+        if (!p.isOp() && FactionUtils.getFactionAt(pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " convert EXP in Warzones.");
             return true;
         }

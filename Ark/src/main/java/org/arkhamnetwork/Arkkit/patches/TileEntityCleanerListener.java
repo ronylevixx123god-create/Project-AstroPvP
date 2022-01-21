@@ -23,6 +23,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import com.Acrobot.ChestShop.Signs.ChestShopSign;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import org.bukkit.Bukkit;
@@ -47,7 +48,7 @@ final class TileEntityCleanerListener
     public void onChunkLoad(ChunkLoadEvent e) {
         FLocation ploc;
         Chunk c = e.getChunk();
-        if (Bukkit.getPluginManager().isPluginEnabled("Factions") && !Board.getFactionAt(ploc = new FLocation(c.getBlock(0, 0, 0).getLocation())).isWarZone()) {
+        if (Bukkit.getPluginManager().isPluginEnabled("Factions") && !FactionUtils.getFactionAt(ploc = new FLocation(c.getBlock(0, 0, 0).getLocation())).isWarZone()) {
             return;
         }
         int count = 0;

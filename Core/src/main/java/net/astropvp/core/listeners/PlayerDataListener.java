@@ -2,6 +2,7 @@ package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astrospawners.utils.LocationUtils;
 import net.astropvp.core.utils.PlayerData;
 import net.astropvp.core.utils.PlayerDataHelper;
@@ -17,7 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.struct.Relation;
 
 import net.astropvp.core.AstroCore;
 
@@ -52,7 +52,7 @@ public class PlayerDataListener implements Listener {
 									if(time - System.currentTimeMillis() <= -60 * 1000 * 15) {
 										Faction faction = FactionUtils.getFactionAt(location);
 										FPlayer fp = FactionUtils.getFPlayer(player);
-										if(faction.getRelationTo(fp) == Relation.ALLY || 
+										if(faction.getRelationTo(fp) == Relation.ALLY ||
 										faction.getRelationTo(fp) == Relation.MEMBER ||
 										faction.isWarZone() || faction.isSafeZone()) {
 											return;

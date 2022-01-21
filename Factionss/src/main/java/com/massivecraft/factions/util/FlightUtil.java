@@ -3,7 +3,7 @@ package com.massivecraft.factions.util;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.FactionsPlugin;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Permission;
 import org.bukkit.Bukkit;
 import org.bukkit.GameMode;

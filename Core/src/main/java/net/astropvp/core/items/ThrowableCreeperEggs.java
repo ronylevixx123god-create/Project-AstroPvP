@@ -82,7 +82,7 @@ public class ThrowableCreeperEggs implements Listener {
             return;
         }
 
-        if (Board.getFactionAt(new FLocation(player.getLocation())).isWarZone()) {
+        if (FactionUtils.getFactionAt(new FLocation(player.getLocation())).isWarZone()) {
             player.sendMessage(CC.translate("&c(!) You cannot use that here."));
             return;
         }
@@ -113,7 +113,7 @@ public class ThrowableCreeperEggs implements Listener {
     }
 
     public void spawnCreeper(Location location) {
-        if (Board.getFactionAt(new FLocation(location)).isWarZone()) return;
+        if (FactionUtils.getFactionAt(new FLocation(location)).isWarZone()) return;
         Creeper creeper = location.getWorld().spawn(location, Creeper.class);
         Bukkit.getScheduler().runTaskLater(plugin, () -> {
             Location creeperLocation = creeper.getLocation();

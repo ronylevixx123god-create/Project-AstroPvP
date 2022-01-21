@@ -23,7 +23,7 @@ import com.massivecraft.factions.listeners.menu.GUIMenu;
 import com.massivecraft.factions.struct.FactionPermission;
 import com.massivecraft.factions.struct.FactionPermissions;
 import com.massivecraft.factions.struct.PermissionManager;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.zcore.util.ItemUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;

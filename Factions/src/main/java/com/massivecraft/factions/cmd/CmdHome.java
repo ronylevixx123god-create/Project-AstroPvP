@@ -14,7 +14,7 @@ package com.massivecraft.factions.cmd;
 import com.massivecraft.factions.*;
 import com.massivecraft.factions.integration.EssentialsFeatures;
 import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.struct.Role;
 import com.massivecraft.factions.zcore.util.SmokeUtil;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;

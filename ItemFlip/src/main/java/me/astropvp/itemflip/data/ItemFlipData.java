@@ -5,7 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.JSONMessage;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 
 import java.util.ArrayList;
 import java.util.Iterator;

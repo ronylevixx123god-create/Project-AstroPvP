@@ -37,7 +37,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -139,7 +139,7 @@ extends HeroicCustomEnchantment {
                 if (!shooter.canSee(playerHit = (Player)event.getEntity()) || WorldGuardUtils.isPvPDisabled((Location)playerHit.getLocation()) || WorldGuardUtils.isPvPDisabled((Location)shooter.getLocation())) {
                     return;
                 }
-                Relation relation = FactionUtils.getRelationTo((RelationParticipator)FactionUtils.getFPlayer((Player)shooter), (RelationParticipator)FactionUtils.getFPlayer((Player)((Player)event.getEntity())));
+                Relation relation = FactionUtils.getRelationTo(FactionUtils.getFPlayer(shooter), FactionUtils.getFPlayer((Player)((Player)event.getEntity())));
                 if (relation == Relation.ENEMY || relation == Relation.NEUTRAL) {
                     if (MaskUtils.hasMaskEquipped((Player)playerHit, (String)"GLITCH")) {
                         return;

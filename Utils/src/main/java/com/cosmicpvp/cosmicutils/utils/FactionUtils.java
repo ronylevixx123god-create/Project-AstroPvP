@@ -14,11 +14,12 @@ import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.struct.factions.CosmicFactionHandler;
 import com.cosmicpvp.cosmicutils.struct.factions.FactionHandler;
 import com.cosmicpvp.cosmicutils.struct.factions.HCFactionHandler;
+
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;

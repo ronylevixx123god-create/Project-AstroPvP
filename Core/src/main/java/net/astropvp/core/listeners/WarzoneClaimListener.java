@@ -1,6 +1,7 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
@@ -96,7 +97,7 @@ public class WarzoneClaimListener implements Listener {
         for (int x = minChunkX; x <= maxChunkX; x++) {
             for (int z = minChunkZ; z <= maxChunkZ; z++) {
                 FLocation flocation = new FLocation(world.getName(), x, z);
-                Faction at = Board.getFactionAt(flocation);
+                Faction at = FactionUtils.getFactionAt(flocation);
                 if (at == faction)
                     claims++;
             }
@@ -106,30 +107,19 @@ public class WarzoneClaimListener implements Listener {
 
     private boolean isCloseToWarzone(Chunk c) {
         int x;
+        if (checkChunk(c)) return true;
+        return checkChunk(c);
+    }
+
+    private boolean checkChunk(Chunk c) {
+        int x;
         for (x = -1; x <= 1; x++) {
             for (int z = -1; z <= 1; z++) {
                 if (x != 0 || z != 0) {
                     Chunk ch = c.getWorld().getChunkAt(c.getX() + x, c.getZ() + z);
                     Location l = ch.getBlock(8, 8, 8).getLocation();
                     FLocation fl = new FLocation(l);
-                    if (Board.getFactionAt(fl).isWarZone() && !WorldGuardUtils.isPvPDisabled(l)) {
-                        String regionName = WorldGuardUtils.getRegionName(l);
-                        if (regionName.contains("warzone")) {
-                            setWarzoneRegionName(regionName);
-                            setClaimLimiterRegionName(this.regions.get(regionName));
-                            return true;
-                        }
-                    }
-                }
-            }
-        }
-        for (x = -1; x <= 1; x++) {
-            for (int z = -1; z <= 1; z++) {
-                if (x != 0 || z != 0) {
-                    Chunk ch = c.getWorld().getChunkAt(c.getX() + x, c.getZ() + z);
-                    Location l = ch.getBlock(8, 8, 8).getLocation();
-                    FLocation fl = new FLocation(l);
-                    if (Board.getFactionAt(fl).isWarZone() && !WorldGuardUtils.isPvPDisabled(l)) {
+                    if (FactionUtils.getFactionAt(fl).isWarZone() && !WorldGuardUtils.isPvPDisabled(l)) {
                         String regionName = WorldGuardUtils.getRegionName(l);
                         if (regionName.contains("warzone")) {
                             setWarzoneRegionName(regionName);
