@@ -10,7 +10,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.struct.Relation;
+import com.massivecraft.factions.perms.Relation;
 import me.astropvp.itemflip.enums.Color;
 import me.astropvp.itemflip.utils.HoverText;
 import net.astropvp.CollectPlugin;

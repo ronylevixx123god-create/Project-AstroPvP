@@ -1,7 +1,5 @@
 package me.ifamasssxd.cosmicconquest.struct;
 
-import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
-import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.Lists;
@@ -337,7 +335,7 @@ public class ConquestManager
             location.getChunk().load();
         }
         location.getBlock().setType(Material.CHEST);
-        final List<ItemStack> loot = Lists.newArrayList(CosmicSpaceChestsAPI.getItems(ItemRarity.LEGENDARY, 8));
+        final List<ItemStack> loot = new ArrayList<>();
         loot.add(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ConquestLootbox").createClaimableItem(false));
         final Chest chest = (Chest) location.getBlock().getState();
         if (chest != null) {

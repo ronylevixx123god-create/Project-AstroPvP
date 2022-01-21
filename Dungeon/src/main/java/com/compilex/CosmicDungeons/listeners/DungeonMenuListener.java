@@ -181,7 +181,7 @@ implements Listener {
                 }
                 dungeonLore.add((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "[" + (Object)ChatColor.WHITE + filteredPlayerCount + " players, " + TimeUtils.formatFutureTime((long)(System.currentTimeMillis() + dungeon.getTimeSinceDungeonStart())) + " runtime" + (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "]");
                 for (Player pl : dungeon.getPlayers()) {
-                    FPlayer fpl = (FPlayer)FPlayers.i.get((OfflinePlayer)pl);
+                    FPlayer fpl = (FPlayer)FPlayers.getInstance().getByPlayer(pl);
                     DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(pl);
                     if (dp.getCurrentDungeon() != dungeon) continue;
                     if (fpl.getFaction().isNormal()) {

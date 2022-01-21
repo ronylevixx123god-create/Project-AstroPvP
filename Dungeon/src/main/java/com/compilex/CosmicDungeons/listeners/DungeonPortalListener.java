@@ -388,14 +388,7 @@ implements Listener {
                         dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)new Location(dungeon.getWorld(), 287.0, 208.0, -12.0), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "LOCKED", (Object)ChatColor.GRAY + "The airlock will automatically", (Object)ChatColor.GRAY + "unlock once the dungeon portal closes."}));
                     }
                     int closeTimer = 100;
-                    int level = UpgradeUtils.getUpgradeLevel((Player)p, (String)"HEROIC_DUNGEON_PORTAL");
-                    if (level == 1) {
-                        closeTimer = 90;
-                    } else if (level == 2) {
-                        closeTimer = 80;
-                    } else if (level == 3) {
-                        closeTimer = 45;
-                    }
+
                     if (p.isOp() && p.getName().equalsIgnoreCase("MattHawkk") && p.isSneaking()) {
                         closeTimer = 10;
                     }

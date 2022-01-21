@@ -74,63 +74,8 @@
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-        </dependency>
 
-        <dependency>
-            <groupId>net.astropvp</groupId>
-            <artifactId>Collect</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>CompilexPermissions</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Enchantments</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Lootboxes</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>SpaceChests</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Duels</artifactId>
-            <version>0.1</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Conquest</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>AuctionHouse</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Lootboxes</artifactId>
-            <version>0.1</version>
-        </dependency>
 
         <!-- System repos -->
         <dependency>
@@ -154,6 +99,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>collect</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Collect.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

@@ -83,6 +83,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
@@ -226,13 +227,13 @@ public class CosmicDungeonsPlugin extends JavaPlugin {
             }
         }
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get(), () -> {
-            for (FPlayer fplayer : FPlayers.i.get()) {
+            for (FPlayer fplayer : FPlayers.getInstance().getAllFPlayers()) {
                 try {
                     UUID uuid = UUID.fromString(fplayer.getAccountId());
                     this.factionsInsideOnEnable.put(uuid, fplayer.getFactionId());
                 }
                 catch (Exception e) {
-                    Bukkit.getLogger().info("Unable to get UUID from: " + fplayer.getNameAsync() + " ID: " + fplayer.getAccountId());
+                    Bukkit.getLogger().info("Unable to get UUID from: " + fplayer.getName() + " ID: " + fplayer.getAccountId());
                     e.printStackTrace();
                 }
             }

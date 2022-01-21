@@ -99,12 +99,7 @@
         </dependency>
 
         <!-- New Cosmic Repos -->
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Arkkit</artifactId>
@@ -175,6 +170,14 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>set</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicArmorSets.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>facqss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -212,7 +215,7 @@
             <artifactId>util</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicPvPUtils (1).jar</systemPath>
+            <systemPath>${project.basedir}/lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
 
 
