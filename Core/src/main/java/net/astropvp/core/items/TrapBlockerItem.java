@@ -111,7 +111,7 @@ public class TrapBlockerItem extends CosmicItem
                     }
 
                     if (trappedPlayersCooldown.containsKey(p.getUniqueId())) {
-                        player.sendMessage(CC.translate("&c&l(Trap Blocker)&c " + p.getName() + " is still on trap blocker cooldown, this lasts 60s."));
+                        player.sendMessage(CC.translate("&c&l(Trap Blocker)&c " + p.getName() + " is still on trap blocker cooldown, this lasts 120s."));
                         continue;
                     }
                     trappedPlayers.put(p.getUniqueId(), p);
@@ -131,7 +131,7 @@ public class TrapBlockerItem extends CosmicItem
                 Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                     trappedPlayersCooldown.remove(p.getUniqueId());
                     p.sendMessage(CC.translate("&c&l(Trap Blocker)&c You can now get trap blocked again."));
-                }, 20*60L);
+                }, 20*120);
             }
         }
 

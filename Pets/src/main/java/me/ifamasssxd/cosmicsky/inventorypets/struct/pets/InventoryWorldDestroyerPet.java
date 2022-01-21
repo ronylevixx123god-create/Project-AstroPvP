@@ -217,41 +217,40 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         return filteredLocations;
     }
 
-    public static void cagePlayer(Player player, final Player affected) {
-        final List<Location> list = new ArrayList<>();
-        List<Location> toPlace = new ArrayList<>();
-        BukkitScheduler scheduler = Bukkit.getScheduler();
-        Block block = affected.getLocation().getBlock();
-        Block current = null;
-        Location baseLocation = affected.getLocation();
-        list.addAll(setInside(baseLocation.clone().add(0.0D, -1.0D, 0.0D), Material.OBSIDIAN));
-        list.addAll(setInside(baseLocation.clone().add(0.0D, 3.0D, 0.0D), Material.OBSIDIAN));
-        list.addAll(setOutside(baseLocation.clone().add(0.0D, -1.0D, 0.0D), Material.OBSIDIAN));
-        list.addAll(setOutside(baseLocation.clone().add(0.0D, 3.0D, 0.0D), Material.OBSIDIAN));
-        list.addAll(setOutside(baseLocation.clone().add(0.0D, 0.0D, 0.0D), Material.IRON_FENCE));
-        list.addAll(setOutside(baseLocation.clone().add(0.0D, 1.0D, 0.0D), Material.IRON_FENCE));
-        list.addAll(setOutside(baseLocation.clone().add(0.0D, 2.0D, 0.0D), Material.IRON_FENCE));
-        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.4F);
-        locations.addAll(list);
-
-        scheduler.scheduleSyncDelayedTask((Plugin) CosmicSkyInventoryPets.get(), (Runnable) (new BukkitRunnable() {
+    public static void cagePlayer(final Player player, final Player affected) {
+        final List<Location> list = new ArrayList<Location>();
+        final List<Location> toPlace = new ArrayList<Location>();
+        final BukkitScheduler scheduler = Bukkit.getScheduler();
+        final Block block = affected.getLocation().getBlock();
+        final Block current = null;
+        final Location baseLocation = affected.getLocation();
+        list.addAll(setInside(baseLocation.clone().add(0.0, -1.0, 0.0), Material.OBSIDIAN));
+        list.addAll(setInside(baseLocation.clone().add(0.0, 3.0, 0.0), Material.OBSIDIAN));
+        list.addAll(setOutside(baseLocation.clone().add(0.0, -1.0, 0.0), Material.OBSIDIAN));
+        list.addAll(setOutside(baseLocation.clone().add(0.0, 3.0, 0.0), Material.OBSIDIAN));
+        list.addAll(setOutside(baseLocation.clone().add(0.0, 0.0, 0.0), Material.IRON_FENCE));
+        list.addAll(setOutside(baseLocation.clone().add(0.0, 1.0, 0.0), Material.IRON_FENCE));
+        list.addAll(setOutside(baseLocation.clone().add(0.0, 2.0, 0.0), Material.IRON_FENCE));
+        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.4f);
+        InventoryWorldDestroyerPet.locations.addAll(list);
+        scheduler.scheduleSyncDelayedTask((Plugin)CosmicSkyInventoryPets.get(), (Runnable)new BukkitRunnable() {
             int count = 0;
 
             public void run() {
                 if (this.count >= 6) {
                     InventoryWorldDestroyerPet.removeBlocks(list);
-                    cancel();
+                    this.cancel();
                 }
-                if (WorldGuardUtils.isPvPEnabled(affected.getLocation())) {
-                    affected.damage(1.0D);
-                }
-                if (affected.getHealth() <= 0.0D || affected.isDead()) {
+                final int dmg = 2;
+                affected.damage(0.0);
+                affected.setHealth(affected.getHealth() - 2.5);
+                if (affected.getHealth() <= 0.0 || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);
-                    cancel();
+                    this.cancel();
                 }
-                this.count++;
+                ++this.count;
             }
-        }).runTaskTimer((Plugin) CosmicSkyInventoryPets.get(), 20L, 20L));
+        }.runTaskTimer((Plugin)CosmicSkyInventoryPets.get(), 20L, 20L));
     }
 
     public static String stringLocation(Location loc) {

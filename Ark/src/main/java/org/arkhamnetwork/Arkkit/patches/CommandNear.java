@@ -25,6 +25,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.CommandSource;
 import com.earth2me.essentials.I18n;
 import com.earth2me.essentials.User;
@@ -142,27 +143,28 @@ final class CommandNear
         long radiusSquared = radius * radius;
         boolean showHidden = user.canInteractVanished();
         FPlayer fuser = FPlayers.i.get(user.getBase().getPlayer());
+        int counter = 0;
         for (Player p : Bukkit.getOnlinePlayers()) {
             long delta;
             Location playerLoc;
             User player = NearLegacy.ess3.getUser(p);
             if (player.equals(user) || player.isHidden(user.getBase()) && !showHidden && !user.getBase().canSee(player.getBase()) || (playerLoc = player.getLocation()).getWorld() != world || (delta = (long) playerLoc.distanceSquared(loc)) >= radiusSquared)
                 continue;
-            if (p.hasMetadata("ghostEnchantment")) {
-                int ghostLevel = p.getMetadata("ghostEnchantment").get(0).asInt();
+            if (p.hasMetadata("ghostEnchantment") || p.hasMetadata("heroicGhostEnchantment")) {
                 FPlayer fp = FPlayers.i.get(p);
                 if (fp.getRelationTo(fuser).isAtMost(Relation.NEUTRAL)) {
-                    Relation r = fp.getRelationToLocation();
-                    if (ghostLevel >= 1 && r.isMember() || ghostLevel >= 2 && r.isAlly() || ghostLevel >= 3 && r.isTruce())
-                        continue;
+                    continue;
                 }
             }
             if (output.length() > 0) {
                 output.append(", ");
+                counter++;
             }
             output.append(player.getDisplayName()).append("\u00a7f(\u00a74").append((long) Math.sqrt(delta)).append("m\u00a7f)");
         }
-        if (output.length() > 1) {
+        if (counter >= 16) {
+            string = CC.translate("&c&l(!)&c There are too many players nearby!");
+        } else if (output.length() > 1) {
             string = output.toString();
         } else {
             NearLegacy.ess3.getI18n();

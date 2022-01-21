@@ -21,7 +21,7 @@ public class BloodhoundListener implements Listener {
             if (entity.getMetadata("bloodHoundNoBless").get(0).asString().equals("ancient")) {
                entity.sendMessage(CC.translate("&3&L* LEVIATHAN'S CURSE &7(1.5x DMG) &3&l*"));
             }
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50, event, "BloodHound");
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50, event, "&4&lBloodHound");
          }
       }
 

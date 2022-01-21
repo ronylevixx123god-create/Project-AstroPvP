@@ -43,14 +43,6 @@ public class CommandArkReboot
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("cancel")) {
-            sender.sendMessage("Cancelled reboot task;");
-            this.serverRebootTask.cancel();
-            return true;
-        }
-
-
-
         if (restart_task_exists) {
             sender.sendMessage(ChatColor.YELLOW + "There is already a pending restart task running.");
             return true;

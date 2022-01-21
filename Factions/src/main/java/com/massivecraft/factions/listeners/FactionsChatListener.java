@@ -127,7 +127,7 @@ public class FactionsChatListener implements Listener {
                         Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("FactionChat (" + myFaction.getTag() + ") " + talkingPlayer.getName() + ": " + msg));
                         var12 = FPlayers.i.getOnline().iterator();
 
-                        while(var12.hasNext()) {
+                        while (var12.hasNext()) {
                             fplayer = var12.next();
                             if (fplayer.isSpyingChat() && fplayer.getFaction() != myFaction) {
                                 fplayer.sendMessage("[FCspy] " + myFaction.getTag() + ": " + String.format(Conf.factionChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
@@ -158,7 +158,7 @@ public class FactionsChatListener implements Listener {
                             Bukkit.getLogger().log(Level.INFO, ChatColor.stripColor("ModChat (" + myFaction.getTag() + ") " + talkingPlayer.getName() + ": " + msg));
                             var12 = FPlayers.i.getOnline().iterator();
 
-                            while(var12.hasNext()) {
+                            while (var12.hasNext()) {
                                 fplayer = var12.next();
                                 if (fplayer.isSpyingChat() && fplayer.getFaction() != myFaction) {
                                     fplayer.sendMessage("[FMCspy] " + myFaction.getTag() + ": " + String.format(Conf.modChatFormat, nameAndTitle, playerName, ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
@@ -184,7 +184,7 @@ public class FactionsChatListener implements Listener {
 
                             var10 = FPlayers.i.getOnline().iterator();
 
-                            while(var10.hasNext()) {
+                            while (var10.hasNext()) {
                                 fplayer = var10.next();
                                 if (myFaction.getRelationTo(fplayer) == Relation.ALLY) {
                                     fplayer.sendMessage(String.format(Conf.allianceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, fplayer.getPlayer(), true)));
@@ -208,7 +208,7 @@ public class FactionsChatListener implements Listener {
                                 });
                                 var10 = FPlayers.i.getOnline().iterator();
 
-                                while(var10.hasNext()) {
+                                while (var10.hasNext()) {
                                     fplayer = var10.next();
                                     if (myFaction.getRelationTo(fplayer) == Relation.TRUCE) {
                                         fplayer.sendMessage(String.format(Conf.truceChatFormat, ChatColor.stripColor(me.getNameAndTagAsync()), ChatUtils.getFilteredMessage(msg, talkingPlayer, true)));
@@ -243,14 +243,6 @@ public class FactionsChatListener implements Listener {
             balance = Econ.econ.getBalance(Bukkit.getOfflinePlayer(follower.getId()));
         }
 
-        int seasonalWins;
-        List<SeasonalWin> seasonalWinDetails;
-        List<FancyMessage> seasonalHoverInfo = null;
-
-        List<FancyMessage> creatorHoverInfo = null;
-        String channelName = null;
-        String channelURL = null;
-
         List<FancyMessage> player_faction_info = Lists.newArrayList(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Username: " + ChatColor.valueOf(Conf.hoverChatColor) + event.getPlayer().getName()), new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Nick: " + ChatColor.valueOf(Conf.hoverChatColor) + event.getPlayer().getDisplayName()), new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Faction: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getFaction().getTag()), null, new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Balance: " + ChatColor.valueOf(Conf.hoverChatColor) + "$" + this.formatter.format(balance)));
 
         player_faction_info.remove(3);
@@ -258,7 +250,7 @@ public class FactionsChatListener implements Listener {
 
         String player_display_name = event.getPlayer().getDisplayName();
 
-        player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Power: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getPowerRounded() + ChatColor.valueOf(Conf.hoverSlashColor) + "/" + ChatColor.valueOf(Conf.hoverChatColor) + (int)Conf.powerPlayerMax));
+        player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Power: " + ChatColor.valueOf(Conf.hoverChatColor) + follower.getPowerRounded() + ChatColor.valueOf(Conf.hoverSlashColor) + "/" + ChatColor.valueOf(Conf.hoverChatColor) + (int) Conf.powerPlayerMax));
         player_faction_info.add(new FancyMessage(ChatColor.valueOf(Conf.hoverNames) + "Logged in: " + ChatColor.valueOf(Conf.hoverChatColor) + DateUtil.formatDateDiff(user.getLastLogin()) + " ago"));
         player_faction_info.add(new FancyMessage(CC.translate("&eFaction Koth Wins: &6") + CosmicKOTHAPI.getFactionKothWins(FactionUtils.getFaction(event.getPlayer()))));
 
@@ -267,37 +259,26 @@ public class FactionsChatListener implements Listener {
 
         Player player;
         FancyMessage fancy_message;
-        for(Iterator<Player> var18 = event.getRecipients().iterator(); var18.hasNext(); fancy_message.send(player)) {
+        for (Iterator<Player> var18 = event.getRecipients().iterator(); var18.hasNext(); fancy_message.send(player)) {
             player = var18.next();
             FPlayer you = FPlayers.i.get(player);
             String current_string = event.getFormat();
 
-                current_string = current_string.replace("[FACTION]", follower.getChatTag(you).trim().replace(" ", ""));
+            current_string = current_string.replace("[FACTION]", follower.getChatTag(you).trim().replace(" ", ""));
 
             current_string = current_string.replace("%1$s", "/UniqueSplitString/");
             String[] current_message_string = current_string.split("/UniqueSplitString/");
-            fancy_message = seasonalHoverInfo != null ? (new FancyMessage(current_message_string[0])).formattedTooltip(seasonalHoverInfo) : new FancyMessage(current_message_string[0]);
+            fancy_message = new FancyMessage(current_message_string[0]);
             if (current_message_string.length > 1) {
-                if (channelURL == null) {
-                    fancy_message.then(player_display_name).formattedTooltip(player_faction_info).command("/f who " + event.getPlayer().getName());
-                } else {
-                    String playerRank = player_display_name.substring(0, player_display_name.lastIndexOf(">") + 1);
-                    String playerName = player_display_name.substring(player_display_name.lastIndexOf(">") + 1);
-                    fancy_message.then(playerRank).formattedTooltip(creatorHoverInfo).link(channelURL).then(playerName).formattedTooltip(player_faction_info).command("/f who " + event.getPlayer().getName());
-                }
-
+                fancy_message.then(player_display_name).formattedTooltip(player_faction_info).command("/f who " + event.getPlayer().getName());
                 int current_count = 0;
-                String[] var49 = current_message_string;
-                int var27 = current_message_string.length;
-
-                for(int var28 = 0; var28 < var27; ++var28) {
-                    String split = var49[var28];
+                for (String value : current_message_string) {
+                    String split = value;
                     ++current_count;
                     if (current_count > 1) {
                         split = split.replace("%2$s", ChatUtils.getFilteredMessage(event.getMessage(), player, true));
                         List<ChatColor> last_colors = new ArrayList<ChatColor>();
                         String[] var31 = split.split(" ");
-                        int var32 = var31.length;
 
                         for (String s : var31) {
                             String message_part = s;
@@ -345,7 +326,7 @@ public class FactionsChatListener implements Listener {
                 }
 
                 text = regexMatcherurl.group().trim().replaceAll("www.", "").replaceAll("http://", "").replaceAll("https://", "");
-            } while(regexMatcherurl.group().length() == 0 || text.length() == 0 || !this.webpattern.matcher(message).find());
+            } while (regexMatcherurl.group().length() == 0 || text.length() == 0 || !this.webpattern.matcher(message).find());
 
             return true;
         }
