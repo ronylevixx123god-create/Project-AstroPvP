@@ -19,6 +19,7 @@
  */
 package me.ifamasssxd.cosmichcf.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
@@ -41,7 +42,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onEntitySpawn(CreatureSpawnEvent event) {
         Faction spawningIn;
-        if (event.getEntity().getWorld().getName().equals("world") && (spawningIn = Board.getFactionAt((FLocation)new FLocation(event.getEntity().getLocation()))) != null && spawningIn.isNormal()) {
+        if (event.getEntity().getWorld().getName().equals("world") && (spawningIn = FactionUtils.getFactionAt((FLocation)new FLocation(event.getEntity().getLocation()))) != null && spawningIn.isNormal()) {
             boolean greatHall = HCFOutpostAPI.isControllingOutpost(spawningIn, OutpostType.THE_GREAT_HALL);
             boolean courtyard = HCFOutpostAPI.isControllingOutpost(spawningIn, OutpostType.COURTYARD);
             if ((greatHall || courtyard) && (greatHall || Math.random() <= 0.5)) {
@@ -64,7 +65,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onEntityDeath(EntityDeathEvent event) {
         Faction in;
-        if (event.getEntity().getWorld().getName().equals("world") && (in = Board.getFactionAt((FLocation)new FLocation(event.getEntity().getLocation()))) != null && in.isNormal()) {
+        if (event.getEntity().getWorld().getName().equals("world") && (in = FactionUtils.getFactionAt((FLocation)new FLocation(event.getEntity().getLocation()))) != null && in.isNormal()) {
             if (HCFOutpostAPI.isControllingOutpost(in, OutpostType.THE_GREAT_HALL)) {
                 event.setDroppedExp((int)((double)event.getDroppedExp() * 1.25));
             } else if (HCFOutpostAPI.isControllingOutpost(in, OutpostType.COURTYARD)) {

@@ -4,8 +4,6 @@ import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.intergalacticenforcer.Enforcer;
 import me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
@@ -36,11 +34,8 @@ public interface GuardBoss {
 
     default void onDamage(final Boss boss, final EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player) {
-                final int level = FactionUpgradeAPI.getPerkLevel((Player) event.getDamager(), FactionUpgrade.CONQUEST_MASTERY);
-                if (level > 0) {
-                    final double mult = (level == 1) ? 1.5 : ((level == 2) ? 2.0 : ((level == 3) ? 2.5 : ((level == 4) ? 3.0 : 1.0)));
-                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * mult);
-                }
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1);
+
 
             return;
         }

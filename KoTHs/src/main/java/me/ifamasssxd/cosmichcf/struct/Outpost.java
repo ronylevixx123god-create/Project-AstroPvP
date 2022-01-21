@@ -377,7 +377,7 @@ public abstract class Outpost {
         }
         if (this.getTeleportLocation() != null && this.defendingFaction != null && shouldAlert) {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                FPlayer fplayer = FPlayers.i.get(p);
+                FPlayer fplayer = FPlayers.getInstance().getByPlayer(p);
                 if (fplayer == null) continue;
                 p.sendMessage("");
                 p.sendMessage(this.getNameColor() + CC.Bold + this.prefix + " " + this.defendingFaction.getRelationTo(fplayer).getColor() + this.defendingFaction.getTag() + this.getNameColor() + " has taken control of " + this.getOutpostName() + this.getNameColor() + "!");

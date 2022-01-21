@@ -6,7 +6,6 @@ import com.cosmicpvp.cosmicutils.struct.factions.FactionHandler;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.*;
-import com.massivecraft.factions.cmd.CmdFocus;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.OfflinePlayer;
@@ -44,10 +43,10 @@ public class AstroScoreboardAPI {
         Random random = new Random();
 
         int value = random.nextInt(1000 + 1) + 1;
-        FPlayer fPlayer = FPlayers.i.get(player);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
         String faction;
-        Faction factionName = FPlayers.i.get(player).getFaction();
+        Faction factionName = FPlayers.getInstance().getByPlayer(player).getFaction();
         if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fPlayer.getFaction().getTag());
         } else {
@@ -64,7 +63,7 @@ public class AstroScoreboardAPI {
         FPlayer fp = FactionUtils.getFPlayer(player);
         String faction;
         FPlayer fother = FactionUtils.getFPlayer(other);
-        Faction factionName = FPlayers.i.get(player).getFaction();
+        Faction factionName = FPlayers.getInstance().getByPlayer(player).getFaction();
         if (!(FactionUtils.isWilderness(factionName))) {
             faction = CC.strip(fp.getFaction().getTag());
         } else {
@@ -113,9 +112,7 @@ public class AstroScoreboardAPI {
                 break;
         }
 
-        if (FactionUtils.getFaction(other).focusedPlayer == fp) {
-            return CC.translate("&e&k") + faction;
-        } else if (factionName.isWilderness()) {
+        if (factionName.isWilderness()) {
             return color + faction + rankColor;
         } else {
             return color + faction + rankColor + " ";

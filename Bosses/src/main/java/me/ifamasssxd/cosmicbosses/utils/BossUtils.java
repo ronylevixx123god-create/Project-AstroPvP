@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicbosses.utils;
 
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.User;
 import com.massivecraft.factions.Board;
@@ -105,9 +106,7 @@ public class BossUtils {
             if (regionName.contains("warzone") || (checkBattlefield && regionName.contains("battlefield"))) {
                 if (BossUtils.factions) {
                     final FLocation ploc = new FLocation(pl.getLocation());
-                    if (!Board.getFactionAt(ploc).isWarZone()) {
-                        return false;
-                    }
+                    return FactionUtils.getFactionAt(ploc).isWarZone();
                 }
                 return true;
             }
@@ -117,6 +116,7 @@ public class BossUtils {
 
     public static Entity spawnDungeonBoss(final Location location, final int phase) {
         final DungeonYijki boss = (DungeonYijki) BossType.DUNGEON_YIJKI.createInstance(location);
+        assert boss != null;
         boss.onBossSpawn();
         try {
             boss.setBossPhase(DungeonYijki.BossPhase.values()[phase - 1]);
@@ -186,7 +186,7 @@ public class BossUtils {
         if (regionName.contains("warzone")) {
             if (BossUtils.factions) {
                 final FLocation ploc = new FLocation(loc);
-                if (!Board.getFactionAt(ploc).getId().equals("-2")) {
+                if (!FactionUtils.getFactionAt(ploc).getId().equals("-2")) {
                     BossUtils.warzone.put(coords, false);
                     return false;
                 }

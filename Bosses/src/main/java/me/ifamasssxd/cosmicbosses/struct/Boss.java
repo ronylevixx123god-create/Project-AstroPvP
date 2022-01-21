@@ -34,8 +34,6 @@ import me.ifamasssxd.cosmicbosses.utils.MapUtils;
 import me.ifamasssxd.cosmicbosses.utils.NumberUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import net.astropvp.core.utils.InventoryUtils;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
@@ -157,14 +155,9 @@ public abstract class Boss extends Equipable implements Healable {
             return;
         }
         if (event.getDamager() instanceof Player) {
-            int heroicLevel = UpgradeUtils.getUpgradeLevel((Player)event.getDamager(), "HEROIC_BOSS_MASTERY");
             double mult = 1.0D;
-            if (heroicLevel > 0) {
-                mult = (heroicLevel == 1) ? 2.05D : ((heroicLevel == 2) ? 2.15D : ((heroicLevel == 3) ? 2.25D : 1.0D));
-            } else {
-                int level = FactionUpgradeAPI.getPerkLevel((Player)event.getDamager(), FactionUpgrade.BOSS_MASTERY);
-                mult = (level == 1) ? 1.25D : ((level == 2) ? 1.5D : ((level == 3) ? 1.75D : ((level == 4) ? 2.0D : 1.0D)));
-            }
+                mult =  1.0D;
+
             if (DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon().getBossSlayerTrinket())
                 mult += 0.5D;
             event.setDamage(event.getDamage() * mult);

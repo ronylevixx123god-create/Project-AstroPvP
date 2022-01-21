@@ -3,8 +3,8 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.util.TimeUtil;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -29,7 +29,7 @@ public class InventoryPetXpBooster extends InventoryPet {
 
    public List getPetDescription(int level) {
       double percent = this.getIncrease(level);
-      return Lists.newArrayList(CC.Gray + "A mystical sprite that has", CC.Gray + "the unique ability to increase", CC.Gray + "the rate at which cosmonauts gain", CC.Gray + "experience and knowledge from combat.", "", CC.WhiteB + "Ability", CC.Gray + "Gain a " + NumberUtils.formatMoney(percent) + "x Vanilla XP", CC.Gray + "increase for " + TimeUtil.formatSeconds(this.getDuration(level)) + "!", "", CC.WhiteB + "Cooldown", CC.Gray + " 1 hour");
+      return Lists.newArrayList(CC.Gray + "A mystical sprite that has", CC.Gray + "the unique ability to increase", CC.Gray + "the rate at which cosmonauts gain", CC.Gray + "experience and knowledge from combat.", "", CC.WhiteB + "Ability", CC.Gray + "Gain a " + NumberUtils.formatMoney(percent) + "x Vanilla XP", CC.Gray + "increase for " + TimeUtils.formatSeconds(this.getDuration(level)) + "!", "", CC.WhiteB + "Cooldown", CC.Gray + " 1 hour");
    }
 
    private double getIncrease(int level) {
@@ -79,7 +79,7 @@ public class InventoryPetXpBooster extends InventoryPet {
             return true;
          }
       } else {
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtil.formatSeconds((int)(timeTillCanUse / 1000L)));
+         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
       }
    }
 

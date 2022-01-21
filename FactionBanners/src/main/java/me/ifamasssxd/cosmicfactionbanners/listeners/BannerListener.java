@@ -2,7 +2,7 @@ package me.ifamasssxd.cosmicfactionbanners.listeners;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.google.common.collect.*;
-import me.bryside.WildPvPPlugin;
+import com.massivecraft.factions.perms.Relation;
 import me.ifamasssxd.cosmicfactionbanners.*;
 import com.massivecraft.factions.event.*;
 import me.ifamasssxd.cosmicfactionbanners.struct.*;
@@ -44,7 +44,7 @@ public class BannerListener implements Listener
     
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onFactionDisband(final FPlayerLeaveEvent event) {
-        if (event.getFaction().getFPlayers().size() <= 1 && event.getFaction().getFPlayers().contains(event.getFPlayer())) {
+        if (event.getFaction().getFPlayers().size() <= 1 && event.getFaction().getFPlayers().contains(event.getfPlayer())) {
             CosmicFactionBanners.get().getBannerManager().getBannerDesignMap().remove(event.getFaction().getId());
         }
     }
@@ -65,7 +65,7 @@ public class BannerListener implements Listener
                 if (l.getBlockZ() != block.getZ()) {
                     continue;
                 }
-                final FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)event.getPlayer());
+                final FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(event.getPlayer());
                 if (fp.getFaction().getRelationTo((RelationParticipator)banner.getFaction()).isAtLeast(Relation.ALLY)) {
                     event.setCancelled(true);
                     event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot destroy " + banner.getWhoPlacedUsername() + "'s Faction Banner!");

@@ -40,7 +40,7 @@ implements Runnable {
         if (this.outpost.getOutpostTier() == OutpostTier.VANILLA) {
             Faction faction;
             String controlling = this.outpost.getControllingFaction();
-            if (controlling != null && System.currentTimeMillis() - this.lastFactionPointsGiven >= TimeUnit.MINUTES.toMillis(12L) && (faction = Factions.i.getByTag(controlling)) != null) {
+            if (controlling != null && System.currentTimeMillis() - this.lastFactionPointsGiven >= TimeUnit.MINUTES.toMillis(12L) && (faction = Factions.getInstance().getByTag(controlling)) != null) {
                 this.lastFactionPointsGiven = System.currentTimeMillis();
                 //FactionPointUtils.giveFactionPoints((Faction)faction, (Player)null, (String)"outpost_vanilla", (Object)this.outpost);
             }

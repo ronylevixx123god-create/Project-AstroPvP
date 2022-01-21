@@ -1,5 +1,6 @@
 package me.venir.astrocollectors.inventories;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
@@ -34,7 +35,7 @@ public class CollectorsUI {
         CollectorManager collectorManager = CollectorManager.DELEGATE;
         collector = collectorManager.getCollector(location);
         FLocation fLocation = new FLocation(location);
-        Faction faction = Board.getFactionAt(fLocation);
+        Faction faction = FactionUtils.getFactionAt(fLocation);
 
         collectorUI = new Gui(1, ChatColor.GREEN + faction.getTag() + "'s Collector");
 

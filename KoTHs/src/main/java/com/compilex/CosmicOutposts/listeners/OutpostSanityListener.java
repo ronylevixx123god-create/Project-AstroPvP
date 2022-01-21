@@ -118,9 +118,9 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerChangeFactionName(PlayerCommandPreprocessEvent e) {
-        Player p;
+        Player p = e.getPlayer();
         Faction f;
-        if (e.getMessage().startsWith("/f tag") && (f = ((FPlayer)FPlayers.i.get((OfflinePlayer)(p = e.getPlayer()))).getFaction()).isNormal()) {
+        if (e.getMessage().startsWith("/f tag") && (f = ((FPlayer)FPlayers.getInstance().getByPlayer(e.getPlayer())).getFaction()).isNormal()) {
             for (Outpost o : CosmicKOTHPlugin.get_().getOutposts()) {
                 if (!(o.getControllingFaction() != null && o.getControllingFaction().equals(f.getTag()) || o.getCapTask().getAttackingFaction() != null && o.getCapTask().getAttackingFaction().equals((Object)f)) && (o.getCapTask().getDefendingFaction() == null || !o.getCapTask().getDefendingFaction().equals((Object)f))) continue;
                 e.setCancelled(true);
@@ -244,7 +244,7 @@ implements Listener {
     public void onPlayerShootBow(EntityShootBowEvent e) {
         Player p;
         Outpost o;
-        if (e.getEntity() instanceof Player && (o = CosmicOutpostsAPI.getOutpost((Entity)(p = (Player)e.getEntity()))) != null && WorldGuardUtils.getRegionName(p.getLocation()).contains("defender") && (o.getCapTask().getDefendingFaction() == null || !((FPlayer)FPlayers.i.get((OfflinePlayer)p)).getFaction().getTag().equals(o.getCapTask().getDefendingFaction().getTag()))) {
+        if (e.getEntity() instanceof Player && (o = CosmicOutpostsAPI.getOutpost((Entity)(p = (Player)e.getEntity()))) != null && WorldGuardUtils.getRegionName(p.getLocation()).contains("defender") && (o.getCapTask().getDefendingFaction() == null || !((FPlayer)FPlayers.getInstance().getByPlayer(p)).getFaction().getTag().equals(o.getCapTask().getDefendingFaction().getTag()))) {
             e.setCancelled(true);
             p.sendMessage((Object)ChatColor.GRAY + "* You cannot shoot bows from the defender spawn.");
         }
@@ -258,7 +258,7 @@ implements Listener {
             if (p.isOp()) {
                 return;
             }
-            if (WorldGuardUtils.getRegionName(e.getPlayer().getLocation()).contains("defender") && (o.getCapTask().getDefendingFaction() == null || !((FPlayer)FPlayers.i.get((OfflinePlayer)p)).getFaction().getTag().equals(o.getCapTask().getDefendingFaction().getTag()))) {
+            if (WorldGuardUtils.getRegionName(e.getPlayer().getLocation()).contains("defender") && (o.getCapTask().getDefendingFaction() == null || !((FPlayer)FPlayers.getInstance().getByPlayer(p)).getFaction().getTag().equals(o.getCapTask().getDefendingFaction().getTag()))) {
                 e.setCancelled(true);
                 e.setUseInteractedBlock(Event.Result.DENY);
                 e.setUseItemInHand(Event.Result.DENY);
@@ -275,7 +275,7 @@ implements Listener {
         } else if (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player) {
             pAttacker = (Player)((Projectile)e.getDamager()).getShooter();
         }
-        if (pAttacker != null && (o = CosmicOutpostsAPI.getOutpost((Entity)pAttacker)) != null && WorldGuardUtils.getRegionName(pAttacker.getLocation()).contains("defender") && (o.getCapTask().getDefendingFaction() == null || !((FPlayer)FPlayers.i.get((OfflinePlayer)pAttacker)).getFaction().getTag().equals(o.getCapTask().getDefendingFaction().getTag()))) {
+        if (pAttacker != null && (o = CosmicOutpostsAPI.getOutpost((Entity)pAttacker)) != null && WorldGuardUtils.getRegionName(pAttacker.getLocation()).contains("defender") && (o.getCapTask().getDefendingFaction() == null || !((FPlayer)FPlayers.getInstance().getByPlayer(pAttacker)).getFaction().getTag().equals(o.getCapTask().getDefendingFaction().getTag()))) {
             e.setCancelled(true);
             e.setDamage(0.0);
             pAttacker.sendMessage((Object)ChatColor.GRAY + "* You cannot deal damage to defenders inside their spawn.");

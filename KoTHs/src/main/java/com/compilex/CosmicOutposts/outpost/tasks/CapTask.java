@@ -69,7 +69,6 @@ implements Runnable {
     public CapTask(Outpost outpost) {
         this.outpost = outpost;
         this.factionUpgrades = true;
-        this.webLink = Bukkit.getPluginManager().isPluginEnabled("CosmicWebLink");
         this.masks = new File("plugins/CosmicMasks.jar").exists();
     }
 
@@ -77,19 +76,17 @@ implements Runnable {
     public void run() {
         ++this.iterations;
         List<Player> playersInCapzone = this.getPlayersInCapZone();
-        if (this.defendingFaction != null && this.attackingFaction == null && (double)this.capPercent >= 0.1 && this.defendingFaction.getFPlayers().size() > 0 && Bukkit.getPluginManager().isPluginEnabled("CosmicFactionQuests")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add HOLD_" + this.outpost.getOutpostTier().name() + "_OUTPOST_I " + this.defendingFaction.getTag());
-        }
+
         if (playersInCapzone.size() == 0) {
             return;
         }
-        if (this.attackingFaction != null && !this.attackingFaction.attached()) {
+/*        if (this.attackingFaction != null && !this.attackingFaction.attached()) {
             this.attackingFaction = null;
         }
         if (this.defendingFaction != null && !this.defendingFaction.attached()) {
             this.defendingFaction = null;
-        }
-        if (this.outpost.getControllingFaction() != null && Factions.i.getByTag(this.outpost.getControllingFaction()) == null) {
+        }*/
+        if (this.outpost.getControllingFaction() != null && Factions.getInstance().getByTag(this.outpost.getControllingFaction()) == null) {
             this.outpost.setControllingFaction(null);
             if (this.defendingFaction != null && this.attackingFaction != null && this.attackingFaction.equals(this.defendingFaction)) {
                 this.attackingFaction = null;
@@ -125,7 +122,7 @@ implements Runnable {
                 this.capPercent = this.roundCapPercent();
                 return;
             }
-            this.attackingFaction = Factions.i.getByTag(strongestFaction);
+            this.attackingFaction = Factions.getInstance().getByTag(strongestFaction);
             if (this.outpost.getControllingFaction() == null && this.doesFactionControlAnOutpost(this.attackingFaction.getTag())) {
                 this.notifyFactionOfOutpostAlreadyClaimed(this.attackingFaction);
                 this.attackingFaction = null;
@@ -195,10 +192,9 @@ implements Runnable {
                     this.attackingFaction = null;
                 }
             } else {
-                this.attackingFaction = Factions.i.getByTag(strongestFaction);
+                this.attackingFaction = Factions.getInstance().getByTag(strongestFaction);
                 if (this.isAFactionDefending()) {
                     float capPercentDecreaseInterval2 = this.getCapPercentDecreaseInterval(FMC);
-                    this.getClass();
                     float f = capPercentDecreaseInterval2 * 5.0f;
                     if (this.factionUpgrades) {
                         f = this.applyFactionUpgrades(this.attackingFaction, f);
@@ -310,13 +306,13 @@ implements Runnable {
             Bukkit.broadcastMessage("");
             long startCapTime = this.outpost.getCapTime();
             int secondsCappedFor = (int)((System.currentTimeMillis() - startCapTime) / 1000L);
-            CosmicOutpostsAPI.incrementCapTime(Factions.i.getByTag(this.defendingFaction.getTag()), this.outpost.getOutpostTier(), secondsCappedFor);
+            CosmicOutpostsAPI.incrementCapTime(Factions.getInstance().getByTag(this.defendingFaction.getTag()), this.outpost.getOutpostTier(), secondsCappedFor);
             Bukkit.getLogger().info("Adding " + secondsCappedFor + " of cap time to " + this.outpost.getControllingFaction());
             if (playersInCapzone != null) {
                 for (Player player : playersInCapzone) {
                     Faction plFaction = FactionUtils.getFaction(player);
                     if (plFaction == null || !plFaction.equals(this.attackingFaction)) continue;
-                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "OUTPOST_UNCAP", new Object[]{this.outpost.getOutpostTier().name()}));
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "OUTPOST_UNCAP", this.outpost.getOutpostTier().name()));
                 }
             }
             if (this.doesFactionControlAnOutpost(this.attackingFaction.getTag())) {
@@ -430,7 +426,7 @@ implements Runnable {
 
     public boolean doesPlayerInStrongestFactionHaveOutpostMask(String factionTag, List<Player> playersInCapzone) {
         for (Player p : playersInCapzone) {
-            FPlayer fp = FPlayers.i.get(p);
+            FPlayer fp = FPlayers.getInstance().getByPlayer(p);
             if (!fp.getFaction().getTag().equals(factionTag) || !MaskUtils.hasMaskEquipped(p, "OUTPOST")) continue;
             return true;
         }
@@ -440,7 +436,7 @@ implements Runnable {
     public FactionMemberCounts getFactionMemberCounts(List<Player> l) {
         FactionMemberCounts factionCounts = new FactionMemberCounts();
         for (Player p : l) {
-            FPlayer fp = FPlayers.i.get(p);
+            FPlayer fp = FPlayers.getInstance().getByPlayer(p);
             if (!fp.getFaction().isNormal()) continue;
             factionCounts.put(fp.getFaction().getTag(), factionCounts.containsKey(fp.getFaction().getTag()) ? factionCounts.get(fp.getFaction().getTag()) + 1 : 1);
         }

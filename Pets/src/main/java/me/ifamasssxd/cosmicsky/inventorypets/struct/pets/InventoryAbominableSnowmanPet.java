@@ -121,8 +121,8 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
          p2.sendMessage(String.valueOf(CC.Red) + "Player is already a Snowman! ");
          return true;
       }
-      FPlayer castingPlayer = (FPlayer)FPlayers.i.get(player);
-      FPlayer surroundingPlayer = (FPlayer)FPlayers.i.get(p2);
+      FPlayer castingPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
+      FPlayer surroundingPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(p2);
       if (castingPlayer.getRelationTo((RelationParticipator)surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo((RelationParticipator)surroundingPlayer) == Relation.NEUTRAL) {
          petItem.setLastUsed(System.currentTimeMillis());
          freezeThePlayer(p2, player);

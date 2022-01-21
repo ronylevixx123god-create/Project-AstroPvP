@@ -69,7 +69,7 @@ public class FactionBanner
         msg.addRunCommand(CC.GrayB + CC.Underline + "HERE", ChatColor.GRAY, "/frecall", CC.Gray + "Click to teleport to " + this.whoPlacedUsername + "'s banner!");
         msg.addText((Player)null, CC.Gray + " or use " + CC.DarkPurple + "/f assist" + CC.Gray + " to teleport!", ChatColor.GRAY);
         for (final FPlayer player : faction.getFPlayers()) {
-            if (!player.isCachedAsOnline()) {
+            if (!player.isOnline()) {
                 continue;
             }
             final Player pl = player.getPlayer();

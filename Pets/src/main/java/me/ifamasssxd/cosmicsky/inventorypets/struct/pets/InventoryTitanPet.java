@@ -127,8 +127,8 @@ public class InventoryTitanPet extends InventoryPet {
                p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* TERMINATOR MASK: Blocked Shockwave (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
                player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* TERMINATOR MASK: Blocked Shockwave (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");
             } else {
-               FPlayer castingPlayer = (FPlayer)FPlayers.i.get(player);
-               FPlayer surroundingPlayer = (FPlayer)FPlayers.i.get(p);
+               FPlayer castingPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
+               FPlayer surroundingPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(p);
                if (castingPlayer.getRelationTo(surroundingPlayer) == Relation.ENEMY || castingPlayer.getRelationTo(surroundingPlayer) == Relation.NEUTRAL) {
                   p.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* TITAN UNBREAKABLE: (" + ChatColor.GRAY + player.getName() + ChatColor.DARK_RED + ")");
                   player.sendMessage("" + ChatColor.DARK_RED + ChatColor.BOLD + "* TITAN UNBREAKABLE: (" + ChatColor.GRAY + p.getName() + ChatColor.DARK_RED + ")");

@@ -204,7 +204,7 @@ implements Runnable {
             String faction;
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-            FPlayer fp = (FPlayer)FPlayers.i.get((OfflinePlayer)p);
+            FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
             String facId = fp.getFaction().isNormal() ? "id=" + fp.getFactionId() : "";
             String string = faction = fp.getFaction().isNormal() ? fp.getFaction().getTag() : "N/A";
             if (!new File("plugins/CosmicKOTH/koth.log").exists()) {
@@ -243,7 +243,7 @@ implements Runnable {
         if (this.playerCapping == null && this.playerCapped == null) {
             return "???";
         }
-        FPlayer fp = FPlayers.i.get(this.playerCapping != null ? this.playerCapping : this.playerCapped);
+        FPlayer fp = FPlayers.getInstance().getByPlayer(this.playerCapping != null ? this.playerCapping : this.playerCapped);
         if (fp.getFaction().isNormal()) {
             return "[" + fp.getFaction().getTag() + "] " + (this.playerCapping != null ? this.playerCapping.getName() : this.playerCapped.getName());
         }

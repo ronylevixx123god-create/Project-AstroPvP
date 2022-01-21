@@ -41,9 +41,7 @@ public class CosmicOutpostsAPI {
         }
         CosmicKOTHPlugin.get_().getDataManager().incrementCapTime(faction, tier, amount);
         FPlayer admin = faction.getFPlayerAdmin();
-        if (admin != null && admin.getCachedUUID() != null) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contests add " + admin.getCachedUUID() + " opheld " + amount);
-        }
+
     }
 
     @Deprecated
@@ -72,7 +70,7 @@ public class CosmicOutpostsAPI {
     }
 
     public static Outpost getOutpostPlayerControls(Player p) {
-        Faction playerFaction = FPlayers.i.get(p).getFaction();
+        Faction playerFaction = FPlayers.getInstance().getByPlayer(p).getFaction();
         if (playerFaction.isNormal()) {
             for (Outpost outpost : CosmicKOTHPlugin.get_().getOutposts()) {
                 if (outpost.getControllingFaction() == null || !outpost.getControllingFaction().equals(playerFaction.getTag())) continue;
@@ -83,27 +81,27 @@ public class CosmicOutpostsAPI {
     }
 
     public static boolean isDefender(Player p, Outpost o) {
-        Faction playerFaction = FPlayers.i.get(p).getFaction();
+        Faction playerFaction = FPlayers.getInstance().getByPlayer(p).getFaction();
         return playerFaction.isNormal() && playerFaction.getTag().equals(o.getControllingFaction());
     }
 
     public static boolean controlsVanillaOutpost(Player p) {
-        Faction playerFaction = FPlayers.i.get(p).getFaction();
+        Faction playerFaction = FPlayers.getInstance().getByPlayer(p).getFaction();
         return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 
     public static boolean controlsTraineeOutpost(Player p) {
-        Faction playerFaction = FPlayers.i.get(p).getFaction();
+        Faction playerFaction = FPlayers.getInstance().getByPlayer(p).getFaction();
         return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 
     public static boolean controlsHeroOutpost(Player p) {
-        Faction playerFaction = FPlayers.i.get(p).getFaction();
+        Faction playerFaction = FPlayers.getInstance().getByPlayer(p).getFaction();
         return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getHeroOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getHeroOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 
     public static boolean controlsCosmonautOutpost(Player p) {
-        Faction playerFaction = FPlayers.i.get(p).getFaction();
+        Faction playerFaction = FPlayers.getInstance().getByPlayer(p).getFaction();
         return playerFaction.isNormal() && CosmicKOTHPlugin.get_().getCosmonautOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getCosmonautOutpost().getControllingFaction().equals(playerFaction.getTag());
     }
 }

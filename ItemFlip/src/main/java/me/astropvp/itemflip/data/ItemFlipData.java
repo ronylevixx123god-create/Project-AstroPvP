@@ -4,13 +4,13 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.JSONMessage;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.perms.Relation;
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.struct.Relation;
 import me.astropvp.itemflip.enums.Color;
 import me.astropvp.itemflip.utils.HoverText;
 import net.astropvp.CollectPlugin;
@@ -94,10 +94,8 @@ public class ItemFlipData {
             winner.playSound(winner.getLocation(), Sound.ANVIL_LAND, 1.25F, 2.0F);
             FPlayer f_winner = FactionUtils.getFPlayer(winner);
             FPlayer f_loser = FactionUtils.getFPlayer(loser);
-            Iterator var8 = this.getData().iterator();
 
-            while (var8.hasNext()) {
-                ItemFlipPlayerData flip_data = (ItemFlipPlayerData) var8.next();
+            for (ItemFlipPlayerData flip_data : this.getData()) {
                 Player player = flip_data.getPlayer();
                 FPlayer fp = FactionUtils.getFPlayer(player);
                 Relation rel_one = fp.getRelationTo(f_winner);

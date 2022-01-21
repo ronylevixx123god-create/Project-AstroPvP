@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicfactionbanners.commands;
 
+import com.massivecraft.factions.perms.Role;
 import me.ifamasssxd.cosmicfactionbanners.*;
 import org.bukkit.command.*;
 import org.bukkit.entity.*;

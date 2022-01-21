@@ -223,7 +223,7 @@
             <artifactId>fac</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Factions-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
         </dependency>
     </dependencies>
 

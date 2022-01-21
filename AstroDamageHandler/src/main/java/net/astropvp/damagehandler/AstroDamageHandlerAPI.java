@@ -24,7 +24,7 @@ public class AstroDamageHandlerAPI {
     }
 
     public void increaseDamage(double amountInPercentage, EntityDamageByEntityEvent event, String instance, int crystalsAmount) {
-        double increaseAmount = this.getCorrectIncreasePercentage(amountInPercentage*crystalsAmount);
+        double increaseAmount = this.getCorrectIncreasePercentage(amountInPercentage * crystalsAmount);
         increaseDamage(amountInPercentage, event, instance, increaseAmount);
     }
 
@@ -52,7 +52,7 @@ public class AstroDamageHandlerAPI {
     }
 
     public void reduceDamage(double amountInPercentage, EntityDamageByEntityEvent event, String instance, int crystalsAmount) {
-        double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage*crystalsAmount);
+        double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage * crystalsAmount);
         reduceDamage(amountInPercentage, event, instance, decreaseAmount);
     }
 
@@ -76,7 +76,7 @@ public class AstroDamageHandlerAPI {
     }
 
     public void reduceDamage(double amountInPercentage, EntityDamageEvent event, String instance, int crystalsAmount) {
-        double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage*crystalsAmount);
+        double decreaseAmount = this.getCorrectDecreasePercentage(amountInPercentage * crystalsAmount);
         reduceDamage(amountInPercentage, event, instance, decreaseAmount);
     }
 
@@ -136,11 +136,19 @@ public class AstroDamageHandlerAPI {
     }
 
     private void sendDebugMessage(Entity entity, String message) {
-        entity.sendMessage(CC.translate(message));
+        if (entity.isOp()) {
+            entity.sendMessage(CC.translate(message));
+        }
+        Bukkit.getConsoleSender().sendMessage(CC.Aqua + message);
+
     }
 
     private void sendDebugMessage(Player player, String message) {
-        player.sendMessage(CC.translate(message));
+        if (player.isOp()) {
+            player.sendMessage(CC.translate(message));
+        }
+        Bukkit.getConsoleSender().sendMessage(CC.Aqua + message);
+
     }
 
     private Double getCorrectIncreasePercentage(double value) {

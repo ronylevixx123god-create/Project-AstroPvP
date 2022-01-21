@@ -156,7 +156,7 @@ public class ConquestListener implements Listener {
                         itemsToDrop.clear();
                         block.getWorld().playEffect(block.getLocation().add(0.5D, 0.0D, 0.5D), Effect.STEP_SOUND, Material.CHEST.getId());
                         block.getWorld().playSound(block.getLocation(), Sound.WITHER_SHOOT, 1.0F, 0.85F);
-                        FPlayer fplayer = (FPlayer)FPlayers.i.get((OfflinePlayer)player);
+                        FPlayer fplayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
                         Faction faction = fplayer.getFaction();
                         String name = ChatColor.AQUA + ((faction != null && faction.isNormal()) ? (faction.getTag() + " ") : "") + ChatColor.AQUA + player.getName();
                         if (manager.getLastConquer() != null)

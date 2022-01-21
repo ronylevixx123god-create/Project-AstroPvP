@@ -29,7 +29,7 @@ implements Runnable {
     @Override
     public void run() {
         for (Player p : this.outpost.getWorld().getPlayers()) {
-            if (p.hasPermission("staff.outpost.godmode") || !WorldGuardUtils.getRegionName(p.getLocation()).contains("defender") || this.outpost.getCapTask().getDefendingFaction() != null && ((FPlayer)FPlayers.i.get((OfflinePlayer)p)).getFaction().getTag().equals(this.outpost.getCapTask().getDefendingFaction().getTag())) continue;
+            if (p.hasPermission("staff.outpost.godmode") || !WorldGuardUtils.getRegionName(p.getLocation()).contains("defender") || this.outpost.getCapTask().getDefendingFaction() != null && ((FPlayer)FPlayers.getInstance().getByPlayer(p)).getFaction().getTag().equals(this.outpost.getCapTask().getDefendingFaction().getTag())) continue;
             p.setHealth(Math.max(0.0, p.getHealth() - 2.0));
             p.sendMessage((Object)ChatColor.RED + ChatColor.BOLD.toString() + " - 2HP" + (Object)ChatColor.GRAY + " (defender spawn debuff)");
         }

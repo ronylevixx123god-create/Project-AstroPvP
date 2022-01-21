@@ -44,7 +44,6 @@ import com.compilex.CosmicOutposts.outpost.managers.DataManager;
 import com.compilex.CosmicOutposts.utils.MonsterUtils;
 import com.earth2me.essentials.Essentials;
 import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.zcore.util.WorldUtil;
 import com.sk89q.worldedit.BlockVector;
 import com.sk89q.worldguard.protection.regions.ProtectedRegion;
 import lombok.Getter;
@@ -316,7 +315,7 @@ public class CosmicKOTHPlugin
                             CosmicKOTHPlugin.this.registerConfigData();
                             CosmicKOTHPlugin.this.registerCenter();
                         }
-                        WorldUtil.changeClaimsInRegionWithFaction(Bukkit.getConsoleSender(), "koth_arena", CosmicKOTHPlugin.this.world, Factions.i.getWarZone(), true);
+                        //WorldUtil.changeClaimsInRegionWithFaction(Bukkit.getConsoleSender(), "koth_arena", CosmicKOTHPlugin.this.world, Factions.i.getWarZone(), true);
                     }
                 }, 20L);
             }
@@ -333,7 +332,7 @@ public class CosmicKOTHPlugin
             outpost.setControllingFaction(this.getConfig().getString("mainoutposts." + outpost.getOutpostTier().name().toLowerCase() + ".controllingFaction").length() > 0 ? this.getConfig().getString("mainoutposts." + outpost.getOutpostTier().name().toLowerCase() + ".controllingFaction") : null);
             if (outpost.getControllingFaction() != null) {
                 outpost.getCapTask().setCapPercent(1.0f);
-                outpost.getCapTask().setDefendingFaction(Factions.i.getByTag(outpost.getControllingFaction()));
+                outpost.getCapTask().setDefendingFaction(Factions.getInstance().getByTag(outpost.getControllingFaction()));
                 outpost.setCapTime(this.getConfig().getLong("mainoutposts." + outpost.getOutpostTier().name().toLowerCase() + ".capTime"));
             }
             Bukkit.getLogger().info("[CosmicOutposts] LOADING OUTPOST " + outpost.getOutpostTier().name() + ":");

@@ -1,5 +1,6 @@
 package me.venir.astrocollectors.listeners.collectorlisteners;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import me.venir.astrocollectors.collector.CollectorManager;
@@ -30,7 +31,7 @@ public class BlockPlaceListener implements Listener {
 
         FLocation fLocation = new FLocation(location);
 
-        if (Board.getFactionAt(fLocation).isWilderness()) {
+        if (FactionUtils.getFactionAt(fLocation).isWilderness()) {
             Language.CAN_NOT_PLACE_IN_WILD.send(event.getPlayer());
             event.setCancelled(true);
             return;

@@ -56,14 +56,14 @@ public class ChannelUtil {
 
             List<CosmicPlayer> speakingTo = new ArrayList<>();
 
-            Faction tpf = FPlayers.i.get(cp1.getPlayer().getUniqueId().toString()).getFaction();
+            Faction tpf = FPlayers.getInstance().getByPlayer(cp1.getPlayer()).getFaction();
 
             if(tpf == null)continue;
 
             for(CosmicPlayer cp2 : all){
                 if(cp1 == cp2 || !cp2.isOnCosmicClient() || cp2.getCurrentChannel() != EnumChannel.FACTION)continue;
 
-                Faction thatPF = FPlayers.i.get(cp2.getPlayer().getUniqueId().toString()).getFaction();
+                Faction thatPF = FPlayers.getInstance().getByPlayer(cp2.getPlayer()).getFaction();
 
                 if(tpf != thatPF)continue;
 

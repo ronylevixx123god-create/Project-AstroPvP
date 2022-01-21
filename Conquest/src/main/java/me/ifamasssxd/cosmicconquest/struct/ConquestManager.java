@@ -3,6 +3,7 @@ package me.ifamasssxd.cosmicconquest.struct;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -129,9 +130,9 @@ public class ConquestManager
             final List<FLocation> locs = this.warzoned.get(center);
             if (locs != null) {
                 locs.forEach(fLocation -> {
-                    if (Board.getFactionAt(fLocation).isWarZone()) {
+                    if (FactionUtils.getFactionAt(fLocation).isWarZone()) {
                         Bukkit.getLogger().info("Unclaiming WarZone at " + fLocation.toString());
-                        Board.setFactionAt(Factions.i.getNone(), fLocation);
+                        Board.getInstance().setFactionAt(Factions.getInstance().getNone(), fLocation);
                     }
                     return;
                 });
@@ -151,8 +152,8 @@ public class ConquestManager
         for (int x = -radius; x < radius + 1; ++x) {
             for (int z = -radius; z < radius + 1; ++z) {
                 final FLocation flocation = new FLocation(this.nextSpawnLocation.getWorld().getName(), chunk.getX() + x, chunk.getZ() + z);
-                if (Board.getFactionAt(flocation).isNone()) {
-                    Board.setFactionAt(Factions.i.getWarZone(), flocation);
+                if (FactionUtils.getFactionAt(flocation).isNone()) {
+                    Board.getInstance().setFactionAt(Factions.getInstance().getWarZone(), flocation);
                     claims.add(flocation);
                     this.touched.add(flocation);
                     Bukkit.getLogger().info("Claiming chunk at X: " + flocation.getX() + " Z: " + flocation.getZ() + " to warzone..");
@@ -178,8 +179,8 @@ public class ConquestManager
         this.unclaimWarzone(clean);
         if (clean == null) {
             for (final FLocation loc : this.touched) {
-                if (Board.getFactionAt(loc).isWarZone()) {
-                    Board.setFactionAt(Factions.i.getNone(), loc);
+                if (FactionUtils.getFactionAt(loc).isWarZone()) {
+                    Board.getInstance().setFactionAt(Factions.getInstance().getNone(), loc);
                     Bukkit.getLogger().info("Unclaiming untracked WarZone chunk at " + loc.toString());
                 }
             }
@@ -314,7 +315,7 @@ public class ConquestManager
         for (int x = -radius; x < radius + 1; ++x) {
             for (int z = -radius; z < radius + 1; ++z) {
                 final FLocation flocation = new FLocation(world.getName(), chunkX + x, chunkZ + z);
-                if (!Board.getFactionAt(flocation).isNone()) {
+                if (!FactionUtils.getFactionAt(flocation).isNone()) {
                     return false;
                 }
             }
@@ -372,7 +373,7 @@ public class ConquestManager
     private HashSet<String> getClaimedChunkCoords() {
         final String worldNeeded = Bukkit.getWorlds().get(0).getName();
         final HashSet<String> map = new HashSet<String>();
-        for (final Map.Entry<String, Map<String, String>> data : Board.dumpAsSaveFormat().entrySet()) {
+        for (final Map.Entry<String, Map<String, String>> data : FactionUtils.dumpAsSaveFormat().entrySet()) {
             if (data.getKey() != null) {
                 if (!data.getKey().equals(worldNeeded)) {
                     continue;

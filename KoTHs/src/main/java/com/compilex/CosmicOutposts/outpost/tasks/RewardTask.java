@@ -88,23 +88,14 @@ implements Runnable {
             }
         }
         if (this.outpost.getOutpostTier() == OutpostTier.TRAINEE && this.outpost.getControllingFaction() != null) {
-            Faction f = Factions.i.getByTag(this.outpost.getControllingFaction());
+            Faction f = Factions.getInstance().getByTag(this.outpost.getControllingFaction());
             if (f == null) {
                 return;
             }
-            if (this.useNewEconomy) {
-                try {
-                    Econ.depositFactionBalance((Faction)f, (double)25000.0);
-                }
-                catch (Exception e) {
-                    this.useNewEconomy = false;
-                    e.printStackTrace();
-                    String bankId = f.getAccountId();
-                    CosmicKOTHPlugin.get_().getEconomy().depositPlayer(bankId, 25000.0);
-                }
-            } else {
+
+
                 CosmicKOTHPlugin.get_().getEconomy().depositPlayer(f.getAccountId(), 25000.0);
-            }
+
             f.sendMessage(ChatColor.GREEN.toString() + (Object)ChatColor.BOLD + "+ $25,000 " + (Object)ChatColor.GREEN + "(/f money" + (Object)ChatColor.GRAY + " [Trainee Outpost Perk]" + (Object)ChatColor.GREEN + ")");
         }
     }

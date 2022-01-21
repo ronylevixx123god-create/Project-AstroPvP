@@ -208,7 +208,7 @@ implements Listener {
             Furnace furnace = (Furnace)state;
             FLocation fl = new FLocation(e.getBlock().getLocation());
             Board.getInstance();
-            Faction f = Board.getFactionAt((FLocation)fl);
+            Faction f = FactionUtils.getFactionAt((FLocation)fl);
             if (f != null && f.isNormal() && furnace.getBurnTime() > 1 && HCFOutpostAPI.isControllingOutpost(f, OutpostType.COURTYARD)) {
                 this.cachedBlocksToBoost.computeIfAbsent(f, se -> new ConcurrentSet()).add(e.getBlock());
             }

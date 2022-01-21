@@ -126,10 +126,10 @@ public class CollectorInventory extends GUIBuilder {
         List<String> lore = new ArrayList<>();
         if (e.getSlot() == 13) {
             if (collector.getAmount(Material.TNT) == 0) return;
-            FPlayer fplayer = FPlayers.i.get(player);
+            FPlayer fplayer = FPlayers.getInstance().getByPlayer(player);
             Faction faction = fplayer.getFaction();
             if (faction.isWilderness()) return;
-            faction.tnt += collector.getTntAmount();
+            faction.setTNTBank((int) (faction.getTNTBank() + collector.getTntAmount()));
             Language.COLLECTOR_TNT.send(p, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(collector.getAmount(Material.TNT))));
             collector.setAmount(Material.TNT, 0);
             lore.add(Utils.format("&a&l* &fAmount: &a0"));
@@ -146,14 +146,14 @@ public class CollectorInventory extends GUIBuilder {
             collector.getLootMap().forEach((m, i) -> {
                 if (collector.getAmount(m) == 0) return;
                 if (m == Material.TNT) {
-                    FPlayer fplayer = FPlayers.i.get(player);
+                    FPlayer fplayer = FPlayers.getInstance().getByPlayer(player);
                     Faction faction = fplayer.getFaction();
                     if (faction.isWilderness()) return;
-                    if (faction.tnt == Double.MAX_VALUE) {
+                    if (faction.getTNTBank() >= faction.getMaxTNT()) {
                         p.sendMessage(Utils.format("&cYour /f tnt bank is FULL. Please clear some space."));
                         return;
                     }
-                    faction.tnt += Double.valueOf(collector.getAmount(Material.TNT));
+                    faction.setTNTBank(faction.getTNTBank() + collector.getAmount(Material.TNT));
                     Language.COLLECTOR_TNT.send(p, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(collector.getAmount(Material.TNT))));
                 } else {
                     double price = essentials.getWorth().getPrice(essentials, new ItemStack(m)).doubleValue() * collector.getAmount(m);
@@ -184,7 +184,6 @@ public class CollectorInventory extends GUIBuilder {
         meta.setLore(lore);
         itemStack.setItemMeta(meta);
         p.playSound(p.getLocation(), Sound.ITEM_PICKUP, 5, 5);
-        return;
     }
 
 

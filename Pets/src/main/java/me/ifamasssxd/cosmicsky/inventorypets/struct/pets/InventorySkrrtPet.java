@@ -119,8 +119,8 @@ public class InventorySkrrtPet extends InventoryPet {
             } while (p.hasMetadata("in_duel"));
 
 
-            FPlayer castingPlayer = (FPlayer) FPlayers.i.get(player);
-            FPlayer surroundingPlayer = (FPlayer) FPlayers.i.get(p);
+            FPlayer castingPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(player);
+            FPlayer surroundingPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(p);
 
             if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "skrrtCooldown")) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on skrrt cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "skrrtCooldown") + "&c."));

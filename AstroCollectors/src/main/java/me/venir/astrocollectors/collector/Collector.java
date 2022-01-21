@@ -154,12 +154,12 @@ public final class Collector {
     }
 
     public void sellTNT(Player player) {
-        FPlayer fplayer = FPlayers.i.get(player);
+        FPlayer fplayer = FPlayers.getInstance().getByPlayer(player);
         Faction faction = fplayer.getFaction();
 
         if (faction.isWilderness()) return;
 
-        if (faction.tnt == Double.MAX_VALUE) {
+        if (faction.getTNTBank() >= faction.getMaxTNT()) {
             player.sendMessage(Utils.format("&cYour /f tnt bank is FULL. Please clear some space."));
             return;
         }
@@ -168,7 +168,7 @@ public final class Collector {
 
         addTNTSellLog(player, this.getAmount(Material.TNT));
 
-        faction.tnt += this.getAmount(Material.TNT);
+        faction.setTNTBank(faction.getTNTBank() + this.getAmount(Material.TNT));;
         this.resetAmount(Material.TNT);
 
         player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);

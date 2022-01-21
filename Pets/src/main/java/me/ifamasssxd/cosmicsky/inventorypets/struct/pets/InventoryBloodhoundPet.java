@@ -11,8 +11,6 @@ import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.cmd.CmdFocus;
-import com.massivecraft.factions.cmd.CmdUnfocus;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
@@ -169,7 +167,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
          public void run() {
             pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
             pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
-            CmdUnfocus.unfocusPlayer(FactionUtils.getFaction(player), player);
+            //CmdUnfocus.unfocusPlayer(FactionUtils.getFaction(player), player);
          }
       }).runTaskLater(CosmicSkyInventoryPets.get(), 200L);
    }
@@ -221,11 +219,11 @@ public class InventoryBloodhoundPet extends InventoryPet {
 
    private void focusTargetPlayer(Player player, Player pTarget) {
       if (pTarget instanceof Player) {
-         FPlayer fPlayer = (FPlayer)FPlayers.i.get(player);
+         FPlayer fPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
          Faction myFaction = fPlayer.getFaction();
-         FPlayer targetPlayer = (FPlayer)FPlayers.i.get(pTarget);
+         FPlayer targetPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(pTarget);
          if (myFaction.isNormal()) {
-            CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+            //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
          }
       }
 

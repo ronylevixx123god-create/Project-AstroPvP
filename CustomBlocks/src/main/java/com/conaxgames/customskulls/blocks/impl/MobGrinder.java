@@ -117,7 +117,7 @@ public class MobGrinder extends CustomBlock {
     public void placeBlockAction(Player p0, BlockPlaceEvent p1, Block p2, ItemStack p3) {
         // check if the player has a faction.
         // check if the player is in faction land
-        FPlayer fPlayer = FPlayers.i.get(p0);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(p0);
         if (fPlayer == null) {
             p0.sendMessage(CC.RED + "You must have a faction to place a block of this type.");
             return;
@@ -133,7 +133,7 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void breakBlockAction(Player player, BlockBreakEvent p1, Block p2, ItemStack p3, CustomBlock cb, AbilityData data) {
-        FPlayer fPlayer = FPlayers.i.get(player);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
         Player breaker = p1.getPlayer();
         if (fPlayer == null) {
             // The block must be in the land to remove it.

@@ -3,12 +3,12 @@ package com.compilex.CosmicCustomCreepers.listeners;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.struct.FactionPermission;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.astrospawners.items.ItemSpawner;
@@ -113,11 +113,11 @@ implements Listener {
                     return null;
                 }
                 FLocation fLocation = new FLocation(spawnLoc);
-                Faction f = Board.getFactionAt(fLocation);
-                if (f.isNormal() && !f.hasPermission(FPlayers.i.get(p), fLocation, FactionPermission.CREEPER, null)) {
+                Faction f = FactionUtils.getFactionAt(fLocation);
+/*                if (f.isNormal() && !f.hasPermission(FPlayers.i.get(p), fLocation, FactionPermission.CREEPER, null)) {
                     p.sendMessage(CC.RedB + "(!) " + CC.Red + "You do not have permission to do that in this territory! A Coleader+ of " + f.getTag() + " needs to grant you /f perm to perform this action.");
                     return null;
-                }
+                }*/
                 ItemStack egg = e.getItem();
                 if (egg.getAmount() > 1) {
                     egg.setAmount(egg.getAmount() - 1);
@@ -207,7 +207,7 @@ implements Listener {
                         CreatureSpawner cs = (CreatureSpawner) b.getState();
                         ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
                         int spawnerCount = cs.getSpawnerCount();
-                        if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
+                        if (spawnerCount == 4 && !FactionUtils.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                             cs.setSpawnerCount((short) 1);
                             spawnerCount = 1;
                         }
@@ -232,7 +232,7 @@ implements Listener {
                     ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
 
                     int spawnerCount = cs.getSpawnerCount();
-                    if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
+                    if (spawnerCount == 4 && !FactionUtils.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                         cs.setSpawnerCount((short)1);
                         spawnerCount = 1;
                     }
@@ -254,7 +254,7 @@ implements Listener {
                     CreatureSpawner cs = (CreatureSpawner) b.getState();
                     ItemStack is = ItemSpawner.getItem(cs.getSpawnedType(), 1);
                     int spawnerCount = cs.getSpawnerCount();
-                    if (spawnerCount == 4 && !Board.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
+                    if (spawnerCount == 4 && !FactionUtils.getFactionAt(new FLocation(cs.getLocation())).isNormal()) {
                         cs.setSpawnerCount((short)1);
                         spawnerCount = 1;
                     }

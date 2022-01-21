@@ -58,8 +58,7 @@ public class GenBucketListener implements Listener {
                 FPlayer me = FactionUtils.getFPlayer(player);
                 BlockFace blockFace = event.getBlockFace();
                 ActiveBucket bucket = ActiveBucket.of(player.getItemInHand());
-                Board.getInstance();
-                Faction locFaction = Board.getFactionAt(new FLocation(event.getClickedBlock().getLocation()));
+                Faction locFaction = FactionUtils.getFactionAt(new FLocation(event.getClickedBlock().getLocation()));
                 if (bucket != null) {
                     event.setCancelled(true);
                     player.updateInventory();

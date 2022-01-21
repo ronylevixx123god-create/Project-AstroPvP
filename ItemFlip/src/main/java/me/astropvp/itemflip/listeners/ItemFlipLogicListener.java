@@ -48,27 +48,25 @@ public class ItemFlipLogicListener implements Listener {
         int slot = event.getSlot();
         Inventory inventory = event.getInventory();
         ItemStack item = event.getCurrentItem();
-        if (((ItemFlipPlayerData)data.getData().get(0)).getPlayer() == player) {
-            slots = Arrays.asList(new Integer[] {
-                    Integer.valueOf(1), Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(9), Integer.valueOf(10), Integer.valueOf(11), Integer.valueOf(12), Integer.valueOf(18), Integer.valueOf(19), Integer.valueOf(20),
-                    Integer.valueOf(21), Integer.valueOf(27), Integer.valueOf(28), Integer.valueOf(29), Integer.valueOf(30) });
-            items = ((ItemFlipPlayerData)data.getData().get(0)).getItems();
+        if (data.getData().get(0).getPlayer() == player) {
+            slots = Arrays.asList(1, Integer.valueOf(2), Integer.valueOf(3), Integer.valueOf(9), Integer.valueOf(10), Integer.valueOf(11), Integer.valueOf(12), Integer.valueOf(18), Integer.valueOf(19), Integer.valueOf(20),
+                    Integer.valueOf(21), 27, Integer.valueOf(28), Integer.valueOf(29), Integer.valueOf(30));
+            items = data.getData().get(0).getItems();
         } else {
-            slots = Arrays.asList(new Integer[] {
-                    Integer.valueOf(5), Integer.valueOf(6), Integer.valueOf(7), Integer.valueOf(14), Integer.valueOf(15), Integer.valueOf(16), Integer.valueOf(17), Integer.valueOf(23), Integer.valueOf(24), Integer.valueOf(25),
-                    Integer.valueOf(26), Integer.valueOf(32), Integer.valueOf(33), Integer.valueOf(34), Integer.valueOf(35) });
-            items = ((ItemFlipPlayerData)data.getData().get(1)).getItems();
+            slots = Arrays.asList(Integer.valueOf(5), Integer.valueOf(6), Integer.valueOf(7), Integer.valueOf(14), Integer.valueOf(15), Integer.valueOf(16), Integer.valueOf(17), Integer.valueOf(23), Integer.valueOf(24), Integer.valueOf(25),
+                    Integer.valueOf(26), Integer.valueOf(32), Integer.valueOf(33), Integer.valueOf(34), Integer.valueOf(35));
+            items = data.getData().get(1).getItems();
         }
         if (inventory != event.getClickedInventory()) {
             if (item == null || item.getType() == Material.AIR)
                 return;
             for (Iterator<Integer> iterator = slots.iterator(); iterator.hasNext(); ) {
-                int pos = ((Integer)iterator.next()).intValue();
+                int pos = iterator.next().intValue();
                 if (inventory.getItem(pos) == null || inventory.getItem(pos).getType() == Material.AIR) {
                     player.playSound(player.getLocation(), Sound.ORB_PICKUP, 50.0F, 50.0F);
                     items.add(event.getCurrentItem().clone());
                     event.setCurrentItem(null);
-                    ItemFlipPlayerData flip_data = (player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
+                    ItemFlipPlayerData flip_data = (player == data.getData().get(0).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
                     flip_data.setAccepted(false);
                     data.setCountdown(-1);
                     Inventory refresh_inventory = ItemFlipTradeInventory.getInventory(data);
@@ -76,8 +74,8 @@ public class ItemFlipLogicListener implements Listener {
                         ItemStack new_item = refresh_inventory.getItem(i);
                         inventory.setItem(i, new_item);
                     }
-                    ((ItemFlipPlayerData)data.getData().get(0)).getPlayer().updateInventory();
-                    ((ItemFlipPlayerData)data.getData().get(1)).getPlayer().updateInventory();
+                    data.getData().get(0).getPlayer().updateInventory();
+                    data.getData().get(1).getPlayer().updateInventory();
                     return;
                 }
             }
@@ -87,8 +85,8 @@ public class ItemFlipLogicListener implements Listener {
             items.remove(item);
             event.setCurrentItem(null);
             Inventory refresh_inventory = ItemFlipTradeInventory.getInventory(data);
-            Bukkit.getScheduler().runTaskLater((Plugin)AstroItemFlipPlugin.getInstance(), () -> player.getInventory().addItem(new ItemStack[] { item }), 20L);
-            ItemFlipPlayerData flip_data = (player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
+            Bukkit.getScheduler().runTaskLater(AstroItemFlipPlugin.getInstance(), () -> player.getInventory().addItem(new ItemStack[] { item }), 20L);
+            ItemFlipPlayerData flip_data = (player == data.getData().get(0).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
             flip_data.setAccepted(false);
             data.setCountdown(-1);
             player.playSound(player.getLocation(), Sound.ORB_PICKUP, 50.0F, 50.0F);
@@ -96,14 +94,14 @@ public class ItemFlipLogicListener implements Listener {
                 ItemStack new_item = refresh_inventory.getItem(i);
                 inventory.setItem(i, new_item);
             }
-            ((ItemFlipPlayerData)data.getData().get(0)).getPlayer().updateInventory();
-            ((ItemFlipPlayerData)data.getData().get(1)).getPlayer().updateInventory();
+            data.getData().get(0).getPlayer().updateInventory();
+            data.getData().get(1).getPlayer().updateInventory();
             return;
         }
         if (item != null && item.getType() != Material.AIR && (new NBTWrapper(item)).hasKey("item_flip_color")) {
             Color color = Color.valueOf((new NBTWrapper(item)).getString("item_flip_color"));
-            ItemFlipPlayerData flip_data = (player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
-            if (color == ((ItemFlipPlayerData)data.getData().get(0)).getColor() || color == ((ItemFlipPlayerData)data.getData().get(1)).getColor())
+            ItemFlipPlayerData flip_data = (player == data.getData().get(0).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
+            if (color == data.getData().get(0).getColor() || color == data.getData().get(1).getColor())
                 return;
             flip_data.setColor(color);
             Inventory refresh_inventory = ItemFlipTradeInventory.getInventory(data);
@@ -111,20 +109,20 @@ public class ItemFlipLogicListener implements Listener {
                 ItemStack new_item = refresh_inventory.getItem(i);
                 inventory.setItem(i, new_item);
             }
-            ((ItemFlipPlayerData)data.getData().get(0)).getPlayer().updateInventory();
-            ((ItemFlipPlayerData)data.getData().get(1)).getPlayer().updateInventory();
+            data.getData().get(0).getPlayer().updateInventory();
+            data.getData().get(1).getPlayer().updateInventory();
             return;
         }
-        if ((slot == 0 && player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) || (slot == 8 && player == ((ItemFlipPlayerData)data.getData().get(1)).getPlayer())) {
-            if (data.getCountdown() != -1 && (!((ItemFlipPlayerData)data.getData().get(0)).isAccepted() || !((ItemFlipPlayerData)data.getData().get(1)).isAccepted()))
+        if ((slot == 0 && player == data.getData().get(0).getPlayer()) || (slot == 8 && player == data.getData().get(1).getPlayer())) {
+            if (data.getCountdown() != -1 && (!data.getData().get(0).isAccepted() || !data.getData().get(1).isAccepted()))
                 return;
-            ItemFlipPlayerData flip_data = (player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
+            ItemFlipPlayerData flip_data = (player == data.getData().get(0).getPlayer()) ? data.getData().get(0) : data.getData().get(1);
             if (flip_data.getItems().size() == 0) {
                 player.playSound(player.getLocation(), Sound.ITEM_BREAK, 0.75F, 2.0F);
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wager atleast one item!");
                 return;
             }
-            if (((ItemFlipPlayerData)data.getData().get(0)).isAccepted() && ((ItemFlipPlayerData)data.getData().get(1)).isAccepted())
+            if (data.getData().get(0).isAccepted() && data.getData().get(1).isAccepted())
                 data.setCountdown(-1);
             flip_data.setAccepted(!flip_data.isAccepted());
             player.playSound(player.getLocation(), Sound.ORB_PICKUP, 25.0F, 25.0F);
@@ -133,11 +131,11 @@ public class ItemFlipLogicListener implements Listener {
                 ItemStack new_item = refresh_inventory.getItem(i);
                 inventory.setItem(i, new_item);
             }
-            ((ItemFlipPlayerData)data.getData().get(0)).getPlayer().updateInventory();
-            ((ItemFlipPlayerData)data.getData().get(1)).getPlayer().updateInventory();
-            if (((ItemFlipPlayerData)data.getData().get(0)).isAccepted() && ((ItemFlipPlayerData)data.getData().get(1)).isAccepted()) {
+            data.getData().get(0).getPlayer().updateInventory();
+            data.getData().get(1).getPlayer().updateInventory();
+            if (data.getData().get(0).isAccepted() && data.getData().get(1).isAccepted()) {
                 data.setCountdown(10);
-                (new TradeCountdownTask(data, inventory)).runTaskTimer((Plugin)AstroItemFlipPlugin.getInstance(), 20L, 20L);
+                (new TradeCountdownTask(data, inventory)).runTaskTimer(AstroItemFlipPlugin.getInstance(), 20L, 20L);
             }
             return;
         }
@@ -157,13 +155,13 @@ public class ItemFlipLogicListener implements Listener {
         ItemFlipData data = ItemFlipData.findItemFlipData(player);
         if (data == null || data.isActive())
             return;
-        Player other = (player == ((ItemFlipPlayerData)data.getData().get(0)).getPlayer()) ? ((ItemFlipPlayerData)data.getData().get(1)).getPlayer() : ((ItemFlipPlayerData)data.getData().get(0)).getPlayer();
+        Player other = (player == data.getData().get(0).getPlayer()) ? data.getData().get(1).getPlayer() : data.getData().get(0).getPlayer();
         data.remove();
         other.sendMessage(CC.RedB + "(!) " + CC.Red + player.getName() + " has closed out of the Item Flip Inventory!");
         player.sendMessage(CC.RedB + "(!) " + CC.Red + "You have closed out of the item flip inventory!");
         other.closeInventory();
-        ((ItemFlipPlayerData)data.getData().get(0)).getItems().stream().forEach(item -> ((ItemFlipPlayerData)data.getData().get(0)).getPlayer().getInventory().addItem(new ItemStack[] { item }));
-        ((ItemFlipPlayerData)data.getData().get(1)).getItems().stream().forEach(item -> ((ItemFlipPlayerData)data.getData().get(1)).getPlayer().getInventory().addItem(new ItemStack[] { item }));
+        data.getData().get(0).getItems().stream().forEach(item -> data.getData().get(0).getPlayer().getInventory().addItem(new ItemStack[] { item }));
+        data.getData().get(1).getItems().stream().forEach(item -> data.getData().get(1).getPlayer().getInventory().addItem(new ItemStack[] { item }));
     }
 
     @EventHandler

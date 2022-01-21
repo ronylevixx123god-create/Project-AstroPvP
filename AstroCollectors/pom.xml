@@ -84,7 +84,7 @@
         </dependency>
         <dependency>
             <groupId>com.astropvp</groupId>
-            <artifactId>CustomBlock</artifactId>
+            <artifactId>CustomBlocks</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CustomBlocks.jar</systemPath>

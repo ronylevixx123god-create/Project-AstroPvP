@@ -2,14 +2,10 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
-import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.util.TimeUtil;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -22,6 +18,9 @@ import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class InventoryPetTesla extends InventoryPet {
    public InventoryPets getOwner() {
@@ -69,7 +68,7 @@ public class InventoryPetTesla extends InventoryPet {
             int duration = this.getDuration(petItem.getLevel());
             petItem.setLastUsed(System.currentTimeMillis());
             boolean inCombat = CombatLog.inCombat(player);
-            boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
+            boolean inWarzone = FactionUtils.getFactionAt(new FLocation(player.getLocation())).isWarZone();
             int xp = inCombat && inWarzone ? 10 : 4;
             CosmicSkyInventoryPets.get().getPetManager().getTeslaBuffs().put(player.getUniqueId(), new TeslaPetBuff(1.0D, System.currentTimeMillis() + (long)(duration * 1000)));
             player.sendMessage(this.getOwner().getMsgWithPrefix(CC.Green) + CC.GreenB + " [" + CC.Gray + "Tesla Pet Boost (" + CC.Green + "No Soul Costs" + CC.Gray + ")" + CC.GreenB + "]");
@@ -79,7 +78,7 @@ public class InventoryPetTesla extends InventoryPet {
             return true;
          }
       } else {
-         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtil.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
+         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
       }
    }
 

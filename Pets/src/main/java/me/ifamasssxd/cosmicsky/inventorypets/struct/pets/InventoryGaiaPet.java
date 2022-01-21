@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
@@ -56,7 +57,7 @@ public class InventoryGaiaPet extends InventoryPet {
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking())) {
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
       } else {
-         boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
+         boolean inWarzone = FactionUtils.getFactionAt(new FLocation(player.getLocation())).isWarZone();
          int xpGain = inWarzone ? 50 : 5;
          int affected = ((Enchantments)Bukkit.getPluginManager().getPlugin("Enchantments")).getNaturesWrathEnchant().procNaturesWrath(player, player, petItem.getLevel(), null, 0.5D);
          if (affected == 0) {

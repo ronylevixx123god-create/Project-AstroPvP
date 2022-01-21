@@ -55,7 +55,7 @@ public class PacketHandler {
     }
 
     public void handle(PacketInPingAllies pingAllies, Player sender){
-        FPlayer fPlayer = FPlayers.i.get(sender.getUniqueId().toString());
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(sender);
 
         if(fPlayer == null)return;
 
@@ -66,7 +66,7 @@ public class PacketHandler {
         PacketOutPingAllies container = new PacketOutPingAllies(sender.getName(), 0, pingAllies.getX(), pingAllies.getY(), pingAllies.getZ(), pingAllies.isAllies());
 
         if(pingAllies.isAllies()){
-            for(Faction ally : Factions.i.get()){
+            for(Faction ally : Factions.getInstance().getAllFactions()){
                 if(faction.getRelationTo(ally).isAlly()){
                     for(FPlayer allyPlayer : ally.getFPlayersWhereOnline(true)){
                         Player player = allyPlayer.getPlayer();
@@ -101,7 +101,7 @@ public class PacketHandler {
     }
 
     public void handle(PacketInChunkClaim chunkDataRequest, Player sender){
-        if(FactionUtils.attemptClaim(FPlayers.i.get(sender), FactionUtils.getFaction(sender), new Location(sender.getWorld(), chunkDataRequest.getX(), 0, chunkDataRequest.getZ()), true)) {
+        if(FactionUtils.attemptClaim(FPlayers.getInstance().getByPlayer(sender), FactionUtils.getFaction(sender), new Location(sender.getWorld(), chunkDataRequest.getX(), 0, chunkDataRequest.getZ()), true)) {
             PacketOutChunkData packetOutChunkData = new PacketOutChunkData(chunkDataRequest.getX(), chunkDataRequest.getZ(), FactionUtils.getFactionId(sender), FactionUtils.getFaction(sender).getTag());
             PacketOutChunkDataList packet = new PacketOutChunkDataList(Lists.newArrayList(packetOutChunkData));
             CosmicPlayers.get().getCosmicPlayer(sender).sendPacket(packet);

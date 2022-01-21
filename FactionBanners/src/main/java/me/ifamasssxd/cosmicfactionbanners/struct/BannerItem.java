@@ -25,7 +25,7 @@ public class BannerItem extends CosmicItem
         if (objects.length != 4) {
             return null;
         }
-        final Faction faction = (Faction)((objects[0] instanceof Faction) ? objects[0] : Factions.i.get(objects[0].toString()));
+        final Faction faction = (Faction)((objects[0] instanceof Faction) ? objects[0] : Factions.getInstance().getFactionById(objects[0].toString()));
         if (faction == null) {
             return null;
         }

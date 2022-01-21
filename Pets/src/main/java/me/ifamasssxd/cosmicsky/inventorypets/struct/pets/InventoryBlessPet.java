@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
@@ -59,7 +60,7 @@ public class InventoryBlessPet extends InventoryPet {
          return false;
       }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
-         boolean inWarzone = Board.getFactionAt(new FLocation(player.getLocation())).isWarZone();
+         boolean inWarzone = FactionUtils.getFactionAt(new FLocation(player.getLocation())).isWarZone();
          int xpGain = inWarzone ? 50 : 5;
          this.getFplayersInRadius(this.getBlessRadius(petItem.getLevel()), player);
          player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "PET: ** BLESSED **");
@@ -75,7 +76,7 @@ public class InventoryBlessPet extends InventoryPet {
    }
 
    public void getFplayersInRadius(double radius, Player player) {
-      FPlayer fplayer = (FPlayer)FPlayers.i.get(player);
+      FPlayer fplayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
       Faction fac = fplayer.getFaction();
       if (player.getUniqueId().toString().equalsIgnoreCase("6e1815b6-209d-40c9-9fb9-0dee04e73f7e")) {
          player.sendMessage(CC.RedI + "HOLA FUCKBOI");

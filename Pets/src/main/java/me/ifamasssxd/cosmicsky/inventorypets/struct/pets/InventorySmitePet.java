@@ -102,7 +102,7 @@ public class InventorySmitePet extends InventoryPet {
    }
 
    public LivingEntity getTargetEntityFromBlock(Player player, int maxRangeInBlocks) {
-      FPlayer fp = (FPlayer)FPlayers.i.get(player);
+      FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(player);
       Block b = player.getTargetBlock((Set<Material>) null, maxRangeInBlocks);
       double targetDistance = 4.0D;
       LivingEntity target = null;
@@ -131,7 +131,7 @@ public class InventorySmitePet extends InventoryPet {
                break;
             }
 
-            pTarget = (FPlayer)FPlayers.i.get((Player)possibleTarget);
+            pTarget = (FPlayer)FPlayers.getInstance().getByPlayer((Player)possibleTarget);
          } while(pTarget.getFaction().isNormal() && pTarget.getRelationTo(fp).isAtLeast(Relation.ALLY));
 
          target = (LivingEntity)possibleTarget;

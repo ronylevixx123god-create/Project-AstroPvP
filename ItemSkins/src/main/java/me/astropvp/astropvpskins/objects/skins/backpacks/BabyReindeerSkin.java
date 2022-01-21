@@ -1,10 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.backpacks;
 
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.massivecraft.factions.Faction;
-import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import org.bukkit.Bukkit;

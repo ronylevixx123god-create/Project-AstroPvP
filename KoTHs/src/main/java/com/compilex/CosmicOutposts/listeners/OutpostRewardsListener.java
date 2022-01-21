@@ -39,12 +39,12 @@ import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.compilex.CosmicOutposts.utils.MonsterUtils;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.FactionChunkOwnershipCache;
 import java.util.Random;
 import me.ifamasssxd.cosmicfactionboosters.BoosterAPI;
 import me.ifamasssxd.cosmicfactionboosters.enums.BoosterType;
@@ -74,7 +74,7 @@ implements Listener {
             return;
         }
         if (e.getEntity().getKiller() != null) {
-            Faction killerFaction = FPlayers.i.get(e.getEntity().getKiller()).getFaction();
+            Faction killerFaction = FPlayers.getInstance().getByPlayer(e.getEntity().getKiller()).getFaction();
             if (Bukkit.getPluginManager().isPluginEnabled("CosmicFactionBoosters") && BoosterAPI.hasActiveBooster(killerFaction, BoosterType.EXP)) {
                 return;
             }
@@ -106,22 +106,7 @@ implements Listener {
     }
 
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
-    public void onCreatureSpawn(CreatureSpawnEvent e) {
-        if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
-            Faction f = FactionChunkOwnershipCache.getCachedFactionChunkOwnership(e.getLocation());
-            if (f == null || f.isNone()) {
-                FLocation fl = new FLocation(e.getEntity().getLocation());
-                f = Board.getFactionAt(fl);
-            }
-            if (f.isNormal() && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getTraineeOutpost().getControllingFaction().equals(f.getTag())) {
-                e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Arkkit.get(), e.getEntity().hasMetadata("monsterAmount") ? e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 2 : 2));
-            }
-            if (f.isNormal() && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction() != null && CosmicKOTHPlugin.get_().getVanillaOutpost().getControllingFaction().equals(f.getTag()) && Math.random() < 0.5) {
-                e.getEntity().setMetadata("monsterAmount", new FixedMetadataValue(Arkkit.get(), e.getEntity().hasMetadata("monsterAmount") ? e.getEntity().getMetadata("monsterAmount").get(0).asInt() + 2 : 2));
-            }
-        }
-    }
+
 
     @EventHandler
     public void onSoulDemonDeath(EntityDeathEvent e) {

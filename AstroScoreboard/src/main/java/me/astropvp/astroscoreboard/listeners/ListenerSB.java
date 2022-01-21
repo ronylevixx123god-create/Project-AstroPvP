@@ -46,12 +46,12 @@ public class ListenerSB implements Listener {
 
     @EventHandler
     public void onFactionJoin(FPlayerJoinEvent event) {
-        refreshTagsAsyncForServer(event.getFPlayer().getPlayer());
+        refreshTagsAsyncForServer(event.getfPlayer().getPlayer());
     }
 
     @EventHandler
     public void onFactionLeave(FPlayerLeaveEvent event) {
-        refreshTagsAsyncForServer(event.getFPlayer().getPlayer());
+        refreshTagsAsyncForServer(event.getfPlayer().getPlayer());
     }
 
     @EventHandler
@@ -75,19 +75,7 @@ public class ListenerSB implements Listener {
         refreshTagsAsyncForServer(event.getPlayer());
     }
 
-    @EventHandler
-    public void onFactionFocus(FactionFocusEvent event) {
-        refreshTagsAsyncForFaction(event.getFsender(), FactionUtils.getFaction(event.getFtarget()));
-        refreshTagsAsyncForFaction(event.getFsender(), event.getFsender());
 
-    }
-
-    @EventHandler
-    public void onFactionUnFocus(FactionUnFocusEvent event) {
-        refreshTagsAsyncForFaction(event.getFsender(), FactionUtils.getFaction(event.getFtarget()));
-        refreshTagsAsyncForFaction(event.getFsender(), event.getFsender());
-
-    }
 
     public void refreshTagsAsyncForFaction(Faction faction1, Faction faction2) {
         Collection<? extends Player> faction1Players = faction1.getOnlinePlayers();

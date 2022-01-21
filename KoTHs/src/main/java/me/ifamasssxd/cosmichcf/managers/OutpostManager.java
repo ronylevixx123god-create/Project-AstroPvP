@@ -44,9 +44,7 @@ import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.P;
 import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.struct.FLogType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.HCFOutpost;
 import me.ifamasssxd.cosmichcf.struct.Outpost;
@@ -134,9 +132,7 @@ public class OutpostManager {
                 if (end.endsWith(", ")) {
                     end = end.substring(0, end.length() - 2);
                 }
-                if (faction != null) {
-                    P.p.getFlogManager().log(faction, FLogType.SELLING, new String[]{player.getName(), front, end});
-                }
+
             }
             catch (Exception e) {
                 e.printStackTrace();
@@ -272,12 +268,7 @@ public class OutpostManager {
                 Faction controlling = FactionUtils.getFactionById((String)out.getLastFactionToCap());
                 if (controlling != null && out.getLastCapturedTime() != 0L && System.currentTimeMillis() - out.getLastCapturedTime() >= this.MONEY_GIVE_DELAY && System.currentTimeMillis() - this.lastMoneyGiven >= this.MONEY_GIVE_DELAY) {
                     this.lastMoneyGiven = System.currentTimeMillis();
-                    try {
-                        Econ.depositFactionBalance((Faction)controlling, (double)10000.0);
-                    }
-                    catch (Exception e) {
-                        e.printStackTrace();
-                    }
+
                 }
                 return;
             }

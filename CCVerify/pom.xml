@@ -55,7 +55,7 @@
             <artifactId>facs</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/libs/Factions (19).jar</systemPath>
+            <systemPath>${project.basedir}/libs/Factions.jar</systemPath>
         </dependency>
 
         <dependency>

@@ -88,8 +88,7 @@ public class GenBucketTask extends BukkitRunnable {
     }
 
     public boolean isLocationValid() {
-        Board.getInstance();
-        Faction locFaction = Board.getFactionAt(new FLocation(this.currentLocation));
+        Faction locFaction = FactionUtils.getFactionAt(new FLocation(this.currentLocation));
         boolean hasChunkAccess = false;
         if (this.currentLocation != null) {
             hasChunkAccess = FactionUtils.getFaction(this.player).isNormal() && FactionUtils.getFaction(this.player).getId().equals(locFaction.getId());

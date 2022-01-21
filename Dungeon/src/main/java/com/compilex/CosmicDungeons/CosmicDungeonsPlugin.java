@@ -72,8 +72,6 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.earth2me.essentials.IEssentials;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -84,6 +82,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import net.milkbowl.vault.economy.Economy;

@@ -1,19 +1,14 @@
 package me.astropvp.astroscoreboard.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.massivecraft.factions.cmd.killtracker.KillHandler;
-import me.bryside.WildPvPPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
+import me.astropvp.astroscoreboard.manager.TabListManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.scoreboard.*;
-import me.astropvp.astroscoreboard.manager.TabListManager;
+import org.bukkit.scoreboard.Scoreboard;
 
 public class PlayerListener implements Listener {
 	
