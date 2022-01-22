@@ -163,6 +163,7 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new EntityStackerListener(this));
         registerListener(new MobSpawnerListener());
         //registerListener(new MobCoinShopListener());
+        registerListener(new FtopCommandListener());
         registerListener(new PlayerDataOnJoin());
         //registerListener(new ClickMobcoinsNoteListener());
         registerListener(new GrindingGuiClose());

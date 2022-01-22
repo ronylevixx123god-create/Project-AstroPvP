@@ -25,24 +25,20 @@ public class CommandFactionsTop implements CommandExecutor {
         int to = (page - 1) * 9 + 9;
         Map<Integer, FactionData> data = FactionsTopAPI.getTopFactions(from, to);
         for (int x = from; x < to; x++) {
-            if (data.containsKey(Integer.valueOf(x))) {
-                FactionData faction = data.get(Integer.valueOf(x));
+            if (data.containsKey(x)) {
+                FactionData faction = data.get(x);
                 TextComponent msg = new TextComponent(CC.GreenB + pos + ". " + CC.Green + faction.getFaction().getTag() + CC.Green + " - " + CC.WhiteB + "$" + NumberUtils.formatMoney(faction.getSpawnerValue()));
-                StringBuilder builder = new StringBuilder();
-                builder.append(CC.GreenB + CC.Underline + faction.getFaction().getTag() + "\n\n");
-                builder.append(CC.White + "Member Wealth: " + CC.Green + "$" +
-                        NumberUtils.formatMoney(faction.getMemberValue()) + "\n");
-                builder.append(CC.White + "Spawner Value: " + CC.Green + "$" +
-                        NumberUtils.formatMoney(faction.getSpawnerValue()) + "\n");
-                builder.append(CC.White + "Spawners: " + CC.Green + faction.getSpawnerCount() + "\n");
-                builder.append(CC.White + "Stacked Spawners: " + CC.Green + faction
-                        .getStackedSpawnerCount() + "\n");
-                builder.append(CC.White + "Richest Member:\n");
-                builder.append(" " + CC.Green + faction.getRichestPlayer() + ": $" +
-                        NumberUtils.formatMoney(faction.getRichestPlayerBalance()));
-                msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(builder
-                        .toString())).create()));
-                player.spigot().sendMessage((BaseComponent)msg);
+                String builder = CC.GreenB + CC.Underline + faction.getFaction().getTag() + "\n\n" +
+                        CC.White + "Member Wealth: " + CC.Green + "$" + NumberUtils.formatMoney(faction.getMemberValue()) + "\n" +
+                        CC.White + "Spawner Value: " + CC.Green + "$" + NumberUtils.formatMoney(faction.getSpawnerValue()) + "\n" +
+                        CC.White + "Spawners: " + CC.Green + faction.getSpawnerCount() + "\n" +
+                        CC.White + "Stacked Spawners: " + CC.Green + faction
+                        .getStackedSpawnerCount() +
+                        "\n" +
+                        CC.White + "Richest Member:\n" +
+                        " " + CC.Green + faction.getRichestPlayer() + ": $" + NumberUtils.formatMoney(faction.getRichestPlayerBalance());
+                msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(builder)).create()));
+                player.sendMessage(msg);
                 pos++;
             }
         }
