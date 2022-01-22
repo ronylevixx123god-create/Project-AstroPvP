@@ -81,7 +81,6 @@ public class MobSpawnerListener implements Listener {
                     public void run() {
                         SpawnerData spawnerData = new SpawnerData(type, math);
                         MakeSpawner.newFileItem(event.getBlock().getLocation(), spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
-                        AstroSpawners.getInstance().getSpawnersMap().put(event.getBlock().getLocation(), spawnerData);
                     }
                 });
         event.getPlayer().setItemInHand(spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));

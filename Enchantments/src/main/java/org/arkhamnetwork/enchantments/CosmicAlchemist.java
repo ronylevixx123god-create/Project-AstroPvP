@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
+import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.listeners.EnchanterListener;

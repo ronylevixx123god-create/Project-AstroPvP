@@ -3,11 +3,15 @@ package net.astropvp.core.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.perms.Role;
+
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.configs.DeleteSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import net.astropvp.core.utils.BlocksUtil;
 import net.astropvp.core.utils.ChunkBusterUtils;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
@@ -48,8 +52,6 @@ public class ChunkBusterListener implements Listener {
                 return;
             }
 
-            SpawnerManager manager = new SpawnerManager();
-
             int X = event.getBlock().getChunk().getX() * 16;
             int Z = event.getBlock().getChunk().getZ() * 16;
             for (int x = 0; x < 16; x++) {
@@ -57,9 +59,10 @@ public class ChunkBusterListener implements Listener {
                     for (int y = 0; y < 256; y++) {
                         Block block = event.getBlock().getWorld().getBlockAt(X + x, y, Z + z);
                         if ((block.getType() == Material.MOB_SPAWNER) && (block.getType() != Material.AIR)) {
-                            SpawnerData data = manager.findSpawnerData(block.getLocation());
+                            SpawnerData data = AstroSpawners.getInstance().getSpawnersMap().get(block.getLocation());
                             if (data != null) {
                                 data.setSpawnerAmount(0);
+                                DeleteSpawner.delete(event.getBlock().getWorld().getBlockAt(X + x, y, Z + z).getLocation());
                             }
                         }
                         if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR) && (block.getType() != Material.JUKEBOX)) {
@@ -85,6 +88,7 @@ public class ChunkBusterListener implements Listener {
                     }
                 }
             }
+            event.getPlayer().sendMessage(CC.translate("&a&l(!)&a Finished chunkbusting the whole chunk."));
         }
     }
 }

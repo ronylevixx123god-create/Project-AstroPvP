@@ -64,7 +64,7 @@ public class SpawnerManager {
                 EntityType type = EntityType.valueOf(set.getString("type"));
                 int amount = Integer.parseInt(set.getString("amount"));
                 SpawnerData spawnerData = new SpawnerData(type, amount);
-                AstroSpawners.getInstance().getSpawnersMap().put(location, spawnerData);
+                //AstroSpawners.getInstance().getSpawnersMap().put(location, spawnerData);
                 MakeSpawner.newFileItem(location, type, amount);
             }
             this.loading = false;

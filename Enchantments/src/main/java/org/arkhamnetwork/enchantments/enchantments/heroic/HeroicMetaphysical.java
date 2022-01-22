@@ -58,7 +58,6 @@ public class HeroicMetaphysical extends HeroicCustomEnchantment
                 if (damagedEquipped != null) {
                     final double chance = 0.2 * damagedEquipped;
                     if (HeroicMetaphysical.this.random.nextDouble() <= chance) {
-                        event.setCancelled(true);
                         if (event.getTarget() instanceof Player && !event.getTarget().hasMetadata("neutralized")) {
                             ((Player)event.getTarget()).sendMessage(CC.LightPurpleB + "** POLYMORPHIC METAPHYSICAL (" + CC.Gray + "Ice Aspect blocked!" + CC.LightPurpleB + ") **");
                             DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL *", "METAPHYSICAL");

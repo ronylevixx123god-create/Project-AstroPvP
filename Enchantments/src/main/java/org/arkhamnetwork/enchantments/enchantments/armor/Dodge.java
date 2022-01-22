@@ -34,17 +34,16 @@ public class Dodge extends CustomEnchantment
         }
         if (e instanceof EntityDamageByEntityEvent) {
             double chance = 0.025;
-            final boolean sneaking = ((Player)player).isSneaking();
+            final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.05;
             }
             if (Math.random() < chance) {
-                if (attacker instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player)attacker, SkinType.SPRING_2021_SWORD)) {
-                    e.setCancelled(true);
+                if (attacker instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_2021_SWORD)) {
+                    e.setDamage(0);
+                    ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
+                    player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
                 }
-                e.setDamage(0);
-                ((Player)player).sendMessage(ChatColor.YELLOW + "*DODGE*");
-                player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }
         }
     }
