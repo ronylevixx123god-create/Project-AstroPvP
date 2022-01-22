@@ -14,6 +14,7 @@ import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.cache.CacheManager;
 import net.astropvp.core.utils.cache.CachedPlayer;
+import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -75,6 +76,8 @@ public class AstroArmorSetsAPI {
         ItemStack[] armor = player.getInventory().getArmorContents();
 
         for (ItemStack item : armor) {
+            if (item == null) continue;
+            if (item.getType() == Material.AIR) continue;
             if (hasSetTypeOnItem(item)) {
                 cache.addArmorSet(getSetTypeOnItem(item));
             }

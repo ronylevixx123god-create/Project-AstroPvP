@@ -140,7 +140,7 @@ public class ChatListener implements Listener {
                 } else {
                     String name = itemStack.getItemMeta().getDisplayName();
                     int amount = itemStack.getAmount();
-                    clickable.addItem(String.format("&f» " + name + " &7(%sx) &f«", amount), itemStack);
+                    clickable.addItem(String.format("&f» " + name + " &7(%sx) &f« ", amount), itemStack);
                 }
                 message = message.replace("[item]", "").replace("[ITEM]", "");
             }

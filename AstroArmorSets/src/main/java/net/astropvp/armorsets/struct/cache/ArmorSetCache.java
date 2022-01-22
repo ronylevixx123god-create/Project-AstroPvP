@@ -1,6 +1,7 @@
 package net.astropvp.armorsets.struct.cache;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -14,6 +15,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
+@Setter
 @Getter
 public class ArmorSetCache extends Cache {
     private final Map<ArmorSetType, Integer> currentArmorSets;
@@ -44,7 +46,6 @@ public class ArmorSetCache extends Cache {
                 }
             }
         }
-        Bukkit.broadcastMessage("Added armorset");
 
     }
 
@@ -60,7 +61,6 @@ public class ArmorSetCache extends Cache {
                 this.currentArmorSet = null;
             }
         }
-        Bukkit.broadcastMessage("Removed armorset");
 
     }
 
@@ -70,7 +70,6 @@ public class ArmorSetCache extends Cache {
         } else {
             this.currentSetCrystals.put(type, 1);
         }
-        Bukkit.broadcastMessage("Added armorCrystal");
 
     }
 
@@ -83,7 +82,6 @@ public class ArmorSetCache extends Cache {
                 this.currentSetCrystals.put(type, this.currentSetCrystals.get(type) - 1);
             }
         }
-        Bukkit.broadcastMessage("Removed armorCrystal");
 
     }
 
@@ -91,7 +89,6 @@ public class ArmorSetCache extends Cache {
         if (AstroArmorSetsAPI.isHeroic(item)) {
             this.heroicPieces++;
         }
-        Bukkit.broadcastMessage("Added heroicarmor");
 
     }
 
@@ -99,7 +96,6 @@ public class ArmorSetCache extends Cache {
         if (!AstroArmorSetsAPI.isHeroic(item)) {
             this.heroicPieces--;
         }
-        Bukkit.broadcastMessage("removed heroicarmor");
 
     }
 

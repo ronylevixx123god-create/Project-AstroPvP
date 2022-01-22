@@ -66,7 +66,6 @@ public enum ArmorSetType {
             List<String> lore = meta.getLore();
             lore.add("");
             lore.addAll(set.getArmorLore());
-            lore.add("");
             meta.setLore(lore);
             item.setItemMeta(meta);
             NBTWrapper wrapper = new NBTWrapper(item);

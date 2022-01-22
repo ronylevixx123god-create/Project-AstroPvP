@@ -2,6 +2,7 @@ package net.astropvp.armorsets;
 
 import lombok.Getter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import net.astropvp.armorsets.commands.CommandDebugArmorSet;
 import net.astropvp.armorsets.commands.CommandGiveArmorSet;
 import net.astropvp.armorsets.commands.CommandGiveHeroicArmor;
 import net.astropvp.armorsets.commands.CommandGiveHeroicUpgrade;
@@ -38,6 +39,8 @@ public class AstroArmorSets extends JavaPlugin {
         getCommand("heroicarmor").setExecutor(new CommandGiveHeroicArmor());
         getCommand("armorset").setExecutor(new CommandGiveArmorSet());
         getCommand("heroicupgrade").setExecutor(new CommandGiveHeroicUpgrade());
+        getCommand("debugarmorsets").setExecutor(new CommandDebugArmorSet());
+
 
 
     }

@@ -32,6 +32,7 @@ import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.*;
@@ -109,15 +110,16 @@ final class HotbarArmorSwapListener
             return;
         }
         String worldName = e.getPlayer().getWorld().getName();
-        if (e.isCancelled() && (worldName.equals("world_duels") || worldName.equals("world_duels2") || worldName.equals("cosmic-pvparenas"))) {
-            return;
-        }
+
         Player p = e.getPlayer();
         if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - p.getMetadata("lastArmorSwap").get(0).asLong() <= 12L) {
             return;
         }
         if (e.isCancelled() && p.hasMetadata("noArmorSwap")) {
             return;
+        }
+        if (getOldArmorPiece(p, e.getItem()) != null && getOldArmorPiece(p, e.getItem()).getType() != Material.AIR) {
+            AstroArmorSetsAPI.refreshArmorPiece(e.getItem(), getOldArmorPiece(p, e.getItem()), e.getPlayer());
         }
         e.setCancelled(true);
         e.setUseInteractedBlock(Event.Result.DENY);
@@ -127,27 +129,28 @@ final class HotbarArmorSwapListener
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
             MaskType.rescanMask(p, true);
         }
-        if (getOldArmorPiece(p, e.getItem()) != null) {
-            AstroArmorSetsAPI.refreshArmorPiece(e.getItem(), getOldArmorPiece(p, e.getItem()), e.getPlayer());
-        }
+
         p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
     }
 
-    public ItemStack getOldArmorPiece(Player player, ItemStack is) {
-        if (is == null || is.getType() == Material.AIR) {
+    public ItemStack getOldArmorPiece(Player player, ItemStack itemStack) {
+        if (itemStack == null || itemStack.getType() == Material.AIR) {
             return null;
         }
-        String n = is.getType().toString().toLowerCase();
+        String n = itemStack.getType().toString().toLowerCase();
         PlayerInventory inv = player.getInventory();
         if (n.contains("helmet")) {
-            return inv.getHelmet();
-        } else if (n.contains("chestplate")) {
-            return inv.getChestplate();
-        } else if (n.contains("leggings")) {
-            return inv.getLeggings();
+            return player.getInventory().getHelmet();
+        }
+        if (n.contains("chestplate")) {
+            return player.getInventory().getChestplate();
+        }
+        if (n.contains("leggings")) {
+            return player.getInventory().getLeggings();
 
-        } else if (n.contains("boots")) {
-            return inv.getBoots();
+        }
+        if (n.contains("boots")) {
+            return player.getInventory().getBoots();
         }
         return null;
     }

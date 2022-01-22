@@ -12,3 +12,6 @@ commands:
   armorset:
     description: command
     aliases: ['givearmorset', 'armorsets']
+  debugarmorsets:
+    description: Debug armorsets
+    aliases: ['debugarmor', 'debugarmorset']

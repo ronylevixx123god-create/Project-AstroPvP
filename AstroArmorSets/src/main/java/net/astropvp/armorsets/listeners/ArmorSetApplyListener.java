@@ -45,7 +45,8 @@ public class ArmorSetApplyListener implements Listener {
             }
 
             if (AstroArmorSetsAPI.hasCrystalsApplied(e.getOldArmorPiece())) {
-                List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(e.getNewArmorPiece());
+                List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(e.getOldArmorPiece());
+                assert crystals != null;
                 for (ArmorSetType type : crystals) {
                     cache.removeArmorCrystal(type);
 
