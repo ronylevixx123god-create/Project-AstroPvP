@@ -9,7 +9,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.entity.Player;
@@ -34,16 +33,7 @@ public class EnderpearlCooldown
 
     public static long getEnderPearlCooldown(Player pl) {
         long retr = pl.getWorld().getName().equals("world_arena") ? arenaDelayMilliseconds : (pl.getWorld().getName().equals("world_koth") ? kothDelayMilliseconds : enderpearlDelayMilliseconds);
-        int level = UpgradeUtils.getUpgradeLevel(pl, "HEROIC_ENDERPEARL_COOLDOWN");
-        if (level == 1) {
-            retr -= 500L;
-        } else if (level == 2) {
-            retr -= 1000L;
-        } else if (level == 3) {
-            retr -= 1250L;
-        } else if (level == 4) {
-            retr -= 2000L;
-        }
+
         if (pl.getWorld().getName().contains("dungeon"))
             return 500L;
         return retr;

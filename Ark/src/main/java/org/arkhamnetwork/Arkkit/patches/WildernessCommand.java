@@ -43,7 +43,7 @@ public class WildernessCommand extends ArkPlugin {
     protected static String messageSuccess;
     protected static String messageFailed;
     protected static String messageWorld;
-    protected static HashSet<String> claimedChunkCoords;
+    //protected static HashSet<String> claimedChunkCoords;
 
     public WildernessCommand(Plugin p) {
         super(p);
@@ -64,7 +64,7 @@ public class WildernessCommand extends ArkPlugin {
             this.kill();
             return;
         }
-        claimedChunkCoords = this.getClaimedChunkCoords();
+        //claimedChunkCoords = this.getClaimedChunkCoords();
         xCenter = Arkkit.get().getConfig().getInt("settings.wilderness.x-center");
         zCenter = Arkkit.get().getConfig().getInt("settings.wilderness.z-center");
         maxRange = Arkkit.get().getConfig().getInt("settings.wilderness.max-range");
@@ -94,7 +94,7 @@ public class WildernessCommand extends ArkPlugin {
     private HashSet<String> getClaimedChunkCoords() {
         String worldNeeded = Bukkit.getWorlds().get(0).getName();
         HashSet<String> map = new HashSet<String>();
-        for (Map.Entry data : FactionUtils.dumpAsSaveFormat().entrySet()) {
+        for (Map.Entry data : Board.getBoardImpl().dumpAsSaveFormat().entrySet()) {
             if (data.getKey() == null || !data.getKey().equals(worldNeeded)) continue;
             map.addAll(((Map) data.getValue()).keySet());
         }

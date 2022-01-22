@@ -324,7 +324,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Factionsss</artifactId>
+            <artifactId>Factionss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>

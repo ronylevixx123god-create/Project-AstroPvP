@@ -31,7 +31,6 @@ import com.cosmicpvp.cosmicutils.struct.DecimalFormatType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.rit.sucy.EnchantmentAPI;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
@@ -163,17 +162,8 @@ public class CombatLog
     }
 
     public static long getCombatTagDuration(Player player) {
-        int combatDuration = UpgradeUtils.getUpgradeLevel(player, "HEROIC_COMBAT_TAG");
         long toRetr = tagDuration;
-        if (combatDuration == 1) {
-            toRetr -= 250L;
-        } else if (combatDuration == 2) {
-            toRetr -= 500L;
-        } else if (combatDuration == 3) {
-            toRetr -= 1000L;
-        } else if (combatDuration == 4) {
-            toRetr -= 2000L;
-        }
+
         if (mask_plugin && MaskUtils.hasMaskEquipped(player, "JOKER")) {
             toRetr -= 3000L;
         }

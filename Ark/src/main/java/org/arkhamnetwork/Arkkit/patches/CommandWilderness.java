@@ -70,7 +70,7 @@ final class CommandWilderness
                 if (new Random().nextBoolean()) {
                     z = Math.abs(z);
                 }
-                if (WildernessCommand.claimedChunkCoords.contains(x / 16 + "," + z / 16) || WildernessCommand.disabledBlocks.contains((block = world.getBlockAt(x, (y = world.getHighestBlockYAt(x, z)) - 1, z)).getType().toString()) || WildernessCommand.disabledBlocks.contains(block.getLocation().add(0.0, 1.0, 0.0).getBlock().getType().toString()) || !FactionUtils.getFactionAt(new FLocation(block.getLocation())).isNone())
+                if (WildernessCommand.disabledBlocks.contains((block = world.getBlockAt(x, (y = world.getHighestBlockYAt(x, z)) - 1, z)).getType().toString()) || WildernessCommand.disabledBlocks.contains(block.getLocation().add(0.0, 1.0, 0.0).getBlock().getType().toString()) || !FactionUtils.getFactionAt(new FLocation(block.getLocation())).isNone())
                     continue;
                 player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.67f);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 60, 0));

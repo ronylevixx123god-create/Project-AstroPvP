@@ -133,10 +133,7 @@ public class SetBonusListener
             Player damaged = (Player) event.getEntity();
             ArmorSet damagedArmorSet = CosmicArmorSetsAPI.getArmorSet(damaged);
             Map<ArmorSet, Integer> bonuses = CosmicArmorSetsAPI.getBonusCrystalsEquippedWithCorruptionIncluded(damaged, damager);
-            int reduceLevel;
-            if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) != damageAtStart && (reduceLevel = UpgradeUtils.getUpgradeLevel((Player) event.getEntity(), "HEROIC_ARMOR_SET")) > 0) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (reduceLevel == 1 ? 0.9 : (reduceLevel == 2 ? 0.85 : (reduceLevel == 3 ? 0.8 : (reduceLevel == 4 ? 0.75 : 1.0)))));
-            }
+
             if (damagedArmorSet != null) {
                 damagedArmorSet.getArmorSetInfo().onPlayerDamaged(damaged, event);
             } else {
