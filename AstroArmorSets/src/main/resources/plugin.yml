@@ -5,3 +5,10 @@ depend: [CosmicPvPUtils, CosmicSkyCustomItems, NBTAPI]
 commands:
   heroicarmor:
     description: command
+    aliases: [ 'giveheroicarmor' ]
+  heroicupgrade:
+    description: command
+    aliases: ['giveheroicupgrade', 'heroicupgrades']
+  armorset:
+    description: command
+    aliases: ['givearmorset', 'armorsets']

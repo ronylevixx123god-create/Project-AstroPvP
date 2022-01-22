@@ -12,8 +12,6 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicconquest.CosmicConquestAPI;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
-import me.ifamasssxd.killtracker.listeners.Tracker;
 import org.arkhamnetwork.Arkkit.patches.*;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.EnchantmentOrb;
@@ -76,8 +74,6 @@ public class LootGenerator {
         uncommonExtras.put(ItemUtils.getTitleVoucher("RIP"), 0.005);
         uncommonExtras.put(ItemUtils.getTitleVoucher("Getmed"), 0.005);
         uncommonExtras.put(new ItemStack(Material.HOPPER, 1), 0.01);
-        uncommonExtras.put(KillTrackerAPI.buildTracker(Tracker.Simple), 0.025);
-        uncommonExtras.put(KillTrackerAPI.buildTracker(Tracker.Unique), 0.01);
         uncommonExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.UNIQUE, 50), 5), 0.02);
         uncommonExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.UNIQUE), 1), 0.01);
         rareExtras = new HashMap();
@@ -101,7 +97,6 @@ public class LootGenerator {
 
         rareExtras.put(new ItemStack(Material.getMaterial(383), 1, (short) 50), 0.01);
         rareExtras.put(new ItemStack(Material.HOPPER, 5), 0.01);
-        rareExtras.put(KillTrackerAPI.buildTracker(Tracker.Elite), 0.01);
         rareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ELITE, 50), 5), 0.02);
         rareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ELITE), 1), 0.01);
         ultraRareExtras = new HashMap();
@@ -131,7 +126,6 @@ public class LootGenerator {
         ultraRareExtras.put(new ItemStack(Material.getMaterial(383), 2, (short) 50), 0.01);
         ultraRareExtras.put(new ItemStack(Material.HOPPER, 16), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 1), 0.01);
-        ultraRareExtras.put(KillTrackerAPI.buildTracker(Tracker.Ultimate), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ULTIMATE, 50), 5), 0.02);
         ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ULTIMATE), 2), 0.01);
         ultraRareExtras.put(ShowcaseExpander.getShowcaseExpanderItem(), 0.01);
@@ -163,7 +157,6 @@ public class LootGenerator {
         legendaryExtras.put(ItemUtils.getTitleVoucher("weewoo"), 0.01);
         legendaryExtras.put(ItemUtils.getTitleVoucher("Shiva-d"), 0.01);
 
-        legendaryExtras.put(KillTrackerAPI.buildTracker(Tracker.Legendary), 0.015);
         legendaryExtras.put(new ItemStack(Material.getMaterial(383), 16, (short) 50), 0.02);
         legendaryExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 8), 0.03);
@@ -204,7 +197,6 @@ public class LootGenerator {
         godExtras.put(ItemUtils.getTitleVoucher("Epic"), 0.01);
         godExtras.put(ItemUtils.getTitleVoucher("#GetSplit"), 0.01);
 
-        godExtras.put(KillTrackerAPI.buildTracker(Tracker.Legendary), 0.015);
         godExtras.put(new ItemStack(Material.getMaterial(383), 48, (short) 50), 0.02);
         godExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 10), 0.03);

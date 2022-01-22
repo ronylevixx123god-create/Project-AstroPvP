@@ -20,19 +20,19 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
         return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nHelmet&r")).addLoreLines(
                 CC.translate("&dReceived from opening the koth lootbag.")
-        ).build();
+        ).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nChestplate&r")).addLoreLines(CC.translate("&dReceived from opening the koth lootbag.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nChestplate&r")).addLoreLines(CC.translate("&dReceived from opening the koth lootbag.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nLeggings&r")).addLoreLines(CC.translate("&dReceived from opening the koth lootbag.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nLeggings&r")).addLoreLines(CC.translate("&dReceived from opening the koth lootbag.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nBoots&r")).addLoreLines(CC.translate("&dReceived from opening the koth lootbag.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r &f&l&nBoots&r")).addLoreLines(CC.translate("&dReceived from opening the koth lootbag.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {

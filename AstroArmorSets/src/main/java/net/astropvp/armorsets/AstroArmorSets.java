@@ -2,10 +2,14 @@ package net.astropvp.armorsets;
 
 import lombok.Getter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import net.astropvp.armorsets.commands.CommandGiveArmorSet;
 import net.astropvp.armorsets.commands.CommandGiveHeroicArmor;
+import net.astropvp.armorsets.commands.CommandGiveHeroicUpgrade;
 import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
 import net.astropvp.armorsets.listeners.ArmorSetApplyListener;
+import net.astropvp.armorsets.listeners.HeroicArmorDamageListener;
+import net.astropvp.armorsets.listeners.HeroicUpgradeApplyListener;
 import net.astropvp.damagehandler.commands.CommandDebugDamage;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -32,11 +36,18 @@ public class AstroArmorSets extends JavaPlugin {
 
     public void registerCommands() {
         getCommand("heroicarmor").setExecutor(new CommandGiveHeroicArmor());
+        getCommand("armorset").setExecutor(new CommandGiveArmorSet());
+        getCommand("heroicupgrade").setExecutor(new CommandGiveHeroicUpgrade());
+
 
     }
 
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new ArmorSetApplyListener(this), this);
+        getServer().getPluginManager().registerEvents(new HeroicUpgradeApplyListener(), this);
+        getServer().getPluginManager().registerEvents(new HeroicArmorDamageListener(), this);
+
+
     }
 
     public void registerCustomItems() {

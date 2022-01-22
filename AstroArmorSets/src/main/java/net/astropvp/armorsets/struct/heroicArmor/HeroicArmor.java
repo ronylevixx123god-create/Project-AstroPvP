@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import lombok.Getter;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -12,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+@Getter
 public enum HeroicArmor {
     HELMET(3, 1, Material.LEATHER_HELMET, CC.DarkRedB + "Heroic Helmet", false),
     CHESTPLATE(8, 1, Material.LEATHER_CHESTPLATE, CC.DarkRedB + "Heroic Chestplate", false),
@@ -42,7 +44,7 @@ public enum HeroicArmor {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)
                         .addLoreLine("")
-                        .addLoreLine(CC.Gray + "+:" + (int)armor.increase + " Bonus Attack Damage")
+                        .addLoreLine(CC.Gray + "+" + (int)armor.increase + " Bonus Attack Damage")
                         .addLoreLine(CC.DarkRed + "This weapon is stronger than diamond.")
                         .addEnchantment(Enchantment.DAMAGE_ALL, 5)
                         .addEnchantment(Enchantment.DURABILITY, 3)
@@ -64,5 +66,14 @@ public enum HeroicArmor {
             items.add(wrapper.build());
         }
         return items;
+    }
+
+    public static HeroicArmor getFromMaterial(Material material) {
+        String materialName = material.name();
+        for (HeroicArmor type : HeroicArmor.values()) {
+            if (!materialName.endsWith(type.name())) continue;
+            return type;
+        }
+        return null;
     }
 }

@@ -6,6 +6,7 @@ import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.core.utils.cache.Cache;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -35,7 +36,7 @@ public class ArmorSetCache extends Cache {
             this.currentArmorSets.put(type, 1);
         } else {
             this.currentArmorSets.put(type, this.currentArmorSets.get(type) + 1);
-            if (this.currentArmorSets.get(type) == 4) {
+            if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) == 4) {
                 this.currentArmorSet = type;
 
                 for (String s : type.getArmorSet().getArmorEquipMessage()) {
@@ -43,6 +44,8 @@ public class ArmorSetCache extends Cache {
                 }
             }
         }
+        Bukkit.broadcastMessage("Added armorset");
+
     }
 
     public void removeArmorSet(ArmorSetType type) {
@@ -51,12 +54,13 @@ public class ArmorSetCache extends Cache {
             if (amount - 1 == 0) {
                 this.currentArmorSets.remove(type);
             } else {
-                this.currentSetCrystals.put(type, this.currentSetCrystals.get(type) - 1);
+                this.currentArmorSets.put(type, this.currentArmorSets.get(type) - 1);
             }
-            if (this.currentArmorSets.get(type) != 4) {
+            if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) != 4) {
                 this.currentArmorSet = null;
             }
         }
+        Bukkit.broadcastMessage("Removed armorset");
 
     }
 
@@ -66,6 +70,8 @@ public class ArmorSetCache extends Cache {
         } else {
             this.currentSetCrystals.put(type, 1);
         }
+        Bukkit.broadcastMessage("Added armorCrystal");
+
     }
 
     public void removeArmorCrystal(ArmorSetType type) {
@@ -77,18 +83,24 @@ public class ArmorSetCache extends Cache {
                 this.currentSetCrystals.put(type, this.currentSetCrystals.get(type) - 1);
             }
         }
+        Bukkit.broadcastMessage("Removed armorCrystal");
+
     }
 
     public void addHeroicArmor(ItemStack item) {
         if (AstroArmorSetsAPI.isHeroic(item)) {
             this.heroicPieces++;
         }
+        Bukkit.broadcastMessage("Added heroicarmor");
+
     }
 
     public void removeHeroicArmor(ItemStack item) {
         if (!AstroArmorSetsAPI.isHeroic(item)) {
             this.heroicPieces--;
         }
+        Bukkit.broadcastMessage("removed heroicarmor");
+
     }
 
 }

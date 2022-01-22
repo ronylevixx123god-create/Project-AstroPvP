@@ -18,19 +18,19 @@ import java.util.List;
 
 public class GrinderArmorSet extends ArmorSet {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&8&lGrinder Helmet")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&8&lGrinder Helmet")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&8&lGrinder Torso")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&8&lGrinder Torso")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&8&lGrinder Pants")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&8&lGrinder Pants")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&8&lGrinder Kicks")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&8&lGrinder Kicks")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
 

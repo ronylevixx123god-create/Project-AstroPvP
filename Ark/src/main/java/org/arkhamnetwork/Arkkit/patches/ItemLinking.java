@@ -47,7 +47,6 @@ public class ItemLinking
     protected static String FORMAT = "&8[&cP[PRESTIGE]&8] &8[[TITLE]&8] [PREFIX][NAME]&f: [COLOR][MESSAGE]";
     protected static boolean arkham_prestige = false;
     protected static Economy economy = null;
-    public CommandViewBrag viewBrag;
 
     public ItemLinking(Plugin p) {
         super(p);
@@ -160,14 +159,7 @@ public class ItemLinking
         arkham_prestige = this.getBukkitPlugin().getServer().getPluginManager().isPluginEnabled("ArkhamPrestige");
         bragEnabled = this.getBukkitPlugin().getConfig().getBoolean("settings.item_linking.bragEnabled", false);
         this.setupEconomy();
-        ItemLinkingChatListener listener = new ItemLinkingChatListener(this);
-        this.registerListener(listener);
-        if (bragEnabled) {
-            this.viewBrag = new CommandViewBrag("brag", "/<command> [args]", "Sends a link to a bragable inventory.");
-            this.registerCommand(this.viewBrag);
-        }
-        this.registerCommand(new CommandSendItem("senditem", "/<command> [args]", "Sends a link of the item in your character's hand.", new ArrayList<String>(Arrays.asList("showitem", "send"))));
-        this.registerCommand(new CommandSendBrag("sendbrag", "/<command> [args]", "Sends a link to your inventory.", new ArrayList<String>(Arrays.asList("showbrag")), listener));
+
     }
 
     @Override

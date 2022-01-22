@@ -18,19 +18,19 @@ import java.util.List;
 
 public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&6&lEngineer Face Mask")).addLoreLines(CC.translate("&6Engineer face mask.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&6&lEngineer Face Mask")).addLoreLines(CC.translate("&6Engineer face mask.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&6&lEngineer Explosion-Proof Torso")).addLoreLines(CC.translate("&6The mantel of engineers.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&6&lEngineer Explosion-Proof Torso")).addLoreLines(CC.translate("&6The mantel of engineers.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&6&lEngineer Protective Chaps")).addLoreLines(CC.translate("&6The fabled robes of engineers.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&6&lEngineer Protective Chaps")).addLoreLines(CC.translate("&6The fabled robes of engineers.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&6&lEngineer Steel Toed Boots")).addLoreLines(CC.translate("&6Light as feather, heavy as stone.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&6&lEngineer Steel Toed Boots")).addLoreLines(CC.translate("&6Light as feather, heavy as stone.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
 

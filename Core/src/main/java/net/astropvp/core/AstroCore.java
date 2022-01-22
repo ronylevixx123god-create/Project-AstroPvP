@@ -13,7 +13,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
-import net.astropvp.core.titles.listeners.ChatListener;
 import net.astropvp.core.titles.listeners.PermissionListener;
 import net.astropvp.core.titles.listeners.PlayerJoinQuitListener;
 import net.astropvp.core.titles.listeners.TitleInventoryListener;
@@ -465,6 +464,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
         getServer().getPluginManager().registerEvents( new ItemFilterListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
+        getServer().getPluginManager().registerEvents(new net.astropvp.core.listeners.ChatListener(), this);
     }
 
     public void registerCustomItems() {

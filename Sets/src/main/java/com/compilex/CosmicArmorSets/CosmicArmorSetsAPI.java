@@ -67,9 +67,6 @@ public class CosmicArmorSetsAPI {
     public static ItemStack createRandomArmorSetUpgrade() {
         String star = CC.GoldB + "* " + CC.Gold;
         ItemStack retr = new ItemBuilder(Material.CHEST, CC.GoldB + "Random Heroic Upgrade " + CC.Gray + "(Right Click)", CC.Gray + "Click to receive a random " + CC.GoldU + "Heroic Armorset Upgrade", CC.Gray + "from one of the following armor sets!", "", CC.GoldB + "Available Armor Sets", star + ArmorSet.YETI.getDisplayName(), star + ArmorSet.MOTHER_OF_YIJKI.getDisplayName(), star + ArmorSet.SUPREME.getDisplayName(), star + ArmorSet.RANGER.getDisplayName(), star + ArmorSet.PHANTOM.getDisplayName(), star + ArmorSet.DIMENSIONAL_TRAVELER.getDisplayName()).build();
-        if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            retr = ItemID.assignItemID(null, retr);
-        }
         return new NBTWrapper(retr).setString("cosmicType", "RANDOM_ARMOR_UPGRADE").build();
     }
 

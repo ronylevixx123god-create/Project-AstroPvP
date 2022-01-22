@@ -26,7 +26,10 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Material;
@@ -124,7 +127,31 @@ final class HotbarArmorSwapListener
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
             MaskType.rescanMask(p, true);
         }
+        if (getOldArmorPiece(p, e.getItem()) != null) {
+            AstroArmorSetsAPI.refreshArmorPiece(e.getItem(), getOldArmorPiece(p, e.getItem()), e.getPlayer());
+        }
         p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
     }
+
+    public ItemStack getOldArmorPiece(Player player, ItemStack is) {
+        if (is == null || is.getType() == Material.AIR) {
+            return null;
+        }
+        String n = is.getType().toString().toLowerCase();
+        PlayerInventory inv = player.getInventory();
+        if (n.contains("helmet")) {
+            return inv.getHelmet();
+        } else if (n.contains("chestplate")) {
+            return inv.getChestplate();
+        } else if (n.contains("leggings")) {
+            return inv.getLeggings();
+
+        } else if (n.contains("boots")) {
+            return inv.getBoots();
+        }
+        return null;
+    }
+
+
 }
 

@@ -1,13 +1,14 @@
 package net.astropvp.armorsets.struct.sets;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -21,19 +22,19 @@ public class LunaArmorSet extends ArmorSet {
     public static List<UUID> lunaStrikedPlayers = new ArrayList<>();
 
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&7&lLuna Helmet")).addLoreLines(CC.translate("&7From the galaxy to astro.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&7&lLuna Helmet")).addLoreLines(CC.translate("&7From the galaxy to astro.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&7&lLuna Chain Torso")).addLoreLines(CC.translate("&7From the galaxy to astro.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&7&lLuna Chain Torso")).addLoreLines(CC.translate("&7From the galaxy to astro.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&7&lLuna Jeans")).addLoreLines(CC.translate("&7From the galaxy to astro.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&7&lLuna Jeans")).addLoreLines(CC.translate("&7From the galaxy to astro.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&7&lLuna Kicks")).addLoreLines(CC.translate("&7From the galaxy to astro.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&7&lLuna Kicks")).addLoreLines(CC.translate("&7From the galaxy to astro.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
 
@@ -105,7 +106,7 @@ public class LunaArmorSet extends ArmorSet {
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&l* &7Negate all incoming Pet Damage modifiers (5s)")));
         enemy.sendMessage("");
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicArmorSetsPlugin.get_(), () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroArmorSets.getInstance(), () -> {
             if (isLunarStriked(enemy)) {
                 lunaStrikedPlayers.remove(enemy.getUniqueId());
             }

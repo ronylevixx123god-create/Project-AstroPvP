@@ -18,19 +18,19 @@ import java.util.List;
 
 public class DragonArmorSet extends ArmorSet {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&e&lDecapitated Dragon Skull")).addLoreLines(CC.translate("&eThe mythical helmet of dragons.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&e&lDecapitated Dragon Skull")).addLoreLines(CC.translate("&eThe mythical helmet of dragons.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&e&lFirey Chestplate of Dragons")).addLoreLines(CC.translate("&eThe mythical chestplate of dragons.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&e&lFirey Chestplate of Dragons")).addLoreLines(CC.translate("&eThe mythical chestplate of dragons.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&e&lScorched Leggings of Dragons")).addLoreLines(CC.translate("&eThe mythical leggings of dragons.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&e&lScorched Leggings of Dragons")).addLoreLines(CC.translate("&eThe mythical leggings of dragons.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&e&lDragon Slayer Battle Boots")).addLoreLines(CC.translate("&eThe mythical boots of dragons.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&e&lDragon Slayer Battle Boots")).addLoreLines(CC.translate("&eThe mythical boots of dragons.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
 

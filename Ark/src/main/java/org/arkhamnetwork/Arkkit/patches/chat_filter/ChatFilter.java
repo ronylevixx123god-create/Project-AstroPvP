@@ -46,7 +46,7 @@ public class ChatFilter
         super(p);
     }
 
-    protected static boolean isChatHalted() {
+    public static boolean isChatHalted() {
         return chat_haulted;
     }
 

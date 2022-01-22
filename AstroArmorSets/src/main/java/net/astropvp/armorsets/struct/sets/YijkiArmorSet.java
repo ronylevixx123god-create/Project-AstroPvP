@@ -1,8 +1,5 @@
 package net.astropvp.armorsets.struct.sets;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.CosmicArmorSetsPlugin;
-import com.compilex.CosmicArmorSets.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
@@ -13,8 +10,10 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
+import net.astropvp.armorsets.utils.LocationUtils;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.armor.Phoenix;
 import org.bukkit.*;
@@ -30,19 +29,19 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&f&lYijki Mask")).addLoreLines(CC.translate("&fYijki face mask.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&f&lYijki Mask")).addLoreLines(CC.translate("&fYijki face mask.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&f&lYijki Torso")).addLoreLines(CC.translate("&fThe forbidden mantel of yijki.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&f&lYijki Torso")).addLoreLines(CC.translate("&fThe forbidden mantel of yijki.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&f&lYijki Robeset")).addLoreLines(CC.translate("&fThe fabled robes of yijki.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&f&lYijki Robeset")).addLoreLines(CC.translate("&fThe fabled robes of yijki.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&f&lYijki Footwraps")).addLoreLines(CC.translate("&fLight as feather, heavy as stone.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&f&lYijki Footwraps")).addLoreLines(CC.translate("&fLight as feather, heavy as stone.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
 
@@ -110,7 +109,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
     public void activateYijki(Location center, Player player) throws Exception {
         ArrayList<Location> procLocations = new ArrayList<Location>();
         ArrayList<Player> nearbyPlayers = new ArrayList<Player>();
-        FPlayer fp = FPlayers.i.get(player);
+        FPlayer fp = FPlayers.getInstance().getByPlayer(player);
         for (int i = 0; i < 16; ++i) {
             Location l = LocationUtils.getNearbyLocation(center, 8, 2, 0);
             l.getWorld().playSound(l, Sound.WITHER_SPAWN, 1.0f, 0.4f);
@@ -121,18 +120,17 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
         for (Entity nearbyEnt : player.getNearbyEntities(32.0, 64.0, 32.0)) {
             if (!(nearbyEnt instanceof Player)) continue;
             Player pNear = (Player) nearbyEnt;
-            FPlayer fpNear = FPlayers.i.get(pNear);
-            if (CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player)) continue;
+            FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
             if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CUPID_AMULET)) {
                 player.sendMessage(CC.translate("&c&l* Amulet of Angles &7(Blocked Yijki) &c&l*"));
                 continue;
             }
             if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                 continue;
-            pNear.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "** REVENGE OF YIJKI (" + ChatColor.RED + fp.getNameAsync() + " [1.5s]" + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") **");
+            pNear.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "** REVENGE OF YIJKI (" + ChatColor.RED + fp.getName() + " [1.5s]" + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") **");
             nearbyPlayers.add(pNear);
         }
-        Bukkit.getScheduler().runTaskLater(CosmicArmorSetsPlugin.get_(), () -> {
+        Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
             for (Location l : procLocations) {
                 l.getWorld().strikeLightningEffect(l);
                 l.getWorld().playSound(l, Sound.WITHER_DEATH, 1.0f, 0.4f);
@@ -146,7 +144,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
                 for (Player pNear : nearbyPlayers) {
                     FPlayer fpNear;
-                    if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = FPlayers.i.get(pNear)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || CosmicArmorSetsAPI.hasInfiniteLuck(pNear, 4, player) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                    if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = FPlayers.getInstance().getByPlayer(pNear)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                         continue;
                     int damage = 16;
                     try {

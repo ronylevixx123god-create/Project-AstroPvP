@@ -19,21 +19,21 @@ import java.util.List;
 
 public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(CC.translate("&cThe fabled hood of the Phantom.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(CC.translate("&cThe fabled hood of the Phantom.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(CC.translate("&cThe legendary shroud of the Phantom.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(CC.translate("&cThe legendary shroud of the Phantom.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(CC.translate("&cThe demonic robe of the Phantom.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(CC.translate("&cThe demonic robe of the Phantom.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
         return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&c&lPhantom Hood")).addLoreLines(
                 CC.translate("&cThe silent sandals of the Phantom."))
-                .build();
+                .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {

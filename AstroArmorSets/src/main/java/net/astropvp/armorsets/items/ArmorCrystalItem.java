@@ -91,7 +91,7 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
                 if(str.contains("&")) {
                     lore.add(CC.translate("  " + s.getColor() + CC.Bold + "  " + s.getColor() + str));
                 } else {
-                    lore.add("  " + s.getColor() + CC.Bold + "● " + s.getColor() + str);
+                    lore.add("  " + CC.DarkGrayB + "● " + s.getColor() + str);
                 }
             }
         }

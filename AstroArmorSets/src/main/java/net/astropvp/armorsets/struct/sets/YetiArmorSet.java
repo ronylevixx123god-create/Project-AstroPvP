@@ -18,21 +18,21 @@ import java.util.List;
 
 public class YetiArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&b&lYeti Facemask")).addLoreLines(CC.translate("&bThe savage mask of the Yeti.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&b&lYeti Facemask")).addLoreLines(CC.translate("&bThe savage mask of the Yeti.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&b&lBloody Yeti Torso")).addLoreLines(CC.translate("&bThe impermable chestplate of the Yeti.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&b&lBloody Yeti Torso")).addLoreLines(CC.translate("&bThe impermable chestplate of the Yeti.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&b&lFuzzy Yeti Leggings")).addLoreLines(CC.translate("&bThe cozy yet monstrous legs of the Yeti.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&b&lFuzzy Yeti Leggings")).addLoreLines(CC.translate("&bThe cozy yet monstrous legs of the Yeti.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
         return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&b&lBig-Yeti Boots")).addLoreLines(
                 CC.translate("&bBigfoot has nothing on these boots."))
-                .build();
+                .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {

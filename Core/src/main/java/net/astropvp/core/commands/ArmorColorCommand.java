@@ -67,7 +67,7 @@ public class ArmorColorCommand implements CommandExecutor {
 
         ArmorColorGUI armorColorGUI = new ArmorColorGUI(player);
         armorColorGUI.open();
-        player.sendMessage(CC.translate("&aOpening the armor color net.astropvp.armorsets.gui..."));
+        player.sendMessage(CC.translate("&aOpening the armor color gui..."));
 
 
         return false;

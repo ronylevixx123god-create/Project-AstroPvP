@@ -23,7 +23,7 @@ public class ChatColorGUI extends GUIBuilder {
 
     @Override
     protected int getSlots() {
-        return 18;
+        return 9;
     }
 
     @Override
@@ -40,7 +40,6 @@ public class ChatColorGUI extends GUIBuilder {
         this.inventory.setItem(6, getItems(6));
         this.inventory.setItem(7, getItems(7));
         this.inventory.setItem(8, getItems(8));
-        this.inventory.setItem(13, player.getItemInHand());
     }
 
     @Override

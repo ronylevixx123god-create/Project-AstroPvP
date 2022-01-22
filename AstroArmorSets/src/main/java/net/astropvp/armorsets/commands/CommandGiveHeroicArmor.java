@@ -12,7 +12,11 @@ import org.bukkit.inventory.ItemStack;
 public class CommandGiveHeroicArmor implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String string, String[] strings) {
-        if (sender instanceof Player && sender.isOp()) {
+        if (!sender.isOp()) {
+            sender.sendMessage(CC.Red + "No permission.");
+            return true;
+        }
+        if (sender instanceof Player) {
             for (ItemStack item : HeroicArmor.getHeroicItems()) {
                 ((Player) sender).getInventory().addItem(item);
             }

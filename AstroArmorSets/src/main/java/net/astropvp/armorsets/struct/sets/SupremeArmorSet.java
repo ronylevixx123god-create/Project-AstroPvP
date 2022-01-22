@@ -18,19 +18,19 @@ import java.util.List;
 
 public class SupremeArmorSet extends ArmorSet implements ArmorSetWeapon {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&4&lSupreme Headgear")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&4&lSupreme Headgear")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&4&lSupreme Vest")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&4&lSupreme Vest")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&4&lSupreme Chaps")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&4&lSupreme Chaps")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&4&lSupreme Thruster Boots")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&4&lSupreme Thruster Boots")).addLoreLines(CC.translate("&4A lightweight headpiece fit fot take off.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {

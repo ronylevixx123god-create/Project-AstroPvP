@@ -48,12 +48,11 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>facs</artifactId>
+        <artifactId>factions</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
     </dependency>
-
 
     <dependency>
         <groupId>com.astropvp</groupId>
@@ -61,6 +60,56 @@
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>pets</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/CosmicSkyInventoryPets.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>eapi</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>skins</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>articleapi</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/ParticleAPI_v2.1.1.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>enchants</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
+    </dependency>
+
+
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>weaponrunes</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
     </dependency>
 
     <dependency>

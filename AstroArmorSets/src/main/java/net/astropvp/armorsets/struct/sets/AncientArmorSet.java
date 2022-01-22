@@ -5,8 +5,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.cmd.CmdFocus;
-import com.massivecraft.factions.cmd.CmdUnfocus;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -17,6 +15,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -31,19 +30,19 @@ import java.util.List;
 
 public class AncientArmorSet extends ArmorSet {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&3&lAncient Cap")).addLoreLines(CC.translate("&3Powerful martine helmet.")).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&3&lAncient Cap")).addLoreLines(CC.translate("&3Powerful martine helmet.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&3&lAncient Body")).addLoreLines(CC.translate("&3Powerful martine chestplate.")).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&3&lAncient Body")).addLoreLines(CC.translate("&3Powerful martine chestplate.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&3&lAncient Legs")).addLoreLines(CC.translate("&3Powerful martine leggings.")).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&3&lAncient Legs")).addLoreLines(CC.translate("&3Powerful martine leggings.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&3&lAncient Boots")).addLoreLines(CC.translate("&3Powerful martine boots.")).build();
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&3&lAncient Boots")).addLoreLines(CC.translate("&3Powerful martine boots.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
 
@@ -139,16 +138,16 @@ public class AncientArmorSet extends ArmorSet {
         Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
             pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
             pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
-            CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
+            //CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
         },100L);
 
     }
 
     private void focusTargetPlayer(Player player, Player pTarget) {
-            FPlayer fPlayer = FPlayers.i.get(player);
+            FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
             Faction myFaction = fPlayer.getFaction();
-            FPlayer targetPlayer = FPlayers.i.get(pTarget);
-            CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+            FPlayer targetPlayer = FPlayers.getInstance().getByPlayer(pTarget);
+            //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
 
     }
 

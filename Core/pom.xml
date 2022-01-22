@@ -234,7 +234,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Arkkit</artifactId>
+            <artifactId>Arkkitt</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>

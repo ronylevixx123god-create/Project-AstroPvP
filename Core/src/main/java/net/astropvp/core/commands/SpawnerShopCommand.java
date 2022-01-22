@@ -57,7 +57,7 @@ public class SpawnerShopCommand
 
         SpawnerShopGUI spawnerShopGUI = new SpawnerShopGUI(player, amount);
         spawnerShopGUI.open();
-        player.sendMessage(CC.translate("&a&l(!)&a Opening the spawner shop net.astropvp.armorsets.gui with value &f" + amount + "&a!"));
+        player.sendMessage(CC.translate("&a&l(!)&a Opening the spawner shop gui with value &f" + amount + "&a!"));
 
 
         return false;
