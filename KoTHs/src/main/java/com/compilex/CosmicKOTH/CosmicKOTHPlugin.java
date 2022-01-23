@@ -151,6 +151,9 @@ public class CosmicKOTHPlugin
     @Getter
     @Setter
     private Map<String, String> cachedMessages = new HashMap<String, String>();
+    @Getter
+    private Map<String, Integer> kothWins;
+
 
     public void onEnable() {
         _ = this;
@@ -203,6 +206,7 @@ public class CosmicKOTHPlugin
         this.outpostManager.loadOutposts(this);
         this.trophiesEnabled = new File("plugins/CosmicHCFTrophies.jar").exists();
         Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(7400), 20L, 20L);
+        kothWins = CustomConfig.load();
 
 
         CustomConfig.setup();
@@ -229,6 +233,9 @@ public class CosmicKOTHPlugin
                 this.getConfig().set("relaunch", true);
                 this.saveConfig();
             }
+
+            CustomConfig.setup();
+            CustomConfig.save();
         }
 
         for (Outpost outpost : this.outposts) {

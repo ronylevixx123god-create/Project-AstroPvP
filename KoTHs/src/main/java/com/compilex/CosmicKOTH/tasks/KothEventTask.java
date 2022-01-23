@@ -30,7 +30,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class KothEventTask
 implements Runnable {
@@ -224,12 +226,11 @@ implements Runnable {
 
     public void logFactionWin(Player p) throws IOException {
         String factionId = FactionUtils.getFactionId(p);
-        int kothWins = 1;
+        int wins;
+        wins = CosmicKOTHPlugin.get_().getKothWins().getOrDefault(factionId, 0);
+        CosmicKOTHPlugin.get_().getKothWins().put(factionId, wins+1);
 
-        if (CustomConfig.get().contains(factionId)) {
-            kothWins = CustomConfig.get().getInt(factionId)+1;
-        }
-        CustomConfig.get().set(factionId, kothWins);
+        CustomConfig.get().set("kothWins", CosmicKOTHPlugin.get_().getKothWins());
 
         CustomConfig.save();
         CustomConfig.reload();

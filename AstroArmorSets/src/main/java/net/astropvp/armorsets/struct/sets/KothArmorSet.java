@@ -64,8 +64,8 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add(CC.Aqua + "+5% Outgoing Damage");
-        message.add(CC.Aqua + "+12.5% PVE Damage");
+        message.add(CC.LightPurple + "+5% Outgoing Damage");
+        message.add(CC.LightPurple + "+12.5% PVE Damage");
         return message;
     }
 

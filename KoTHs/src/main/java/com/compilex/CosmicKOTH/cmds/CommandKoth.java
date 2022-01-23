@@ -18,6 +18,7 @@ import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.InventoryUtils;
 import com.compilex.CosmicKOTH.utils.KothTopUtil;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -50,7 +51,8 @@ implements CommandExecutor {
                 String name = entry.getKey();
                 int wins = entry.getValue();
                 counter++;
-                player.sendMessage(CC.translate("&e&l" + counter + ". &e" + name + " - &f" + wins + " wins"));
+                if (counter > 10) break;
+                player.sendMessage(CC.translate("&e&l" + counter + ". &e" + name + " - &f" + wins + " Win(s) &7($" + NumberUtils.formatMoney(wins * 10) + " Earned)"));
             }
             player.sendMessage("");
             return true;

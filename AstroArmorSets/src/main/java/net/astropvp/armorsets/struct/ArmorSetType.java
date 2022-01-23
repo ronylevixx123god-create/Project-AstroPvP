@@ -27,10 +27,10 @@ public enum ArmorSetType {
     GRINDER(CC.translate("&8&lGrinder"), new GrinderArmorSet(), CC.DarkGray, 0x404040),
     LUNA(CC.translate("&7&lLuna"), new LunaArmorSet(), CC.Gray, 0xA0A0A0),
     SUPREME(CC.translate("&4&lSupreme"), new SupremeArmorSet(), CC.DarkRed, 8264475),
-    TRAVELER(CC.translate("&5&lTraveler"), new TravelerArmorSet(), CC.DarkPurple,12001978 ),
+    DIMENSIONAL_TRAVELER(CC.translate("&5&lDimensional Traveler"), new TravelerArmorSet(), CC.DarkPurple,12001978 ),
     YETI(CC.translate("&b&lYeti"), new YetiArmorSet(), CC.Aqua, 518113),
-    YIJKI(CC.translate("&f&lMother of Yijki"), new YijkiArmorSet(), CC.White,0xFFFFFF ),
-    KOTH(CC.translate("&d&lKoth"), new PhantomArmorSet(), CC.LightPurple,31999 );
+    MOTHER_OF_YIJKI(CC.translate("&f&lMother of Yijki"), new YijkiArmorSet(), CC.White,0xFFFFFF ),
+    KOTH(CC.translate("&d&lKoth"), new KothArmorSet(), CC.LightPurple,31999 );
 
     //OMNI Rbg -> 0x0027FF
 

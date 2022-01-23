@@ -1,11 +1,14 @@
 package com.compilex.CosmicKOTH.customfiles;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CustomConfig {
 
@@ -39,6 +42,20 @@ public class CustomConfig {
 
     public static void reload(){
         customFile = YamlConfiguration.loadConfiguration(file);
+    }
+
+    public static Map<String, Integer> load() {
+        Map<String, Integer> kothWins = new HashMap<>();
+        try {
+            for (String key : customFile.getConfigurationSection("kothWins").getKeys(false)) {
+                int wins = customFile.getInt("kothWins." + key);
+                kothWins.put(key, wins);
+            }
+            return kothWins;
+
+        } catch (Exception e) {
+            return kothWins;
+        }
     }
 
 }

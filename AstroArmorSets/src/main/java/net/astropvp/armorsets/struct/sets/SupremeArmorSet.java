@@ -60,7 +60,7 @@ public class SupremeArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add(CC.Red + "+3% Outgoing Damage");
+        message.add(CC.DarkRed + "+3% Outgoing Damage");
         return message;
     }
 

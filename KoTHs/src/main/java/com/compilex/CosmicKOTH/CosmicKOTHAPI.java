@@ -12,6 +12,7 @@ import com.google.common.collect.Lists;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.massivecraft.factions.Faction;
 import net.minecraft.server.v1_8_R3.NBTBase;
@@ -66,11 +67,7 @@ public class CosmicKOTHAPI {
 
     public static int getFactionKothWins(Faction faction) throws IOException {
         String factionId = faction.getId();
-        if (CustomConfig.get().contains(factionId)) {
-            return CustomConfig.get().getInt(factionId);
-        } else {
-            return 0;
-        }
+        return CosmicKOTHPlugin.get_().getKothWins().getOrDefault(factionId, 0);
 
     }
 

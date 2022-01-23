@@ -63,8 +63,8 @@ public class YetiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add(CC.Red + "-2.5% Incoming Damage");
-        message.add(CC.Red + "+2.5% Outgoing Damage");
+        message.add(CC.Aqua + "-2.5% Incoming Damage");
+        message.add(CC.Aqua + "+2.5% Outgoing Damage");
         return message;
     }
 

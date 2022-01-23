@@ -1,5 +1,6 @@
 package com.compilex.CosmicKOTH.utils;
 
+import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.customfiles.CustomConfig;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -13,16 +14,14 @@ public class KothTopUtil {
     public static Map<String, Integer> getKothTop() {
 
         Map<String, Integer> kothTop = new HashMap<>();
-        FileConfiguration file = CustomConfig.get();
-        for (Map<?, ?> list : file.getMapList("")) {
-            for (Map.Entry<?, ?> entry : list.entrySet()) {
+            for (Map.Entry<String, Integer> entry : CosmicKOTHPlugin.get_().getKothWins().entrySet()) {
                 String facID = String.valueOf(entry.getKey());
                 int wins = Integer.parseInt(String.valueOf(entry.getValue()));
                 String facname = FactionUtils.getFactionById(facID).getTag();
                 if (facname != null) {
                     kothTop.put(facname, wins);
                 }
-            }
+
         }
 
         Map<String, Integer> sortedKoth = kothTop.entrySet().stream().sorted(Map.Entry.comparingByValue())

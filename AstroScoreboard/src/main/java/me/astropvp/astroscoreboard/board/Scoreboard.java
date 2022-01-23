@@ -8,7 +8,6 @@ import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
-import com.reliableplugins.printer.PrinterPlayer;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
@@ -98,9 +97,7 @@ public class Scoreboard implements BoardAdapter {
             }
         }
 
-        if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
-            return CC.translate("&d&lPrinter Mode&7 " + getDateSuffix());
-        }
+
 
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("infernal")) {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
@@ -238,22 +235,6 @@ public class Scoreboard implements BoardAdapter {
                     }
                 }
             }
-        }
-
-
-        if (PrinterPlayer.fromPlayer(player) != null && PrinterPlayer.fromPlayer(player).isPrinting()) {
-            PrinterPlayer printerPlayer = PrinterPlayer.fromPlayer(player);
-            List<String> board = new LinkedList<>();
-            board.add("");
-            board.add(CC.translate("&d&lBalance"));
-            board.add(CC.translate("&f$") + NumberUtils.formatMoney(printerPlayer.getRemainingBalance()));
-            board.add("");
-            board.add(CC.translate("&d&lMode"));
-            board.add(CC.translate("&aEnabled"));
-            board.add("");
-            board.add(CC.translate("&d&lAccount"));
-            board.add(CC.translate("&f") + player.getName());
-            return board;
         }
 
         /*if (player.hasMetadata("cageMatch")) {
