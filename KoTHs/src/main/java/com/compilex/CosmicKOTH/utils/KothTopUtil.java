@@ -17,6 +17,7 @@ public class KothTopUtil {
             for (Map.Entry<String, Integer> entry : CosmicKOTHPlugin.get_().getKothWins().entrySet()) {
                 String facID = String.valueOf(entry.getKey());
                 int wins = Integer.parseInt(String.valueOf(entry.getValue()));
+                if (FactionUtils.getFactionById(facID) == null) continue;
                 String facname = FactionUtils.getFactionById(facID).getTag();
                 if (facname != null) {
                     kothTop.put(facname, wins);

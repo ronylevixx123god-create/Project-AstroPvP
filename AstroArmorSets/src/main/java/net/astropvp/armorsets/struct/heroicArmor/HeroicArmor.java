@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import lombok.Getter;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -44,7 +45,7 @@ public enum HeroicArmor {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)
                         .addLoreLine("")
-                        .addLoreLine(CC.Gray + "+" + (int)armor.increase + " Bonus Attack Damage")
+                        .addLoreLine(CC.Gray + "+" + (int) armor.increase + " Bonus Attack Damage")
                         .addLoreLine(CC.DarkRed + "This weapon is stronger than diamond.")
                         .addEnchantment(Enchantment.DAMAGE_ALL, 5)
                         .addEnchantment(Enchantment.DURABILITY, 3)
@@ -53,7 +54,7 @@ public enum HeroicArmor {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)
                         .addLoreLine("")
-                        .addLoreLine(CC.Gray + "+" + (int)armor.reduction + " Armor Value")
+                        .addLoreLine(CC.Gray + "+" + (int) armor.reduction + " Armor Value")
                         .addLoreLine(CC.DarkRed + "This armor is stronger than diamond.")
                         .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
                         .addEnchantment(Enchantment.DURABILITY, 3)
@@ -61,8 +62,11 @@ public enum HeroicArmor {
             }
 
             NBTWrapper wrapper = new NBTWrapper(item);
-            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
-            cosmicData.setBoolean("heroicArmor", true);
+
+
+            NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("cosmicData");
+            builder.setBoolean("heroicArmor", true);
+            wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
             items.add(wrapper.build());
         }
         return items;

@@ -42,6 +42,7 @@ import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.compilex.CosmicOutposts.outpost.managers.DataManager;
 import com.compilex.CosmicOutposts.utils.MonsterUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.Essentials;
 import com.massivecraft.factions.Factions;
 import com.sk89q.worldedit.BlockVector;
@@ -205,12 +206,13 @@ public class CosmicKOTHPlugin
         this.outpostManager = new OutpostManager();
         this.outpostManager.loadOutposts(this);
         this.trophiesEnabled = new File("plugins/CosmicHCFTrophies.jar").exists();
-        Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(7400), 20L, 20L);
-        kothWins = CustomConfig.load();
+        Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(14600), 20L, 20L);
+
 
 
         CustomConfig.setup();
         CustomConfig.save();
+        kothWins = CustomConfig.load();
     }
 
     public void onDisable() {
@@ -223,10 +225,9 @@ public class CosmicKOTHPlugin
         if (CosmicKOTHPlugin.get_().getKoth() != null) {
             Player[] arrplayer = Bukkit.getServer().getOnlinePlayers().toArray(new Player[0]);
             int n = arrplayer.length;
-            for (int i = 0; i < n; ++i) {
+            for (Player value : arrplayer) {
                 Player player;
-                Player p = player = arrplayer[i];
-                CosmicKOTHPlugin.get_().getKoth().getClass();
+                Player p = player = value;
                 player.removeMetadata("KOTH_CAPPING_START", CosmicKOTHPlugin.get_());
             }
             if (!CosmicKOTHPlugin.get_().getKoth().isCapped()) {

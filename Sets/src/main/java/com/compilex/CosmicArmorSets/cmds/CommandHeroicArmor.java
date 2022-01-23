@@ -51,18 +51,6 @@ public class CommandHeroicArmor implements CommandExecutor {
                 return true;
             }
             ItemStack item = CosmicArmorSetsAPI.createHeroicPeice(type);
-            if (args.length == 3) {
-                if (args[2].equalsIgnoreCase("ench")) {
-                    item = new NBTWrapper(item).setGlowing().build();
-                } else {
-                    Integer parsed = NumberUtils.parseIntOrNull(args[2]);
-                    if (parsed != null && parsed > 0) {
-                        NBTWrapper wrapper = new NBTWrapper(item);
-                        item = wrapper.setNBTBase("conaxData", new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).setInt("armorModifier", parsed).get()).build();
-                        sender.sendMessage(CC.Red + "Item given with armor modifier: " + parsed);
-                    }
-                }
-            }
             if (item != null) {
                 PlayerUtil.giveOrDropProtectedItem(pl, item, -1);
             }

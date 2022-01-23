@@ -33,21 +33,23 @@ public class SaveAllGrinderCustomBlocks {
 
                 data.setLastActivated(data.getLastActivated());
 
-                ymlFile.set("astro", mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
-                ymlFile.set("legendary", mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
-                ymlFile.set("godly", mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
-                ymlFile.set("xp", mobGrinderCache.getXp());
+                if (mobGrinderCache != null) {
+                    ymlFile.set("astro", mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
+                    ymlFile.set("legendary", mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
+                    ymlFile.set("godly", mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
+                    ymlFile.set("xp", mobGrinderCache.getXp());
 
-                data.setLastActivated(data.getLastActivated());
-                mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
-                mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
-                mobGrinderCache.getCrateKeys().put(CrateType.GODLY, mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
-                mobGrinderCache.setXp(mobGrinderCache.getXp());
+                    data.setLastActivated(data.getLastActivated());
+                    mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
+                    mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
+                    mobGrinderCache.getCrateKeys().put(CrateType.GODLY, mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
+                    mobGrinderCache.setXp(mobGrinderCache.getXp());
+                }
 
 
                 try {
                     ymlFile.save(file);
-                } catch (IOException exception) {
+                } catch (Exception exception) {
                     CoreSkulls.instance.info("Unable to save yml file information. Printing stack...");
                     exception.printStackTrace();
                 }
