@@ -21,6 +21,8 @@ import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.inventory.ItemStack;

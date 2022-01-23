@@ -109,7 +109,7 @@ public class ChatListener implements Listener {
                 );
             }
 
-            clickable.add(PermissionsAPI.getPermissionUser(player.getUniqueId()).getPrefix() + player.getName() + " " + getTag(player),
+            clickable.add(PermissionsAPI.getPermissionUser(player.getUniqueId()).getPrefix() + player.getName() + getTag(player),
                     "&7Name: &a" + player.getName() + " \n" +
                             "&7Rank: " + PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup() + " \n" +
                             "&7Balance: &a$" + NumberUtils.formatMoney(EconomyUtils.getBalance(player)) + " \n" +

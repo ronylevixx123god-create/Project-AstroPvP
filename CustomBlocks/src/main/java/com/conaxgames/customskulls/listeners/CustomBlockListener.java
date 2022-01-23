@@ -5,6 +5,7 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.util.CC;
+import com.conaxgames.customskulls.util.ChunkUtil;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import org.bukkit.Bukkit;
@@ -104,7 +105,7 @@ public class CustomBlockListener implements Listener {
         }
         CustomBlockUtil.getBlockDatasInChunk(player);
 
-        if (event.getPlayer().getLocation().getChunk() != event.getBlockAgainst().getLocation().getChunk()) {
+        if (!ChunkUtil.isLocationAInSameChunkAsLocationB(event.getPlayer().getLocation(), event.getBlockAgainst().getLocation())) {
             player.sendMessage(CC.translate("&c&l(!)&c You must stand in the same chunk as the block you are placing against."));
             event.setCancelled(true);
             return;

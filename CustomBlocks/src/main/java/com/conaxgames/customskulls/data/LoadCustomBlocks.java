@@ -62,7 +62,6 @@ public class LoadCustomBlocks {
 
 
             // This is a debug message which can be deleted at a later date!
-            CoreSkulls.instance.info("[CustomSkulls] Put " + data.getAbilityType() + " into memory.");
         }
     }
 

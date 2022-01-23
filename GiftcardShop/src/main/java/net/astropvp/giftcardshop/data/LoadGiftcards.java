@@ -36,7 +36,6 @@ public class LoadGiftcards {
             Giftcard giftcard = new Giftcard(uuid, code, date, amount);
             GiftcardShopPlugin.getInstance().addGiftcardToList(giftcard);
 
-            System.out.println("[GiftcardsPlugin] Put " + uuid + " into giftcard codes memory");
         }
     }
 

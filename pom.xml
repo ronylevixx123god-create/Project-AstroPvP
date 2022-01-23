@@ -71,6 +71,7 @@
         <module>AstroArmorSets</module>
         <module>AstroDamageHandler</module>
         <module>AstroFactions</module>
+        <module>AstroWildPvP</module>
     </modules>
 
     <build>

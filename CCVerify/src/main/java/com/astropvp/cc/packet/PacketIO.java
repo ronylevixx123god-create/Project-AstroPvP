@@ -207,7 +207,6 @@ public class PacketIO {
                     String json = PacketContainer.GSON.toJson(packet.getPacket());
                     Iterable<String> splitter = Splitter.fixedLength(3000).split(json);
                     Iterator<String> spliterator = splitter.iterator();
-                    Debug.log("Sent packet: " + PacketCommons.getPacketClass(packet.getPacket().getID()).getSimpleName() + " to player: " + packet.getRecipient().getName());
                     while (spliterator.hasNext()) {
                         byte[] sent;
                         String content = spliterator.next();

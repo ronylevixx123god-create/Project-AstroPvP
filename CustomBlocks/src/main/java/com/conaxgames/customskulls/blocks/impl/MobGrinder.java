@@ -78,7 +78,7 @@ public class MobGrinder extends CustomBlock {
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
         if (CoreSkulls.instance.getGrinderBlocks().get(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())).getUuid()) == null) {
-            p1.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, data is still loading..."));
+            p1.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, the grinder block is still warming up..."));
             return;
         }
 

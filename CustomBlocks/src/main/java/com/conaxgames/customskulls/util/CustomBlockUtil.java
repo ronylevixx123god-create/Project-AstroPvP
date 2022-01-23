@@ -6,12 +6,16 @@ import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
+import net.minecraft.server.v1_8_R3.BlockPosition;
+import net.minecraft.server.v1_8_R3.ChunkCache;
+import net.minecraft.server.v1_8_R3.IBlockData;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
+import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -47,15 +51,16 @@ public class CustomBlockUtil {
     public static List<AbilityData> getBlockDatasInChunk(Player player) {
         List<AbilityData> abilityDataList = new ArrayList<>();
         final Collection<AbilityData> map = AbilityData.getAbilityDataMap().values();
-            Chunk chunk = player.getLocation().getChunk();
-            for (AbilityData data : map) {
-                if (data == null || data.getLocation() == null) continue;
-                if (data.getAbilityType() == null) continue;
-                if (chunk == null) continue;
-                if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
-                    abilityDataList.add(data);
-                }
+        //final Chunk chunk = player.getLocation().getChunk();
+
+        for (AbilityData data : map) {
+            if (data == null || data.getLocation() == null) continue;
+            if (data.getAbilityType() == null) continue;
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(data.getLocation(), player.getLocation())) { // The chunk the player is in has a CustomBlock in it!
+                abilityDataList.add(data);
+
             }
+        }
         return abilityDataList;
     }
 
@@ -74,17 +79,17 @@ public class CustomBlockUtil {
         }
 
 
-        if (location.clone().add(1, 0,0).getBlock().getType() == Material.CHEST || location.clone().add(1, 0,0).getBlock().getType() == Material.TRAPPED_CHEST) {
+        if (location.clone().add(1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
             Chest chest = (Chest) location.clone().add(1, 0, 0).getBlock().getState();
             if (CustomBlockUtil.isEmpty(chest.getInventory())) {
-                return location.clone().add(1, 0,0);
+                return location.clone().add(1, 0, 0);
             }
         }
 
-        if (location.clone().add(0, 0,1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0,1).getBlock().getType() == Material.TRAPPED_CHEST) {
+        if (location.clone().add(0, 0, 1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, 1).getBlock().getType() == Material.TRAPPED_CHEST) {
             Chest chest = (Chest) location.clone().add(0, 0, 1).getBlock().getState();
             if (CustomBlockUtil.isEmpty(chest.getInventory())) {
-                return location.clone().add(0, 0,1);
+                return location.clone().add(0, 0, 1);
             }
         }
         return null;
@@ -92,12 +97,10 @@ public class CustomBlockUtil {
     }
 
     public static boolean chunkContainsABlock(Player player) {
-        Chunk chunk = player.getLocation().getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
             if (data == null || data.getLocation() == null)
                 continue;
-            if (chunk == null) continue;
-            if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(player.getLocation(), data.getLocation())) { // The chunk the player is in has a CustomBlock in it!
                 return true;
             }
         }
