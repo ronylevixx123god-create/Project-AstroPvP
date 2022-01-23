@@ -1,7 +1,5 @@
 package org.arkhamnetwork.enchantments.mastery;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.cache.CacheBuilder;
 import com.massivecraft.factions.Faction;
@@ -9,6 +7,8 @@ import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.CustomEnchantment;
 import lombok.SneakyThrows;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
 import net.minecraft.server.v1_8_R3.WorldServer;
@@ -60,7 +60,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
     }
 
     public boolean decayDamage(Player player, int level) {
-        if (CosmicArmorSetsAPI.getArmorSet(player) == ArmorSet.MOTHER_OF_YIJKI) {
+        if (AstroArmorSetsAPI.getCurrentArmorSet(player) == ArmorSetType.MOTHER_OF_YIJKI) {
             ItemStack handItem = player.getItemInHand();
             if (handItem != null) {
                 Material type = handItem.getType();
@@ -263,7 +263,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                 event.getDamager().remove();
                 de.inventivegames.particle.ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), event.getDamager().getLocation().add(0.0D, 0.75D, 0.0D), 0.5F, 0.5F, 0.5F, 0.01F, 20);
 
-                if (CosmicArmorSetsAPI.getArmorSet(damagedPlayer) == ArmorSet.MOTHER_OF_YIJKI) {
+                if (AstroArmorSetsAPI.getCurrentArmorSet(damagedPlayer) == ArmorSetType.MOTHER_OF_YIJKI) {
                     ItemStack handItem = damagedPlayer.getItemInHand();
                     if (handItem != null) {
                         Material type = handItem.getType();

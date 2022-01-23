@@ -23,11 +23,11 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -90,8 +90,8 @@ extends CustomEnchantment {
                 player.sendMessage((Object)ChatColor.DARK_RED + "** DEEP WOUNDS " + (Object)ChatColor.GRAY + "(NO BLESS)" + (Object)ChatColor.DARK_RED + " **");
                 return;
             }
-            ArmorSet as = CosmicArmorSetsAPI.getArmorSet((Player)player);
-            if (as != null && as.equals((Object)ArmorSet.KOTH)) {
+            ArmorSetType as = AstroArmorSetsAPI.getCurrentArmorSet((Player)player);
+            if (as != null && as.equals((Object)ArmorSetType.KOTH)) {
                 long nextBlessedTextTick;
                 long l = nextBlessedTextTick = player.hasMetadata("nextBlessedTextTick") ? ((MetadataValue)player.getMetadata("nextBlessedTextTick").get(0)).asLong() : 0L;
                 if ((long) MinecraftServer.currentTick >= nextBlessedTextTick) {

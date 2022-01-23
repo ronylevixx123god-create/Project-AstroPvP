@@ -30,6 +30,7 @@ public class CommandDebugArmorSet implements CommandExecutor {
         sender.sendMessage(CC.translate("&bCrystals: &f" + cache.getCurrentSetCrystals()));
         sender.sendMessage(CC.translate("&cEquipped Heroic Pieces: &f" + cache.getHeroicPieces()));
         sender.sendMessage(CC.translate("&dArmorSets Equipped: &f" + cache.getCurrentArmorSets()));
+        sender.sendMessage(CC.translate("&6AntiMkit Equipped: &f" + cache.getCurrentAntiMkitCrystals()));
         sender.sendMessage("");
 
         return false;

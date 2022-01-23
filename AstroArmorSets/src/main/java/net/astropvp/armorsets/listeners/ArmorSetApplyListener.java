@@ -4,6 +4,7 @@ import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
@@ -17,6 +18,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class ArmorSetApplyListener implements Listener {
 
@@ -52,6 +54,15 @@ public class ArmorSetApplyListener implements Listener {
 
                 }
             }
+
+            if (AstroArmorSetsAPI.itemHasMkitCrystals(e.getOldArmorPiece())) {
+                Set<AntiMkit> crystals = AstroArmorSetsAPI.getAntiMkitCrystalsOnItem(e.getOldArmorPiece());
+                assert crystals != null;
+                for (AntiMkit type : crystals) {
+                    cache.removeMkitCrystal(type);
+
+                }
+            }
         }
 
         //Add
@@ -69,6 +80,14 @@ public class ArmorSetApplyListener implements Listener {
                 List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(e.getNewArmorPiece());
                 for (ArmorSetType type : crystals) {
                     cache.addArmorCrystal(type);
+
+                }
+            }
+            if (AstroArmorSetsAPI.itemHasMkitCrystals(e.getNewArmorPiece())) {
+                Set<AntiMkit> crystals = AstroArmorSetsAPI.getAntiMkitCrystalsOnItem(e.getNewArmorPiece());
+                assert crystals != null;
+                for (AntiMkit type : crystals) {
+                    cache.addMkitCrystal(type);
 
                 }
             }

@@ -9,8 +9,10 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
+import net.astropvp.armorsets.utils.Pair;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.cache.CacheManager;
 import net.astropvp.core.utils.cache.CachedPlayer;
@@ -92,6 +94,14 @@ public class AstroArmorSetsAPI {
             if (isHeroic(item)) {
                 cache.addHeroicArmor(item);
             }
+
+            if (AstroArmorSetsAPI.itemHasMkitCrystals(item)) {
+                Set<AntiMkit> crystals = AstroArmorSetsAPI.getAntiMkitCrystalsOnItem(item);
+                assert crystals != null;
+                for (AntiMkit type : crystals) {
+                    cache.addMkitCrystal(type);
+                }
+            }
         }
     }
 
@@ -123,6 +133,22 @@ public class AstroArmorSetsAPI {
         }
         if (isHeroic(newArmorPiece)) {
             cache.addHeroicArmor(newArmorPiece);
+        }
+
+        if (AstroArmorSetsAPI.itemHasMkitCrystals(oldArmorPiece)) {
+            Set<AntiMkit> crystals = AstroArmorSetsAPI.getAntiMkitCrystalsOnItem(oldArmorPiece);
+            assert crystals != null;
+            for (AntiMkit type : crystals) {
+                cache.removeMkitCrystal(type);
+            }
+        }
+
+        if (AstroArmorSetsAPI.itemHasMkitCrystals(newArmorPiece)) {
+            Set<AntiMkit> crystals = AstroArmorSetsAPI.getAntiMkitCrystalsOnItem(newArmorPiece);
+            assert crystals != null;
+            for (AntiMkit type : crystals) {
+                cache.addMkitCrystal(type);
+            }
         }
 
     }
@@ -241,21 +267,24 @@ public class AstroArmorSetsAPI {
     }
 
     public static Map<ArmorSetType, Integer> getBonusCrystalsEquipped(Player player) {
-        HashMap<ArmorSetType, Integer> found = null;
-        for (ItemStack armor : player.getInventory().getArmorContents()) {
-            List<ArmorSetType> sets;
-            if (armor == null || armor.getType() == Material.AIR || (sets = getCrystalsFromItem(armor)) == null || sets.isEmpty())
-                continue;
-            if (found == null) {
-                found = new HashMap<>();
-            }
-            for (ArmorSetType type : sets) {
-                ArmorSetType set;
-                Integer current = found.get(set = type);
-                found.put(set, current == null ? 1 : current + 1);
-            }
+        Map<ArmorSetType, Integer> empty = new HashMap<>();
+        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
+        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        if (cache.getCurrentSetCrystals() != null && !cache.getCurrentSetCrystals().isEmpty()) {
+            return cache.getCurrentSetCrystals();
         }
-        return found == null ? Collections.emptyMap() : found;
+        return empty;
+    }
+
+    public static Map<AntiMkit, Integer> getAntiMkitCrystalsEquipped(Player player) {
+        Map<AntiMkit, Integer> empty = new HashMap<>();
+
+        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
+        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        if (cache.getCurrentAntiMkitCrystals() != null && !cache.getCurrentAntiMkitCrystals().isEmpty()) {
+            return cache.getCurrentAntiMkitCrystals();
+        }
+        return empty;
     }
 
     public static List<ArmorSetType> getCrystalsFromItem(ItemStack item) {
@@ -350,6 +379,117 @@ public class AstroArmorSetsAPI {
         for (ArmorSetType set : ArmorSetType.values()) {
             if (!set.name().equalsIgnoreCase(name)) continue;
             return set;
+        }
+        return null;
+    }
+
+
+
+    public static AntiMkit mkitFromName(String name) {
+        return Arrays.stream(AntiMkit.values()).filter(ab -> ab.name().equalsIgnoreCase(name)).findFirst().orElse(null);
+    }
+    public static Set<AntiMkit> getAntiMkitCrystal(NBTWrapper wrapper) {
+        if (wrapper == null)
+            return null;
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
+        if (cosmicData != null) {
+            Set<AntiMkit> retr = null;
+            String abilityArmorSetEquipped = cosmicData.getString("antiMkit");
+            if (abilityArmorSetEquipped != null && !abilityArmorSetEquipped.isEmpty()) {
+                AntiMkit set = mkitFromName(abilityArmorSetEquipped);
+                retr = new HashSet<>();
+                retr.add(set);
+                return retr;
+            }
+            if (cosmicData.hasKey("antiMkits")) {
+                retr = new HashSet<>();
+                NBTTagListBuilder list = new NBTTagListBuilder(cosmicData.getNBTBase("antiMkits"));
+                for (int i = 0; i < list.size(); i++) {
+                    String setName = list.getStringAt(i);
+                    AntiMkit set2 = mkitFromName(setName);
+                    if (set2 != null)
+                        retr.add(set2);
+                }
+                return retr;
+            }
+        }
+        return null;
+    }
+
+    public static boolean hasMkitEquipped(Player player, AntiMkit armorSet) {
+        byte b;
+        int i;
+        ItemStack[] arrayOfItemStack;
+        for (i = (arrayOfItemStack = player.getInventory().getArmorContents()).length, b = 0; b < i; ) {
+            ItemStack x = arrayOfItemStack[b];
+            if (x != null && x.getType() != Material.AIR) {
+                Set<AntiMkit> set = getAntiMkitCrystalsOnItem(x);
+                if (set != null)
+                    if (set.contains(armorSet))
+                        return true;
+            }
+            b++;
+        }
+        return false;
+    }
+
+    public static Set<AntiMkit> getAntiMkitCrystalsOnItem(ItemStack armorItem) {
+        return getAntiMkitCrystal(new NBTWrapper(armorItem));
+    }
+
+    public static ItemStack removeAntiMkitCrystalFromItem(NBTWrapper wrapper) {
+        NBTTagCompoundBuilder data = wrapper.getCompound("cosmicData");
+        if (data != null) {
+            data.remove("antiMkit");
+            data.remove("antiMkits");
+            wrapper.setNBTBase("cosmicData", data.get());
+        }
+        ItemStack item = wrapper.build();
+        ItemMeta im = item.getItemMeta();
+        List<String> lore = im.getLore();
+        if (lore != null) {
+            lore.removeIf(s -> s.startsWith(CC.GoldB + "Anti M-Kit Crystal ("));
+            im.setLore(lore);
+        }
+        item.setItemMeta(im);
+        return item;
+    }
+
+    public ItemStack removeAntiMkitCrystalFromItem(ItemStack item) {
+        return removeAntiMkitCrystalFromItem(new NBTWrapper(item));
+    }
+
+    public static Pair<Set<AntiMkit>, Integer> getFromAntiMkitCrystal(ItemStack item) {
+        return getFromAntiMkitCrystal(new NBTWrapper(item));
+    }
+
+    public static boolean itemHasMkitCrystals(ItemStack itemStack) {
+        return getAntiMkitCrystalsOnItem(itemStack) != null;
+    }
+
+    public static Pair<Set<AntiMkit>, Integer> getFromAntiMkitCrystal(NBTWrapper wrapper) {
+        if (wrapper.getString("cosmicType").equals("anti_mkit")) {
+            NBTTagCompoundBuilder builder = wrapper.getCompound("cosmicData");
+            if (builder != null) {
+                int success = builder.getInt("success");
+                Set<AntiMkit> applied = new HashSet<>();
+                if (builder.hasKey("mKit")) {
+                    AntiMkit set = mkitFromName(builder.getString("mKit"));
+                    if (set != null)
+                        applied.add(set);
+                } else if (builder.hasKey("mKits")) {
+                    NBTTagListBuilder list = new NBTTagListBuilder(builder.getNBTBase("mKits"));
+                    for (int i = 0; i < list.size(); i++) {
+                        String str = list.getStringAt(i);
+                        if (str != null) {
+                            AntiMkit set2 = mkitFromName(str);
+                            if (set2 != null)
+                                applied.add(set2);
+                        }
+                    }
+                }
+                return new Pair(applied, success);
+            }
         }
         return null;
     }

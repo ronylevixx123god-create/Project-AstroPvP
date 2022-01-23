@@ -97,7 +97,7 @@ public class LunaArmorSet extends ArmorSet {
     }
 
     public void lunaStrike(Player enemy) {
-        if (isLunarStriked(enemy)) return;
+        if (isLunaStriked(enemy)) return;
         lunaStrikedPlayers.add(enemy.getUniqueId());
         enemy.sendMessage("");
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8&l✰ &7&lLUNA STRIKE ABILITY (" + enemy.getName() + ") &8&l✰")));
@@ -107,13 +107,13 @@ public class LunaArmorSet extends ArmorSet {
         enemy.sendMessage("");
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroArmorSets.getInstance(), () -> {
-            if (isLunarStriked(enemy)) {
+            if (isLunaStriked(enemy)) {
                 lunaStrikedPlayers.remove(enemy.getUniqueId());
             }
         }, 100L);
     }
 
-    public static boolean isLunarStriked(Player player) {
+    public static boolean isLunaStriked(Player player) {
         return lunaStrikedPlayers.contains(player.getUniqueId());
     }
 

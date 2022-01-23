@@ -16,15 +16,16 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
-import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
+
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.armorsets.struct.sets.LunaArmorSet;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
@@ -72,12 +73,12 @@ extends CustomEnchantment {
             if (!this.isWearingHeroic((Player)playerHit)) {
                 return;
             }
-            if (LunaSet.isLunarStriked((Player) playerHit)) return;
+            if (LunaArmorSet.isLunaStriked((Player) playerHit)) return;
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player)p, (int)4);
             }
             double increase = level * 5;
-            if (CosmicArmorSetsAPI.hasCrystalApplied((Player) player, ArmorSet.LUNA)) {
+            if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {
                 increase *= 1.1;
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {

@@ -242,19 +242,17 @@
             <systemPath>${project.basedir}/lib/CosmicGUIShop.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>DamageIndicators</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
-        </dependency>
+
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
+            <artifactId>setss</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroArmorSets-0.1.jar</systemPath>
         </dependency>
+
+
 
 
         <dependency>

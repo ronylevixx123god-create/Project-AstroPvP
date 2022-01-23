@@ -15,7 +15,7 @@ import me.astropvp.astrospawners.utils.LocationUtils;
 public class SpawnerData {
 
     public int spawnerAmount;
-    private EntityType type;
+    private final EntityType type;
 
     public SpawnerData(EntityType type, int spawnerAmount) {
         this.spawnerAmount = spawnerAmount;

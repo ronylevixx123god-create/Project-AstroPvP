@@ -53,12 +53,12 @@ public class MobSpawnerListener implements Listener {
 
         EntityType type = ItemSpawner.getEntityTypeFromItem(item);
 
-/*        if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
+        if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlockAgainst().getChunk(), type)) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));
             event.getPlayer().sendMessage(CC.translate("&cPlease stack it on the existing spawner."));
             event.setCancelled(true);
             return;
-        }*/
+        }
 
         if (type == null) {
             event.setCancelled(true);
@@ -194,7 +194,7 @@ public class MobSpawnerListener implements Listener {
                                 player.sendMessage(CC.GreenB + " * " + CC.White + "Amount: " + CC.Green
                                         + (found != null ? found.getSpawnerAmount() : 1) + "x");
                                 player.sendMessage("");
-                                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1, 1);
+                                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
                             }
                         });
             }

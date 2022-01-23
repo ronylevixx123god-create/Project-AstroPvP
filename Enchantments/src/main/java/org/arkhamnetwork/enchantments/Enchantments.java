@@ -20,6 +20,8 @@ import org.arkhamnetwork.enchantments.items.EMPPulseItem;
 import org.arkhamnetwork.enchantments.items.OmniBlackscroll;
 import org.arkhamnetwork.enchantments.listeners.*;
 import org.arkhamnetwork.enchantments.mastery.*;
+import org.arkhamnetwork.enchantments.mastery.MasteryBlackout;
+import org.arkhamnetwork.enchantments.mastery.MasteryNeutralize;
 import org.arkhamnetwork.enchantments.tasks.PlayerPotionEffectPersistTask;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.bukkit.Bukkit;

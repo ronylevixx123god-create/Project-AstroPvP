@@ -6,8 +6,10 @@ import net.astropvp.armorsets.commands.CommandDebugArmorSet;
 import net.astropvp.armorsets.commands.CommandGiveArmorSet;
 import net.astropvp.armorsets.commands.CommandGiveHeroicArmor;
 import net.astropvp.armorsets.commands.CommandGiveHeroicUpgrade;
+import net.astropvp.armorsets.items.AntiMKitCrystalItem;
 import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
+import net.astropvp.armorsets.listeners.AntiMkitDamagedListener;
 import net.astropvp.armorsets.listeners.ArmorSetApplyListener;
 import net.astropvp.armorsets.listeners.HeroicArmorDamageListener;
 import net.astropvp.armorsets.listeners.HeroicUpgradeApplyListener;
@@ -49,6 +51,8 @@ public class AstroArmorSets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ArmorSetApplyListener(this), this);
         getServer().getPluginManager().registerEvents(new HeroicUpgradeApplyListener(), this);
         getServer().getPluginManager().registerEvents(new HeroicArmorDamageListener(), this);
+        getServer().getPluginManager().registerEvents(new AntiMkitDamagedListener(), this);
+
 
 
     }
@@ -57,6 +61,8 @@ public class AstroArmorSets extends JavaPlugin {
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicSkyCustomItems")) {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CrystalExtractionItem());
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ArmorCrystalItem());
+            CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AntiMKitCrystalItem());
+
         }
     }
 }

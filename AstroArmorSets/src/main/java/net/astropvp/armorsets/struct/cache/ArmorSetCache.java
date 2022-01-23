@@ -5,6 +5,7 @@ import lombok.Setter;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.core.utils.cache.Cache;
 import org.bukkit.Bukkit;
@@ -20,6 +21,8 @@ import java.util.Map;
 public class ArmorSetCache extends Cache {
     private final Map<ArmorSetType, Integer> currentArmorSets;
     private final Map<ArmorSetType, Integer> currentSetCrystals;
+    private final Map<AntiMkit, Integer> currentAntiMkitCrystals;
+
     private int heroicPieces;
     private ArmorSetType currentArmorSet;
     private final Player player;
@@ -29,6 +32,7 @@ public class ArmorSetCache extends Cache {
         this.player = player;
         this.currentArmorSets = new HashMap<>();
         this.currentSetCrystals = new HashMap<>();
+        this.currentAntiMkitCrystals = new HashMap<>();
         this.currentArmorSet = null;
         this.heroicPieces = 0;
     }
@@ -85,6 +89,27 @@ public class ArmorSetCache extends Cache {
 
     }
 
+    public void addMkitCrystal(AntiMkit type) {
+        if (this.currentAntiMkitCrystals.containsKey(type)) {
+            this.currentAntiMkitCrystals.put(type, this.currentAntiMkitCrystals.get(type) + 1);
+        } else {
+            this.currentAntiMkitCrystals.put(type, 1);
+        }
+
+    }
+
+    public void removeMkitCrystal(AntiMkit type) {
+        if (this.currentAntiMkitCrystals.containsKey(type)) {
+            int amount = this.currentAntiMkitCrystals.get(type);
+            if (amount - 1 == 0) {
+                this.currentAntiMkitCrystals.remove(type);
+            } else {
+                this.currentAntiMkitCrystals.put(type, this.currentAntiMkitCrystals.get(type) - 1);
+            }
+        }
+
+    }
+
     public void addHeroicArmor(ItemStack item) {
         if (AstroArmorSetsAPI.isHeroic(item)) {
             this.heroicPieces++;
@@ -93,7 +118,7 @@ public class ArmorSetCache extends Cache {
     }
 
     public void removeHeroicArmor(ItemStack item) {
-        if (!AstroArmorSetsAPI.isHeroic(item)) {
+        if (AstroArmorSetsAPI.isHeroic(item)) {
             this.heroicPieces--;
         }
 

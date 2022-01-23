@@ -136,17 +136,15 @@ public class AstroDamageHandlerAPI {
     }
 
     private void sendDebugMessage(Entity entity, String message) {
-        if (entity.isOp()) {
             entity.sendMessage(CC.translate(message));
-        }
+
         Bukkit.getConsoleSender().sendMessage(CC.Aqua + message);
 
     }
 
     private void sendDebugMessage(Player player, String message) {
-        if (player.isOp()) {
             player.sendMessage(CC.translate(message));
-        }
+
         Bukkit.getConsoleSender().sendMessage(CC.Aqua + message);
 
     }

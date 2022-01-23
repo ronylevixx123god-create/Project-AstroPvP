@@ -157,19 +157,14 @@ public class EnchanterListener implements Listener {
                 }
                 if (e.getSlot() == 9 ) {
                     p.getInventory().addItem(EnchantmentBook.getTransmogScroll());
-                    return;
                 } else if (e.getSlot() == 10) {
                     p.getInventory().addItem(EnchantmentBook.getWhiteScroll());
-                    return;
                 } else if (e.getSlot() == 11) {
                     p.getInventory().addItem(EnchantmentBook.getBlackScroll(100));
-                    return;
                 } else if (e.getSlot() == 12) {
                     p.getInventory().addItem(EnchantmentBook.getHeroicBlackscroll(100,100,false));
-                    return;
                 } else if (e.getSlot() == 13) {
                     p.getInventory().addItem(ItemNametag.getNametagItem());
-                    return;
                 }
             }
         }

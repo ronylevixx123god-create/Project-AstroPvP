@@ -22,11 +22,12 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.bow;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
+
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -55,18 +56,11 @@ implements Listener {
             int teleblockLevel = ((MetadataValue)e.getDamager().getMetadata("teleblockEnchantment").get(0)).asInt();
             if (e.getEntity() instanceof Player) {
                 Player pHurt = (Player)e.getEntity();
-                if (CosmicArmorSetsAPI.getArmorSet((Player)pHurt) == ArmorSet.RANGER) {
-                    return;
-                }
+
                 if (MaskType.hasEquipped((Player)pHurt, (String)"GLITCH")) {
                     return;
                 }
-                Map equipped = CosmicArmorSetsAPI.getBonusCrystalsEquipped((Player)pHurt);
-                Integer crystalCount = (Integer)equipped.get((Object)ArmorSet.RANGER);
-                if (crystalCount != null && Math.random() < 0.2 * (double)crystalCount.intValue()) {
-                    pHurt.sendMessage(CC.GreenB + "* RANGER CRYSTAL [" + CC.Gray + "Immune to Teleblock" + CC.GreenB + "] *");
-                    return;
-                }
+
                 pHurt.setMetadata("teleblock", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + (long)(5 + teleblockLevel * 3000))));
                 PlayerInventory pi = pHurt.getInventory();
                 int pearlsToDestroy = teleblockLevel * 3;
