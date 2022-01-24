@@ -60,21 +60,26 @@ public class CrateKeyInventoryListener implements Listener {
             CrateType type = CrateKeyItem.getCrateType(player.getItemInHand());
             if (player.isSneaking()) {
                 int amountOfKeys = player.getItemInHand().getAmount();
+                int amount = player.getItemInHand().getAmount();
                 while (amountOfKeys != 0) {
-                    ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
 
-                    addItemToPlayer(player, itemStack, data);
+                    addItemToPlayer(player, data);
 
                     amountOfKeys--;
                 }
                 player.setItemInHand((ItemStack) null);
+                player.sendMessage(CC.translate("&a&l(!)&a You have opened &f" + amount + "&a " + type.getPrefixedName() + "s&a."));
+
 
             } else {
                 ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
-                addItemToPlayer(player, itemStack, data);
+                addItemToPlayer(player, data);
 
+                if (itemStack.getItemMeta() != null) {
+                    player.sendMessage(CC.translate("&a&l(!)&a You have opened a " + type.getPrefixedName() + " &aand received " + itemStack.getItemMeta().getDisplayName() + "&a."));
+                }
 
                 if (player.getItemInHand().getAmount() > 1) {
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
@@ -83,7 +88,7 @@ public class CrateKeyInventoryListener implements Listener {
                 }
             }
 
-            player.playSound(player.getLocation(), Sound.NOTE_BASS, 1, 1);
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1f, 1f);
 
 
             event.setCancelled(true);
@@ -104,11 +109,12 @@ public class CrateKeyInventoryListener implements Listener {
         return true;
     }
 
-    public static void addItemToPlayer(Player player, ItemStack item, CrateData data) {
-        if (item == null || item.getType() == Material.AIR)
-            return;
+    public static void addItemToPlayer(Player player, CrateData data) {
+
         CrateType type = data.getCrateType();
-        CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
+        ItemStack item = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
+
+        /*CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
         if (filter != null && filter.isFiltered(item)) {
             if (!item.hasItemMeta()) {
                 player.sendMessage(CC.translate(item.getType().name() + "&c has been skipped. &cLeft-Click the crate to edit this filter."));
@@ -117,7 +123,7 @@ public class CrateKeyInventoryListener implements Listener {
                 player.sendMessage(CC.translate(item.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft-Click the crate to edit this filter."));
             }
             return;
-        }
+        }*/
         player.getInventory().addItem(item);
     }
 }

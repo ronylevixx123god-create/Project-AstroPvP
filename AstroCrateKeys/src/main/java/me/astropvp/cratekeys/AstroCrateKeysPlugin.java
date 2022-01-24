@@ -25,7 +25,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
     public static AstroCrateKeysPlugin AstroCrateKeysPlugin;
     public static FileConfiguration config;
     public static HashMap<CrateType, Map<ItemStack, Double>> cachedCrateLoot;
-    public FilterManager filterManager;
+    //public FilterManager filterManager;
 
 
     public void onEnable() {
@@ -38,7 +38,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
         for (CrateType crateType : CrateType.values()) {
             cachedCrateLoot.put(crateType, AstroCrateKeysAPI.getItems(crateType));
         }
-        this.filterManager = new FilterManager(this);
+        //this.filterManager = new FilterManager(this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
 
 

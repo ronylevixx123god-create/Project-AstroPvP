@@ -81,8 +81,8 @@ public class LootPreviewGUI {
 
         expShopUI.setItem(6, 5, new GuiItem(createGUIItem(), event -> expShopUI.close(player)));
 
-        FilterPlayer filterPlayer = FilterManager.getInstance().getFilterPlayer(player);
-        CrateKeyFilter filter = filterPlayer.hasFilter("crate_key_" + type.name().toLowerCase()) ? (CrateKeyFilter) filterPlayer.getFilter("crate_key_" + type.name().toLowerCase()) : (CrateKeyFilter) filterPlayer.registerFilter(new CrateKeyFilter(type));
+        //FilterPlayer filterPlayer = FilterManager.getInstance().getFilterPlayer(player);
+        //CrateKeyFilter filter = filterPlayer.hasFilter("crate_key_" + type.name().toLowerCase()) ? (CrateKeyFilter) filterPlayer.getFilter("crate_key_" + type.name().toLowerCase()) : (CrateKeyFilter) filterPlayer.registerFilter(new CrateKeyFilter(type));
         for (Map.Entry<ItemStack, Double> entry : itemList.entrySet()) {
             ItemStack item = entry.getKey().clone();
             double chance = entry.getValue();
@@ -91,14 +91,14 @@ public class LootPreviewGUI {
             itemBuilder.addLoreLine("");
             itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
-            itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: " + (filter.isFiltered(item) ? "&aTrue" : "&cFalse")));
+            //itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: " + (filter.isFiltered(item) ? "&aTrue" : "&cFalse")));
             this.expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
 
-                if (filter.isFiltered(item)) {
+/*                if (filter.isFiltered(item)) {
                     filter.setFiltered(item, false);
                 } else {
                     filter.setFiltered(item, true);
-                }
+                }*/
 
 
 

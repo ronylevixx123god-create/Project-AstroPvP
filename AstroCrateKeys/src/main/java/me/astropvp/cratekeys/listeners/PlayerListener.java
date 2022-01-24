@@ -11,7 +11,7 @@ public class PlayerListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
         Player player = e.getPlayer();
-        FilterManager.getInstance().unregisterFilterPlayer(player);
+        //FilterManager.getInstance().unregisterFilterPlayer(player);
     }
 
 }
