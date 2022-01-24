@@ -53,7 +53,9 @@ public class BossSpawnTask implements Runnable
             Bukkit.getScheduler().runTask(CosmicBosses.get(), this);
             return;
         }
+        assert type != null;
         final Boss boss = type.createInstance(highest);
+        assert boss != null;
         boss.setNaturallySpawned(true);
         boss.onBossSpawn();
     }

@@ -559,7 +559,7 @@ public class Scoreboard implements BoardAdapter {
         if (!FactionUtils.getFaction(player).isWilderness()) {
             Faction faction = FactionUtils.getFaction(player);
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
-            board.add(CC.translate("&a" + faction.getOnlinePlayers().size() + " &7/ 20"));
+            board.add(CC.translate("&a" + faction.getOnlinePlayers().size() + " &7/ 15"));
         } else {
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
             board.add(CC.Gray + "play.astropvp.net");

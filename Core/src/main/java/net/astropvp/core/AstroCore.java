@@ -67,6 +67,7 @@ import net.astropvp.core.listeners.*;
 import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.utils.CleanseScroll;
+import net.astropvp.core.utils.CooldownUtils;
 import net.astropvp.core.utils.ItemUtils;
 import net.astropvp.core.utils.cache.CacheManager;
 import net.milkbowl.vault.economy.Economy;
@@ -129,6 +130,7 @@ public class AstroCore extends JavaPlugin {
     private CoinFlipManager coinFlipManager;
     private TogglesManager toggleManager = new TogglesManager();
     private GiveAllManager giveAllManager;
+    private CooldownUtils cooldownUtils;
     @Getter
     @Setter
     public static TitleManagerAPI titleManagerAPI;
@@ -174,6 +176,7 @@ public class AstroCore extends JavaPlugin {
         this.dataManager = new TitleDatabaseManager();
         this.dataManager.cacheAllEquippedTitles();
         this.coinFlipManager = new CoinFlipManager();
+        this.cooldownUtils = new CooldownUtils("astroCore");
         try {
             this.coinFlipManager.loadCoinFlips();
         } catch (IOException e) {
@@ -425,7 +428,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
         getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
         getServer().getPluginManager().registerEvents(new DamageFixes(), this);
-        getServer().getPluginManager().registerEvents(new ChatListener(), this);
+        getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
         getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
         getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
@@ -464,7 +467,6 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
         getServer().getPluginManager().registerEvents( new ItemFilterListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
-        getServer().getPluginManager().registerEvents(new net.astropvp.core.listeners.ChatListener(), this);
     }
 
     public void registerCustomItems() {

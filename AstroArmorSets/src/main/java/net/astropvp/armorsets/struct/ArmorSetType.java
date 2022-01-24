@@ -30,7 +30,7 @@ public enum ArmorSetType {
     DIMENSIONAL_TRAVELER(CC.translate("&5&lDimensional Traveler"), new TravelerArmorSet(), CC.DarkPurple,12001978 ),
     YETI(CC.translate("&b&lYeti"), new YetiArmorSet(), CC.Aqua, 518113),
     MOTHER_OF_YIJKI(CC.translate("&f&lMother of Yijki"), new YijkiArmorSet(), CC.White,0xFFFFFF ),
-    KOTH(CC.translate("&d&lKoth"), new KothArmorSet(), CC.LightPurple,31999 );
+    KOTH(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r"), new KothArmorSet(), CC.Aqua,31999 );
 
     //OMNI Rbg -> 0x0027FF
 

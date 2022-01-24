@@ -55,17 +55,17 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
         lore.add(CC.translate("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&lSET BONUS"));
-        lore.add(CC.translate("&8● &dDeal +20% damage to all enemies."));
-        lore.add(CC.translate("&8● &dDeal +50% damage to mobs."));
-        lore.add(CC.translate("&8● &dAuto Bless."));
+        lore.add(CC.translate("&8● &bDeal +20% damage to all enemies."));
+        lore.add(CC.translate("&8● &bDeal +50% damage to mobs."));
+        lore.add(CC.translate("&8● &bAuto Bless."));
         lore.add(CC.translate("&7(&oRequires all 4 koth items.&7)"));
         return lore;
     }
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add(CC.LightPurple + "+5% Outgoing Damage");
-        message.add(CC.LightPurple + "+12.5% PVE Damage");
+        message.add(CC.Aqua + "+5% Outgoing Damage");
+        message.add(CC.Aqua + "+12.5% PVE Damage");
         return message;
     }
 
@@ -73,9 +73,9 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
         List<String> message = new ArrayList<>();
         message.add("");
         message.add(CC.translate("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&lSET BONUS"));
-        message.add(CC.translate("&8● &dDeal +20% damage to all enemies."));
-        message.add(CC.translate("&8● &dDeal +50% damage to mobs."));
-        message.add(CC.translate("&8● &dAuto Bless."));
+        message.add(CC.translate("&8● &bDeal +20% damage to all enemies."));
+        message.add(CC.translate("&8● &bDeal +50% damage to mobs."));
+        message.add(CC.translate("&8● &bAuto Bless."));
         message.add("");
         return message;
     }
@@ -87,7 +87,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
                 .addLoreLines(CC.Gray + "Received from opening the koth lootbag."
                         , ""
                         , CC.translate("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&lWEAPON BONUS")
-                        , CC.translate("&8● &4Deal +7.5% damage to all enemies.")
+                        , CC.translate("&8● &bDeal +7.5% damage to all enemies.")
                         , CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items." + CC.Gray + ")")
                 .addEnchantment(Enchantment.DAMAGE_ALL, 5).addEnchantment(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "KOTH_SWORD").build();
 
@@ -96,7 +96,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
                 .addLoreLines(CC.Gray + "Received from opening the koth lootbag."
                         , ""
                         , CC.translate("&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&lWEAPON BONUS")
-                        , CC.translate("&8● &4Deal +50% Durability Damage.")
+                        , CC.translate("&8● &bDeal +50% Durability Damage.")
                         , CC.Gray + "(" + CC.GrayI + "Requires all 4 koth items." + CC.Gray + ")")
                 .addEnchantment(Enchantment.DAMAGE_ALL, 5).addEnchantment(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "KOTH_AXE").build();
 

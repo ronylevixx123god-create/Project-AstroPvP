@@ -1,9 +1,12 @@
 package net.astropvp.core.listeners;
 
+import com.astropvp.cc.player.CosmicPlayers;
 import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.compilex.CosmicKOTH.CosmicKOTHAPI;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.earth2me.essentials.utils.DateUtil;
+import com.golfing8.kore.FactionsKore;
+import com.golfing8.kore.feature.ShieldFeature;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -13,9 +16,11 @@ import net.astropvp.core.AstroCore;
 import net.astropvp.core.conaxgames.staff.StaffChat;
 import net.astropvp.core.titles.PlayerTitleAPI;
 import net.astropvp.core.titles.utils.Clickable;
+import net.astropvp.core.utils.CooldownUtils;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
+import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -26,12 +31,22 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.io.IOException;
 import java.util.*;
 import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ChatListener implements Listener {
+
+    private final Pattern ipPattern = Pattern.compile("((?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[.,-:; ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9]))", Pattern.CASE_INSENSITIVE);
+    private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
+    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "nig", "fag", "faggot", "ddos", "doss", "niggar", "hitler");
+    private final ShieldFeature shieldFeature;
+    private double chatCooldown;
+    public ChatListener(AstroCore plugin) {
+        this.shieldFeature = FactionsKore.get().getFeature(ShieldFeature.class);
+    }
 
     @EventHandler
     public void onInventoryClick(InventoryClickEvent event) {
@@ -41,10 +56,6 @@ public class ChatListener implements Listener {
     }
 
     // Chat Filter
-    private final Pattern ipPattern = Pattern.compile("((?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[.,-:; ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9]))", Pattern.CASE_INSENSITIVE);
-    private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
-    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "nig", "fag", "faggot", "ddos", "doss", "niggar", "hitler");
-
     @EventHandler(priority = EventPriority.HIGH)
     public void playerChat(AsyncPlayerChatEvent event) {
 
@@ -56,7 +67,23 @@ public class ChatListener implements Listener {
         Player player = event.getPlayer();
         FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
 
+
         if (fPlayer.getChatMode() != ChatMode.PUBLIC) return;
+
+        if (player.hasPermission("astrocore.nebula")) {
+            chatCooldown = 0.5;
+        } else if (player.hasPermission("astrocore.apollo")) {
+            chatCooldown = 1;
+        } else {
+            chatCooldown = 2;
+        }
+
+        if (AstroCore.getInstance().getCooldownUtils().isOnCooldown(player, "chatCooldown")) {
+            long msLeft = AstroCore.getInstance().getCooldownUtils().getRemainingMillis(player, "chatCooldown");
+            player.sendMessage(CC.translate("&c&l(!)&c You cannot send messages for another " + msLeft + "ms."));
+            return;
+        }
+
 
         Faction faction = fPlayer.getFaction();
 
@@ -92,28 +119,36 @@ public class ChatListener implements Listener {
             Clickable clickable = new Clickable("");
             if (!faction.isWilderness()) {
                 String shieldStatus;
-/*                if (shieldFeature.isShieldActive(faction.getId()) && shieldFeature.isSetup(faction.getId()) && shieldFeature.isTimeConfigured(faction.getId())) {
+                if (shieldFeature.isShieldActive(faction.getId()) && shieldFeature.isSetup(faction.getId()) && shieldFeature.isTimeConfigured(faction.getId())) {
                     shieldStatus = "&aON &7(" + ChatColor.stripColor(shieldFeature.getShieldData(faction.getId(), true)) + "&7)";
                 } else {
                     shieldStatus = "&cOFF";
-                }*/
+                }
 
-                clickable.add(faction.getRelationTo(recipientFaction).getColor() + fPlayer.getChatTag() + " ",
-                        "&8(&a!&8) &7Faction Info: &a" + faction.getTag() + " \n" +
-                                "&a* &7Strikes: &a" + faction.getStrikes().size() + " \n" +
-                                "&a* &7Power: &a" + (int) faction.getPower() + "&8/&a" + (int) faction.getPowerMax() + " \n" +
-                                //"&a* &7Shield " + shieldStatus + "\n" +
-                                "&a* &7Online: &a" + faction.getOnlinePlayers().size() + " \n\n" +
-                                "&7&oClick to view this faction",
-                        "/f who " + player.getName()
-                );
+                try {
+                    clickable.add(faction.getRelationTo(recipientFaction).getColor() + fPlayer.getChatTag() + " ",
+                            "&6&lFaction Info: &f" + faction.getTag() + " \n" +
+                                    "&6* &eStrikes: &f" + faction.getStrikes().size() + " \n" +
+                                    "&6* &ePower: &a" + (int) faction.getPower() + "&8/&a" + (int) faction.getPowerMax() + " \n" +
+                                    "&6* &eShield: &f" + shieldStatus + "\n" +
+                                    "&6* &eOnline: &f" + faction.getOnlinePlayers().size() + " \n" +
+                                    "&6* &eFaction Koth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(FactionUtils.getFaction(event.getPlayer())) + " \n\n" +
+                                    "&7&oClick to view this faction",
+                            "/f who " + player.getName()
+                    );
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             clickable.add(PermissionsAPI.getPermissionUser(player.getUniqueId()).getPrefix() + player.getName() + getTag(player),
-                    "&7Name: &a" + player.getName() + " \n" +
-                            "&7Rank: " + PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup() + " \n" +
-                            "&7Balance: &a$" + NumberUtils.formatMoney(EconomyUtils.getBalance(player)) + " \n" +
-                            "&7&oClick to see when the player logged online",
+                    "&6&lUser: &f" + player.getName() + " \n" +
+                            "&6* &eNick: &f" + player.getDisplayName() + " \n" +
+                            "&6* &eFaction: &f" + FactionUtils.getFaction(player).getTag() + " \n" +
+                            "&6* &eBalance: &a$" + NumberUtils.formatMoney(EconomyUtils.getBalance(player)) + " \n" +
+                            "&6* &eLogged in: &f" + DateUtil.formatDateDiff(EssentialsUtils.getEssentials().getUser(player).getLastLogin()) + " ago" + " \n" +
+                            "&6* &eCosmic Client: &f" + ((CosmicPlayers.get().getCosmicPlayer(event.getPlayer()).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗") + " \n\n" +
+                    "&7&oClick to see when the player logged online",
                     "/seen " + player.getName()
             );
 
@@ -154,6 +189,9 @@ public class ChatListener implements Listener {
 
             clickable.add(chatcolor + message);
             clickable.sendToPlayer(recipient);
+            if (!player.isOp()) {
+                AstroCore.getInstance().getCooldownUtils().add(player, "chatCooldown", (long) (chatCooldown*1000));
+            }
         });
     }
 
