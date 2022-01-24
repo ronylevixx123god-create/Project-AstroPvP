@@ -34,11 +34,11 @@
         <module name="AuctionHouse" />
         <module name="Factions" />
         <module name="Conquest" />
-        <module name="CoolPlugin" />
         <module name="Slotbot" />
         <module name="KoTHs" />
         <module name="Duels" />
         <module name="GiftcardShop" />
+        <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
         <module name="Ark" />
@@ -65,24 +65,28 @@
         <module name="CustomItems" />
         <module name="Pets" />
         <module name="Utils" />
-        <module name="Factions-Legacy (1)" />
         <module name="WeaponRunes" />
         <module name="AstroGamble" />
         <module name="AstroDamageHandler" />
         <module name="CompilexPermissions" />
       </profile>
-      <profile name="Annotation profile for Factions-Legacy" enabled="true">
-        <sourceOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
+      <profile name="Annotation profile for Factions-Legacy (1)" enabled="true">
+        <sourceOutputDir name="../../../Factionss/modules/Legacy/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../Factionss/modules/Legacy/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Factions-Legacy" />
+        <module name="Factions-Legacy (1)" />
+      </profile>
+      <profile name="Annotation profile for Factions (2) (com.massivecraft)" enabled="true">
+        <sourceOutputDir name="../../../Factionss/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../Factionss/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions (2) (com.massivecraft)" />
       </profile>
       <profile name="Annotation profile for ProjectAstro" enabled="true">
         <sourceOutputDir name="../../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions (1) (com.massivecraft)" />
-        <module name="Factions (2) (com.massivecraft)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -95,6 +99,7 @@
       <module name="Christmas" target="8" />
       <module name="ClientComms" target="8" />
       <module name="Comms" target="8" />
+      <module name="CoolPlugin" target="8" />
       <module name="CrateBoxes" target="8" />
       <module name="CustomItem" target="1.8" />
       <module name="CustomTNT" target="1.8" />

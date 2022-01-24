@@ -1,5 +1,8 @@
 package me.astropvp.astropvpskins.objects;
 
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 import me.ifamasssxd.cosmicskycustoms.struct.*;
@@ -50,7 +53,7 @@ public class BackpackSocketItem extends CosmicItem implements InventoryInteracta
             return;
         }
 
-        if (clicked.getType() != Material.LEATHER_CHESTPLATE) {
+        if (clicked.getType() != Material.LEATHER_CHESTPLATE || !AstroArmorSetsAPI.isHeroic(clicked)) {
             player.sendMessage(CC.translate("&c&l(!) &cYou can only apply this to heroic chestplates!."));
             return;
         }
@@ -71,9 +74,15 @@ public class BackpackSocketItem extends CosmicItem implements InventoryInteracta
             lore.add(CC.translate("&3&l+ BACKPACK [&8N/A&3&l]"));
             meta.setLore(lore);
             clicked.setItemMeta(meta);
-            clickedWrapper = new NBTWrapper(clicked);
-            clickedWrapper.getconaxData().setBoolean("hasBackpackSocket", Boolean.valueOf(true));
-            event.setCurrentItem(clickedWrapper.build());
+
+            NBTWrapper wrapper = new NBTWrapper(clicked);
+            NBTTagCompoundBuilder conaxData = wrapper.getCompoundOrCreate("conaxData");
+            conaxData.setBoolean("hasBackpackSocket", true);
+            wrapper.setNBTBase("conaxData", (NBTBase) conaxData.get());
+
+            ItemStack finalItem = wrapper.build();
+            event.setCurrentItem(finalItem);
+
             player.sendMessage(CC.translate("&a&l(!) &aYour socket successfully applied."));
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.0f);
         }
