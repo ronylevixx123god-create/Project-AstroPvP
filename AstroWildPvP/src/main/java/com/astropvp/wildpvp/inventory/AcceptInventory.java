@@ -42,7 +42,7 @@ public class AcceptInventory  implements InventoryProvider {
         this.inventory.open(owner);
         this.expiringMap = ExpiringMap.builder().expiration(30L, TimeUnit.SECONDS).expirationListener((player, time) -> {
             AstroWildPvP.getInstance().getQueueManager().getAcceptingPlayers().remove(this.joiner.getUniqueId());
-            KrizzUtil.sendMessage((CommandSender) player, "&c&l(&f!&c&l) &cYour acceptance time ran out, request ignored.");
+            KrizzUtil.sendMessage((CommandSender) player, "&c&l(!) &cYour acceptance time ran out, request ignored.");
             KrizzUtil.sendMessage(this.joiner, "&cYour PvP match request to " + this.owner.getName() + " has been &4&lIGNORED&c.");
             this.queue.setState(QueueState.IDLE);
             this.inventory.close((Player) player);

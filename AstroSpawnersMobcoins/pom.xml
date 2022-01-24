@@ -275,10 +275,10 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
+            <artifactId>seyt</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Sets-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/AstroArmorSets-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

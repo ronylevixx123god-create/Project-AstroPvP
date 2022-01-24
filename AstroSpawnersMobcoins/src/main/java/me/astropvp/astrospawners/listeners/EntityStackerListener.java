@@ -3,8 +3,7 @@ package me.astropvp.astrospawners.listeners;
 import com.astropvp.cc.CCVerify;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.compilex.CompilexPermissions.CompilexPermissions;
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
+
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.EnchantmentAPI;
@@ -22,6 +21,8 @@ import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.GrindingMessagesUtil;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
@@ -108,7 +109,7 @@ public class EntityStackerListener implements Listener {
             PlayerData data = manager.getPlayerData(p);
 
 
-            if (CosmicArmorSetsAPI.getArmorSet(p) != null && CosmicArmorSetsAPI.getArmorSet(p) == ArmorSet.GRINDER) {
+            if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
                 exp += 50;
             }
 

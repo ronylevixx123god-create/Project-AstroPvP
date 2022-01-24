@@ -32,7 +32,7 @@ public class EnchantmentCoderInventory {
         inventory.setItem(31, getDisplayItem(Material.LEATHER_LEGGINGS));
         inventory.setItem(40, getDisplayItem(Material.LEATHER_BOOTS));
         inventory.setItem(20, getDisplayItem(Material.GOLD_AXE));
-        inventory.setItem(24, getDisplayItem(Material.GOLD_AXE));
+        inventory.setItem(24, getDisplayItem(Material.GOLD_SWORD));
         ItemStack pane = getItemPane();
         for (int i = 0; i < inventory.getSize(); i++) {
             ItemStack item = inventory.getItem(i);

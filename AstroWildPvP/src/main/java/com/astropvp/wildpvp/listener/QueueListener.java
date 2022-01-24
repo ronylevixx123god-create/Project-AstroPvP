@@ -182,7 +182,7 @@ public class QueueListener implements Listener {
                         KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c This queue currently cannot be joined.");
                     } else {
                         new AcceptInventory(queue.getHost(), player, queue);
-                        KrizzUtil.sendMessage(player, "&a&l(&f!&a&l) &aYou have sent a /pvp request to &f" + queue.getHost().getName() + "&a.");
+                        KrizzUtil.sendMessage(player, "&a&l(!) &aYou have sent a /pvp request to &f" + queue.getHost().getName() + "&a.");
                         player.closeInventory();
                     }
                 }
