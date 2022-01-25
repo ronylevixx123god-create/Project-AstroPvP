@@ -112,6 +112,7 @@ public class ArmorSetCache extends Cache {
 
     public void addHeroicArmor(ItemStack item) {
         if (AstroArmorSetsAPI.isHeroic(item)) {
+            if (heroicPieces +1 > 4) return;
             this.heroicPieces++;
         }
 
@@ -119,6 +120,7 @@ public class ArmorSetCache extends Cache {
 
     public void removeHeroicArmor(ItemStack item) {
         if (AstroArmorSetsAPI.isHeroic(item)) {
+            if (this.heroicPieces -1 < 0) return;
             this.heroicPieces--;
         }
 

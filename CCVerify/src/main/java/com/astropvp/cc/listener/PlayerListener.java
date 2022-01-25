@@ -35,7 +35,7 @@ public class PlayerListener implements Listener {
         Player damager = (Player)((Object)event.getDamager());
         Player damaged = (Player)((Object)event.getEntity());
 
-        double oldHealth = damaged.getHealth();
+        final double oldHealth = damaged.getHealth();
         Bukkit.getScheduler().scheduleSyncDelayedTask(CCVerify.get(), () -> {
             if (damaged.isDead()) {
                 return;
@@ -70,13 +70,13 @@ public class PlayerListener implements Listener {
 
                 if(cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld())continue;
 
-                if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 60)continue;
+                if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 80)continue;
 
                 if(cosmicPlayer.getPlayer() == event.getEntity())continue;
 
                 cosmicPlayer.sendPacket(hitSplat);
             }
-        }, 1L);
+        }, 3L);
 
 
 
@@ -98,7 +98,7 @@ public class PlayerListener implements Listener {
     }
 
     private String colorDamage(double finalDamage){
-        if(finalDamage <= 10.0D){
+        if(finalDamage < 10.0D){
             return Chat.c("&c&l-" + (int) (finalDamage) + " HP");
         }else{
             return Chat.c("&4&l-" + (int) (finalDamage) + " HP");

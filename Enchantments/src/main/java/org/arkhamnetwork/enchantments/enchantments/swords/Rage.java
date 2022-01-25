@@ -31,9 +31,7 @@ public class Rage extends CustomEnchantment
             if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - target.getMetadata("doubleStriked").get(0).asLong() < 500L) {
                 return;
             }
-            if (user.hasMetadata("noRageUntil") && user.getMetadata("noRageUntil").get(0).asLong() > System.currentTimeMillis()) {
-                return;
-            }
+
             final double mod = 0.06 * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0;
             if (hitCombo > 12.0) {
@@ -42,10 +40,10 @@ public class Rage extends CustomEnchantment
             if (target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player)target, SkinType.VALENTINES_2021_AMULET)) {
                 hitCombo = 8.0;
             }
-            if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
+            if (hitCombo > 1.0) {
                 this.playRageEffect(target.getEyeLocation(), enchantLevel);
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(hitCombo, event, "&6&lRage");
-                target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10*hitCombo, event, "&6&lRage");
+                //target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
             }
             if (target instanceof Player) {
                 this.addPVPHitCombo((Player)user);

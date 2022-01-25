@@ -28,9 +28,9 @@ public class HeroicDevour extends CustomEnchantment
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
             if (((Player)user).getItemInHand() != null && !EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Lifesteal") && !EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Demonic Lifesteal")) {
                 final double random = Math.random();
-                final double chance = (enchantLevel == 1) ? 0.02 : ((enchantLevel == 2) ? 0.04 : ((enchantLevel == 3) ? 0.14 : 0.22));
+                final double chance = (enchantLevel == 1) ? 0.02 : ((enchantLevel == 2) ? 0.03 : ((enchantLevel == 3) ? 0.04 : 0.05));
                 final int toHeal = (enchantLevel == 1) ? 2 : ((enchantLevel == 2) ? 3 : ((enchantLevel == 3) ? 3 : 4));
-                int health = (int)user.getHealth() + toHeal;
+                int health = (int)user.getHealth()/2 + toHeal;
                 if (health > user.getMaxHealth()) {
                     health = (int)user.getMaxHealth();
                 }

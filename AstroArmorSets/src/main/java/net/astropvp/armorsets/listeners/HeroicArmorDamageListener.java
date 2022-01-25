@@ -5,11 +5,12 @@ import net.astropvp.core.AstroCore;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HeroicArmorDamageListener implements Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
