@@ -36,10 +36,7 @@ public class RevokeScratchCard extends CosmicItem
                 CC.translate(""),
                 CC.translate("&4&l * &4Reward: &fRevoke Book"),
                 CC.translate("&4&l * &4Chance: &f0% - 100%"),
-                CC.translate("&4&l * &4Level: &fI - III"),
-                CC.translate(""),
-                CC.translate("&8[&4!&8] &fUnlocked from the &4Scratch Merchant&f &7(/merchant)&f.")
-
+                CC.translate("&4&l * &4Level: &fI - III")
         ).build())).build();
     }
 
@@ -55,10 +52,7 @@ public class RevokeScratchCard extends CosmicItem
                 CC.translate(""),
                 CC.translate("&4&l * &4Reward: &fRevoke Book"),
                 CC.translate("&4&l * &4Chance: &f0% - 100%"),
-                CC.translate("&4&l * &4Level: &fI - III"),
-                CC.translate(""),
-                CC.translate("&8[&4!&8] &fUnlocked from the &4Scratch Merchant&f &7(/merchant)&f.")
-
+                CC.translate("&4&l * &4Level: &fI - III")
 
         ).build();
     }
