@@ -37,7 +37,6 @@ public class SpiritLink extends CustomEnchantment
                     AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)playerNear, healAmount, "&e&lSpirit Link");
                 }
             }
-            player.getWorld().playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.35f);
         }
     }
 

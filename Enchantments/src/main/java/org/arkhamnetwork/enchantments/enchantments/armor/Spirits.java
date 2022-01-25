@@ -101,7 +101,6 @@ extends CustomEnchantment {
                         ++healed;
                         GeneralUtil.healPlayer((LivingEntity)player, toHeal);
                         player.setMetadata("heal_cd", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)((double)System.currentTimeMillis() + (double)required / 20.0 * 1000.0)));
-                        player.playSound(player.getLocation(), Sound.ORB_PICKUP, 0.3f, 1.4f);
                         try {
                             ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().clone().add(0.0, 1.0, 1.0), 0.75f, 0.75f, 0.75f, 0.01f, 15);
                         }

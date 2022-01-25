@@ -2,6 +2,7 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
@@ -15,6 +16,7 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -59,7 +61,8 @@ public class AncientArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35, event, "AncientSet");
-        if (Math.random() < 0.05 && attacked instanceof Player) {
+        if (Math.random() < 0.0025 && attacked instanceof Player) {
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
             startAncientEffect(attacker, (Player) attacked);
         }
 
@@ -67,7 +70,9 @@ public class AncientArmorSet extends ArmorSet {
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7, event, "AncientCrystal", amount);
-        if (Math.random() < 0.05 && attacked instanceof Player) {
+        if (Math.random() < 0.0025 && attacked instanceof Player) {
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+
             startAncientEffect(attacker, (Player) attacked);
         }
 

@@ -35,8 +35,8 @@ public class CommandWeaponBonus implements CommandExecutor {
         ItemMeta meta = helpBook.getItemMeta();
 
         meta.setDisplayName(CC.translate("&b&lWeapon Bonuses"));
-        meta.setLore(Lists.newArrayList(new String[] {CC.translate("&7Weapon Bonuses are orbs which you"), CC.translate("&7apply onto Heroic Swords only and"), CC.translate("&7imbue the weapon with special powers.")}
-        ));
+        meta.setLore(Lists.newArrayList(
+                CC.translate("&7Weapon Bonuses are orbs which you"), CC.translate("&7apply onto Heroic Swords only and"), CC.translate("&7imbue the weapon with special powers.")));
 
         helpBook.setItemMeta(meta);
 

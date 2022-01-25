@@ -108,7 +108,7 @@ public class AstroCore extends JavaPlugin {
     public static String LORE_SUFFIX = ":  ";
     private File spongeDirectory;
     private HolyWhiteScrollListener holyWhiteScrollListener;
-    private net.astropvp.core.items.HolyWhitescrollItem holyWhitescrollItem;
+    private HolyWhitescrollItem holyWhitescrollItem;
     private JackpotManager jackpotManager;
     public static Economy economy;
     Essentials ess;
@@ -486,6 +486,7 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantmentCoderItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicEnchantmentCoderItem());
+        this.holyWhitescrollItem = new HolyWhitescrollItem();
     }
 
     public void protocolFix() {

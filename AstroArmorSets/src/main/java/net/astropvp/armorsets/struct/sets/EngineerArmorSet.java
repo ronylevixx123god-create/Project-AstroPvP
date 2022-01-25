@@ -1,22 +1,43 @@
 package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.*;
+import com.google.common.collect.Maps;
+import com.massivecraft.factions.iface.RelationParticipator;
+import com.massivecraft.factions.perms.Relation;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
+
+    public  HashMap<Entity, Player> blocksAndPlayers = new HashMap<>();
+
+    public  HashMap<Entity, Player> blocksAndProccer = Maps.newHashMap();
+
+    public  List<String> uuidsE = new ArrayList<>();
+
+    public  List<String> entityList = new ArrayList<>();
+
     public ItemStack getHelmet() {
         return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&6&lEngineer Face Mask")).addLoreLines(CC.translate("&6Engineer face mask.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
@@ -35,14 +56,37 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
+        if (attacker instanceof Player) {
+            if (Math.random() <= 0.15) {
+                if (((Player) attacker).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacker).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacker).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacker).getItemInHand()) == WeaponBonusType.DEMON) {
+                    amount = amount - 1;
+                    attacker.sendMessage(CC.translate("&6&l** &4Demon Weaponbonus &7Blocked an &6Engineer Crystal &7of " + attacked.getName() + "'s Set &6&l**"));
+                }
+            }
+        }
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(9, event, "EngineerCrystal", amount);
-        //TODO engineer ability
+
+        if (attacker instanceof Player) {
+            if (ThreadLocalRandom.current().nextInt(100) <= 4) {
+                if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+
+                onEngineerAbility((Player) attacker);
+
+            }
+        }
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, event, "EngineerSet");
-        //TODO engineer ability
+        if (attacker instanceof Player) {
+            if (ThreadLocalRandom.current().nextInt(100) <= 4) {
+                if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                    return;
+
+                onEngineerAbility((Player) attacker);
+            }
+        }
 
     }
 
@@ -95,6 +139,36 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
 
         weapons.add(sword);
         return weapons;
+    }
+
+    public void onEngineerAbility(Player player) {
+        List<Entity> affected = (List<Entity>)player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> {
+            if (!(ent instanceof Player))
+                return false;
+            Player p = (Player)ent;
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VIRUS_HELMET_HAZMAT)) {
+                p.sendMessage(CC.translate("&2&l* PRISON BREAK &7(Hazmat Helmet) &2&l*"));
+                return false;
+            }
+            if (p.hasMetadata("immune_freeze")) {
+                p.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "B-2 Bomb blocked!" + CC.DarkGrayB + "] *");
+                return false;
+            }
+            Relation relation = FactionUtils.getRelationTo((RelationParticipator)FactionUtils.getFaction(p), (RelationParticipator)FactionUtils.getFaction(player));
+            return (relation != Relation.TRUCE && relation != Relation.MEMBER && relation != Relation.ALLY);
+        }).collect(Collectors.toList());
+        for (Entity ent2 : affected) {
+            //FallingBlock block = ent2.getWorld().spawnFallingBlock(ent2.getLocation().add(0.0D, 10.0D, 0.0D), Material.TNT, (byte)9);
+            //addEntityUUIDE(block.getUniqueId());
+            //blocksAndPlayers.put(block, (Player)ent2);
+            //blocksAndProccer.put(block, player);
+        }
+        player.sendMessage(CC.translate("&a&l* B-2 BOMBER DEPLOYED [&7" + affected.size() + " &7players&a&l] *"));
+    }
+
+    public void addEntityUUIDE(UUID id) {
+        String uuid = id.toString();
+        uuidsE.add(uuid);
     }
 
 

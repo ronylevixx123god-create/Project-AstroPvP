@@ -1,6 +1,7 @@
 package net.astropvp.damagehandler;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -29,6 +30,7 @@ public class AstroDamageHandlerAPI {
     }
 
     private void increaseDamage(double amountInPercentage, EntityDamageByEntityEvent event, String instance, double increaseAmount) {
+        if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation())) return;
         double oldDamage = event.getDamage();
         double newDamage = oldDamage * increaseAmount;
         if (event.getEntity() instanceof Player) {
@@ -57,6 +59,8 @@ public class AstroDamageHandlerAPI {
     }
 
     private void reduceDamage(double amountInPercentage, EntityDamageByEntityEvent event, String instance, double decreaseAmount) {
+        if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation())) return;
+
         double oldDamage = event.getDamage();
         double newDamage = event.getDamage() * decreaseAmount;
         if (this.debug) {
@@ -81,6 +85,8 @@ public class AstroDamageHandlerAPI {
     }
 
     private void reduceDamage(double amountInPercentage, EntityDamageEvent event, String instance, double decreaseAmount) {
+        if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation())) return;
+
         double oldDamage = event.getDamage();
         double newDamage = event.getDamage() * decreaseAmount;
         if (this.debug) {
@@ -119,6 +125,8 @@ public class AstroDamageHandlerAPI {
     }
 
     public void dealDamage(LivingEntity to, double amount, String instance) {
+        if (!WorldGuardUtils.isPvPEnabled(to.getLocation())) return;
+
         double getNewHealth = to.getHealth() - amount;
         if (this.debug && to instanceof Player) {
             this.sendDebugMessage((Entity) to, "&c&l- " + amount + " DMG &7(Instance: " + instance + "&7)");

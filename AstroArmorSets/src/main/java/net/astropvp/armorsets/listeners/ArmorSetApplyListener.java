@@ -14,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
@@ -24,11 +25,6 @@ public class ArmorSetApplyListener implements Listener {
 
     public ArmorSetApplyListener(AstroArmorSets plugin) {
         plugin = AstroArmorSets.getInstance();
-    }
-
-    @EventHandler
-    public void onJoin(PlayerJoinEvent e) {
-        AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
     }
 
     @EventHandler
@@ -126,15 +122,15 @@ public class ArmorSetApplyListener implements Listener {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
         ArmorSetCache cache;
-        if (attacked instanceof Player) {
+        if (attacked instanceof Player && attacker instanceof Player) {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");
             //armor set damaged
-            if (cache.getCurrentArmorSet() != null) {
+            if (cache != null && cache.getCurrentArmorSet() != null) {
                 cache.getCurrentArmorSet().getArmorSet().onDamaged(attacker, (Player) attacked, e);
             }
 
             //crystals damaged
-            if (!cache.getCurrentSetCrystals().isEmpty()) {
+            if (cache != null && !cache.getCurrentSetCrystals().isEmpty()) {
                 for (Map.Entry<ArmorSetType, Integer> entry : cache.getCurrentSetCrystals().entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
@@ -144,5 +140,23 @@ public class ArmorSetApplyListener implements Listener {
             }
         }
 
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        if (e.getEntity() != null) {
+            Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
+                AstroArmorSetsAPI.refreshArmorSets(e.getEntity());
+            }, 30L);
+        }
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        if (e.getPlayer() != null) {
+            Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
+                AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+            }, 30L);
+        }
     }
 }

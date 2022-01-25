@@ -51,6 +51,15 @@
         </dependency>
 
         <dependency>
+            <groupId>com.astropvp</groupId>
+            <artifactId>weaponrunes</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
+        </dependency>
+
+
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.16.18</version>

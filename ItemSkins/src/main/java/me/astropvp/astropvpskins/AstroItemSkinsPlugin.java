@@ -14,6 +14,7 @@ import me.astropvp.astropvpskins.objects.BackpackSocketItem;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
+import net.astropvp.armorsets.commands.CommandDebugArmorSet;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         getCommand("itemskin").setExecutor(new CommandItemSkin());
+
         getCommand("multiskin").setExecutor(new CommandMultiSkin());
         getCommand("removeskin").setExecutor(new RemoveBrokenSkinCommand());
         getServer().getPluginManager().registerEvents(new ItemSkinListener(), this);

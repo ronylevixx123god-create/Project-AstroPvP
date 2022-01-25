@@ -1,8 +1,6 @@
 package net.astropvp.core.items;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;

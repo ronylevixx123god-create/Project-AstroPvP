@@ -1,7 +1,6 @@
 package net.astropvp.core.listeners;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
+
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -10,6 +9,8 @@ import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.CollectPlugin;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.HolyWhiteScrollUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
@@ -90,11 +91,11 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 boolean isControlling = (controlling && Math.random() > 0.1D);
                 double monoChance = (killerIsControllingFrozen ? 0.48D : 0.33D);
-                if (CosmicArmorSetsAPI.hasCrystalApplied(e.getEntity().getPlayer(), ArmorSet.ASTRO)) monoChance += 0.05;
+                if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;
-                if (killer != null && CosmicArmorSetsAPI.getArmorSet(killer) == ArmorSet.DIMENSIONAL_TRAVELER) {
+                if (killer != null && AstroArmorSetsAPI.getCurrentArmorSet(killer) == ArmorSetType.DIMENSIONAL_TRAVELER) {
                     boolean flag = false;
                     for (ItemStack item : killer.getInventory().getContents()) {
                         if (item != null && item.getType() == Material.DIAMOND_AXE && (new NBTWrapper(item)).getString("cosmicType").equals("TRAVELER_AXE"))
@@ -102,7 +103,7 @@ public class HolyWhiteScrollListener implements Listener {
                     }
                     isTravAxe = (Math.random() < 0.5D && flag);
                 }
-                if (e.getEntity() != null && CosmicArmorSetsAPI.getArmorSet(e.getEntity()) == ArmorSet.DIMENSIONAL_TRAVELER)
+                if (e.getEntity() != null && AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity()) == ArmorSetType.DIMENSIONAL_TRAVELER)
                     for (ItemStack item2 : e.getEntity().getInventory().getContents()) {
                         if (item2 != null && item2.getType() == Material.DIAMOND_AXE && (new NBTWrapper(item2)).getString("cosmicType").equals("TRAVELER_AXE"))
                             isKilledHoldingTravAxe = true;

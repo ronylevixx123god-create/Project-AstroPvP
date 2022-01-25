@@ -44,7 +44,7 @@ public class Rage extends CustomEnchantment
             }
             if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
                 this.playRageEffect(target.getEyeLocation(), enchantLevel);
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50.0 * hitCombo, event, "&6&lRage");
+                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(hitCombo, event, "&6&lRage");
                 target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
             }
             if (target instanceof Player) {

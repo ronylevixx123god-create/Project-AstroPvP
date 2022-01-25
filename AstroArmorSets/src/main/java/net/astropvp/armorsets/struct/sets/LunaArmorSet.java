@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -51,14 +52,18 @@ public class LunaArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(6, event, "LunaSet");
-        if (Math.random() < 0.05 && attacked instanceof Player) {
+        if (Math.random() < 0.0025 && attacked instanceof Player) {
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+
             lunaStrike((Player) attacked);
         }
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "LunaCrystal", amount);
-        if (Math.random() < 0.05 && attacked instanceof Player) {
+        if (Math.random() < 0.0025 && attacked instanceof Player) {
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+
             lunaStrike((Player) attacked);
         }
     }
@@ -98,6 +103,7 @@ public class LunaArmorSet extends ArmorSet {
 
     public void lunaStrike(Player enemy) {
         if (isLunaStriked(enemy)) return;
+
         lunaStrikedPlayers.add(enemy.getUniqueId());
         enemy.sendMessage("");
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8&l✰ &7&lLUNA STRIKE ABILITY (" + enemy.getName() + ") &8&l✰")));

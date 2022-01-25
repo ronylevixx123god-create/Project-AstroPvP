@@ -75,6 +75,11 @@ public class AstroArmorSetsAPI {
     public static void refreshArmorSets(Player player) {
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
+        cache.setHeroicPieces(0);
+        cache.getCurrentAntiMkitCrystals().clear();
+        cache.setCurrentArmorSet(null);
+        cache.getCurrentSetCrystals().clear();
+
         ItemStack[] armor = player.getInventory().getArmorContents();
 
         for (ItemStack item : armor) {
@@ -328,12 +333,9 @@ public class AstroArmorSetsAPI {
         item.setType(type.getType());
         double modifier = type.getReduction();
 
-        NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
-        cosmicData.setBoolean("heroicArmor", true);
 
-        ItemStack finished = wrapper.build();
-        ItemMeta im = finished.getItemMeta();
+
+        ItemMeta im = item.getItemMeta();
         String strongerLine;
         List<String> lore = im.hasLore() ? im.getLore() : new ArrayList<>();
         if (!lore.contains(strongerLine = CC.DarkRed + "This armor is stronger than diamond.")) {
@@ -347,7 +349,11 @@ public class AstroArmorSetsAPI {
             ((LeatherArmorMeta) im).setColor(Color.RED);
         }
         item.setItemMeta(im);
-        return item;
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        cosmicData.setBoolean("heroicArmor", true);
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
+        return wrapper.build();
     }
 
     public static ItemStack convertWeaponToHeroic(HeroicArmor type, ItemStack item) {
@@ -364,7 +370,13 @@ public class AstroArmorSetsAPI {
         im.setLore(existing);
         item.setItemMeta(im);
 
-        return item;
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+        cosmicData.setBoolean("heroicArmor", true);
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
+
+
+        return wrapper.build();
     }
 
     public static ItemStack createArmorSetUpgrade(ArmorSetType armorset, double successRate) {

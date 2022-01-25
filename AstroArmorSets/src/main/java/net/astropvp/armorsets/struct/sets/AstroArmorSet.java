@@ -2,19 +2,39 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.perms.Relation;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
+import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
+import org.bukkit.block.Block;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AstroArmorSet extends ArmorSet {
+    public List<Block> blockList = new ArrayList<Block>();
+
+
     public ItemStack getHelmet() {
         return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&a&lAstro Cap")).addLoreLines(CC.translate("&aGodly astro helmet.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
@@ -34,7 +54,8 @@ public class AstroArmorSet extends ArmorSet {
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "AstroCrystal", amount);
-        //TODO astro Ability
+
+
     }
 
 
@@ -46,12 +67,77 @@ public class AstroArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "AstroSet");
+        if (Math.random() < 0.0025) {
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 
+            if (Math.random() <= 0.35) {
+                if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
+                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weaponbonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
+                    return;
+                }
+            }
+
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.28);
+            if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
+                if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
+                    return;
+                }
+                if (event.getDamager().getWorld().getName().equals("world_duels")) {
+                    return;
+                }
+                attacker.setMetadata("FalloutAbility", new FixedMetadataValue(AstroArmorSets.getInstance(), System.currentTimeMillis()));
+                FPlayer fp = FPlayers.getInstance().getByPlayer(attacker);
+                for (Entity nearbyEnt : attacker.getNearbyEntities(32.0, 64.0, 32.0)) {
+                    if (nearbyEnt instanceof Player) {
+                        Player pNear = (Player) nearbyEnt;
+                        FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
+                        if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                            continue;
+                        pNear.sendMessage(CC.translate("&a&l** &aAstro Cage Ability &7[" + fp.getName() + "] &a&l**"));
+                    }
+                    attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
+                    this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
+                }
+            }
+        }
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7, event, "AstroCrystal", amount);
 
+        if (Math.random() < 0.0025) {
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+
+            if (Math.random() <= 0.35) {
+                if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
+                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weaponbonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
+                    return;
+                }
+            }
+
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.28);
+            if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
+                if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
+                    return;
+                }
+                if (event.getDamager().getWorld().getName().equals("world_duels")) {
+                    return;
+                }
+                attacker.setMetadata("FalloutAbility", new FixedMetadataValue(AstroArmorSets.getInstance(), System.currentTimeMillis()));
+                FPlayer fp = FPlayers.getInstance().getByPlayer(attacker);
+                for (Entity nearbyEnt : attacker.getNearbyEntities(32.0, 64.0, 32.0)) {
+                    if (nearbyEnt instanceof Player) {
+                        Player pNear = (Player) nearbyEnt;
+                        FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
+                        if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                            continue;
+                        pNear.sendMessage(CC.translate("&a&l** Astro Cage Ability &7[" + fp.getName() + "] &a&l**"));
+                    }
+                    attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
+                    this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
+                }
+            }
+        }
     }
 
     public List<String> getArmorLore() {
@@ -84,6 +170,79 @@ public class AstroArmorSet extends ArmorSet {
         message.add(CC.translate("&8● &aAstro Cage Ability."));
         message.add("");
         return message;
+    }
+
+    public List<Block> setOutlinedBlocks(Location location, Material material) {
+        ArrayList<Block> blocks = new ArrayList<Block>();
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, 2.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(2.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(-2.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, -2.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, -2.0), material));
+        return blocks;
+    }
+
+    public List<Block> setInsideBlocks(Location location, Material material) {
+        ArrayList<Block> blocks = new ArrayList<Block>();
+        blocks.add(this.setBlock(location, material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, 0.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(0.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, 1.0), material));
+        blocks.add(this.setBlock(location.clone().add(-1.0, 0.0, -1.0), material));
+        blocks.add(this.setBlock(location.clone().add(1.0, 0.0, -1.0), material));
+        return blocks;
+    }
+
+    public void activateFalloutKillerAbility(Player player, final Player target) {
+        final ArrayList<Block> blocks = new ArrayList<Block>();
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().add(0.0, -1.0, 0.0), Material.DIAMOND_BLOCK));
+        blocks.addAll(this.setInsideBlocks(player.getLocation().add(0.0, -1.0, 0.0), Material.SOUL_SAND));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 0.0, 0.0), Material.IRON_FENCE));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 1.0, 0.0), Material.IRON_FENCE));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 2.0, 0.0), Material.IRON_FENCE));
+        blocks.addAll(this.setOutlinedBlocks(player.getLocation().clone().add(0.0, 3.0, 0.0), Material.DIAMOND_BLOCK));
+        blocks.addAll(this.setInsideBlocks(player.getLocation().clone().add(0.0, 3.0, 0.0), Material.DIAMOND_BLOCK));
+        blockList.addAll(blocks);
+        new BukkitRunnable() {
+            int counter = 0;
+
+            public void run() {
+                ++this.counter;
+                target.damage(3.5);
+                if (this.counter == 6) {
+                    List<Block> newBlocks = blocks.stream().filter(Objects::nonNull).collect(Collectors.toList());
+                    for (Block block : newBlocks) {
+                        block.setType(Material.AIR);
+                    }
+                    blockList.removeAll(newBlocks);
+                    this.cancel();
+                }
+            }
+        }.runTaskTimer(AstroArmorSets.getInstance(), 0L, 20L);
+    }
+
+    public Block setBlock(Location location, Material material) {
+        if (location.getBlock().getType() == Material.AIR) {
+            location.getBlock().setType(material);
+            return location.getBlock();
+        }
+        return null;
     }
 
 

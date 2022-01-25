@@ -6,6 +6,8 @@ depend:
   - ProtocolLib
   - BuycraftX
   - Factions
+  - Enchantments
+  - EnchantmentAPI
 permissions:
   ccverify.voice.lock:
     default: false

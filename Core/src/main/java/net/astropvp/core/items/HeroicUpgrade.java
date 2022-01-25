@@ -1,17 +1,14 @@
 package net.astropvp.core.items;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
-import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
-import net.minecraft.server.v1_8_R3.NBTBase;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -49,20 +46,18 @@ public class HeroicUpgrade extends CosmicItem
         if (cursor.getAmount() > 1) {
             throw new PrefixedException("You cannot apply stacked Heroic Weapon upgrades to an item.");
         }
-        NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
+        //NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompoundOrCreate("conaxData");
 
-        cosmicData.setInt("heroicWeaponUpgrade", Integer.valueOf(1));
+        //cosmicData.setInt("heroicWeaponUpgrade", Integer.valueOf(1));
         e.setCancelled(true);
         e.getWhoClicked().setItemOnCursor((ItemStack)null);
-        clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
-        clicked = clickedWrapper.build();
-        if (type == Material.DIAMOND_AXE) {
-            CosmicArmorSetsAPI.convertIntoHeroicWeapon(HeroicWeaponType.AXE, clicked, true);
-        } else if (type == Material.DIAMOND_SWORD) {
-            CosmicArmorSetsAPI.convertIntoHeroicWeapon(HeroicWeaponType.SWORD, clicked, true);
-        }
+        //clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        //clicked = clickedWrapper.build();
+
+        AstroArmorSetsAPI.convertItemToHeroic(clicked);
+
         e.setCurrentItem(clicked);
-        player.sendMessage(CC.translate("&a&l(!)&a Successfully applied Heroic Weapon Upgrade to this item!"));
+        player.sendMessage(CC.translate("&a&l(!)&a Successfully applied Heroic Weapon Upgrade to " + clicked.getItemMeta().getDisplayName() + "!"));
     }
 
     public void onItemUse(Player player, ItemStack item, NBTWrapper wrapper, PlayerInteractEvent event) throws CosmicException {

@@ -82,7 +82,7 @@ public class Silence extends CustomEnchantment
         target.setMetadata("noDefenseProcs", new FixedMetadataValue((Plugin)Enchantments.getInstance(), true));
         target.playSound(target.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
         target.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + "[" + (int)(durationTicks / 20.0) + "s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
-        DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.DarkPurpleB + "* SILENCE " + CC.Gray + "[" + durationTicks/20 + "s] " + CC.DarkPurpleB +  "*", "SILENCE");
+        DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.DarkPurpleB + "* SILENCE " + CC.Gray + "[" + (int)durationTicks/20 + "s] " + CC.DarkPurpleB +  "*", "SILENCE");
         target.setMetadata("silenceTargetCooldown", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + 2500L));
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), new Runnable() {
             @Override

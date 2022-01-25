@@ -39,7 +39,6 @@ public class HeroicArmored extends HeroicCustomEnchantment
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&6&lArmored");
             final Location l = player.getLocation();
-            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
         }
     }
 }

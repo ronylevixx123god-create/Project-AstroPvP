@@ -159,7 +159,7 @@ public class HolyWhiteScrollUtils {
     }
 
     public static boolean isOldHolyWhiteScroll(ItemStack i) {
-        return i != null && i.hasItemMeta() && i.getType() == Material.PAPER && i.getItemMeta().hasDisplayName() && i.getItemMeta().getDisplayName().equals(AstroCore.getInstance().getHolyWhiteScroll().getItemMeta().getDisplayName()) && i.getItemMeta().hasLore() && ((String)i.getItemMeta().getLore().get(0)).equals(AstroCore.getInstance().getHolyWhiteScroll().getItemMeta().getLore().get(0));
+        return i != null && i.hasItemMeta() && i.getType() == Material.PAPER && i.getItemMeta().hasDisplayName() && i.getItemMeta().getDisplayName().equals(AstroCore.getHolyWhiteScroll().getItemMeta().getDisplayName()) && i.getItemMeta().hasLore() && ((String)i.getItemMeta().getLore().get(0)).equals(AstroCore.getHolyWhiteScroll().getItemMeta().getLore().get(0));
     }
 
     public static int getMaxHolyAllowed(ItemStack item) {

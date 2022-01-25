@@ -92,11 +92,14 @@ extends CustomEnchantment {
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
+        if (!(attacker instanceof Player)) return;
+        if (!(player instanceof Player)) return;
+
         if (e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && e.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
         double random = Math.random();
-        double chance = 0.004 * (double)level;
+        double chance = 0.001 * (double)level;
         boolean KOTH = player.getWorld().getName().equals("world_koth");
         if (random < chance) {
             int cost;
@@ -104,7 +107,10 @@ extends CustomEnchantment {
             if (p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
                 return;
             }
-            if (MaskType.hasEquipped((Player) player, "THANOS")) {
+            if (MaskType.hasEquipped((Player) attacker, "THANOS")) {
+                return;
+            }
+            if (MaskType.hasEquipped((Player) attacker, "ZEUS")) {
                 return;
             }
             if(p.hasMetadata("witcher_ability"))

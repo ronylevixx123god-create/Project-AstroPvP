@@ -34,11 +34,11 @@ public class CrateLogicListener implements Listener {
         final Block block = event.getBlock();
         Bukkit.getScheduler().runTaskLater((Plugin) AstroCrateKeysPlugin.getInstance(), (Runnable)new BukkitRunnable() {
             public void run() {
-                block.getLocation().getBlock().setType(Material.CHEST);
+                //block.getLocation().getBlock().setType(Material.CHEST);
             }
         },  1L);
         CrateDataManager.newInstance(type, block.getLocation());
-        event.setCancelled(true);
+        //event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
