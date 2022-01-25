@@ -347,6 +347,11 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>AstroArmorSets</artifactId>
+            <version>0.1</version>
+        </dependency>
     </dependencies>
 
 </project>

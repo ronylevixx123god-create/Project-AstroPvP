@@ -6,8 +6,11 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
+import me.astropvp.astropvpskins.cache.ItemSkinCache;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
+import net.astropvp.core.utils.cache.CacheManager;
+import net.astropvp.core.utils.cache.CachedPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -65,7 +68,7 @@ public class ItemSkinListener implements Listener {
                 return;
             if (typeList.get(0) == null || !AstroItemSkinsAPI.isCorrectType(typeList.get(0), clicked))
                 return;
-            if (cooldownPlayers.containsKey((Player) event.getWhoClicked())) {
+            if (cooldownPlayers.containsKey(event.getWhoClicked())) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
                 return;
             }
@@ -82,11 +85,13 @@ public class ItemSkinListener implements Listener {
 
 
             if (event.getSlotType() == InventoryType.SlotType.ARMOR)
-                for (SkinType type : typeList)
-                    type.getItemSkin().onEquip((Player) event.getWhoClicked());
+                for (SkinType type : typeList) {
+                    CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer((Player) event.getWhoClicked());
+                    ((ItemSkinCache) cachedPlayer.getCache("item_skin")).removeItemSkin(type);
+                }
             if (typeList.size() == 1) {
                 if (typeList.get(0).getItemSkinType() == ItemSkinType.BACKPACK) {
-                    event.setCurrentItem(((SkinType) typeList.get(0)).applyBackpack(clicked));
+                    event.setCurrentItem(typeList.get(0).applyBackpack(clicked));
                     event.setCurrentItem(applyBackpackSkin(event.getCurrentItem(), typeList.get(0)));
                 } else {
 
@@ -131,8 +136,9 @@ public class ItemSkinListener implements Listener {
 
 
                         if (event.getSlotType() == InventoryType.SlotType.ARMOR) {
-                            skinTypes.get(i).getItemSkin().onUnequip((Player) event.getWhoClicked());
-                            skinTypes.get(j).getItemSkin().onUnequip((Player) event.getWhoClicked());
+                            CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer((Player) event.getWhoClicked());
+                            ((ItemSkinCache)cachedPlayer.getCache("item_skin")).removeItemSkin(skinTypes.get(i));
+                            ((ItemSkinCache)cachedPlayer.getCache("item_skin")).removeItemSkin(skinTypes.get(j));
                         }
 
 
@@ -206,12 +212,12 @@ public class ItemSkinListener implements Listener {
         Entity damager = event.getDamager();
         Entity damaged = event.getEntity();
         if (damager instanceof Player) {
-            List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
+            List<SkinType> damagerSkins = ((ItemSkinCache)CacheManager.getInstance().getCachedPlayer((Player) damager).getCache("item_skin")).getCurrentSkins();
             for (SkinType skin : damagerSkins)
                 skin.getItemSkin().onAttack((Player) damager, damaged, event);
         }
         if (damaged instanceof Player) {
-            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damaged);
+            List<SkinType> damagedSkins = ((ItemSkinCache)CacheManager.getInstance().getCachedPlayer((Player) damaged).getCache("item_skin")).getCurrentSkins();
             for (SkinType skin : damagedSkins)
                 skin.getItemSkin().onAttacked((Player) damaged, damager, event);
         }
@@ -243,12 +249,14 @@ public class ItemSkinListener implements Listener {
         if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
             assert skins != null;
-            skins.forEach(skin -> skin.getItemSkin().onUnequip(event.getPlayer()));
+            ItemSkinCache cache = (ItemSkinCache) CacheManager.getInstance().getCachedPlayer(event.getPlayer()).getCache("item_skin");
+            skins.forEach(cache::removeItemSkin);
         }
         if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
             List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
             assert skins != null;
-            skins.forEach(skin -> skin.getItemSkin().onEquip(event.getPlayer()));
+            ItemSkinCache cache = (ItemSkinCache) CacheManager.getInstance().getCachedPlayer(event.getPlayer()).getCache("item_skin");
+            skins.forEach(cache::addItemSkin);
         }
     }
 

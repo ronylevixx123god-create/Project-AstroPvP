@@ -8,12 +8,14 @@ import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astroscoreboard.board.Board;
 import me.astropvp.astroscoreboard.manager.PlayerDisplayManager;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
@@ -25,8 +27,9 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
-
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);    }
+
+    ItemMeta.Spigot
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {

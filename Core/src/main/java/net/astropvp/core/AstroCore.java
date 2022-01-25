@@ -11,6 +11,7 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.FieldAccessException;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
+import net.astropvp.core.stats.StatsManager;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
 import net.astropvp.core.titles.listeners.PermissionListener;
@@ -135,6 +136,7 @@ public class AstroCore extends JavaPlugin {
     @Setter
     public static TitleManagerAPI titleManagerAPI;
     private Freeze freezeCommand;
+    private StatsManager statsManager;
 
     @SneakyThrows
     public void onEnable() {
@@ -156,6 +158,7 @@ public class AstroCore extends JavaPlugin {
         this.claimsOnFrozen = new HashMap<>();
         this.filterManager = new FilterManager();
         this.filterManager.loadFilters();
+        this.statsManager = new StatsManager(this);
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunload lava_sponge");
         WorldGuardPlugin.inst().getConfig().set("simulation.sponge.enable", false);
