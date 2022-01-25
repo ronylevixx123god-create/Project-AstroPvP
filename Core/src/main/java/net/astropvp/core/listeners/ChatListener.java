@@ -126,7 +126,7 @@ public class ChatListener implements Listener {
                 }
 
                 try {
-                    clickable.add(faction.getRelationTo(recipientFaction).getColor() + fPlayer.getChatTag() + " ",
+                    clickable.add("&8[" + faction.getRelationTo(recipientFaction).getColor() + fPlayer.getChatTag() + "&8]&r ",
                             "&6&lFaction Info: &f" + faction.getTag() + " \n" +
                                     "&6* &eStrikes: &f" + faction.getStrikes().size() + " \n" +
                                     "&6* &ePower: &a" + (int) faction.getPower() + "&8/&a" + (int) faction.getPowerMax() + " \n" +
@@ -164,7 +164,7 @@ public class ChatListener implements Listener {
 
 
             String message = event.getMessage();
-            clickable.add("&7: ");
+            clickable.add("&8 » ");
 
 
             if (message.contains("[item]") || message.contains("[ITEM]")) {
