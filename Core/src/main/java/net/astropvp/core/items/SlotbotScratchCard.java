@@ -33,10 +33,7 @@ public class SlotbotScratchCard extends CosmicItem
                 , CC.translate("&7&nRight-Click&7 to have a chance"),
                 CC.translate("&7to unlock a reward from this scratchcard!"),
                 CC.translate(""),
-                CC.translate("&a&l * &aReward: &fSlotbot Ticket"),
-                CC.translate(""),
-                CC.translate("&8[&a!&8] &fUnlocked from the &aScratch Merchant&f &7(/merchant)&f.")
-
+                CC.translate("&a&l * &aReward: &fSlotbot Ticket")
         ).build())).build();
     }
 
@@ -50,10 +47,7 @@ public class SlotbotScratchCard extends CosmicItem
                 , CC.translate("&7&nRight-Click&7 to have a chance"),
                 CC.translate("&7to unlock a reward from this scratchcard!"),
                 CC.translate(""),
-                CC.translate("&a&l * &aReward: &fSlotbot Ticket"),
-                CC.translate(""),
-                CC.translate("&8[&a!&8] &fUnlocked from the &aScratch Merchant&f &7(/merchant)&f.")
-
+                CC.translate("&a&l * &aReward: &fSlotbot Ticket")
         ).build();
     }
 

@@ -7,8 +7,6 @@ import com.cosmicpvp.CosmicSpaceChests.libs.ChestLootSelector;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.MiscUtil;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -231,13 +229,7 @@ public class PlayerInteractChestListener implements Listener {
                 boolean warzone = false;
                 String region = MiscUtil.getRegionName(e.getClickedBlock().getLocation()).toLowerCase();
                 boolean spawn = region.startsWith("spaw");
-                if (plugin.getServer().getPluginManager().isPluginEnabled("Factions")) {
-                    FLocation ploc = new FLocation(e.getClickedBlock().getLocation());
-                    if (Board.getFactionAt(ploc).isWarZone())
-                        warzone = true;
-                } else {
-                    return;
-                }
+
                 if (!spawn && warzone && !region.contains("frozen_") && !region.contains("infernal_")) {
                     Chest c = (Chest)e.getClickedBlock().getState();
                     if (getItemCount(c.getBlockInventory()) <= 0) {
@@ -259,20 +251,20 @@ public class PlayerInteractChestListener implements Listener {
     public void removeGlitchedChestItemsInventoryClose(InventoryCloseEvent e) {
         if (!e.getPlayer().getInventory().contains(Material.CHEST))
             return;
-        for (ItemStack is : (ItemStack[])e.getPlayer().getInventory().getContents().clone()) {
-            if (isGlitchedChest(is))
-                e.getPlayer().getInventory().remove(is);
-        }
+        //for (ItemStack is : (ItemStack[])e.getPlayer().getInventory().getContents().clone()) {
+            //if (isGlitchedChest(is))
+                //e.getPlayer().getInventory().remove(is);
+        //}
     }
 
     @EventHandler
     public void removeGLitchedChestItemsPlayerJoin(PlayerJoinEvent e) {
         if (!e.getPlayer().getInventory().contains(Material.CHEST))
             return;
-        for (ItemStack is : (ItemStack[])e.getPlayer().getInventory().getContents().clone()) {
-            if (isGlitchedChest(is))
-                e.getPlayer().getInventory().remove(is);
-        }
+        //for (ItemStack is : (ItemStack[])e.getPlayer().getInventory().getContents().clone()) {
+            //if (isGlitchedChest(is))
+                //e.getPlayer().getInventory().remove(is);
+        //}
     }
 
     private boolean isGlitchedChest(ItemStack i) {
@@ -388,32 +380,8 @@ public class PlayerInteractChestListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onPlayerJoin(PlayerJoinEvent e) {
-        if (e.getPlayer().getInventory().contains(Material.CHEST))
-            CosmicSpaceChestsAPI.convertDropPackages(e.getPlayer());
-    }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onInventoryOpen(InventoryOpenEvent e) {
-        if (e.getInventory().contains(Material.CHEST))
-            CosmicSpaceChestsAPI.convertDropPackages(e.getInventory());
-    }
 
-    @EventHandler
-    public void noFireballFire(ExplosionPrimeEvent e) {
-        if (e.getEntity() instanceof org.bukkit.entity.Fireball) {
-            FLocation fl = new FLocation(e.getEntity().getLocation());
-            if (Board.getFactionAt(fl).isWarZone())
-                e.setFire(false);
-        }
-    }
-
-    @EventHandler
-    public void onEntityDeath(EntityDeathEvent e) {
-        if (e.getEntity().hasMetadata("envoyMonster"))
-            e.getDrops().clear();
-    }
 
     private int getItemCount(Inventory inv) {
         int x = 0;

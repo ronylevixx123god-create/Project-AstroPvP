@@ -36,10 +36,7 @@ public class RogueScratchCard extends CosmicItem
                 CC.translate(""),
                 CC.translate("&c&l * &cReward: &fRogue Book"),
                 CC.translate("&c&l * &cChance: &f0% - 100%"),
-                CC.translate("&c&l * &cLevel: &fI - III"),
-                CC.translate(""),
-                CC.translate("&8[&c!&8] &fUnlocked from the &cScratch Merchant&f &7(/merchant)&f.")
-
+                CC.translate("&c&l * &cLevel: &fI - III")
         ).build())).build();
     }
 
@@ -55,10 +52,7 @@ public class RogueScratchCard extends CosmicItem
                 CC.translate(""),
                 CC.translate("&c&l * &cReward: &fRogue Book"),
                 CC.translate("&c&l * &cChance: &f0% - 100%"),
-                CC.translate("&c&l * &cLevel: &fI - III"),
-                CC.translate(""),
-                CC.translate("&8[&c!&8] &fUnlocked from the &cScratch Merchant&f &7(/merchant)&f.")
-
+                CC.translate("&c&l * &cLevel: &fI - III")
         ).build();
     }
 
