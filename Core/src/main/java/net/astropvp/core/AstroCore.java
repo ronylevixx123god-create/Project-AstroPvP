@@ -470,6 +470,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
         getServer().getPluginManager().registerEvents( new ItemFilterListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
+        this.itemListener = new ItemFilterListener();
     }
 
     public void registerCustomItems() {

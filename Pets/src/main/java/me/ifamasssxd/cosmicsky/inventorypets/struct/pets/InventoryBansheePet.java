@@ -138,6 +138,8 @@ public class InventoryBansheePet extends InventoryPet {
             enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
             if (!AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(enemy))) {
                 enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+
+            } else {
                 enemy.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet&7 Holy WhiteScroll Bypass &7[&f" + player.getName() + "&7] &e&l*"));
 
             }
@@ -164,7 +166,6 @@ public class InventoryBansheePet extends InventoryPet {
 
         (new BukkitRunnable() {
             public void run() {
-                player.sendMessage(CC.translate("&4&lPET: BANSHEE - RKO has worn off! "));
                 player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
                 player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
                 EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
@@ -196,6 +197,8 @@ public class InventoryBansheePet extends InventoryPet {
         enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         if (!AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(enemy))) {
             enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+
+        } else {
             enemy.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet&7 Holy WhiteScroll Bypass &7[&f" + player.getName() + "&7] &e&l*"));
 
         }
@@ -223,7 +226,6 @@ public class InventoryBansheePet extends InventoryPet {
 
         (new BukkitRunnable() {
             public void run() {
-                player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
                 player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
                 player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
                 EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);

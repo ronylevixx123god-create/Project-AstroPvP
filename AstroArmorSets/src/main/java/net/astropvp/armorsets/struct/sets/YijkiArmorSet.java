@@ -47,7 +47,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) throws Exception {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "YijkiCrystal", amount);
-        if (Math.random() < 0.0025 && attacker instanceof Player) {
+        if (Math.random() < 0.07 && attacker instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 
             activateYijki(attacker.getLocation(), attacked);
@@ -57,7 +57,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) throws Exception {
         AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(30, event, "YijkiSet");
-        if (Math.random() < 0.0025 && attacker instanceof Player) {
+        if (Math.random() < 0.07 && attacker instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 
             activateYijki(attacker.getLocation(), attacked);

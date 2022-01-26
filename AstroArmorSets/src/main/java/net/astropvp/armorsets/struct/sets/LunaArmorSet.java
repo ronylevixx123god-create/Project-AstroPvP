@@ -52,7 +52,7 @@ public class LunaArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(6, event, "LunaSet");
-        if (Math.random() < 0.0025 && attacked instanceof Player) {
+        if (Math.random() < 0.05 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 
             lunaStrike((Player) attacked);
@@ -61,7 +61,7 @@ public class LunaArmorSet extends ArmorSet {
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "LunaCrystal", amount);
-        if (Math.random() < 0.0025 && attacked instanceof Player) {
+        if (Math.random() < 0.05 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 
             lunaStrike((Player) attacked);
