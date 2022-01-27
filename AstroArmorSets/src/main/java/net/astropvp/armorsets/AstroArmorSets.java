@@ -2,10 +2,7 @@ package net.astropvp.armorsets;
 
 import lombok.Getter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import net.astropvp.armorsets.commands.CommandDebugArmorSet;
-import net.astropvp.armorsets.commands.CommandGiveArmorSet;
-import net.astropvp.armorsets.commands.CommandGiveHeroicArmor;
-import net.astropvp.armorsets.commands.CommandGiveHeroicUpgrade;
+import net.astropvp.armorsets.commands.*;
 import net.astropvp.armorsets.items.AntiMKitCrystalItem;
 import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
@@ -40,7 +37,7 @@ public class AstroArmorSets extends JavaPlugin {
         getCommand("armorset").setExecutor(new CommandGiveArmorSet());
         getCommand("heroicupgrade").setExecutor(new CommandGiveHeroicUpgrade());
         getCommand("debugarmorsets").setExecutor(new CommandDebugArmorSet());
-
+        getCommand("armorsets").setExecutor(new CommandOpenGUI());
 
 
     }
@@ -51,6 +48,7 @@ public class AstroArmorSets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new HeroicArmorDamageListener(), this);
         getServer().getPluginManager().registerEvents(new AntiMkitDamagedListener(), this);
         getServer().getPluginManager().registerEvents(new OmniArmorDamageListener(), this);
+        getServer().getPluginManager().registerEvents(new GUIInventoryListener(), this);
 
 
 
