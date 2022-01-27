@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.bukkit.ChatColor
  *  org.bukkit.Material
@@ -46,7 +46,7 @@ import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
 public class SettingsListener
-implements Listener {
+        implements Listener {
     @EventHandler
     public void onPlayerRegen(EntityRegainHealthEvent e) {
         NewDuel d;
@@ -166,4 +166,3 @@ implements Listener {
         }
     }
 }
-

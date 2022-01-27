@@ -139,7 +139,7 @@ public class DuelListener
     public void onPlayerPreProcess(PlayerCommandPreprocessEvent e) {
         if (Arena.getDuelWorldName().equalsIgnoreCase(e.getPlayer().getWorld().getName()) && e.getMessage().startsWith("/f ") && !e.getPlayer().isOp() && !e.getPlayer().getGameMode().equals((Object)GameMode.CREATIVE)) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
+            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands in a duel.");
             e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
             e.setMessage("/null");
             return;
@@ -174,7 +174,7 @@ public class DuelListener
                 }
                 e.setMessage("/null");
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
+                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands in a duel.");
                 e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
             }
         }

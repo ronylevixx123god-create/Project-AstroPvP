@@ -250,7 +250,7 @@ public class ClassicDuel extends NewDuel {
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", this.isRanked(), loser));
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", this.isRanked(), winner));
                 if (this.settings.hasSetting(Setting.DROPITEMS)) {
-                    Bukkit.broadcastMessage(CC.translate("&6&l(Duels) &a" + winner + " &7has defeated &c" + loser + " &7in a Risk Inventory Duel!"));
+                    Bukkit.broadcastMessage(CC.translate("&e&l(!)&e &a&n" + winner.getName() + "&r &ehas defeated &c&n" + loser.getName() + "&e in a Risk Inventory Duel!"));
                 }
             }
         } else if (endReason == EndReason.RELOAD || endReason == EndReason.NO_WINNER) {

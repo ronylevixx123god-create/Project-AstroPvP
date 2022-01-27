@@ -344,6 +344,7 @@ public class DuelInventoryListener implements Listener {
         TeamData data = CosmicDuel.get().getTeamDataManager().tryFindTeam(p.getUniqueId());
         if (p.hasMetadata("close_exempt")) {
             p.removeMetadata("close_exempt", CosmicDuel.get());
+
         } else {
             NewDuel d;
             if (e.getInventory().getName().equalsIgnoreCase("Duel Settings")) {
@@ -363,63 +364,61 @@ public class DuelInventoryListener implements Listener {
                         p.sendMessage(ChatColor.GRAY + "The duel has been cancelled.");
                         DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                     }
+                }
 
-                } else if (e.getInventory().getName().contains(p.getName()) && e.getInventory().getName().length() >= 32) {
-                    if (DuelAPI.hasDuel(p)) {
-                        d = DuelAPI.getDuel(p);
-                        if (d.getCreateState() == DuelCreateState.STAKES) {
-                            d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
-                            d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
-                            d.setCreateState(DuelCreateState.DONE);
-                            d.getStakeInventory().closeInventory(d);
-                            DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
-                        }
-                    }
-                } else if (data != null) {
-                    if (data.getLeaderUUID() != null) {
-                        if (Bukkit.getPlayer(data.getLeaderUUID()) != null) {
-                            if (e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
-                                String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
-                                d = DuelAPI.getDuel(p);
-                                if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {
-                                    d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
-                                    d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
-                                    d.setCreateState(DuelCreateState.DONE);
-                                    d.getStakeInventory().closeInventory(d);
-                                    DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
-                                }
-                            }
-                        }
-                    }
-                } else if (!e.getInventory().getName().equalsIgnoreCase("Select a Kit") && !e.getInventory().getName().equals("Select a Duel GKit")) {
-                    if (e.getInventory().getName().endsWith("Duel Settings")) {
-                        if (DuelAPI.hasPendingInvite(p)) {
-                            DuelAPI.declineDuel(p, e.getInventory().getName().split("'s")[0], true);
-                        }
-                    } else if (e.getInventory().getName().contains("'s Death Loot")) {
-                        ListIterator var8 = e.getInventory().iterator();
-
-                        while (var8.hasNext()) {
-                            ItemStack is = (ItemStack) var8.next();
-                            if (is != null && is.getType() != Material.AIR) {
-                                if (p.getInventory().firstEmpty() == -1) {
-                                    p.getWorld().dropItem(p.getLocation(), is);
-                                } else {
-                                    p.getInventory().addItem(new ItemStack[]{is});
-                                }
-                            }
-                        }
-                    }
-                } else if (DuelAPI.hasDuel(p)) {
+            } else if (e.getInventory().getName().contains(p.getName())) {
+                if (DuelAPI.hasDuel(p)) {
                     d = DuelAPI.getDuel(p);
-                    if (d.getCreateState() == DuelCreateState.KIT) {
-                        d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "KITS" + ChatColor.YELLOW + " selection.", false);
+                    if (d.getCreateState() == DuelCreateState.STAKES) {
+
+                        d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
                         d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
+                        d.setCreateState(DuelCreateState.DONE);
+                        d.getStakeInventory().closeInventory(d);
                         DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
                     }
                 }
-            }
+            } else if (data != null) {
+                if (data.getLeaderUUID() != null) {
+                    if (Bukkit.getPlayer(data.getLeaderUUID()) != null) {
+                        if (e.getInventory().getName().contains(Bukkit.getPlayer(data.getLeaderUUID()).getName()) && e.getInventory().getName().length() >= 32) {
+                            String teamLeaderName = Bukkit.getPlayer(data.getLeaderUUID()).getName();
+                            d = DuelAPI.getDuel(p);
+                            if (d instanceof TeamDuel && d.getCreateState() == DuelCreateState.STAKES) {
+                                d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "STAKES" + ChatColor.YELLOW + " selection.", false);
+                                d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
+                                d.setCreateState(DuelCreateState.DONE);
+                                d.getStakeInventory().closeInventory(d);
+                                DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
+                            }
+                        }
+                    }
+                }
+            } else if (!e.getInventory().getName().equalsIgnoreCase("Select a Kit") && !e.getInventory().getName().equals("Select a Duel GKit")) {
+                if (e.getInventory().getName().endsWith("Duel Settings")) {
+                    if (DuelAPI.hasPendingInvite(p)) {
+                        DuelAPI.declineDuel(p, e.getInventory().getName().split("'s")[0], true);
+                    }
+                } else if (e.getInventory().getName().contains("'s Death Loot")) {
 
+                    for (ItemStack is : e.getInventory()) {
+                        if (is != null && is.getType() != Material.AIR) {
+                            if (p.getInventory().firstEmpty() == -1) {
+                                p.getWorld().dropItem(p.getLocation(), is);
+                            } else {
+                                p.getInventory().addItem(is);
+                            }
+                        }
+                    }
+                }
+            } else if (DuelAPI.hasDuel(p)) {
+                d = DuelAPI.getDuel(p);
+                if (d.getCreateState() == DuelCreateState.KIT) {
+                    d.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + p.getName() + " closed the " + ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + "KITS" + ChatColor.YELLOW + " selection.", false);
+                    d.sendMessage(ChatColor.GRAY + "The duel has been cancelled.", false);
+                    DuelAPI.cancelDuel(d, CancelReason.CLOSED_INVENTORY);
+                }
+            }
         }
     }
 }
