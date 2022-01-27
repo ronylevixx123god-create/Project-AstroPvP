@@ -15,3 +15,6 @@ commands:
   debugarmorsets:
     description: Debug armorsets
     aliases: ['debugarmor', 'debugarmorset']
+  armorsets:
+    description: Open the Armor Sets GUI
+    aliases: ['armorgui', 'setsgui']
