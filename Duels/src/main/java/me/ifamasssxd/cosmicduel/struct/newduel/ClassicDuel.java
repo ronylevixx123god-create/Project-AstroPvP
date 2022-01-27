@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
@@ -12,7 +12,6 @@
  *  com.gmail.nossr50.util.StringUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.utils.ItemBuilder
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.arkhamnetwork.Arkkit.patches.CombatLog
  *  org.arkhamnetwork.enchantments.EnchantmentBook
@@ -59,8 +58,7 @@ import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.utils.*;
-import me.ifamasssxd.factionupgrades.utils.ItemBuilder;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -216,12 +214,10 @@ public class ClassicDuel extends NewDuel {
                 }
                 sendJsonMessage(jsonMessage, true);
                 sendMessage("", true);
-                if (loser != null) {
-                    loser.sendMessage("");
-                    loser.sendMessage(winningMsg);
-                    jsonMessage.sendToPlayer(loser);
-                    loser.sendMessage("");
-                }
+                loser.sendMessage("");
+                loser.sendMessage(winningMsg);
+                jsonMessage.sendToPlayer(loser);
+                loser.sendMessage("");
                 removePlayer(winner, Reason.WIN, false);
                 winner.playSound(winner.getLocation(), Sound.LEVEL_UP, 1.0F, 1.4F);
                 RandomFireworks.getManager().launchRandomFirework(winner.getLocation());
@@ -237,8 +233,7 @@ public class ClassicDuel extends NewDuel {
                     }
                     loser.getInventory().setArmorContents(null);
                     removePotionEffects(loser);
-                    for (ListIterator<ItemStack> listIterator = loser.getInventory().iterator(); listIterator.hasNext(); ) {
-                        ItemStack is = listIterator.next();
+                    for (ItemStack is : loser.getInventory()) {
                         if (is != null && is.getType() != Material.AIR)
                             items.add(is);
                     }
@@ -247,15 +242,17 @@ public class ClassicDuel extends NewDuel {
                     CollectionBin.addItems(winner, items);
                     winner.sendMessage(CC.translate("&a&l(!) &aUse &n/duel collect&a to collect your winnings!"));
                 }
-                if (isRanked()) {
-                    winner.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You defeated " + loser.getName() + " in a Ranked Duel!");
-                    loser.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have been defeated by " + winner.getName() + " in a Ranked Duel!");
-                }
                 Title titleWinner = new Title(CC.translate("&a&lWinner"), CC.translate("&7") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
                 Title titleLoser = new Title(CC.translate("&c&lYou Lost"), CC.translate("&7Winner: ") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
-                loser.sendTitle(titleLoser);            }
+                loser.sendTitle(titleLoser);
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", this.isRanked(), loser));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", this.isRanked(), winner));
+                if (this.settings.hasSetting(Setting.DROPITEMS)) {
+                    Bukkit.broadcastMessage(CC.translate("&e&l(!)&e &a&n" + winner.getName() + "&r &ehas defeated &c&n" + loser.getName() + "&e in a Risk Inventory Duel!"));
+                }
+            }
         } else if (endReason == EndReason.RELOAD || endReason == EndReason.NO_WINNER) {
             onEnd(false);
             returnStakes();
@@ -442,6 +439,7 @@ public class ClassicDuel extends NewDuel {
         if (this.originalLocation.containsKey(p.getUniqueId()))
             forceTeleport(p, this.originalLocation.get(p.getUniqueId()));
         this.originalLocation.remove(p.getUniqueId());
+        p.setFireTicks(0);
     }
 
 

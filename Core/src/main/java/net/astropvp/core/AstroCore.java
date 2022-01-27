@@ -409,7 +409,7 @@ public class AstroCore extends JavaPlugin {
                     p.sendMessage("");
                 }
             }
-        }, 50L, 3600L);
+        }, 50L, 7200L);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "citizens reload");

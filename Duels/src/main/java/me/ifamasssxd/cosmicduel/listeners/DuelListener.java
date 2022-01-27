@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.ChatColor
@@ -56,7 +56,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 
 public class DuelListener
-implements Listener {
+        implements Listener {
     List<String> fixAliases = Lists.newArrayList("/fix", "/efix", "/erepair", "/repair");
 
     @EventHandler(priority=EventPriority.MONITOR)
@@ -183,4 +183,3 @@ implements Listener {
         }
     }
 }
-

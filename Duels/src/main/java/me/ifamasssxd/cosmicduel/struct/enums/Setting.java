@@ -12,7 +12,7 @@ import org.bukkit.inventory.ItemStack;
 
 public enum Setting {
     GOLDEN_APPLES("Golden Apples", "%s Golden Apples during the duel.", Material.GOLDEN_APPLE, 0, true, true),
-    MCMMO("MCMMO", "%s MCMMO skills during the duel.", Material.DIAMOND_AXE, 0, true, false),
+    //MCMMO("MCMMO", "%s MCMMO skills during the duel.", Material.DIAMOND_AXE, 0, true, false),
     POTIONS("Potions", "%s all potions during the duel.", Material.BREWING_STAND_ITEM, 0, true, true),
     BOWS("Bows", "%s Bows during the duel.", Material.BOW, 0, true, true),
     HEALING("Healing", "%s Vanilla regen during the duel.", Material.GHAST_TEAR, 0, true, true),
