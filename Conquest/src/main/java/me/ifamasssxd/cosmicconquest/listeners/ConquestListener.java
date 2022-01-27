@@ -202,7 +202,6 @@ public class ConquestListener implements Listener {
                             }
                         } else {
                             hitsLeft.setHits(hitsLeft.getHits() - 1);
-                            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contests add " + player.getName() + " chestHits 1");
                         }
                         Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "CONQUEST_DAMAGE", new Object[] {hitsLeft.getHits(), prevHits}));
                     }
