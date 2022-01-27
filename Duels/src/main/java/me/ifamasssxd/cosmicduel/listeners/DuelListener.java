@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.google.common.collect.Lists
  *  org.bukkit.ChatColor
@@ -56,7 +56,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.List;
 
 public class DuelListener
-implements Listener {
+        implements Listener {
     List<String> fixAliases = Lists.newArrayList("/fix", "/efix", "/erepair", "/repair");
 
     @EventHandler(priority=EventPriority.MONITOR)
@@ -139,7 +139,7 @@ implements Listener {
     public void onPlayerPreProcess(PlayerCommandPreprocessEvent e) {
         if (Arena.getDuelWorldName().equalsIgnoreCase(e.getPlayer().getWorld().getName()) && e.getMessage().startsWith("/f ") && !e.getPlayer().isOp() && !e.getPlayer().getGameMode().equals((Object)GameMode.CREATIVE)) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands in a duel.");
+            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
             e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
             e.setMessage("/null");
             return;
@@ -174,7 +174,7 @@ implements Listener {
                 }
                 e.setMessage("/null");
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands in a duel.");
+                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
                 e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
             }
         }
@@ -183,4 +183,3 @@ implements Listener {
         }
     }
 }
-

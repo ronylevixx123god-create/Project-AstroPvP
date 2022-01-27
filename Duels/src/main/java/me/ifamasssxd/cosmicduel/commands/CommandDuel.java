@@ -70,7 +70,7 @@ public class CommandDuel implements CommandExecutor {
             return true;
         Player p = (Player) sender;
         if (CosmicDuel.get().isShuttingDown()) {
-            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel net.astropvp.armorsets.commands while the server is rebooting.");
+            p.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot use duel  while the server is rebooting.");
             return true;
         }
         if (args.length == 1) {

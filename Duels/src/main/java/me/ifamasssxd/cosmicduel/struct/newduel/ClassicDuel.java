@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
@@ -216,12 +216,10 @@ public class ClassicDuel extends NewDuel {
                 }
                 sendJsonMessage(jsonMessage, true);
                 sendMessage("", true);
-                if (loser != null) {
-                    loser.sendMessage("");
-                    loser.sendMessage(winningMsg);
-                    jsonMessage.sendToPlayer(loser);
-                    loser.sendMessage("");
-                }
+                loser.sendMessage("");
+                loser.sendMessage(winningMsg);
+                jsonMessage.sendToPlayer(loser);
+                loser.sendMessage("");
                 removePlayer(winner, Reason.WIN, false);
                 winner.playSound(winner.getLocation(), Sound.LEVEL_UP, 1.0F, 1.4F);
                 RandomFireworks.getManager().launchRandomFirework(winner.getLocation());
@@ -237,8 +235,7 @@ public class ClassicDuel extends NewDuel {
                     }
                     loser.getInventory().setArmorContents(null);
                     removePotionEffects(loser);
-                    for (ListIterator<ItemStack> listIterator = loser.getInventory().iterator(); listIterator.hasNext(); ) {
-                        ItemStack is = listIterator.next();
+                    for (ItemStack is : loser.getInventory()) {
                         if (is != null && is.getType() != Material.AIR)
                             items.add(is);
                     }
@@ -247,15 +244,14 @@ public class ClassicDuel extends NewDuel {
                     CollectionBin.addItems(winner, items);
                     winner.sendMessage(CC.translate("&a&l(!) &aUse &n/duel collect&a to collect your winnings!"));
                 }
-                if (isRanked()) {
-                    winner.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "You defeated " + loser.getName() + " in a Ranked Duel!");
-                    loser.sendMessage(ChatColor.RED + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You have been defeated by " + winner.getName() + " in a Ranked Duel!");
-                }
                 Title titleWinner = new Title(CC.translate("&a&lWinner"), CC.translate("&7") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
                 Title titleLoser = new Title(CC.translate("&c&lYou Lost"), CC.translate("&7Winner: ") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
-                loser.sendTitle(titleLoser);            }
+                loser.sendTitle(titleLoser);
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", this.isRanked(), loser));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", this.isRanked(), winner));
+            }
         } else if (endReason == EndReason.RELOAD || endReason == EndReason.NO_WINNER) {
             onEnd(false);
             returnStakes();

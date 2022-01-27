@@ -29,7 +29,6 @@ public class ListenerSB implements Listener {
         }
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);    }
 
-    ItemMeta.Spigot
 
     @EventHandler
     public void onQuit(PlayerQuitEvent event) {
