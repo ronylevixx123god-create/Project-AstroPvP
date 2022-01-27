@@ -20,6 +20,8 @@ public class CommandDebugArmorSet implements CommandExecutor {
             cache.getCurrentArmorSets().clear();
             cache.getCurrentSetCrystals().clear();
             cache.setHeroicPieces(0);
+            cache.setOmniPieces(0);
+
             cache.setCurrentArmorSet(null);
             sender.sendMessage(CC.translate("&aCleared all the values for armorsets plugin"));
             return true;
@@ -31,6 +33,8 @@ public class CommandDebugArmorSet implements CommandExecutor {
         sender.sendMessage(CC.translate("&cEquipped Heroic Pieces: &f" + cache.getHeroicPieces()));
         sender.sendMessage(CC.translate("&dArmorSets Equipped: &f" + cache.getCurrentArmorSets()));
         sender.sendMessage(CC.translate("&6AntiMkit Equipped: &f" + cache.getCurrentAntiMkitCrystals()));
+        sender.sendMessage(CC.translate("&3Omni Crystals: &f" + cache.getOmniPieces()));
+
         sender.sendMessage("");
 
         return false;

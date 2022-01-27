@@ -35,8 +35,10 @@ public class ArmorSetApplyListener implements Listener {
         if (e.getOldArmorPiece() != null && e.getOldArmorPiece().getType() != Material.AIR) {
             if (AstroArmorSetsAPI.hasSetTypeOnItem(e.getOldArmorPiece())) {
                 cache.removeArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getOldArmorPiece()));
-
             }
+
+
+
             if (AstroArmorSetsAPI.isHeroic(e.getOldArmorPiece())) {
                 cache.removeHeroicArmor(e.getOldArmorPiece());
 
@@ -58,6 +60,10 @@ public class ArmorSetApplyListener implements Listener {
                     cache.removeMkitCrystal(type);
 
                 }
+            }
+
+            if (AstroArmorSetsAPI.isOmniPiece(e.getOldArmorPiece())) {
+                cache.removeOmniPiece(e.getOldArmorPiece());
             }
         }
 
@@ -86,6 +92,10 @@ public class ArmorSetApplyListener implements Listener {
                     cache.addMkitCrystal(type);
 
                 }
+            }
+
+            if (AstroArmorSetsAPI.isOmniPiece(e.getNewArmorPiece())) {
+                cache.addOmniPiece(e.getNewArmorPiece());
             }
         }
     }

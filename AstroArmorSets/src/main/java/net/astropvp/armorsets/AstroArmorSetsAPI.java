@@ -38,6 +38,15 @@ public class AstroArmorSetsAPI {
         }
     }
 
+    public static boolean isOmniPiece(ItemStack item) {
+        if (item != null && item.getType() != Material.AIR) {
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+            return cosmicData.hasKey("omniArmorSet");
+        }
+        return false;
+    }
+
     public static boolean hasSetTypeOnItem(ItemStack item) {
         if (item != null && item.getType() != Material.AIR) {
             NBTWrapper wrapper = new NBTWrapper(item);
@@ -76,6 +85,7 @@ public class AstroArmorSetsAPI {
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
         cache.setHeroicPieces(0);
+        cache.setOmniPieces(0);
         cache.getCurrentAntiMkitCrystals().clear();
         cache.setCurrentArmorSet(null);
         cache.getCurrentSetCrystals().clear();
@@ -98,6 +108,10 @@ public class AstroArmorSetsAPI {
 
             if (isHeroic(item)) {
                 cache.addHeroicArmor(item);
+            }
+
+            if (isOmniPiece(item)) {
+                cache.addOmniPiece(item);
             }
 
             if (AstroArmorSetsAPI.itemHasMkitCrystals(item)) {
@@ -138,6 +152,13 @@ public class AstroArmorSetsAPI {
         }
         if (isHeroic(newArmorPiece)) {
             cache.addHeroicArmor(newArmorPiece);
+        }
+
+        if (isOmniPiece(oldArmorPiece)) {
+            cache.removeOmniPiece(oldArmorPiece);
+        }
+        if (isOmniPiece(newArmorPiece)) {
+            cache.addOmniPiece(newArmorPiece);
         }
 
         if (AstroArmorSetsAPI.itemHasMkitCrystals(oldArmorPiece)) {

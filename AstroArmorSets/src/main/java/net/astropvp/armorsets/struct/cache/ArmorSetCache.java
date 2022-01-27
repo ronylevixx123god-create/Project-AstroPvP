@@ -24,6 +24,8 @@ public class ArmorSetCache extends Cache {
     private final Map<AntiMkit, Integer> currentAntiMkitCrystals;
 
     private int heroicPieces;
+    private int omniPieces;
+
     private ArmorSetType currentArmorSet;
     private final Player player;
 
@@ -35,6 +37,7 @@ public class ArmorSetCache extends Cache {
         this.currentAntiMkitCrystals = new HashMap<>();
         this.currentArmorSet = null;
         this.heroicPieces = 0;
+        this.omniPieces = 0;
     }
 
     public void addArmorSet(ArmorSetType type) {
@@ -42,7 +45,7 @@ public class ArmorSetCache extends Cache {
             this.currentArmorSets.put(type, 1);
         } else {
             this.currentArmorSets.put(type, this.currentArmorSets.get(type) + 1);
-            if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) == 4) {
+            if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) == 4 || (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) + omniPieces == 4)) {
                 this.currentArmorSet = type;
 
                 for (String s : type.getArmorSet().getArmorEquipMessage()) {
@@ -61,7 +64,7 @@ public class ArmorSetCache extends Cache {
             } else {
                 this.currentArmorSets.put(type, this.currentArmorSets.get(type) - 1);
             }
-            if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) != 4) {
+            if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) != 4 || this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) + omniPieces != 4) {
                 this.currentArmorSet = null;
             }
         }
@@ -111,19 +114,39 @@ public class ArmorSetCache extends Cache {
     }
 
     public void addHeroicArmor(ItemStack item) {
-        if (AstroArmorSetsAPI.isHeroic(item)) {
             if (heroicPieces +1 > 4) return;
             this.heroicPieces++;
-        }
-
     }
 
     public void removeHeroicArmor(ItemStack item) {
-        if (AstroArmorSetsAPI.isHeroic(item)) {
             if (this.heroicPieces -1 < 0) return;
             this.heroicPieces--;
+    }
+
+    public void addOmniPiece(ItemStack item) {
+            if (omniPieces + 1 > 4) return;
+            this.omniPieces++;
+        for (Map.Entry<ArmorSetType, Integer> entry : currentArmorSets.entrySet()) {
+            ArmorSetType type = entry.getKey();
+            Integer amount = entry.getValue();
+
+            if (this.omniPieces + amount == 4) {
+                this.currentArmorSet = type;
+
+                for (String s : type.getArmorSet().getArmorEquipMessage()) {
+                    this.player.sendMessage(s);
+                }
+            }
         }
+
 
     }
 
+    public void removeOmniPiece(ItemStack item) {
+            if (this.omniPieces -1 < 0) return;
+            this.omniPieces--;
+            if (this.currentArmorSet != null) {
+                this.currentArmorSet = null;
+            }
+        }
 }
