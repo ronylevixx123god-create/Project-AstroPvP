@@ -24,8 +24,7 @@ public class LootTable {
     public static List<ItemStack> getShowItems() {
         final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
         final ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-        for (int i = 0; i < iteration.size(); ++i) {
-            final String l = iteration.get(i);
+        for (final String l : iteration) {
             if (Utils.isShowing(l)) {
                 list.add(Utils.getItem(l));
             }
@@ -36,8 +35,7 @@ public class LootTable {
     public static List<ItemStack> getBroadcastItems() {
         final List<String> iteration = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
         final ArrayList<ItemStack> list = new ArrayList<ItemStack>();
-        for (int i = 0; i < iteration.size(); ++i) {
-            final String l = iteration.get(i);
+        for (final String l : iteration) {
             if (Utils.isBroadcasting(l)) {
                 list.add(Utils.getItem(l));
             }

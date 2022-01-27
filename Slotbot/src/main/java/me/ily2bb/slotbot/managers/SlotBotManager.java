@@ -85,5 +85,6 @@ public class SlotBotManager {
                 }
             }
         }.runTaskTimer((Plugin) SlotBotPlugin.getInstance(), 10L, 10L));
+
     }
 }

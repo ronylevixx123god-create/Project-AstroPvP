@@ -84,6 +84,10 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
         } catch (Exception exception) {
             exception.printStackTrace();
         }
+        if (c != null && !c.isDead()) {
+            Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), c::remove, 600L);
+        }
+
     }
 
     private Location getNearbyLocation(Location l, int radius, int y_boost) {

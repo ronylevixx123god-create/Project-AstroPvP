@@ -1,6 +1,7 @@
 package me.ily2bb.slotbot.objects;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
@@ -87,14 +88,12 @@ public class ItemListCacher {
     public void broadcastMessage() {
         List broadcastItems = LootTable.getBroadcastItems();
         int y = 0;
-        Iterator var3 = this.items.iterator();
 
-        while (var3.hasNext()) {
-            ItemStack item = (ItemStack) var3.next();
-            Iterator var5 = broadcastItems.iterator();
+        for (Object o : this.items) {
+            ItemStack item = (ItemStack) o;
 
-            while (var5.hasNext()) {
-                ItemStack x = (ItemStack) var5.next();
+            for (Object broadcastItem : broadcastItems) {
+                ItemStack x = (ItemStack) broadcastItem;
                 if (x.equals(item)) {
                     ++y;
                 }
@@ -104,8 +103,6 @@ public class ItemListCacher {
         if (y != 0) {
             Player p = this.getPlayer();
             Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("");
             StringBuilder spaces = new StringBuilder();
             int size = 40 - p.getName().length();
 
@@ -113,30 +110,26 @@ public class ItemListCacher {
                 spaces.append(" ");
             }
 
-            Bukkit.broadcastMessage(spaces + CC.AquaB + "Cosmic" + CC.WhiteB + "-" + CC.LightPurpleB + "Slot Bot");
+            Bukkit.broadcastMessage(spaces + CC.GoldB + "Astro" + CC.WhiteB + "-" + CC.YellowB + "Slot Bot");
             String sentence = "     " + CC.Gray + this.getPlayer().getName() + " rolled the slot /bot with " + CC.White + this.items.size() + " tickets " + CC.Gray + "and won:";
+            Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(sentence);
-            Bukkit.broadcastMessage(spaces + CC.AquaB + "");
             Player[] onlinePlayers = Bukkit.getOnlinePlayers().toArray(new Player[0]);
             int length = Bukkit.getOnlinePlayers().size();
 
             for (int l = 0; l < length; ++l) {
                 Player pl = onlinePlayers[l];
 
-                for (int i = 0; i < this.items.size(); ++i) {
-                    ItemStack k = (ItemStack) this.items.get(i);
+                for (Object item : this.items) {
+                    ItemStack k = (ItemStack) item;
                     String itemName = Utils.getDisplayName(k);
-                    String line = CC.AquaB + "* " + CC.White + k.getAmount() + "x " + itemName;
-                    ItemLinking.sendItemViaJSON(line, k, pl);
+                    String line = CC.GoldB + "* " + CC.White + k.getAmount() + "x " + itemName;
+                    ItemLinking.sendItemViaJSON(StringUtils.getCenteredMessage(line), k, pl);
                 }
             }
 
-            if (caches.contains(this)) {
-                caches.remove(this);
-            }
+            caches.remove(this);
 
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage("");
         }
     }

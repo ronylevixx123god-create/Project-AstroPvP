@@ -184,7 +184,7 @@ public class Inventories {
                     cacher = ((cacher == null) ? new ItemListCacher(player, this.previousItems[2]) : cacher.addItem(this.previousItems[2]));
                     if (announce) {
                         final ItemListCacher y2 = cacher;
-                        Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), () -> y2.broadcastMessage(), 1L);
+                        Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), y2::broadcastMessage, 1L);
                     }
                     if (!Utils.isInventoryFull(player)) {
                         player.getInventory().addItem(this.previousItems[2]);
@@ -201,7 +201,7 @@ public class Inventories {
                     cacher2 = ((cacher2 == null) ? new ItemListCacher(player, item) : cacher2.addItem(item));
                     if (announce2) {
                         final ItemListCacher y3 = cacher2;
-                        Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), () -> y3.broadcastMessage(), 1L);
+                        Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), y3::broadcastMessage, 1L);
                     }
                     if (!Utils.isInventoryFull(player)) {
                         player.getInventory().addItem(item);

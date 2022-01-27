@@ -407,10 +407,9 @@ public class AstroCore extends JavaPlugin {
                     p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official Suported Astro Version of the &nCosmicClient&c."));
                     p.sendMessage(CC.translate("&7If you wish to download it, follow the steps in the &f#cc-features&7 channel in our &f/discord&7."));
                     p.sendMessage("");
-                    p.playSound(p.getLocation(), Sound.CHICKEN_EGG_POP, 5, 5);
                 }
             }
-        }, 50L, 1800L);
+        }, 50L, 3600L);
 
         this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "citizens reload");
