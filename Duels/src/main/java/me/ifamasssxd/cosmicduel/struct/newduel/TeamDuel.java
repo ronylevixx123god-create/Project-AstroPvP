@@ -40,7 +40,7 @@ import me.ifamasssxd.cosmicduel.utils.JSONMessage;
 import me.ifamasssxd.cosmicduel.utils.KitUtils;
 import me.ifamasssxd.cosmicduel.utils.RandomFireworks;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.EnchantmentBook;

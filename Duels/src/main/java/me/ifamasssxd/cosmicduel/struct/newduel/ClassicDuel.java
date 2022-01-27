@@ -12,7 +12,6 @@
  *  com.gmail.nossr50.util.StringUtils
  *  com.google.common.collect.Lists
  *  com.rit.sucy.EnchantmentAPI
- *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.utils.ItemBuilder
  *  org.arkhamnetwork.Arkkit.Arkkit
  *  org.arkhamnetwork.Arkkit.patches.CombatLog
  *  org.arkhamnetwork.enchantments.EnchantmentBook
@@ -59,8 +58,7 @@ import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.utils.*;
-import me.ifamasssxd.factionupgrades.utils.ItemBuilder;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.core.utils.TitleUtil;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -251,6 +249,9 @@ public class ClassicDuel extends NewDuel {
                 loser.sendTitle(titleLoser);
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(winner, "DUEL_WIN", this.isRanked(), loser));
                 Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(loser, "DUEL_LOSE", this.isRanked(), winner));
+                if (this.settings.hasSetting(Setting.DROPITEMS)) {
+                    Bukkit.broadcastMessage(CC.translate("&6&l(Duels) &a" + winner + " &7has defeated &c" + loser + " &7in a Risk Inventory Duel!"));
+                }
             }
         } else if (endReason == EndReason.RELOAD || endReason == EndReason.NO_WINNER) {
             onEnd(false);
@@ -438,6 +439,7 @@ public class ClassicDuel extends NewDuel {
         if (this.originalLocation.containsKey(p.getUniqueId()))
             forceTeleport(p, this.originalLocation.get(p.getUniqueId()));
         this.originalLocation.remove(p.getUniqueId());
+        p.setFireTicks(0);
     }
 
 
