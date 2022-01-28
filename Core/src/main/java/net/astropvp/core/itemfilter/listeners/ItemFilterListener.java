@@ -144,7 +144,7 @@ implements Listener {
             if (!this.alerted.contains(player.getUniqueId())) {
                 player.sendMessage("");
                 player.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot pickup some items because you have an Item /filter enabled!");
-                player.sendMessage(ChatColor.GRAY + "Use" + ChatColor.WHITE + "/ft " + ChatColor.GRAY + "to disable your active /filter");
+                player.sendMessage(ChatColor.GRAY + "Use" + ChatColor.WHITE + " /ft " + ChatColor.GRAY + "to disable your active /filter");
                 player.sendMessage("");
                 this.alerted.add(player.getUniqueId());
             }

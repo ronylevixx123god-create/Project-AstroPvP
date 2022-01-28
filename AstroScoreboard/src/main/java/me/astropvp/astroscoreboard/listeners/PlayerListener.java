@@ -28,10 +28,12 @@ public class PlayerListener implements Listener {
         //player.setHealth(player.getHealth());
         //board.registerNewObjective(objectiveName, "health").setDisplaySlot(DisplaySlot.BELOW_NAME);
         //player.setScoreboard(board);
-        TabListManager.sendTablist(player,
-                CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
-                CC.translate("\n&6  Factions &e// &d" + ((CraftPlayer) player).getHandle().ping + "ms &e// &a" + AstroScoreboardPlugin.df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS()) + " &7&oTPS &8➥ &f&ohttps://astropvp.net  \n" +
-                        "&e" + Bukkit.getOnlinePlayers().size() + " &fOnline &8➥ &f&ohttps://buy.astropvp.net/\n"));
+        try {
+            TabListManager.sendTablist(player,
+                    CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
+                    CC.translate("\n&6  Factions &e// &d" + ((CraftPlayer) player).getHandle().ping + "ms &e// &a" + AstroScoreboardPlugin.df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS()) + " &7&oTPS &8➥ &f&ohttps://astropvp.net  \n" +
+                            "&e" + Bukkit.getOnlinePlayers().size() + " &fOnline &8➥ &f&ohttps://buy.astropvp.net/\n"));
+        } catch (Exception ignored) {}
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
