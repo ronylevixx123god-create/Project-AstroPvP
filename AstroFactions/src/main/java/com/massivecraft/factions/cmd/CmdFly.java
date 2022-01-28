@@ -32,10 +32,10 @@ public class CmdFly extends FCommand {
                 boolean did = toggleFlight(context, !context.fPlayer.isAutoFlying(), true);
 
                 if(did){
-                    context.fPlayer.setAutoFlying(!context.fPlayer.isAutoFlying());
+                    //context.fPlayer.setAutoFlying(!context.fPlayer.isAutoFlying());
                 }
             }else{
-                toggleFlight(context, !context.fPlayer.isFlying(), true);
+                //toggleFlight(context, !context.fPlayer.isFlying(), true);
             }
         } else if (context.args.size() == 1) {
             if(FactionsPlugin.getInstance().isSOTW() && !Permission.SOTW.has(context.sender)){
@@ -45,11 +45,11 @@ public class CmdFly extends FCommand {
             if (context.argAsString(0).equalsIgnoreCase("auto")) {
                 // Player Wants to AutoFly
                 if (Permission.FLY_AUTO.has(context.player, true)) {
-                    context.fPlayer.setAutoFlying(!context.fPlayer.isAutoFlying());
-                    toggleFlight(context, context.fPlayer.isAutoFlying(), false);
+                    //context.fPlayer.setAutoFlying(!context.fPlayer.isAutoFlying());
+                    //toggleFlight(context, context.fPlayer.isAutoFlying(), false);
                 }
             } else {
-                toggleFlight(context, context.argAsBool(0), true);
+                //toggleFlight(context, context.argAsBool(0), true);
             }
         }
     }
@@ -57,7 +57,7 @@ public class CmdFly extends FCommand {
     private boolean toggleFlight(final CommandContext context, final boolean toggle, boolean notify) {
         // If false do nothing besides set
         if (!toggle) {
-            context.fPlayer.setFlying(false);
+            //context.fPlayer.setFlying(false);
             return true;
         }
         // Do checks if true
@@ -70,7 +70,7 @@ public class CmdFly extends FCommand {
                 if(FactionsPlugin.getInstance().isSOTW() && !Permission.SOTW.has(context.sender)){
                     context.fPlayer.msg(TL.PLAYER_SOTW_NOFLY);
                 }else{
-                    context.fPlayer.setFlying(true);
+                    //context.fPlayer.setFlying(true);
                 }
             }
         }, this.plugin.conf().commands().fly().getDelay());

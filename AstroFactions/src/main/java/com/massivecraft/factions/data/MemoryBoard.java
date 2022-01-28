@@ -78,7 +78,7 @@ public abstract class MemoryBoard extends Board {
             for (FPlayer fPlayer : FPlayers.getInstance().getOnlinePlayers()) {
                 if (fLocations.contains(fPlayer.getLastStoodAt())) {
                     if (FactionsPlugin.getInstance().conf().commands().fly().isEnable() && !fPlayer.isAdminBypassing() && fPlayer.isFlying()) {
-                        fPlayer.setFlying(false);
+                        //fPlayer.setFlying(false);
                     }
                     if (fPlayer.isWarmingUp()) {
                         fPlayer.clearWarmup();
@@ -134,7 +134,7 @@ public abstract class MemoryBoard extends Board {
                 if (entity instanceof Player) {
                     FPlayer fPlayer = FPlayers.getInstance().getByPlayer((Player) entity);
                     if (!fPlayer.isAdminBypassing() && fPlayer.isFlying()) {
-                        fPlayer.setFlying(false);
+                        //fPlayer.setFlying(false);
                     }
                     if (fPlayer.isWarmingUp()) {
                         fPlayer.clearWarmup();
@@ -150,7 +150,7 @@ public abstract class MemoryBoard extends Board {
                         if (entity instanceof Player) {
                             FPlayer fPlayer = FPlayers.getInstance().getByPlayer((Player) entity);
                             if (!fPlayer.isAdminBypassing() && fPlayer.isFlying()) {
-                                fPlayer.setFlying(false);
+                                //fPlayer.setFlying(false);
                             }
                             if (fPlayer.isWarmingUp()) {
                                 fPlayer.clearWarmup();

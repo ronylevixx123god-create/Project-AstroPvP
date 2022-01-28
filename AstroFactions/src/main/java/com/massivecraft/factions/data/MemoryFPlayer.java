@@ -439,7 +439,7 @@ public abstract class MemoryFPlayer implements FPlayer {
 
         this.autoClaimFor = null;
 
-        this.setFlying(false, false);
+        //this.setFlying(false, false);
         return true;
     }
 
@@ -846,7 +846,7 @@ public abstract class MemoryFPlayer implements FPlayer {
 
         myFaction.removeAnnouncements(this);
         this.resetFactionData();
-        setFlying(false, false);
+        //setFlying(false, false);
 
         if (myFaction.isNormal() && !perm && myFaction.getFPlayers().isEmpty()) {
             // Remove this faction

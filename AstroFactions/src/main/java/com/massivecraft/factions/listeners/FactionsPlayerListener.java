@@ -72,14 +72,14 @@ public class FactionsPlayerListener extends AbstractListener {
     private void toggleFlight(FPlayer fPlayer, final boolean toggle) {
         // If false do nothing besides set
         if (!toggle) {
-            fPlayer.setFlying(false);
+            //fPlayer.setFlying(false);
             return;
         }
         // Do checks if true
         if (!flyTest(fPlayer)) {
             return;
         }
-        fPlayer.setFlying(true);
+        //fPlayer.setFlying(true);
     }
 
     private boolean flyTest(FPlayer fPlayer) {
@@ -95,8 +95,8 @@ public class FactionsPlayerListener extends AbstractListener {
         this.plugin.updatesOnJoin(event.getPlayer());
 
         if (Permission.FLY_AUTO.has(event.getPlayer(), false)) {
-            fPlayer.setAutoFlying(true);
-            toggleFlight(fPlayer, true);
+            //fPlayer.setAutoFlying(true);
+            //toggleFlight(fPlayer, true);
         }
     }
 
@@ -161,7 +161,7 @@ public class FactionsPlayerListener extends AbstractListener {
         me.setAutoLeave(!me.getPlayer().hasPermission(Permission.AUTO_LEAVE_BYPASS.node));
         me.setTakeFallDamage(true);
         if (plugin.conf().commands().fly().isEnable() && me.isFlying()) { // TODO allow flight to continue
-            me.setFlying(false);
+            //me.setFlying(false);
         }
 
         if (FactionsPlugin.getInstance().getSeeChunkUtil() != null) {
@@ -278,14 +278,14 @@ public class FactionsPlayerListener extends AbstractListener {
             boolean canFly = me.canFlyInFactionTerritory(factionTo);
             if (!changedFaction){
                 if (canFly && !canFlyPreClaim && me.isFlying() && plugin.conf().commands().fly().isDisableFlightDuringAutoclaim()) {
-                    me.setFlying(false);
+                    //me.setFlying(false);
                 }
                 break free;
             }
             if (me.isFlying() && !canFly) {
-                me.setFlying(false);
+                //me.setFlying(false);
             } else if (me.isAutoFlying() && !me.isFlying() && canFly) {
-                me.setFlying(true);
+                //me.setFlying(true);
             }
         }
 
@@ -554,7 +554,7 @@ public class FactionsPlayerListener extends AbstractListener {
         if (!isEnabled) {
             FScoreboard.remove(me, event.getPlayer());
             if (me.isFlying()) {
-                me.setFlying(false);
+                //me.setFlying(false);
             }
             return;
         }
@@ -570,9 +570,9 @@ public class FactionsPlayerListener extends AbstractListener {
         if (plugin.conf().commands().fly().isEnable() && !me.isAdminBypassing()) {
             boolean canFly = me.canFlyAtLocation(to);
             if (me.isFlying() && !canFly) {
-                me.setFlying(false, false);
+                //me.setFlying(false, false);
             } else if (me.isAutoFlying() && !me.isFlying() && canFly) {
-                me.setFlying(true);
+                //me.setFlying(true);
             }
         }
 

@@ -59,9 +59,9 @@ public class FlightUtil {
                 if (pilot.isFlying() && !pilot.isAdminBypassing()) {
                     if (enemiesNearby(pilot, FactionsPlugin.getInstance().conf().commands().fly().getEnemyRadius(), players)) {
                         pilot.msg(TL.COMMAND_FLY_ENEMY_DISABLE);
-                        pilot.setFlying(false);
+                        //pilot.setFlying(false);
                         if (pilot.isAutoFlying()) {
-                            pilot.setAutoFlying(false);
+                            //pilot.setAutoFlying(false);
                         }
                     }
                 }

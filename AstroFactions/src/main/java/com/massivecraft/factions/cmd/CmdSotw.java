@@ -28,8 +28,8 @@ public class CmdSotw extends FCommand {
             for (FPlayer fPlayer : FPlayers.getInstance().getOnlinePlayers()) {
                 if (Permission.SOTW.has(fPlayer.getPlayer())) continue;
                 fPlayer.msg(TL.PLAYER_SOTW_NOFLY);
-                fPlayer.setFlying(false, false);
-                fPlayer.setAutoFlying(false);
+                //fPlayer.setFlying(false, false);
+                //fPlayer.setAutoFlying(false);
             }
         } else {
             context.sender.sendMessage(ChatColor.RED + "Turned off SOTW");

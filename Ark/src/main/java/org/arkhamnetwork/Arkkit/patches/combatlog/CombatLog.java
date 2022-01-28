@@ -189,7 +189,7 @@ public class CombatLog
             }
             if (EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Opening Combo"))) {
                 int openingComboLevel = EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Opening Combo"));
-                if(!OpeningCombo.isOnCooldown(pl)) {
+                if (!OpeningCombo.isOnCooldown(pl)) {
                     OpeningCombo.proc(pl, openingComboLevel);
                     pl.sendMessage(CC.DarkRedB + "OPENING COMBO - ACTIVE");
                 }
@@ -209,7 +209,7 @@ public class CombatLog
             pl.removeMetadata("autumn_amulet", Arkkit.get());
         }
 
-        if (MauisHookSkin.mauiEffect.containsKey(pl)&& !CombatLog.inCombat(pl)) {
+        if (MauisHookSkin.mauiEffect.containsKey(pl) && !CombatLog.inCombat(pl)) {
             Bukkit.getScheduler().runTaskLaterAsynchronously(Arkkit.get(), () -> {
                 MauisHookSkin.mauiEffect.remove(pl);
             }, 1200L);
@@ -221,9 +221,8 @@ public class CombatLog
             Bleed.clearBleedEffect(pl);
         }
         pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!)" + ChatColor.GREEN + " You have left combat. You may now safely logout.");
-        if (pl.isOp()) {
-            pl.setAllowFlight(true);
-        }
+        pl.setAllowFlight(true);
+
         pl.updateInventory();
     }
 
