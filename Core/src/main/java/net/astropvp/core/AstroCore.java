@@ -402,7 +402,7 @@ public class AstroCore extends JavaPlugin {
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), () -> {
             for (Player p : Bukkit.getOnlinePlayers()) {
-                if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient()) {
+                if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient() && !p.isOp()) {
                     p.sendMessage("");
                     p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official Suported Astro Version of the &nCosmicClient&c."));
                     p.sendMessage(CC.translate("&7If you wish to download it, follow the steps in the &f#cc-features&7 channel in our &f/discord&7."));
