@@ -5,11 +5,8 @@ import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.enums.CrateType;
-import me.astropvp.cratekeys.filters.FilterManager;
-import me.astropvp.cratekeys.filters.impl.CrateKeyFilter;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -68,7 +65,7 @@ public class CrateKeyInventoryListener implements Listener {
 
                     amountOfKeys--;
                 }
-                player.setItemInHand((ItemStack) null);
+                player.setItemInHand(null);
                 player.sendMessage(CC.translate("&a&l(!)&a You have opened &f" + amount + "&a " + type.getPrefixedName() + "s&a."));
 
 
@@ -83,7 +80,7 @@ public class CrateKeyInventoryListener implements Listener {
                 if (player.getItemInHand().getAmount() > 1) {
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
                 } else {
-                    player.setItemInHand((ItemStack) null);
+                    player.setItemInHand(null);
                 }
             }
 
