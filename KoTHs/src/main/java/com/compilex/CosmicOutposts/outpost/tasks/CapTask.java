@@ -39,8 +39,6 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
-import me.ifamasssxd.factionupgrades.FactionUpgradeAPI;
-import me.ifamasssxd.factionupgrades.struct.FactionUpgrade;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -63,12 +61,10 @@ implements Runnable {
     private final float capMod = 1.0f;
     private static final HashMap<String, Long> factionNotifyTimes = new HashMap();
     private boolean webLink = false;
-    private boolean factionUpgrades = false;
     private boolean masks = false;
 
     public CapTask(Outpost outpost) {
         this.outpost = outpost;
-        this.factionUpgrades = true;
         this.masks = new File("plugins/CosmicMasks.jar").exists();
     }
 
@@ -108,11 +104,8 @@ implements Runnable {
             if (this.defendingFaction != null && this.defendingFaction.getTag().equals(strongestFaction) && FMC.size() == 1) {
                 if (this.capPercent < 1.0f) {
                     float capPercentIncreaseInterval = this.getCapPercentIncreaseInterval(FMC);
-                    this.getClass();
                     float f = capPercentIncreaseInterval * 5.0f;
-                    if (this.factionUpgrades) {
-                        f = this.applyFactionUpgrades(this.defendingFaction, f);
-                    }
+
                     if (strongestFactionHasMask) {
                         f = (float)((double)f * 2.0);
                     }
@@ -149,11 +142,8 @@ implements Runnable {
             if (this.isAFactionAttacking() && this.attackingFaction.getTag().equals(strongestFaction)) {
                 if (this.isAFactionDefending() && !this.attackingFaction.equals(this.defendingFaction)) {
                     float capPercentDecreaseInterval = this.getCapPercentDecreaseInterval(FMC);
-                    this.getClass();
                     float f = capPercentDecreaseInterval * 5.0f;
-                    if (this.factionUpgrades) {
-                        f = this.applyFactionUpgrades(this.defendingFaction, f);
-                    }
+
                     if (strongestFactionHasMask) {
                         f = (float)((double)f * 2.0);
                     }
@@ -164,11 +154,8 @@ implements Runnable {
                         return;
                     }
                     float capPercentIncreaseInterval2 = this.getCapPercentIncreaseInterval(FMC);
-                    this.getClass();
                     float f = capPercentIncreaseInterval2 * 1.0f;
-                    if (this.factionUpgrades) {
-                        f = this.applyFactionUpgrades(this.attackingFaction, f);
-                    }
+
                     if (strongestFactionHasMask) {
                         f = (float)((double)f * 2.0);
                     }
@@ -178,11 +165,8 @@ implements Runnable {
             } else if (this.isAFactionDefending() && this.defendingFaction.getTag().equals(strongestFaction)) {
                 if (this.capPercent < 1.0f) {
                     float capPercentIncreaseInterval3 = this.getCapPercentIncreaseInterval(FMC);
-                    this.getClass();
                     float f = capPercentIncreaseInterval3 * 5.0f;
-                    if (this.factionUpgrades) {
-                        f = this.applyFactionUpgrades(this.defendingFaction, f);
-                    }
+
                     if (strongestFactionHasMask) {
                         f = (float)((double)f * 2.0);
                     }
@@ -196,9 +180,7 @@ implements Runnable {
                 if (this.isAFactionDefending()) {
                     float capPercentDecreaseInterval2 = this.getCapPercentDecreaseInterval(FMC);
                     float f = capPercentDecreaseInterval2 * 5.0f;
-                    if (this.factionUpgrades) {
-                        f = this.applyFactionUpgrades(this.attackingFaction, f);
-                    }
+
                     if (strongestFactionHasMask) {
                         f = (float)((double)f * 2.0);
                     }
@@ -207,7 +189,6 @@ implements Runnable {
                     Bukkit.getLogger().info("[CosmicOutposts] Irregular call, no faction defending but new attacking faction?");
                     float capPercent = this.capPercent;
                     float capPercentIncreaseInterval4 = this.getCapPercentIncreaseInterval(FMC);
-                    this.getClass();
                     this.capPercent = capPercent + capPercentIncreaseInterval4 * 1.0f;
                 }
             }
@@ -457,24 +438,6 @@ implements Runnable {
 
 
     public float applyFactionUpgrades(Faction faction, float f) {
-        if (this.factionUpgrades) {
-            int perkLevel = FactionUpgradeAPI.getPerkLevel(faction, FactionUpgrade.OUTPOST_CONTROL);
-            if (perkLevel == 1) {
-                f *= 1.1f;
-            }
-            if (perkLevel == 2) {
-                f = (float)((double)f * 1.25);
-            }
-            if (perkLevel == 3) {
-                f = (float)((double)f * 1.5);
-            }
-            if (perkLevel == 4) {
-                f *= 2.0f;
-            }
-            if (perkLevel == 5) {
-                f = (float)((double)f * 2.25);
-            }
-        }
         return f;
     }
 

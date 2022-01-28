@@ -153,7 +153,7 @@ public class CollectorInventory extends GUIBuilder {
                         p.sendMessage(Utils.format("&cYour /f tnt bank is FULL. Please clear some space."));
                         return;
                     }
-                    faction.setTNTBank(faction.getTNTBank() + collector.getAmount(Material.TNT));
+                    faction.setTNTBank((int) (faction.getTNTBank() + collector.getAmount(Material.TNT)));
                     Language.COLLECTOR_TNT.send(p, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(collector.getAmount(Material.TNT))));
                 } else {
                     double price = essentials.getWorth().getPrice(essentials, new ItemStack(m)).doubleValue() * collector.getAmount(m);

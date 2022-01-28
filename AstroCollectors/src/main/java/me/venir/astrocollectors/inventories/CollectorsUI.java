@@ -56,9 +56,9 @@ public class CollectorsUI {
                 .setLore(getMobDropsLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    int amount = collector.getTotalMobDropAmount();
+                    double amount = collector.getTotalMobDropAmount();
                     if (amount == 0) return;
-                    collector.addMobDropSellLog(player, amount, collector.getAllMobDropsWorth());
+                    collector.addMobDropSellLog(player, (int) amount, collector.getAllMobDropsWorth());
                     collector.sellAllMobDrops(player);
                     updateItems();
                 }));
@@ -69,7 +69,7 @@ public class CollectorsUI {
                 .setLore(getTntLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    int amount = collector.getAmount(Material.TNT);
+                    double amount = collector.getAmount(Material.TNT);
                     if (amount == 0) return;
                     collector.sellTNT(player);
                     updateItems();
