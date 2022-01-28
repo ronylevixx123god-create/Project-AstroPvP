@@ -112,6 +112,7 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
         return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", chance.doubleValue()).get()).assignIID().build();
     }
 
+
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
         return inventoryItemType == InventoryItemType.CURSOR;
     }

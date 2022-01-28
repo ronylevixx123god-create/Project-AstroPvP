@@ -29,14 +29,6 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new SpawnersFix(), this);
         new ProtocolListener();
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
-            for (Player p :Bukkit.getOnlinePlayers()) {
-                if (DuelAPI.hasDuel(p) && !p.getLocation().getWorld().getName().contains("duel") && Objects.requireNonNull(DuelAPI.getDuel(p)).getDuelState() == DuelState.PLAYING) {
-                    p.removeMetadata("in_duel", CosmicDuel.get());
-                    DuelAPI.cancelDuel(DuelAPI.getDuel(p), CancelReason.DUEL_END);
-                }
-            }
-        }, 20L, 20L);
 
     }
 

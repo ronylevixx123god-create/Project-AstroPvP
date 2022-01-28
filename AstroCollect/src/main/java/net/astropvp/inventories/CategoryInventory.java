@@ -128,7 +128,7 @@ public class CategoryInventory {
                     new CollectInventory(player).getCollectUI().open(player);
                 }
                 event.setCancelled(true);
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
+                player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0F, 0.9F);
 
             }));
         }

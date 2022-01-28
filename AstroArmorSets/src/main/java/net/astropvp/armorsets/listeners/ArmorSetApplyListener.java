@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
 import java.util.List;
@@ -163,6 +164,15 @@ public class ArmorSetApplyListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (e.getPlayer() != null) {
+            Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
+                AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+            }, 30L);
+        }
+    }
+
+    @EventHandler
+    public void onWorldChange(PlayerChangedWorldEvent e) {
         if (e.getPlayer() != null) {
             Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
                 AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());

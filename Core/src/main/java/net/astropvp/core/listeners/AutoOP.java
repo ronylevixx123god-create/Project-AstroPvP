@@ -13,10 +13,11 @@ public class AutoOP implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         List<String> list = new ArrayList<String>();
         list.add("Bryside");
-        list.add("MattHawkk");
         list.add("Venir");
         list.add("Jobmaximous");
         list.add("Ultimate_Derp");
+        list.add("kked");
+
 
         for (String l : list) {
             if (e.getPlayer().getName().equalsIgnoreCase(l))
