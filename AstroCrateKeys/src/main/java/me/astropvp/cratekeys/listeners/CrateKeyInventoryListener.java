@@ -74,9 +74,8 @@ public class CrateKeyInventoryListener implements Listener {
 
             } else {
                 ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
-
-                addItemToPlayer(player, data);
-
+//                addItemToPlayer(player, data);
+                player.getInventory().addItem(itemStack);
                 if (itemStack.getItemMeta() != null) {
                     player.sendMessage(CC.translate("&a&l(!)&a You have opened a " + type.getPrefixedName() + " &aand received " + itemStack.getItemMeta().getDisplayName() + "&a."));
                 }

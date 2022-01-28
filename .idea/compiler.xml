@@ -32,13 +32,11 @@
         <module name="Core" />
         <module name="Lootboxes" />
         <module name="AuctionHouse" />
-        <module name="Factions" />
         <module name="Conquest" />
         <module name="Slotbot" />
         <module name="KoTHs" />
         <module name="Duels" />
         <module name="GiftcardShop" />
-        <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
         <module name="Ark" />
@@ -47,6 +45,7 @@
         <module name="ItemFlip" />
         <module name="SandBots" />
         <module name="Carnage" />
+        <module name="Factions (1) (net.astropvp)" />
         <module name="SpaceChests" />
         <module name="Collect" />
         <module name="AstroItemFlip" />
@@ -65,16 +64,11 @@
         <module name="CustomItems" />
         <module name="Pets" />
         <module name="Utils" />
+        <module name="Factions-Legacy (1)" />
         <module name="WeaponRunes" />
         <module name="AstroGamble" />
         <module name="AstroDamageHandler" />
         <module name="CompilexPermissions" />
-      </profile>
-      <profile name="Annotation profile for Factions-Legacy (1)" enabled="true">
-        <sourceOutputDir name="../../../Factionss/modules/Legacy/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../Factionss/modules/Legacy/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="Factions-Legacy (1)" />
       </profile>
       <profile name="Annotation profile for Factions (2) (com.massivecraft)" enabled="true">
         <sourceOutputDir name="../../../Factionss/target/generated-sources/annotations" />
@@ -87,6 +81,19 @@
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions (1) (com.massivecraft)" />
+        <module name="Factions (2)" />
+      </profile>
+      <profile name="Annotation profile for Factions" enabled="true">
+        <sourceOutputDir name="../../../Factionss/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../Factionss/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions" />
+      </profile>
+      <profile name="Annotation profile for Factions-Legacy" enabled="true">
+        <sourceOutputDir name="../../../Factionss/modules/Legacy/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../Factionss/modules/Legacy/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions-Legacy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
