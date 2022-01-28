@@ -4,6 +4,8 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.guis.GUIInteractListener;
 import com.conaxgames.customskulls.guis.SlotBotOpenerGUI;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
@@ -23,6 +25,10 @@ public class CrateKeyGUIListener implements Listener {
         Block clickedBlock = e.getClickedBlock();
         if (clickedBlock.getType() != Material.NOTE_BLOCK) return;
 
+        if (FactionUtils.getFaction(e.getPlayer()) != FactionUtils.getFactionAt(clickedBlock.getLocation()) && !e.getPlayer().isOp()) {
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need to be in the " + FactionUtils.getFactionAt(clickedBlock.getLocation()).getTag()) + " faction to open this grinder block!");
+            return;
+        }
 
         if (AbilityData.getByUUID(AbilityData.getUUID(clickedBlock.getLocation())) != null) {
             e.setCancelled(true);

@@ -118,7 +118,7 @@ public class InventoryUtils {
         lore.add("");
         lore.add(CC.Gray + "KOTH is a " + CC.White + "popular factions minigame " + CC.Gray + "where");
         lore.add(CC.Gray + "players compete for control of a central");
-        lore.add(CC.Gray + "capturable region held at the every " + CC.GrayU + "2 hours");
+        lore.add(CC.Gray + "capturable region held at the every " + CC.GrayU + "4 hours");
         lore.add("");
         lore.add(CC.Gray + "If you can " + CC.White + "keep control of the region" + CC.Gray + " for");
         lore.add(CC.Yellow + "5 minutes, " + CC.Gray + "you will be rewarded with some");

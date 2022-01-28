@@ -1,5 +1,6 @@
 package net.astropvp.armorsets;
 
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -74,6 +75,8 @@ public class AstroArmorSetsAPI {
         ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
         return cache.getCurrentArmorSet();
     }
+
+
 
     public static Map<ArmorSetType, Integer> getCurrentCrystals(Player player) {
         CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);

@@ -7,9 +7,9 @@ import me.ifamasssxd.cosmicfactionbanners.*;
 import com.massivecraft.factions.event.*;
 import me.ifamasssxd.cosmicfactionbanners.struct.*;
 import com.massivecraft.factions.iface.*;
-import com.massivecraft.factions.struct.*;
 import java.util.*;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.bukkit.plugin.*;
 import me.ifamasssxd.cosmicfactionbanners.managers.*;
 import org.bukkit.inventory.*;

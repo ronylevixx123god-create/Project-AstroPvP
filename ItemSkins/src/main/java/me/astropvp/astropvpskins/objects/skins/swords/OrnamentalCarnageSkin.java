@@ -1,15 +1,10 @@
 package me.astropvp.astropvpskins.objects.skins.swords;
 
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
-import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTank;
-import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTrap;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 

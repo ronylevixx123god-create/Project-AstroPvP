@@ -214,16 +214,10 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSpaceChests.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>killtracker</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicKillTracker.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>mchests</artifactId>
+            <artifactId>mchestgs</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicMysteryChest.jar</systemPath>

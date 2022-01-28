@@ -23,6 +23,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -50,7 +51,7 @@ extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.075 * level;
+        final double chance = 0.04;
         final int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();
@@ -64,6 +65,11 @@ extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE SLIPPERS &7Blocked Slow Effect &c&l*"));
+                return;
+            }
+
+            if (MaskType.hasEquipped((Player) playerHit, "HOLY")) {
+                playerHit.sendMessage(CC.translate("&6&l* HOLY MASK [&7Ice Aspect blocked!&6&l] *"));
                 return;
             }
 

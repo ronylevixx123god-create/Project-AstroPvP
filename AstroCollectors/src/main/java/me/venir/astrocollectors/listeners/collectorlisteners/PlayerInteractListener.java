@@ -39,7 +39,7 @@ public class PlayerInteractListener  implements Listener {
             Collector collector = CollectorManager.DELEGATE.getCollector(event.getClickedBlock().getLocation());
 
             if (FactionUtils.getFaction(event.getPlayer()) != FactionUtils.getFactionAt(collectorLocation) && !event.getPlayer().isOp()) {
-                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need to be in the " + FactionUtils.getFactionAt(collectorLocation)) + " to open this collector!");
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need to be in the " + FactionUtils.getFactionAt(collectorLocation).getTag()) + " faction to open this collector!");
                 return;
             }
 

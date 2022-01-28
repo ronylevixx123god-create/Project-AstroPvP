@@ -9,12 +9,11 @@ commands:
   heroicupgrade:
     description: command
     aliases: ['giveheroicupgrade', 'heroicupgrades']
-  armorset:
+  givearmorset:
     description: command
-    aliases: ['givearmorset', 'armorsets']
   debugarmorsets:
     description: Debug armorsets
     aliases: ['debugarmor', 'debugarmorset']
   armorsets:
     description: Open the Armor Sets GUI
-    aliases: ['armorgui', 'setsgui']
+    aliases: ['armorgui', 'setsgui', 'armorset', 'set', 'sets']

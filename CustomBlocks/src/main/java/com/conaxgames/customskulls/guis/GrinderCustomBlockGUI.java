@@ -84,7 +84,7 @@ public class GrinderCustomBlockGUI {
                 int space = getEmptySlots((Player) event.getWhoClicked()) * 64;
                 amountToGive = Math.min(astroKeys, space);
                 while (givenKeys != amountToGive) {
-                    event.getWhoClicked().getInventory().addItem(astroKey);
+                    event.getWhoClicked().getInventory().addItem(this.astroKey);
                     givenKeys++;
                 }
             } else {
@@ -111,7 +111,7 @@ public class GrinderCustomBlockGUI {
                 int space = getEmptySlots((Player) event.getWhoClicked()) * 64;
                 amountToGive = Math.min(legKeys, space);
                 while (givenKeys != amountToGive) {
-                    event.getWhoClicked().getInventory().addItem(legKey);
+                    event.getWhoClicked().getInventory().addItem(this.legKey);
                     givenKeys++;
                 }
             } else {
@@ -137,7 +137,7 @@ public class GrinderCustomBlockGUI {
                 int space = getEmptySlots((Player) event.getWhoClicked()) * 64;
                 amountToGive = Math.min(godlyKeys, space);
                 while (givenKeys != amountToGive) {
-                    event.getWhoClicked().getInventory().addItem(godlyKey);
+                    event.getWhoClicked().getInventory().addItem(this.godlyKey);
                     givenKeys++;
                 }
             } else {

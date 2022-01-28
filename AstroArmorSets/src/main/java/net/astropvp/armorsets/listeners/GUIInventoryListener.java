@@ -17,12 +17,14 @@ public class GUIInventoryListener implements Listener {
         Player p = (Player) event.getWhoClicked();
         Inventory inventory = event.getClickedInventory();
 
+        if (inventory == null) return;
+        if (inventory.getName() == null) return;
         if(inventory.getName().equals("Armor Sets")) {
             event.setCancelled(true);
             ItemStack item = inventory.getItem(event.getSlot());
             if (item == null) return;
-            if(item.getType() == Material.COMPASS) p.closeInventory();
-            if(item.getType() == Material.FEATHER) {
+            if(item.getType() == Material.BARRIER) p.closeInventory();
+            if(item.getType() == Material.BED) {
                 SetGUI gui = new SetGUI(p, "Armor Sets");
                 gui.openBaseGUI();
             }

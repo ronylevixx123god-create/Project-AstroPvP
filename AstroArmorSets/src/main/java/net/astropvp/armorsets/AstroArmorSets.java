@@ -34,7 +34,7 @@ public class AstroArmorSets extends JavaPlugin {
 
     public void registerCommands() {
         getCommand("heroicarmor").setExecutor(new CommandGiveHeroicArmor());
-        getCommand("armorset").setExecutor(new CommandGiveArmorSet());
+        getCommand("givearmorset").setExecutor(new CommandGiveArmorSet());
         getCommand("heroicupgrade").setExecutor(new CommandGiveHeroicUpgrade());
         getCommand("debugarmorsets").setExecutor(new CommandDebugArmorSet());
         getCommand("armorsets").setExecutor(new CommandOpenGUI());

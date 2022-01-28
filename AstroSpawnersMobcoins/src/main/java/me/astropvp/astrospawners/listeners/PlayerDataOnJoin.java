@@ -11,14 +11,14 @@ public class PlayerDataOnJoin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
         //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
-        AstroSpawners.getInstance().getManager().createPlayerDataAsync(e.getPlayer());
+        //AstroSpawners.getInstance().getManager().createPlayerDataAsync(e.getPlayer());
     }
 
     @EventHandler
     public void onQuit(PlayerQuitEvent e) {
         //PlayerDataManager manager = AstroSpawners.getPlayerDataManager();
-        PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(e.getPlayer());
-        AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
+        //PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(e.getPlayer());
+        //AstroSpawners.getInstance().getManager().savePlayerDataAsync(data);
 
     }
 }

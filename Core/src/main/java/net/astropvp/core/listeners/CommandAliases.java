@@ -6,7 +6,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
 public class CommandAliases implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlayerCommandPreprocess(PlayerCommandPreprocessEvent e) {
         String cmd = e.getMessage().toLowerCase();
         if (cmd.equalsIgnoreCase("/f upgrades")) {
@@ -23,8 +23,8 @@ public class CommandAliases implements Listener {
             e.setMessage("/f topp");
             return;
         }
-        if (cmd.equals("/masks")) {
-            e.setMessage("/help masks");
+        if (cmd.equals("/mask")) {
+            e.setMessage("/cmask");
             return;
         }
         if (cmd.equals("/tpyes")) {

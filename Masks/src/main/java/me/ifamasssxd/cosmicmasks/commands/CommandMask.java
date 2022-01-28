@@ -29,7 +29,7 @@ import org.bukkit.inventory.ItemStack;
 public class CommandMask
 implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
-        if (args.length == 1 && args[0].equalsIgnoreCase("help")) {
+        if (args.length == 0) {
             new MaskHelpMenu((Player)sender).openGUI(CosmicMasks.get());
             return true;
         }
