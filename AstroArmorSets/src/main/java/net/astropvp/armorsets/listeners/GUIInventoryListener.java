@@ -20,6 +20,7 @@ public class GUIInventoryListener implements Listener {
         if(inventory.getName().equals("Armor Sets")) {
             event.setCancelled(true);
             ItemStack item = inventory.getItem(event.getSlot());
+            if (item == null) return;
             if(item.getType() == Material.COMPASS) p.closeInventory();
             if(item.getType() == Material.FEATHER) {
                 SetGUI gui = new SetGUI(p, "Armor Sets");

@@ -7,12 +7,16 @@ import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import com.massivecraft.factions.event.FactionDisbandEvent;
+import com.massivecraft.factions.gui.FDisbandConfirm;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.perms.PermissibleAction;
 import com.massivecraft.factions.scoreboards.FTeamWrapper;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.util.TL;
 import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+
+import java.util.concurrent.TimeUnit;
 
 
 public class CmdDisband extends FCommand {
@@ -35,6 +39,8 @@ public class CmdDisband extends FCommand {
         }
 
         boolean isfaction = context.fPlayer != null && faction == context.faction;
+        long time;
+
 
         if (isfaction) {
             if (!context.fPlayer.isAdminBypassing() && !faction.hasAccess(context.fPlayer, PermissibleAction.DISBAND)) {
@@ -55,6 +61,17 @@ public class CmdDisband extends FCommand {
             context.msg(TL.COMMAND_DISBAND_MARKEDPERMANENT.toString());
             return;
         }
+
+        boolean access = false;
+        if (context.player.hasMetadata("disband_confirm") && (time = context.player.getMetadata("disband_confirm").get(0).asLong()) != 0L && System.currentTimeMillis() - time <= TimeUnit.SECONDS.toMillis(3L)) {
+            access = true;
+        }
+        if (!access) {
+            context.player.playSound(context.player.getLocation(), "ANVIL_LAND", 1.0f, 1.4f);
+            new FDisbandConfirm(context.player, faction).openGUI(FactionsPlugin.getInstance());
+            return;
+        }
+
         if (!FactionsPlugin.getInstance().getLandRaidControl().canDisbandFaction(faction, context)) {
             return;
         }

@@ -504,6 +504,12 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Utils</artifactId>
+            <version>0.1</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <repositories>
