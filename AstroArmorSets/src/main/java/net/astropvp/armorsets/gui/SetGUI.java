@@ -1,14 +1,15 @@
 package net.astropvp.armorsets.gui;
 
-import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -17,32 +18,43 @@ import java.util.List;
 
 public class SetGUI {
 
-    private Player player;
-    private String title;
+    private final Player player;
+    private final String title;
 
     public SetGUI(Player player, String title) {
         this.player = player;
         this.title = title;
     }
 
-    public void open() {
-        ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+    public void openBaseGUI() {
+        player.closeInventory();
+        int size = (int) (Math.ceil(ArmorSetType.values().length / 9d) * 9);
+        Inventory inventory = Bukkit.createInventory(player, size, title);
 
         for(ArmorSetType setType : ArmorSetType.values()) {
-            ArmorSet set = setType.getArmorSet();
-            items.add(set.getHelmet());
-
-            if(set instanceof ArmorSetWeapon) {
-                List<ItemStack> weapons = ((ArmorSetWeapon) set).getWeapons();
-                items.addAll(weapons);
-            }
+            ItemStack item = new ItemStack(setType.getDisplayItem());
+            item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
+            ItemMeta meta = item.getItemMeta();
+            meta.setDisplayName(setType.getDisplay());
+            meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+            item.setItemMeta(meta);
+            inventory.addItem(item);
         }
 
-        int size = (int) (Math.ceil(items.size() / 9d) * 9);
-        Inventory inventory = Bukkit.createInventory(this.player, size, this.title);
-        for (ItemStack item : items) { inventory.addItem(item); }
         inventory.setItem(size-1, getCompass());
-        this.player.openInventory(inventory);
+        player.openInventory(inventory);
+    }
+
+    public void openSubGUI(ArmorSetType setType) {
+        player.closeInventory();
+        Inventory inventory = Bukkit.createInventory(player, 9, title);
+
+        for(ItemStack item : setType.getItems()) {
+            inventory.addItem(item);
+        }
+
+        inventory.setItem(8, getFeather());
+        player.openInventory(inventory);
     }
 
     public ItemStack getCompass() {
@@ -51,6 +63,14 @@ public class SetGUI {
         meta.setDisplayName(CC.translate("&7Exit Menu"));
         compass.setItemMeta(meta);
         return compass;
+    }
+
+    public ItemStack getFeather() {
+        ItemStack feather = new ItemStack(Material.FEATHER, 1);
+        ItemMeta meta = feather.getItemMeta();
+        meta.setDisplayName(CC.translate("&7Return to Menu"));
+        feather.setItemMeta(meta);
+        return feather;
     }
 
 }

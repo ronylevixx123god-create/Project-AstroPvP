@@ -13,7 +13,7 @@ public class CommandOpenGUI implements CommandExecutor {
         if(!(sender instanceof Player)) return false;
         Player player = (Player) sender;
         SetGUI gui = new SetGUI(player, "Armor Sets");
-        gui.open();
+        gui.openBaseGUI();
         return false;
     }
 

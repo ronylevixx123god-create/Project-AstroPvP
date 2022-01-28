@@ -1,5 +1,7 @@
 package net.astropvp.armorsets.listeners;
 
+import net.astropvp.armorsets.gui.SetGUI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -16,9 +18,20 @@ public class GUIInventoryListener implements Listener {
         Inventory inventory = event.getClickedInventory();
 
         if(inventory.getName().equals("Armor Sets")) {
+            event.setCancelled(true);
             ItemStack item = inventory.getItem(event.getSlot());
-            if(item.getType() != Material.COMPASS) event.setCancelled(true);
-            else p.closeInventory();
+            if(item.getType() == Material.COMPASS) p.closeInventory();
+            if(item.getType() == Material.FEATHER) {
+                SetGUI gui = new SetGUI(p, "Armor Sets");
+                gui.openBaseGUI();
+            }
+
+            for(ArmorSetType set : ArmorSetType.values()) {
+                if(set.getDisplay().equals(item.getItemMeta().getDisplayName())) {
+                    SetGUI gui = new SetGUI(p, "Armor Sets");
+                    gui.openSubGUI(set);
+                }
+            }
         }
     }
 
