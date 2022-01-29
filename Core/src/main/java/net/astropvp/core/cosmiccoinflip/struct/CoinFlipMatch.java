@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent
  *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.HCFOutpostUtils
@@ -71,7 +71,7 @@ public class CoinFlipMatch {
         this.starterPlayer = starter;
         this.previousColor = firstColor;
         this.playerUUID = starter.getUniqueId();
-        this.playerName = starter.getName();
+        this.playerName = starter.getDisplayName();
         this.firstColor = firstColor;
         AstroCore.getInstance().getEcon().withdrawPlayer(starter, this.wager);
         starter.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "- $" + ChatColor.RED + this.format.format(this.wager));
@@ -85,8 +85,8 @@ public class CoinFlipMatch {
         ItemStack defaultSkill = defaultHeadStacks.computeIfAbsent(player.getUniqueId(), k -> ItemBuilder.createSkull(player.getName(), null, new String[]{null}));
         ItemStack skull = defaultSkill.clone();
         ItemMeta im = skull.getItemMeta();
-        im.setDisplayName(FactionUtils.getFactionTag(other, player) + ChatColor.BOLD.toString() + player.getName());
-        im.setLore((List)Lists.newArrayList(new String[]{ChatColor.GREEN + "Balance: " + ChatColor.GREEN + ChatColor.BOLD + "$" + ChatColor.GREEN + this.format.format(AstroCore.getInstance().getEcon().getBalance(player))}));
+        im.setDisplayName(FactionUtils.getFactionTag(other, player) + ChatColor.BOLD.toString() + " " + player.getDisplayName());
+        im.setLore((List) Lists.newArrayList(new String[]{ChatColor.GREEN + "Balance: " + ChatColor.GREEN + ChatColor.BOLD + "$" + ChatColor.GREEN + this.format.format(AstroCore.getInstance().getEcon().getBalance(player))}));
         skull.setItemMeta(im);
         return skull;
     }
@@ -103,7 +103,7 @@ public class CoinFlipMatch {
         this.coinFlipMenu.setItem(8, this.getSkull(this.getSecondPlayer(), this.getStarterPlayer()));
         this.matchState = MatchState.STARTING;
         this.coinFlipMenu.setItem(4, ItemBuilder.buildItem(Material.STAINED_GLASS_PANE, 5, DyeColor.LIME.getWoolData(), ChatColor.GREEN + ChatColor.BOLD.toString() + 5, ChatColor.GRAY + "Rolling in " + 5 + "s"));
-        new BukkitRunnable(){
+        new BukkitRunnable() {
             int timer = 0;
 
             public void run() {
@@ -162,13 +162,13 @@ public class CoinFlipMatch {
                 CoinColor color = !lastTick ? ((CoinFlipMatch.this.previousColor == CoinFlipMatch.this.getFirstColor()) ? CoinFlipMatch.this.getSecondColor() : CoinFlipMatch.this.getFirstColor()) : CoinFlipMatch.this.getWinnerColor();
                 String winnerName = (lastTick && color.equals(CoinFlipMatch.this.getFirstColor())) ? (CoinFlipMatch.this.getFirstColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getStarterPlayer().getName()) : ((lastTick && color.equals(CoinFlipMatch.this.getSecondColor())) ? (CoinFlipMatch.this.getSecondColor().getChatColor() + ChatColor.BOLD.toString() + CoinFlipMatch.this.getSecondPlayer().getName()) : null);
                 CoinFlipMatch.this.previousColor = color;
-                CoinFlipMatch.this.coinFlipMenu.setItem(4, ItemBuilder.buildItem(Material.WOOL, (short)color.getDyeColor().getWoolData(), (winnerName != null) ? winnerName : color.getName(), Lists.newArrayList(new String[] { (winnerName != null) ? (winnerName + ChatColor.GRAY + " has won the Coin Flip!") : (ChatColor.GRAY + "Rolling...") })));
+                CoinFlipMatch.this.coinFlipMenu.setItem(4, ItemBuilder.buildItem(Material.WOOL, (short) color.getDyeColor().getWoolData(), (winnerName != null) ? winnerName : color.getName(), Lists.newArrayList(new String[]{(winnerName != null) ? (winnerName + ChatColor.GRAY + " has won the Coin Flip!") : (ChatColor.GRAY + "Rolling...")})));
                 for (Player pl : CoinFlipMatch.this.getPlayers()) {
                     if (pl != null)
                         pl.updateInventory();
                 }
             }
-        }).runTaskTimer((Plugin)AstroCore.getInstance(), 20L, 2L);
+        }).runTaskTimer((Plugin) AstroCore.getInstance(), 20L, 2L);
     }
 
     public CoinColor getWinnerColor() {
@@ -214,7 +214,7 @@ public class CoinFlipMatch {
 
     public void onAcceptMatch(Player player) {
         this.secondPlayer = player;
-        this.player2Name = player.getName();
+        this.player2Name = player.getDisplayName();
         this.player2UUID = player.getUniqueId();
         AstroCore.getInstance().getEcon().withdrawPlayer(player, this.wager);
         this.buildFlipMenu();
@@ -248,14 +248,16 @@ public class CoinFlipMatch {
         }
         CoinFlipManager manager = AstroCore.getInstance().getCoinFlipManager();
         manager.addWin(player.getUniqueId(), loser, win, taxRate * this.wager);
-        EconomyResponse response = AstroCore.getInstance().getEcon().depositPlayer((OfflinePlayer)player, win);
+        EconomyResponse response = AstroCore.getInstance().getEcon().depositPlayer((OfflinePlayer) player, win);
         player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ $" + this.format.format(win));
-        if (win >= (double)manager.getAlertAmount()) {
-            for (Player pl : PlayerUtil.getOnlinePlayers()) {
-                if (AstroCore.getInstance().getCoinFlipManager().getToggledNotifications().contains(pl.getUniqueId())) continue;
-                pl.sendMessage(ChatColor.GRAY.toString() + ChatColor.BOLD + "** " + this.getColorChosen(player.getUniqueId()).getChatColor() + "\u25a0 " + FactionUtils.getFactionTag(pl, player) + ChatColor.GREEN + " " + player.getName() + ChatColor.GRAY + " (" + manager.getWinLossRatio(player.getUniqueId(), "-") + ") has defeated " + ChatColor.RED + this.getColorChosen(loser).getChatColor() + "\u25a0 " + FactionUtils.getFactionTag(pl, Bukkit.getPlayer(loser)) + " " + ChatColor.RED + (player.getName().equals(this.playerName) ? this.player2Name : this.playerName) + ChatColor.GRAY + " (" + manager.getWinLossRatio(loser, "-") + ") in a " + ChatColor.GRAY + ChatColor.UNDERLINE + "$" + this.format.format(totalWines) + ChatColor.GRAY + " /coinflip");
-            }
+        for (Player pl : PlayerUtil.getOnlinePlayers()) {
+            if (AstroCore.getInstance().getCoinFlipManager().getToggledNotifications().contains(pl.getUniqueId()))
+                continue;
+            pl.sendMessage("");
+            pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "Coin Flip " + ChatColor.DARK_GRAY + "➥ " + this.getColorChosen(player.getUniqueId()).getChatColor() + "\u25a0 " + FactionUtils.getFactionTag(pl, player) + ChatColor.GREEN + " " + player.getDisplayName() + ChatColor.GRAY + " (" + manager.getWinLossRatio(player.getUniqueId(), "-") + ") has defeated " + ChatColor.RED + this.getColorChosen(loser).getChatColor() + "\u25a0 " + FactionUtils.getFactionTag(pl, Bukkit.getPlayer(loser)) + " " + ChatColor.RED + (player.getDisplayName().equals(this.playerName) ? this.player2Name : this.playerName) + ChatColor.GRAY + " (" + manager.getWinLossRatio(loser, "-") + ") in a " + ChatColor.GRAY + ChatColor.UNDERLINE + "$" + this.format.format(totalWines) + ChatColor.GRAY + " /coinflip");
+            pl.sendMessage("");
         }
+
         Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "CF_WIN", win, this.wager, loser));
         Bukkit.getLogger().info("Giving " + player.getName() + " $" + win + " for beating " + (this.playerName.equals(player.getName()) ? this.player2Name : this.playerName) + " in a Coin Flip! (transactionSuccess: " + response.transactionSuccess() + ")");
     }
@@ -276,7 +278,7 @@ public class CoinFlipMatch {
             this.endCoinFlip(RemoveReason.LEAVE, null);
         } else if (this.matchState == MatchState.WAITING && this.getSecondPlayer() == null) {
             this.matchState = MatchState.DONE;
-            AstroCore.getInstance().getEcon().depositPlayer((OfflinePlayer)player, this.wager);
+            AstroCore.getInstance().getEcon().depositPlayer((OfflinePlayer) player, this.wager);
             Bukkit.getLogger().info("Returning wager of " + this.wager + " to " + player.getName());
             AstroCore.getInstance().getCoinFlipManager().getCoinFlipMatches().remove(this);
         }
