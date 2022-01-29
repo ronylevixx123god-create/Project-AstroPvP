@@ -12,6 +12,9 @@ import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
+import me.ifamasssxd.cosmicbosses.bosses.kingslime.KingSlime;
+import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater;
+import me.ifamasssxd.cosmicbosses.bosses.skeletonhorse.UndeadAssassin;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut;
@@ -47,6 +50,7 @@ public class Scoreboard implements BoardAdapter {
     }
 
     private static final DateFormat format = new SimpleDateFormat("MM/dd");
+
     public static String getDateSuffix() {
         return format.format(new Date());
     }
@@ -98,6 +102,20 @@ public class Scoreboard implements BoardAdapter {
         }
 
 
+        if (WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof KingSlime) {
+                        return CC.translate("&e&lKing Slime &7" + getDateSuffix());
+                    } else if (Boss.bosses.get(entity.getUniqueId()) instanceof UndeadAssassin) {
+                        return CC.translate("&c&lUndead Assassin &7" + getDateSuffix());
+                    } else if (Boss.bosses.get(entity.getUniqueId()) instanceof PlagueBloater) {
+                        return CC.translate("&2&lPlague Bloater &7" + getDateSuffix());
+                    }
+                }
+            }
+        }
+
 
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("infernal")) {
             return CC.translate("&c&lInfernal Stronghold &7" + getDateSuffix());
@@ -127,8 +145,7 @@ public class Scoreboard implements BoardAdapter {
         }
 
 
-
-            return CC.translate("&6&lAstro&f&lPvP &7" + getDateSuffix());
+        return CC.translate("&6&lAstro&f&lPvP &7" + getDateSuffix());
     }
 
 
@@ -155,7 +172,7 @@ public class Scoreboard implements BoardAdapter {
                             board.add(CC.Aqua + yijki.getActiveAbility().getAbilityName());
                             board.add("");
                             board.add(CC.GreenB + "Damage Dealt");
-                            int damage = yijki.getDamageTracker().containsKey(player) ? yijki.getDamageTracker().get(player) : 0;
+                            int damage = yijki.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
                             int totalDamage = 0;
                             for (Integer dmg : (yijki.getDamageTracker()).values()) {
                                 totalDamage += dmg;
@@ -187,7 +204,7 @@ public class Scoreboard implements BoardAdapter {
                             board.add(CC.Green + Yijki.WitherPhase.getPhase(yijki.getPhase()).getPhaseName());
                             board.add("");
                             board.add(CC.GreenB + "Damage Dealt");
-                            int damage = yijki.getDamageTracker().containsKey(player) ? yijki.getDamageTracker().get(player) : 0;
+                            int damage = yijki.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
                             int totalDamage = 0;
                             for (Integer dmg : (yijki.getDamageTracker()).values()) {
                                 totalDamage += dmg;
@@ -215,7 +232,7 @@ public class Scoreboard implements BoardAdapter {
                             board.add(CC.Aqua + cosmonaut.getActiveAbility().getAbilityName());
                             board.add("");
                             board.add(CC.GreenB + "Damage Dealt");
-                            int damage = cosmonaut.getDamageTracker().getOrDefault(player, 0);
+                            int damage = cosmonaut.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
                             int totalDamage = 0;
                             for (final Integer dmg : (cosmonaut.getDamageTracker()).values()) {
                                 totalDamage += dmg;
@@ -232,6 +249,42 @@ public class Scoreboard implements BoardAdapter {
                             board.add(CC.Green + string);
                             return board;
                         }
+                    }
+                }
+            }
+        }
+
+
+        if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
+                        CorruptCosmonaut cosmonaut = (CorruptCosmonaut) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        board.add(CC.Red + Math.round(cosmonaut.getEntity().getHealth()));
+                        board.add("");
+                        board.add(CC.AquaB + "Ability");
+                        board.add(CC.Aqua + cosmonaut.getActiveAbility().getAbilityName());
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = cosmonaut.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
+                        int totalDamage = 0;
+                        for (final Integer dmg : (cosmonaut.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        final double percent = (double) damage / totalDamage * 100.0;
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
+                        if (string.length() > 16) {
+                            string = string.replace("[", "").replace("]", "");
+                            if (string.length() > 16) {
+                                string = string.substring(0, 16);
+                            }
+                        }
+                        board.add(CC.Green + string);
+                        return board;
                     }
                 }
             }
@@ -261,45 +314,88 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }*/
 
-        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
-            List<String> board = new LinkedList<>();
-            OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
-            me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("great_hall");
-
-            board.add("");
-            board.add(CC.translate("&b&lAttacking"));
-            if (outpost.getAttackingFaction() != null) {
-                board.add(CC.translate("&f") + outpost.getAttackingFaction().getTag());
-            } else {
-                board.add(CC.translate("&fN/A"));
+        if (WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity.hasMetadata("boss")) {
+                    if (Boss.bosses.get(entity.getUniqueId()) instanceof KingSlime) {
+                        KingSlime slime = (KingSlime) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        board.add(CC.Red + Math.round(slime.getEntity().getHealth()));
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = slime.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
+                        int totalDamage = 0;
+                        for (final Integer dmg : (slime.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        final double percent = (double) damage / totalDamage * 100.0;
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent)+ "%]";
+                        if (string.length() > 16) {
+                            string = string.replace("[", "").replace("]", "");
+                            if (string.length() > 16) {
+                                string = string.substring(0, 16);
+                            }
+                        }
+                        board.add(CC.Green + string);
+                        return board;
+                    } else if (Boss.bosses.get(entity.getUniqueId()) instanceof UndeadAssassin) {
+                        UndeadAssassin assassin = (UndeadAssassin) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        board.add(CC.Red + Math.round(assassin.getEntity().getHealth()));
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = assassin.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
+                        int totalDamage = 0;
+                        for (final Integer dmg : (assassin.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        final double percent = (double) damage / totalDamage * 100.0;
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
+                        if (string.length() > 16) {
+                            string = string.replace("[", "").replace("]", "");
+                            if (string.length() > 16) {
+                                string = string.substring(0, 16);
+                            }
+                        }
+                        board.add(CC.Green + string);
+                        return board;
+                    } else if (Boss.bosses.get(entity.getUniqueId()) instanceof PlagueBloater) {
+                        PlagueBloater plague = (PlagueBloater) Boss.bosses.get(entity.getUniqueId());
+                        List<String> board = new LinkedList<>();
+                        board.add("");
+                        board.add(CC.RedB + "Health");
+                        board.add(CC.Red + Math.round(plague.getEntity().getHealth()));
+                        board.add("");
+                        board.add(CC.GreenB + "Damage Dealt");
+                        int damage = plague.getDamageTracker().getOrDefault(player.getUniqueId(), 0);
+                        int totalDamage = 0;
+                        for (final Integer dmg : (plague.getDamageTracker()).values()) {
+                            totalDamage += dmg;
+                        }
+                        final double percent = (double) damage / totalDamage * 100.0;
+                        DecimalFormat format = new DecimalFormat("###.#");
+                        String string = ChatColor.GREEN.toString() + damage + ChatColor.GRAY + " [" + format.format(percent) + "%]";
+                        if (string.length() > 16) {
+                            string = string.replace("[", "").replace("]", "");
+                            if (string.length() > 16) {
+                                string = string.substring(0, 16);
+                            }
+                        }
+                        board.add(CC.Green + string);
+                        return board;
+                    }
+                }
             }
-            board.add("");
-            board.add(CC.translate("&b&lControlling"));
-            if (outpost.getDefendingFaction() != null) {
-                board.add(outpost.getDefendingFaction().getTag());
-            } else {
-                board.add(CC.translate("&fN/A"));
-            }
-            board.add("");
-            board.add(CC.translate("&b&lCap %"));
-            board.add(round(outpost.getCapPercentage(), 2) + "%");
-            board.add("");
-
-
-            board.add(CC.translate("&b&lStatus"));
-            try {
-                board.add(CC.translate("&f") + outpostManager.getOutpostInside(player.getLocation()).getOutpostState().getName());
-
-            } catch (NullPointerException e) {
-                board.add(CC.translate("&fN/A"));
-
-            }
-
-            board.add("");
-            board.add(CC.translate("&b&lAccount"));
-            board.add(CC.translate("&f") + player.getName());
-            return board;
         }
+
+
+
 
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("infernal")) {
             List<String> board = new LinkedList<>();
@@ -500,7 +596,7 @@ public class Scoreboard implements BoardAdapter {
                     board.add(CC.translate(CC.White + "&6&lSumo Event"));
                     board.add("");
                     board.add(CC.translate("&6● &7Status: &6" + Utils.toNiceString(sumoMiniGame.getMiniGameState().name())));
-                    board.add(CC.translate("&6● &7Participants: &6" + sumoMiniGame.getParticipants().size()  + "&8/&6" + sumoMiniGame.getMaxPlayers()));
+                    board.add(CC.translate("&6● &7Participants: &6" + sumoMiniGame.getParticipants().size() + "&8/&6" + sumoMiniGame.getMaxPlayers()));
                     board.add(CC.translate("&6● &7Spectators: &6" + sumoMiniGame.getSpectators().size()));
 
                     if (sumoMiniGame.getMiniGameState() == MiniGameState.IN_PROGRESS) {
@@ -518,7 +614,7 @@ public class Scoreboard implements BoardAdapter {
                     board.add(CC.translate(CC.White + "&6&lParkour Event"));
                     board.add("");
                     board.add(CC.translate("&6● &7Status: &6" + Utils.toNiceString(parkourMiniGame.getMiniGameState().name())));
-                    board.add(CC.translate("&6● &7Participants: &6" + parkourMiniGame.getParticipants().size()  + "&8/&6" + parkourMiniGame.getMaxPlayers()));
+                    board.add(CC.translate("&6● &7Participants: &6" + parkourMiniGame.getParticipants().size() + "&8/&6" + parkourMiniGame.getMaxPlayers()));
                     board.add(CC.translate("&6● &7Spectators: &6" + parkourMiniGame.getSpectators().size()));
                     board.add("");
                     board.add(CC.White + "play.astropvp.net");

@@ -101,57 +101,7 @@ public class ArmorSetApplyListener implements Listener {
         }
     }
 
-    @EventHandler
-    public void onAttack(EntityDamageByEntityEvent e) {
-        Entity attacker = e.getDamager();
-        Entity attacked = e.getEntity();
-        ArmorSetCache cache;
-        if (attacker instanceof Player) {
-            cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
 
-            //armor set damaged
-            if (cache.getCurrentArmorSet() != null) {
-                cache.getCurrentArmorSet().getArmorSet().onAttack((Player) attacker, attacked, e);
-            }
-
-            //crystals damaged
-            if (!cache.getCurrentSetCrystals().isEmpty()) {
-                for (Map.Entry<ArmorSetType, Integer> entry : cache.getCurrentSetCrystals().entrySet()) {
-                    ArmorSetType armorSetType = entry.getKey();
-                    int amount = entry.getValue();
-                    armorSetType.getArmorSet().onAttackCrystal((Player) attacker, attacked, e, amount);
-
-                }
-            }
-
-        }
-
-    }
-
-    @EventHandler
-    public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
-        Entity attacker = e.getDamager();
-        Entity attacked = e.getEntity();
-        ArmorSetCache cache;
-        if (attacked instanceof Player && attacker instanceof Player) {
-            cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");
-            //armor set damaged
-            if (cache != null && cache.getCurrentArmorSet() != null) {
-                cache.getCurrentArmorSet().getArmorSet().onDamaged(attacker, (Player) attacked, e);
-            }
-
-            //crystals damaged
-            if (cache != null && !cache.getCurrentSetCrystals().isEmpty()) {
-                for (Map.Entry<ArmorSetType, Integer> entry : cache.getCurrentSetCrystals().entrySet()) {
-                    ArmorSetType armorSetType = entry.getKey();
-                    int amount = entry.getValue();
-                    armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
-
-                }
-            }
-        }
-
-    }
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {

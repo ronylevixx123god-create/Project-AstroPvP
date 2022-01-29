@@ -8,7 +8,6 @@ import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
 import net.astropvp.armorsets.items.OmniCrystal;
 import net.astropvp.armorsets.listeners.*;
-import net.astropvp.damagehandler.commands.CommandDebugDamage;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -49,6 +48,8 @@ public class AstroArmorSets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new AntiMkitDamagedListener(), this);
         getServer().getPluginManager().registerEvents(new OmniArmorDamageListener(), this);
         getServer().getPluginManager().registerEvents(new GUIInventoryListener(), this);
+        getServer().getPluginManager().registerEvents(new ArmorSetDamageListener(), this);
+
 
 
 

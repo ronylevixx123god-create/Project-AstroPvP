@@ -16,6 +16,8 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import net.astropvp.damagehandler.AstroDamageHandler;
+import net.astropvp.damagehandler.AstroDamageHandlerAPI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -241,13 +243,15 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     this.cancel();
                 }
-                final int dmg = 2;
-                affected.damage(0.0);
-                affected.setHealth(affected.getHealth() - 2.5);
+                if (!affected.isDead()) {
+                    final int dmg = 2;
+                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage(affected, dmg, "&e&lCage Ticks");
+                }
                 if (affected.getHealth() <= 0.0 || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     this.cancel();
                 }
+
                 ++this.count;
             }
         }.runTaskTimer((Plugin)CosmicSkyInventoryPets.get(), 20L, 20L));

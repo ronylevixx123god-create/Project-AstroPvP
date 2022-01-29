@@ -8,6 +8,8 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
@@ -75,7 +77,6 @@ public class AstroArmorSetsAPI {
         ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
         return cache.getCurrentArmorSet();
     }
-
 
 
     public static Map<ArmorSetType, Integer> getCurrentCrystals(Player player) {
@@ -305,6 +306,31 @@ public class AstroArmorSetsAPI {
         return empty;
     }
 
+    public static Map<ArmorSetType, Integer> getBonusCrystalsEquippedIncludingCorruption(Player attacker, Player attacked) {
+        Map<ArmorSetType, Integer> map = new HashMap<>();
+        CachedPlayer cachedOther = CacheManager.getInstance().getCachedPlayer(attacked);
+        ArmorSetCache cacheOther = (ArmorSetCache) cachedOther.getCache("armor_set");
+        if (attacker.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(attacker, SkinType.CORRUPT_AMULET_CORRUPTION)) {
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.RUINS_HELMET)) {
+                return cacheOther.getCurrentSetCrystals();
+            }
+            List<ArmorSetType> chestplateCrystalsPlayer = getCrystalsFromItem(attacker.getInventory().getChestplate());
+            for (Map.Entry<ArmorSetType, Integer> entry : cacheOther.getCurrentSetCrystals().entrySet()) {
+                ArmorSetType type = entry.getKey();
+                Integer amount = entry.getValue();
+                if (!chestplateCrystalsPlayer.contains(type)) {
+                    map.put(type, amount);
+                }
+            }
+
+        } else {
+            return cacheOther.getCurrentSetCrystals();
+
+        }
+        return map;
+    }
+
     public static Map<AntiMkit, Integer> getAntiMkitCrystalsEquipped(Player player) {
         Map<AntiMkit, Integer> empty = new HashMap<>();
 
@@ -356,7 +382,6 @@ public class AstroArmorSetsAPI {
     public static ItemStack convertArmorToHeroic(ItemStack item, HeroicArmor type) {
         item.setType(type.getType());
         double modifier = type.getReduction();
-
 
 
         ItemMeta im = item.getItemMeta();
@@ -420,10 +445,10 @@ public class AstroArmorSetsAPI {
     }
 
 
-
     public static AntiMkit mkitFromName(String name) {
         return Arrays.stream(AntiMkit.values()).filter(ab -> ab.name().equalsIgnoreCase(name)).findFirst().orElse(null);
     }
+
     public static Set<AntiMkit> getAntiMkitCrystal(NBTWrapper wrapper) {
         if (wrapper == null)
             return null;
@@ -490,6 +515,7 @@ public class AstroArmorSetsAPI {
         item.setItemMeta(im);
         return item;
     }
+
 
     public ItemStack removeAntiMkitCrystalFromItem(ItemStack item) {
         return removeAntiMkitCrystalFromItem(new NBTWrapper(item));

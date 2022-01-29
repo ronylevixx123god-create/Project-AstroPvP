@@ -24,6 +24,7 @@ public class UpgradeGUI extends GUI<UpgradeType>{
         items.put(UpgradeType.CHEST, FactionsPlugin.getInstance().conf().upgrades().chest().item().getItem());
 
         items.put(UpgradeType.WARP_AMOUNT, FactionsPlugin.getInstance().conf().upgrades().warpAmount().item().getItem());
+
     }
 
     public UpgradeGUI(FPlayer user) {

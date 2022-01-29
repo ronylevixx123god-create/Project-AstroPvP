@@ -51,7 +51,7 @@ extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.04;
+        final double chance = 0.055;
         final int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();

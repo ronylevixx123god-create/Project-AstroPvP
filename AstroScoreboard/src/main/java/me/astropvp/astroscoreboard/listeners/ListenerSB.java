@@ -1,5 +1,6 @@
 package me.astropvp.astroscoreboard.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.event.*;
@@ -87,7 +88,10 @@ public class ListenerSB implements Listener {
             for (Player player : faction1Players) {
                 for (Player other : factions2Players) {
                     try {
-                        PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other));
+                        //PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrefix(player, other));
+                        PlayerDisplayManager.setUserPrefix(player, other, AstroScoreboardAPI.getDefaultPrfix(player));
+                        PlayerDisplayManager.setUserSuffix(player, other, " " + AstroScoreboardAPI.getDefaultSuffix(player, other));
+
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
@@ -101,8 +105,14 @@ public class ListenerSB implements Listener {
 
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
             for (Player player : allPlayers) {
-                PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining));
-                PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrefix(playerJoining, player));
+                //PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining));
+                //PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrefix(playerJoining, player));
+                PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrfix(player));
+                PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrfix(playerJoining));
+
+
+                PlayerDisplayManager.setUserSuffix(player, playerJoining, " " + AstroScoreboardAPI.getDefaultSuffix(player, playerJoining));
+                PlayerDisplayManager.setUserSuffix(playerJoining, player, " " + AstroScoreboardAPI.getDefaultSuffix(playerJoining, player));
 
             }
         });

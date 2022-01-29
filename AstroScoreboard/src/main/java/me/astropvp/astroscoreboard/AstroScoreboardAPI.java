@@ -50,11 +50,11 @@ public class AstroScoreboardAPI {
             faction = "zzz";
         }
         //return faction;
-        return faction + rankOrder.get(rank);
+        return rankOrder.get(rank) + faction;
     }
 
 
-    public static String getDefaultPrefix(Player player, Player other) {
+    public static String getDefaultSuffix(Player player, Player other) {
         FPlayer fp = FactionUtils.getFPlayer(player);
         String faction;
         FPlayer fother = FactionUtils.getFPlayer(other);
@@ -110,8 +110,52 @@ public class AstroScoreboardAPI {
         if (factionName.isWilderness()) {
             return color + faction + rankColor;
         } else {
-            return color + faction + rankColor + " ";
+            return color + faction + rankColor;
         }
+    }
+
+    public static String getDefaultPrfix(Player player) {
+        String prefix;
+        String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+        switch (Objects.requireNonNull(rank)) {
+            case "apollo":
+                prefix = "&bApollo";
+                break;
+            case "interstellar":
+                prefix = "&5Nebula";
+                break;
+            case "owner":
+                prefix = "&4Owner";
+                break;
+            case "manager":
+                prefix = "&cManager";
+                break;
+            case "developer":
+                prefix = "&cDev";
+                break;
+            case "media":
+                prefix = "&dMedia";
+                break;
+            case "admin":
+                prefix = "&cAdmin";
+                break;
+            case "mod":
+                prefix = "&3Mod";
+                break;
+            case "srmod":
+                prefix = "&3SrMod";
+                break;
+            case "helper":
+                prefix = "&aHelper";
+                break;
+            default:
+                prefix = "&eAstro";
+                break;
+        }
+
+
+        return CC.translate(prefix + " &f");
+
     }
 
 
