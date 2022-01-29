@@ -7,6 +7,7 @@ import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.util.TL;
+import com.massivecraft.factions.util.UpgradeType;
 import org.bukkit.Bukkit;
 
 public class CmdJoin extends FCommand {
@@ -59,9 +60,11 @@ public class CmdJoin extends FCommand {
             return;
         }
 
+        final int memberLimit = FactionsPlugin.getInstance().conf().factions().other().getFactionMemberLimit() + faction.getUpgrade(UpgradeType.FACTION_SIZE);
+
         if(!fplayer.isAdminBypassing()){
-            if (FactionsPlugin.getInstance().conf().factions().other().getFactionMemberLimit() > 0 && faction.getSize() >= FactionsPlugin.getInstance().conf().factions().other().getFactionMemberLimit()) {
-                context.msg(TL.COMMAND_JOIN_ATLIMIT, faction.getTag(context.fPlayer), FactionsPlugin.getInstance().conf().factions().other().getFactionMemberLimit(), fplayer.describeTo(context.fPlayer, false));
+            if (FactionsPlugin.getInstance().conf().factions().other().getFactionMemberLimit() > 0 && faction.getSize() >= memberLimit) {
+                context.msg(TL.COMMAND_JOIN_ATLIMIT, faction.getTag(context.fPlayer), memberLimit, fplayer.describeTo(context.fPlayer, false));
                 return;
             }
         }

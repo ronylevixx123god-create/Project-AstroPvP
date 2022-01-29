@@ -25,6 +25,8 @@ public class UpgradeGUI extends GUI<UpgradeType>{
 
         items.put(UpgradeType.WARP_AMOUNT, FactionsPlugin.getInstance().conf().upgrades().warpAmount().item().getItem());
 
+        items.put(UpgradeType.FACTION_SIZE, FactionsPlugin.getInstance().conf().upgrades().factionSize().item().getItem());
+
     }
 
     public UpgradeGUI(FPlayer user) {
@@ -78,6 +80,15 @@ public class UpgradeGUI extends GUI<UpgradeType>{
 
                 toReturn = toReturn.replace("{LEVEL}", user.getFaction().getUpgrade(upgradeType) + "");
                 break;
+            case FACTION_SIZE:
+                for(int z = 1; z <= FactionsPlugin.getInstance().conf().upgrades().factionSize().getLevels().size(); z++){
+                    toReturn = toReturn.replace("{AMOUNT_" + z + "}", "" + FactionsPlugin.getInstance().conf().upgrades().factionSize().getNumber(z));
+
+                    toReturn = toReturn.replace("{PRICE_" + z + "}", "" + NumberFormat.getIntegerInstance().format(FactionsPlugin.getInstance().conf().upgrades().factionSize().getCost(z)));
+                }
+
+                toReturn = toReturn.replace("{LEVEL}", user.getFaction().getUpgrade(upgradeType) + "");
+                break;
         }
         return toReturn;
     }
@@ -103,6 +114,7 @@ public class UpgradeGUI extends GUI<UpgradeType>{
         map.put(FactionsPlugin.getInstance().conf().upgrades().tnt().item().getSlot(), UpgradeType.TNT);
         map.put(FactionsPlugin.getInstance().conf().upgrades().chest().item().getSlot(), UpgradeType.CHEST);
         map.put(FactionsPlugin.getInstance().conf().upgrades().warpAmount().item().getSlot(), UpgradeType.WARP_AMOUNT);
+        map.put(FactionsPlugin.getInstance().conf().upgrades().factionSize().item().getSlot(), UpgradeType.FACTION_SIZE);
         return map;
     }
 

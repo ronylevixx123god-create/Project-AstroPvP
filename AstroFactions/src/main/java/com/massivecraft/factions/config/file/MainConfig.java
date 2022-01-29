@@ -3033,6 +3033,112 @@ public class MainConfig {
             return this.warpAmount;
         }
 
+        public class FactionSize {
+            private boolean enabled = true;
+
+            private int defaultFactionSize = 15;
+
+            @Comment("This list follows the format of (PRICE):(gain access to more faction warps). The order of the list is crucial as it dictates the level.")
+            private List<String> levels = new ArrayList<>(Arrays.asList(
+                    "250000:" + factions.other.factionMemberLimit + 1,
+                    "250000:" + factions.other.factionMemberLimit + 2,
+                    "250000:" + factions.other.factionMemberLimit + 3,
+                    "250000:" + factions.other.factionMemberLimit + 4,
+                    "250000:" + factions.other.factionMemberLimit + 5
+            ));
+
+            public int getCost(int level){
+                if (level <= 0 || levels.size() == 0 || levels.size() < level) return -1;
+
+                String[] costs = levels.get(level - 1).split(":");
+
+                return Integer.parseInt(costs[0]);
+            }
+
+            public int getNumber(int level){
+                if(level <= 0) return getDefaultFactionSize();
+
+                if(levels.size() == 0 || levels.size() < level) return -1;
+
+                String[] costs = levels.get(level - 1).split(":");
+
+                return Integer.parseInt(costs[1]);
+            }
+
+            public List<String> getLevels() {
+                return levels;
+            }
+
+            private Item item = new Item();
+
+            public boolean isEnabled(){
+                return this.enabled;
+            }
+
+            public int getDefaultFactionSize() {
+                return defaultFactionSize;
+            }
+
+            public Item item(){
+                return item;
+            }
+
+            public class Item {
+                private String type = "ARMOR_STAND";
+
+                private String name = "&aFaction Size";
+
+                private int slot = 0;
+
+                private int damage = 0;
+
+                public int getSlot() {
+                    return slot;
+                }
+
+                private List<String> lore = new ArrayList<String>(){
+                    {
+                        this.add("&7");
+                        this.add("&d* &eLevel 1");
+                        this.add("&ePrice: &a${PRICE_1}");
+                        this.add("&eAmount: &c{AMOUNT_1}");
+                        this.add("&7");
+                        this.add("&d* &eLevel 2");
+                        this.add("&ePrice: &a${PRICE_2}");
+                        this.add("&eAmount: &c{AMOUNT_2}");
+                        this.add("&7");
+                        this.add("&d* &eLevel 3");
+                        this.add("&ePrice: &a${PRICE_3}");
+                        this.add("&eAmount: &c{AMOUNT_3}");
+                        this.add("&7");
+                        this.add("&7");
+                        this.add("&d* &eLevel 4");
+                        this.add("&ePrice: &a${PRICE_4}");
+                        this.add("&eAmount: &c{AMOUNT_4}");
+                        this.add("&7");
+                        this.add("&d* &eLevel 5");
+                        this.add("&ePrice: &a${PRICE_5}");
+                        this.add("&eAmount: &c{AMOUNT_5}");
+                        this.add("&7Current Level: &d&n{LEVEL}");
+                    }
+                };
+
+                public SimpleItem getItem(){
+                    return SimpleItem.builder().setMaterial(Material.valueOf(type))
+                            .setData((short) damage)
+                            .setLore(lore)
+                            .setName(TextUtil.parseColor(name))
+                            .build();
+                }
+            }
+        }
+
+        private FactionSize factionSize = new FactionSize();
+
+        public FactionSize factionSize(){
+            return this.factionSize;
+        }
+
 /*
         public class CropBoost {
             private boolean enabled = true;

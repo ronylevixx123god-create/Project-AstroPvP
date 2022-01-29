@@ -1,12 +1,3 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.StringUtils$DefaultFontInfo
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- */
 package net.astropvp.core.autogiveall.tasks;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -15,10 +6,7 @@ import net.astropvp.core.autogiveall.struct.GiveAllManager;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 
-public class AutoGiveAllTask
-implements Runnable {
-
-    private static final int CENTER_PX = 154;
+public class AutoGiveAllTask implements Runnable {
 
     public static void sendCenteredMessage(String message) {
         message = ChatColor.translateAlternateColorCodes('&', message);
@@ -28,13 +16,9 @@ implements Runnable {
         for (char c : message.toCharArray()) {
             if (c == '§') {
             previousCode = true;
-        } else if (previousCode == true) {
+        } else if (previousCode) {
             previousCode = false;
-            if (c == 'l' || c == 'L') {
-                isBold = true;
-            } else {
-                isBold = false;
-            }
+                isBold = c == 'l' || c == 'L';
         } else {
             StringUtils.DefaultFontInfo dFI = StringUtils.DefaultFontInfo.getDefaultFontInfo(c);
             messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();

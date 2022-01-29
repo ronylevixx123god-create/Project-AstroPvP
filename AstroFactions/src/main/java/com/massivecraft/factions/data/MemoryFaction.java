@@ -1,12 +1,6 @@
 package com.massivecraft.factions.data;
 
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.FactionsPlugin;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.config.file.DefaultPermissionsConfig;
 import com.massivecraft.factions.event.FactionAutoDisbandEvent;
 import com.massivecraft.factions.iface.EconomyParticipator;
@@ -32,17 +26,8 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
-import java.time.ZonedDateTime;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
-import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -1400,6 +1385,32 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
                 Econ.withdraw(user, cost);
 
                 user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "Warp Amount", currentLevel + 1);
+
+                this.upgrades.put(type, currentLevel + 1);
+                return true;
+
+            case FACTION_SIZE:
+                maxLevel = FactionsPlugin.getInstance().conf().upgrades().factionSize().getLevels().size();
+
+                currentLevel = getUpgrade(type);
+
+                if(currentLevel + 1 > maxLevel){
+                    user.msg(TL.COMMAND_UPGRADE_ALREADY_MAX);
+                    return false;
+                }
+
+                money = (long) Econ.getBalance(user);
+
+                cost = FactionsPlugin.getInstance().conf().upgrades().factionSize().getCost(currentLevel + 1);
+
+                if(cost > money){
+                    user.msg(TL.COMMAND_UPGRADE_NOT_ENOUGH);
+                    return false;
+                }
+
+                Econ.withdraw(user, cost);
+
+                user.msg(TL.COMMAND_UPGRADE_SUCCESSFUL, "Faction Size", currentLevel + 1);
 
                 this.upgrades.put(type, currentLevel + 1);
                 return true;

@@ -5,5 +5,6 @@ public enum UpgradeType {
     CHEST,
     SPAWNER_BOOST,
     CROP_BOOST,
-    WARP_AMOUNT
+    WARP_AMOUNT,
+    FACTION_SIZE
 }
