@@ -1828,9 +1828,6 @@ public class MainConfig {
             private boolean newFactionsDefaultOpen = false;
             private boolean newFactionsDefaultPeaceful = false;
 
-            @Comment("When faction membership hits this limit, players will no longer be able to join using /f join; default is 0, no limit")
-            private int factionMemberLimit = 0;
-
             private int maxAlts = 15;
 
             public int maxAlts(){
@@ -1942,10 +1939,6 @@ public class MainConfig {
 
             public boolean isNewFactionsDefaultPeaceful() {
                 return newFactionsDefaultPeaceful;
-            }
-
-            public int getFactionMemberLimit() {
-                return factionMemberLimit;
             }
 
             public String getNewPlayerStartingFactionID() {
@@ -3040,11 +3033,11 @@ public class MainConfig {
 
             @Comment("This list follows the format of (PRICE):(gain access to more faction warps). The order of the list is crucial as it dictates the level.")
             private List<String> levels = new ArrayList<>(Arrays.asList(
-                    "250000:" + factions.other.factionMemberLimit + 1,
-                    "250000:" + factions.other.factionMemberLimit + 2,
-                    "250000:" + factions.other.factionMemberLimit + 3,
-                    "250000:" + factions.other.factionMemberLimit + 4,
-                    "250000:" + factions.other.factionMemberLimit + 5
+                    "250000:" + defaultFactionSize + 1,
+                    "250000:" + defaultFactionSize + 2,
+                    "250000:" + defaultFactionSize + 3,
+                    "250000:" + defaultFactionSize + 4,
+                    "250000:" + defaultFactionSize + 5
             ));
 
             public int getCost(int level){
