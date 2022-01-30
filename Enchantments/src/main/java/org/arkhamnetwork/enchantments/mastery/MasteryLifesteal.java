@@ -25,7 +25,7 @@ public class MasteryLifesteal extends MasteryCustomEnchantment {
 
     @Override
     public void applyDamagedOtherPlayer(final Player damager, final Player damaged, final EntityDamageByEntityEvent event, final int enchantLevel) {
-        if (Math.random() <= enchantLevel * 0.05) {
+        /*if (Math.random() <= enchantLevel * 0.05) {
             if (MaskType.hasEquipped(damaged, "NECROMANCER") || !this.canEffectPlayer(damaged)) {
                 return;
             }
@@ -63,5 +63,6 @@ public class MasteryLifesteal extends MasteryCustomEnchantment {
                 }
             }
         }
+    }*/
     }
 }

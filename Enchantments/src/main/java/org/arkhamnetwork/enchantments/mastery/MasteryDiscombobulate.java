@@ -15,10 +15,10 @@ public class MasteryDiscombobulate extends MasteryCustomEnchantment {
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
-        player.setMetadata("discombobulateEnchantment", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
+        //player.setMetadata("discombobulateEnchantment", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enchantLevel));
     }
 
     public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        player.removeMetadata("discombobulateEnchantment", (Plugin) Enchantments.getInstance());
+        //player.removeMetadata("discombobulateEnchantment", (Plugin) Enchantments.getInstance());
     }
 }

@@ -29,7 +29,7 @@ public class MasterySoulSiphon extends MasteryCustomEnchantment {
 
     @Override
     public void applyDamagedOtherPlayer(final Player damager, final Player damaged, final EntityDamageByEntityEvent event, final int enchantLevel) {
-        final double chance = 0.04 + 0.01 * enchantLevel;
+        /*final double chance = 0.04 + 0.01 * enchantLevel;
         final double toHeal = 2 + enchantLevel * 2;
         final double random = Math.random();
         if (random < chance) {
@@ -96,5 +96,6 @@ public class MasterySoulSiphon extends MasteryCustomEnchantment {
                 }
             }
         }
+    }*/
     }
 }

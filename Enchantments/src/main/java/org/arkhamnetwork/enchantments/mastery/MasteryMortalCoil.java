@@ -63,7 +63,7 @@ public class MasteryMortalCoil extends MasteryCustomEnchantment {
     @Override
     public void applyDamagedOtherPlayer(final Player damager, final Player damaged, final EntityDamageByEntityEvent event, final int enchantLevel) {
         final double chance = 0.025 + enchantLevel * 0.015;
-        if (Math.random() <= chance) {
+        /*if (Math.random() <= chance) {
             if (isAffected(damaged)) {
                 return;
             }
@@ -71,6 +71,6 @@ public class MasteryMortalCoil extends MasteryCustomEnchantment {
                 return;
             }
             this.applyMortalEffect(damaged, damager, 2.0 + enchantLevel * 0.4, enchantLevel);
-        }
+        }*/
     }
 }

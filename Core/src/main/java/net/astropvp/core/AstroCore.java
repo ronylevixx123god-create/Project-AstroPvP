@@ -411,9 +411,7 @@ public class AstroCore extends JavaPlugin {
             }
         }, 50L, 7200L);
 
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "citizens reload");
-        }, 150L, 1200L);
+
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
 

@@ -51,7 +51,7 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
     }
 
     public void applyDefenseEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageEvent event) {
-        double chance = 0.01D + enchantLevel / 3.0D * 0.005D;
+        /*double chance = 0.01D + enchantLevel / 3.0D * 0.005D;
         if (Math.random() <= chance) {
             int radius = Math.min(2 + enchantLevel, 5);
             Player damaged = (Player) user;
@@ -97,7 +97,7 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
                 damaged.getWorld().playSound(damaged.getLocation(), Sound.GLASS, 3.0F, 1.1F);
             }
             Bukkit.getLogger().info("Permafrosting near " + damaged.getName() + " affected: " + blocks.size());
-        }
+        }*/
     }
 
     class PlayerMaterialData {

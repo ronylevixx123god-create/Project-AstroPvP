@@ -42,7 +42,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
 
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity damagedPlayer, final LivingEntity attackerEnt, final int enchantLevel, final EntityDamageEvent event) {
-        if (!(damagedPlayer instanceof Player) || !(attackerEnt instanceof Player)) {
+        /*if (!(damagedPlayer instanceof Player) || !(attackerEnt instanceof Player)) {
             return;
         }
         final Player damaged = (Player) damagedPlayer;
@@ -78,7 +78,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
                     this.markedPlayers.remove(player);
                 }, (long) (20.0 * seconds));
             }
-        }
+        }*/
     }
 
     public void applyDefenseEffectIgnoreAntiMkit(final LivingEntity damagedPlayer, final LivingEntity attackerEnt, final int enchantLevel, final EntityDamageEvent event) throws Exception {

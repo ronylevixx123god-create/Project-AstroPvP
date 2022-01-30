@@ -357,16 +357,7 @@ public abstract class MemoryBoard extends Board {
 
                      if (flocationHere.isOutsideWorldBorder(buffer)){
                         row.then("-").color(ChatColor.BLACK);
-                    } else if (flocationHere.isInCorner() && factionHere.isWilderness()) {
-                        row.then("x").color(ChatColor.AQUA).tooltip(
-                                TextUtil.parseColor(
-                                        "&8(&a!&8) &7Claim Info: &a \n" +
-                                                "&a* &7Chunk Location: &aX: " + flocationHere.getX() + " Z: " + flocationHere.getZ() + "\n" +
-                                                "&a* &7Corner Claim: &aTrue\n\n" +
-                                                "&7TIP: &ouse '/f corner' to claim this corner"
-                                )
-                        );
-                    } else if (factionHere.isWilderness()) {
+                    }  else if (factionHere.isWilderness()) {
                         row.then("-").color(FactionsPlugin.getInstance().conf().colors().factions().getWilderness());
                     } else if (factionHere.isSafeZone()) {
                         row.then("+").color(FactionsPlugin.getInstance().conf().colors().factions().getSafezone());

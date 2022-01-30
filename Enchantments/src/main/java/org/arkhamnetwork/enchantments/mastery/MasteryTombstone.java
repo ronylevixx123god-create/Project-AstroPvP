@@ -38,12 +38,12 @@ public class MasteryTombstone extends MasteryCustomEnchantment {
         super("Tombstone", GeneralUtil.armor, 10);
         this.max = 10;
         this.armorSet = "DEATH_KNIGHT";
-        Bukkit.getPluginManager().registerEvents((Listener) new TombstoneSanityListener(this), (Plugin) Enchantments.getInstance());
+        //Bukkit.getPluginManager().registerEvents((Listener) new TombstoneSanityListener(this), (Plugin) Enchantments.getInstance());
     }
 
     @SneakyThrows
     public void applyDefenseEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageEvent event) {
-        if (!(target instanceof Player)) {
+        /*if (!(target instanceof Player)) {
             return;
         }
         final Player damaged = (Player) user;
@@ -172,5 +172,6 @@ public class MasteryTombstone extends MasteryCustomEnchantment {
                 //event.setCancelled(true);
             }
         }
+    }*/
     }
 }

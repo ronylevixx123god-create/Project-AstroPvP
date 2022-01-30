@@ -45,7 +45,7 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
     }
 
     public void applyDefenseEffect(LivingEntity damaged, LivingEntity attacker, int enchantLevel, EntityDamageEvent event) {
-        if (!(event instanceof EntityDamageByEntityEvent) || !(attacker instanceof Player))
+        /*if (!(event instanceof EntityDamageByEntityEvent) || !(attacker instanceof Player))
             return;
         if ((enchantLevel * 2) * 0.01D >= Math.random()) {
             Player player = (Player) damaged;
@@ -88,7 +88,7 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
                         pl.setWalkSpeed(0.2F);
                 }, duration * 20L);
             }
-        }
+        }*/
     }
 
     class HorrifiedListener extends CustomEnchantListener<MasteryHorrify> {

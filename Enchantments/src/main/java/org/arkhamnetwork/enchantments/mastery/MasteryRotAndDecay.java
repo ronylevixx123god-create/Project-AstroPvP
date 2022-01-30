@@ -56,7 +56,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
         super("Rot and Decay", GeneralUtil.armor, 11);
         this.max = 10;
         this.armorSet = "NECROMANCER";
-        Bukkit.getPluginManager().registerEvents((Listener) new RotAndDecayListener(this), (Plugin) Enchantments.getInstance());
+        //Bukkit.getPluginManager().registerEvents((Listener) new RotAndDecayListener(this), (Plugin) Enchantments.getInstance());
     }
 
     public boolean decayDamage(Player player, int level) {
@@ -82,7 +82,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
 
     @SneakyThrows
     public void applyDefenseEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageEvent event) {
-        if (target == null || !(target instanceof Player) || !(event instanceof EntityDamageByEntityEvent))
+        /*if (target == null || !(target instanceof Player) || !(event instanceof EntityDamageByEntityEvent))
             return;
         if (event.isCancelled())
             return;
@@ -145,7 +145,7 @@ public class MasteryRotAndDecay extends MasteryCustomEnchantment {
                 }
             }
             Bukkit.getLogger().info("[RotAndDecay] Spawned (" + actuallySpawned + " / " + zombiesToSpawn + ") zombies near " + LocationUtils.getStringFromLocation(playerLoc) + " for " + damaged.getName());
-        }
+        }*/
     }
 
     public void applyRotAndDecayEffect(final Player sourcePlayer, Block centerBlock, int radius, final int enchantLevel, EntityDamageEvent event) throws NoSuchFieldException, IllegalAccessException {

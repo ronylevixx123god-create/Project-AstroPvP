@@ -128,6 +128,15 @@ public class DamageListener implements Listener {
     }
 
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void command(PlayerCommandPreprocessEvent e) {
+        if ((e.getMessage().equalsIgnoreCase("/f role") || e.getMessage().equalsIgnoreCase("/f rule") || e.getMessage().equalsIgnoreCase("/f access"))) {
+            e.setMessage("/f perm");
+            e.setCancelled(true);
+        }
+
+    }
+
 
     @EventHandler
     public void diaPvP(EntityDamageByEntityEvent e) {
