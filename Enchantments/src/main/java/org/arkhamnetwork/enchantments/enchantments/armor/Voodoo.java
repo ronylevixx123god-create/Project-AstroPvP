@@ -38,7 +38,7 @@ extends CustomEnchantment {
         if (random < (chance = 0.04 * (double)level) && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, time * 20 + 25, level < 4 ? 0 : 1));
             try {
-                ParticleEffect.MOB_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), attacker.getEyeLocation().add(0.0, 0.5, 0.0), 0.04f, 0.04f, 0.04f, 0.1f, 15);
+               // ParticleEffect.MOB_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), attacker.getEyeLocation().add(0.0, 0.5, 0.0), 0.04f, 0.04f, 0.04f, 0.1f, 15);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

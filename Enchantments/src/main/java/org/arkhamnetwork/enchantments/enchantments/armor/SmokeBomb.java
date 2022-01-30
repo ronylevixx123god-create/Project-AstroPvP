@@ -75,7 +75,7 @@ extends CustomEnchantment {
                     victims.add((LivingEntity)ent);
                 }
                 try {
-                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 1.0f, 1.0f, 1.0f, 0.1f, 75);
+                    //ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 1.0f, 1.0f, 1.0f, 0.1f, 75);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

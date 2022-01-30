@@ -71,7 +71,7 @@ extends CustomEnchantment {
             boolean bl = heal = Math.random() <= (double)level * 0.15;
             if (heal && GeneralUtil.healPlayer(player, e.getDamage())) {
                 try {
-                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 40);
+                    //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 40);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -87,7 +87,7 @@ extends CustomEnchantment {
                 }
             }, 2L);
             try {
-                ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 70);
+                //ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 70);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

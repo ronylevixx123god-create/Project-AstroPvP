@@ -106,7 +106,7 @@ public class RocketEscape
                 rocket_escapists.add(uuid);
                 Location loc = pl.getLocation();
                 try {
-                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
+                    //ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -116,7 +116,7 @@ public class RocketEscape
                     public void run() {
                         if (Bukkit.getPlayer((UUID) uuid) != null) {
                             try {
-                                ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
+                                //ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }

@@ -44,7 +44,7 @@ implements Listener {
             Location loc = e.getLocation();
             loc.getWorld().playSound(loc, Sound.EXPLODE, 1.0f, 1.0f);
             try {
-                ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 3);
+                //ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 3);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

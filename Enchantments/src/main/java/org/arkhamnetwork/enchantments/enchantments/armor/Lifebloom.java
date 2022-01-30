@@ -66,7 +66,7 @@ extends CustomEnchantment {
                     allies.add(pEnt);
                 }
                 try {
-                    ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation().add(0.0, 1.0, 0.0), 1.4f, 1.4f, 1.4f, 0.1f, 65);
+                    //ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation().add(0.0, 1.0, 0.0), 1.4f, 1.4f, 1.4f, 0.1f, 65);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -77,7 +77,7 @@ extends CustomEnchantment {
                         ally.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120, level - 4));
                     }
                     try {
-                        ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), ally.getLocation().add(0.0, 1.0, 0.0), 2.0f, 2.0f, 2.0f, 0.1f, 16);
+                        //ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), ally.getLocation().add(0.0, 1.0, 0.0), 2.0f, 2.0f, 2.0f, 0.1f, 16);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }

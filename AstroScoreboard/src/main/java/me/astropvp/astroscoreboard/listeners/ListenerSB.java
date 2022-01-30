@@ -102,13 +102,13 @@ public class ListenerSB implements Listener {
 
     public void refreshTagsAsyncForServer(Player playerJoining) {
         Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
-
+String prefix = AstroScoreboardAPI.getDefaultPrfix(playerJoining);
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
             for (Player player : allPlayers) {
                 //PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining));
                 //PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrefix(playerJoining, player));
                 PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrfix(player));
-                PlayerDisplayManager.setUserPrefix(playerJoining, player, AstroScoreboardAPI.getDefaultPrfix(playerJoining));
+                PlayerDisplayManager.setUserPrefix(playerJoining, player, prefix);
 
 
                 PlayerDisplayManager.setUserSuffix(player, playerJoining, " " + AstroScoreboardAPI.getDefaultSuffix(player, playerJoining));

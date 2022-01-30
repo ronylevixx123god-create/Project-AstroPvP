@@ -102,8 +102,8 @@ public class Scoreboard implements BoardAdapter {
         }
 
 
-        if (WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
-            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+        if (!WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawn_region") && WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
+            for (Entity entity : player.getNearbyEntities(32, 16, 32)) {
                 if (entity.hasMetadata("boss")) {
                     if (Boss.bosses.get(entity.getUniqueId()) instanceof KingSlime) {
                         return CC.translate("&e&lKing Slime &7" + getDateSuffix());
@@ -314,8 +314,8 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }*/
 
-        if (WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
-            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+        if (!WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawn_region") && WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
+            for (Entity entity : player.getNearbyEntities(32, 16, 32)) {
                 if (entity.hasMetadata("boss")) {
                     if (Boss.bosses.get(entity.getUniqueId()) instanceof KingSlime) {
                         KingSlime slime = (KingSlime) Boss.bosses.get(entity.getUniqueId());
@@ -684,7 +684,7 @@ public class Scoreboard implements BoardAdapter {
 
 
     public long getInterval() {
-        return 40L;
+        return 100L;
     }
 
     public int getPing() {

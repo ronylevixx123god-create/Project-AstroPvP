@@ -266,7 +266,7 @@ public class PlagueBloater extends Boss {
 
     @Override
     public int getMaxHealth() {
-        return 3500;
+        return 2500;
     }
 
     @Override

@@ -25,7 +25,7 @@ public class Aegis extends CustomEnchantment
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        if (!(attacker instanceof Player)) {
+        /*if (!(attacker instanceof Player)) {
             return;
         }
         if (player.hasMetadata("noDefenseProcs")) {
@@ -47,6 +47,6 @@ public class Aegis extends CustomEnchantment
             return;
         }
         enemies.add(pAttacker.getUniqueId());
-        player.setMetadata("aegis_uniqueEnemies", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enemies));
+        player.setMetadata("aegis_uniqueEnemies", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enemies));*/
     }
 }

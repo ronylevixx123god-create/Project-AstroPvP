@@ -84,7 +84,7 @@ extends CustomEnchantment {
                 Player p = (Player)player;
                 Location spawnLoc = player.getLocation().add(0.0, 2.0, 0.0);
                 try {
-                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.64f, 45);
+                    //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.64f, 45);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

@@ -430,7 +430,7 @@ public class UndeadAssassin extends Boss {
 
     @Override
     public int getMaxHealth() {
-        return 3000;
+        return 2000;
     }
 
     @Override

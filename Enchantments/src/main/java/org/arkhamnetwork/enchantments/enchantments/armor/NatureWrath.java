@@ -136,7 +136,7 @@ extends CustomEnchantment {
                 }
             } else {
                 try {
-                    ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0.4f, 0.4f, 0.4f, 0.1f, 20);
+                    //ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0.4f, 0.4f, 0.4f, 0.1f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -156,12 +156,12 @@ extends CustomEnchantment {
             if (ent instanceof LivingEntity && !(ent instanceof Player) && !ent.hasMetadata("do_not_clear")) {
                 ent.getWorld().strikeLightningEffect(ent.getLocation());
                 try {
-                    ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0.6f, 0.6f, 0.6f, 0.1f, 10);
+                    //ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0.6f, 0.6f, 0.6f, 0.1f, 10);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 try {
-                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 35);
+                    //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 35);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

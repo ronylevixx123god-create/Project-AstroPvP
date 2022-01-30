@@ -41,7 +41,7 @@ implements Listener {
         Player p;
         if (e.getDamager() instanceof Player && ((Player)e.getDamager()).getWalkSpeed() == 0.0f) {
             try {
-                ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
+                //ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
@@ -53,7 +53,7 @@ implements Listener {
                 p.setWalkSpeed(0.2f);
                 p.removeMetadata("natureWrathTask", (Plugin)Enchantments.getInstance());
                 try {
-                    ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
+                    //ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }            }
@@ -64,7 +64,7 @@ implements Listener {
     public void onPlayerShootBow(EntityShootBowEvent e) {
         if (e.getEntity() instanceof Player && ((Player)e.getEntity()).getWalkSpeed() == 0.0f) {
             try {
-                ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
+                //ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 30);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }        }

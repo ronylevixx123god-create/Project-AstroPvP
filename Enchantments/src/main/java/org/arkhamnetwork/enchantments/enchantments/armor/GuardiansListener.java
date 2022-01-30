@@ -66,12 +66,12 @@ implements Listener {
                     if (Math.random() < (double)bloodCurseLevel * 0.05 && pSummoner.getHealth() < pSummoner.getMaxHealth() && !pSummoner.isDead()) {
                         GeneralUtil.healPlayer((LivingEntity)pSummoner, bloodCurseLevel == 5 ? 2 : 1);
                         try {
-                            ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), pSummoner.getEyeLocation(), 0.2f, 0.2f, 0.2f, 0.1f, 1);
+                            //ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), pSummoner.getEyeLocation(), 0.2f, 0.2f, 0.2f, 0.1f, 1);
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
                         try {
-                            ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation().add(0.0, 0.3, 0.0).getBlock().getLocation(), 0.2f, 0.2f, 0.2f, 0.1f, 1);
+                            //ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation().add(0.0, 0.3, 0.0).getBlock().getLocation(), 0.2f, 0.2f, 0.2f, 0.1f, 1);
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }

@@ -67,51 +67,10 @@ public class AstroScoreboardAPI {
 
         String color = FactionUtils.isWilderness(fp.getFaction()) ? CC.White : fp.getRelationTo(fother).getColor().toString();
         ChatColor rankColor;
-        String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-        switch (Objects.requireNonNull(rank)) {
-            case "owner":
-                rankColor = ChatColor.DARK_RED;
-                break;
-            case "manager":
-            case "developer":
-            case "media":
-                rankColor = ChatColor.LIGHT_PURPLE;
-                break;
-            case "admin":
-                rankColor = ChatColor.RED;
-                break;
-            case "mod":
-                rankColor = ChatColor.BLUE;
-                break;
-            case "banteam":
-                rankColor = ChatColor.GOLD;
-                break;
-            case "jradmin":
-                rankColor = ChatColor.RED;
-                break;
-            case "srmod":
-                rankColor = ChatColor.DARK_AQUA;
-                break;
-            case "jrmod":
-            case "interstellar":
-                rankColor = ChatColor.DARK_PURPLE;
-                break;
-            case "helper":
-                rankColor = ChatColor.GREEN;
-                break;
-            case "apollo":
-                rankColor = ChatColor.AQUA;
-                break;
-            default:
-                rankColor = ChatColor.YELLOW;
-                break;
-        }
+        //String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
-        if (factionName.isWilderness()) {
-            return color + faction + rankColor;
-        } else {
-            return color + faction + rankColor;
-        }
+
+        return color + faction;
     }
 
     public static String getDefaultPrfix(Player player) {

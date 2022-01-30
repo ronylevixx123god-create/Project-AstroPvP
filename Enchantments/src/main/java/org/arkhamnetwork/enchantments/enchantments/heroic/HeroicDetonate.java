@@ -146,7 +146,7 @@ extends CustomEnchantment {
                 spawnerType = ((CreatureSpawner)state).getSpawnedType();
             }
             try {
-                ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 0.025f, 0.025f, 0.1f, 1);
+                //ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 0.025f, 0.025f, 0.1f, 1);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

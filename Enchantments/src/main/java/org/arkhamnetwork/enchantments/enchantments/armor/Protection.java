@@ -87,7 +87,7 @@ extends CustomEnchantment {
                             if (p.getHealth() + (double)amountToHeal < p.getMaxHealth() && p.getHealth() > 0.0 && !p.isDead()) {
                                 p.setHealth(p.getHealth() + (double)amountToHeal);
                                 try {
-                                    ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
+                                    //ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
                                 } catch (Exception exception) {
                                     exception.printStackTrace();
                                 }
@@ -95,21 +95,21 @@ extends CustomEnchantment {
                             if (level >= 1 && Math.random() <= 0.15) {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, level * 20, level > 2 ? 1 : 0));
                                 try {
-                                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 10);
+                                    //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 10);
                                 } catch (Exception exception) {
                                     exception.printStackTrace();
                                 }
                             }
                             if (level >= 2 && Math.random() <= 0.1) {
                                 try {
-                                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
+                                    //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
                                 } catch (Exception exception) {
                                     exception.printStackTrace();
                                 }                            }
                             if (level < 3 || !(Math.random() <= 0.005)) continue;
                             p.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, level * 20 * 2, level + 1));
                             try {
-                                ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 30);
+                                //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 30);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }                        }

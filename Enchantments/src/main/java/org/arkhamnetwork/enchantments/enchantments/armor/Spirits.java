@@ -88,7 +88,7 @@ extends CustomEnchantment {
                 int toHeal = level <= 5 ? 2 : (level <= 8 ? 4 : 5);
                 toHeal /= 2;
                 try {
-                    ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().clone().add(0.0, 1.0, 1.0), 0.5f, 0.5f, 0.5f, 0.01f, 20);
+                    //ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), ent.getLocation().clone().add(0.0, 1.0, 1.0), 0.5f, 0.5f, 0.5f, 0.01f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -102,7 +102,7 @@ extends CustomEnchantment {
                         GeneralUtil.healPlayer((LivingEntity)player, toHeal);
                         player.setMetadata("heal_cd", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)((double)System.currentTimeMillis() + (double)required / 20.0 * 1000.0)));
                         try {
-                            ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().clone().add(0.0, 1.0, 1.0), 0.75f, 0.75f, 0.75f, 0.01f, 15);
+                         //   ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().clone().add(0.0, 1.0, 1.0), 0.75f, 0.75f, 0.75f, 0.01f, 15);
                         }
                         catch (Exception e) {
                             e.printStackTrace();
@@ -134,12 +134,12 @@ extends CustomEnchantment {
                 Player p = (Player)player;
                 Location spawnLoc = player.getLocation().add(0.0, 1.0, 0.0);
                 try {
-                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
+                    //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.64f, 45);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 try {
-                    ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.154f, 35);
+                    //ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.154f, 35);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

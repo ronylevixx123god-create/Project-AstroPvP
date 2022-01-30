@@ -37,7 +37,7 @@ extends CustomEnchantment {
             DurabilityUtil.healMostDamagedArmorPeice((Player)player, (short)1);
             Location l = player.getLocation();
             try {
-                ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l, 1.0f, 1.0f, 1.0f, 0.1f, 4);
+                //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), l, 1.0f, 1.0f, 1.0f, 0.1f, 4);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

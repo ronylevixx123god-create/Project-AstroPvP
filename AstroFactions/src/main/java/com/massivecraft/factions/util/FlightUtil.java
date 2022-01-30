@@ -52,7 +52,7 @@ public class FlightUtil {
 
         @Override
         public void run() {
-            Collection<FPlayer> players = FPlayers.getInstance().getOnlinePlayers();
+            /*Collection<FPlayer> players = FPlayers.getInstance().getOnlinePlayers();
             for (Player player : Bukkit.getOnlinePlayers()) {
                 if(Permission.FLY_ANY.has(player.getPlayer()))continue;
                 FPlayer pilot = FPlayers.getInstance().getByPlayer(player);
@@ -65,7 +65,7 @@ public class FlightUtil {
                         }
                     }
                 }
-            }
+            }*/
         }
 
         public boolean enemiesNearby(FPlayer target, int radius) {
@@ -112,7 +112,7 @@ public class FlightUtil {
 
         @Override
         public void run() {
-            for (Player player : Bukkit.getOnlinePlayers()) {
+            /*for (Player player : Bukkit.getOnlinePlayers()) {
                 FPlayer pilot = FPlayers.getInstance().getByPlayer(player);
                 if (pilot.isFlying()) {
                     if (pilot.getFlyTrailsEffect() != null && Permission.FLY_TRAILS.has(player) && pilot.getFlyTrailsState()) {
@@ -121,8 +121,9 @@ public class FlightUtil {
                     }
                 }
             }
+        }*/
+
         }
 
     }
-
 }

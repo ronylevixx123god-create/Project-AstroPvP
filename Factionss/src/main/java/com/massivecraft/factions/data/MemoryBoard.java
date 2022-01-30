@@ -354,15 +354,6 @@ public abstract class MemoryBoard extends Board {
 
                      if (flocationHere.isOutsideWorldBorder(buffer)){
                         row.then("-").color(ChatColor.BLACK);
-                    } else if (flocationHere.isInCorner() && factionHere.isWilderness()) {
-                        row.then("x").color(ChatColor.AQUA).tooltip(
-                                TextUtil.parseColor(
-                                        "&8(&a!&8) &7Claim Info: &a \n" +
-                                                "&a* &7Chunk Location: &aX: " + flocationHere.getX() + " Z: " + flocationHere.getZ() + "\n" +
-                                                "&a* &7Corner Claim: &aTrue\n\n" +
-                                                "&7TIP: &ouse '/f corner' to claim this corner"
-                                )
-                        );
                     } else if (factionHere.isWilderness()) {
                         row.then("-").color(FactionsPlugin.getInstance().conf().colors().factions().getWilderness());
                     } else if (factionHere.isSafeZone()) {
@@ -378,15 +369,7 @@ public abstract class MemoryBoard extends Board {
                         }
 
                         char tag = fList.get(factionHere.getTag());
-                        row.then(String.valueOf(tag)).color(factionHere.getColorTo(faction)).tooltip(
-                                TextUtil.parseColor(
-                                "&8(&a!&8) &7Claim Info: &a \n" +
-                                "&a* &7Chunk Location: &aX: " + flocationHere.getX() + " Z: " + flocationHere.getZ() + "\n" +
-                                "&a* &7Faction Name: &a" + factionHere.getTag() + "\n" +
-                                "&a* &7Online Members: &a" + factionHere.getOnlinePlayers().size() + "\n" +
-                                "&a* &7Power: &a" + (int) factionHere.getPower() + "&8/&a" + (int) factionHere.getPowerMax()
-                                )
-                        );
+                        row.then(String.valueOf(tag)).color(factionHere.getColorTo(faction));
                     } else {
                         row.then("-").color(ChatColor.GRAY);
                     }

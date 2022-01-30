@@ -69,7 +69,7 @@ extends CustomEnchantment {
                 final Player p = (Player)player;
                 Location spawnLoc = p.getTargetBlock((HashSet<Byte>) null, 5).getLocation().add(0.0, 1.0, 0.0);
                 try {
-                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, 0.5f, 0.5f, 0.5f, 0.1f, 20);
+                    //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, 0.5f, 0.5f, 0.5f, 0.1f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -92,7 +92,7 @@ extends CustomEnchantment {
                     final Player pAttacker = (Player)attacker;
                     pAttacker.hidePlayer(p);
                     try {
-                        ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0.75f, 0.75f, 0.75f, 0.1f, 35);
+                        //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0.75f, 0.75f, 0.75f, 0.1f, 35);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
@@ -102,7 +102,7 @@ extends CustomEnchantment {
                         public void run() {
                             pAttacker.showPlayer(p);
                             try {
-                                ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0.75f, 0.75f, 0.75f, 0.1f, 35);
+                                //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0.75f, 0.75f, 0.75f, 0.1f, 35);
                             } catch (Exception exception) {
                                 exception.printStackTrace();
                             }

@@ -11,9 +11,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class AstroDamageHandlerAPI {
     private final AstroDamageHandler plugin;
+    private boolean debug;
 
     public AstroDamageHandlerAPI(AstroDamageHandler plugin) {
         this.plugin = plugin;
+        this.debug = plugin.getConfig().getBoolean("debug-enabled");
     }
 
 
@@ -33,7 +35,7 @@ public class AstroDamageHandlerAPI {
         double newDamage = oldDamage * increaseAmount;
         if (event.getEntity() instanceof Player) {
             if (event.getDamager() instanceof Player) {
-                if (plugin.getConfig().getBoolean("debug-enabled")) {
+                if (this.debug) {
                     LivingEntity entity = (LivingEntity) event.getEntity();
                     double oldHealth = entity.getHealth();
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -61,7 +63,7 @@ public class AstroDamageHandlerAPI {
 
         double oldDamage = event.getDamage();
         double newDamage = event.getDamage() * decreaseAmount;
-        if (plugin.getConfig().getBoolean("debug-enabled")) {
+        if (this.debug) {
             LivingEntity entity = (LivingEntity) event.getEntity();
             double oldHealth = entity.getHealth();
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -87,7 +89,7 @@ public class AstroDamageHandlerAPI {
 
         double oldDamage = event.getDamage();
         double newDamage = event.getDamage() * decreaseAmount;
-        if (plugin.getConfig().getBoolean("debug-enabled")) {
+        if (this.debug) {
             LivingEntity entity = (LivingEntity) event.getEntity();
             double oldHealth = entity.getHealth();
             Bukkit.getScheduler().runTaskLater(plugin, () -> {
@@ -115,7 +117,7 @@ public class AstroDamageHandlerAPI {
 
     public void dealDamage(Player to, double amount, String instance) {
         double getNewHealth = to.getHealth() - amount;
-        if (plugin.getConfig().getBoolean("debug-enabled")) {
+        if (this.debug) {
             this.sendDebugMessage(to, "&c&l- " + amount + " DMG &7(Instance: " + instance + "&7)");
         }
 
@@ -126,7 +128,7 @@ public class AstroDamageHandlerAPI {
         if (!WorldGuardUtils.isPvPEnabled(to.getLocation())) return;
 
         double getNewHealth = to.getHealth() - amount;
-        if (plugin.getConfig().getBoolean("debug-enabled") && to instanceof Player) {
+        if (this.debug && to instanceof Player) {
             this.sendDebugMessage((Entity) to, "&c&l- " + amount + " DMG &7(Instance: " + instance + "&7)");
         }
 
@@ -135,7 +137,7 @@ public class AstroDamageHandlerAPI {
 
     public void healPlayer(LivingEntity entity, double healAmount, String instance) {
         this.setPlayerHealth(entity, entity.getHealth() + healAmount);
-        if (plugin.getConfig().getBoolean("debug-enabled")) {
+        if (this.debug) {
             this.sendDebugMessage((Entity) entity, "&a&l+ " + healAmount + " HP &7(Instance: " + instance + "&7)");
         }
 

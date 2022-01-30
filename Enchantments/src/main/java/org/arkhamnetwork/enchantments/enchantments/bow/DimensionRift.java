@@ -98,7 +98,7 @@ extends CustomEnchantment {
                     blocks.put(l.clone(), m);
                     l.getBlock().setType(Material.SOUL_SAND);
                     try {
-                        ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 10);
+                        //ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), l.clone().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 10);
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
@@ -107,7 +107,7 @@ extends CustomEnchantment {
                         blocks.put(lAbove.clone(), mAbove);
                         lAbove.getBlock().setType(Material.WEB);
                         try {
-                            ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), lAbove.clone().add(0.0, 0.5, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 10);
+                            //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), lAbove.clone().add(0.0, 0.5, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 10);
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }

@@ -19,6 +19,7 @@ import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.enchantments.enchantments.swords.Block;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -125,6 +126,16 @@ public class DamageListener implements Listener {
                 e.setCancelled(true);
             }
 
+    }
+
+
+    @EventHandler
+    public void onDamageBoss(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() != null) {
+            if (e.getEntity().hasMetadata("boss")) {
+                e.setDamage(e.getDamage() *5);
+            }
+        }
     }
 
 

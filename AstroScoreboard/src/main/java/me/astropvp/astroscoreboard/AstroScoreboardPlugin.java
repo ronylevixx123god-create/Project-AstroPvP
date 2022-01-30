@@ -58,7 +58,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
                 }
             } catch (Exception ignored) {
             }
-        }, 100L, 100L);
+        }, 100L, 200L);
 
     }
 

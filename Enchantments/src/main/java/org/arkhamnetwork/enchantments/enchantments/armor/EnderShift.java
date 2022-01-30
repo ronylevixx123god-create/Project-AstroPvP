@@ -81,7 +81,7 @@ extends CustomEnchantment {
                 ender_shifters.add(uuid);
                 Location loc = pl.getLocation();
                 try {
-                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 1.0f,(float) Math.random() * 1.0f, (float) Math.random() * 1.0f, 1.25f, 100);
+                    //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 1.0f,(float) Math.random() * 1.0f, (float) Math.random() * 1.0f, 1.25f, 100);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

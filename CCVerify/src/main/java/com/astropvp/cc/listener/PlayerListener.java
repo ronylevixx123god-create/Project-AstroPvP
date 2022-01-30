@@ -70,7 +70,7 @@ public class PlayerListener implements Listener {
 
                 if(cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld())continue;
 
-                if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 80)continue;
+                if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 15)continue;
 
                 if(cosmicPlayer.getPlayer() == event.getEntity())continue;
 

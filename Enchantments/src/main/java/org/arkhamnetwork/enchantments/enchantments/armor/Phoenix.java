@@ -195,7 +195,7 @@ extends CustomEnchantment {
     }
 
     public static boolean canUsePhoenix(Player pl, int enchantLevel) {
-        return !last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - last_phoenix.get(pl.getUniqueId().toString()) > (long)((4 - enchantLevel) * 60000);
+        return !last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - last_phoenix.get(pl.getUniqueId().toString()) > (long)((4 - 2) * 60000);
     }
 
     public static int getPhoenixProcSoulCost(Player player) {

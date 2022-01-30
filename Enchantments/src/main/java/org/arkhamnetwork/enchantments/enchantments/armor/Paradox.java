@@ -95,7 +95,7 @@ extends CustomEnchantment {
                     KillTrackerAPI.removeSoulsFromGems((Player)p, (int)cost);
                     for (Player pEnt : affectedPlayers) {
                         try {
-                            ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 20);
+                            //ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), pEnt.getLocation().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 20);
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
@@ -111,7 +111,7 @@ extends CustomEnchantment {
                 }
             } else {
                 try {
-                    ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0.4f, 0.4f, 0.4f, 0.1f, 20);
+                    //ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getEyeLocation(), 0.4f, 0.4f, 0.4f, 0.1f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

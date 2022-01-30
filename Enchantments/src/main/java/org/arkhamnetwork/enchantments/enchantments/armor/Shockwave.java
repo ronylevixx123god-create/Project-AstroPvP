@@ -68,7 +68,7 @@ extends CustomEnchantment {
                 }
                 Location l = ent.getLocation();
                 try {
-                    ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), l, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, 0.73f, 100);
+                    //ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), l, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, (float)Math.random() * 2.0f, 0.73f, 100);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
@@ -76,7 +76,7 @@ extends CustomEnchantment {
 
             player.getWorld().playSound(player.getLocation(), Sound.FIREWORK_LAUNCH, 1.0f, 0.1f);
             try {
-                ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), (float)Math.random() * 3.0f, (float)Math.random() * 3.0f, (float)Math.random() * 3.0f, 0.73f, 100);
+                //ParticleEffect.ENCHANTMENT_TABLE.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), (float)Math.random() * 3.0f, (float)Math.random() * 3.0f, (float)Math.random() * 3.0f, 0.73f, 100);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

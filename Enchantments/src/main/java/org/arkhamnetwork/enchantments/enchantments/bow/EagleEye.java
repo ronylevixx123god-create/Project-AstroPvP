@@ -67,7 +67,7 @@ extends CustomEnchantment {
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.LEGGINGS, -1);
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.BOOTS, -1);
             try {
-                ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.45f, 30);
+                //ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.45f, 30);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

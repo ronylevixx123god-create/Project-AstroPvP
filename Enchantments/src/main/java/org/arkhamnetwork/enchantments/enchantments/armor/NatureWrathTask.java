@@ -35,7 +35,7 @@ extends BukkitRunnable {
             this.victim.playSound(this.victim.getLocation(), Sound.GHAST_SCREAM2, 2.0f, 2.0f);
             this.victim.sendMessage(ChatColor.DARK_GREEN.toString() + ChatColor.BOLD.toString() + "** NATURE'S WRATH **");
             try {
-                ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), this.victim.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 35);
+                //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), this.victim.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 35);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

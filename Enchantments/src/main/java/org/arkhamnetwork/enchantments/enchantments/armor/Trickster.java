@@ -50,12 +50,12 @@ extends CustomEnchantment {
                 player.teleport(l2, PlayerTeleportEvent.TeleportCause.PLUGIN);
                 player.getWorld().playSound(l1, Sound.PORTAL_TRIGGER, 0.8f, 1.4f);
                 try {
-                    ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), l1, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.5f, 20);
+                    //ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), l1, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.5f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
                 try {
-                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l2, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.5f, 20);
+                    //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), l2, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.5f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

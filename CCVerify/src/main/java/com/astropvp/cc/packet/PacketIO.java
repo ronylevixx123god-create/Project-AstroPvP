@@ -285,7 +285,7 @@ public class PacketIO {
             public void run() {
                 PacketIO.this.pumpOutQueue();
             }
-        }).runTaskTimer((Plugin)CCVerify.get(), 0L, 1L);
+        }).runTaskTimerAsynchronously((Plugin)CCVerify.get(), 0L, 1L);
     }
 
     private void createReceiveTask() {
@@ -295,6 +295,6 @@ public class PacketIO {
             public void run() {
                 PacketIO.this.pumpInQueue();
             }
-        }).runTaskTimer((Plugin)CCVerify.get(), 0L, 1L);
+        }).runTaskTimerAsynchronously((Plugin)CCVerify.get(), 0L, 1L);
     }
 }

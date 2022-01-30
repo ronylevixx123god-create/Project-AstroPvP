@@ -96,12 +96,12 @@ extends CustomEnchantment {
             }
             pHit.playSound(pHit.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
             try {
-                ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), pHit.getLocation().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 60);
+                //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), pHit.getLocation().add(0.0, 1.0, 0.0), 0.7f, 0.7f, 0.7f, 0.1f, 60);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             try {
-                ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), pHit.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 25);
+                //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), pHit.getLocation().add(0.0, 1.0, 0.0), 0.4f, 0.4f, 0.4f, 0.1f, 25);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
