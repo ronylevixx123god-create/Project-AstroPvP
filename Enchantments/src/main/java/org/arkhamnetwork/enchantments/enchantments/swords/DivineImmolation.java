@@ -62,6 +62,10 @@ public class DivineImmolation extends CustomEnchantment
             damage *= 1.15;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2) {
+            damage *=1.15;
+        }
+
         if (player.hasMetadata("soulEnchantMultiplier")) {
             damage *= player.getMetadata("soulEnchantMultiplier").get(0).asDouble();
         }

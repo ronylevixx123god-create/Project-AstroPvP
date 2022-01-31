@@ -81,12 +81,12 @@ public class DamageListener implements Listener {
         }
     }
 
-        @EventHandler(priority = EventPriority.NORMAL)
+        @EventHandler(priority = EventPriority.LOW)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
 
-            e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
+            //e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
         }
     }
 
@@ -99,8 +99,8 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 5;
-                if (protLevel == 5) decrease += 2;
+                if (protLevel == 6) decrease += 3;
+                if (protLevel == 5) decrease += 1;
             }
         }
         return decrease * 0.01;

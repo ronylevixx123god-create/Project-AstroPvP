@@ -90,9 +90,11 @@
         </dependency>
 
         <dependency>
-            <groupId>net.astropvp</groupId>
-            <artifactId>AstroDamageHandler</artifactId>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>dmg</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -126,18 +128,21 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicCustomTNT.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>net.astropvp</groupId>
-            <artifactId>Core</artifactId>
-            <version>0.1</version>
 
-        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Particleapi</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ParticleAPI_v2.1.1.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>core</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -221,7 +226,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ItemSkins</artifactId>
+            <artifactId>ItemSkinss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>

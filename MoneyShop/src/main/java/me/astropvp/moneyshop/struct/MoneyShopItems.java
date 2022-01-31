@@ -11,8 +11,8 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 
 public enum MoneyShopItems {
-    SLOTBOT(10000000000.0, CosmicSlotBotAPI.createSlotBotItem()),
-    PREMADE(5000000000.0, CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PremadeMeta").createClaimableItem(false)),
+    SLOTBOT(5000000000.0, CosmicSlotBotAPI.createSlotBotItem()),
+    PREMADE(100000000.0, CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PremadeMeta").createClaimableItem(false)),
     METAVERSE(25000000000.0, CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("Metaverse").createClaimableItem(false)),
     GODLY(50000000.0, CrateKeyItem.getItem(CrateType.GODLY)),
     APOLLO(500000000000.0, CosmicSkyCustomItems.get().getItemManager().getCustomItem("apollo_rank").createItem(null)),

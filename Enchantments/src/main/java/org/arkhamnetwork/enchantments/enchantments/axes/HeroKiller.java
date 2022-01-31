@@ -60,6 +60,9 @@ extends CustomEnchantment {
         }
         if(p.hasMetadata("witcher_ability"))
             return;
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BACKPACK)) {
+            return;
+        }
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
@@ -83,6 +86,9 @@ extends CustomEnchantment {
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 increase += 1.3;
+            }
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2) {
+                increase *=1.15;
             }
             AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(increase, e, "&c&lHero Killer");
         }

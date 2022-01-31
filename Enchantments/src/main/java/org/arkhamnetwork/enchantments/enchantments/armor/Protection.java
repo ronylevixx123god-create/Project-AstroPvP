@@ -92,7 +92,7 @@ extends CustomEnchantment {
                                     exception.printStackTrace();
                                 }
                             }
-                            if (level >= 1 && Math.random() <= 0.15) {
+                            if (level >= 1 && Math.random() <= 0.05) {
                                 p.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, level * 20, level > 2 ? 1 : 0));
                                 try {
                                     //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 10);
@@ -107,7 +107,7 @@ extends CustomEnchantment {
                                     exception.printStackTrace();
                                 }                            }
                             if (level < 3 || !(Math.random() <= 0.005)) continue;
-                            p.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, level * 20 * 2, level + 1));
+                            //p.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, level * 20 * 2, level + 1));
                             try {
                                 //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 30);
                             } catch (Exception exception) {

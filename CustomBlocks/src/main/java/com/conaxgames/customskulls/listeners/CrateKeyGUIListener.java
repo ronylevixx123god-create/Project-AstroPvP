@@ -2,7 +2,7 @@ package com.conaxgames.customskulls.listeners;
 
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
-import com.conaxgames.customskulls.guis.GUIInteractListener;
+import com.conaxgames.customskulls.guis.CrateKeyOpenerGUI;
 import com.conaxgames.customskulls.guis.SlotBotOpenerGUI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
@@ -34,7 +34,7 @@ public class CrateKeyGUIListener implements Listener {
             e.setCancelled(true);
             AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(clickedBlock.getLocation()));
             if (data.getAbilityType() == AbilityType.SECURITY_SYSTEM) {
-                GUIInteractListener crateKeyOpenerGUI = new GUIInteractListener(data, e.getClickedBlock(), p);
+                CrateKeyOpenerGUI crateKeyOpenerGUI = new CrateKeyOpenerGUI(data, e.getClickedBlock(), p);
                 crateKeyOpenerGUI.getCustomBlockGui().open(p);
             } else if (data.getAbilityType() == AbilityType.COSMIC_TOKEN_GENERATOR) {
                 SlotBotOpenerGUI slotBotOpenerGUI = new SlotBotOpenerGUI(data, e.getClickedBlock(), p);

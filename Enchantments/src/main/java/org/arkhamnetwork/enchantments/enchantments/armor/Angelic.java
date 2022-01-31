@@ -32,7 +32,7 @@ public class Angelic extends CustomEnchantment
             return;
         }
         final double random = Math.random();
-        final double chance = 0.02 * level;
+        final double chance = 0.005 * level;
         if (random < chance) {
             long healDelay = 250L;
             if (level <= 1) {

@@ -34,10 +34,10 @@ import java.util.List;
 import java.util.Map;
 
 @Getter
-public class GUIInteractListener {
+public class CrateKeyOpenerGUI {
     private final PaginatedGui customBlockGui;
 
-    public GUIInteractListener(AbilityData data, Block block, Player player) {
+    public CrateKeyOpenerGUI(AbilityData data, Block block, Player player) {
             player.sendMessage(CC.translate("&a&l(!)&a Opening the Personal CrateKey Opener!"));
             player.playSound(player.getLocation(), Sound.CHEST_OPEN, 5, 5);
          this.customBlockGui = new PaginatedGui(3, 27, "CrateKey Custom Block Menu");

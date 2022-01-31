@@ -26,7 +26,7 @@ public class LastManStandingCapTask extends BukkitRunnable {
             LastManStandingCacher cacher = LastManStandingCacher.getCachers().get(i);
             Player player = cacher.getPlayer();
             if (player != null &&
-                    player.isOnline()) {
+                    player.isOnline() && !player.isDead()) {
                 try {
                     CapType type = WorldGuardUtils.inRegion(player.getLocation(), "lms_region_desert") ? CapType.DESERT : (WorldGuardUtils.inRegion(player.getLocation(), "lms_region_spawn") ? CapType.SPAWN : null);
                     if (type == null) {
@@ -63,12 +63,6 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         player2.sendMessage(String.valueOf(CC.WhiteB) + "+ " + StringUtils.formatWithCommas(give) + "XP " + CC.Gray + "(LMS Reward " + CC.White + "#" + (x.getLMSTime() / 60) + CC.Gray + ")");
                         player2.giveExp(give);
                         x.addExperience(give);
-                        if (Math.random() <= 0.1) {
-                            Bukkit.broadcastMessage("");
-                            Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
-                            Bukkit.broadcastMessage("");
-                            Bukkit.dispatchCommand(console, "slotbot give " + player2.getName() + " 1");
-                        }
                     } else {
                         double multiplier = 1.0D;
                         if (HCFOutpostUtils.doesControlOutpost(player2, "frozen"))
@@ -78,12 +72,12 @@ public class LastManStandingCapTask extends BukkitRunnable {
                         EconomyUtils.depositBalance((OfflinePlayer) player2, give2);
                         x.addMoney(give2);
 
-                        if (Math.random() <= 0.1) {
-                            Bukkit.broadcastMessage("");
-                            Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
-                            Bukkit.broadcastMessage("");
-                            Bukkit.dispatchCommand(console, "slotbot give " + player2.getName() + " 1");
-                        }
+                    }
+                    if (Math.random() <= 0.1) {
+                        Bukkit.broadcastMessage("");
+                        Bukkit.broadcastMessage(CC.translate("&6&l(&e&l/LMS&6&l) &f" + player2.getName() + " &egot lucky and received a &6Slotbot Ticket &7(/warp desert)&e."));
+                        Bukkit.broadcastMessage("");
+                        Bukkit.dispatchCommand(console, "slotbot give " + player2.getName() + " 1");
                     }
                 }
             }
