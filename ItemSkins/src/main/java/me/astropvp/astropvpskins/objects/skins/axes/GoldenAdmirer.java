@@ -1,5 +1,7 @@
 package me.astropvp.astropvpskins.objects.skins.axes;
 
+import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
+import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;

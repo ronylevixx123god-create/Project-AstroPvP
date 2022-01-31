@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import me.ifamasssxd.cosmicduel.DuelAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -24,8 +23,6 @@ public class DeathAndTaxesSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        if (DuelAPI.isSpectator(damager)) return;
-
         if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
             this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());
         if(damaged instanceof Player && Math.random() <= 0.02 && !markList.containsKey(damaged)) {

@@ -82,7 +82,7 @@ public enum SkinType {
     EASTER_PICKAXE(CC.RedB + "Easter Basket", ItemSkinType.AXE, new EasterBasketSkin(), Arrays.asList(CC.Red + "-10% Incoming DMG")),
     PEPE_HELMET(CC.BlueB + "Pepe Helmet", ItemSkinType.HELMET, new PepeHelmetSkin(), Arrays.asList(new String[0])),
     SCYTHE1(CC.RedB + "Skull Scythe", ItemSkinType.SWORD, new SkullScytheSkin(), Arrays.asList(CC.Red + "+2.5% Outgoing Damage", CC.Red + "10% chance to silence amulet of corruption for 10s")),
-    DOOMSDAY_SWORD(CC.DarkGreenB + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList(CC.Red + "Increases outgoing damage from soul enchantments by 1.25x")),
+    DOOMSDAY_SWORD(CC.DarkGreenB + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList(CC.Red + "Increases outgoing damage from soul org.arkhamnetwork.enchantments by 1.25x")),
     RUINS_SWORD(CC.DarkAquaB + "Trident of the Deep", ItemSkinType.SWORD, new TridentSkin(), Arrays.asList(CC.Red + "Blessed IV", CC.Red + "Hex V", CC.Red + "Mark of the Beast VI", CC.Red + "25% chance to bypass Full Armor Set", CC.Red + "or Armor Crystal defensive bonus")),
     COSMIC_CITIZEN_BOOTS(CC.AquaB + "Moon Boots", ItemSkinType.BOOTS, new MoonBootsSkin(), Arrays.asList(CC.Red + "Increases armor set bonus/crystal damage by 1.2x")),
     MEDIEVAL_BOOTS_KNIGHT(CC.GrayB + "Knight's Boots", ItemSkinType.BOOTS, new KnightBootsSkin(), Arrays.asList(CC.Red + "Immune to all but vanilla knockback")),
@@ -229,6 +229,7 @@ public enum SkinType {
 
 
 
+
     private final String display;
 
     private final ItemSkinType itemSkinType;
@@ -249,9 +250,6 @@ public enum SkinType {
         this.lore.addAll(extra);
     }
 
-    public String getDisplay() {
-        return this.display;
-    }
     public String getDisplayName() { return CC.WhiteB + "Item Skin (" + this.display + CC.WhiteB + ")"; }
     public String getName() { return this.display; }
     public String getAppliedLore() { return CC.WhiteB + "ITEM SKIN: " + this.display; }
@@ -285,25 +283,6 @@ public enum SkinType {
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "item_skin");
-        return wrapper.build();
-    }
-
-    public ItemStack applyBackpack(ItemStack item) {
-        NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-        if(!cosmicData.hasKey("itemSkinType")) {
-            cosmicData.setString("itemSkinType", name());
-        } else {
-            String[] current = cosmicData.getString("itemSkinType").split(",");
-            List<String> strings = new ArrayList<>(Arrays.asList(current));
-            strings.add(name());
-            String s = Arrays.toString(strings.toArray());
-            s = s.replace("[", "");
-            s = s.replace("]", "");
-            s = s.replace(" ", "");
-            cosmicData.setString("itemSkinType", s);
-        }
-        wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();
     }
 

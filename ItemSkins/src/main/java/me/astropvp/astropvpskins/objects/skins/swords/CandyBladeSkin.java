@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import me.ifamasssxd.cosmicduel.DuelAPI;
 import org.arkhamnetwork.enchantments.mastery.MasteryLifesteal;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -18,8 +17,6 @@ public class CandyBladeSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        if (DuelAPI.isSpectator(damager)) return;
-
         if(damaged instanceof Player) {
             new MasteryLifesteal().applyDamagedOtherPlayer(damager, (Player) damaged, event, 10);
         }
