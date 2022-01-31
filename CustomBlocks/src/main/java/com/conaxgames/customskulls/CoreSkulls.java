@@ -16,6 +16,7 @@ import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
 import lombok.Getter;
+import lombok.Setter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.cratekeys.enums.CrateType;
@@ -41,6 +42,10 @@ public class CoreSkulls extends JavaPlugin {
     public static Map<String, CustomBlock> customBlocks = new HashMap<>();
 
     private static Field bukkitCommand;
+
+    @Setter
+    @Getter
+    public static boolean isSavingGrinderBlocks = false;
 
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
 
@@ -79,13 +84,12 @@ public class CoreSkulls extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CrateKeyGUIListener(), this);
         mobStackerUtils = AstroSpawners.getInstance().getMobStackerUtils();
         LoadCustomBlocks.load();
-        info("CoreSkulls!");
         inSlotbotMachine = new HashMap<>();
-        registerTasks();
-        ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
         grinderBlocks = new HashMap<>();
+        ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
+        registerTasks();
+        info("CustomBlocks has been loaded!");
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SaveAllGrinderCustomBlocks::saveAllGrinderCustomBlocks,120*20L, 900*20);
 
     }
 
@@ -130,8 +134,10 @@ public class CoreSkulls extends JavaPlugin {
     }
 
     private void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 4);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 5*20, 10*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 5);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 5*20, 15*20);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SaveAllGrinderCustomBlocks::saveAllGrinderCustomBlocks,120*20L, 1200*20);
+
     }
 
 

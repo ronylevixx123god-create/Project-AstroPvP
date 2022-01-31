@@ -53,6 +53,10 @@ public class GrinderCustomBlockGUI {
         this.customBlockGui.setItem(3, 4, new GuiItem(CoreSkulls.customBlocks.get(data.getAbilityType().getName()).getCustomBlockItem()));
 
         this.customBlockGui.setItem(3, 6, new GuiItem(activateButton, event -> {
+            if (CoreSkulls.isSavingGrinderBlocks) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
+                return;
+            }
             if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), data.getAbilityType().getPricePerAction())) {
                 EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), data.getAbilityType().getPricePerAction());
                 data.setLastActivated(System.currentTimeMillis());
@@ -76,6 +80,10 @@ public class GrinderCustomBlockGUI {
         //Astro key
         ItemStack astroKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&a&lAstro Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.ASTRO) + "&8)"), CC.translate("&7Click to redeem the astro crate keys")).build();
         this.customBlockGui.setItem(2, 2, new GuiItem(astroKey, event -> {
+            if (CoreSkulls.isSavingGrinderBlocks) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
+                return;
+            }
             int astroKeys = mobGrinderCache.getCrateKeys().get(CrateType.ASTRO);
             if (astroKeys == 0) return;
             int givenKeys = 0;
@@ -103,6 +111,10 @@ public class GrinderCustomBlockGUI {
         //Legendary key
         ItemStack legKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&6&lLegendary Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY) + "&8)"), CC.translate("&7Click to redeem the legendary crate keys")).build();
         this.customBlockGui.setItem(3, 2, new GuiItem(legKey, event -> {
+            if (CoreSkulls.isSavingGrinderBlocks) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
+                return;
+            }
             int legKeys = mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY);
             if (legKeys == 0) return;
             int givenKeys = 0;
@@ -129,6 +141,10 @@ public class GrinderCustomBlockGUI {
         //Godly key
         ItemStack godlyKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&4&lGodly Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.GODLY) + "&8)"), CC.translate("&7Click to redeem the godly crate keys")).build();
         this.customBlockGui.setItem(4, 2, new GuiItem(godlyKey, event -> {
+            if (CoreSkulls.isSavingGrinderBlocks) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
+                return;
+            }
             int godlyKeys = mobGrinderCache.getCrateKeys().get(CrateType.GODLY);
             if (godlyKeys == 0) return;
             int givenKeys = 0;
@@ -157,6 +173,10 @@ public class GrinderCustomBlockGUI {
         double xp = mobGrinderCache.getXp();
         ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + (int) xp + "&8)"), CC.translate("&7Click to redeem the experience")).build();
         this.customBlockGui.setItem(4, 8, new GuiItem(xpBottle, event -> {
+            if (CoreSkulls.isSavingGrinderBlocks) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
+                return;
+            }
             if (xp == 0) return;
 
             if (event.getWhoClicked().getInventory().firstEmpty() == -1) {

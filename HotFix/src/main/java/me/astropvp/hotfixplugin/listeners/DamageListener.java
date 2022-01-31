@@ -81,7 +81,7 @@ public class DamageListener implements Listener {
         }
     }
 
-        @EventHandler(priority = EventPriority.LOWEST)
+        @EventHandler(priority = EventPriority.NORMAL)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
@@ -99,8 +99,8 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 12;
-                if (protLevel == 5) decrease += 10;
+                if (protLevel == 6) decrease += 5;
+                if (protLevel == 5) decrease += 2;
             }
         }
         return decrease * 0.01;
@@ -120,6 +120,7 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
+        if (WorldGuardUtils.getRegionsIn(e.getPlayer()) == null) return;
         if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") ||WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter"))) {
                 e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed in this region!"));
                 e.setMessage("/null");

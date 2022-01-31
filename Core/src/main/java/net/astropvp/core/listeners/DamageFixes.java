@@ -47,18 +47,4 @@ public class DamageFixes implements Listener {
         
     }
 
-
-    public double getProtectionReduction(Player p) {
-        double decrease = 0;
-        for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
-            if (armorPiece == null) continue;
-            if (armorPiece.getType() == Material.AIR) continue;
-            if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
-                int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 2;
-                if (protLevel == 5) decrease += 1;
-            }
-        }
-        return decrease * 0.01;
-    }
 }

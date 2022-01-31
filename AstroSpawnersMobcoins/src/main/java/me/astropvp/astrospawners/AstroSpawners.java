@@ -183,6 +183,8 @@ public class AstroSpawners extends JavaPlugin {
         //getCommand("addmobcoins").setExecutor(new CommandAddMobcoins());
 
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
+        getCommand("stackspawners").setExecutor(new CommandStackSpawners());
+
 
 
 

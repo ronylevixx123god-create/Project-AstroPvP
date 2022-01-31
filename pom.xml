@@ -71,6 +71,7 @@
         <module>AstroDamageHandler</module>
         <module>AstroFactions</module>
         <module>AstroWildPvP</module>
+        <module>MoneyShop</module>
     </modules>
 
     <build>

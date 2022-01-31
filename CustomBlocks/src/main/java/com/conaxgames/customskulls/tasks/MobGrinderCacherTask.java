@@ -15,13 +15,15 @@ public class MobGrinderCacherTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        for (Map.Entry<String, MobGrinderCache> entry : CoreSkulls.instance.getGrinderBlocks().entrySet()) {
+        if (CoreSkulls.isSavingGrinderBlocks) return;
+        final Map<String, MobGrinderCache> grinderBlocks = CoreSkulls.instance.getGrinderBlocks();
+        for (Map.Entry<String, MobGrinderCache> entry : grinderBlocks.entrySet()) {
             if (!AbilityData.getAbilityDataMap().containsKey((entry.getKey()))) {
                 CoreSkulls.instance.getGrinderBlocks().remove(entry.getKey());
             }
         }
-
-        for (Map.Entry<String, AbilityData> entry : AbilityData.getAbilityDataMap().entrySet()) {
+        final Map<String, AbilityData> abilityDataMap = AbilityData.getAbilityDataMap();
+        for (Map.Entry<String, AbilityData> entry : abilityDataMap.entrySet()) {
             String key = entry.getKey();
             if (key == null) continue;
             if (AbilityData.getByUUID(key) == null) continue;

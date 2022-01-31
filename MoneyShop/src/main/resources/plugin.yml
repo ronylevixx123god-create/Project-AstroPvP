@@ -1,0 +1,6 @@
+name: AstroMoneyShop
+main: me.astropvp.moneyshop.MoneyShop
+version: 1.0
+commands:
+  moneyshop:
+    aliases: [ opshop, givedp, itemshop ]

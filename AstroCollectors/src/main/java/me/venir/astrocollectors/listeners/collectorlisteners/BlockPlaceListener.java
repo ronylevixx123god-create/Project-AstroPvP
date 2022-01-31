@@ -31,7 +31,7 @@ public class BlockPlaceListener implements Listener {
 
         FLocation fLocation = new FLocation(location);
 
-        if (FactionUtils.getFactionAt(fLocation).isWilderness()) {
+        if (Board.getInstance().getFactionAt(fLocation).isWilderness()) {
             Language.CAN_NOT_PLACE_IN_WILD.send(event.getPlayer());
             event.setCancelled(true);
             return;

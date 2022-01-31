@@ -34,7 +34,7 @@ public final class Collector {
     private final Reference<World> reference;
     private final int chunkX, chunkZ;
     private final double x, y, z;
-    private final Map<Material,Double> lootMap;
+    private final Map<Material,Integer> lootMap;
     private final List<CollectorSellLog> sellLogs;
     Essentials essentials;
 
@@ -56,7 +56,7 @@ public final class Collector {
         for (Object obj : uncastedLootMap.entrySet()) {
             Map.Entry entry = (Map.Entry) obj;
             Material material = Material.matchMaterial(String.valueOf(entry.getKey()));
-            double amount = 0;
+            int amount = 0;
             try {
                 amount = Integer.parseInt(String.valueOf(entry.getValue()));
             } catch (NumberFormatException ignore) {
@@ -89,16 +89,16 @@ public final class Collector {
         sellLogs = new ArrayList<>();
     }
 
-    public double getAmount(Material material) {
-        return lootMap.getOrDefault(material,0.0);
+    public int getAmount(Material material) {
+        return lootMap.getOrDefault(material,0);
     }
 
     public double getTntAmount() {
-        return lootMap.getOrDefault(Material.TNT, 0.0);
+        return lootMap.getOrDefault(Material.TNT, 0);
     }
 
-    public double getTotalMobDropAmount() {
-        AtomicDouble totalAmount = new AtomicDouble();
+    public int getTotalMobDropAmount() {
+        AtomicInteger totalAmount = new AtomicInteger();
         lootMap.forEach((material, amount) -> {
             if (material == Material.TNT) return;
             totalAmount.addAndGet(amount);
@@ -106,7 +106,7 @@ public final class Collector {
         return totalAmount.get();
     }
 
-    public void setAmount(Material material, double amount) {
+    public void setAmount(Material material, int amount) {
         lootMap.put(material,amount);
     }
 
@@ -123,7 +123,7 @@ public final class Collector {
         return totalWorth.get();
     }
 
-    public void incrementAmount(Material material, double increment) {
+    public void incrementAmount(Material material, int increment) {
         lootMap.compute(material,(key,value) -> {
             if (value == null) {
                 return increment;
@@ -144,7 +144,7 @@ public final class Collector {
         return new Location(world, x, y, z);
     }
 
-    public Map<Material,Double> getLootMap() {
+    public Map<Material,Integer> getLootMap() {
         return lootMap;
     }
 
@@ -166,9 +166,9 @@ public final class Collector {
 
         Language.COLLECTOR_TNT.send(player, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(this.getAmount(Material.TNT))));
 
-        addTNTSellLog(player, (int) this.getAmount(Material.TNT));
+        addTNTSellLog(player, this.getAmount(Material.TNT));
 
-        faction.setTNTBank((int) (faction.getTNTBank() + this.getAmount(Material.TNT)));;
+        faction.setTNTBank((int) (faction.getTNTBank() + this.getTntAmount()));
         this.resetAmount(Material.TNT);
 
         player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
@@ -185,7 +185,7 @@ public final class Collector {
 
     public void sellAll(Player player) {
         if (lootMap.isEmpty()) return;
-        if (getTotalMobDropAmount() > 0) addMobDropSellLog(player, (int) getTotalMobDropAmount(), getAllMobDropsWorth());
+        if (getTotalMobDropAmount() > 0) addMobDropSellLog(player, getTotalMobDropAmount(), getAllMobDropsWorth());
         lootMap.forEach((m, i) -> {
             if (getAmount(m) == 0) return;
             sellOneTntOrMobDropAndLog(player, m);

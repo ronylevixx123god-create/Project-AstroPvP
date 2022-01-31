@@ -29,3 +29,5 @@ commands:
   clearafk:
     description: /clearafk
     aliases: [ clearafkgrinders ]
+  stackspawners:
+    aliases: [stacks, stackspawner, fixspawners, spawnerstack, spawnerstacks]

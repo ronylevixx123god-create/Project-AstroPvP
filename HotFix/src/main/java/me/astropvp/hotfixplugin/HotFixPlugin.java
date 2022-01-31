@@ -27,6 +27,8 @@ public class HotFixPlugin extends JavaPlugin {
 
         getCommand("fixslot").setExecutor(new FixSlotsCommand());
         Bukkit.getPluginManager().registerEvents(new SpawnersFix(), this);
+        Bukkit.getPluginManager().registerEvents(new EnderPearlFixes(), this);
+
         new ProtocolListener();
 
 

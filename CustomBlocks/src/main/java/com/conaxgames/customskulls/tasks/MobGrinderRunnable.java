@@ -8,10 +8,12 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 55;
+    int amountOfExpPerBlaze = 50;
 
     @Override
     public void run() {
+        if (CoreSkulls.isSavingGrinderBlocks) return;
+
         for (MobGrinderCache mobGrinderCache : CoreSkulls.instance.getGrinderBlocks().values()) {
             if (mobGrinderCache == null) continue;
             if (!mobGrinderCache.getAbilityData().isActive()) continue;
@@ -38,7 +40,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             //ADD LOOT TO THE CHEST
             mobGrinderCache.setXp(mobGrinderCache.getXp()+amountOfExpPerBlaze);
             double chance = Math.random();
-            if (chance < 0.0005) {
+            if (chance < 0.00025) {
                 int godlyKeys = mobGrinderCache.getCrateKeys().get(CrateType.GODLY);
                 mobGrinderCache.getCrateKeys().put(CrateType.GODLY,  godlyKeys+ 1);
             } else if (chance < 0.01) {

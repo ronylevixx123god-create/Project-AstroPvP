@@ -1,6 +1,5 @@
 package me.venir.astrocollectors.inventories;
 
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
@@ -35,7 +34,7 @@ public class CollectorsUI {
         CollectorManager collectorManager = CollectorManager.DELEGATE;
         collector = collectorManager.getCollector(location);
         FLocation fLocation = new FLocation(location);
-        Faction faction = FactionUtils.getFactionAt(fLocation);
+        Faction faction = Board.getInstance().getFactionAt(fLocation);
 
         collectorUI = new Gui(1, ChatColor.GREEN + faction.getTag() + "'s Collector");
 
@@ -56,9 +55,9 @@ public class CollectorsUI {
                 .setLore(getMobDropsLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    double amount = collector.getTotalMobDropAmount();
+                    int amount = collector.getTotalMobDropAmount();
                     if (amount == 0) return;
-                    collector.addMobDropSellLog(player, (int) amount, collector.getAllMobDropsWorth());
+                    collector.addMobDropSellLog(player, amount, collector.getAllMobDropsWorth());
                     collector.sellAllMobDrops(player);
                     updateItems();
                 }));
@@ -69,7 +68,7 @@ public class CollectorsUI {
                 .setLore(getTntLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    double amount = collector.getAmount(Material.TNT);
+                    int amount = collector.getAmount(Material.TNT);
                     if (amount == 0) return;
                     collector.sellTNT(player);
                     updateItems();

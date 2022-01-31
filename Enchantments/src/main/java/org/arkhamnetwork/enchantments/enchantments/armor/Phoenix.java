@@ -37,6 +37,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.mastery.MasteryFeignDeath;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -174,18 +175,22 @@ extends CustomEnchantment {
                 Title title = new Title(CC.translate("&c&l** PHOENIX**"), CC.translate("&7You have &n" + KillTrackerAPI.getAllSouls((Player)player) + "&7 souls left." ), 3, 30, 3);
                 player.sendTitle(title);
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
+                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                    try {
+                        MasteryFeignDeath.vanishPlayer(player, 4);
+                    } catch (NoSuchFieldException | IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
                 for (Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (!(ent instanceof Player)) continue;
                     ((Player)ent).sendMessage(String.valueOf(ChatColor.RED.toString()) + ChatColor.BOLD.toString() + "*** PHOENIX SOUL (" + (Object)ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + (Object)ChatColor.RED + (Object)ChatColor.BOLD + ") ***");
                     ((Player)ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
                 }
                 Location loc = player.getLocation();
-                ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.FLAME, (Location)loc, (float)((float)Math.random()), (float)((float)Math.random()), (float)((float)Math.random()), (float)0.75f, (int)80);
-                ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.LAVA, (Location)loc, (float)((float)Math.random()), (float)((float)Math.random()), (float)((float)Math.random()), (float)0.7f, (int)20);
                 return true;
             }
             if (!player.hasMetadata("outOfSoulsMessage") || ((MetadataValue)player.getMetadata("outOfSoulsMessage").get(0)).asLong() < System.currentTimeMillis()) {
-                ParticleEffect.playEffect((ParticleEffect)ParticleEffect.LAVA, (Location)player.getEyeLocation(), (float)0.4f, (int)20);
                 player.playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
                 player.sendMessage(String.valueOf(ChatColor.RED.toString()) + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
                 player.setMetadata("outOfSoulsMessage", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + 15000L)));
