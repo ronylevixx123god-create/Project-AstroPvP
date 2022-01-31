@@ -67,6 +67,7 @@
         <module name="CustomItems" />
         <module name="Pets" />
         <module name="Utils" />
+        <module name="Factions-Legacy (1)" />
         <module name="MoneyShop" />
         <module name="WeaponRunes" />
         <module name="AstroGamble" />
@@ -98,12 +99,6 @@
         <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions-Legacy (2)" />
-      </profile>
-      <profile name="Annotation profile for Factions-Legacy (1)" enabled="true">
-        <sourceOutputDir name="../../../Factionss/modules/Legacy/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../Factionss/modules/Legacy/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="Factions-Legacy (1)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
