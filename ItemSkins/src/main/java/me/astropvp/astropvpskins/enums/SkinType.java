@@ -8,6 +8,7 @@ import me.astropvp.astropvpskins.objects.skins.amulets.*;
 import me.astropvp.astropvpskins.objects.skins.axes.*;
 import me.astropvp.astropvpskins.objects.skins.backpacks.*;
 import me.astropvp.astropvpskins.objects.skins.belts.*;
+import me.astropvp.astropvpskins.objects.skins.boots.*;
 import me.astropvp.astropvpskins.objects.skins.helmets.*;
 import me.astropvp.astropvpskins.objects.skins.swords.*;
 import net.minecraft.server.v1_8_R3.NBTBase;
@@ -23,17 +24,6 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
-import me.astropvp.astropvpskins.objects.skins.boots.CamouflageBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.CorruptBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.CupidBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.KnightBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.MoonBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.RainbowSlidesSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.RetaliationBoots;
-import me.astropvp.astropvpskins.objects.skins.boots.SexyBootsSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.SnowflakeSlippersSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.TeddySlippersSkin;
-import me.astropvp.astropvpskins.objects.skins.boots.VirusBootsSkin;
 import me.astropvp.astropvpskins.objects.skins.bows.CupidBowSkin;
 import me.astropvp.astropvpskins.objects.skins.pickaxes.RubberChickenSkin;
 
@@ -230,9 +220,11 @@ public enum SkinType {
     COSMIC_CITIZEN_SWORD(CC.AquaB + "Sparkler", ItemSkinType.SWORD, new SparklerSkin(), Arrays.asList(CC.Red + "Transforms any creeper you hit into a Raid Creeper")),
     HALLOWEEN_SWORD(CC.GoldB + "Blade of Darkness", ItemSkinType.SWORD, new BladeOfDarknessSkin(), Arrays.asList(CC.Red + "2% chance to proc Revenge of Yijki", CC.Red + "4% Chain Lifesteal V", CC.Red + "33% chance to reflect Traps", CC.Red + "Soul Siphon III", CC.Red + "Headless III", CC.Red + "Immune to Blindness")),
     JULY_2021_BACKPACK(CC.translate("&f&lCosmic Cape"), ItemSkinType.BACKPACK, new CosmicCapeSkin(), Arrays.asList(CC.Red + "Immunte to Hero Killer", CC.Red + "Decreases incoming damage from Soul Enchants by 15%", CC.Red + "2.5% chance to negate enemy Shockwave and (Guided) Rocket", CC.Red + "Escape on outgoing damage for 10s", CC.Red + "Increases outgoing damage by up to 15% when under 50% HP")),
-    THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s"));
+    THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s")),
 
+    BACK_TO_SCHOOL_2021_BOOTS(CC.translate("&8&lBig Timbs"), ItemSkinType.BOOTS, new BigTimbsSkin(), Arrays.asList(CC.Red + "35% chance on incoming damage to", CC.Red + "negate enemy Rage stack multipliers", CC.Red + "Immune to Hero Killer", CC.Red + "Immune to enemy outgoing Heroic Pet abilities", CC.translate("&cGears IV"))),
 
+    JULY_2021_BOOTS(CC.translate("&c&lBarry's Bolts"), ItemSkinType.BOOTS, new BarrysBoltsSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to Slowness Potion Effect", CC.Red + "-15% damage from enemy (Bloody) Deep Wounds", CC.Red + "Flash Ability", CC.translate("&7 (10% chance when damaged to activate. When"), CC.translate("&7 active, all enemies you hit will have their"), CC.translate("&7 pets and Phoenix enchantment silenced, your"), CC.translate("&7 Soul Tether will do +20% damage and incoming"), CC.translate("&7 soul damage to your allies within a 4x4"), CC.translate("&7radius is reduced by -5%")));
 
 
 
