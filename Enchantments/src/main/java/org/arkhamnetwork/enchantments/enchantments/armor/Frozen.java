@@ -50,6 +50,11 @@ extends CustomEnchantment {
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BOOTS)) {
+                attacker.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Frozen&c&l] **"));
+                return;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE SLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;

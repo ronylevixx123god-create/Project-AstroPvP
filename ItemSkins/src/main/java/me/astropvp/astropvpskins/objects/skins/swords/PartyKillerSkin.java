@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.swords;
 
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.ifamasssxd.cosmicduel.DuelAPI;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -12,6 +13,8 @@ public class PartyKillerSkin extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (DuelAPI.isSpectator(damager)) return;
+
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;
         if (event.isCancelled())

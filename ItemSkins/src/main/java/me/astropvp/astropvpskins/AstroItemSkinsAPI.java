@@ -12,6 +12,7 @@ import java.util.stream.Collectors;
 
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
@@ -37,6 +38,17 @@ public class AstroItemSkinsAPI {
         if (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR && hasItemSkin(player.getItemInHand()))
             skins.addAll(getItemSkinByItem(player.getItemInHand()));
         return skins;
+    }
+
+
+    public static boolean hasBackpack(final ItemStack item) {
+        final NBTWrapper wrapper = new NBTWrapper(item);
+        return wrapper.hasKey("cosmicData") && (!wrapper.hasKey("cosmicType") || !wrapper.getString("cosmicType").equals("item_skin")) && new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).hasKey("backpackSkinType");
+    }
+
+    public static boolean hasBackpackSocket(final ItemStack item) {
+        final NBTWrapper wrapper = new NBTWrapper(item);
+        return wrapper.hasKey("conaxData") && new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).hasKey("hasBackpackSocket");
     }
 
     public static boolean hasItemSkin(ItemStack item, ItemStack item2) {

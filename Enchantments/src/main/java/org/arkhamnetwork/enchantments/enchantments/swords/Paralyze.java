@@ -47,6 +47,11 @@ extends CustomEnchantment {
                 playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE FLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BOOTS)) {
+                playerHit.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Paralyze&c&l] **"));
+                return;
+            }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
             playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, level > 2 ? 1 : 0));
             if (level == 4) {

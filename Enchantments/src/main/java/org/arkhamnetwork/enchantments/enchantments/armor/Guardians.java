@@ -26,8 +26,11 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -65,6 +68,11 @@ extends CustomEnchantment {
                 return;
             }
             if (player.hasMetadata("inDungeonParkour")) {
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
+                attacker.sendMessage(CC.translate("&9&l* INFINITY BELT &7Blocked &eGuardians &9&l*"));
                 return;
             }
             boolean KOTH_or_duel = player.getWorld().getName().equals("world_koth") || player.getWorld().getName().equals("world_duels") || player.getWorld().getName().equals("world_duels2");

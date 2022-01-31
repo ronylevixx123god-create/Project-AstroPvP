@@ -68,6 +68,11 @@ extends CustomEnchantment {
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BOOTS)) {
+                playerHit.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Ice Aspect&c&l] **"));
+                return;
+            }
+
             if (MaskType.hasEquipped((Player) playerHit, "HOLY")) {
                 playerHit.sendMessage(CC.translate("&6&l* HOLY MASK [&7Ice Aspect blocked!&6&l] *"));
                 return;

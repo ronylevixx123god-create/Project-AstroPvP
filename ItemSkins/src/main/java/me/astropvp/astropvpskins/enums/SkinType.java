@@ -8,7 +8,6 @@ import me.astropvp.astropvpskins.objects.skins.amulets.*;
 import me.astropvp.astropvpskins.objects.skins.axes.*;
 import me.astropvp.astropvpskins.objects.skins.backpacks.*;
 import me.astropvp.astropvpskins.objects.skins.belts.*;
-import me.astropvp.astropvpskins.objects.skins.boots.*;
 import me.astropvp.astropvpskins.objects.skins.helmets.*;
 import me.astropvp.astropvpskins.objects.skins.swords.*;
 import net.minecraft.server.v1_8_R3.NBTBase;
@@ -24,6 +23,17 @@ import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
+import me.astropvp.astropvpskins.objects.skins.boots.CamouflageBootsSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.CorruptBootsSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.CupidBootsSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.KnightBootsSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.MoonBootsSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.RainbowSlidesSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.RetaliationBoots;
+import me.astropvp.astropvpskins.objects.skins.boots.SexyBootsSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.SnowflakeSlippersSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.TeddySlippersSkin;
+import me.astropvp.astropvpskins.objects.skins.boots.VirusBootsSkin;
 import me.astropvp.astropvpskins.objects.skins.bows.CupidBowSkin;
 import me.astropvp.astropvpskins.objects.skins.pickaxes.RubberChickenSkin;
 
@@ -72,7 +82,7 @@ public enum SkinType {
     EASTER_PICKAXE(CC.RedB + "Easter Basket", ItemSkinType.AXE, new EasterBasketSkin(), Arrays.asList(CC.Red + "-10% Incoming DMG")),
     PEPE_HELMET(CC.BlueB + "Pepe Helmet", ItemSkinType.HELMET, new PepeHelmetSkin(), Arrays.asList(new String[0])),
     SCYTHE1(CC.RedB + "Skull Scythe", ItemSkinType.SWORD, new SkullScytheSkin(), Arrays.asList(CC.Red + "+2.5% Outgoing Damage", CC.Red + "10% chance to silence amulet of corruption for 10s")),
-    DOOMSDAY_SWORD(CC.DarkGreenB + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList(CC.Red + "Increases outgoing damage from soul org.arkhamnetwork.enchantments by 1.25x")),
+    DOOMSDAY_SWORD(CC.DarkGreenB + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList(CC.Red + "Increases outgoing damage from soul enchantments by 1.25x")),
     RUINS_SWORD(CC.DarkAquaB + "Trident of the Deep", ItemSkinType.SWORD, new TridentSkin(), Arrays.asList(CC.Red + "Blessed IV", CC.Red + "Hex V", CC.Red + "Mark of the Beast VI", CC.Red + "25% chance to bypass Full Armor Set", CC.Red + "or Armor Crystal defensive bonus")),
     COSMIC_CITIZEN_BOOTS(CC.AquaB + "Moon Boots", ItemSkinType.BOOTS, new MoonBootsSkin(), Arrays.asList(CC.Red + "Increases armor set bonus/crystal damage by 1.2x")),
     MEDIEVAL_BOOTS_KNIGHT(CC.GrayB + "Knight's Boots", ItemSkinType.BOOTS, new KnightBootsSkin(), Arrays.asList(CC.Red + "Immune to all but vanilla knockback")),
@@ -204,37 +214,17 @@ public enum SkinType {
     CHRISTMAS_BACKPACK_REINDEER(CC.RedB + "Baby Reindeer", ItemSkinType.BACKPACK, new BabyReindeerSkin(), Arrays.asList(CC.Red + "Incoming damage has a 33% chance", CC.Red + "to break enemy Silence, Blackout", CC.Red + "Blood Pact ability", CC.Gray + " (50% chance for incoming damage that would", CC.Gray + " normally kill you or bring your health to <=6HP", CC.Gray + " to be redirected at a nearby in-combat ally", CC.Gray + " within 8 blocks for 2x the damage. If no", CC.Gray + " allies are within 8 blocks, you will receive", CC.Gray + " -25% incoming damage when <=6HP)", CC.Red + "Furry Friend ability", CC.Gray + " (Receive Absorbtion V for 8s if an incoming", CC.Gray + " attack brings your health to <=20HP, 30s", CC.Gray + " cooldown)")),
     NYE_BACKPACK(CC.LightPurpleB + "Power Core", ItemSkinType.BACKPACK, new PowerCoreSkin(), Arrays.asList(CC.Red + "Aquatic I", CC.Red + "Lava Strider I", CC.Red + "Ghostly Ghost III", CC.Red + "Obsidianshield I", CC.Red + "Gears IV", CC.Red + "Obsidian you place spawns with 1 bonus", CC.Red + "durability until server reboot")),
     SUMMER_2021_BACKPACK(CC.GoldB + "Surfboard", ItemSkinType.BACKPACK, new SurfboardSkin(), Arrays.asList(CC.Red + "Chance to not activate custom block cooldown")),
+    //TODO:COSMIC CAPE HERE
     THANKSGIVING_BACKPACK_PICNIC(CC.YellowB + "Portable Picnic", ItemSkinType.BACKPACK, new PortablePicnicSkin(), Arrays.asList(CC.translate("&cNo Food loss"), CC.translate("&c-4% Incoming Damage"), CC.translate("&c+1 Food to nearby allies within"), CC.translate("&c10 blocks every 10s"))),
     CHRISTMAS_SWORD_CANDY(CC.RedB + "Candy Blade", ItemSkinType.SWORD, new CandyBladeSkin(), Arrays.asList(CC.Red + "Chain Lifesteal X", CC.Red + "Sugar Burst Ability", CC.Gray + " (10% chance to deal damage to", CC.Gray + " enemies 20% more often for 3s)")),
     TRIALS_SWORD(CC.GoldB + "Death and Taxes", ItemSkinType.SWORD, new DeathAndTaxesSkin(), Arrays.asList(CC.Red + "Death Toll ability", CC.Gray + " (8% chance to mark a player with \"Death Toll\",", CC.Gray + " which will track all damage you deal to", CC.Gray + " to them with Death and Taxes and damage", CC.Gray + " the player by 25% of damage dealt after 6s.)")),
     MEDIEVAL_SWORD_KING(CC.GoldB + "King Sceptre", ItemSkinType.SWORD, new KingSceptreSkin(), Arrays.asList(CC.Red + "Master Inquisitive V", CC.Red + "2x mob drops from melee'd mobs", CC.Red + "2x vanilla EXP from melee'd mobs", CC.Red + "Auto /sell mob drops")),
     SPRING_2021_SWORD(CC.GreenB + "Party Blade", ItemSkinType.SWORD, new PartyBladeSkin(), Arrays.asList(CC.Red + "Bypass enemy (Heroic) Aegis", CC.Red + "Immune to enemy Leadership", CC.Red + "+20% Outgoing damage when (Titan) Trapped/Frozen", CC.Red + "Inverted Knockback", CC.Gray + " (your enemy gets pulled to you each time you hit them)", CC.Red + "Silence enemy Amulet of Corruption for +3s per hit, max 30s")),
     NYE_SWORD(CC.LightPurpleB + "Party Killer", ItemSkinType.SWORD, new PartyKillerSkin(), Arrays.asList(CC.Red + "Anti Gank II", CC.Red + "+1% Outgoing Damage per combat tagged", CC.Red + "enemy player in your chunk (max +5%)", CC.Red + "Attacks have a 20% chance to pull target", CC.Red + "slightly towards you and push nearby enemies", CC.Red + "within a 3x3 radius of target away", CC.Red + "Attacks combat tag all enemies", CC.Red + "within a 4x64x4 radius of a target", CC.Red + "50% Pet Leash Negation")),
-    NYE_2021_AXE(CC.translate("&9&Cosmic Key"), ItemSkinType.AXE, new CosmicKey(), Arrays.asList(CC.Red + "Up to 10% chance to dodge Deathbringer", CC.Red + "when health is below 10 HP", CC.Red + "Divine Immolation IV", CC.Red + "Titan Attribute: Atlas 3", CC.Red + "Up to +10% Outgoing Damage when health is below 15 HP")),
-    THANKSGIVING_2021_MUTATED_AXE(CC.translate("&6&lWhisk Taker"), ItemSkinType.AXE, new WhiskTaker(), Arrays.asList(CC.Red + "3% chance when hit to proc an AoE", CC.Red + "explosion which deals 5HP to all", CC.Red + "enemies in a 5x5 radius and makes", CC.Red + "deal +20% Outgoing Damage to", CC.Red + "all affected enemies for 6s", CC.Red + "+2.5 Outgoing Damage", CC.Red + "15% chance when your Rogue procs", CC.Red + "to make your enemy 45% slower for 1s", CC.Red + "5% chance to Teleblock", CC.Red + "4% chance to silence your enemies", CC.Red + "Divine Immolation for 8s")),
-    BACK_TO_SCHOOL_2021_AXE(CC.translate("&6&lBoosyed Chainsaw"), ItemSkinType.AXE, new BoostedChainsaw(), Arrays.asList(CC.Red + "50% chance to bypass (Marty) Valor", CC.Red + "Double Strike III", CC.Red + "2.5% chance to silence enemy Soul Enchants for 8s", CC.Red + "Negate enemy Preserved Snowflake")),
-    JULY_2021_AXE(CC.translate("&f&lStormbreaker"), ItemSkinType.AXE,new StormBreaker(),Arrays.asList(CC.Red + "Blackout IV", CC.Red + "Divine Immolation I", CC.Red + "Titan Attribute: Kronos 8")),
-    CHRISTMAS_2021_SWORD(CC.translate("&4&lSeason's Beatings"), ItemSkinType.SWORD, new SeasonsBeatings(), Arrays.asList(CC.Red + "+7% Outgoing Damage to players wielding weapons with Hero Killer", CC.Red + "+10% Outgoing Damage to enemies with Soul Mode Activated", CC.Red + "3.5% chance to silence enemy (Reflective) Block for 8s", CC.Red + "Outgoing Damage while Frozen or Slowed has a 12.5% chance", CC.Red + "to remove the Freeze or Slow effect", CC.Red + "+10% Rage Damage")),
-    THANKSGIVING_2021_SWORD(CC.translate("&e&lCarver"), ItemSkinType.SWORD, new Carver(), Arrays.asList(CC.Red + "15% chance to deal 2x Divine Immolation tick damage", CC.Gray + "  (costs 2x extra souls on proc)", CC.Red + "33% chance to bypass Heroic Armor", CC.Red + "Damage you deal has a 3% chance to deal", CC.Red + "+50% Outgoing Soul Enchant Damage for 5s", CC.Red + "4% chance to silence your enemy's Rogue for 8s")),
-    HALLOWEEN_2021_SWORD(CC.translate("&6&lSpinal Tap"), ItemSkinType.SWORD, new SpinalTab(), Arrays.asList(CC.Red + "Hysteria Ability", CC.Gray + " (Every player you hit will grant you 1 Hysteria", CC.Gray + " stack up to a max of 5 stacks for 4s. For every", CC.Gray + " stack you have, you will receive +2% Outgoing", CC.Gray + " On your first hit at 5 stacks, you are", CC.Gray + " guaranteed to proc Blackout 4)", CC.Red + "2% chance to proc Rogue II", CC.Red + "when attacking enemies from behind", CC.Red + "4% chance to negate enemy Witch Hats for 10s")),
     COSMIC_CITIZEN_SWORD(CC.AquaB + "Sparkler", ItemSkinType.SWORD, new SparklerSkin(), Arrays.asList(CC.Red + "Transforms any creeper you hit into a Raid Creeper")),
     HALLOWEEN_SWORD(CC.GoldB + "Blade of Darkness", ItemSkinType.SWORD, new BladeOfDarknessSkin(), Arrays.asList(CC.Red + "2% chance to proc Revenge of Yijki", CC.Red + "4% Chain Lifesteal V", CC.Red + "33% chance to reflect Traps", CC.Red + "Soul Siphon III", CC.Red + "Headless III", CC.Red + "Immune to Blindness")),
-    JULY_2021_BACKPACK(CC.translate("&f&lCosmic Cape"), ItemSkinType.BACKPACK, new CosmicCapeSkin(), Arrays.asList(CC.Red + "Immunte to Hero Killer", CC.Red + "Decreases incoming damage from Soul Enchants by 15%", CC.Red + "2.5% chance to negate enemy Shockwave and (Guided) Rocket", CC.Red + "Escape on outgoing damage for 10s", CC.Red + "Increases outgoing damage by up to 15% when under 50% HP")),
-    THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s")),
+    THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s"));
 
-    THANKSGIVING_2021_BOOTS(CC.translate("&8&lLoafers"), ItemSkinType.BOOTS, new LoafersSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "3.5% chance to make enemy (Vampiric) Devour heal", CC.Red + "instead of hurt you by the same % for 5s", CC.Red + "2.5% chance to silence enemy Pets in a 6x6 radius for 10s", CC.translate("&cGears V for 6s when affected by an enemy's Heroic Pet"))),
-
-
-    CHRISTMAS_2021_BOOTS(CC.translate("&2&lSleigh Riders"), ItemSkinType.BOOTS, new SleighRiders(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Limit enemy Amulet of Corruption to 1 armor set type", CC.Red + "When affected by any Slowness, you will receive -1%", CC.Red + "Incoming Damage (up to a max of 8%) and +1% Outgoing", CC.translate("&cDamage (up to a max of 15%) per 5% HP lost"), CC.translate("&c&l3% chance to clear your enemy's rage stacks and"), CC.translate("&csilence their ability to gain more for 7s"), CC.translate("&c&l7% chance to negate enemy Rogue for 8s when their"), CC.translate("&c&lhealth is below 20 HP"))),
-
-
-    JULY_2021_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BOOTS, new InfinityBeltSkin(), Arrays.asList(CC.Red + "Equipped armor will regain to 10% durability", CC.Red + "instead of breaking (10m cooldown)", CC.Red + "Immune to Soul trap", CC.Red + "Immune to (Obsidian) Guardians", CC.translate("&cNegates enemy (Reinforced) Tank"))),
-
-
-    BACK_TO_SCHOOL_2021_BOOTS(CC.translate("&8&lBig Timbs"), ItemSkinType.BOOTS, new BigTimbsSkin(), Arrays.asList(CC.Red + "35% chance on incoming damage to", CC.Red + "negate enemy Rage stack multipliers", CC.Red + "Immune to Hero Killer", CC.Red + "Immune to enemy outgoing Heroic Pet abilities", CC.translate("&cGears IV"))),
-    HALLOWEEN_2021_BOOTS(CC.translate("&8&lBloodstained Galoshes"), ItemSkinType.BOOTS, new BloodstainedGaloshesSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to World Destroyer Cage", CC.Red + "25% chance to reflect cage back at the user", CC.Red + "Immune to Slownesses/Freezes", CC.Red + "Increases Execute HP threshold to proc by 1.3x", CC.translate("&cPsychotic Pursuit Ability"), CC.translate("&7 (+5% chance to proc Dodge +7 Outgoing"), CC.translate("&7 Damage on successful (Ethereal) Dodge procs"), CC.translate("&7 for a short duration"))),
-
-    JULY_2021_BOOTS(CC.translate("&c&lBarry's Bolts"), ItemSkinType.BOOTS, new BarrysBoltsSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to Slowness Potion Effect", CC.Red + "-15% damage from enemy (Bloody) Deep Wounds", CC.Red + "Flash Ability", CC.translate("&7 (10% chance when damaged to activate. When"), CC.translate("&7 active, all enemies you hit will have their"), CC.translate("&7 pets and Phoenix enchantment silenced, your"), CC.translate("&7 Soul Tether will do +20% damage and incoming"), CC.translate("&7 soul damage to your allies within a 4x4"), CC.translate("&7radius is reduced by -5%")));
 
 
 
@@ -259,6 +249,9 @@ public enum SkinType {
         this.lore.addAll(extra);
     }
 
+    public String getDisplay() {
+        return this.display;
+    }
     public String getDisplayName() { return CC.WhiteB + "Item Skin (" + this.display + CC.WhiteB + ")"; }
     public String getName() { return this.display; }
     public String getAppliedLore() { return CC.WhiteB + "ITEM SKIN: " + this.display; }
@@ -292,6 +285,25 @@ public enum SkinType {
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         wrapper.setString("random", UUID.randomUUID().toString());
         wrapper.setString("cosmicType", "item_skin");
+        return wrapper.build();
+    }
+
+    public ItemStack applyBackpack(ItemStack item) {
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        if(!cosmicData.hasKey("itemSkinType")) {
+            cosmicData.setString("itemSkinType", name());
+        } else {
+            String[] current = cosmicData.getString("itemSkinType").split(",");
+            List<String> strings = new ArrayList<>(Arrays.asList(current));
+            strings.add(name());
+            String s = Arrays.toString(strings.toArray());
+            s = s.replace("[", "");
+            s = s.replace("]", "");
+            s = s.replace(" ", "");
+            cosmicData.setString("itemSkinType", s);
+        }
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();
     }
 

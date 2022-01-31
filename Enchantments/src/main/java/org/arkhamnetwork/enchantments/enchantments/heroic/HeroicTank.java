@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -18,6 +20,10 @@ public class HeroicTank extends HeroicCustomEnchantment
             return;
         }
         if (player.hasMetadata("neutralized")) {
+            return;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
             return;
         }
 

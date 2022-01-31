@@ -1,5 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -79,6 +82,24 @@ public class Bleed extends CustomEnchantment
                 }
                 if (!ent.hasMetadata("bloodLust")) {
                     continue;
+                }
+
+                if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VIRUS_HELMET_HAZMAT)) {
+                    p.sendMessage(CC.translate("&2&l* PRISON BREAK &7(Hazmat Helmet) &2&l*"));
+                    return;
+                }
+                if (p.hasMetadata("immune_freeze")) {
+                    p.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "Bleed slowness blocked!" + CC.DarkGrayB + "] *");
+                    return;
+                }
+                if (MaskType.HOLY.hasEquipped(p)) {
+                    p.sendMessage(CC.GoldB + "* HOLY MASK [" + ChatColor.GRAY + "Bleed slowness blocked!" + CC.GoldB + "] *");
+                    return;
+                }
+
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.JULY_2021_BOOTS)) {
+                    p.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Bleed&c&l] **"));
+                    return;
                 }
                 final Player pEnt = (Player)ent;
                 if (!GeneralUtil.isAlly(p, pEnt)) {

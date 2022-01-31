@@ -349,18 +349,9 @@
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>seyt</artifactId>
+            <groupId>net.astropvp</groupId>
+            <artifactId>AstroArmorSets</artifactId>
             <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/AstroArmorSets-0.1.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>dmg</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>
         </dependency>
     </dependencies>
 

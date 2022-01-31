@@ -34,6 +34,7 @@ import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.boots.BarrysBoltsSkin;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -157,6 +158,14 @@ extends CustomEnchantment {
                 ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
                 damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
+                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
+            if (((BarrysBoltsSkin)SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
+                ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_BREAK, 2, 2);
+                ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_BREAK, 2, 2);
+                player.sendMessage(CC.translate("&c&l** &7Enemy Garry's Bolt &c&lBLOCKED PHOENIX **"));
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 return false;
             }

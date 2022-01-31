@@ -72,6 +72,11 @@ public class HeroicBleed extends HeroicCustomEnchantment
                 p.sendMessage(CC.GoldB + "* HOLY MASK [" + ChatColor.GRAY + "Deep Bleed slowness blocked!" + CC.GoldB + "] *");
                 return;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.JULY_2021_BOOTS)) {
+                p.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Deep Bleed&c&l] **"));
+                return;
+            }
             p.setWalkSpeed((float)(0.20000000298023224 - 0.0075 * bleedStack));
             if (bleedStack >= 5 && bleedStack % 5 == 0) {
                 p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format(bleedStack * 0.0075 / 0.20000000298023224 * 100.0) + ChatColor.RED + "% Speed] **");

@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.ifamasssxd.cosmicduel.DuelAPI;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -25,6 +26,8 @@ public class MauisHookSkin extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!damager.getWorld().getName().equals("world") && !damager.getWorld().getName().equals("flat")) return;
+        if (DuelAPI.isSpectator(damager)) return;
+
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation())) return;
         if (event.isCancelled()) return;
@@ -48,7 +51,7 @@ public class MauisHookSkin extends ItemSkin {
         damager.sendMessage(CC.translate("&c&l* MAUI'S HOOK &7[&fStack x" + mauiEffect.get(damager) + "&7] &c&l*"));
     }
 
-    //Sneka listener is in the me.astropvp.cratekeys.listeners package
+    //Sneka listener is in the me.astropvp.cratekeys.net.astropvp.armorsets.listeners package
 
 
 

@@ -91,7 +91,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>dmg</artifactId>
+            <artifactId>dfssmg</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>

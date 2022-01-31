@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -24,6 +26,10 @@ public class Tank extends CustomEnchantment
             return;
         }
         if (player.hasMetadata("noDefenseProcs")) {
+            return;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
             return;
         }
         if (player.hasMetadata("neutralized")) {
