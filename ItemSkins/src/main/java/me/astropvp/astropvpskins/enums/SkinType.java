@@ -222,6 +222,12 @@ public enum SkinType {
     JULY_2021_BACKPACK(CC.translate("&f&lCosmic Cape"), ItemSkinType.BACKPACK, new CosmicCapeSkin(), Arrays.asList(CC.Red + "Immunte to Hero Killer", CC.Red + "Decreases incoming damage from Soul Enchants by 15%", CC.Red + "2.5% chance to negate enemy Shockwave and (Guided) Rocket", CC.Red + "Escape on outgoing damage for 10s", CC.Red + "Increases outgoing damage by up to 15% when under 50% HP")),
     THANKSGIVING_SWORD_FEAST(CC.YellowB + "The Feast", ItemSkinType.SWORD, new TheFeastSkin(), Arrays.asList(CC.Red + "Soul Tether V", CC.Red + "-1 Food on enemy on Outgoing Damage", CC.Red + "20% chance to gain 1HP as you feed on your enemy", CC.Red + "20% chance to afflict enemies with Hunger IV for 3s")),
 
+    THANKSGIVING_2021_BOOTS(CC.translate("&8&lLoafers"), ItemSkinType.BOOTS, new LoafersSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "3.5% chance to make enemy (Vampiric) Devour heal", CC.Red + "instead of hurt you by the same % for 5s", CC.Red + "2.5% chance to silence enemy Pets in a 6x6 radius for 10s", CC.translate("&cGears V for 6s when affected by an enemy's Heroic Pet"))),
+
+
+    CHRISTMAS_2021_BOOTS(CC.translate("&2&lSleigh Riders"), ItemSkinType.BOOTS, new SleighRiders(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Limit enemy Amulet of Corruption to 1 armor set type", CC.Red + "When affected by any Slowness, you will receive -1%", CC.Red + "Incoming Damage (up to a max of 8%) and +1% Outgoing", CC.translate("&cDamage (up to a max of 15%) per 5% HP lost"), CC.translate("&c&l3% chance to clear your enemy's rage stacks and"), CC.translate("&csilence their ability to gain more for 7s"), CC.translate("&c&l7% chance to negate enemy Rogue for 8s when their"), CC.translate("&c&lhealth is below 20 HP"))),
+
+
     JULY_2021_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BOOTS, new InfinityBeltSkin(), Arrays.asList(CC.Red + "Equipped armor will regain to 10% durability", CC.Red + "instead of breaking (10m cooldown)", CC.Red + "Immune to Soul trap", CC.Red + "Immune to (Obsidian) Guardians", CC.translate("&cNegates enemy (Reinforced) Tank"))),
 
 
