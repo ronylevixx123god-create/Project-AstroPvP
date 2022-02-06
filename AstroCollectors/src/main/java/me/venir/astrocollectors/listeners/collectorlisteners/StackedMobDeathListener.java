@@ -44,11 +44,13 @@ public class StackedMobDeathListener implements Listener {
             ItemStack itemStack = e.getDrops(entity.getType());
             if (itemStack == null) return;
 
+            if (collector.getAmount(itemStack.getType()) + stackSize >= Integer.MAX_VALUE) return;
 
-            if (collector.getAmount(itemStack.getType())+ (stackSize) >= Double.MAX_VALUE) {
+
+            if (collector.getAmount(itemStack.getType())+ (stackSize*10) >= Double.MAX_VALUE) {
                 return;
             }
-            if (collector.getAllMobDropsWorth() + (stackSize*4) >= Double.MAX_VALUE) {
+            if (collector.getAllMobDropsWorth() + (stackSize*10) >= Double.MAX_VALUE) {
                 return;
             }
             collector.incrementAmount(itemStack.getType(), stackSize);

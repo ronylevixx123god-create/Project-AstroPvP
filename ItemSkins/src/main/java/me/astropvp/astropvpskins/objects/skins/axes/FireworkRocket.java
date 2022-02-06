@@ -17,6 +17,7 @@ public class FireworkRocket extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (!(damager instanceof Player)) return;
         if (!(damaged instanceof Player)) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
 
 
         if (Math.random() < 0.02) {

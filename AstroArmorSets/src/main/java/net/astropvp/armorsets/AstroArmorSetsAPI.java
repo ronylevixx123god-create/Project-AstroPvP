@@ -1,6 +1,5 @@
 package net.astropvp.armorsets;
 
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagListBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -318,8 +317,14 @@ public class AstroArmorSetsAPI {
             List<ArmorSetType> chestplateCrystalsPlayer = getCrystalsFromItem(attacker.getInventory().getChestplate());
             for (Map.Entry<ArmorSetType, Integer> entry : cacheOther.getCurrentSetCrystals().entrySet()) {
                 ArmorSetType type = entry.getKey();
+
                 Integer amount = entry.getValue();
-                if (!chestplateCrystalsPlayer.contains(type)) {
+
+                if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.BACK_TO_SCHOOL_2021_HELMET) && isDefensiveCrystal(type)) {
+                    map.put(type, amount);
+
+                } else if (!chestplateCrystalsPlayer.contains(type)) {
+
                     map.put(type, amount);
                 }
             }
@@ -329,6 +334,20 @@ public class AstroArmorSetsAPI {
 
         }
         return map;
+    }
+
+    public static boolean isDefensiveCrystal(ArmorSetType type) {
+        switch (type) {
+            case ANCIENT:
+            case YETI:
+            case ASTRO:
+            case ENGINEER:
+            case MOTHER_OF_YIJKI:
+            case LUNA:
+                return true;
+            default:
+                return false;
+        }
     }
 
     public static Map<AntiMkit, Integer> getAntiMkitCrystalsEquipped(Player player) {

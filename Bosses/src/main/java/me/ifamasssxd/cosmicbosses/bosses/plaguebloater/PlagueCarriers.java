@@ -47,7 +47,7 @@ public class PlagueCarriers extends BossAbility implements EntityContainer {
 
     @Override
     public void onAbility() {
-        if (this.getEntities().size() >= 3) {
+        if (this.getEntities().size() >= 2) {
             return;
         }
         this.getBoss().sendMessage(ChatColor.ITALIC + "Go forth my Plague Carriers, defile this land with the power of the plague.");

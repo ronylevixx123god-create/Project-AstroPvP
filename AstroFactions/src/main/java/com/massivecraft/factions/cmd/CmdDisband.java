@@ -93,7 +93,7 @@ public class CmdDisband extends FCommand {
             if (fplayer.getFaction() == faction) {
                 fplayer.msg(TL.COMMAND_DISBAND_BROADCAST_YOURS, who);
             } else {
-                fplayer.msg(TL.COMMAND_DISBAND_BROADCAST_NOTYOURS, who, faction.getTag(fplayer));
+                //fplayer.msg(TL.COMMAND_DISBAND_BROADCAST_NOTYOURS, who, faction.getTag(fplayer));
             }
         }
         if (FactionsPlugin.getInstance().conf().logging().isFactionDisband()) {

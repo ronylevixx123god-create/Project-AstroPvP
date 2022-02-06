@@ -26,6 +26,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
@@ -70,7 +72,11 @@ extends CustomEnchantment {
         if (!(proj.getShooter() instanceof Player)) {
             return;
         }
-        LivingEntity victima = target;
+
+        if (((Player) target).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) target).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) target).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
+        return;
+        }
+            LivingEntity victima = target;
         double y = proj.getLocation().getY();
         double victimay = victima.getLocation().getY();
         double level = enchantLevel;

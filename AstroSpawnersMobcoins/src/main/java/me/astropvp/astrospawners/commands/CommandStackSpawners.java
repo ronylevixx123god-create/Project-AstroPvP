@@ -21,11 +21,20 @@ public class CommandStackSpawners implements CommandExecutor {
         Player player = ((Player) sender).getPlayer();
 
         for (ItemStack item : player.getInventory().getContents()) {
+
             int amount = ItemSpawner.getSpawnerAmount(item);
             EntityType type = ItemSpawner.getEntityTypeFromItem(item);
+
+
+
             if(type == null || amount <= -1) {
                 continue;
             }
+
+            if (item.getAmount() >1) {
+                amount *=item.getAmount();
+            }
+
             player.getInventory().remove(item);
             if (spawners.containsKey(type)) {
                 int currentAmount = spawners.get(type);

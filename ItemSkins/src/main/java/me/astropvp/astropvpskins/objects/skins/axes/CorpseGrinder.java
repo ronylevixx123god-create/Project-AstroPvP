@@ -13,7 +13,10 @@ public class CorpseGrinder extends ItemSkin {
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
+
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
+
         new DoubleStrike().applyEffect(damager, (LivingEntity) damaged, 2, event);
 
 

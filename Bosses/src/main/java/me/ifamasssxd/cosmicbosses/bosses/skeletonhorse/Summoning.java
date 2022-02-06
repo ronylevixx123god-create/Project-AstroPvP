@@ -49,7 +49,7 @@ public class Summoning extends BossAbility {
             handle2.motY += 0.5;
         }
         this.boss.getEntity().addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, Integer.MAX_VALUE, 1));
-        for (int amount = this.random.nextInt(3) + 2, i = 0; i < amount && this.boss.getMinions().size() <= 7; ++i) {
+        for (int amount = this.random.nextInt(3) + 2, i = 0; i < amount && this.boss.getMinions().size() <= 3; ++i) {
             final Skeleton skeleton = (Skeleton) this.boss.spawnMinion(EntityType.SKELETON, this.boss.getEntity().getLocation());
             skeleton.setMaxHealth(50.0);
             skeleton.setHealth(skeleton.getMaxHealth());

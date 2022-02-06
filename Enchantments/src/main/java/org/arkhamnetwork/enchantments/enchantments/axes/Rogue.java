@@ -6,6 +6,8 @@ import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
+import me.astropvp.astropvpskins.objects.skins.swords.Carver;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -36,10 +38,7 @@ public class Rogue extends CustomEnchantment {
         if (!(player instanceof Player)) // rooThink
             return;
         if (!(playerHit instanceof Player)) return;
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
-            playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
-            return;
-        }
+
         final Player p = (Player) player;
         final ItemStack used = p.getItemInHand();
         if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
@@ -49,6 +48,23 @@ public class Rogue extends CustomEnchantment {
             double multi = 1.0D + 0.166666666666666D * (double) level + Math.random() / 2.0D;
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
+                playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
+                return;
+            }
+
+            if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
+                return;
+            }
+
+            if (((Carver)SkinType.THANKSGIVING_2021_SWORD.getItemSkin()).getRogueSilenced().contains(p.getName())) {
+                return;
+            }
+
+            if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
                 return;
             }
             double chance = 0;
@@ -62,6 +78,10 @@ public class Rogue extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2) {
                 multi +=0.15;
+            }
+
+            if (player.hasMetadata("carver_damage")) {
+                multi +=0.10;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {

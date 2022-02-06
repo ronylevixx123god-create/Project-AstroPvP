@@ -8,6 +8,7 @@ import me.astropvp.astroscoreboard.AstroScoreboardAPI;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astroscoreboard.board.Board;
 import me.astropvp.astroscoreboard.manager.PlayerDisplayManager;
+import me.astropvp.proxypach.ProxyPatch;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;

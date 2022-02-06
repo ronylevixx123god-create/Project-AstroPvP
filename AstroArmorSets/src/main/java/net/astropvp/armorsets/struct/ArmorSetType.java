@@ -21,7 +21,7 @@ import java.util.List;
 @Getter
 public enum ArmorSetType {
     PHANTOM(CC.translate("&c&lPhantom"), new PhantomArmorSet(), CC.Red, 14294340, Material.COAL),
-    ANCIENT(CC.translate("&3&lAncient"), new AncientArmorSet(), CC.DarkAqua, 3650995, Material.NETHER_WARTS),
+    ANCIENT(CC.translate("&3&lAncient"), new AncientArmorSet(), CC.DarkAqua, 3650995, Material.NETHER_STAR),
     ASTRO(CC.translate("&a&lAstro"), new AstroArmorSet(), CC.Green, 5765888, Material.FIREBALL),
     DRAGON(CC.translate("&e&lDragon"), new DragonArmorSet(), CC.Yellow, 0xFFEE00, Material.BLAZE_POWDER),
     ENGINEER(CC.translate("&6&lEngineer"), new EngineerArmorSet(), CC.Gold, 15176967, Material.LEVER),

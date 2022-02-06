@@ -1,6 +1,7 @@
 package net.astropvp.armorsets.listeners;
 
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
+import me.astropvp.proxypach.ProxyPatch;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -114,6 +115,7 @@ public class ArmorSetApplyListener implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
+        if (ProxyPatch.playerNames.contains(e.getPlayer().getName())) return;
         if (e.getPlayer() != null) {
             Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
                 AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());

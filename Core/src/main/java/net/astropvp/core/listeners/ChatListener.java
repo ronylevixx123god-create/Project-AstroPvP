@@ -14,6 +14,7 @@ import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.struct.ChatMode;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.conaxgames.staff.StaffChat;
+import net.astropvp.core.conaxgames.staff.StaffUtil;
 import net.astropvp.core.titles.PlayerTitleAPI;
 import net.astropvp.core.titles.utils.Clickable;
 import net.astropvp.core.utils.CooldownUtils;
@@ -69,6 +70,8 @@ public class ChatListener implements Listener {
 
 
         if (fPlayer.getChatMode() != ChatMode.PUBLIC) return;
+
+        if (StaffUtil.inStaffChat.contains(event.getPlayer())) return;
 
         if (player.hasPermission("astrocore.nebula")) {
             chatCooldown = 0.5;
@@ -175,7 +178,7 @@ public class ChatListener implements Listener {
                 } else {
                     String name = itemStack.getItemMeta().getDisplayName();
                     int amount = itemStack.getAmount();
-                    clickable.addItem(String.format("&f» " + name + " &7(%sx) &f« ", amount), itemStack);
+                    clickable.addItem(CC.translate("&f» " + name + " &7(" + amount + "x) &f« "), itemStack);
                 }
                 message = message.replace("[item]", "").replace("[ITEM]", "");
             }

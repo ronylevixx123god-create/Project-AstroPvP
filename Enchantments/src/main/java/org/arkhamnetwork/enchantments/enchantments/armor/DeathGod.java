@@ -32,7 +32,7 @@ public class DeathGod
             return;
         }
         final double random = Math.random();
-        final double procChance = 0.025 * level;
+        final double procChance = 0.005 * level;
         if (random < procChance && player.getHealth() - e.getFinalDamage() <= 4 + level) {
             ((Player) player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");

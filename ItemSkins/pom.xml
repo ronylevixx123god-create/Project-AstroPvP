@@ -77,6 +77,20 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>ench</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>pets</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicSkyInventoryPets.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>duels</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -277,6 +291,14 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/VanishNoPacket.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>dmg</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

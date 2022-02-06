@@ -46,6 +46,15 @@ public class DamageListener implements Listener {
         }
     }
 
+/*    @EventHandler
+    public void axe(EntityDamageByEntityEvent e) {
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE")) {
+                e.setDamage(e.getDamage()*1.5);
+            }
+        }
+    }*/
+
     private String getFormattedName(ItemStack hand) {
         if (hand == null || hand.getType() == Material.AIR) {
             return "their fists!";

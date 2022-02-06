@@ -14,18 +14,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class TridentSkin extends ItemSkin {
-
+    @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (DuelAPI.isSpectator(damager)) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
+
         if(Math.random() <= 0.04) {
             damaged.sendMessage("");
             damaged.sendMessage(CC.translate("&3&l* TRIDENT OF DEEP &7[" + damager.getName() + "] &3&l*"));
             damaged.sendMessage(CC.translate("&3&l * &7+ Hex"));
             damaged.sendMessage(CC.translate("&3&l * &7+ Mark Of the Beast"));
             damaged.sendMessage(CC.translate("&7"));
-            (new Hex()).applyEffect((LivingEntity)damager, (LivingEntity)damaged, 4, event);
+            //(new Hex()).applyEffect((LivingEntity)damager, (LivingEntity)damaged, 4, event);
             (new MasteryMarkOfTheBeast()).applyDefenseEffect((LivingEntity)damager, (LivingEntity)damaged, 6, event);
 
         }

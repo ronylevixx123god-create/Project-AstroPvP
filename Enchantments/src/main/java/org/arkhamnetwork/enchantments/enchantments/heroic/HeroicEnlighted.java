@@ -44,6 +44,7 @@ public class HeroicEnlighted extends CustomEnchantment
             if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) {
                 toGive *= 1.05;
             }
+
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, 2.0, "&d&lDivine Enlighted"), 1L);
         }
     }

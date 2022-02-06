@@ -21,6 +21,7 @@
         <module name="Masks" />
         <module name="AstroArmorSets" />
         <module name="AstroEvents" />
+        <module name="ProxyPatch" />
         <module name="AstroUtils" />
         <module name="Explosive" />
         <module name="AstroCrateKeys" />
@@ -38,7 +39,6 @@
         <module name="KoTHs" />
         <module name="Duels" />
         <module name="GiftcardShop" />
-        <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
         <module name="Ark" />
@@ -99,6 +99,12 @@
         <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions-Legacy (2)" />
+      </profile>
+      <profile name="Annotation profile for Factions-Legacy" enabled="true">
+        <sourceOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions-Legacy" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

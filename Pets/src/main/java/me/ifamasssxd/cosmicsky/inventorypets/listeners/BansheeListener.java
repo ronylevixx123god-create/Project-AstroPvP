@@ -1,23 +1,19 @@
 package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
-import com.compilex.CosmicArmorSets.enums.armorsets.LunaSet;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
+import net.astropvp.armorsets.struct.sets.LunaArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.inventory.ItemStack;
-
-import java.util.HashMap;
-import java.util.List;
 
 public class BansheeListener implements Listener {
 
@@ -26,7 +22,7 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
             if (damager.hasMetadata("banshee_active")) {
-                if (LunaSet.isLunarStriked((Player) event.getEntity())) return;
+                if (LunaArmorSet.isLunaStriked((Player) event.getEntity())) return;
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless") && !event.getDamager().hasMetadata("bloodHoundNoBless")) {
                     AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "&4&lBansheePet");
                 }
@@ -44,6 +40,7 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
             if (event.getEntity().hasMetadata("banshee_Scrolls")) return;
+            if ((((SpinalTab)SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(damager.getName())) return;
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced((Player) event.getEntity())) && Math.random() < 0.002) {
                 event.getEntity().sendMessage(CC.translate("&e&l* WITCH HAT &7Activated &4Banshee Pet &7on&f " + damager.getName() + " &e&l*"));
                 damager.sendMessage(CC.translate("&e&l* &f" + event.getEntity().getName() + " &e&lWITCH HAT &4Banshee Pet &7Ability &e&l*"));

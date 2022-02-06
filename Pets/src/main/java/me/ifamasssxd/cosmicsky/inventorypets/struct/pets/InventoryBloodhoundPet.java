@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -116,7 +117,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
       final String name = player.getName();
 
-      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget))) {
+      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget)) && !(((SpinalTab)SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(pTarget.getName()) || !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
          pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Bloodhound Pet &7[&f" + player.getName() + "&7] &e&l*"));
          player.sendMessage(CC.translate("&e&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
          return true;

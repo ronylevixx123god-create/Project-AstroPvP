@@ -26,7 +26,7 @@ public class BossSpawnTask implements Runnable
         if (!enabled) {
             return;
         }
-        if (Arrays.asList(Bukkit.getOnlinePlayers()).size() == 0 || Boss.bosses.size() >= 10) {
+        if (Arrays.asList(Bukkit.getOnlinePlayers()).size() == 0 || Boss.bosses.size() >= 4) {
             return;
         }
         BossType type = null;

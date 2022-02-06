@@ -8,6 +8,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicduel.DuelAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -15,6 +16,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -201,10 +203,14 @@ public class ItemSkinListener implements Listener {
                 || type.endsWith("_SWORD") || type.endsWith("AXE");
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
         Entity damaged = event.getEntity();
+        if (event.isCancelled()) return;
+        if (damager instanceof Player) {
+            if (DuelAPI.isSpectator((Player) damager)) return;
+        }
         if (damager instanceof Player) {
             List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
             for (SkinType skin : damagerSkins)

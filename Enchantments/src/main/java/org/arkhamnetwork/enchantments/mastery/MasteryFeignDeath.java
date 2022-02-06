@@ -69,7 +69,7 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
                 if (tracked instanceof EntityPlayer) {
                     EntityPlayer pl = tracked;
                     if (pl.playerConnection == null || pl.playerConnection.isDisconnected() ||
-                            AstroItemSkinsAPI.hasSkinEquipped(pl.getBukkitEntity().getPlayer(), SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+                            AstroItemSkinsAPI.hasSkinEquipped(pl.getBukkitEntity().getPlayer(), SkinType.CHRISTMAS_AMULET_SNOWFLAKE) && !AstroItemSkinsAPI.hasSkinEquipped((Player) damaged, SkinType.BACK_TO_SCHOOL_2021_AXE))
                         continue;
                     pl.playerConnection.sendPacket(fakePlayer);
                     pl.playerConnection.sendPacket(status);
@@ -83,14 +83,14 @@ public class MasteryFeignDeath extends MasteryCustomEnchantment {
         Bukkit.getScheduler().scheduleSyncDelayedTask(Enchantments.getInstance(), () -> {
             PacketPlayOutEntityDestroy destroy = new PacketPlayOutEntityDestroy(entityId);
             for (EntityPlayer pl : whoReceived) {
-                if (pl.playerConnection == null || pl.playerConnection.isDisconnected() || AstroItemSkinsAPI.hasSkinEquipped(pl.getBukkitEntity().getPlayer(), SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+                if (pl.playerConnection == null || pl.playerConnection.isDisconnected() || (AstroItemSkinsAPI.hasSkinEquipped(pl.getBukkitEntity().getPlayer(), SkinType.CHRISTMAS_AMULET_SNOWFLAKE) &&  !AstroItemSkinsAPI.hasSkinEquipped((Player) damaged, SkinType.BACK_TO_SCHOOL_2021_AXE)))
                     continue;
                 pl.playerConnection.sendPacket(destroy);
             }
         },30L);
         damaged.sendTitle(new Title(CC.RedB + "Feign Death", CC.Red + NumberUtils.formatSeconds(seconds), 10, 25, 10));
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
-            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE))
+            if (!AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_AMULET_SNOWFLAKE) && !AstroItemSkinsAPI.hasSkinEquipped((Player) damaged, SkinType.BACK_TO_SCHOOL_2021_AXE))
                 pl.hidePlayer(damaged);
         }
         damaged.playSound(damaged.getLocation(), Sound.WITHER_SHOOT, 3.0F, 0.9F);

@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
@@ -36,9 +37,7 @@ public class DivineImmolation extends CustomEnchantment
         if (!CommandEnchDust.soulEnabled) {
             return;
         }
-        if (playerHit.hasMetadata("stacked")) {
-            return;
-        }
+
         final Player p = (Player)player;
         double radius = 1.0 * level;
         double damage = Math.floor((level*2));
@@ -49,6 +48,10 @@ public class DivineImmolation extends CustomEnchantment
         if (player.hasMetadata("leviathanTrophySilence") && player.getMetadata("leviathanTrophySilence").get(0).asLong() > System.currentTimeMillis()) {
             return;
         }
+
+        if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
+            return;
+        }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
             damage *= 1.25;
         }
@@ -57,6 +60,10 @@ public class DivineImmolation extends CustomEnchantment
         }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_AMULET)) {
             damage *= 1.25;
+        }
+
+        if (player.hasMetadata("carver_damage")) {
+            damage *=1.3;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_SWORD)) {
             damage *= 1.15;
@@ -71,6 +78,13 @@ public class DivineImmolation extends CustomEnchantment
         }
         if (!GeneralUtil.isSword(p.getItemInHand())) {
             return;
+        }
+
+        if (playerHit instanceof Player) {
+
+            if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
+                return;
+            }
         }
         if (player.hasMetadata("witcher_negate") && player.getMetadata("witcher_negate").get(0).asLong() > System.currentTimeMillis()) {
             return;
@@ -105,6 +119,14 @@ public class DivineImmolation extends CustomEnchantment
                     }
                     if (pEnt != null && !p.canSee(pEnt)) {
                         continue;
+                    }
+
+                    if (pEnt == null) return;
+                    if (pEnt.getInventory() == null) return;
+                    if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)){
+                    if (AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) {
+                        continue;
+                    }
                     }
                     if (pEnt != null && pEnt.hasMetadata("NPC")) {
                         continue;

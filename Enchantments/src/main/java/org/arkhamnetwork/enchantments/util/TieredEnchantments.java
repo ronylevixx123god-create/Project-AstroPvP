@@ -241,6 +241,7 @@ public enum TieredEnchantments {
     private static List<CustomEnchantment> commonEnchants;
     private static List<CustomEnchantment> uncommonEnchants;
     private static List<CustomEnchantment> rareEnchants;
+    private static List<CustomEnchantment> mutatedEnchants;
     private static List<CustomEnchantment> ultraRareEnchants;
     private static List<CustomEnchantment> legendaryEnchants;
     private static List<CustomEnchantment> soulEnchants;
@@ -255,6 +256,7 @@ public enum TieredEnchantments {
         TieredEnchantments.rareEnchants = new ArrayList<CustomEnchantment>();
         TieredEnchantments.ultraRareEnchants = new ArrayList<CustomEnchantment>();
         TieredEnchantments.legendaryEnchants = new ArrayList<CustomEnchantment>();
+        TieredEnchantments.mutatedEnchants = new ArrayList<CustomEnchantment>();
         TieredEnchantments.soulEnchants = new ArrayList<CustomEnchantment>();
         TieredEnchantments.heroicEnchants = new ArrayList<CustomEnchantment>();
         TieredEnchantments.masteryEnchants = new ArrayList<CustomEnchantment>();
@@ -315,6 +317,10 @@ public enum TieredEnchantments {
         }
         if (tier == 8) {
             return TieredEnchantments.masteryEnchants;
+        }
+        if (tier == 9) {
+            return TieredEnchantments.mutatedEnchants;
+
         }
         return new ArrayList<CustomEnchantment>();
     }

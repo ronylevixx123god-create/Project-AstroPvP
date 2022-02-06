@@ -28,7 +28,7 @@ public class Devour extends CustomEnchantment
             if (bleedStacks >= 100.0) {
                 bleedStacks = 99.0;
             }
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(bleedStacks + 4.0, event, "&6&lDevour");
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(bleedStacks, event, "&6&lDevour");
             target.setMetadata("effectedByDevour", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);

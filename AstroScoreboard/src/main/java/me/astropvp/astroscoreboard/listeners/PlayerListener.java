@@ -1,6 +1,7 @@
 package me.astropvp.astroscoreboard.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astroscoreboard.manager.TabListManager;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
@@ -13,7 +14,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
-import org.bukkit.scoreboard.Team;
 
 public class PlayerListener implements Listener {
 
@@ -31,7 +31,7 @@ public class PlayerListener implements Listener {
         try {
             TabListManager.sendTablist(player,
                     CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
-                    CC.translate("\n&6  Factions &e// &d" + ((CraftPlayer) player).getHandle().ping + "ms &e// &a" + AstroScoreboardPlugin.df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS()) + " &7&oTPS &8➥ &f&ohttps://astropvp.net  \n" +
+                    CC.translate("\n&6  Factions &e// &d" + getPing(player) + "ms &e// &a" + AstroScoreboardPlugin.df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS()) + " &7&oTPS &8➥ &f&ohttps://astropvp.net  \n" +
                             "&e" + Bukkit.getOnlinePlayers().size() + " &fOnline &8➥ &f&ohttps://buy.astropvp.net/\n"));
         } catch (Exception ignored) {}
     }
@@ -40,10 +40,24 @@ public class PlayerListener implements Listener {
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         Scoreboard board = player.getScoreboard();
-        if (board != null) {
-            board.getTeams().forEach(Team::unregister);
+        if(board != null) {
+            board.getTeams().forEach(team -> team.unregister());
         }
 
+    }
+
+    public static int getPing(Player player) {
+        int ping = ((CraftPlayer) player).getHandle().ping;
+        if (ping == 0) {
+            ping = ThreadLocalRandom.current().nextInt(90, 150);
+        } else if (ping > 80 && ping < 210) {
+            ping = ThreadLocalRandom.current().nextInt(40, 80);
+
+        } else if
+        (ping > 210) {
+            ping = ThreadLocalRandom.current().nextInt(100, 140);
+        }
+        return ping;
     }
 
 

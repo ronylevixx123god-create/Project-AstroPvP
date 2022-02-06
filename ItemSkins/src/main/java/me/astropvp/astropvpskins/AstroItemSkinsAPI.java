@@ -171,6 +171,7 @@ public class AstroItemSkinsAPI {
 
 
         cosmicData.remove("itemSkinType");
+        cosmicData.remove("tintColor");
 
 
         for (String skinType : skins) {
@@ -210,6 +211,8 @@ public class AstroItemSkinsAPI {
         String[] stringArray;
         List<String> skins = new ArrayList<>(Arrays.asList(stringArray = skinList.split(",")));
         cosmicData.remove("itemSkinType");
+        cosmicData.remove("tintColor");
+
         SkinType type = SkinType.valueOf(stringArray[0]);
         skins.remove(stringArray[0]);
         if (skins.size() != 0) {
@@ -301,6 +304,8 @@ public class AstroItemSkinsAPI {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.remove("itemSkinType");
+        cosmicData.remove("tintColor");
+
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();
     }

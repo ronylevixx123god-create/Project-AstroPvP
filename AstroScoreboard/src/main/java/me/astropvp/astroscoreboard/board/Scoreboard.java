@@ -103,7 +103,7 @@ public class Scoreboard implements BoardAdapter {
 
 
         if (!WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawn_region") && WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
-            for (Entity entity : player.getNearbyEntities(32, 16, 32)) {
+            for (Entity entity : player.getNearbyEntities(16, 16, 16)) {
                 if (entity.hasMetadata("boss")) {
                     if (Boss.bosses.get(entity.getUniqueId()) instanceof KingSlime) {
                         return CC.translate("&e&lKing Slime &7" + getDateSuffix());
@@ -153,7 +153,7 @@ public class Scoreboard implements BoardAdapter {
 
         if (player.getWorld().getName().startsWith("dungeon_")) {
             if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL) {
-                for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                for (Entity entity : player.getNearbyEntities(16, 16, 16)) {
                     if (entity.hasMetadata("boss")) {
                         if (Boss.bosses.get(entity.getUniqueId()) instanceof CorruptCosmonaut) {
                             CorruptCosmonaut yijki = (CorruptCosmonaut) Boss.bosses.get(entity.getUniqueId());
@@ -187,7 +187,7 @@ public class Scoreboard implements BoardAdapter {
             }
 
             if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.DESTROYED_OUTPOST || DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.ABANDONED_SHIP)) {
-                for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                for (Entity entity : player.getNearbyEntities(16, 16, 16)) {
                     if (entity.hasMetadata("boss")) {
                         if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
                             DungeonYijki yijki = (DungeonYijki) Boss.bosses.get(entity.getUniqueId());
@@ -219,7 +219,7 @@ public class Scoreboard implements BoardAdapter {
             }
 
             if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
-                for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                for (Entity entity : player.getNearbyEntities(16, 16, 16)) {
                     if (entity.hasMetadata("boss")) {
                         if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
                             CorruptCosmonaut cosmonaut = (CorruptCosmonaut) Boss.bosses.get(entity.getUniqueId());
@@ -256,7 +256,7 @@ public class Scoreboard implements BoardAdapter {
 
 
         if (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon() != null && (DungeonsAPI.get().getPlayerDungeonData(player).getCurrentDungeon().getDungeonType() == DungeonType.PLANET_NUL)) {
-            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+            for (Entity entity : player.getNearbyEntities(16, 16, 16)) {
                 if (entity.hasMetadata("boss")) {
                     if (Boss.bosses.get(entity.getUniqueId()) instanceof DungeonYijki) {
                         CorruptCosmonaut cosmonaut = (CorruptCosmonaut) Boss.bosses.get(entity.getUniqueId());
@@ -315,7 +315,7 @@ public class Scoreboard implements BoardAdapter {
         }*/
 
         if (!WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawn_region") && WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawnwarzone")) {
-            for (Entity entity : player.getNearbyEntities(32, 16, 32)) {
+            for (Entity entity : player.getNearbyEntities(16, 16, 16)) {
                 if (entity.hasMetadata("boss")) {
                     if (Boss.bosses.get(entity.getUniqueId()) instanceof KingSlime) {
                         KingSlime slime = (KingSlime) Boss.bosses.get(entity.getUniqueId());

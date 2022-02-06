@@ -31,7 +31,6 @@ public class Inversion extends CustomEnchantment
                     return;
                 }
                 AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)playerHit, heal, "&6&lInversion");
-                e.setDamage(0);
                 playerHit.playSound(playerHit.getLocation(), Sound.PISTON_EXTEND, 0.8f, 2.0f);
             }
         }

@@ -46,6 +46,9 @@ public class AstroSpawners extends JavaPlugin {
     @Getter
     private Map<Location, SpawnerData> spawnersMap;
 
+    @Getter
+    public static List<Player> coolDownSpawnerPlace = new ArrayList<>();
+
 
 
     public MobStackerUtils getMobStackerUtils() {

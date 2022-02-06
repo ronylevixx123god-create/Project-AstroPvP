@@ -3,6 +3,8 @@ package me.astropvp.astropvpskins.inventories;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import java.util.ArrayList;
 import java.util.Arrays;
+
+import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Bukkit;
@@ -20,21 +22,18 @@ public class ItemSkinSubInventory {
         byte b1;
         int j;
         SkinType[] arrayOfSkinType1;
-        for (j = (arrayOfSkinType1 = SkinType.values()).length, b1 = 0; b1 < j; ) {
-            SkinType x = arrayOfSkinType1[b1];
-            if (ItemSkinType.isSimilarItemSkin(type, x.getItemSkinType()))
+        for (SkinType skinType : SkinType.values()) {
+            if (ItemSkinType.isSimilarItemSkin(type, skinType.getItemSkinType()))
                 len++;
-            b1 = (byte)(b1 + 1);
         }
         len = (len <= 9) ? 9 : ((len <= 18) ? 18 : ((len <= 27) ? 27 : ((len <= 36) ? 36 : 45)));
         Inventory inventory = Bukkit.createInventory(null, len, CC.translate("&8Item Skins: ") + display);
         int pos = 0;
         byte b2 = 0;
         SkinType[] arrayOfSkinType2;
-        for (int k = (arrayOfSkinType2 = SkinType.values()).length; b2 < k; ) {
-            SkinType x = arrayOfSkinType2[b2];
-            if (ItemSkinType.isSimilarItemSkin(x.getItemSkinType(), type)) {
-                inventory.setItem(pos, x.getItem());
+        for (SkinType skinType : SkinType.values()) {
+            if (ItemSkinType.isSimilarItemSkin(skinType.getItemSkinType(), type)) {
+                inventory.setItem(pos, skinType.getItem());
                 pos++;
             }
             b2 = (byte)(b2 + 1);

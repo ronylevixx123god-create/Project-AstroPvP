@@ -72,10 +72,9 @@ public class ItemSkinsInventory {
         ArrayList<String> lore = new ArrayList<>();
         byte b = 0;
         SkinType[] arrayOfSkinType;
-        for (int i = (arrayOfSkinType = SkinType.values()).length; b < i; ) {
-            SkinType x = arrayOfSkinType[b];
-            if (ItemSkinType.isSimilarItemSkin(x.getItemSkinType(), type)) {
-                String d = ChatColor.stripColor(x.getName());
+        for (SkinType skinType : SkinType.values()) {
+            if (ItemSkinType.isSimilarItemSkin(skinType.getItemSkinType(), type)) {
+                String d = ChatColor.stripColor(skinType.getName());
                 d = String.valueOf(CC.GoldB) + "* " + CC.Yellow + d;
                 lore.add(d);
             }

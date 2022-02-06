@@ -28,13 +28,13 @@ public class HeroicAssassin extends CustomEnchantment
         }
         final double distance = user.getLocation().distance(target.getLocation());
         if (distance < 0.25) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(87.5, event, "&d&lShadow Assassin");
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25.5, event, "&d&lShadow Assassin");
         }
         else if (distance < 0.5 && distance > 0.25) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50.0, event, "&d&lShadow Assassin");
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20.0, event, "&d&lShadow Assassin");
         }
         else if (distance < 0.75 && distance > 0.5) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25.0, event, "&d&lShadow Assassin");
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15.0, event, "&d&lShadow Assassin");
         }
         else if (distance < 1.0 && distance > 0.75) {
             AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10.0, event, "&d&lShadow Assassin");

@@ -1,6 +1,5 @@
 package net.astropvp.armorsets.items;
 
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
@@ -8,6 +7,8 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -53,14 +54,14 @@ public class OmniCrystal extends CosmicItem
         if (meta.hasLore())  {
             if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS"))) return;
         }
-        List<ArmorSet> bonusApplied = ArmorSet.getFromArmorBonusCrystal(clickedWrapper);
+        List<ArmorSetType> bonusApplied = AstroArmorSetsAPI.getFromArmorBonusCrystal(clickedWrapper);
         if (bonusApplied != null && !bonusApplied.isEmpty()) {
             event.getWhoClicked().sendMessage(CC.translate("&cYou cannot apply an omni crystal to a piece that contains crystals"));
             event.setCancelled(true);
             return;
         }
 
-        if (ArmorSet.getArmorSetFromItem(clicked) != null) {
+        if (AstroArmorSetsAPI.getSetTypeOnItem(clicked) != null) {
             return;
         }
         if (player.getItemOnCursor().getAmount() <= 1) {

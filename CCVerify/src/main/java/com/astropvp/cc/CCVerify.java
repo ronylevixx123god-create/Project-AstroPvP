@@ -12,6 +12,7 @@ import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.voice.VoiceTask;
 import lombok.Getter;
 import lombok.Setter;
+import me.astropvp.proxypach.ProxyPatch;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -62,6 +63,8 @@ public class CCVerify extends JavaPlugin implements Listener {
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
+        if (ProxyPatch.playerNames.contains(event.getPlayer().getName())) return;
+
         PacketIO.get().addPlayer(event.getPlayer());
     }
 

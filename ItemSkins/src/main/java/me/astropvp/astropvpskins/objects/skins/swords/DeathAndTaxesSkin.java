@@ -25,6 +25,7 @@ public class DeathAndTaxesSkin extends ItemSkin {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (DuelAPI.isSpectator(damager)) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
 
         if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
             this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());

@@ -28,6 +28,7 @@ import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -35,6 +36,7 @@ import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -59,7 +61,7 @@ public class RocketEscape
         this.interval = 5.0;
     }
 
-    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageByEntityEvent e) {
         if (player instanceof Player) {
             double dmg = e.getFinalDamage();
             if (player.getWorld().getEnvironment() == World.Environment.THE_END) {
@@ -80,6 +82,11 @@ public class RocketEscape
                     player.sendMessage(CC.translate("&c&l ** &7" + attacker.getName() + "'s Rocket Escape: &4&lBLOCKED &7[Cursed Wings] &c&l**"));
                     attacker.sendMessage(CC.translate("&c&l ** &7Rocket Escape: &4&lBLOCKED &7[" + player.getName() + "'s Cursed Wings] &c&l**"));
                     return;
+                }
+
+                if (((Player) player).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(100, e, "TommyTail");
+                    player.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7Heroic Rocket Escape 2x Damage&2&l] *"));
                 }
 
                 Player pl = (Player) player;

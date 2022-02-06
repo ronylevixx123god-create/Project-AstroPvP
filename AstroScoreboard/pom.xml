@@ -122,7 +122,7 @@
         <!-- System repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>MCMMO</artifactId>
+            <artifactId>MCMsMO</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
@@ -133,6 +133,14 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicFactionPoints.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>hotfux</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HotFix.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -147,6 +155,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>pp</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ProxyPatch-0.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -384,6 +399,18 @@
             <artifactId>AstroEvents</artifactId>
             <version>1.0</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>HotFix</artifactId>
+            <version>0.1</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>HotFix</artifactId>
+            <version>0.1</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

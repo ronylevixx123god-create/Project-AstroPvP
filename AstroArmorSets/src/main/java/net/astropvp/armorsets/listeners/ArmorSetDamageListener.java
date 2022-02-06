@@ -1,5 +1,7 @@
 package net.astropvp.armorsets.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
@@ -7,16 +9,25 @@ import net.astropvp.core.AstroCore;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 import java.util.Map;
 
 public class ArmorSetDamageListener implements Listener {
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onAttack(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
+
+        if (attacker instanceof Player) {
+            if (DuelAPI.isSpectator((Player) attacker)) return;
+        }
+        if (e.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(attacked.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacker.getLocation()))
+            return;
+
         ArmorSetCache cache;
         if (attacker instanceof Player) {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
@@ -41,10 +52,16 @@ public class ArmorSetDamageListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
+        if (attacker instanceof Player) {
+            if (DuelAPI.isSpectator((Player) attacker)) return;
+        }
+        if (e.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(attacked.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacker.getLocation()))
+            return;
         ArmorSetCache cache;
         if (attacker instanceof Player && attacked instanceof Player) {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");

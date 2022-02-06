@@ -22,7 +22,10 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.sets.LunaArmorSet;
@@ -60,6 +63,9 @@ extends CustomEnchantment {
         }
         if(p.hasMetadata("witcher_ability"))
             return;
+        if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
+            return;
+        }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BACKPACK)) {
             return;
         }
@@ -72,6 +78,11 @@ extends CustomEnchantment {
         if (p.hasMetadata("soulTrap") && ((MetadataValue)p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
             return;
         }
+
+        if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
+            return;
+        }
+
         if (KillTrackerAPI.hasGodMode((Player)p) && KillTrackerAPI.getAllSouls((Player)p) > 0) {
             if (!this.isWearingHeroic((Player)playerHit)) {
                 return;
@@ -83,6 +94,10 @@ extends CustomEnchantment {
             double increase = level * 5;
             if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {
                 increase *= 1.1;
+            }
+
+            if (player.hasMetadata("carver_damage")) {
+                increase *= 1.3;
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 increase += 1.3;

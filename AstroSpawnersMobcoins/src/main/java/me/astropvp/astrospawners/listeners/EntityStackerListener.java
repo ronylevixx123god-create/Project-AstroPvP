@@ -52,6 +52,8 @@ public class EntityStackerListener implements Listener {
     private final PlayerDataManager manager;
     private final AstroSpawners plugin;
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
+    private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
+
 
 
     public EntityStackerListener(AstroSpawners plugin) {
@@ -101,10 +103,10 @@ public class EntityStackerListener implements Listener {
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
 
 
-            EconomyUtils.depositBalance(p, 27);
+            //EconomyUtils.depositBalance(p, 27);
 
 
-            double exp = 100;
+            double exp = 150;
 
             PlayerData data = manager.getPlayerData(p);
 
@@ -169,7 +171,7 @@ public class EntityStackerListener implements Listener {
         StackedMobDeathEvent stackedMobDeathEvent = new StackedMobDeathEvent(entity, e.getDamager());
         try {
             Bukkit.getPluginManager().callEvent(stackedMobDeathEvent);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
 
         }
         entity.setHealth(entity.getMaxHealth());
@@ -180,10 +182,13 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.07) {
+                if (num >= 0 && num <= 0.01) {
+                    p.getInventory().addItem(legKey);
+                }
+                 else if (num >= 0 && num <= 0.08) {
                     p.getInventory().addItem(astroKey);
                 }
-            } catch (IllegalArgumentException ex) {
+            } catch (IllegalArgumentException ignored) {
             }
         }
     }

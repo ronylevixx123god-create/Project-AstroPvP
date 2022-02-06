@@ -90,7 +90,7 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 boolean isControlling = (controlling && Math.random() > 0.1D);
-                double monoChance = (killerIsControllingFrozen ? 0.48D : 0.33D);
+                double monoChance = (killerIsControllingFrozen ? 0.55D : 0.45D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
                 boolean isTravAxe = false;
@@ -128,6 +128,9 @@ public class HolyWhiteScrollListener implements Listener {
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
+                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.3F);
+                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 11.0F);
+
                     if (killerIsControllingFrozen && Math.random() < 0.1) {
                         e.getEntity().sendMessage(CC.RedB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");

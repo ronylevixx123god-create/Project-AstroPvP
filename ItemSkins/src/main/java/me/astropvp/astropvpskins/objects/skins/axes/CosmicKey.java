@@ -3,6 +3,7 @@ package me.astropvp.astropvpskins.objects.skins.axes;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.astropvp.astropvpskins.utils.DivineUtils;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.swords.DivineImmolation;
 import org.bukkit.entity.Entity;
@@ -15,7 +16,14 @@ public class CosmicKey extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        new DivineImmolation().applyEffect(damager, (LivingEntity) damaged, 4, event);
+        if (damager.hasMetadata("frozenSkrrt")) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
+
+        if (damaged instanceof Player) {
+            if (!damager.hasMetadata("frozenSkrrt") && !damaged.hasMetadata("frozenSkrrt")) {
+                DivineUtils.divinePlayer((Player) damaged, 4);
+            }
+        }
         //code atlas 3 ability
         if (damager.getHealth() <= 15) {
             AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "&9&lCosmic Key");

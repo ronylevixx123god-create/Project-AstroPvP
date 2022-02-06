@@ -24,13 +24,13 @@ public class HeroicExecute extends HeroicCustomEnchantment{
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 10.0) {
+        if (target.getHealth() > 12.0) {
             return;
         }
         final double random = Math.random();
         final double chance = 0.07 * level;
         if (random < chance) {
-            int mod = 25;
+            int mod = 50;
             AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * mod), e, "&d&lPermanent Execute");
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);

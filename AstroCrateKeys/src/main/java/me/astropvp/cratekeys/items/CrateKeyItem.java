@@ -25,6 +25,9 @@ public class CrateKeyItem {
         NBTTagCompoundBuilder tag = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) :
                 new NBTTagCompoundBuilder();
         tag.setString("crate_type", type.name());
+        if (type.name().contains("MUTATED")) {
+            tag.setString("tintColor", "-10237440");
+        }
         wrapper.setNBTBase("cosmicData", tag.get());
         return addGlow(wrapper.build());
     }

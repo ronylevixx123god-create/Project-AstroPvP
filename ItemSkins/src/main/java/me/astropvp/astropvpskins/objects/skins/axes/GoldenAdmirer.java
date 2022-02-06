@@ -23,6 +23,8 @@ public class GoldenAdmirer extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(damager.hasMetadata("admirer_disabled"))
             return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
+
         double chance = 0.5;
         if (Math.random() < chance) {
             if (isAdmirerSilenced(((Player) damaged).getPlayer()))

@@ -30,13 +30,7 @@
     </repositories>
 
 <dependencies>
-    <dependency>
-        <groupId>com.astropvp</groupId>
-        <artifactId>winespigot</artifactId>
-        <version>1.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/lib/WineSpigot-V1.1.6.jar</systemPath>
-    </dependency>
+
 
     <dependency>
         <groupId>com.astropvp</groupId>
@@ -44,6 +38,14 @@
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
+    </dependency>
+
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>proxy</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/ProxyPatch-0.1.jar</systemPath>
     </dependency>
 
     <dependency>
@@ -62,13 +64,7 @@
         <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
     </dependency>
 
-    <dependency>
-        <groupId>com.astropvp</groupId>
-        <artifactId>pets</artifactId>
-        <version>1.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/lib/CosmicSkyInventoryPets.jar</systemPath>
-    </dependency>
+
 
     <dependency>
         <groupId>com.astropvp</groupId>
@@ -80,7 +76,7 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>skins</artifactId>
+        <artifactId>skisss</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>
@@ -102,8 +98,20 @@
         <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
     </dependency>
 
-
-
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>pets</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/CosmicSkyInventoryPets.jar</systemPath>
+    </dependency>
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>duel</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/CosmicDuel.jar</systemPath>
+    </dependency>
     <dependency>
         <groupId>com.astropvp</groupId>
         <artifactId>weaponrunes</artifactId>
@@ -111,7 +119,13 @@
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
     </dependency>
-
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>utils</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/CosmicPvPUtils.jar</systemPath>
+    </dependency>
     <dependency>
         <groupId>com.conaxgames</groupId>
         <artifactId>server</artifactId>
@@ -134,11 +148,6 @@
     </dependency>
 
 
-    <dependency>
-        <groupId>com.conaxgames</groupId>
-        <artifactId>Utils</artifactId>
-        <version>0.1</version>
-    </dependency>
 
 
 </dependencies>

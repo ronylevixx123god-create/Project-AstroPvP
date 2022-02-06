@@ -65,7 +65,7 @@ public class ChunkBusterListener implements Listener {
                                 DeleteSpawner.delete(event.getBlock().getWorld().getBlockAt(X + x, y, Z + z).getLocation());
                             }
                         }
-                        if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR) && (block.getType() != Material.JUKEBOX)) {
+                        if ((block.getType() != Material.BEDROCK) && (block.getType() != Material.AIR) && (block.getType() != Material.JUKEBOX) && (block.getType() != Material.NOTE_BLOCK)) {
                             if (block.getType() == Material.CHEST || block.getType() == Material.DISPENSER || block.getType() == Material.DROPPER) {
                                 if (block.getType() == Material.CHEST) {
                                     Chest c = (Chest) block.getState();

@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -17,7 +18,7 @@ import java.util.Objects;
 
 final class RageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageEvent event) {
+    public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.getEntity() instanceof Player && (event.getEntity().hasMetadata("pvp_rageHitCombo") || event.getEntity().hasMetadata("pve_rageHitCombo"))) {
             if (RuneCacher.isContained((Player) event.getEntity()) && Objects.requireNonNull(RuneCacher.getRuneCacher((Player) event.getEntity())).getRuneType() == RuneType.KRONOS)
                 if (event.getEntity().hasMetadata("pvp_rageHitCombo")) {

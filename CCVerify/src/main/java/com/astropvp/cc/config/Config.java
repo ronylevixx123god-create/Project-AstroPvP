@@ -67,7 +67,7 @@ public class Config {
                 "orange_justice",
                 "electro_shuffle",
                 "poltergeist",
-                "gangam_style",
+                "gangnam_style",
                 "star_power",
                 "boneless",
                 "stuffed",

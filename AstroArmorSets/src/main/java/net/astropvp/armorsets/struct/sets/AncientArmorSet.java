@@ -49,12 +49,12 @@ public class AncientArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "AncientCrystal", amount);
+        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "AncientCrystal", amount);
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "AncientSet");
+        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, event, "AncientSet");
         attacked.setVelocity(attacked.getVelocity().multiply(0.8));
 
     }
@@ -69,7 +69,7 @@ public class AncientArmorSet extends ArmorSet {
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7, event, "AncientCrystal", amount);
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "AncientCrystal", amount);
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 

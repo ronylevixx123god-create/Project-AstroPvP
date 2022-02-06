@@ -77,6 +77,8 @@ public class CrateKeyOpenerGUI {
                     return;
                 }
 
+
+
                 Location nearbyChest = CustomBlockUtil.getClosestChestLocation(data.getLocation());
                 if (nearbyChest != null) {
                     Chest chest = (Chest) nearbyChest.getBlock().getState();

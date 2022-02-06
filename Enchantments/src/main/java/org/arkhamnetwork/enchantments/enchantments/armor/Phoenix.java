@@ -34,6 +34,7 @@ import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.boots.BarrysBoltsSkin;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
@@ -134,6 +135,11 @@ extends CustomEnchantment {
                 return false;
             }
 
+            if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(player.getName())) {
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Chainsaw Silence Ability&c&l] *"));
+                return false;
+            }
+
             if (damager != null && damager instanceof Player && MaskType.hasEquipped((Player) damager, (String)"THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                 player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
@@ -153,9 +159,7 @@ extends CustomEnchantment {
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 return false;
             }
-            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
-                ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_LAND, 2, 2);
-                ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_LAND, 2, 2);
+            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.65) {
                 damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
@@ -163,8 +167,6 @@ extends CustomEnchantment {
             }
 
             if (((BarrysBoltsSkin)SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
-                ((Player) damager).playSound(damager.getLocation(), Sound.ANVIL_BREAK, 2, 2);
-                ((Player) damager).playSound(player.getLocation(), Sound.ANVIL_BREAK, 2, 2);
                 player.sendMessage(CC.translate("&c&l** &7Enemy Garry's Bolt &c&lBLOCKED PHOENIX **"));
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 return false;

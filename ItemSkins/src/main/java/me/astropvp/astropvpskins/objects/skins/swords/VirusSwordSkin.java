@@ -16,6 +16,7 @@ public class VirusSwordSkin extends ItemSkin {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (DuelAPI.isSpectator(damager)) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
 
         event.setDamage(event.getDamage() * 1.035);
         (new HeroicCleave()).applyEffect(damager, (LivingEntity)damaged, 5, event);

@@ -65,6 +65,8 @@ public class EnderPearlFixes implements Listener {
                             newLoc = to.clone().add(0.0, -1.0, 0.0);
                         }
                     }
+                    System.out.println(toBlock.getType().name());
+                    System.out.println(toAbove.getType().name());
                     e.setTo(newLoc);
                     return;
                 }
@@ -75,8 +77,12 @@ public class EnderPearlFixes implements Listener {
             } else {
                 System.out.println(toBlock.getType().name());
                 System.out.println(toAbove.getType().name());
-                if (to.getBlock().getType() != Material.AIR) {
-                    e.setCancelled(true);
+                if (to.clone().add(0, -1, 0).getBlock().getType() == Material.AIR) {
+                    System.out.println("setting +1 y loc");
+
+                    to.setY(to.getY()+1);
+                    e.setTo(to);
+                    //e.setCancelled(true);
                     return;
                 };
                 if (to.getY() > from.getY()) {
@@ -140,6 +146,7 @@ public class EnderPearlFixes implements Listener {
                 location.setYaw(player.getLocation().getYaw());
                 location.setPitch(player.getLocation().getPitch());
                 player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                System.out.println("Deb 1");
                 return;
             }
             Location blockBehindLocation = this.getLocationBehind(event.getEntity().getLocation(), event.getEntity().getVelocity(), 2.1);
@@ -149,6 +156,8 @@ public class EnderPearlFixes implements Listener {
             Material material = type = blockBehind == null ? null : blockBehind.getType();
             if (!(blockBehind != null && type != Material.AIR && !this.isPermeable(type) || (upperMaterial = blockBehind.getLocation().add(0.0, 1.0, 0.0).getBlock().getType()) != null && upperMaterial != Material.AIR)) {
                 player.teleport(blockBehindLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                System.out.println("Deb 2");
+
             }
         }
     }

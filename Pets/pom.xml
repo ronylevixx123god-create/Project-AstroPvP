@@ -89,6 +89,13 @@
             <version>2.17.2</version>
             <scope>provided</scope>
         </dependency>
+
+        <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>AstroDamageHandler</artifactId>
+            <version>0.1</version>
+        </dependency>
+
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -110,11 +117,7 @@
             <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>net.astropvp</groupId>
-            <artifactId>AstroDamageHandler</artifactId>
-            <version>0.1</version>
-        </dependency>
+
 
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -125,11 +128,6 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
-            <version>0.1</version>
-        </dependency>
 
 
 
@@ -143,8 +141,10 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ItemSkins</artifactId>
+            <artifactId>skinssss</artifactId>
             <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>
         </dependency>
 
         <dependency>
@@ -156,12 +156,18 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>CCverify</artifactId>
+            <artifactId>CCvserify</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CCVerify-1.0 (9).jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>sets</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroArmorSets-0.1.jar</systemPath>
+        </dependency>
 
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -262,5 +268,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
         </dependency>
+
     </dependencies>
 </project>

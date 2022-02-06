@@ -64,6 +64,15 @@ public class MobSpawnerListener implements Listener {
             event.setCancelled(true);
             return;
         }
+
+        if (AstroSpawners.coolDownSpawnerPlace.contains(event.getPlayer())) {
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, you are still on spawner place cooldown."));
+            event.setCancelled(true);
+            return;
+        }
+
+
+
         int amount = ItemSpawner.getSpawnerAmount(item);
         if (amount <= 0) {
             event.setCancelled(true);
@@ -74,7 +83,10 @@ public class MobSpawnerListener implements Listener {
         event.getPlayer().sendMessage(CC.translate("&c&l- " + amount + " &c&l" + EntityUtils.getEntityName(type) + "&c&l Spawners"));
         event.getPlayer().sendMessage(CC.translate("&7There are now " + spawnersLeft + "&7 spawners left in your hand."));
 
-
+        AstroSpawners.coolDownSpawnerPlace.add(event.getPlayer());
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+            AstroSpawners.coolDownSpawnerPlace.remove(event.getPlayer());
+        }, 20L);
         Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
                 (Runnable) new BukkitRunnable() {
                     @Override
@@ -110,10 +122,22 @@ public class MobSpawnerListener implements Listener {
                         return;
                     }
 
+                    if (AstroSpawners.coolDownSpawnerPlace.contains(event.getPlayer())) {
+                        event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, you are still on spawner place cooldown."));
+                        event.setCancelled(true);
+                        return;
+                    }
+
+
+
 
                     //CHANGED
                     event.setCancelled(true);
                     Player player = event.getPlayer();
+                    AstroSpawners.coolDownSpawnerPlace.add(event.getPlayer());
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+                        AstroSpawners.coolDownSpawnerPlace.remove(event.getPlayer());
+                    }, 20L);
                     Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
                             (Runnable) new BukkitRunnable() {
                                 @Override

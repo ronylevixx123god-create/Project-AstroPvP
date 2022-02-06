@@ -356,7 +356,10 @@ public class ClassicDuel extends NewDuel {
 
             RandomFireworks.getManager().launchRandomFirework(p.getLocation());
             p.chat("/apply");
-            Blessed.blessPlayer(p, true);
+            Bukkit.getScheduler().runTaskLater(CosmicDuel.get(), () -> {
+                Blessed.blessPlayer(p, false);
+
+            }, 20L);
         }
     }
 

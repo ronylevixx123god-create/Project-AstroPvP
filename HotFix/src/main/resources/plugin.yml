@@ -2,5 +2,3 @@ name: HotFix
 main: me.astropvp.hotfixplugin.HotFixPlugin
 version: 1.0
 commands:
-  fixslot:
-    aliases: [ fixslots, slotfix, slotsfix ]

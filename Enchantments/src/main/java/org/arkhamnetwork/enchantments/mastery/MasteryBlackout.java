@@ -64,6 +64,11 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CHRISTMAS_HELMET_STAR)) {
             durationInTicks *= (long)0.66;
         }
+        if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_HELMET)) {
+            durationInTicks *= 0.4;
+
+        }
+
         pTarget.sendMessage(CC.translate("&4&L* BLACKOUT &7[" + (int)(durationInTicks / 20L) + "&7s] &4&l *"));
         player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + (int)(durationInTicks / 20L) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
         pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + durationInTicks/20 + "&7s] &5&l *"));

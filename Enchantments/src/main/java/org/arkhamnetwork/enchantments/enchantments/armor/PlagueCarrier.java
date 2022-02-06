@@ -67,6 +67,8 @@ public class PlagueCarrier
             if (player.getHealth() - dmg <= 0.0) {
                 if (player.hasMetadata("neutralized"))
                     return;
+                if (player.hasMetadata("noDefenseProcs"))
+                    return;
                 if (p.hasMetadata("PlagueCarrier") && System.currentTimeMillis() - ((MetadataValue) p.getMetadata("PlagueCarrier").get(0)).asLong() <= 10000L) {
                     return;
                 }

@@ -14,6 +14,7 @@ public class PartyKillerSkin extends ItemSkin {
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (DuelAPI.isSpectator(damager)) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
 
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;

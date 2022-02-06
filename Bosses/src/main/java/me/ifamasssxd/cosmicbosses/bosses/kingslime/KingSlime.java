@@ -187,9 +187,9 @@ public class KingSlime extends Boss {
                     final Location loc = this.getEntity().getLocation();
                     final double distance = e.getLocation().distanceSquared(loc);
                     if (distance <= 45.0 && e.getTicksLived() >= 60) {
-                        final int heal = (int) Math.min(50.0, e.getHealth() * 2.0);
-                        this.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + heal + " HP (SOURCE: Minion)");
-                        this.onHeal(heal);
+                        //final int heal = (int) Math.min(50.0, e.getHealth() * 2.0);
+                        //this.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "+ " + heal + " HP (SOURCE: Minion)");
+                        //this.onHeal(heal);
                         this.getEntity().getWorld().playSound(loc, Sound.SLIME_ATTACK, 15.0f, 0.8f);
                         if (this.random.nextInt(10) == 0) {
                             //ParticleEffect.sendToLocation(ParticleEffect.SLIME, e.getLocation(), 0.5f, 0.5f, 0.5f, 0.01f, 20);

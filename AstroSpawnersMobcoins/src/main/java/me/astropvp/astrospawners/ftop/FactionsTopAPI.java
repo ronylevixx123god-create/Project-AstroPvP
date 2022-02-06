@@ -47,20 +47,29 @@ public class FactionsTopAPI {
     }
 
     public static long getValueOfSpawner(EntityType type) {
-        if (type == EntityType.BLAZE)
-            return 750000L;
-        if (type == EntityType.IRON_GOLEM)
-            return 5000000L;
-        if (type == EntityType.VILLAGER)
-            return 15000000L;
-        if (type == EntityType.ZOMBIE)
-            return 85000L;
-        if (type == EntityType.SKELETON)
-            return 85000L;
-        if (type == EntityType.CREEPER)
-            return 390000L;
-        if (type == EntityType.WITCH)
-            return 10000000L;
-        return 50000L;
+
+        switch (type) {
+            case BLAZE:
+                return 750000L;
+            case IRON_GOLEM:
+                return 5000000L;
+            case VILLAGER:
+                return 15000000L;
+            case ZOMBIE:
+            case SKELETON:
+            case SPIDER:
+            case CAVE_SPIDER:
+                return 85000L;
+            case CREEPER:
+                return 390000L;
+            case WITCH:
+                return 10000000L;
+            case PIG_ZOMBIE:
+            case SLIME:
+                return 450000L;
+            default:
+                return 50000L;
+
+        }
     }
 }

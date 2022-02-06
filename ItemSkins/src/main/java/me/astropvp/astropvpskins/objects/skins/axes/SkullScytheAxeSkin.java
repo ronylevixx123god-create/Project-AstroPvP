@@ -13,6 +13,7 @@ import org.bukkit.plugin.Plugin;
 public class SkullScytheAxeSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
 
         event.setDamage(event.getDamage() * 1.025);
         if(Math.random() <= 0.1) {

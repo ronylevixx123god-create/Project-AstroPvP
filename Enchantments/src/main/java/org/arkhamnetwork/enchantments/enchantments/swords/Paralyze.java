@@ -14,6 +14,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
@@ -57,6 +58,7 @@ extends CustomEnchantment {
             if (level == 4) {
                 playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, level > 2 ? 1 : 0));
             }
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)level, e, "&b&lParalyze");
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &7[5s] &5&l*"), "PARALYZE");
 
         }

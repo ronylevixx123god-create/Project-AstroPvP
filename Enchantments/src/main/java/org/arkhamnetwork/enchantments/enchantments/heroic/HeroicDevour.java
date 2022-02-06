@@ -35,7 +35,7 @@ public class HeroicDevour extends CustomEnchantment
                     health = (int)user.getMaxHealth();
                 }
                 if (random < chance) {
-                    AstroDamageHandler.getInstance().getDamageHandler().healPlayer(user, (double)health, "&d&lVampiric Devour");
+                    //AstroDamageHandler.getInstance().getDamageHandler().healPlayer(user, (double)health, "&d&lVampiric Devour");
                 }
             }
             double bleedStacks = Bleed.getBleedStack(target);

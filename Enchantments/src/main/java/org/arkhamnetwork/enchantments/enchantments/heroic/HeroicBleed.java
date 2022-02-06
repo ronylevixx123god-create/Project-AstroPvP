@@ -73,6 +73,11 @@ public class HeroicBleed extends HeroicCustomEnchantment
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
+                p.sendMessage(CC.translate("&8&l* BANDOLIER BELT [&7Blocked Deep Bleed slowness&8&l] *"));
+                return;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.JULY_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Deep Bleed&c&l] **"));
                 return;
@@ -106,7 +111,7 @@ public class HeroicBleed extends HeroicCustomEnchantment
                     continue;
                 }
                 final double amountToHeal = Math.max(4.0, bleedStack * 0.1 * bloodLustLevel);
-                AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)pEnt, amountToHeal, "&d&lDeep Bleed");
+                //AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)pEnt, amountToHeal, "&d&lDeep Bleed");
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         }

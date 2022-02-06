@@ -83,7 +83,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/BuycraftX.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>prox</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/ProxyPatch-0.1.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>util</artifactId>

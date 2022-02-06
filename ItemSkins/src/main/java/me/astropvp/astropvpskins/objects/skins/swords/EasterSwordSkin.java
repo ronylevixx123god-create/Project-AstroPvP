@@ -15,6 +15,7 @@ public class EasterSwordSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (DuelAPI.isSpectator(damager)) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
 
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         (new Devour()).applyEffect(damager, (LivingEntity) damaged, 5, event);

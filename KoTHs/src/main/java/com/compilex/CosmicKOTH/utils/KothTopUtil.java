@@ -3,12 +3,15 @@ package com.compilex.CosmicKOTH.utils;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.customfiles.CustomConfig;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.google.common.collect.Maps;
 import org.bukkit.configuration.file.FileConfiguration;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class KothTopUtil {
     public static Map<String, Integer> getKothTop() {
@@ -25,13 +28,15 @@ public class KothTopUtil {
 
         }
 
-        Map<String, Integer> sortedKoth = kothTop.entrySet().stream().sorted(Map.Entry.comparingByValue())
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue,
-                        (entry1, entry2) -> entry2, LinkedHashMap::new));
+        Map<String,Integer> sortedKoth =
+                kothTop.entrySet().stream()
+                        .sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(10).collect(Collectors.toMap(
+                        Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, LinkedHashMap::new));;
 
-        return sortedKoth.entrySet().stream()
-                .limit(10)
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
 
+        return sortedKoth;
     }
+
+
+
 }

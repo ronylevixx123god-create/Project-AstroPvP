@@ -71,6 +71,11 @@ public class Silence extends CustomEnchantment
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SUMMER_2021_HELMET)) {
             durationTicks *= 0.4;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_HELMET)) {
+            durationTicks *= 0.4;
+
+        }
         if (!GoldenAdmirer.isAdmirerSilenced(target)) {
             if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.THANKSGIVING_HELMET_WITCH)) {
                 durationTicks -= durationTicks * 0.25;

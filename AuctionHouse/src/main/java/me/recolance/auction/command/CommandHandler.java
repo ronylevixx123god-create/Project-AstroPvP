@@ -247,7 +247,7 @@ public class CommandHandler
     private static boolean isValidAlternatePrice(String priceString) {
         try {
             long money = Util.getMoneyValue(priceString);
-            return money >= 0L && money <= Integer.MAX_VALUE;
+            return money >= 0L && money <= Double.MAX_VALUE;
         } catch (Exception e) {
             return false;
         }

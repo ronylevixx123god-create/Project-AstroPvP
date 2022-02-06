@@ -177,7 +177,7 @@ public class PlagueBloater extends Boss {
         if (this.getEntity().hasMetadata("heroicEnvoyBoss")) {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 1.5);
         }
-        if (this.random.nextBoolean() && this.getMinions().size() < 14) {
+        if (this.random.nextBoolean() && this.getMinions().size() < 4) {
             final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
             minion.setMetadata("plague_ads", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             minion.setMaxHealth(20.0);

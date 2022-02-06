@@ -1,4 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.belts;
 
-public class BandolierBeltSkin {
+import me.astropvp.astropvpskins.objects.ItemSkin;
+
+public class BandolierBeltSkin extends ItemSkin {
 }

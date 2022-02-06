@@ -91,7 +91,7 @@ public class CmdCreate extends FCommand {
         Bukkit.getServer().getPluginManager().callEvent(createEvent);
 
         for (FPlayer follower : FPlayers.getInstance().getOnlinePlayers()) {
-            follower.msg(TL.COMMAND_CREATE_CREATED, context.fPlayer.describeTo(follower, true), faction.getTag(follower));
+            //follower.msg(TL.COMMAND_CREATE_CREATED, context.fPlayer.describeTo(follower, true), faction.getTag(follower));
         }
 
         context.msg(TL.COMMAND_CREATE_YOUSHOULD, FCmdRoot.getInstance().cmdDescription.getUsageTemplate(context));

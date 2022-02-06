@@ -91,7 +91,7 @@ public class ConfirmMenu
             int slot = e.getRawSlot();
             if (slot < 4) {
                 ItemStack i = (ItemStack) ((MetadataValue) p.getMetadata("auctionConfirm").get(0)).value();
-                int price = ((MetadataValue) p.getMetadata("auctionPrice").get(0)).asInt();
+                double price = ((MetadataValue) p.getMetadata("auctionPrice").get(0)).asInt();
                 p.removeMetadata("auctionConfirm", (Plugin) Auction.getPlugin());
                 p.removeMetadata("auctionPrice", (Plugin) Auction.getPlugin());
                 double fee = Controller.getSellFee(p, price);

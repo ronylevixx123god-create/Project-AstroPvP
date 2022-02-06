@@ -55,7 +55,7 @@ public class HeroicDeathbringer extends CustomEnchantment
 
                 final double random = Math.random();
                 double chance = 0.05 * DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile)damage).getShooter() : damage);
-                chance *= 1.5;
+                chance *= 1.6;
                 if (random < chance) {
                     AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(115.0, e, "&d&lPlanetary Deathbringer");
                 }

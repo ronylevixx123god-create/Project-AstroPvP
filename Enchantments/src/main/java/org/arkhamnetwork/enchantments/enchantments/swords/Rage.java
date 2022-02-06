@@ -23,7 +23,8 @@ public class Rage extends CustomEnchantment
     }
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
+        if (event.isCancelled()) return;
+        if (event.getDamage() > 0.0 && user instanceof Player) {
             final Player pUser = (Player)user;
             if (!(event.getDamager() instanceof LivingEntity)) {
                 return;
@@ -37,14 +38,18 @@ public class Rage extends CustomEnchantment
             if (hitCombo > 12.0) {
                 hitCombo = 12.0;
             }
-            if (target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player)target, SkinType.VALENTINES_2021_AMULET)) {
-                hitCombo = 8.0;
-            }
-            if (hitCombo > 1.0) {
+
                 this.playRageEffect(target.getEyeLocation(), enchantLevel);
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(80*hitCombo, event, "&6&lRage");
-                //target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+            if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(40 * hitCombo, event, "&6&lXmas Rage");
+
+                } else {
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30 * hitCombo, event, "&6&lRage");
+                }
+                target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
             }
+
             if (target instanceof Player) {
                 this.addPVPHitCombo((Player)user);
             }

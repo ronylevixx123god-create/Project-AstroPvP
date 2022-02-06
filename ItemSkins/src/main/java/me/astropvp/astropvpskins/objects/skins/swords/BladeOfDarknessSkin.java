@@ -16,6 +16,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class BladeOfDarknessSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
+        if (damager.hasMetadata("frozenSkrrt")) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if(Math.random() >= 0.02) {
             //TODO: YIJKI ABILITY

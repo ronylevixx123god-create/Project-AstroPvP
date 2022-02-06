@@ -110,7 +110,7 @@ public class Bleed extends CustomEnchantment
                     continue;
                 }
                 final double amountToHeal = Math.max(2.0, bleedStack * 0.05 * bloodLustLevel);
-                AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)pEnt, amountToHeal, "&e&lBleed");
+                //AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)pEnt, amountToHeal, "&e&lBleed");
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         }

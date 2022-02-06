@@ -1,21 +1,19 @@
 package me.astropvp.hotfixplugin;
 
-import me.astropvp.astropvpskins.commands.CommandMultiSkin;
-import me.astropvp.hotfixplugin.commands.FixSlotsCommand;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.hotfixplugin.listeners.*;
-import me.ifamasssxd.cosmicduel.CosmicDuel;
-import me.ifamasssxd.cosmicduel.DuelAPI;
-import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
-import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
+
 import org.bukkit.Bukkit;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.text.DecimalFormat;
 import java.util.Objects;
 
 public class HotFixPlugin extends JavaPlugin {
     private static HotFixPlugin instance;
+    public static final DecimalFormat df = new DecimalFormat("#.#");
 
 
     @Override
@@ -25,13 +23,12 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportSafetyListener(), this);
 
-        getCommand("fixslot").setExecutor(new FixSlotsCommand());
-        Bukkit.getPluginManager().registerEvents(new SpawnersFix(), this);
         Bukkit.getPluginManager().registerEvents(new EnderPearlFixes(), this);
+        Bukkit.getPluginManager().registerEvents(new CommandPingListener(), this);
 
-        new ProtocolListener();
-
-
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
+        }, 400L, 200L);
     }
 
     @Override
@@ -41,5 +38,19 @@ public class HotFixPlugin extends JavaPlugin {
 
     public static HotFixPlugin getInstance() {
         return instance;
+    }
+
+    public static int getPing(Player player) {
+        int ping = ((CraftPlayer) player).getHandle().ping;
+        if (ping == 0) {
+            ping = ThreadLocalRandom.current().nextInt(90, 150);
+        } else if (ping > 80 && ping < 210) {
+            ping = ThreadLocalRandom.current().nextInt(40, 80);
+
+        } else if
+        (ping > 210) {
+            ping = ThreadLocalRandom.current().nextInt(100, 140);
+        }
+        return ping;
     }
 }

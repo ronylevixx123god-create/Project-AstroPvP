@@ -32,9 +32,9 @@ public class HeroicTank extends HeroicCustomEnchantment
             final Player pAttacker = (Player)attacker;
             i = pAttacker.getItemInHand();
         }
-        final double damage_negation = level * 0.0225;
+        final double damage_negation = level * 0.0125;
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lReinforced Tank");
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level/2, e, "&d&lReinforced Tank");
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }
