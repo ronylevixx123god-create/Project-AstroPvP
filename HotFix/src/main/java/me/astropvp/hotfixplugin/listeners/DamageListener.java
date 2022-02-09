@@ -13,6 +13,7 @@ import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
@@ -46,14 +47,14 @@ public class DamageListener implements Listener {
         }
     }
 
-/*    @EventHandler
+    @EventHandler
     public void axe(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
-            if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE")) {
-                e.setDamage(e.getDamage()*1.5);
+            if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_AXE) {
+                e.setDamage(e.getDamage()*0.5);
             }
         }
-    }*/
+    }
 
     private String getFormattedName(ItemStack hand) {
         if (hand == null || hand.getType() == Material.AIR) {
@@ -96,6 +97,9 @@ public class DamageListener implements Listener {
             Player phurt = (Player) e.getEntity();
 
             //e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
+            if (getProtectionReduction(phurt) != 0) {
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
+            }
         }
     }
 
@@ -108,11 +112,11 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 3;
-                if (protLevel == 5) decrease += 1;
+                if (protLevel == 6) decrease += 5;
+                if (protLevel == 5) decrease += 3;
             }
         }
-        return decrease * 0.01;
+        return decrease;
     }
 /*    @EventHandler(priority = EventPriority.MONITOR)
     public void diaSwordFix(EntityDamageByEntityEvent e) {
@@ -169,7 +173,7 @@ public class DamageListener implements Listener {
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {
                 if (armor.getType().name().startsWith("DIAMOND_")) {
-                    dmgBuff+=5;
+                    dmgBuff+=20;
                 }
             }
             e.setDamage(e.getDamage() * 1+dmgBuff);

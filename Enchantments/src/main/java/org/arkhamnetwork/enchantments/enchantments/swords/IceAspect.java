@@ -63,6 +63,9 @@ extends CustomEnchantment {
                 return;
             }
 
+            if (((Player)playerHit).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.BACK_TO_SCHOOL_2021_AMULET))
+                return;
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 playerHit.sendMessage(CC.translate("&c&l* SNOWFLAKE SLIPPERS &7Blocked Slow Effect &c&l*"));
                 return;

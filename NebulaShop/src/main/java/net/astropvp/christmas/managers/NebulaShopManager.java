@@ -28,7 +28,7 @@ public class NebulaShopManager {
 
     public NebulaShopManager() {
         this.currentItem = ConfigUtils.getItem(NebulaShop.getInstance().getConfig().getString("current-item"));
-        this.currentPrice = NebulaShop.getInstance().getConfig().getInt("current-price");
+        this.currentPrice = NebulaShop.getInstance().getConfig().getDouble("current-price");
         this.shopLocation = ConfigUtils.stringToLocation(NebulaShop.getInstance().getConfig().getString("shop-location"));
         this.alreadyBought = NebulaShop.getInstance().getConfig().getStringList("already-bought");
     }

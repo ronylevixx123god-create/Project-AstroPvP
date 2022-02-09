@@ -49,6 +49,9 @@ public class DivineImmolation extends CustomEnchantment
             return;
         }
 
+        if (p.hasMetadata("noSoulProc"))
+            return;
+
         if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
             return;
         }

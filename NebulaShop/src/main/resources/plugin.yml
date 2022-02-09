@@ -1,5 +1,5 @@
 name: NebulaShop
-main: net.astropvp.nebulashop.NebulaShop
+main: net.astropvp.christmas.NebulaShop
 version: 1.0
 commands:
   nebula:

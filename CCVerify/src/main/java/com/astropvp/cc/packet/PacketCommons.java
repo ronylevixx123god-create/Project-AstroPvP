@@ -39,7 +39,7 @@ public class PacketCommons {
         packetIDMap.put((short) 69, PacketOutPurchaseFeed.class);
         packetIDMap.put((short) 70, PacketOutTooltip.class);
         packetIDMap.put((short) 71, PacketOutClearTooltip.class);
-        packetIDMap.put((short) 32, PacketOutItemCooldowns.class);
+        packetIDMap.put((short) 32, SItemCooldownsListPacket.class);
         packetIDMap.put((short) 20, PacketOutChunkDataList.class);
         packetIDMap.put((short) 72, PacketOutHealthBar.class);
 

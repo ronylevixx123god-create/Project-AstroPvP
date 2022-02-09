@@ -127,8 +127,14 @@ extends CustomEnchantment {
                 if (120L - (System.currentTimeMillis() - ((Long)last_phoenix.get(player.getUniqueId().toString())).longValue()) / 1000L != 0L)
                 player.sendMessage(CC.translate("&c&l** PHOENIX ON COOLDOWN ** &7[" + TimeUtils.formatSeconds(120L - (System.currentTimeMillis() - ((Long)last_phoenix.get(player.getUniqueId().toString())).longValue()) / 1000L) + "]"));
             }
+
+
+            if (player.hasMetadata("noPhoenixProcs")) {
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7The Crumble&c&l] *"));
+                return false;
+            }
             if (damager != null && damager instanceof Player && Math.random() <= 0.5 && MaskType.hasEquipped((Player)((Player)damager), (String)"DEATH_KNIGHT") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-                player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
+                player.sendMessage(String.valueOf(CC.RedB) + "* DEATH KNIGHT PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player)damager).getName());
@@ -141,7 +147,7 @@ extends CustomEnchantment {
             }
 
             if (damager != null && damager instanceof Player && MaskType.hasEquipped((Player) damager, (String)"THANOS") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-                player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
+                player.sendMessage(String.valueOf(CC.RedB) + "* THANOS MASK PHOENIX BLOCKED [" + CC.Gray + ((Player)damager).getName() + CC.RedB + "] *");
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player)damager).getName());

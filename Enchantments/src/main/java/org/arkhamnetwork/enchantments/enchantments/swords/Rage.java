@@ -42,10 +42,10 @@ public class Rage extends CustomEnchantment
                 this.playRageEffect(target.getEyeLocation(), enchantLevel);
             if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(40 * hitCombo, event, "&6&lXmas Rage");
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50 * hitCombo, event, "&6&lXmas Rage");
 
                 } else {
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30 * hitCombo, event, "&6&lRage");
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(40 * hitCombo, event, "&6&lRage");
                 }
                 target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
             }

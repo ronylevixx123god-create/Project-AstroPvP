@@ -259,7 +259,7 @@ public class FCmdRoot extends FCommand implements CommandExecutor {
         } else {
             this.addSubCommand(this.cmdTop);
         }
-        this.addSubCommand(new CmdVault());
+        //this.addSubCommand(new CmdVault());
         if (CommodoreProvider.isSupported()) {
             brigadierManager.build();
         }

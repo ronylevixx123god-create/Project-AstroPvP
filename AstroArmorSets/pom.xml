@@ -100,7 +100,7 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>pets</artifactId>
+        <artifactId>pests</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/CosmicSkyInventoryPets.jar</systemPath>

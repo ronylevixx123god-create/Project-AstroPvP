@@ -1,4 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.amulets;
 
-public class WatchmanAmuletSkin {
+import me.astropvp.astropvpskins.objects.ItemSkin;
+
+public class WatchmanAmuletSkin extends ItemSkin {
 }

@@ -17,6 +17,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
@@ -83,6 +84,7 @@ public class InventorySkrrtPet extends InventoryPet {
 
 
     private void givePlayerGearFive(final Player player) {
+
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
 
         (new BukkitRunnable() {
@@ -145,6 +147,7 @@ public class InventorySkrrtPet extends InventoryPet {
 
                 int skrrtCooldown = 30;
                 CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "skrrtCooldown", skrrtCooldown * 1000);
+                CrankedAmuletUtil.tryHatchAbility(p, player);
 
                 CombatLog.flagCombat(p);
                 freezeThePlayer(p);

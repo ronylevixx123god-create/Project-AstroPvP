@@ -6,16 +6,16 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Map;
 
-public class PacketOutItemCooldowns implements Packet {
+public class SItemCooldownsListPacket implements Packet {
     @Override
     public short getID() {
         return 32;
     }
 
     @SerializedName("cooldowns")
-    private Map<String, List<Double>> cooldowns;
+    private Map<String, List<Long>> cooldowns;
 
-    public PacketOutItemCooldowns(Map<String, List<Double>> cooldowns){
+    public SItemCooldownsListPacket(Map<String, List<Long>> cooldowns){
         this.cooldowns = cooldowns;
     }
 }

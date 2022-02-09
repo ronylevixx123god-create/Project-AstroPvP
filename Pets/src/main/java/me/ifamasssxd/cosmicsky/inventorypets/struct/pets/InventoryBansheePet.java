@@ -21,6 +21,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.ChatColor;
@@ -135,6 +136,8 @@ public class InventoryBansheePet extends InventoryPet {
                 enemy.sendMessage(CC.translate("&8&l* " + player.getName() + "'s BANDOLIER BELT [&7Bypassed Witch Hat&8&l] *"));
                 player.sendMessage(CC.translate("&8&l* " + player.getName() + "'s BANDOLIER BELT [&7Blocked " + enemy.getName() + "'s Witch Hat&8&l] *"));
             }
+
+            CrankedAmuletUtil.tryHatchAbility(enemy, player);
 
 
             CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldown * 1000);

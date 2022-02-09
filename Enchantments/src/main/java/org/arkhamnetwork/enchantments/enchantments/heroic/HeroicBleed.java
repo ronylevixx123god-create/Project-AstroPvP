@@ -73,6 +73,9 @@ public class HeroicBleed extends HeroicCustomEnchantment
                 return;
             }
 
+            if (((Player)p).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.BACK_TO_SCHOOL_2021_AMULET))
+                return;
+
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
                 p.sendMessage(CC.translate("&8&l* BANDOLIER BELT [&7Blocked Deep Bleed slowness&8&l] *"));
                 return;

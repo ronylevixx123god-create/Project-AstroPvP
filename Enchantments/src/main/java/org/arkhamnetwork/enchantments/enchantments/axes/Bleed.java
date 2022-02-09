@@ -97,6 +97,9 @@ public class Bleed extends CustomEnchantment
                     return;
                 }
 
+                if (((Player)p).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.BACK_TO_SCHOOL_2021_AMULET))
+                    return;
+
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.JULY_2021_BOOTS)) {
                     p.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Bleed&c&l] **"));
                     return;

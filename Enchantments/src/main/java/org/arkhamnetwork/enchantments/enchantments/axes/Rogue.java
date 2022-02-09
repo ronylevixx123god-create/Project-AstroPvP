@@ -51,6 +51,9 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
 
+            if (p.hasMetadata("noSoulProc"))
+                return;
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SUMMER_2021_AMULET) && Math.random() < 0.20) {
                 playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
                 return;

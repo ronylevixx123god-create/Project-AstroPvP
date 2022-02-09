@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.*;
@@ -54,10 +56,18 @@ public class HeroicDeathbringer extends CustomEnchantment
             if (DeathbringEvents.doubleDamage.contains(damage)) {
 
                 final double random = Math.random();
-                double chance = 0.05 * DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile)damage).getShooter() : damage);
+                double chance = 0.05 * DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage);
                 chance *= 1.6;
                 if (random < chance) {
                     AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(115.0, e, "&d&lPlanetary Deathbringer");
+                    if (damage instanceof Player)
+                        if (((Player) damage).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) damage).getPlayer(), SkinType.CHRISTMAS_2021_AMULET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) damage).getPlayer(), SkinType.CHRISTMAS_2021_MUTATED_AMULET))) {
+
+                            if (Math.random() < 0.03) {
+                                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(115.0, e, "&d&lPlanetary Deathbringer");
+                            }
+
+                        }
                 }
             }
         }

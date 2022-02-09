@@ -15,6 +15,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import net.astropvp.damagehandler.AstroDamageHandlerAPI;
@@ -120,12 +121,18 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");*/
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D) {
             petItem.setLastUsed(System.currentTimeMillis());
-
-
             player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
         }
+
+        if (((Player)target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
+            petItem.setLastUsed(System.currentTimeMillis());
+            player.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&c" + target.getName() + "&7] &8&l*"));
+            target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
+            return true;
+        }
+
         if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
             player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(target, "cageCooldown") + "&c."));
             return false;
@@ -144,6 +151,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         target.sendMessage(CC.translate("&a&l*** " + player.getName() + "&a&l's WORLD DESTROYER PET [&f" + cageDuration + "s&a&l] - CAGE! **"));
         target.sendMessage("");
         DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&a&l* WORLD DESTROYER [&77s&a&l] *"), "RKO");
+
+        CrankedAmuletUtil.tryHatchAbility(target, player);
+
 
         int cageCooldown = 30;
         CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown*1000);

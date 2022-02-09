@@ -309,7 +309,7 @@ public class AstroArmorSetsAPI {
         Map<ArmorSetType, Integer> map = new HashMap<>();
         CachedPlayer cachedOther = CacheManager.getInstance().getCachedPlayer(attacked);
         ArmorSetCache cacheOther = (ArmorSetCache) cachedOther.getCache("armor_set");
-        if (attacker.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(attacker, SkinType.CORRUPT_AMULET_CORRUPTION)) {
+        if (attacker.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(attacker, SkinType.CORRUPT_AMULET_CORRUPTION) && attacked.getInventory().getChestplate() != null && !AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.THANKSGIVING_2021_AMULET)) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.RUINS_HELMET)) {
                 return cacheOther.getCurrentSetCrystals();

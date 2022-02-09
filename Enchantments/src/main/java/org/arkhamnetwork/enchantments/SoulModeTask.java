@@ -47,13 +47,13 @@ public class SoulModeTask implements Runnable {
                         p.setMetadata("lastSoulRemoveEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                         if (!p.hasMetadata("spectator"))
                             //ParticleEffect.playEffect(ParticleEffect.SPELL, p.getLocation().add(0.0D, 1.0D, 0.0D), 0.5F, 65);
-                            ParticleEffect.SPELL.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
+                            //ParticleEffect.SPELL.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
                         p.playSound(p.getLocation(), Sound.EAT, 0.4F, 0.2F);
                         if (KillTrackerAPI.getAllSouls(p) % 100 == 0)
                             p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "** SOULS: " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(p) + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " **");
                     } else if (!p.hasMetadata("spectator")) {
                         //ParticleEffect.playEffect(ParticleEffect.ENCHANTMENT_TABLE, p.getLocation().add(0.0D, 1.0D, 0.0D), 1.5F, 80);
-                        de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
+                        //de.inventivegames.particle.ParticleEffect.ENCHANTMENT_TABLE.sendToPlayer(p.getPlayer(),p.getLocation(), 0,0, 0,1.5f,10);
                     }
                 }
             }

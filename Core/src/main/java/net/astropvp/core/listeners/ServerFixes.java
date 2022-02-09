@@ -55,6 +55,12 @@ public class ServerFixes implements Listener {
         }
     }
 
+
+    @EventHandler
+    public void slimeSplit(SlimeSplitEvent e) {
+        e.setCancelled(true);
+    }
+
     @EventHandler
     public void preventBlockGlitch(BlockPlaceEvent event) {
         if (!event.isCancelled()) return;
