@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.gmail.nossr50.mcMMO
  *  com.rit.sucy.CustomEnchantment
@@ -49,30 +49,31 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class Guardians
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public Guardians() {
         super("Guardians", GeneralUtil.armor, 2);
         this.max = 10;
         this.base = 20.0;
         this.interval = 5.0;
-        Bukkit.getPluginManager().registerEvents((Listener)new GuardiansListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new GuardiansListener(), (Plugin) Enchantments.getInstance());
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
-            if(player.hasMetadata("noDefenseProcs"))
+        if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
+            if (player.hasMetadata("noDefenseProcs"))
                 return;
             if (player.hasMetadata("exterminated") || player.hasMetadata("neutralized"))
                 return;
-            if (player.hasMetadata("guardianEvent") && System.currentTimeMillis() < ((MetadataValue)player.getMetadata("guardianEvent").get(0)).asLong()) {
+            if (player.hasMetadata("guardianEvent") && System.currentTimeMillis() < ((MetadataValue) player.getMetadata("guardianEvent").get(0)).asLong()) {
                 return;
             }
             if (player.hasMetadata("inDungeonParkour")) {
                 return;
             }
-
-            if (((Player)attacker).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2021_AMULET))
-                return;
+            if (((Player) attacker).getInventory().getChestplate() != null) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2021_AMULET))
+                    return;
+            }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
                 attacker.sendMessage(CC.translate("&9&l* INFINITY BELT &7Blocked &eGuardians &9&l*"));
@@ -81,19 +82,16 @@ extends CustomEnchantment {
 
             boolean KOTH_or_duel = player.getWorld().getName().equals("world_koth") || player.getWorld().getName().equals("world_duels") || player.getWorld().getName().equals("world_duels2");
             double chance = 0.001;
-            if (chance > 0.02) {
-                chance = 0.02;
-            }
             if (KOTH_or_duel) {
                 chance /= 2.0;
             }
             if (Math.random() < chance) {
-                player.setMetadata("guardianEvent", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + 10000L)));
+                player.setMetadata("guardianEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + 10000L)));
                 int guardian_count = level / 10 + 1;
                 if (KOTH_or_duel) {
                     guardian_count = 1;
                 }
-                Player p = (Player)player;
+                Player p = (Player) player;
                 Location spawnLoc = player.getLocation().add(0.0, 2.0, 0.0);
                 try {
                     //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), spawnLoc, (float)Math.random(), (float)Math.random(), (float) Math.random(), 0.64f, 45);
@@ -111,9 +109,9 @@ extends CustomEnchantment {
     }
 
     public static IronGolem spawnGuardianEntity(Location spawnLocation, Player summoner, int level) {
-        IronGolem ig = (IronGolem)spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.IRON_GOLEM);
-        ig.setMetadata("guardianSummoner", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)summoner.getName()));
-        ig.setMetadata("no_loot", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)true));
+        IronGolem ig = (IronGolem) spawnLocation.getWorld().spawnEntity(spawnLocation, EntityType.IRON_GOLEM);
+        ig.setMetadata("guardianSummoner", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) summoner.getName()));
+        ig.setMetadata("no_loot", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
         ig.setCanPickupItems(false);
         ig.setCustomName(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + summoner.getName() + "'s Guardian");
         ig.setCustomNameVisible(true);
@@ -136,25 +134,25 @@ extends CustomEnchantment {
             ig.addPotionEffect(new PotionEffect(PotionEffectType.DAMAGE_RESISTANCE, Integer.MAX_VALUE, 0));
         }
         final IronGolem golem = ig;
-        int target_task_id = new BukkitRunnable(){
+        int target_task_id = new BukkitRunnable() {
 
             public void run() {
                 if (!golem.isDead()) {
-                    Player ptarg = Guardians.getClosestPlayer((Entity)golem);
+                    Player ptarg = Guardians.getClosestPlayer((Entity) golem);
                     if (ptarg != null) {
-                        golem.setTarget((LivingEntity)ptarg);
+                        golem.setTarget((LivingEntity) ptarg);
                     }
                 } else {
                     this.cancel();
                     if (golem.hasMetadata("targetTaskID")) {
-                        golem.removeMetadata("targetTaskID", (Plugin)Enchantments.getInstance());
+                        golem.removeMetadata("targetTaskID", (Plugin) Enchantments.getInstance());
                     }
                 }
             }
-        }.runTaskTimer((Plugin)Enchantments.getInstance(), 20L, 20L).getTaskId();
-        ig.setMetadata("targetTaskID", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)target_task_id));
+        }.runTaskTimer((Plugin) Enchantments.getInstance(), 20L, 20L).getTaskId();
+        ig.setMetadata("targetTaskID", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) target_task_id));
         final IronGolem igf = ig;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
 
             @Override
             public void run() {
@@ -171,12 +169,13 @@ extends CustomEnchantment {
         if (!boss.hasMetadata("guardianSummoner")) {
             return null;
         }
-        String summoner = ((MetadataValue)boss.getMetadata("guardianSummoner").get(0)).asString();
-        Player pSummoner = Bukkit.getPlayer((String)summoner);
+        String summoner = ((MetadataValue) boss.getMetadata("guardianSummoner").get(0)).asString();
+        Player pSummoner = Bukkit.getPlayer((String) summoner);
         if (pSummoner != null) {
             for (Entity ent : pSummoner.getNearbyEntities(9.0, 9.0, 9.0)) {
-                if (!(ent instanceof Player) || ent.hasMetadata("spectator") || ((Player)ent).getName().equals(summoner) || GeneralUtil.isAtleastTruce(pSummoner, (Player)ent)) continue;
-                return (Player)ent;
+                if (!(ent instanceof Player) || ent.hasMetadata("spectator") || ((Player) ent).getName().equals(summoner) || GeneralUtil.isAtleastTruce(pSummoner, (Player) ent))
+                    continue;
+                return (Player) ent;
             }
         }
         return null;

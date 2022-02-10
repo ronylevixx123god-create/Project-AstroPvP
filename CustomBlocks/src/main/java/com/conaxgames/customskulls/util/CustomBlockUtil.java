@@ -116,6 +116,35 @@ public class CustomBlockUtil {
         return true;
     }
 
+    public static List<Location> getNearbyChests(Location location) {
+        List<Location> chests = new ArrayList<>();
+
+        if (location.clone().add(-1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(-1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(-1, 0, 0).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+        if (location.clone().add(0, 0, -1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, -1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, -1).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+
+
+        if (location.clone().add(1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(1, 0, 0).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+
+        if (location.clone().add(0, 0, 1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, 1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, 1).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+        return chests;
+    }
+
     public static boolean chunkHasCertainBlock(Player p, String abilityData) {
         for (AbilityData abilityData2 : CustomBlockUtil.getBlockDatasInChunk(p)) {
 

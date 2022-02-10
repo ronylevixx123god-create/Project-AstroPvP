@@ -104,6 +104,12 @@ public class DamageListener implements Listener {
     }
 
 
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        e.getPlayer().setAllowFlight(true);
+    }
+
+
 
     public double getProtectionReduction(Player p) {
         double decrease = 0;

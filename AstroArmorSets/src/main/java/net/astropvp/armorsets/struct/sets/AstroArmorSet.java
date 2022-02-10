@@ -53,7 +53,7 @@ public class AstroArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(17.5, event, "AstroCrystal", amount);
+        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroCrystal", amount);
 
 
     }
@@ -103,7 +103,7 @@ public class AstroArmorSet extends ArmorSet {
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(12, event, "AstroCrystal", amount);
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroCrystal", amount);
 
         if (Math.random() < 0.01) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;

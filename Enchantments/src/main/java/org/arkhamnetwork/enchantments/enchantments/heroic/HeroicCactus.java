@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import org.arkhamnetwork.enchantments.enchantments.swords.Rage;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import com.cosmicpvp.cosmicutils.utils.*;
@@ -23,6 +24,9 @@ public class HeroicCactus extends HeroicCustomEnchantment
             if (attacker != null && attacker instanceof Player) {
                 final Player pAttacker = (Player)attacker;
                 //pAttacker.damage(0.5 * level);
+                if (Math.random() < 0.5) {
+                    Rage.subtractPVPHitCombo(pAttacker);
+                }
                 final Location l = p.getLocation();
                 WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }

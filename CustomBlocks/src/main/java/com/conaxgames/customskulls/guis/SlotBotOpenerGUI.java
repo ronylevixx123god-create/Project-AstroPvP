@@ -28,10 +28,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 public class SlotBotOpenerGUI {
@@ -59,10 +56,10 @@ public class SlotBotOpenerGUI {
         confirmButton.setItemMeta(meta);
 
 
-        this.customBlockGui.setItem(2, 4, new GuiItem(CoreSkulls.customBlocks.get(data.getAbilityType().getName()).getCustomBlockItem()));
+        this.customBlockGui.setItem(2, 3, new GuiItem(CoreSkulls.customBlocks.get(data.getAbilityType().getName()).getCustomBlockItem()));
 
 
-        customBlockGui.setItem(2, 6, new GuiItem(confirmButton, event -> {
+        customBlockGui.setItem(2, 5, new GuiItem(confirmButton, event -> {
 
 
             if (tickets == 0) {
@@ -123,12 +120,45 @@ public class SlotBotOpenerGUI {
             }
         }));
 
+        customBlockGui.getFiller().fillBorder(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).name(CC.translate("&7")).build()));
 
         customBlockGui.setDefaultClickAction(event -> event.setCancelled(true));
 
 
-        customBlockGui.getFiller().fillBorder(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).name(CC.translate("&7")).build()));
+        ItemStack clearButton = new ItemBuilder(Material.HOPPER, CC.translate("&c&lClear Chests"))
+                .addLoreLine(CC.translate("&7Click here to clear all nearby chests."))
+                .build();
+        customBlockGui.setItem(2, 7, new GuiItem(clearButton, event -> {
+
+
+            int counter = 0;
+            for (Location location : CustomBlockUtil.getNearbyChests(data.getLocation())) {
+                Chest chest = (Chest) location.getBlock().getState();
+
+                if (!CustomBlockUtil.isEmpty(chest.getInventory())) {
+                    chest.getInventory().clear();
+                    counter++;
+                }
+            }
+            if (counter == 0) {
+                p.sendMessage(CC.translate("&c&l(!)&c There are no nearby chests to clear."));
+
+                return;
+            }
+
+            p.closeInventory();
+            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
+            p.sendMessage(CC.translate("&c&l(!)&c Cleared " + counter + " nearby chests."));
+
+            try {
+                ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 2, 2, 2, 0.05f, 40);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
+
+        }));
+
+
     }
-
-
 }
