@@ -43,7 +43,7 @@ extends CustomEnchantment {
                 exception.printStackTrace();
             }
             ((Player)player).playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
-            e.setDamage(0.0);
+            //e.setDamage(0.0);
             edbee.getDamager().remove();
         }
     }

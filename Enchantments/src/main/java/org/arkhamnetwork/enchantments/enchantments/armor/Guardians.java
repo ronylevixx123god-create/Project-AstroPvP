@@ -70,6 +70,7 @@ public class Guardians
             if (player.hasMetadata("inDungeonParkour")) {
                 return;
             }
+            if (attacker == null) return;
             if (((Player) attacker).getInventory().getChestplate() != null) {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2021_AMULET))
                     return;

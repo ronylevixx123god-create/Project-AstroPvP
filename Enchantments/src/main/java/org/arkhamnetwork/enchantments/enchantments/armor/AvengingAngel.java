@@ -108,7 +108,7 @@ extends CustomEnchantment {
                 int duration = 6 + angelLevel;
                 AvengingAngel.this.cooldowns.put(pl.getUniqueId(), System.currentTimeMillis() + 10000L);
                 double healed = pl.getMaxHealth() - pl.getHealth();
-                GeneralUtil.healPlayer((LivingEntity)pl, healed);
+                //GeneralUtil.healPlayer((LivingEntity)pl, healed);
                 pl.sendMessage(CC.YellowB + "* AVENGING ANGEL [" + CC.Gray + "+" + NumberUtils.formatMoney((double)healed) + " HP (" + dead.getName() + ")" + CC.YellowB + " *");
                 Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
                     PlayerPotionEffects.untrackPotionEffect(pl, new SpecificCustomEnchantment(this.customEnchant, angelLevel));

@@ -99,7 +99,7 @@ extends CustomEnchantment {
                         } catch (Exception exception) {
                             exception.printStackTrace();
                         }
-                        GeneralUtil.healPlayer((LivingEntity)pEnt, amountToHeal);
+                        //GeneralUtil.healPlayer((LivingEntity)pEnt, amountToHeal);
                         pEnt.playSound(pEnt.getLocation(), Sound.EAT, 1.0f, 2.0f);
                         pEnt.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "** PARADOX [" + p.getName() + "] (+" + amountToHeal + "HP) **");
                     }

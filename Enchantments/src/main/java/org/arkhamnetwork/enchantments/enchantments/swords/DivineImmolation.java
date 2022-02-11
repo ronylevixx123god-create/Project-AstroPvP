@@ -49,10 +49,13 @@ public class DivineImmolation extends CustomEnchantment
             return;
         }
 
-        if (p.hasMetadata("noSoulProc"))
-            return;
+        if (p.hasMetadata("noSoulProc")) {
+return;
+        }
+
 
         if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
+
             return;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
@@ -80,19 +83,24 @@ public class DivineImmolation extends CustomEnchantment
             damage *= player.getMetadata("soulEnchantMultiplier").get(0).asDouble();
         }
         if (!GeneralUtil.isSword(p.getItemInHand())) {
+
             return;
         }
 
         if (playerHit instanceof Player) {
 
             if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
+
                 return;
             }
         }
         if (player.hasMetadata("witcher_negate") && player.getMetadata("witcher_negate").get(0).asLong() > System.currentTimeMillis()) {
+
             return;
         }
         if (p.hasMetadata("lastItemHeldChange") && MinecraftServerUtils.getCurrentServerTick() - p.getMetadata("lastItemHeldChange").get(0).asLong() <= 5L) {
+
+
             return;
         }
 
@@ -124,10 +132,11 @@ public class DivineImmolation extends CustomEnchantment
                         continue;
                     }
 
-                    if (pEnt == null) return;
-                    if (pEnt.getInventory() == null) return;
+                    if (pEnt == null) continue;
+                    if (pEnt.getInventory() == null) continue;
                     if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)){
-                    if (AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) {
+                    if ((AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
+
                         continue;
                     }
                     }

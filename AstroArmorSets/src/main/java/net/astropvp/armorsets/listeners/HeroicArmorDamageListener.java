@@ -21,7 +21,7 @@ public class HeroicArmorDamageListener implements Listener {
 
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getHeroicPieces() != 0) {
-            double totalReduction = cache.getHeroicPieces() * 5;
+            double totalReduction = cache.getHeroicPieces() * 4.5;
             if (e.getDamager() instanceof Player) {
                 if (Math.random() < 0.33 && AstroItemSkinsAPI.hasSkinEquipped((Player) e.getDamager(), SkinType.THANKSGIVING_2021_SWORD)) {
                     e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + e.getDamager().getName() + "'s Carver &4&l] *"));

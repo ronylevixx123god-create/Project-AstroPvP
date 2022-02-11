@@ -12,8 +12,7 @@ import org.bukkit.plugin.*;
 import org.bukkit.*;
 import org.bukkit.metadata.*;
 
-public class Angelic extends CustomEnchantment
-{
+public class Angelic extends CustomEnchantment {
     HashMap<String, BukkitTask> playerTasks;
 
     public Angelic() {
@@ -55,7 +54,7 @@ public class Angelic extends CustomEnchantment
             if (player.hasMetadata("angelicTaskID")) {
                 return;
             }
-            final int taskID = new RegenerationTask((Player)player, healDuration, healDelay, 0.5).runTaskTimer((Plugin)Enchantments.getInstance(), 0L, healDelay).getTaskId();
+            /*final int taskID = new RegenerationTask((Player)player, healDuration, healDelay, 0.5).runTaskTimer((Plugin)Enchantments.getInstance(), 0L, healDelay).getTaskId();
             Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), new Runnable() {
                 @Override
                 public void run() {
@@ -64,6 +63,7 @@ public class Angelic extends CustomEnchantment
                 }
             }, healDuration);
             player.setMetadata("angelicTaskID", new FixedMetadataValue((Plugin)Enchantments.getInstance(), taskID));
+        }*/
         }
     }
 }

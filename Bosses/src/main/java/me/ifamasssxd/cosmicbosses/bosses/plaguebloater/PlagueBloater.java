@@ -185,6 +185,8 @@ public class PlagueBloater extends Boss {
             minion.setCanPickupItems(false);
             minion.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 2), true);
             minion.getEquipment().setItemInHand(ItemBuilder.buildArmor(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT));
+            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);
+
         } else if (this.getMinions().size() < 14) {
             final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
             minion.setMaxHealth(10.0);
@@ -196,6 +198,9 @@ public class PlagueBloater extends Boss {
             minion.getEquipment().setLeggings(ItemBuilder.buildArmor(Material.DIAMOND_LEGGINGS, Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.THORNS));
             minion.getEquipment().setBoots(ItemBuilder.buildArmor(Material.DIAMOND_BOOTS, Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.THORNS));
             minion.getEquipment().setItemInHand(ItemBuilder.buildArmor(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT));
+
+            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);
+
         }
         super.onDamageTaken(event, damager);
     }

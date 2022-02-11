@@ -46,7 +46,7 @@ public class DimensionSpoof {
                     }
                 }
                 pl.setFlying(fly);
-                pl.setHealth(hp);
+                //pl.setHealth(hp);
                 Enchantments.getInstance().getServer().getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                     @Override
                     public void run() {

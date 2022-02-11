@@ -98,7 +98,7 @@ public class DamageListener implements Listener {
 
             //e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
             if (getProtectionReduction(phurt) != 0) {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
+                //AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
             }
         }
     }

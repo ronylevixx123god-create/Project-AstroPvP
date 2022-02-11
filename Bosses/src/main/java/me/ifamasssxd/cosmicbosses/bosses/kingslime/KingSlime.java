@@ -127,6 +127,7 @@ public class KingSlime extends Boss {
                 minion.setSize(2);
                 minion.setMaxHealth(100.0);
                 minion.setHealth(minion.getMaxHealth());
+                Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);
             }
         }
         this.updateMinionPath();

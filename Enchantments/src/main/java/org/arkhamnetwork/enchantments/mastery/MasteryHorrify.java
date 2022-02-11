@@ -135,7 +135,6 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
                     e.getEntity().hasMetadata("noFallDamageHorrify")) {
                 long time = ((MetadataValue) e.getEntity().getMetadata("noFallDamageHorrify").get(0)).asLong();
                 if (time > System.currentTimeMillis()) {
-                    e.setDamage(0.0D);
                 }
                 e.getEntity().removeMetadata("noFallDamageHorrify", (Plugin) Enchantments.getInstance());
             }

@@ -6,6 +6,7 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossAbility;
 import me.ifamasssxd.cosmicbosses.struct.EntityContainer;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -63,7 +64,10 @@ public class PlagueCarriers extends BossAbility implements EntityContainer {
             ghast.setMetadata("no_drops", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             ghast.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             ghast.setMetadata("plague_carrier", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) e.getUniqueId()));
+
             this.ents.add((Entity) ghast);
+            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), ghast::remove, 20*300);
+
         }
         this.activateCooldown();
     }

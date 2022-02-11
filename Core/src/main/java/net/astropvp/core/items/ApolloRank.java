@@ -85,7 +85,7 @@ public class ApolloRank extends CosmicItem
 
         String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
-        if (!rank.equalsIgnoreCase("astro") && !rank.equalsIgnoreCase("astro+")) {
+        if (!rank.equalsIgnoreCase("astro") && !rank.equalsIgnoreCase("astro+") && !rank.equalsIgnoreCase("media")) {
             throw new PrefixedException("You cannot redeem lower tier ranks.");
         }
 

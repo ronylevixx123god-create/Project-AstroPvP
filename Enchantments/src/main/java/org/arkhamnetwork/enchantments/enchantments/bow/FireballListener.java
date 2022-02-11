@@ -50,7 +50,7 @@ implements Listener {
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity().hasMetadata("hellfire")) {
             e.setCancelled(true);
-            e.setDamage(0.0);
+            //e.setDamage(0.0);
             if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
                 ((Player)((EntityDamageByEntityEvent)e).getDamager()).playSound(e.getEntity().getLocation(), Sound.FIRE, 1.0f, 0.7f);
                 e.getEntity().remove();

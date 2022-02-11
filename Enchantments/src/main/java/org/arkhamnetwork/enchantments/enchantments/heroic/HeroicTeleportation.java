@@ -159,7 +159,6 @@ extends HeroicCustomEnchantment {
 
                         ((HeroicTeleportation)this.customEnchant).grapplePlayer(playerHit, shooter, level);
                         event.setCancelled(true);
-                        event.setDamage(0.0);
                         return;
                     }
                     ((HeroicTeleportation)this.customEnchant).trapTarget(playerHit, shooter, level);
@@ -170,7 +169,6 @@ extends HeroicCustomEnchantment {
                         return;
                     }
                     event.setCancelled(true);
-                    event.setDamage(0.0);
                     if (event.getDamager() instanceof Projectile) {
                         event.getDamager().remove();
                     }

@@ -38,7 +38,6 @@ implements Listener {
             final Player player = (Player)e.getEntity();
             int level = CreeperArmor.creeperArmor.get(player.getName());
             if (e.getCause() == EntityDamageEvent.DamageCause.BLOCK_EXPLOSION || e.getCause() == EntityDamageEvent.DamageCause.ENTITY_EXPLOSION) {
-                e.setDamage(0.0);
                 if (level >= 2) {
                     new BukkitRunnable(){
 

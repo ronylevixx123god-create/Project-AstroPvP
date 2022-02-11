@@ -81,7 +81,6 @@ extends CustomEnchantment {
                 int level = ((MetadataValue)e.getDamager().getMetadata("teleportation_level").get(0)).asInt();
                 if (player.equals((Object)playerHit)) {
                     e.setCancelled(true);
-                    e.setDamage(0.0);
                     if (player instanceof Player) {
                         player.playSound(player.getLocation(), Sound.CAT_HISS, 0.85f, 0.2f);
                     }
@@ -95,7 +94,6 @@ extends CustomEnchantment {
                         return;
                     }
                     e.setCancelled(true);
-                    e.setDamage(0.0);
                     if (e.getDamager() instanceof Projectile) {
                         e.getDamager().remove();
                     }

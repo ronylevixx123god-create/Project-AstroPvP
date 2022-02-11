@@ -154,7 +154,7 @@ extends CustomEnchantment {
                 return false;
             }
             if (damager != null && damager instanceof Player && damager.hasMetadata("banshee_scrolls") && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-                player.sendMessage(String.valueOf(CC.RedB) + "* PHOENIX BLOCKED [&4BANSHEE RKO] *");
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7BANSHEE RKO&c&l] *"));
                 ((Player)damager).sendMessage(String.valueOf(CC.RedB) + "* BANSHEE RKO [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + ((Player)damager).getName());

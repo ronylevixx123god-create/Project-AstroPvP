@@ -6,6 +6,7 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.BossAbility;
 import me.ifamasssxd.cosmicbosses.utils.CustomItem;
 import net.minecraft.server.v1_8_R3.Entity;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.enchantments.Enchantment;
@@ -63,6 +64,8 @@ public class Summoning extends BossAbility {
             skeleton.getEquipment().setItemInHand(new CustomItem(new ItemStack(Material.DIAMOND_SWORD)).setUnbreakable(true).addEnchant(Enchantment.DAMAGE_ALL, 2).build());
             skeleton.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             skeleton.setMetadata("no_drops", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), skeleton::remove, 20*300);
+
         }
         this.activateCooldown();
     }

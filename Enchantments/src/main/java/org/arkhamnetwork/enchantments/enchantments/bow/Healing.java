@@ -95,7 +95,6 @@ extends CustomEnchantment {
                 int level = ((MetadataValue)e.getDamager().getMetadata("healing_level").get(0)).asInt();
                 if (player.equals((Object)playerHit)) {
                     e.setCancelled(true);
-                    e.setDamage(0.0);
                     if (player instanceof Player) {
                         player.playSound(player.getLocation(), Sound.CAT_HISS, 0.85f, 0.2f);
                     }
@@ -114,7 +113,6 @@ extends CustomEnchantment {
                     double heal = new Random().nextInt(max_heal - min_heal) + min_heal;
                     boolean absorption = level >= 3 ? Math.random() < 0.15 * (double)(level - 2) : false;
                     e.setCancelled(true);
-                    e.setDamage(0.0);
                     if (e.getDamager() instanceof Projectile) {
                         e.getDamager().remove();
                     }

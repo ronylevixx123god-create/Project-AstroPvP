@@ -39,7 +39,7 @@ public class BabyReindeerSkin extends ItemSkin {
                         return;
                     Player target = (Player) nearby.get(0);
                     target.damage(event.getFinalDamage());
-                    event.setDamage(0);
+                    //event.setDamage(0);
                 }
             }
         }
