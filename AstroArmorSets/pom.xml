@@ -76,7 +76,7 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>skisss</artifactId>
+        <artifactId>skissss</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>

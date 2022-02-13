@@ -16,7 +16,7 @@ public class HeroicArmored extends HeroicCustomEnchantment
         super("Paladin Armored", "Armored");
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageByEntityEvent e) {
         if (!(player instanceof Player)) {
             return;
         }
@@ -37,7 +37,7 @@ public class HeroicArmored extends HeroicCustomEnchantment
         }
         final double damage_negation = level * 0.01;
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&6&lArmored");
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lHeroic Armored");
             final Location l = player.getLocation();
         }
     }

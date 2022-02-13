@@ -41,11 +41,16 @@ public class HeroicEnlighted extends CustomEnchantment
         final double chance = 0.01 * level;
         if (random < chance) {
             double toGive = 3.0;
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) {
                 toGive *= 1.05;
             }
-
-            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, 2.0, "&d&lDivine Enlighted"), 1L);
+            if (player.hasMetadata("reflectedEnglighted")) {
+                double finalToGive1 = toGive;
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> AstroDamageHandler.getInstance().getDamageHandler().dealDamage(player, finalToGive1, "&d&lReflected Divine Enlighted"), 1L);
+            } else {
+                double finalToGive = toGive;
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, finalToGive, "&d&lDivine Enlighted"), 1L);
+            }
         }
     }
 }

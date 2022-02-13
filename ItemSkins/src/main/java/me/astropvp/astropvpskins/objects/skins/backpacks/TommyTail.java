@@ -31,7 +31,7 @@ public class TommyTail extends ItemSkin {
         }
         if (Math.random() < 0.02) {
             if (damaged instanceof Player) {
-                InventoryBansheePet.startBansheeEffect(damager, (Player) damaged);
+                InventoryBansheePet.startBansheeEffect(damager, (Player) damaged, 8);
             }
         }
 

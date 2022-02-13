@@ -1,11 +1,13 @@
 package net.astropvp.armorsets.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.rit.sucy.EnchantmentAPI;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.core.AstroCore;
+import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,11 +36,17 @@ public class ArmorSetDamageListener implements Listener {
 
             //armor set damaged
             if (cache.getCurrentArmorSet() != null) {
+                if (((Player) attacker).getItemInHand() == null) return;
+                if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
                 cache.getCurrentArmorSet().getArmorSet().onAttack((Player) attacker, attacked, e);
             }
 
             //crystals damaged
             if (!cache.getCurrentSetCrystals().isEmpty()) {
+                if (((Player) attacker).getItemInHand() == null) return;
+                if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
+                if (!((Player) attacker).getItemInHand().getType().name().endsWith("_SWORD") && !((Player) attacker).getItemInHand().getType().name().endsWith("_AXE")) return;
+
                 Map<ArmorSetType, Integer> crystals = cache.getCurrentSetCrystals();
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
@@ -78,9 +86,12 @@ public class ArmorSetDamageListener implements Listener {
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
 
+
                 }
             }
         }
 
     }
+
+
 }

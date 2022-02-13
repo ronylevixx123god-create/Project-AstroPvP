@@ -27,7 +27,7 @@ public class MutatedTommyTail extends ItemSkin {
         }
         if (Math.random() < 0.02) {
             if (damaged instanceof Player) {
-                InventoryBansheePet.startBansheeEffect(damager, (Player) damaged);
+                InventoryBansheePet.startBansheeEffect(damager, (Player) damaged,8);
                 damaged.sendMessage(CC.translate("&2&l* " + damager.getName() + "'s TOMMY TAIL &7Banshee Effect &2&l*"));
             }
         }

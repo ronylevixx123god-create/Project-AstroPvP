@@ -7,6 +7,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.Snowflake;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -52,7 +53,7 @@ public class SnowflakeListener implements Listener {
     @EventHandler
     public void onSnowballHit(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player && snowflake.contains(e.getEntity()))
-            e.setDamage(e.getDamage() * 1.08);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(8, e, "Snowflake hit");
         Entity ent = e.getDamager();
         if(ent instanceof Snowball && e.getEntity() instanceof Player) {
             Player hit = (Player) e.getEntity();

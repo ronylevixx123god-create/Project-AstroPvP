@@ -144,7 +144,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 
         player.sendMessage("");
-        player.sendMessage(CC.translate("&a&l*** WORLD DESTROYER PET [&f" + target.getName() + "s&a&l] - CAGED! **"));
+        player.sendMessage(CC.translate("&a&l*** WORLD DESTROYER PET [&f" + target.getName() + "&a&l] - CAGED! **"));
         player.sendMessage("");
 
         target.sendMessage("");
@@ -253,9 +253,15 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     this.cancel();
                 }
-                if (!affected.isDead()) {
+                if (!affected.isDead() && WorldGuardUtils.isPvPEnabled(affected.getLocation()) && !(AstroItemSkinsAPI.hasSkinEquipped(affected, SkinType.VALENTINES_2022_AMULET))) {
                     final int dmg = 2;
-                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage(affected, dmg, "&e&lCage Ticks");
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(affected, SkinType.VALENTINES_2022_MUTATED_AMULET)) {
+                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(affected, dmg, "&e&lReverted Cage Ticks");
+
+                    } else {
+                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(affected, dmg, "&e&lCage Ticks");
+                    }
                 }
                 if (affected.getHealth() <= 0.0 || affected.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);

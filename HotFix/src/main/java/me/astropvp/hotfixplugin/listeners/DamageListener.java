@@ -10,6 +10,7 @@ import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.perms.Relation;
+import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -98,7 +99,21 @@ public class DamageListener implements Listener {
 
             //e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
             if (getProtectionReduction(phurt) != 0) {
-                //AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
+            }
+            if (((Player) e.getDamager()).getItemInHand() != null) {
+                int enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand()).size();
+                if (enchants < 14) {
+                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
+                }
+                if (((Player) e.getDamager()).getItemInHand().getType() == Material.WOOD_SWORD || ((Player) e.getDamager()).getItemInHand().getType() == Material.IRON_SWORD) {
+                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
+                }
+
+
+            }else {
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
+
             }
         }
     }

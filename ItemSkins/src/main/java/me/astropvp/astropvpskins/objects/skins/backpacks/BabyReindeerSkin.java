@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -32,13 +33,13 @@ public class BabyReindeerSkin extends ItemSkin {
             nearby.removeIf(entity -> !(entity instanceof Player));
             nearby.removeIf(entity -> !GeneralUtil.isAtleastTruce(damaged, (Player) damager));
             if (nearby.size() == 0 && damaged.getHealth() <= 6) {
-                event.setDamage(event.getDamage() * 0.75);
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(25, event, "Baby Reindeer");
             } else if (Math.random() > 0.5) {
                 if (event.getFinalDamage() - damaged.getHealth() < 6) {
                     if (nearby.size() == 0)
                         return;
                     Player target = (Player) nearby.get(0);
-                    target.damage(event.getFinalDamage());
+                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage(target, event.getFinalDamage(), "Baby Reindeer");
                     //event.setDamage(0);
                 }
             }

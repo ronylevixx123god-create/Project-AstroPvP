@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.axes;
 
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -13,13 +14,13 @@ public class SpikedBaseballBatSkin extends ItemSkin {
         if(!(damaged instanceof Player))
             return;
         if(((Player) damaged).getItemInHand().getType().toString().endsWith("_SWORD"))
-            event.setDamage(event.getDamage() * 1.1);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "Spiked Baseball");
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(!(damager instanceof Player))
             return;
         if(((Player) damager).getItemInHand().getType().toString().endsWith("_SWORD"))
-            event.setDamage(event.getDamage() * 0.95);
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "Spiked Baseball");
     }
 }

@@ -82,6 +82,8 @@ return;
         if (player.hasMetadata("soulEnchantMultiplier")) {
             damage *= player.getMetadata("soulEnchantMultiplier").get(0).asDouble();
         }
+
+
         if (!GeneralUtil.isSword(p.getItemInHand())) {
 
             return;
@@ -93,6 +95,11 @@ return;
 
                 return;
             }
+
+            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_HELMET)) && playerHit.getHealth() < playerHit.getMaxHealth()/4) {
+                damage*=0.15;
+            }
+
         }
         if (player.hasMetadata("witcher_negate") && player.getMetadata("witcher_negate").get(0).asLong() > System.currentTimeMillis()) {
 

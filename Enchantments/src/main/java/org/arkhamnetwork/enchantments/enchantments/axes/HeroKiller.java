@@ -91,6 +91,9 @@ extends CustomEnchantment {
             return;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_AMULET))
+            return;
+
         if (KillTrackerAPI.hasGodMode((Player)p) && KillTrackerAPI.getAllSouls((Player)p) > 0) {
             if (!this.isWearingHeroic((Player)playerHit)) {
                 return;

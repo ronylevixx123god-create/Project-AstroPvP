@@ -28,8 +28,11 @@ final class DivineImmolationListener implements Listener
                 final LivingEntity le = (LivingEntity)e.getEntity();
                 double damage = Math.min(4, 4 + enchantLevel) / 4.0;
                 if (le instanceof Player) {
-                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage(le, damage, "&c&lDivine Tick");
-
+                    if (le.hasMetadata("reflectDivineTicks")) {
+                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(le, damage, "&c&lReflected ujiDivine Tick");
+                    } else {
+                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(le, damage, "&c&lDivine Tick");
+                    }
                     ((Player)le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
                 }

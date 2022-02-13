@@ -70,7 +70,7 @@
         <!-- System Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>facQuests</artifactId>
+            <artifactId>facQuestss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicFactionQuests.jar</systemPath>

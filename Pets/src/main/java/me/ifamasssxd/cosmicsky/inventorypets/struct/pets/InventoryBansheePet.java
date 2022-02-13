@@ -24,6 +24,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -71,7 +72,6 @@ public class InventoryBansheePet extends InventoryPet {
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        int bansheeCooldown = 20;
 
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
@@ -98,6 +98,8 @@ public class InventoryBansheePet extends InventoryPet {
                     player.sendMessage(CC.translate("&e&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&e&lWitch Hat&7] &e&l*"));
                     continue;
                 }
+
+
 
 
                 if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
@@ -132,52 +134,26 @@ public class InventoryBansheePet extends InventoryPet {
         }
 
         nearbyEnemies.forEach(enemy -> {
+
             if (AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
                 enemy.sendMessage(CC.translate("&8&l* " + player.getName() + "'s BANDOLIER BELT [&7Bypassed Witch Hat&8&l] *"));
-                player.sendMessage(CC.translate("&8&l* " + player.getName() + "'s BANDOLIER BELT [&7Blocked " + enemy.getName() + "'s Witch Hat&8&l] *"));
+                player.sendMessage(CC.translate("&8&l* BANDOLIER BELT [&7Bypassed " + enemy.getName() + "'s Witch Hat&8&l] *"));
             }
-
             CrankedAmuletUtil.tryHatchAbility(enemy, player);
 
 
-            CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldown * 1000);
-            enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
-            enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " [7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
-            enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-            enemy.sendMessage("");
-            enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
-            enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
-            enemy.sendMessage("");
-
-            DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "s&c&l] *"), "RKO");
-
-        });
-        CombatLog.flagCombat(player);
-        player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
-        player.setMetadata("banshee_active", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
-        player.sendMessage("");
-        player.sendMessage(CC.translate("&4&lPET: ** BANSHEE [&6" + duration + "s&4&l] - RKO! **"));
-        player.sendMessage("");
-
-        (new BukkitRunnable() {
-            public void run() {
-                player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
-                player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
-                player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
-                EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
-                nearbyEnemies.forEach(x -> {
-                    x.removeMetadata("noDefenseProcs", (Plugin) CosmicSkyInventoryPets.get());
-                    x.removeMetadata("banshee_scrolls", (Plugin) CosmicSkyInventoryPets.get());
-                    x.sendMessage(CC.translate("&4&lPET: &4&l[RKO] &efrom " + player.getName() + "'s Banshee Pet &e&nEXPIRED!"));
-                });
+            if ((AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.25 && !enemy.hasMetadata("SSFCooldown")) {
+                startBansheeEffect(enemy, player, duration);
+                enemy.sendMessage(CC.translate("&d&l** SSF HELMET [&7Banshee Reflect on " + player.getName() + " &d&l] **"));
+                player.sendMessage(CC.translate("&d&l** " + enemy.getName() + "'s SSF HELMET [&7Reflected Banshee&d&l] **"));
+                enemy.setMetadata("SSFCooldown", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
+                    enemy.removeMetadata("SSFCooldown", CosmicSkyInventoryPets.get());
+                }, 20 * 360);
+            } else {
+                startBansheeEffect(player, enemy, duration);
             }
-        }).runTaskLater((Plugin) CosmicSkyInventoryPets.get(), (20 * duration));
-        player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
-        player.playSound(player.getLocation(), Sound.GHAST_SCREAM2, 2.0F, 2.0F);
-
+        });
         return true;
     }
 
@@ -186,9 +162,17 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
 
-    public static void startBansheeEffect(Player player, Player enemy) {
+    public static void startBansheeEffect(Player player, Player enemy, int duration) {
 
-        int duration = 8;
+        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(enemy, "bansheeCooldown")) {
+            player.sendMessage(CC.translate("&c&lPET: &c" + enemy.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(enemy, "bansheeCooldown") + "&c."));
+            return;
+        }
+
+        int bansheeCooldownInSeconds = 20;
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldownInSeconds * 1000);
+
+
         enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
         enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " 7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
         enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
@@ -197,11 +181,7 @@ public class InventoryBansheePet extends InventoryPet {
         enemy.sendMessage(CC.translate(String.format("&4&l*** " + player.getName() + "&4&l's BANSHEE PET [&6" + duration + "s&4&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
         enemy.sendMessage(CC.translate(String.format("&c( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
         enemy.sendMessage("");
-
-
         DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "&c&l] *"), "RKO");
-
-
         CombatLog.flagCombat(player);
         player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
@@ -210,21 +190,20 @@ public class InventoryBansheePet extends InventoryPet {
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&lPET: ** BANSHEE [&6" + duration + "s&4&l] - RKO! **"));
         player.sendMessage("");
-
-        (new BukkitRunnable() {
-            public void run() {
-                player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
-                player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
-                player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
-                EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
-
-                enemy.removeMetadata("noDefenseProcs", (Plugin) CosmicSkyInventoryPets.get());
-                enemy.removeMetadata("banshee_scrolls", (Plugin) CosmicSkyInventoryPets.get());
-                enemy.sendMessage(CC.translate("&4&lPET: &4&l[RKO] &efrom " + player.getName() + "'s Banshee Pet &e&nEXPIRED!"));
-
-            }
-        }).runTaskLater((Plugin) CosmicSkyInventoryPets.get(), (20 * duration));
         player.playSound(player.getLocation(), Sound.LAVA_POP, 1.1F, 1.0F);
         player.playSound(player.getLocation(), Sound.GHAST_SCREAM2, 2.0F, 2.0F);
+
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> {
+            player.sendMessage(CC.translate("&4&lPET:  BANSHEE - RKO has worn off! "));
+            player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
+            player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
+            EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
+
+            enemy.removeMetadata("noDefenseProcs", (Plugin) CosmicSkyInventoryPets.get());
+            enemy.removeMetadata("banshee_scrolls", (Plugin) CosmicSkyInventoryPets.get());
+            enemy.sendMessage(CC.translate("&4&lPET: &4&l[RKO] &efrom " + player.getName() + "'s Banshee Pet &e&nEXPIRED!"));
+        }, 20L *duration);
+
+
     }
 }

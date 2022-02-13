@@ -35,20 +35,19 @@ public class Rage extends CustomEnchantment
 
             final double mod = 0.06 * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0;
-            if (hitCombo > 5.0) {
-                hitCombo = 5.0;
+            if (hitCombo > 12.0) {
+                hitCombo = 12.0;
             }
 
             this.playRageEffect(target.getEyeLocation(), enchantLevel);
-            if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(40 * hitCombo, event, "&6&lXmas Rage");
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25 * hitCombo, event, "&6&lXmas Rage");
 
                 } else {
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30 * hitCombo, event, "&6&lRage");
+                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15 * hitCombo, event, "&6&lRage");
                 }
                 target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
-            }
+
 
             if (target instanceof Player) {
                 this.addPVPHitCombo((Player)user);

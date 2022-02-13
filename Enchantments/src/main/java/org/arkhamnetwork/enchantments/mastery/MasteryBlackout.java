@@ -69,7 +69,6 @@ public class MasteryBlackout extends MasteryCustomEnchantment
 
         }
 
-        pTarget.sendMessage(CC.translate("&4&L* BLACKOUT &7[" + (int)(durationInTicks / 20L) + "&7s] &4&l *"));
         player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + (int)(durationInTicks / 20L) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
         pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + durationInTicks/20 + "&7s] &5&l *"));
         pTarget.setMetadata("blackout", new FixedMetadataValue((Plugin)Enchantments.getInstance(), "banana"));

@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -49,7 +50,7 @@ public class Snowflake extends ItemSkin {
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {stacks.put(damager, stacks.get(damager) - 1);}, 200L);
         if(Math.random() <= 0.04) {
             ((Player) damaged).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 1));
-            event.setDamage(event.getDamage() * 1.05); //idk if this is right tbh
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5, event, "Snowflake");
             damager.sendMessage(CC.AquaB + "** DEEP FREEZE " + CC.Gray + "[" + damaged.getName() + "]" + CC.AquaB + " **");
         }
         if(Math.random() <= 0.33) {
@@ -65,7 +66,7 @@ public class Snowflake extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(stacks.containsKey(damaged) && stacks.get(damaged) > 0) {
-            event.setDamage(event.getDamage() * 1 + (stacks.get(damaged) / 10));
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(stacks.get(damaged)/10, event, "Snowflake");
         }
     }
 

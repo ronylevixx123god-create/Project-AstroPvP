@@ -3,6 +3,7 @@ package me.astropvp.astropvpskins.objects.skins.belts;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -36,7 +37,7 @@ public class PieBelt extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if(hypnosis.containsKey(damager)) {
-            event.setDamage(event.getDamage() * 1 + (hypnosis.get(damager) / 2));
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(hypnosis.get(damager), event, "Pie Belt");
         }
     }
 }

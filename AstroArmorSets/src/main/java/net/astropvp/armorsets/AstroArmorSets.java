@@ -14,7 +14,8 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class AstroArmorSets extends JavaPlugin {
     @Getter
     private static AstroArmorSets instance;
-    public static double CUSTOM_SET_MULTIPLIER = 3;
+
+    public static double CUSTOM_SET_MULTIPLIER = 2;
 
 
 

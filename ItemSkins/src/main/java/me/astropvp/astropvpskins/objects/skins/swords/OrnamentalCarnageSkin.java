@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicTrap;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -17,11 +18,12 @@ public class OrnamentalCarnageSkin extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
 
         if (event.isCancelled()) return;
-        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        if(damaged.hasMetadata("titantrap"))
-            event.setDamage(event.getDamage() * 1.1);
-        if(Math.random() > 0.02) {
-            event.setDamage(event.getDamage() * 1.2);
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
+            return;
+        if (damaged.hasMetadata("titantrap"))
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "Ornamental Carnage");
+        if (Math.random() > 0.02) {
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "Ornamental Carnage");
         }
 
         if (damaged instanceof Player) {
@@ -31,9 +33,14 @@ public class OrnamentalCarnageSkin extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
-        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        event.setDamage(event.getDamage() * 0.95);
-        if (damager instanceof Player && KillTrackerAPI.hasGodMode((Player) damager))
-            event.setDamage(event.getDamage() * 0.85);
+        if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
+            return;
+        if (damager instanceof Player) {
+            if (KillTrackerAPI.hasGodMode((Player) damager)) {
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "Ornamental Carnage");
+            } else {
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "Ornamental Carnage");
+            }
+        }
     }
 }

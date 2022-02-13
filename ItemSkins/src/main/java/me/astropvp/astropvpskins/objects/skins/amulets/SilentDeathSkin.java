@@ -6,6 +6,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -26,12 +27,12 @@ public class SilentDeathSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        event.setDamage(event.getDamage() * 1.03);
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(3, event, "Silent Death");
         if(!(damaged instanceof Player))
             return;
         if(silentDeath.containsKey(damaged)) {
             silentDeath.put((Player) damaged, silentDeath.get(damaged) + 1);
-            event.setDamage(event.getDamage() * 1.2);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "Silent Death");
         }
         if(Math.random() <= 0.05) {
             if(AstroItemSkinsAPI.hasSkinEquipped((Player) damaged, SkinType.HALLOWEEN_AMULET))

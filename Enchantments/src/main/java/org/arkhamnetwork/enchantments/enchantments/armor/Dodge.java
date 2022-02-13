@@ -35,12 +35,17 @@ public class Dodge extends CustomEnchantment
         if (attacker instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player)attacker, SkinType.HALLOWEEN_AXE)) {
             return;
         }
+
+        if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
+            return;
         if (e instanceof EntityDamageByEntityEvent) {
             double chance = 0.025;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.05;
             }
+
+
             if (Math.random() < chance) {
                 if (Math.random() < 0.03 && !player.hasMetadata("carver_damage")) {
                     player.setMetadata("carver_damage", new FixedMetadataValue(Enchantments.getInstance(), true));

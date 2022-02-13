@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.belts;
 
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicAegis;
 import org.arkhamnetwork.enchantments.enchantments.swords.Silence;
 import org.bukkit.entity.Entity;
@@ -15,7 +16,7 @@ public class CupidsHeart extends ItemSkin {
         if(!(damaged instanceof Player))
             return;
         if(damaged.hasMetadata("noDefenseProcs"))
-            event.setDamage(event.getDamage() * 1.1);
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "Cupids Heart");
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {

@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.axes;
 
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.swords.DoubleStrike;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -21,7 +22,7 @@ public class CorpseGrinder extends ItemSkin {
 
 
         if (Math.random() < 0.01) {
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.25);
+            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(25, event, "Corpse Grinder");
         }
     }
 }

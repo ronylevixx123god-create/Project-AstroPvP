@@ -72,7 +72,6 @@ extends CustomEnchantment {
                 }
                 for (Player ally : allies) {
                     ally.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GREEN + p.getName() + "'s Lifebloom was activated, fight on!");
-                    GeneralUtil.setPlayerHealth((LivingEntity)ally, ally.getMaxHealth());
                     if (level >= 4) {
                         ally.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 120, level - 4));
                     }

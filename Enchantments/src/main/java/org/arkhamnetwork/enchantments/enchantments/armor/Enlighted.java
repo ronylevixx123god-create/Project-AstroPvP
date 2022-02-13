@@ -40,7 +40,11 @@ public class Enlighted extends CustomEnchantment
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
                 @Override
                 public void run() {
-                    AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, 1.0, "&6&lEnlighted");
+                    if (player.hasMetadata("reflectedEnglighted")) {
+                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(player, 1.0, "&6&lReflected Enlighted");
+                    } else {
+                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, 1.0, "&6&lEnlighted");
+                    }
                 }
             }, 1L);
         }

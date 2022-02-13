@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicCleave;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -18,7 +19,7 @@ public class VirusSwordSkin extends ItemSkin {
         if (DuelAPI.isSpectator(damager)) return;
         if (damager.hasMetadata("frozenSkrrt")) return;
 
-        event.setDamage(event.getDamage() * 1.035);
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(3.5, event, "Virus Sword");
         (new HeroicCleave()).applyEffect(damager, (LivingEntity)damaged, 5, event);
     }
 }

@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -14,6 +15,6 @@ public class CursedWingsSkin extends ItemSkin {
 
         if(GoldenAdmirer.isAdmirerSilenced(damaged))
             return;
-        event.setDamage(event.getDamage() * 0.97);
+        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "Cursed Wings");
     }
 }

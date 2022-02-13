@@ -18,6 +18,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import de.inventivegames.particle.ParticleEffect;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
@@ -43,6 +45,8 @@ extends HeroicCustomEnchantment {
         if (player.hasMetadata("neutralized"))
             return;
         if (player.hasMetadata("noDefenseProcs"))
+            return;
+        if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
             return;
         if (e instanceof EntityDamageByEntityEvent) {
             double chance = 0.005 * (double)level;
