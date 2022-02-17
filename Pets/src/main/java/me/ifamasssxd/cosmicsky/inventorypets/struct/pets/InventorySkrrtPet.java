@@ -145,7 +145,7 @@ public class InventorySkrrtPet extends InventoryPet {
 
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
-                int skrrtCooldown = 30;
+                int skrrtCooldown = 120;
                 CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "skrrtCooldown", skrrtCooldown * 1000);
                 CrankedAmuletUtil.tryHatchAbility(p, player);
 

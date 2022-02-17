@@ -107,6 +107,11 @@ public class PlayerListener
         if ((duel = DuelAPI.getDuel(player)) != null) {
             if (DuelAPI.isDuelQueued(duel)) {
                 DuelAPI.cancelDuel(duel, CancelReason.LEFT_IN_QUEUE);
+                try {
+                    duel.getOppositePlayer(player).closeInventory();
+                } catch (Exception ex) {
+
+                }
                 return;
             }
             duel.removePlayer(player, Reason.LEFT_DUEL, false);
@@ -120,6 +125,11 @@ public class PlayerListener
 
             if ((duelInvite = DuelAPI.getDuelInvite(player, DuelAPI.InviteType.INVITED)) != null) {
                 DuelAPI.declineDuel(player, duelInvite.getInviter(), false);
+                try {
+                    duel.getOppositePlayer(player).closeInventory();
+                } catch (Exception ex) {
+
+                }
                 return;
             }
             duelInvite = DuelAPI.getDuelInvite(player, DuelAPI.InviteType.INVITER);

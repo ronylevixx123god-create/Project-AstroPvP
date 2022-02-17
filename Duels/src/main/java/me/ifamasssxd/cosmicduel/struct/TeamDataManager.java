@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
+import me.ifamasssxd.cosmicduel.DuelAPI;
+import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.utils.JSONMessage;
 import me.ifamasssxd.cosmicduel.utils.TimeUtils;
 import org.bukkit.Bukkit;
@@ -137,7 +139,21 @@ public class TeamDataManager {
     }
 
     public void removeTeam(TeamData data) {
-        this.teams.remove(data.getLeaderUUID());
+        try {
+            for (UUID uuid : data.getTeamates()) {
+                Player player = Bukkit.getPlayer(uuid);
+                if (player.getOpenInventory() != null) {
+                    player.sendMessage(CC.Red + "Closing inventory.");
+
+                    player.closeInventory();
+                }
+            }
+            Bukkit.getPlayer(data.getLeaderUUID()).closeInventory();
+        } catch (Exception e) {
+            e.printStackTrace();
+            this.teams.remove(data.getLeaderUUID());
+
+        }
     }
 
     public boolean isLeaderOfTeam(UUID uuid) {

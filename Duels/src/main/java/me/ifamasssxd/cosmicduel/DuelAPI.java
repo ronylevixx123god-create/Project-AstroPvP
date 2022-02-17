@@ -552,7 +552,7 @@ public class DuelAPI {
     }
 
     public static boolean hasDuel(Player p) {
-        if (p.hasMetadata("in_duel")) {
+        if (p.hasMetadata("in_duel") &&  p.getLocation().getWorld().getName().equals("world_duels")) {
             NewDuel d = getDuel(p);
             if (d == null) {
                 p.removeMetadata("in_duel", CosmicDuel.get());

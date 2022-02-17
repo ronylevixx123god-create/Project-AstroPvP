@@ -227,6 +227,7 @@ implements Runnable {
     public void logFactionWin(Player p) throws IOException {
         String factionId = FactionUtils.getFactionId(p);
         int wins;
+        if (factionId == null) return;
         wins = CosmicKOTHPlugin.get_().getKothWins().getOrDefault(factionId, 0);
         CosmicKOTHPlugin.get_().getKothWins().put(factionId, wins+1);
 

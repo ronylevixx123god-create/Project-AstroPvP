@@ -47,6 +47,7 @@ public class CustomConfig {
         Map<String, Integer> kothWins = new HashMap<>();
         try {
             for (String key : customFile.getConfigurationSection("kothWins.").getKeys(false)) {
+                if (key == null) continue;
                 int wins = customFile.getInt("kothWins." + Integer.parseInt(key));
                 kothWins.put(key, wins);
             }

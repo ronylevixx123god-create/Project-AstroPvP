@@ -19,6 +19,9 @@ public class BansheeListener implements Listener {
 
     @EventHandler
     public void onEntityDamage(EntityDamageByEntityEvent event) {
+        if (event.isCancelled()) return;
+        if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation()))
+            return;
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
             if (damager.hasMetadata("banshee_active")) {

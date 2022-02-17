@@ -26,7 +26,7 @@ public class AuctionUtil {
     }
 
     public static long getEndTime() {
-        return System.currentTimeMillis() + 28800000L;
+        return System.currentTimeMillis() + 864000000; //10 days
     }
 
     public static long getUnclaimedEndTime() {

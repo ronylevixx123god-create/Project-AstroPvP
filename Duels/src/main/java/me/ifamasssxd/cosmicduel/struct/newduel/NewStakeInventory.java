@@ -49,6 +49,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -567,7 +568,20 @@ public class NewStakeInventory {
     }
 
     public boolean isSomeoneReady() {
-        return this.playerOneInventory.getItem(0).equals(this.acceptedItem) || this.playerOneInventory.getItem(8).equals(this.acceptedItem);
+        try {
+            return this.playerOneInventory.getItem(0).equals(this.acceptedItem) || this.playerOneInventory.getItem(8).equals(this.acceptedItem);
+        } catch (Exception e) {
+            for (HumanEntity p : playerOneInventory.getViewers()) {
+                p.closeInventory();
+                DuelAPI.cancelDuel(duel, CancelReason.CLOSED_INVENTORY);
+            }
+            for (HumanEntity p : playerTwoInventory.getViewers()) {
+                p.closeInventory();
+                DuelAPI.cancelDuel(duel, CancelReason.CLOSED_INVENTORY);
+
+            }
+        }
+        return false;
     }
 
     public void checkDone() {
