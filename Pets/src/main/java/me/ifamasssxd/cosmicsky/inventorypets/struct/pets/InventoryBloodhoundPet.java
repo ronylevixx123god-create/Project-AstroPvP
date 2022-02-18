@@ -124,6 +124,12 @@ public class InventoryBloodhoundPet extends InventoryPet {
          return true;
       }
 
+      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+         pTarget.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Bloodhound Pet &7[" + player.getName() + "&7] &8&l*"));
+         player.sendMessage(CC.translate("&8&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&8&lBig Timbs&7] &8&l*"));
+         return true;
+      }
+
       player.chat("/f t " + pTarget.getName());
       pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
       pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));

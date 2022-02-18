@@ -193,7 +193,7 @@ public class CombatLog
                     OpeningCombo.proc(pl, openingComboLevel);
                     pl.sendMessage(CC.DarkRedB + "OPENING COMBO - ACTIVE");
                 }
-            }ski
+            }
         }
         pl.setAllowFlight(false);
         pl.setFlying(false);

@@ -34,13 +34,13 @@ public final class Collector {
     private final Reference<World> reference;
     private final int chunkX, chunkZ;
     private final double x, y, z;
-    private final Map<Material,Integer> lootMap;
+    private final Map<Material, Integer> lootMap;
     private final List<CollectorSellLog> sellLogs;
     Essentials essentials;
 
 
     public Collector(World world, int chunkX, int chunkZ, JSONObject data) {
-        this.essentials =  EssentialsUtils.getEssentials();
+        this.essentials = EssentialsUtils.getEssentials();
         reference = new WeakReference<>(world);
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
@@ -63,7 +63,7 @@ public final class Collector {
 
             }
 
-            lootMap.put(material,amount);
+            lootMap.put(material, amount);
         }
         Object potentialLocationArray = data.get("Location");
         if (!(potentialLocationArray instanceof JSONArray)) {
@@ -77,7 +77,7 @@ public final class Collector {
     }
 
     public Collector(Location location) {
-        this.essentials =  EssentialsUtils.getEssentials();
+        this.essentials = EssentialsUtils.getEssentials();
         reference = new WeakReference<>(location.getWorld());
         lootMap = new EnumMap<>(Material.class);
         x = location.getBlockX();
@@ -90,7 +90,7 @@ public final class Collector {
     }
 
     public int getAmount(Material material) {
-        return lootMap.getOrDefault(material,0);
+        return lootMap.getOrDefault(material, 0);
     }
 
     public double getTntAmount() {
@@ -107,7 +107,7 @@ public final class Collector {
     }
 
     public void setAmount(Material material, int amount) {
-        lootMap.put(material,amount);
+        lootMap.put(material, amount);
     }
 
     public double getMobDropWorth(Material material) {
@@ -124,16 +124,16 @@ public final class Collector {
     }
 
     public void incrementAmount(Material material, int increment) {
-        lootMap.compute(material,(key,value) -> {
+        lootMap.compute(material, (key, value) -> {
             if (value == null) {
                 return increment;
             }
-            return increment+value;
+            return increment + value;
         });
     }
 
     public void resetAmount(Material material) {
-        setAmount(material,0);
+        setAmount(material, 0);
     }
 
     public Location getLocation() {
@@ -144,7 +144,7 @@ public final class Collector {
         return new Location(world, x, y, z);
     }
 
-    public Map<Material,Integer> getLootMap() {
+    public Map<Material, Integer> getLootMap() {
         return lootMap;
     }
 
@@ -156,20 +156,29 @@ public final class Collector {
     public void sellTNT(Player player) {
         FPlayer fplayer = FPlayers.getInstance().getByPlayer(player);
         Faction faction = fplayer.getFaction();
+        Material material = Material.TNT;
+        int amount = getAmount(material);
 
-        if (faction.isWilderness()) return;
-
-        if (faction.getTNTBank() >= faction.getMaxTNT()) {
-            player.sendMessage(Utils.format("&cYour /f tnt bank is FULL. Please clear some space."));
+        if (faction.isWilderness()) {
             return;
         }
 
-        Language.COLLECTOR_TNT.send(player, str -> str.replace("%tnt%", NumberFormat.getIntegerInstance().format(this.getAmount(Material.TNT))));
+        if (faction.getMaxTNT() <= faction.getTNTBank()) return;
 
-        addTNTSellLog(player, this.getAmount(Material.TNT));
 
-        faction.setTNTBank((int) (faction.getTNTBank() + this.getTntAmount()));
-        this.resetAmount(Material.TNT);
+        if (faction.getMaxTNT() < faction.getTNTBank() + amount) {
+            amount = faction.getMaxTNT() - faction.getTNTBank();
+            faction.setTNTBank(faction.getTNTBank() + amount);
+            setAmount(material, getAmount(material) - (amount / 2));
+        } else {
+            faction.setTNTBank(faction.getTNTBank() + amount);
+            resetAmount(material);
+        }
+        int finalAmount = amount;
+
+        Language.COLLECTOR_TNT.send(player, str -> str.replace("%tnt%", Utils.formatNum(finalAmount)));
+
+        addTNTSellLog(player, amount);
 
         player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
     }
@@ -221,12 +230,12 @@ public final class Collector {
         location.add(y);
         location.add(z);
 
-        jsonObject.put("Location",location);
+        jsonObject.put("Location", location);
 
         JSONObject lootObject = new JSONObject();
-        this.lootMap.forEach((key,value) -> lootObject.put(String.valueOf(key) ,value));
+        this.lootMap.forEach((key, value) -> lootObject.put(String.valueOf(key), value));
 
-        jsonObject.put("Loot",lootObject);
+        jsonObject.put("Loot", lootObject);
 
         return jsonObject;
     }

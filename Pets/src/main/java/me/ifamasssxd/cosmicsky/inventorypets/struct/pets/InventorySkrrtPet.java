@@ -11,6 +11,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -126,6 +128,12 @@ public class InventorySkrrtPet extends InventoryPet {
 
             if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "skrrtCooldown")) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on skrrt cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "skrrtCooldown") + "&c."));
+                continue;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+                p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &8&l*"));
+                player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&8&lBig Timbs&7] &8&l*"));
                 continue;
             }
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {

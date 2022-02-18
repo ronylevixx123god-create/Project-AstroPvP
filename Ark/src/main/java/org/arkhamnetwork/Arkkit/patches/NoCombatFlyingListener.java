@@ -38,14 +38,14 @@ final class NoCombatFlyingListener
             return;
         }
         if (e.getEntity() instanceof Player || e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player || e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Projectile && ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter() instanceof Player) {
-            if (e.getEntity() instanceof Player) {
+            /*if (e.getEntity() instanceof Player) {
                 this.disableFlight((Player) e.getEntity());
                 e.getEntity().setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
             }
             if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Player) {
                 this.disableFlight((Player) ((EntityDamageByEntityEvent) e).getDamager());
                 ((EntityDamageByEntityEvent) e).getDamager().setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));
-            }
+            }*/
             if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent) e).getDamager() instanceof Projectile && ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter() instanceof Player) {
                 this.disableFlight((Player) ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter());
                 ((Player) ((Projectile) ((EntityDamageByEntityEvent) e).getDamager()).getShooter()).setMetadata("ncf_combat", new FixedMetadataValue(Arkkit.get(), System.currentTimeMillis()));

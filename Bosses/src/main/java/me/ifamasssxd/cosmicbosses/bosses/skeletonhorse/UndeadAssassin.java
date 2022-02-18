@@ -41,7 +41,7 @@ import java.util.List;
 public class UndeadAssassin extends Boss {
     Horse horse;
     EmpoweredArrow empoweredArrow;
-    Summoning summoning;
+    //Summoning summoning;
     public boolean invincible;
     int hits;
     long lastHit;
@@ -52,7 +52,7 @@ public class UndeadAssassin extends Boss {
     public UndeadAssassin(final Location location, final BossType bossType) {
         super(location, bossType);
         this.empoweredArrow = new EmpoweredArrow(this);
-        this.summoning = new Summoning(this);
+        //this.summoning = new Summoning(this);
         this.invincible = false;
         this.hits = 0;
         this.lastHit = System.currentTimeMillis();
@@ -154,15 +154,15 @@ public class UndeadAssassin extends Boss {
         if (this.loops % 4 == 0 && this.invincible && entity.getHealth() < this.storedHealth) {
             entity.setHealth((double) this.storedHealth);
         }
-        if (!this.invincible && this.getPhase() == Phase.TWO && this.summoning.canUse() && (this.hits >= 10 || System.currentTimeMillis() - this.timeSinceInvincible >= this.summoning.getCooldown() * 0.45)) {
+/*        if (!this.invincible && this.getPhase() == Phase.TWO && this.summoning.canUse() && (this.hits >= 10 || System.currentTimeMillis() - this.timeSinceInvincible >= this.summoning.getCooldown() * 0.45)) {
             this.hits = 0;
             this.timeSinceInvincible = System.currentTimeMillis();
             this.storedHealth = (int) entity.getHealth();
             this.sendMessage(ChatColor.ITALIC + "Rise my minions!");
             this.sendMessage(ChatColor.ITALIC + "Have you not figured it out? I. AM. ALREADY. DEAD. Now come, join me in the underworld.");
             this.sendMessage(ChatColor.WHITE + "You must defeat the minions to damage the boss!");
-            this.summoning.onAbility();
-        }
+            //this.summoning.onAbility();
+        }*/
         if (this.getPhase() == Phase.ONE && this.empoweredArrow.canUse()) {
             this.empoweredArrow.onAbility();
         }
@@ -377,7 +377,7 @@ public class UndeadAssassin extends Boss {
     public void removeInvincibility() {
         this.invincible = false;
         this.timeSinceInvincible = System.currentTimeMillis();
-        this.summoning.activateCooldown();
+        //this.summoning.activateCooldown();
         this.getEntity().removePotionEffect(PotionEffectType.INVISIBILITY);
     }
 

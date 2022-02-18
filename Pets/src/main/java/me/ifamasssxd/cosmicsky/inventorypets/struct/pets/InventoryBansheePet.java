@@ -101,6 +101,20 @@ public class InventoryBansheePet extends InventoryPet {
 
 
 
+                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+                    nearPlayer.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Banshee Pet &7[" + player.getName() + "&7] &8&l*"));
+                    player.sendMessage(CC.translate("&8&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&8&lBig Timbs&7] &8&l*"));
+                    continue;
+                }
+
+                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.HALLOWEEN_2021_HELMET)) {
+                    nearPlayer.sendMessage(CC.translate("&6&l* MINEMAN MUZZLE &7Blocked &4Banshee Pet &7[" + player.getName() + "&7] &6&l*"));
+                    player.sendMessage(CC.translate("&6&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&6&lMineman Muzzle&7] &6&l*"));
+                    continue;
+                }
+
+
+
 
                 if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
                     player.sendMessage(CC.translate("&c&lPET: &c" + nearPlayer.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(nearPlayer, "bansheeCooldown") + "&c."));

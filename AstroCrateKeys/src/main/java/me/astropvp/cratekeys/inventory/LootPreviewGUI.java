@@ -3,6 +3,7 @@ package me.astropvp.cratekeys.inventory;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
+import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 
@@ -102,8 +103,8 @@ public class LootPreviewGUI {
 
 
 
-                LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, type);
-                lootPreviewGUI.expShopUI.open(player);
+                //LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, type);
+                //lootPreviewGUI.expShopUI.open(player);
             }));
         }
 

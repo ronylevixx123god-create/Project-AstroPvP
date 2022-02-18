@@ -109,7 +109,7 @@ public class KingSlime extends Boss {
             this.sendMessage(ChatColor.ITALIC + "Breath it in!");
         }
         final Location entityLocation = this.getEntity().getLocation();
-        if (this.getPhase() == Phase.ONE && this.loops % 4 == 0 && this.getMinions().size() < 6 && this.random.nextInt(3) <= 1) {
+        /*if (this.getPhase() == Phase.ONE && this.loops % 4 == 0 && this.getMinions().size() < 6 && this.random.nextInt(3) <= 1) {
             for (final Entity ent : this.getNearbyEntities(20.0, EntityType.PLAYER)) {
                 if (this.getMinions().size() >= 8) {
                     break;
@@ -130,7 +130,7 @@ public class KingSlime extends Boss {
                 Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);
             }
         }
-        this.updateMinionPath();
+        this.updateMinionPath();*/
         this.updateSize();
         if (this.loops % 16 == 0) {
             this.updateScoreboard();

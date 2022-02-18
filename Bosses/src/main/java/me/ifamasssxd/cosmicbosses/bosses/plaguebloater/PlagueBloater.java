@@ -35,12 +35,12 @@ import java.util.List;
 
 public class PlagueBloater extends Boss {
     private final PlagueBomb plagueBomb;
-    private final PlagueCarriers plagueCarrier;
+    //private final PlagueCarriers plagueCarrier;
 
     public PlagueBloater(final Location location, final BossType bossType) {
         super(location, bossType);
         this.plagueBomb = new PlagueBomb(this);
-        this.plagueCarrier = new PlagueCarriers(this);
+        //this.plagueCarrier = new PlagueCarriers(this);
         ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
         OPKey.setAmount(1);
         this.getLootPool().add(OPKey);
@@ -94,9 +94,9 @@ public class PlagueBloater extends Boss {
         }
         if (this.random.nextBoolean() && this.plagueBomb.canUse() && this.loops >= 20) {
             this.plagueBomb.onAbility();
-        } else if (this.random.nextBoolean() && this.plagueCarrier.canUse() && this.loops >= 4) {
+        } /*else if (this.random.nextBoolean() && this.plagueCarrier.canUse() && this.loops >= 4) {
             this.plagueCarrier.onAbility();
-        }
+        }*/
         if (this.loops % 5 == 0) {
             final Iterator<Entity> ent = this.getMinions().iterator();
             while (ent.hasNext()) {
@@ -110,16 +110,16 @@ public class PlagueBloater extends Boss {
                     e.teleport(this.getEntity().getLocation().clone().add(0.0, 5.0, 0.0));
                 }
             }
-            for (Entity ent2 : (List<Entity>) Lists.newArrayList((Iterable) this.plagueCarrier.getEntities())) {
+            /*for (Entity ent2 : (List<Entity>) Lists.newArrayList((Iterable) this.plagueCarrier.getEntities())) {
                 if (ent2 == null || ent2.isDead()) {
-                    this.plagueCarrier.getEntities().remove(ent2);
+                    //this.plagueCarrier.getEntities().remove(ent2);
                 } else {
                     if (ent2.getLocation().distanceSquared(this.getEntity().getLocation()) < 1500.0) {
                         continue;
                     }
                     ent2.teleport(BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 20, 5, 20));
                 }
-            }
+            }*/
         }
         if (this.loops % 3 == 0 && this.getEntity().hasMetadata("heroicEnvoyBoss") && this.getEntity().getLocation().distance(this.getLocation()) > 30.0) {
             this.getEntity().teleport(this.getLocation());
@@ -133,7 +133,7 @@ public class PlagueBloater extends Boss {
     @Override
     public void cleanup() {
         this.plagueBomb.clearEntities();
-        this.plagueCarrier.clearEntities();
+        //this.plagueCarrier.clearEntities();
         this.removeMinions();
         this.clearScoreboard();
     }
@@ -286,8 +286,8 @@ public class PlagueBloater extends Boss {
     public PlagueBomb getPlagueBomb() {
         return this.plagueBomb;
     }
-
+/*
     public PlagueCarriers getPlagueCarrier() {
         return this.plagueCarrier;
-    }
+    }*/
 }

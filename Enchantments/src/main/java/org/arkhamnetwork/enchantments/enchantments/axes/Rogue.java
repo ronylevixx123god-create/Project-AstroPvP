@@ -79,7 +79,7 @@ public class Rogue extends CustomEnchantment {
                 damage *= 1.1;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2) {
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2  && !player.hasMetadata("noCape")) {
                 multi +=0.15;
             }
 

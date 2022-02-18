@@ -104,6 +104,13 @@ public class InventoryWitcherPet extends InventoryPet {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on witcher cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "witcherCooldown") + "&c."));
                 continue;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+                p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
+                player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&8&lBig Timbs&7] &8&l*"));
+                continue;
+            }
+
             /*if (WitcherCooldown.isOnWitcherCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
                 continue;

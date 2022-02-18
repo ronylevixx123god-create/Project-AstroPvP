@@ -75,7 +75,7 @@ return;
             damage *= 1.15;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2 &&  !player.hasMetadata("noCape")) {
             damage *=1.15;
         }
 

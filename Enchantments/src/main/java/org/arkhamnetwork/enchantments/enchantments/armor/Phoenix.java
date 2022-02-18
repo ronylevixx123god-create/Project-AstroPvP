@@ -199,6 +199,19 @@ extends CustomEnchantment {
                         e.printStackTrace();
                     }
                 }
+                if (damager instanceof Player) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.HALLOWEEN_2021_HELMET) && Math.random() < 0.25 && !damager.hasMetadata("muzzleCD") && !player.hasMetadata("muzzle")) {
+                        player.setMetadata("muzzle", new FixedMetadataValue(Enchantments.getInstance(), true));
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+                            player.removeMetadata("muzzle", Enchantments.getInstance());
+                        }, 10*20);
+                        damager.setMetadata("muzzleCD", new FixedMetadataValue(Enchantments.getInstance(), true));
+                        damager.sendMessage(CC.translate("&6&l* MINEMAN MUZZLE &7Cursed &c" + player.getName() + " &6&l*"));
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+                            damager.removeMetadata("muzzleCD", Enchantments.getInstance());
+                        }, 600*20);
+                    }
+                }
                 for (Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (!(ent instanceof Player)) continue;
                     ((Player)ent).sendMessage(String.valueOf(ChatColor.RED.toString()) + ChatColor.BOLD.toString() + "*** PHOENIX SOUL (" + (Object)ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + (Object)ChatColor.RED + (Object)ChatColor.BOLD + ") ***");

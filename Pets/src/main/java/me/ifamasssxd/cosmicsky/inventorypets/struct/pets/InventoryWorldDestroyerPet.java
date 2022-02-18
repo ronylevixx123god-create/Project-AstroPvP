@@ -110,7 +110,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-        final Player test = target;
         if (WorldGuardUtils.isPvPDisabled(locationClicked))
             throw new PrefixedPetException("Not allowed in this region!");
         if (player.hasMetadata("inDungeonParkour"))
@@ -132,6 +131,14 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
             return true;
         }
+
+        if (((Player)target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
+            petItem.setLastUsed(System.currentTimeMillis());
+            player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
+            target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
+            return true;
+        }
+
 
         if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
             player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(target, "cageCooldown") + "&c."));
