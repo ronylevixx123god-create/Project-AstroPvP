@@ -1,0 +1,156 @@
+# This will tell the plugin what configuration version is currently being used. Do not change this.
+config-version: 3
+
+# Corrects minecrafts faulty horizontal calculations with enderpearl teleportation.
+correct-enderpearl-teleportation: true
+
+# Sometimes clients go a tad below the full block when teleporting into unloaded chunks. This will attempt to fix the issue.
+correct-ground-teleportation: true
+
+# Allows players to freely move once inside a block, preventing them from getting stuck.
+lenient: true
+
+# This message is displayed to the player when the plugin stops them from phasing. Set this to '' to display nothing.
+message: ''
+
+# Whenever the plugin configuration updates, it'll attempt to update all material lists (doors, trapdoors, fences & passable).
+update-material-lists: true
+
+# These blocks will be treated like doors. Players cannot pass through them.
+doors:
+  - ACACIA_DOOR
+  - BIRCH_DOOR
+  - DARK_OAK_DOOR
+  - IRON_DOOR_BLOCK
+  - JUNGLE_DOOR
+  - SPRUCE_DOOR
+  - WOODEN_DOOR
+
+# These blocks will be treated like trapdoors. Players cannot pass through them.
+trapdoors:
+  - TRAP_DOOR
+  - IRON_TRAPDOOR
+
+# These blocks will be treated like gates. Players cannot pass through them.
+gates:
+  - ACACIA_FENCE_GATE
+  - BIRCH_FENCE_GATE
+  - DARK_OAK_FENCE_GATE
+  - FENCE_GATE
+  - JUNGLE_FENCE_GATE
+  - SPRUCE_FENCE_GATE
+
+# These blocks will be treated like fences. Players cannot pass through them.
+fences:
+  - ACACIA_FENCE
+  - BIRCH_FENCE
+  - COBBLE_WALL
+  - DARK_OAK_FENCE
+  - FENCE
+  - IRON_FENCE
+  - JUNGLE_FENCE
+  - NETHER_FENCE
+  - SPRUCE_FENCE
+  - STAINED_GLASS_PANE
+  - THIN_GLASS
+
+# Players are able to pass through these blocks.
+passable:
+  - ACACIA_STAIRS
+  - ACTIVATOR_RAIL
+  - AIR
+  - ANVIL
+  - ARMOR_STAND
+  - BANNER
+  - BEACON
+  - BED_BLOCK
+  - BIRCH_WOOD_STAIRS
+  - BREWING_STAND
+  - BRICK_STAIRS
+  - BROWN_MUSHROOM
+  - CACTUS
+  - CAKE_BLOCK
+  - CARPET
+  - CARROT
+  - CAULDRON
+  - CHEST
+  - COBBLESTONE_STAIRS
+  - COCOA
+  - CROPS
+  - DARK_OAK_STAIRS
+  - DAYLIGHT_DETECTOR
+  - DAYLIGHT_DETECTOR_INVERTED
+  - DEAD_BUSH
+  - DETECTOR_RAIL
+  - DIODE_BLOCK_OFF
+  - DIODE_BLOCK_ON
+  - DOUBLE_PLANT
+  - DRAGON_EGG
+  - ENCHANTMENT_TABLE
+  - ENDER_CHEST
+  - ENDER_PORTAL
+  - ENDER_PORTAL_FRAME
+  - FIRE
+  - FLOWER_POT
+  - GOLD_PLATE
+  - HOPPER
+  - IRON_PLATE
+  - JUNGLE_WOOD_STAIRS
+  - LADDER
+  - LAVA
+  - LEVER
+  - LONG_GRASS
+  - MELON_STEM
+  - NETHER_BRICK_STAIRS
+  - NETHER_WARTS
+  - PISTON_BASE
+  - PISTON_EXTENSION
+  - PISTON_MOVING_PIECE
+  - PISTON_STICKY_BASE
+  - PORTAL
+  - POTATO
+  - POWERED_RAIL
+  - PUMPKIN_STEM
+  - QUARTZ_STAIRS
+  - RAILS
+  - RED_MUSHROOM
+  - RED_ROSE
+  - RED_SANDSTONE_STAIRS
+  - REDSTONE_COMPARATOR_OFF
+  - REDSTONE_COMPARATOR_ON
+  - REDSTONE_TORCH_OFF
+  - REDSTONE_TORCH_ON
+  - REDSTONE_WIRE
+  - SANDSTONE_STAIRS
+  - SAPLING
+  - SEEDS
+  - SIGN
+  - SIGN_POST
+  - SKULL
+  - SMOOTH_STAIRS
+  - SNOW
+  - SOUL_SAND
+  - SPRUCE_WOOD_STAIRS
+  - STANDING_BANNER
+  - STATIONARY_LAVA
+  - STATIONARY_WATER
+  - STEP
+  - STONE_BUTTON
+  - STONE_PLATE
+  - STONE_SLAB2
+  - SUGAR_CANE_BLOCK
+  - TORCH
+  - TRAPPED_CHEST
+  - TRIPWIRE
+  - TRIPWIRE_HOOK
+  - VINE
+  - WALL_BANNER
+  - WALL_SIGN
+  - WATER
+  - WATER_LILY
+  - WEB
+  - WOOD_BUTTON
+  - WOOD_PLATE
+  - WOOD_STAIRS
+  - WOOD_STEP
+  - YELLOW_FLOWER

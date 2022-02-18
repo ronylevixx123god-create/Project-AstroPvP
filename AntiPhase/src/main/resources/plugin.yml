@@ -1,0 +1,6 @@
+name: AntiPhase
+main: net.astropvp.antiphase.AntiPhase
+version: 0.0.1-SNAPSHOT
+description: Protect the server against clients V-Clipping or Phasing into bases
+permissions:
+  antiphase.bypass: {default: false}

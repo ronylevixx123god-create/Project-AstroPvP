@@ -31,6 +31,7 @@
         <module name="AstroGenBuckets" />
         <module name="Contest" />
         <module name="Core" />
+        <module name="AntiPhase" />
         <module name="Lootboxes" />
         <module name="AuctionHouse" />
         <module name="Factions" />

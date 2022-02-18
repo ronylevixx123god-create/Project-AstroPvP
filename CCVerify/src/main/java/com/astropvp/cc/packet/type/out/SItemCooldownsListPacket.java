@@ -13,9 +13,9 @@ public class SItemCooldownsListPacket implements Packet {
     }
 
     @SerializedName("cooldowns")
-    private Map<String, List<Long>> cooldowns;
+    private Map<String, List<Double>> cooldowns;
 
-    public SItemCooldownsListPacket(Map<String, List<Long>> cooldowns){
+    public SItemCooldownsListPacket(Map<String, List<Double>> cooldowns){
         this.cooldowns = cooldowns;
     }
 }

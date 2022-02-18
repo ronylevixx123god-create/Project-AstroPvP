@@ -73,6 +73,7 @@
         <module>AstroWildPvP</module>
         <module>MoneyShop</module>
         <module>ProxyPatch</module>
+        <module>AntiPhase</module>
     </modules>
 
     <build>
