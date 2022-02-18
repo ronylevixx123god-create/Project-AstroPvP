@@ -1,26 +1,17 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  org.bukkit.plugin.java.JavaPlugin
- */
+// Decompiled with: CFR 0.151
+// Class Version: 8
 package me.recolance.auction.menu.categories;
 
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import java.util.List;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
+import me.recolance.auction.menu.categories.AuctionCategory;
+import me.recolance.auction.menu.categories.AuctionMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.List;
 
 public class CategoryItemViewMenu
         extends AuctionMenu {
@@ -32,6 +23,7 @@ public class CategoryItemViewMenu
         this.category = category;
     }
 
+    @Override
     public void redraw() {
         this.clearItems();
         int PREVIOUS_PAGE_SLOT = this.inventory.getSize() - 6;
@@ -41,14 +33,14 @@ public class CategoryItemViewMenu
         List<Listing> items = this.category.getCategoryItems();
         this.setItem(MAIN_CATEGORY_SLOT, new InventoryItem(new ItemBuilder(Material.PAPER, CC.RedB + "Main Category Menu", new String[]{CC.Gray + "Click to view all current", CC.Gray + "auction item categories."}).build()).click(() -> {
             if (this.getParentGUI() != null) {
-                this.getParentGUI().openGUI((JavaPlugin) Auction.getPlugin());
+                this.getParentGUI().openGUI(Auction.getPlugin());
                 this.getParentGUI().redraw();
             }
         }));
         this.setItem(COLLECTION_BIN_SLOT, this.getCollectionBinItem());
         if (items.size() > 0) {
             int perPage = 45;
-            int maxPages = (int) Math.ceil((double) items.size() / (double) perPage);
+            int maxPages = (int)Math.ceil((double)items.size() / 45.0);
             if (this.page > maxPages) {
                 this.page = maxPages;
             }
@@ -77,8 +69,8 @@ public class CategoryItemViewMenu
                     this.redraw();
                 }));
             }
-            int startIndex = this.page * perPage - perPage;
-            int endIndex = startIndex + perPage;
+            int startIndex = this.page * 45 - 45;
+            int endIndex = startIndex + 45;
             int index = 0;
             for (int i = startIndex; i < endIndex && i < items.size(); ++i) {
                 Listing item = items.get(i);
@@ -87,4 +79,3 @@ public class CategoryItemViewMenu
         }
     }
 }
-

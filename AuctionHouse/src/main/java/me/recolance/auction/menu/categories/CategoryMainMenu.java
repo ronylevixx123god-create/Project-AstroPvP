@@ -1,18 +1,5 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.gui.InventoryItem
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemBuilder
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NumberUtils
- *  com.google.common.collect.Lists
- *  org.bukkit.Material
- *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
- *  org.bukkit.me.astropvp.cratekeys.inventory.meta.ItemMeta
- *  org.bukkit.plugin.java.JavaPlugin
- */
+// Decompiled with: CFR 0.151
+// Class Version: 8
 package me.recolance.auction.menu.categories;
 
 import com.cosmicpvp.cosmicutils.gui.InventoryItem;
@@ -20,19 +7,20 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.List;
 import me.recolance.auction.Auction;
 import me.recolance.auction.auction.Listing;
 import me.recolance.auction.data.AuctionItem;
 import me.recolance.auction.data.DataHandler;
 import me.recolance.auction.menu.MenuRenderer;
+import me.recolance.auction.menu.categories.AuctionCategory;
+import me.recolance.auction.menu.categories.AuctionMenu;
+import me.recolance.auction.menu.categories.CategoryItemViewMenu;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class CategoryMainMenu
         extends AuctionMenu {
@@ -57,10 +45,7 @@ public class CategoryMainMenu
         return this.categories;
     }
 
-    public void setCategories(List<AuctionItem> categories) {
-        this.categories = categories;
-    }
-
+    @Override
     public void redraw() {
         this.clearItems();
         int PREVIOUS_PAGE_SLOT = this.inventory.getSize() - 6;
@@ -71,7 +56,7 @@ public class CategoryMainMenu
         int MAIN_CATEGORIES = this.inventory.getSize() - 7;
         List<AuctionItem> categories = this.getCategories();
         int perPage = 45;
-        int maxPages = (int) Math.ceil((double) categories.size() / (double) perPage);
+        int maxPages = (int)Math.ceil((double)categories.size() / 45.0);
         if (this.page > maxPages) {
             this.page = maxPages;
         }
@@ -121,30 +106,30 @@ public class CategoryMainMenu
                 this.redraw();
             });
         }
-        int startIndex = this.page * perPage - perPage;
-        int endIndex = startIndex + perPage;
+        int startIndex = this.page * 45 - 45;
+        int endIndex = startIndex + 45;
         int index = 0;
         for (int i = startIndex; i < endIndex && i < categories.size(); ++i) {
             AuctionItem item = categories.get(i);
             ItemStack display = item.getDisplay();
             ItemMeta im = display.getItemMeta();
             if (item instanceof AuctionCategory) {
-                AuctionCategory category = (AuctionCategory) item;
+                AuctionCategory category = (AuctionCategory)item;
                 if (category.getCategoryItems().size() == 1 && category.getSubCategories().isEmpty()) {
                     this.setItem(index++, this.getAuctionItem(category.getCategoryItems().get(0)));
                     continue;
                 }
-                ArrayList lore = Lists.newArrayList();
+                ArrayList<String> lore = Lists.newArrayList();
                 lore.add("");
                 if (category.getSubCategories() != null && !category.getSubCategories().isEmpty()) {
                     lore.add(CC.Gold + "Sub Categories: " + CC.Yellow + category.getSubCategories().size());
                 }
                 lore.add(CC.GoldB + "Listings: " + CC.Yellow + category.getCategoryItems().size());
-                lore.add(CC.Gold + " Lowest Price: " + CC.YellowB + "$" + CC.Yellow + NumberUtils.formatMoney((double) category.getLowestPricedItem()));
+                lore.add(CC.Gold + " Lowest Price: " + CC.YellowB + "$" + CC.Yellow + NumberUtils.formatMoney(category.getLowestPricedItem()));
                 if (category.getSubCategories() != null && !category.getSubCategories().isEmpty()) {
                     lore.add(CC.Gray + "Click to view sub categories!");
                 }
-                im.setLore((List) lore);
+                im.setLore(lore);
                 display.setItemMeta(im);
                 this.setItem(index++, new InventoryItem(display).click(() -> {
                     if (category.getSubCategories() != null && category.getSubCategories().size() > 0) {
@@ -156,13 +141,16 @@ public class CategoryMainMenu
                         this.redraw();
                         return;
                     }
-                    new CategoryItemViewMenu(this.player, category).setParentGUI(this).openGUI((JavaPlugin) Auction.getPlugin());
+                    new CategoryItemViewMenu(this.player, category).setParentGUI(this).openGUI(Auction.getPlugin());
                 }));
                 continue;
             }
             if (!(item instanceof Listing)) continue;
-            this.setItem(index++, this.getAuctionItem((Listing) item));
+            this.setItem(index++, this.getAuctionItem((Listing)item));
         }
     }
-}
 
+    public void setCategories(List<AuctionItem> categories) {
+        this.categories = categories;
+    }
+}

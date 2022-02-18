@@ -65,7 +65,7 @@ public class DataHandler {
     public static void generateTables() {
         Connection connection = Database.getConnection();
         try {
-            PreparedStatement listings = connection.prepareStatement("CREATE TABLE IF NOT EXISTS listings(id VARCHAR(255) NOT NULL,listed_by VARCHAR(255) NOT NULL,item TEXT NOT NULL,price INT NOT NULL,end_time BIGINT NOT NULL,PRIMARY KEY (id))");
+            PreparedStatement listings = connection.prepareStatement("CREATE TABLE IF NOT EXISTS listings(id VARCHAR(255) NOT NULL,listed_by VARCHAR(255) NOT NULL,item TEXT NOT NULL,price BIGINT NOT NULL,end_time BIGINT NOT NULL,PRIMARY KEY (id))");
             listings.execute();
             PreparedStatement expired = connection.prepareStatement("CREATE TABLE IF NOT EXISTS expired(id VARCHAR(255) NOT NULL,player VARCHAR(255) NOT NULL,item TEXT NOT NULL,expire_time BIGINT NOT NULL,PRIMARY KEY (id))");
             expired.execute();
@@ -93,7 +93,7 @@ public class DataHandler {
             ResultSet set = load.executeQuery();
             while (set.next()) {
                 UUID playerId = UUID.fromString(set.getString("listed_by"));
-                Listing listing = new Listing(UUID.fromString(set.getString("id")), set.getLong("end_time"), playerId, DataHandler.fromString(set.getString("item")), set.getInt("price"));
+                Listing listing = new Listing(UUID.fromString(set.getString("id")), set.getLong("end_time"), playerId, DataHandler.fromString(set.getString("item")), set.getDouble("price"));
                 DataHolder.addListing(listing);
                 DataHolder.addPlayerListing(playerId, listing);
             }

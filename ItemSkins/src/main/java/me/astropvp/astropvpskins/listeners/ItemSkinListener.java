@@ -203,7 +203,7 @@ public class ItemSkinListener implements Listener {
                 || type.endsWith("_SWORD") || type.endsWith("AXE");
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamageByEntity(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
         Entity damaged = event.getEntity();
