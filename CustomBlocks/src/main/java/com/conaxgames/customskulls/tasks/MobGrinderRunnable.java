@@ -8,7 +8,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 50;
+    int amountOfExpPerBlaze = 35;
 
     @Override
     public void run() {
@@ -48,7 +48,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             } else if (chance < 0.01) {
                 int legKeys = mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY);
                 mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, legKeys+1);
-            } else if (chance < 0.1) {
+            } else if (chance < 0.085) {
                 int astroKeys = mobGrinderCache.getCrateKeys().get(CrateType.ASTRO);
                 mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, astroKeys+1);
             }

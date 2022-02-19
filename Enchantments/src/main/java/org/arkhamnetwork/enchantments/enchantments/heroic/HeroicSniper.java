@@ -76,6 +76,10 @@ extends CustomEnchantment {
         if (((Player) target).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) target).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) target).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
         return;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
+            return;
+        }
             LivingEntity victima = target;
         double y = proj.getLocation().getY();
         double victimay = victima.getLocation().getY();

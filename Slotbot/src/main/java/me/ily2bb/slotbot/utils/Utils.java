@@ -19,6 +19,7 @@ import org.yaml.snakeyaml.external.biz.base64Coder.Base64Coder;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
@@ -135,16 +136,15 @@ public class Utils {
         return new Object[]{items, start + 1};
     }
 
-    public static ItemStack getRandomItemFromLootTable(final Object[] objects) {
-        final HashMap<Integer[], ItemStack> map = (HashMap<Integer[], ItemStack>) objects[0];
-        final int random = ThreadLocalRandom.current().nextInt(1, (int) objects[1]);
-        for (final Map.Entry<Integer[], ItemStack> entry : map.entrySet()) {
-            final Integer[] values = entry.getKey();
-            final int from = values[0];
-            final int to = values[1];
-            if (from <= random && to >= random) {
+    public static ItemStack getRandomItemFromLootTable(Object[] objects) {
+        HashMap<Integer[], ItemStack> map = (HashMap<Integer[], ItemStack>)objects[0];
+        int random = ThreadLocalRandom.current().nextInt(1, (Integer) objects[1]);
+        for (Map.Entry<Integer[], ItemStack> entry : map.entrySet()) {
+            Integer[] values = entry.getKey();
+            int from = values[0];
+            int to = values[1];
+            if (from <= random && to >= random)
                 return entry.getValue();
-            }
         }
         return null;
     }

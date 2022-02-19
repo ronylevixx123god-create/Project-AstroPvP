@@ -118,19 +118,25 @@ public class HolyWhiteScrollListener implements Listener {
                 if (isMonopolied && !isKilledHoldingTravAxe) {
                     if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
-                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved you from getting monoed &a&l*"));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved your item from getting monoed &a&l*"));
                         continue;
                     }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(),SkinType.DOOMSDAY_BACKPACK_BUGOUT) && Math.random() < 0.2) {
+                        killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask &a&l* "));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved your item from getting monoed &a&l*"));
+                        continue;
+                    }
+
                     if (MaskUtils.hasMaskEquipped(e.getEntity(), "ELF") && Math.random() <= 0.25) {
-                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &bMonopoly Effect &a&l*"));
+                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &bMonopoly Item &a&l*"));
                         continue;
                     }
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
                     e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
-                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.3F);
-                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 11.0F);
-
+                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
+                    e.getEntity().getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
                     if (killerIsControllingFrozen && Math.random() < 0.1) {
                         e.getEntity().sendMessage(CC.RedB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");

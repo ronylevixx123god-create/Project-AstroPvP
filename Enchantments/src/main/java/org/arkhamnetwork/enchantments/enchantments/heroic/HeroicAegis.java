@@ -1,5 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -27,6 +29,11 @@ public class HeroicAegis extends HeroicCustomEnchantment
         if (player.hasMetadata("noDefenseProcs")) {
             return;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
+            return;
+        }
+
         final int ticksToCheck = 100;
         if (player.hasMetadata("aegis_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("aegis_nextReset").get(0).asLong()) {

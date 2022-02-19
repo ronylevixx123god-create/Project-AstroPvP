@@ -121,6 +121,10 @@ extends CustomEnchantment {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2 && !player.hasMetadata("noCape")) {
                 increase *=1.15;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
+                increase*=0.9;
+            }
             AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(increase, e, "&c&lHero Killer");
         }
     }

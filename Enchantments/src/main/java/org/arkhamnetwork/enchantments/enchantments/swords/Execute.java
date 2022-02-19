@@ -16,6 +16,8 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -40,7 +42,11 @@ public class Execute extends CustomEnchantment
         if (!(target instanceof Player)) {
             return;
         }
-        if (target.getHealth() > 6.0) {
+        double healThres = 6.0;
+        if (((Player)player).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_2021_BOOTS))
+            healThres*=1.3;
+
+        if (target.getHealth() > healThres) {
             return;
         }
         final double random = Math.random();

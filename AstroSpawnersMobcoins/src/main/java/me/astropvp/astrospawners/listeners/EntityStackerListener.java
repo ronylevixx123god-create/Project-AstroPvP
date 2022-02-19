@@ -7,6 +7,7 @@ import com.compilex.CompilexPermissions.CompilexPermissions;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.EnchantmentAPI;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
@@ -88,18 +89,25 @@ public class EntityStackerListener implements Listener {
                 return;
             }
 
+            int remove = 1;
+            if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Kill Aura") && Math.random() < 0.15) {
+                remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+            }
+
 
             int amount = mobStackerUtils.getStackSize(entity);
             if (amount <= 1) {
                 mobStackerUtils.removeStackedMob(entity);
                 return;
             }
-            amount--;
+            amount-=remove;
             mobStackerUtils.setStackSize(entity, amount);
 
 
             Player p = (Player) e.getDamager();
-
+            if (remove > 1) {
+                p.sendMessage(CC.translate("&6&l* KILL AURA [&7-" +remove + "x&6&l] *" ));
+            }
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
 
 
@@ -108,7 +116,7 @@ public class EntityStackerListener implements Listener {
 
             double exp = 150;
 
-            PlayerData data = manager.getPlayerData(p);
+            //PlayerData data = manager.getPlayerData(p);
 
 
             if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
@@ -116,7 +124,10 @@ public class EntityStackerListener implements Listener {
             }
 
             if (p.getInventory().firstEmpty() != -1) {
-                blazeLoot(p);
+                while (remove != 0) {
+                    blazeLoot(p);
+                    remove--;
+                }
             }
 
 
@@ -126,6 +137,8 @@ public class EntityStackerListener implements Listener {
                 exp +=100;
 
             }
+
+
 
             if (isOnCosmicClient) {
                 exp +=50;

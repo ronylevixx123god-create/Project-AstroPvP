@@ -14,6 +14,8 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -40,6 +42,11 @@ extends CustomEnchantment {
             if (player.getWorld().getEnvironment() == World.Environment.THE_END || GeneralUtil.isKOTHWorld(player.getWorld())) {
                 return;
             }
+
+            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) && Math.random() < 0.75) {
+                return;
+            }
+
             Player p = (Player)player;
             if (Math.random() < (double)level * 0.125) {
                 GeneralUtil.pushAwayEntity(attacker, (Entity)p, 1.5 + 0.5 * (double)level);

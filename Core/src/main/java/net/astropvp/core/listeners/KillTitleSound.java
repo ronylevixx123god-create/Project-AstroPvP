@@ -19,7 +19,7 @@ public class KillTitleSound implements Listener {
         Player killed = (Player) e.getEntity();
 
         killer.sendTitle(new Title("", CC.translate("&a&lKILLED &f") + killed.getName(), 20, 50, 20));
-        killer.getWorld().playSound(e.getEntity().getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
+        killer.getWorld().playSound(e.getEntity().getLocation(), Sound.ARROW_HIT, 3.0F, 10.0F);
 
 
     }

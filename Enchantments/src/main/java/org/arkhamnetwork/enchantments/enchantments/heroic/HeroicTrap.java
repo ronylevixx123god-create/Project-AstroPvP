@@ -56,6 +56,9 @@ public class HeroicTrap extends HeroicCustomEnchantment
                 ptarget.sendMessage(CC.translate("&3&l* TEDDY SLIPPERS &7Reflected &dTitan Trap &3&l*"));
                 return;
             }
+
+            if (((Player)ptarget).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.HALLOWEEN_2021_BOOTS))
+                return;
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.FLAMING_HALO) && Math.random() < 0.50) {
                 ptarget.sendMessage(CC.translate("&6&l* FLAMING HALO BLOCKED &7[Titan Trap] &6&l*"));
                 return;

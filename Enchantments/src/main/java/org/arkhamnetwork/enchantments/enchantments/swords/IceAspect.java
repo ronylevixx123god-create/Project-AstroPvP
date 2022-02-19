@@ -63,6 +63,9 @@ extends CustomEnchantment {
                 return;
             }
 
+            if (((Player)playerHit).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2021_BOOTS))
+                return;
+
             if (((Player)playerHit).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.BACK_TO_SCHOOL_2021_AMULET))
                 return;
 

@@ -23,6 +23,8 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
@@ -57,6 +59,10 @@ extends CustomEnchantment {
         }
         Projectile proj = (Projectile)event.getDamager();
         if (!(proj.getShooter() instanceof Player)) {
+            return;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
             return;
         }
         LivingEntity victima = target;

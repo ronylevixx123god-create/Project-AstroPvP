@@ -68,6 +68,7 @@ public class AntiPhase extends JavaPlugin implements Listener {
     )
     public void preventLongMoves(PlayerMoveEvent event) {
         if (event.getFrom().distance(event.getTo()) > 8.0D) {
+
             event.setCancelled(true);
         }
 
@@ -78,7 +79,8 @@ public class AntiPhase extends JavaPlugin implements Listener {
             priority = EventPriority.MONITOR
     )
     public void setTeleported(PlayerTeleportEvent event) {
-        if (event.getCause() != TeleportCause.ENDER_PEARL) {
+        if (event.getCause() != TeleportCause.UNKNOWN) {
+
             this.task.addTeleportedPlayer(event.getPlayer().getUniqueId());
         }
 
@@ -89,6 +91,7 @@ public class AntiPhase extends JavaPlugin implements Listener {
             priority = EventPriority.MONITOR
     )
     public void setTeleported(PlayerRespawnEvent event) {
+
         this.task.addTeleportedPlayer(event.getPlayer().getUniqueId());
     }
 }

@@ -58,6 +58,7 @@ public class EnderPearlFixes implements Listener {
                     if (!player.isFlying() && !player.getAllowFlight()) {
                         System.out.println("[AntiClip] (newPatch v1) Adjusted Pearl Height (flight=false)");
                         newLoc = to.clone().add(0.0, -0.9, 0.0);
+
                     } else {
                         System.out.println("[AntiClip] (newPatch v1) Adjusted Pearl Height (flight=true)");
                         newLoc = to.clone().add(0.0, -1.5, 0.0);
@@ -75,8 +76,14 @@ public class EnderPearlFixes implements Listener {
                     System.out.println("[AntiClip] (newPatch v2) Adjusted Pearl Height -0.5");
                 }
             } else {
+
                 System.out.println(toBlock.getType().name());
                 System.out.println(toAbove.getType().name());
+                if (toBlock.getType() == Material.AIR && toAbove.getType() == Material.AIR) {
+                    to.setY(to.getY()+1);
+                    e.setTo(to);
+                    return;
+                }
                 if (to.clone().add(0, -1, 0).getBlock().getType() == Material.AIR) {
                     System.out.println("setting +1 y loc");
 
@@ -84,7 +91,12 @@ public class EnderPearlFixes implements Listener {
                     e.setTo(to);
                     //e.setCancelled(true);
                     return;
-                };
+                } else  if (toAbove.getType() != Material.AIR) {
+                    System.out.println("[AntiClip] (Fixed BlockGlitch)");
+                    to.setY(to.getY()+1);
+                    e.setTo(to);
+
+                }
                 if (to.getY() > from.getY()) {
                     final Location newLoc = to.clone();
                     Bukkit.getLogger().info("to_upwards = " + newLoc + ", m:" + newLoc.getBlock().getType().name());
@@ -145,7 +157,7 @@ public class EnderPearlFixes implements Listener {
                 Location location = hitBlock.getLocation().clone().add(0.0, 0.5, 0.0);
                 location.setYaw(player.getLocation().getYaw());
                 location.setPitch(player.getLocation().getPitch());
-                player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                player.teleport(location, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                 System.out.println("Deb 1");
                 return;
             }
@@ -155,7 +167,7 @@ public class EnderPearlFixes implements Listener {
             Block blockBehind = blockBehindLocation.getBlock();
             Material material = type = blockBehind == null ? null : blockBehind.getType();
             if (!(blockBehind != null && type != Material.AIR && !this.isPermeable(type) || (upperMaterial = blockBehind.getLocation().add(0.0, 1.0, 0.0).getBlock().getType()) != null && upperMaterial != Material.AIR)) {
-                player.teleport(blockBehindLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                player.teleport(blockBehindLocation, PlayerTeleportEvent.TeleportCause.ENDER_PEARL);
                 System.out.println("Deb 2");
 
             }

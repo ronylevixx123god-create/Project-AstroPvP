@@ -90,7 +90,7 @@ public class InventoryUtils {
         lore.add("");
         lore.add(CC.GoldB + "Winner Reward:");
         lore.add(CC.WhiteB + "● " + CC.Gray + "1x Koth Lootbag");
-        lore.add(CC.WhiteB + "● " + CC.Yellow + "10$ Buycraft Giftcard");
+        lore.add(CC.WhiteB + "● " + CC.Yellow + "20% Chance for 10$ Buycraft Giftcard");
         lore.add("");
         lore.add(CC.translate("&6&lFaction Bonus:"));
         lore.add(CC.translate("&f&l● &7+10% Outgoing Damage"));

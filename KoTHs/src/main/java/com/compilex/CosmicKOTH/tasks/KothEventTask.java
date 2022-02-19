@@ -196,7 +196,11 @@ implements Runnable {
             CombatLog.flagCombat(this.playerCapped);
         }
 
-        GiftcardAPI.createGiftCard(this.playerCapped, 10);
+        if (Math.random() < 0.2) {
+            GiftcardAPI.createGiftCard(this.playerCapped, 10);
+        } else {
+            this.playerCapped.sendMessage(CC.translate("&c&l(!)&c Unfortunately you didn't get a 10$ Buycraft Giftcard, better luck next time!"));
+        }
         LauncherTask.countdown = 7400;
 
     }

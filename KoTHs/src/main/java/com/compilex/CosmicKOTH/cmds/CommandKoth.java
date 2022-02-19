@@ -52,7 +52,7 @@ implements CommandExecutor {
                 int wins = entry.getValue();
                 counter++;
                 if (counter > 10) break;
-                player.sendMessage(CC.translate("&e&l" + counter + ". &e" + name + " - &f" + wins + " Win(s) &e- &7[$" + NumberUtils.formatMoney(wins * 10) + " Earned]"));
+                player.sendMessage(CC.translate("&e&l" + counter + ". &e" + name + " - &f" + wins + " Win(s)"));
             }
             player.sendMessage("");
             return true;

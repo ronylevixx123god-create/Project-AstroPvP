@@ -1,5 +1,6 @@
 package net.astropvp.astroevents.game;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import lombok.Getter;
 import lombok.Setter;
@@ -203,7 +204,11 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     public void giveWinnerRewards(Player player) {
         this.getRewardCommands().forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("{player}", player.getName())));
         try {
-            GiftcardAPI.createGiftCard(player, 5);
+            if (Math.random() < 0.2) {
+                GiftcardAPI.createGiftCard(player, 10);
+            } else {
+               player.sendMessage(CC.translate("&c&l(!)&c Unfortunately you didn't get a 5$ Buycraft Giftcard, better luck next time!"));
+            }
         } catch (IOException e) {
             e.printStackTrace();
         } catch (UnirestException e) {

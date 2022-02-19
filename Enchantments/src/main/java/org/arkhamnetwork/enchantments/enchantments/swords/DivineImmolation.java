@@ -97,7 +97,11 @@ return;
             }
 
             if ((AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_HELMET)) && playerHit.getHealth() < playerHit.getMaxHealth()/4) {
-                damage*=0.15;
+                damage*=0.85;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
+                damage*=0.9;
             }
 
         }

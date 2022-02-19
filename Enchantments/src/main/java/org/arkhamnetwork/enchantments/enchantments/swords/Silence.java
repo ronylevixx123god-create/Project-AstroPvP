@@ -69,13 +69,17 @@ public class Silence extends CustomEnchantment
             durationTicks /= 2.0;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SUMMER_2021_HELMET)) {
-            durationTicks *= 0.4;
+            durationTicks *= 0.6;
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_HELMET)) {
-            durationTicks *= 0.4;
-
+            durationTicks *= 0.6;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
+            durationTicks *= 0.55;
+        }
+
         if (!GoldenAdmirer.isAdmirerSilenced(target)) {
             if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.THANKSGIVING_HELMET_WITCH)) {
                 durationTicks -= durationTicks * 0.25;

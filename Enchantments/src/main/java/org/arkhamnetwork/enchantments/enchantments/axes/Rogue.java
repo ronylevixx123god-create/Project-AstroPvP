@@ -87,6 +87,10 @@ public class Rogue extends CustomEnchantment {
                 multi +=0.10;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
+                multi-=0.10;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(multi*10, e, "Rogue");
 
