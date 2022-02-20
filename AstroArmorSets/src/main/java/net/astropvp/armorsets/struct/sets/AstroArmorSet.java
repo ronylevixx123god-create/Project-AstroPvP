@@ -72,7 +72,7 @@ public class AstroArmorSet extends ArmorSet {
 
             if (Math.random() <= 0.35) {
                 if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
-                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weaponbonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
+                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Nonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
                     return;
                 }
             }
@@ -110,7 +110,7 @@ public class AstroArmorSet extends ArmorSet {
 
             if (Math.random() <= 0.35) {
                 if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
-                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weaponbonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
+                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
                     return;
                 }
             }

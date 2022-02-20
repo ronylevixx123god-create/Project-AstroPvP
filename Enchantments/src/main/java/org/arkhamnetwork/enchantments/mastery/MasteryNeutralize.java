@@ -40,7 +40,6 @@ public class MasteryNeutralize extends MasteryCustomEnchantment
         else if (Math.random() >= 0.0015 * level) {
             return;
         }
-        pTarget.sendMessage(CC.translate("&4&l* NEUTRALIZED &7[" + user.getName() + "&7]&4&l *"));
         user.sendMessage(CC.translate("&5&l* NEUTRALIZED &7[" + pTarget.getName() + "&7]&5&l *"));
         DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* NEUTRALIZED" + CC.Gray +  "[5s]" + CC.Gray + " *", "NEUTRALIZE");
         pTarget.setMetadata("neutralized", new FixedMetadataValue((Plugin)Enchantments.getInstance(), "true"));

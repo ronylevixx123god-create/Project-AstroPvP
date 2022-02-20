@@ -29,7 +29,9 @@ public class Tank extends CustomEnchantment
             return;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
+        if (attacker == null) return;
+        if (!(attacker instanceof Player)) return;
+        if ( AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
             return;
         }
         if (player.hasMetadata("neutralized")) {
@@ -42,7 +44,7 @@ public class Tank extends CustomEnchantment
         }
         final double damage_negation = level * 0.01875;
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&e&lTank");
+            //AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&e&lTank");
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }

@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.helmets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
@@ -25,7 +26,7 @@ public class MinemanMuzzleSkin extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (damager.hasMetadata("frozenSkrrt")) return;
         if (damaged.hasMetadata("frozenSkrrt")) return;
-        if(Math.random() < 0.1) {
+        if(Math.random() < 0.075) {
             List<Entity> nearby = damaged.getNearbyEntities(3, 3, 3);
             nearby.forEach(entity -> {
                 if(!(entity instanceof Player))
@@ -33,12 +34,11 @@ public class MinemanMuzzleSkin extends ItemSkin {
             });
             if(nearby.isEmpty())
                 return;
-            double dmg = event.getDamage();
-            double dmgToEach = Math.ceil(dmg/nearby.size());
+            double dmg = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             nearby.forEach(player -> {
-                AstroDamageHandler.getInstance().getDamageHandler().dealDamage((LivingEntity) player, dmgToEach, "MimeMan MLuzzle");
+                AstroDamageHandler.getInstance().getDamageHandler().dealDamage((LivingEntity) player, dmg, "MimeMan MLuzzle");
 
-                player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmgToEach + "DMG] &8&l**"));
+                player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmg + "DMG] &8&l**"));
             });
         }
 

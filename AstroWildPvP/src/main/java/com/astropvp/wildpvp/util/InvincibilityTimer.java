@@ -20,21 +20,23 @@ public class InvincibilityTimer extends BukkitRunnable {
     }
 
     public void run() {
-        if (this.timeRemaining == 0) {
-            this.queue.getBoth().forEach((player) -> {
-                KrizzUtil.sendMessage((LivingEntity)player, (String)"&aInvincibility - &lEXPIRED");
-                KrizzUtil.playSound(player, Sound.NOTE_BASS);
-            });
-            this.cancel();
-            this.queue.endSuccesfully();
-            this.remove();
-        } else {
-            this.queue.getBoth().forEach((player) -> {
-                KrizzUtil.sendMessage((LivingEntity)player, (String)("&aInvincibility - &lExpiring in " + this.timeRemaining + "s... &7(&C/spawn&7 to exit)"));
-                KrizzUtil.playSound(player, Sound.ORB_PICKUP);
-            });
-            --this.timeRemaining;
-        }
+        try {
+            if (this.timeRemaining == 0) {
+                this.queue.getBoth().forEach((player) -> {
+                    KrizzUtil.sendMessage((LivingEntity) player, (String) "&aInvincibility - &lEXPIRED");
+                    KrizzUtil.playSound(player, Sound.NOTE_BASS);
+                });
+                this.cancel();
+                this.queue.endSuccesfully();
+                this.remove();
+            } else {
+                this.queue.getBoth().forEach((player) -> {
+                    KrizzUtil.sendMessage((LivingEntity) player, (String) ("&aInvincibility - &lExpiring in " + this.timeRemaining + "s... &7(&C/spawn&7 to exit)"));
+                    KrizzUtil.playSound(player, Sound.ORB_PICKUP);
+                });
+                --this.timeRemaining;
+            }
+        } catch (Exception ignored) {}
     }
 
     public void remove() {

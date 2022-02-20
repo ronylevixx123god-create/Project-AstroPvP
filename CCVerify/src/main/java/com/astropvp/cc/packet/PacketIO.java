@@ -142,13 +142,13 @@ public class PacketIO {
         queuePacket(player, new PacketOutSessionKey("13c9esdEOtLC+JPE+GaWFcF86+MqlLoLaY6yRedTwUp3Fx1NFWDwPnBYjCb3Y83yPV8rujPeaCkARIabBx5Ca+J7FstlvlUN2+j5WpCSFUFDvqjw2KG0k6/WoABk1aHQi0n/sypTUB6ZkG2JnyuaNTQh2ebhc5yMIdeAViwIcyW4t3I5p7+VYjcq9YBX4CfKRJjSZaVyJIFBHouCndqlNicc4PvKcmTnYwj66h6rI4t5Iq97ticrbvXdZifre9IGcVLVhOIpCtiXoLBA06t6beLFhOF8OatYVu86CXvT0TBUaidS2NO+l7Qqk4m9k2fDENna2zpOe237XLBm7uKviA=="));
         queuePacket(player, new PacketOutFeatureSet("COSMICPVP"));
         queuePacket(player, new PacketOutAllowedEmotes(new HashSet(Config.getInst().getEmotes().getAllowedEmotes())));
-        Map<String, List<Double>> cooldowns = new HashMap<>();
+        //Map<String, List<Double>> cooldowns = new HashMap<>();
         //for(InventoryPets type : InventoryPets.values()) {
             List<Double> current = new ArrayList<>();
             //for(int i = 1; i < type.getInternalClass().getMaxLevel(); i++) {
                 //current.add((double) 360);
             //}
-            cooldowns.put("BANSHEE", Arrays.asList(360D));
+            //cooldowns.put("BANSHEE", Arrays.asList(360D));
         //}
         //queuePacket(player, new SItemCooldownsListPacket(cooldowns));
         if (Config.getInst().getTooltip().isSendDiscordTooltipOnJoin())

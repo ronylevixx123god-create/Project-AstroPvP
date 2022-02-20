@@ -42,10 +42,10 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 mobGrinderCache.setXp(mobGrinderCache.getXp() + amountOfExpPerBlaze);
             }
             double chance = Math.random();
-            if (chance < 0.001) {
+            if (chance < 0.0025) {
                 int godlyKeys = mobGrinderCache.getCrateKeys().get(CrateType.GODLY);
                 mobGrinderCache.getCrateKeys().put(CrateType.GODLY,  godlyKeys+ 1);
-            } else if (chance < 0.01) {
+            } else if (chance < 0.015) {
                 int legKeys = mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY);
                 mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, legKeys+1);
             } else if (chance < 0.085) {

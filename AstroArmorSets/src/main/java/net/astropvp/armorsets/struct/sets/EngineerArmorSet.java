@@ -60,7 +60,7 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
             if (Math.random() <= 0.15) {
                 if (((Player) attacker).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacker).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacker).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacker).getItemInHand()) == WeaponBonusType.DEMON) {
                     amount = amount - 1;
-                    attacker.sendMessage(CC.translate("&6&l** &4Demon Weaponbonus &7Blocked an &6Engineer Crystal &7of " + attacked.getName() + "'s Set &6&l**"));
+                    attacker.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked an &6Engineer Crystal &7of " + attacked.getName() + "'s Set &6&l**"));
                 }
             }
         }

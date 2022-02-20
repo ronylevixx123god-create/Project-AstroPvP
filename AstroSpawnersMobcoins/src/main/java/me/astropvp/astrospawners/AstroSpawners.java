@@ -210,7 +210,7 @@ public class AstroSpawners extends JavaPlugin {
         }
 
         int amount = afkGrinders.get(uuid);
-        if (amount >= 5000) {
+        if (amount >= 8500) {
             AntiAFKGrindingGUI antiAFKGrindingGUI = new AntiAFKGrindingGUI(p);
             antiAFKGrindingGUI.getAntiAfkGrindingGui().open(p);
         }

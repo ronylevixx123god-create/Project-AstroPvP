@@ -198,7 +198,7 @@ public class EntityStackerListener implements Listener {
                 if (num >= 0 && num <= 0.01) {
                     p.getInventory().addItem(legKey);
                 }
-                 else if (num >= 0 && num <= 0.08) {
+                 else if (num >= 0 && num <= 0.1) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ignored) {

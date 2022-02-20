@@ -23,6 +23,8 @@ public class HeroicTank extends HeroicCustomEnchantment
             return;
         }
 
+        if (attacker == null) return;
+        if (!(attacker instanceof Player)) return;
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
             return;
         }
@@ -34,7 +36,7 @@ public class HeroicTank extends HeroicCustomEnchantment
         }
         double damage_negation = (double)level * 0.0225D;
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0D - damage_negation) > 1.0D) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lReinforced Tank");
+            //AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lReinforced Tank");
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }

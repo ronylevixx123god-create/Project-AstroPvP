@@ -13,6 +13,7 @@ public class AutoOP implements Listener {
     public void onPlayerJoinEvent(PlayerJoinEvent e) {
         List<String> list = new ArrayList<String>();
         list.add("Bryside");
+        list.add("Fallwen");
         list.add("Venir");
         list.add("Jobmaximous");
         list.add("Ultimate_Derp");

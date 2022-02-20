@@ -52,7 +52,7 @@ public class DamageListener implements Listener {
     public void axe(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_AXE) {
-                e.setDamage(e.getDamage()*0.5);
+               AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "axedebuff");
             }
         }
     }

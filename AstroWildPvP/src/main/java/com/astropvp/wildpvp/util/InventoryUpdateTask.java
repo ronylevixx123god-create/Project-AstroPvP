@@ -18,18 +18,19 @@ public abstract class InventoryUpdateTask extends BukkitRunnable {
     }
 
     public void run() {
-        if (!this.player.isOnline()) {
-            this.cancel();
-        } else if (this.player.getOpenInventory() == null) {
-            this.cancel();
-        } else if (this.inventory == null) {
-            this.cancel();
-        } else if (!this.player.getOpenInventory().getTopInventory().getTitle().equals(this.inventory.getTitle())) {
-            this.cancel();
-        } else {
-            this.inventory.setContents(this.getUpdatedContents());
-        }
+        try {
+            if (!this.player.isOnline()) {
+                this.cancel();
+            } else if (this.player.getOpenInventory() == null) {
+                this.cancel();
+            } else if (this.inventory == null) {
+                this.cancel();
+            } else if (!this.player.getOpenInventory().getTopInventory().getTitle().equals(this.inventory.getTitle())) {
+                this.cancel();
+            } else {
+                this.inventory.setContents(this.getUpdatedContents());
+            }
+        }catch (Exception ignored) {}
     }
-
     public abstract ItemStack[] getUpdatedContents();
 }
