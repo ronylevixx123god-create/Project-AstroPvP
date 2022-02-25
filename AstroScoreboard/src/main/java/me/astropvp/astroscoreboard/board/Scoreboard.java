@@ -684,7 +684,7 @@ public class Scoreboard implements BoardAdapter {
 
 
     public long getInterval() {
-        return 40L;
+        return 80;
     }
 
     public int getPing() {

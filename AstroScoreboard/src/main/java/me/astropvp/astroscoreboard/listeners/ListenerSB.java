@@ -29,7 +29,8 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);    }
+        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);
+    }
 
 
     @EventHandler
@@ -80,7 +81,6 @@ public class ListenerSB implements Listener {
     }
 
 
-
     public void refreshTagsAsyncForFaction(Faction faction1, Faction faction2) {
         Collection<? extends Player> faction1Players = faction1.getOnlinePlayers();
         Collection<? extends Player> factions2Players = faction2.getOnlinePlayers();
@@ -103,7 +103,7 @@ public class ListenerSB implements Listener {
 
     public void refreshTagsAsyncForServer(Player playerJoining) {
         Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
-String prefix = AstroScoreboardAPI.getDefaultPrfix(playerJoining);
+        String prefix = AstroScoreboardAPI.getDefaultPrfix(playerJoining);
         Bukkit.getScheduler().runTaskAsynchronously(AstroScoreboardPlugin.getInstance(), () -> {
             for (Player player : allPlayers) {
                 //PlayerDisplayManager.setUserPrefix(player, playerJoining, AstroScoreboardAPI.getDefaultPrefix(player, playerJoining));

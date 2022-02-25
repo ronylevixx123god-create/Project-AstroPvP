@@ -12,6 +12,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.scoreboard.Scoreboard;
 
@@ -38,6 +39,16 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
+        Player player = event.getPlayer();
+        Scoreboard board = player.getScoreboard();
+        if(board != null) {
+            board.getTeams().forEach(team -> team.unregister());
+        }
+
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onQuit(PlayerKickEvent event) {
         Player player = event.getPlayer();
         Scoreboard board = player.getScoreboard();
         if(board != null) {

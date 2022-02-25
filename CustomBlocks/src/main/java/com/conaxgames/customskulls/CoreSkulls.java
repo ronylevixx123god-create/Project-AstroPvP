@@ -6,6 +6,7 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
+import com.conaxgames.customskulls.commands.RemoveBlocks;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.data.SaveAllGrinderCustomBlocks;
 import com.conaxgames.customskulls.data.SaveCustomBlock;
@@ -88,6 +89,7 @@ public class CoreSkulls extends JavaPlugin {
         grinderBlocks = new HashMap<>();
         ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
         registerTasks();
+        this.getCommand("removeblocks").setExecutor(new RemoveBlocks());
         info("CustomBlocks has been loaded!");
 
 

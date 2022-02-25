@@ -19,7 +19,7 @@ public class EasterSwordSkin extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
 
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        (new Devour()).applyEffect(damager, (LivingEntity) damaged, 5, event);
+        //(new Devour()).applyEffect(damager, (LivingEntity) damaged, 5, event);
         if(damaged instanceof Player)
             return;
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15, event, "Easter Sword");

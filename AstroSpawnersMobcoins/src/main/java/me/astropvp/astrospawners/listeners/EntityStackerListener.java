@@ -41,10 +41,7 @@ import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.inventory.ItemStack;
 import org.github.paperspigot.Title;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class EntityStackerListener implements Listener {
 
@@ -54,6 +51,11 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
+    private Map<UUID, Long> blazeCooldown;
+
+    private Map<UUID, Integer> astroKeyLoot;
+    private Map<UUID, Integer> xpLoot;
+    private Map<UUID, Integer> legKeyLoot;
 
 
 
@@ -61,7 +63,10 @@ public class EntityStackerListener implements Listener {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
         this.manager = plugin.getManager();
-
+        this.blazeCooldown = new HashMap<>();
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(AstroSpawners.getInstance(), () -> {
+            this.blazeCooldown.clear();
+        }, 10, 5 * 20 * 60);
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -89,6 +94,7 @@ public class EntityStackerListener implements Listener {
                 return;
             }
 
+
             int remove = 1;
             if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Kill Aura") && Math.random() < 0.15) {
                 remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
@@ -100,13 +106,13 @@ public class EntityStackerListener implements Listener {
                 mobStackerUtils.removeStackedMob(entity);
                 return;
             }
-            amount-=remove;
+            amount -= remove;
             mobStackerUtils.setStackSize(entity, amount);
 
 
             Player p = (Player) e.getDamager();
             if (remove > 1) {
-                p.sendMessage(CC.translate("&6&l* KILL AURA [&7-" +remove + "x&6&l] *" ));
+                p.sendMessage(CC.translate("&6&l* KILL AURA [&7-" + remove + "x&6&l] *"));
             }
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
 
@@ -132,27 +138,24 @@ public class EntityStackerListener implements Listener {
 
 
             if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Master Inquisitive")) {
-                exp +=50;
+                exp += 50;
             } else if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Inquisitive")) {
-                exp +=100;
+                exp += 100;
 
             }
-
 
 
             if (isOnCosmicClient) {
-                exp +=50;
+                exp += 50;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MEDIEVAL_SWORD_KING)) {
-                exp +=100;
+                exp += 100;
             }
 
 
-
-
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
-                exp +=75;
+                exp += 75;
             }
 
 
@@ -180,7 +183,18 @@ public class EntityStackerListener implements Listener {
         if (!mobStackerUtils.isStackedMob(entity)) {
             return;
         }
-        ;
+
+        if (e.getEntity().getType() == EntityType.BLAZE) {
+            if (this.blazeCooldown.containsKey(e.getEntity().getUniqueId())) {
+                if (System.currentTimeMillis() < this.blazeCooldown.get(e.getEntity().getUniqueId()) + (long)66) {
+                    e.setCancelled(true);
+                    return;
+                }
+
+            }
+            this.blazeCooldown.put(e.getEntity().getUniqueId(), System.currentTimeMillis());
+
+        }
         StackedMobDeathEvent stackedMobDeathEvent = new StackedMobDeathEvent(entity, e.getDamager());
         try {
             Bukkit.getPluginManager().callEvent(stackedMobDeathEvent);
@@ -195,10 +209,9 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.01) {
+                if (num >= 0 && num <= 0.015) {
                     p.getInventory().addItem(legKey);
-                }
-                 else if (num >= 0 && num <= 0.1) {
+                } else if (num >= 0 && num <= 0.15) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ignored) {

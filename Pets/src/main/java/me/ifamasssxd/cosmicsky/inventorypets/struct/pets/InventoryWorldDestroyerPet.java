@@ -125,6 +125,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             return true;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+            target.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4World Destroyer Pet &7[" + player.getName() + "&7] &8&l*"));
+            player.sendMessage(CC.translate("&8&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&8&lBig Timbs&7] &8&l*"));
+            return true;
+        }
         if (((Player)target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
             petItem.setLastUsed(System.currentTimeMillis());
             player.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&c" + target.getName() + "&7] &8&l*"));

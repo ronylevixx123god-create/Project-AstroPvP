@@ -13,7 +13,7 @@ public class CandyCollectorSkin extends ItemSkin {
         if(damager instanceof Player) {
             Player player = (Player) damager;
             if(player.getItemInHand().getType().toString().endsWith("_SWORD"))
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(20, event, "Candy Collector");
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(10, event, "Candy Collector");
         }
     }
 }

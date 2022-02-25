@@ -116,6 +116,7 @@ public class CustomBlockListener implements Listener {
 
             if (data.getAbilityType().name().equals(Objects.requireNonNull(CustomBlockUtil.getCustomItem(item)).getIdentifier())) {
                 player.sendMessage(CC.translate("&c&l(!)&c This chunk already contains this custom block."));
+                player.sendMessage(CC.translate("&cType \"&7/removeblocks&c\" to remove all customblocks in your chunk."));
                 event.setCancelled(true);
                 return;
             }

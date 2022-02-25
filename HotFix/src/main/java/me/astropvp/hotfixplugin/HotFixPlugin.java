@@ -28,7 +28,7 @@ public class HotFixPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
-        }, 400L, 200L);
+        }, 400L, 400);
     }
 
     @Override

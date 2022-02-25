@@ -110,7 +110,9 @@ public class DamageListener implements Listener {
                     AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
                 }
 
-
+                if (((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_SWORD) {
+                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(25, e, "DiamondSword");
+                }
             }else {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
 

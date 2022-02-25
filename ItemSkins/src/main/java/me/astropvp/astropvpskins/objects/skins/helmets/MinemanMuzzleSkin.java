@@ -1,11 +1,11 @@
 package me.astropvp.astropvpskins.objects.skins.helmets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -36,9 +36,11 @@ public class MinemanMuzzleSkin extends ItemSkin {
                 return;
             double dmg = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             nearby.forEach(player -> {
-                AstroDamageHandler.getInstance().getDamageHandler().dealDamage((LivingEntity) player, dmg, "MimeMan MLuzzle");
+                if (FactionUtils.isInEnemyFaction(damaged, (Player) player)) {
+                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage((LivingEntity) player, dmg, "MimeMan MLuzzle");
 
-                player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmg + "DMG] &8&l**"));
+                    player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmg + "DMG] &8&l**"));
+                }
             });
         }
 

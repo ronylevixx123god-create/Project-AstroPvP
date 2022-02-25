@@ -3,3 +3,7 @@ version: ${project.version}
 main: com.conaxgames.customskulls.CoreSkulls
 description: CoreSkulls
 depend: [Vault, Factions, CosmicMysteryChest, CosmicPvPUtils, AstroSpawners, ProtocolLib]
+commands:
+  removeblocks:
+    description: remove cblocks
+    aliases: [removeblock]

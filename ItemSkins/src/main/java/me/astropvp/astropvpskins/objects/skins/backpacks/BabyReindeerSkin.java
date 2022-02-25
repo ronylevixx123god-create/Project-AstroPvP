@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.backpacks;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
@@ -39,7 +40,9 @@ public class BabyReindeerSkin extends ItemSkin {
                     if (nearby.size() == 0)
                         return;
                     Player target = (Player) nearby.get(0);
-                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage(target, event.getFinalDamage(), "Baby Reindeer");
+                    if (FactionUtils.isInEnemyFaction((Player) damager, target)) {
+                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(target, event.getFinalDamage(), "Baby Reindeer");
+                    }
                     //event.setDamage(0);
                 }
             }

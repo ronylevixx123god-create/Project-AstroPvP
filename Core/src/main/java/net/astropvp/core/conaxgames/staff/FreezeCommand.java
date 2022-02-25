@@ -24,7 +24,7 @@ public class FreezeCommand extends Command {
             return true;
         }
         Player player = (Player) commandSender;
-        if (!player.hasPermission("astrocore.staff")) {
+        if (!player.hasPermission("astrocore.freeze")) {
             player.sendMessage(CC.Red + "No Permission.");
             return false;
         }

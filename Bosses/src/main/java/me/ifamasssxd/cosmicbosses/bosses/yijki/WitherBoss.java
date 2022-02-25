@@ -429,7 +429,7 @@ public class WitherBoss extends EntityMonster implements IRangedEntity {
 
     protected void initAttributes() {
         super.initAttributes();
-        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(300.0);
+        this.getAttributeInstance(GenericAttributes.maxHealth).setValue(50.0);
         this.getAttributeInstance(GenericAttributes.MOVEMENT_SPEED).setValue(0.6000000238418579);
         this.getAttributeInstance(GenericAttributes.FOLLOW_RANGE).setValue(40.0);
     }
