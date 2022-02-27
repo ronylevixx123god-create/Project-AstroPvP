@@ -54,11 +54,8 @@ extends CustomEnchantment {
                 return;
             }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
-            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 100, level > 2 ? 1 : 0));
-            if (level == 4) {
-                playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 100, level > 2 ? 1 : 0));
-            }
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)level, e, "&b&lParalyze");
+
+            AstroDamageHandler.getInstance().getDamageHandler().dealDamage(playerHit, 2, "&b&lParalyze");
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &7[5s] &5&l*"), "PARALYZE");
 
         }

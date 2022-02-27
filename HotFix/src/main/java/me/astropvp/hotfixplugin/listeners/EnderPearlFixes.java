@@ -84,11 +84,11 @@ public class EnderPearlFixes implements Listener {
                     e.setTo(to);
                     return;
                 }
-                if (to.clone().add(0, -1, 0).getBlock().getType() == Material.AIR) {
+                if (to.clone().add(0, -0.3, 0).getBlock().getType() == Material.AIR) {
                     System.out.println("setting +1 y loc");
 
-                    to.setY(to.getY()+1);
-                    e.setTo(to);
+                    //to.setY(to.getY()+1);
+                    //e.setTo(to);
                     //e.setCancelled(true);
                     return;
                 } else  if (toAbove.getType() != Material.AIR) {

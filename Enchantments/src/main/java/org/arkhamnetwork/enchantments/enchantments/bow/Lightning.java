@@ -30,12 +30,12 @@ extends CustomEnchantment {
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double chance;
         double random = Math.random() * 1.0;
-        if (random < (chance = 0.1 * (double)level)) {
+        if (random < (chance = 0.02 * (double)level)) {
             if (!(playerHit instanceof Player)) {
                 return;
             }
             playerHit.getLocation().getWorld().strikeLightningEffect(playerHit.getLocation());
-            playerHit.damage(5.0, (Entity)player);
+            playerHit.damage(2.0, (Entity)player);
         }
     }
 }

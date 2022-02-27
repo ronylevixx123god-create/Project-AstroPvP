@@ -150,7 +150,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
                     FPlayer fpNear;
                     if (!(pNear.getLocation().distanceSquared(l) <= 2.0) || (fpNear = FPlayers.getInstance().getByPlayer(pNear)).getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                         continue;
-                    int damage = 16;
+                    int damage = 8;
                     try {
                         if (Phoenix.hasPhoenixEquipped(pNear) && Phoenix.procPhoenix(pNear, player, damage)) continue;
                     } catch (Exception e) {

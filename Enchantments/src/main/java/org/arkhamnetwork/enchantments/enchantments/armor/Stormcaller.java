@@ -29,12 +29,12 @@ extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         double chance;
         double random = Math.random();
-        if (random < (chance = 0.045 * (double)level) && attacker != null) {
+        if (random < (chance = 0.005 * (double)level) && attacker != null) {
             if (attacker.equals((Object)player)) {
                 return;
             }
             player.getWorld().strikeLightning(attacker.getLocation());
-            player.damage(10.0);
+            player.damage(2.0);
             GeneralUtil.pushAwayEntity(player, (Entity)attacker, 1.5);
         }
     }

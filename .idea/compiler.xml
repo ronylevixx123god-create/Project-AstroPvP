@@ -79,15 +79,9 @@
         <sourceOutputDir name="../../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Factions (1) (com.massivecraft)" />
+        <module name="Factions (2) (com.massivecraft)" />
         <module name="Factions (2)" />
         <module name="Factions (3)" />
-      </profile>
-      <profile name="Annotation profile for Factions (2) (com.massivecraft)" enabled="true">
-        <sourceOutputDir name="../../../Factionss/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../Factionss/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="Factions (2) (com.massivecraft)" />
       </profile>
       <profile name="Annotation profile for Factions (1)" enabled="true">
         <sourceOutputDir name="../../../Factionss/target/generated-sources/annotations" />
@@ -106,6 +100,12 @@
         <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions-Legacy" />
+      </profile>
+      <profile name="Annotation profile for Factions (1) (com.massivecraft)" enabled="true">
+        <sourceOutputDir name="../../../AstroFactions/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../AstroFactions/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions (1) (com.massivecraft)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -136,6 +136,7 @@
       <module name="ProjectAstro (1)" target="1.8" />
       <module name="SpaceChests (1)" target="1.8" />
       <module name="SpawnersMobcoins" target="8" />
+      <module name="TAB" target="8" />
       <module name="Test" target="8" />
       <module name="VaultsX" target="1.8" />
     </bytecodeTargetLevel>

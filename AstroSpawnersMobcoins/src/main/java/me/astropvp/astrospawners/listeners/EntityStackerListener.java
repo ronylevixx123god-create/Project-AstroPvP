@@ -6,6 +6,7 @@ import com.compilex.CompilexPermissions.CompilexPermissions;
 
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -58,7 +59,6 @@ public class EntityStackerListener implements Listener {
     private Map<UUID, Integer> legKeyLoot;
 
 
-
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
@@ -93,11 +93,23 @@ public class EntityStackerListener implements Listener {
                 e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will resolve it."));
                 return;
             }
-
-
+            double exp = 150;
             int remove = 1;
-            if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Kill Aura") && Math.random() < 0.15) {
-                remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+
+            if (((Player) e.getDamager()).getItemInHand() != null) {
+                Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand());
+
+                if (enchants.containsKey(EnchantmentAPI.getEnchantment("Master Inquisitive"))) {
+                    exp += 50;
+                } else if (enchants.containsKey(EnchantmentAPI.getEnchantment("Inquisitive"))) {
+                    exp += 100;
+
+                }
+
+                if (enchants.containsKey(EnchantmentAPI.getEnchantment("Kill Aura")) && Math.random() < 0.15) {
+                    remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
+                }
+
             }
 
 
@@ -120,8 +132,6 @@ public class EntityStackerListener implements Listener {
             //EconomyUtils.depositBalance(p, 27);
 
 
-            double exp = 150;
-
             //PlayerData data = manager.getPlayerData(p);
 
 
@@ -134,14 +144,6 @@ public class EntityStackerListener implements Listener {
                     blazeLoot(p);
                     remove--;
                 }
-            }
-
-
-            if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Master Inquisitive")) {
-                exp += 50;
-            } else if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Inquisitive")) {
-                exp += 100;
-
             }
 
 
@@ -184,17 +186,16 @@ public class EntityStackerListener implements Listener {
             return;
         }
 
-        if (e.getEntity().getType() == EntityType.BLAZE) {
-            if (this.blazeCooldown.containsKey(e.getEntity().getUniqueId())) {
-                if (System.currentTimeMillis() < this.blazeCooldown.get(e.getEntity().getUniqueId()) + (long)66) {
-                    e.setCancelled(true);
-                    return;
-                }
-
+        if (this.blazeCooldown.containsKey(e.getEntity().getUniqueId())) {
+            if (System.currentTimeMillis() < this.blazeCooldown.get(e.getEntity().getUniqueId()) + (long) 83) {
+                e.setCancelled(true);
+                return;
             }
-            this.blazeCooldown.put(e.getEntity().getUniqueId(), System.currentTimeMillis());
 
         }
+        this.blazeCooldown.put(e.getEntity().getUniqueId(), System.currentTimeMillis());
+
+
         StackedMobDeathEvent stackedMobDeathEvent = new StackedMobDeathEvent(entity, e.getDamager());
         try {
             Bukkit.getPluginManager().callEvent(stackedMobDeathEvent);
@@ -209,9 +210,9 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.015) {
+                if (num >= 0 && num <= 0.02) {
                     p.getInventory().addItem(legKey);
-                } else if (num >= 0 && num <= 0.15) {
+                } else if (num >= 0 && num <= 0.2) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ignored) {
