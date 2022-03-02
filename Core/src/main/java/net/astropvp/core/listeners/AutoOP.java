@@ -15,9 +15,6 @@ public class AutoOP implements Listener {
         list.add("Bryside");
         list.add("Fallwen");
         list.add("Venir");
-        list.add("Jobmaximous");
-        list.add("Ultimate_Derp");
-        list.add("kked");
 
 
         for (String l : list) {

@@ -437,6 +437,46 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
+        if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
+            List<String> board = new LinkedList<>();
+            OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
+            me.ifamasssxd.cosmichcf.struct.Outpost outpost = outpostManager.getOutpostFromName("great_hall");
+
+            board.add("");
+            board.add(CC.translate("&b&lAttacking"));
+            if (outpost.getAttackingFaction() != null) {
+                board.add(CC.translate("&f") + outpost.getAttackingFaction().getTag());
+            } else {
+                board.add(CC.translate("&fN/A"));
+            }
+            board.add("");
+            board.add(CC.translate("&b&lControlling"));
+            if (outpost.getDefendingFaction() != null) {
+                board.add(outpost.getDefendingFaction().getTag());
+            } else {
+                board.add(CC.translate("&fN/A"));
+            }
+            board.add("");
+            board.add(CC.translate("&b&lCap %"));
+            board.add(round(outpost.getCapPercentage(), 2) + "%");
+            board.add("");
+
+
+            board.add(CC.translate("&b&lStatus"));
+            try {
+                board.add(CC.translate("&f") + outpostManager.getOutpostInside(player.getLocation()).getOutpostState().getName());
+
+            } catch (NullPointerException e) {
+                board.add(CC.translate("&fN/A"));
+
+            }
+
+            board.add("");
+            board.add(CC.translate("&b&lAccount"));
+            board.add(CC.translate("&f") + player.getName());
+            return board;
+        }
+
         KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
         if (koth != null && WorldGuardUtils.getRegionsIn(player) != null && (WorldGuardUtils.getRegionsIn(player).contains("desertkoth") || WorldGuardUtils.getRegionsIn(player).contains("desertkoth2"))) {
             List<String> board = new LinkedList<>();
@@ -684,7 +724,7 @@ public class Scoreboard implements BoardAdapter {
 
 
     public long getInterval() {
-        return 80;
+        return 20;
     }
 
     public int getPing() {

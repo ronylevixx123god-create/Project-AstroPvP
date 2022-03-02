@@ -493,6 +493,8 @@ public class AstroCore extends JavaPlugin {
 
             public void onPacketReceiving(PacketEvent event) {
                 if (event.getPacketType() == PacketType.Play.Client.TAB_COMPLETE) {
+                    if (event.getPlayer().isOp()) return;
+
                     try {
                         PacketContainer packet = event.getPacket();
                         String message = ((String) packet.getSpecificModifier(String.class).read(0)).toLowerCase();

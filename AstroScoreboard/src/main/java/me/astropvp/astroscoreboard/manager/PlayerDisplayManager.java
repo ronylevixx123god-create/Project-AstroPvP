@@ -33,7 +33,7 @@ public class PlayerDisplayManager {
 			team = board.registerNewTeam(teamName);
 		}
 		team.setPrefix(prefix);
-		if(!team.hasEntry(player.getName()) && !team.getPrefix().equals(teamName)) {
+		if(!team.hasEntry(player.getName())) {
 			team.addEntry(player.getName());
 		}
 
@@ -60,7 +60,7 @@ public class PlayerDisplayManager {
 			team = board.registerNewTeam(teamName);
 		}
 		team.setSuffix(suffix);
-		if(!team.hasEntry(player.getName()) && !team.getSuffix().equals(teamName)) {
+		if(!team.hasEntry(player.getName())) {
 			team.addEntry(player.getName());
 		}
 	}

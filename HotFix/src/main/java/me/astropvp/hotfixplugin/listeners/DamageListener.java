@@ -61,7 +61,7 @@ public class DamageListener implements Listener {
     public void dmgCap(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             double dmg = e.getFinalDamage();
-            if (dmg >= 18.5) {
+            if (dmg >= 17) {
                 e.setDamage(dmg*0.75);
                 System.out.println("[DamageCap] Normal Damage: " + dmg + ", Edited Damage: " + e.getFinalDamage() * 0.75);
             }

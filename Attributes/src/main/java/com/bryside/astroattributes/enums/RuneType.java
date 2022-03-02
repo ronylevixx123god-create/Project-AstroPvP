@@ -2,7 +2,6 @@ package com.bryside.astroattributes.enums;
 
 import com.bryside.astroattributes.objects.Rune;
 import com.bryside.astroattributes.runes.*;
-import com.compilex.CosmicArmorSets.enums.HeroicWeaponType;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
@@ -106,10 +105,9 @@ public enum RuneType {
         lore.add(CC.RedB + "TITAN XP: " + CC.DarkGrayB + "0 / " + CC.Red + type.getRune().getExpForLevel(level));
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
-        HeroicWeaponType heroicWeaponType = HeroicWeaponType.SWORD;
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
-        compoundBuilder.setString("type", type.name()).setInt("durability", heroicWeaponType.getDurability()).setDouble("dmgIncr", heroicWeaponType.getAttackModifier()).setInt("maxDurability", heroicWeaponType.getDurability()).get().setInt("heroic_weapon", 1);
+        compoundBuilder.setString("type", type.name()).setInt("durability", 3).setDouble("dmgIncr", 3.0).setInt("maxDurability", 3).get().setInt("heroic_weapon", 1);
         item = wrapper.setNBTBase("conaxData", (NBTBase) compoundBuilder.get()).build();
         item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", 0).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
         return item;
@@ -122,10 +120,9 @@ public enum RuneType {
         lore.add(CC.LightPurpleB + "TITAN XP: " + CC.DarkGrayB + "0 / " + CC.LightPurple + type.getRune().getExpForLevel(level));
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
-        HeroicWeaponType heroicWeaponType = HeroicWeaponType.SWORD;
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
-        compoundBuilder.setString("type", type.name()).setInt("durability", Integer.valueOf(heroicWeaponType.getDurability())).setDouble("dmgIncr", Double.valueOf(heroicWeaponType.getAttackModifier())).setInt("maxDurability", Integer.valueOf(heroicWeaponType.getDurability())).setInt("heroic_weapon", 1).get();
+        compoundBuilder.setString("type", type.name()).setInt("durability", Integer.valueOf(3)).setDouble("dmgIncr", Double.valueOf(3)).setInt("maxDurability", Integer.valueOf(3)).setInt("heroic_weapon", 1).get();
         item = wrapper.setNBTBase("conaxData", (NBTBase) compoundBuilder.get()).build();
         item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", Integer.valueOf(0)).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
         return item;
