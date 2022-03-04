@@ -121,8 +121,8 @@ public class DamageListener implements Listener {
                     AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
                 }
 
-                if (((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_SWORD) {
-                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(25, e, "DiamondSword");
+                if (((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD && ((Player) e.getDamager()).getItemInHand().getType() != Material.AIR) {
+                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, e, "DiamondSword");
                 }
             }else {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
@@ -206,7 +206,7 @@ public class DamageListener implements Listener {
             double dmgBuff = 0;
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {
-                if (armor.getType().name().startsWith("DIAMOND_")) {
+                if (!armor.getType().name().startsWith("LEATHER_")) {
                     dmgBuff+=20;
                 }
             }

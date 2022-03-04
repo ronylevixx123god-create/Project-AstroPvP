@@ -79,6 +79,7 @@
         <sourceOutputDir name="../../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="Factions (1) (com.massivecraft)" />
         <module name="Factions (2) (com.massivecraft)" />
         <module name="Factions (2)" />
         <module name="Factions (3)" />
@@ -94,12 +95,6 @@
         <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions-Legacy (2)" />
-      </profile>
-      <profile name="Annotation profile for Factions (1) (com.massivecraft)" enabled="true">
-        <sourceOutputDir name="../../../AstroFactions/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../AstroFactions/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="Factions (1) (com.massivecraft)" />
       </profile>
       <profile name="Annotation profile for Factions-Legacy (1)" enabled="true">
         <sourceOutputDir name="../../../Factionss/modules/Legacy/target/generated-sources/annotations" />
