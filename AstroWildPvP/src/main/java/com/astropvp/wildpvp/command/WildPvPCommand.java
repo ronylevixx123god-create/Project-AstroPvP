@@ -4,6 +4,8 @@ package com.astropvp.wildpvp.command;
 import com.astropvp.wildpvp.AstroWildPvP;
 import com.astropvp.wildpvp.queue.WildQueue;
 import com.astropvp.wildpvp.util.KrizzUtil;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -26,6 +28,10 @@ public class WildPvPCommand implements CommandExecutor, Listener {
             return true;
         } else {
             Player player = (Player)sender;
+            if (CombatLog.inCombat(player)) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot use /pvp while in combat."));
+                return true;
+            }
             if (args.length == 0) {
                 this.plugin.getQueueManager().openQueueInventory(player);
                 return true;

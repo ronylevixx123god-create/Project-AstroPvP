@@ -46,7 +46,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerListeners();
         getInstance().setBoardManager(new BoardManager((BoardAdapter) new Scoreboard()));
 
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+        /*Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             try {
 
                 String tps = df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS());
@@ -60,7 +60,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
                 }
             } catch (Exception ignored) {
             }
-        }, 100L, 200L);
+        }, 100L, 200L);*/
 
     }
 

@@ -68,9 +68,9 @@ public class Board {
         this.objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         this.objective.setDisplayName(this.adapter.getTitle(this.player));
 
-        Objective h = scoreboard.registerNewObjective("showhealth", Criterias.HEALTH);
-        h.setDisplaySlot(DisplaySlot.BELOW_NAME);
-        h.setDisplayName(ChatColor.GOLD + "❤");
+        //Objective h = scoreboard.registerNewObjective("showhealth", Criterias.HEALTH);
+        //h.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        //h.setDisplayName(ChatColor.GOLD + "❤");
     }
 
     public String getNewKey(BoardEntry entry) {

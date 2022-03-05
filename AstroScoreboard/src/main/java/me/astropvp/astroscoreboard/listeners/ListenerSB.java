@@ -29,7 +29,7 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);
+        //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);
     }
 
 
@@ -49,7 +49,7 @@ public class ListenerSB implements Listener {
         }
     }
 
-    @EventHandler
+    /*@EventHandler
     public void onFactionJoin(FPlayerJoinEvent event) {
         refreshTagsAsyncForServer(event.getfPlayer().getPlayer());
     }
@@ -117,5 +117,5 @@ public class ListenerSB implements Listener {
 
             }
         });
-    }
+    }*/
 }

@@ -136,8 +136,8 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
                 throw new PrefixedException("You cannot apply an Armor Set Crystal to an existing Armor Set piece!");
             }
 
-            if (clicked.getType().name().startsWith("DIAMOND")) {
-                throw new PrefixedException("You cannot apply crystals to diamond armor");
+            if (!AstroArmorSetsAPI.isHeroic(clicked)) {
+                throw new PrefixedException("You cannot apply crystals to non-heroic armor");
             }
             if (cursorWrapper.isBlacklistedIID()) {
                 throw new ItemDupedException("Armor set crystal already used!");

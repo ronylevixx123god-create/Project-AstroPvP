@@ -71,7 +71,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>com.astropvp</groupId>
+            <artifactId>ark</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.astropvp</groupId>
             <artifactId>factions</artifactId>

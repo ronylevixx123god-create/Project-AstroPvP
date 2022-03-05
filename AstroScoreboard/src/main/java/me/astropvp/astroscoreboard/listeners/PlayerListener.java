@@ -25,19 +25,19 @@ public class PlayerListener implements Listener {
         //board.registerNewObjective("astro", "dummy");
 
         //String objectiveName = ChatColor.RED + "\u2764";
-        Player player = event.getPlayer();
+        //Player player = event.getPlayer();
         //player.setHealth(player.getHealth());
         //board.registerNewObjective(objectiveName, "health").setDisplaySlot(DisplaySlot.BELOW_NAME);
         //player.setScoreboard(board);
-        try {
+/*        try {
             TabListManager.sendTablist(player,
                     CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
                     CC.translate("\n&6  Factions &e// &d" + getPing(player) + "ms &e// &a" + AstroScoreboardPlugin.df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS()) + " &7&oTPS &8➥ &f&ohttps://astropvp.net  \n" +
                             "&e" + Bukkit.getOnlinePlayers().size() + " &fOnline &8➥ &f&ohttps://buy.astropvp.net/\n"));
-        } catch (Exception ignored) {}
+        } catch (Exception ignored) {}*/
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+ /*   @EventHandler(priority = EventPriority.HIGHEST)
     public void onQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         Scoreboard board = player.getScoreboard();
@@ -55,7 +55,7 @@ public class PlayerListener implements Listener {
             board.getTeams().forEach(team -> team.unregister());
         }
 
-    }
+    }*/
 
     public static int getPing(Player player) {
         int ping = ((CraftPlayer) player).getHandle().ping;
