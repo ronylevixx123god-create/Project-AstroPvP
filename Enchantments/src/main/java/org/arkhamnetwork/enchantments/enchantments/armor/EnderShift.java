@@ -76,7 +76,7 @@ extends CustomEnchantment {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * (level + 7), 0));
                 player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * (level + 7), level + 2), true);
                 player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * (level + 7), level - 1), true);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * (level + 7), level + 2));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * (level + 3), level + 2));
                 final String uuid = player.getUniqueId().toString();
                 ender_shifters.add(uuid);
                 Location loc = pl.getLocation();
@@ -85,13 +85,9 @@ extends CustomEnchantment {
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
-
-                    @Override
-                    public void run() {
-                        ender_shifters.remove(uuid);
-                    }
-                }, (long)(20 * (level + 7) + 10));
+                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+                    ender_shifters.remove(uuid);
+                }, (long)(20L * (level + 7) + 10));
             }
         }
     }

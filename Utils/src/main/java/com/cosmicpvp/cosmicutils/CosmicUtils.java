@@ -66,9 +66,8 @@ public final class CosmicUtils extends JavaPlugin {
         if (this.doesPluginExist("CosmicSpaceChests-Vanilla") || this.doesPluginExist("CosmicDropPackages_Vanilla")) {
             this.vanillaGalaxy = true;
         }
-        if (this.doesPluginExist("CosmicSpaceChests")) {
             this.cosmicGalaxy = true;
-        }
+
         if (new File("seasonal_galaxy").exists()) {
             this.seasonalGalaxy = true;
         }
@@ -88,16 +87,16 @@ public final class CosmicUtils extends JavaPlugin {
         CosmicGUI.activeGUIs.entrySet();
         this.arkkitEnabled = Bukkit.getPluginManager().isPluginEnabled("Arkkit");
         UpgradeUtils.factionUpgradesEnabled = true;
-        this.armorsetEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
-        this.outpostsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
+        this.armorsetEnabled = true;
+        this.outpostsEnabled = true;
         this.evolutionKitEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicEvolutionKits");
         this.vanishNoPacketEnabled = Bukkit.getPluginManager().isPluginEnabled("VanishNoPacket");
         this.hcfCrateEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicHcfCrate");
-        this.conquestsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicConquest");
-        this.enchantmentsEnabled =Bukkit.getPluginManager().isPluginEnabled("Enchantments");
-        this.dungeonsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicDungeons");
-        this.masksEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicMasks");
-        this.lootboxesEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicMysteryChest");
+        this.conquestsEnabled = true;
+        this.enchantmentsEnabled = true;
+        this.dungeonsEnabled = true;
+        this.masksEnabled = true;
+        this.lootboxesEnabled = true;
         this.initStaticClasses();
     }
 
@@ -119,10 +118,7 @@ public final class CosmicUtils extends JavaPlugin {
     private void registerListeners() {
         this.getServer().getPluginManager().registerEvents(new GUIListener(), this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
-        if (!new File("plugins/CosmicSpaceChests.jar").exists() && !new File("plugins/CosmicSpaceChests-Vanilla.jar").exists()) {
-            Bukkit.getLogger().info("Registering Title Listener..");
-            this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
-        }
+        this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
     }
 
     private void initStaticClasses() {

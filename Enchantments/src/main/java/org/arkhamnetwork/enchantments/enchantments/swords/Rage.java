@@ -12,20 +12,19 @@ import org.bukkit.metadata.*;
 import org.bukkit.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 
-public class Rage extends CustomEnchantment
-{
+public class Rage extends CustomEnchantment {
     public Rage() {
         super("Rage", GeneralUtil.weapons, 2);
         this.max = 6;
         this.base = 10.0;
         this.interval = 8.0;
-        Bukkit.getPluginManager().registerEvents(new RageListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new RageListener(), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (event.getDamage() > 0.0 && user instanceof Player) {
-            final Player pUser = (Player)user;
+            final Player pUser = (Player) user;
             if (!(event.getDamager() instanceof LivingEntity)) {
                 return;
             }
@@ -34,7 +33,7 @@ public class Rage extends CustomEnchantment
             }
 
             final double mod = 0.06 * enchantLevel;
-            double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player)user) : getPVEHitCombo((Player)user)) * mod + 1.0;
+            double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0;
             if (hitCombo > 5.0) {
                 hitCombo = 5.0;
             }
@@ -50,15 +49,13 @@ public class Rage extends CustomEnchantment
                     }
                 }
             }
-                target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
-
+            target.setMetadata("effectedByRage", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
 
 
             if (target instanceof Player) {
-                this.addPVPHitCombo((Player)user);
-            }
-            else {
-                this.addPVEHitCombo((Player)user);
+                this.addPVPHitCombo((Player) user);
+            } else {
+                this.addPVEHitCombo((Player) user);
             }
         }
     }
@@ -68,11 +65,11 @@ public class Rage extends CustomEnchantment
     }
 
     public void addPVPHitCombo(final Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue((Plugin)Enchantments.getInstance(), getPVPHitCombo(p) + 1));
+        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue((Plugin) Enchantments.getInstance(), getPVPHitCombo(p) + 1));
     }
 
     public static void subtractPVPHitCombo(final Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue((Plugin)Enchantments.getInstance(), Math.max(0, getPVPHitCombo(p) - 1)));
+        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue((Plugin) Enchantments.getInstance(), Math.max(0, getPVPHitCombo(p) - 1)));
     }
 
     private static int getPVEHitCombo(final Player p) {
@@ -80,11 +77,11 @@ public class Rage extends CustomEnchantment
     }
 
     private void addPVEHitCombo(final Player p) {
-        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue((Plugin)Enchantments.getInstance(), getPVEHitCombo(p) + 1));
+        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue((Plugin) Enchantments.getInstance(), getPVEHitCombo(p) + 1));
     }
 
     public static void subtractPVEHitCombo(final Player p) {
-        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue((Plugin)Enchantments.getInstance(), Math.max(0, getPVEHitCombo(p) - 1)));
+        p.setMetadata("pve_rageHitCombo", new FixedMetadataValue((Plugin) Enchantments.getInstance(), Math.max(0, getPVEHitCombo(p) - 1)));
     }
 
     private void playRageEffect(final Location loc, final int level) {

@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.EnumMap;
 import java.util.Map;
+import java.util.Random;
 
 public class StackedMobDeathEvent  extends Event implements Cancellable {
     private static final HandlerList handlers;
@@ -21,11 +22,12 @@ public class StackedMobDeathEvent  extends Event implements Cancellable {
     public StackedMobDeathEvent(Entity entity, Entity damager) {
         this.entity = entity;
         this.damager = damager;
+        Random random = new Random();
         drops = new EnumMap<>(EntityType.class);
-        drops.put(EntityType.VILLAGER, new ItemStack(Material.EMERALD, 1));
+        drops.put(EntityType.VILLAGER, new ItemStack(Material.EMERALD, random.nextInt((3 - 1)+1) + 1));
         drops.put(EntityType.CREEPER, new ItemStack(Material.TNT, 1));
-        drops.put(EntityType.WITCH, new ItemStack(Material.DIAMOND,1));
-        drops.put(EntityType.IRON_GOLEM, new ItemStack(Material.IRON_INGOT,1));
+        drops.put(EntityType.WITCH, new ItemStack(Material.DIAMOND,random.nextInt((3 - 1)+1) + 1));
+        drops.put(EntityType.IRON_GOLEM, new ItemStack(Material.IRON_INGOT,random.nextInt((3 - 1)+1) + 1));
         drops.put(EntityType.PIG_ZOMBIE, new ItemStack(Material.GOLD_INGOT,1));
         drops.put(EntityType.SKELETON, new ItemStack(Material.BONE));
         drops.put(EntityType.ZOMBIE, new ItemStack(Material.ROTTEN_FLESH));
@@ -62,6 +64,8 @@ public class StackedMobDeathEvent  extends Event implements Cancellable {
     static {
         handlers = new HandlerList();
     }
+
+
 
     public Entity getEntity() {
         return entity;
