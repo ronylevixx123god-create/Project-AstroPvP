@@ -26,6 +26,7 @@ public class AbilityData {
     private long lastActivated = 0;
     private Map<CrateType, Integer> crateKeys = new HashMap<>();
     private double xp = 0;
+    private int level = 0;
 
     public AbilityData(String uuid) {
         this.uuid = uuid;
@@ -45,7 +46,15 @@ public class AbilityData {
     }
 
     public boolean isActive() {
-        return System.currentTimeMillis() < lastActivated + 3600000;
+        int time = 3600000;
+        if (level == 1) {
+            time = 4500000;
+        } else if (level == 2) {
+            time = 5850000;
+        } else if (level == 3) {
+            time = 7200000;
+        }
+        return System.currentTimeMillis() < lastActivated + time;
     }
 
 }

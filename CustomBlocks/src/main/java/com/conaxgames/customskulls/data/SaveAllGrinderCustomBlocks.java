@@ -35,6 +35,7 @@ public class SaveAllGrinderCustomBlocks {
                     MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
 
                     ymlFile.set("lastActivated", data.getLastActivated());
+                    ymlFile.set("level", data.getLevel());
 
                     data.setLastActivated(data.getLastActivated());
 
@@ -43,7 +44,7 @@ public class SaveAllGrinderCustomBlocks {
                         ymlFile.set("legendary", mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
                         ymlFile.set("godly", mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
                         ymlFile.set("xp", mobGrinderCache.getXp());
-
+                        data.setLevel(data.getLevel());
                         data.setLastActivated(data.getLastActivated());
                         mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
                         mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));

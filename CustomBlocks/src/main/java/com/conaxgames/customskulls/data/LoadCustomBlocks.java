@@ -32,6 +32,7 @@ public class LoadCustomBlocks {
             Location location = (Location) ymlFile.get("location");
             AbilityType abilityType = AbilityType.valueOf(ability);
             long lastActivated = ymlFile.getLong("lastActivated");
+            int level = ymlFile.getInt("level");
 
             // This CustomBlock doesn't exist? Oh noes, we better delete it! It's always nice to keep things clean.
             if (CoreSkulls.instance.getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != abilityType.getMaterial()) {
@@ -48,6 +49,7 @@ public class LoadCustomBlocks {
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));
             data.setLastActivated(lastActivated);
+            data.setLevel(level);
 
             if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
                 int astroKeys = ymlFile.getInt("astro");

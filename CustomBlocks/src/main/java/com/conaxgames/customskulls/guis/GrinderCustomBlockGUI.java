@@ -36,11 +36,29 @@ public class GrinderCustomBlockGUI {
 
     public GrinderCustomBlockGUI(AbilityData data, Block block) {
         MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
+        int level = data.getLevel();
+        int price = 0;
+        if (level == 0) {
+            price = 100000000;
+        } else if (level == 1) {
+            price = 500000000;
+        } else if (level == 2) {
+            price = 1000000000;
+        }
+
+        int time = 3600000;
+        if (level == 1) {
+            time = 4500000;
+        } else if (level == 2) {
+            time = 5850000;
+        } else if (level == 3) {
+            time = 7200000;
+        }
 
         this.customBlockGui = new PaginatedGui(5, 27, "Grinder Custom Block Menu");
         ItemStack activateButton = new ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
                 .addLoreLine("")
-                .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((data.getLastActivated() + 3600000) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.millisToRoundedTime((data.getLastActivated() + 3600000) - System.currentTimeMillis()))))
+                .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((data.getLastActivated() + time) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.millisToRoundedTime((data.getLastActivated() + 3600000) - System.currentTimeMillis()))))
                 .addLoreLine(CC.translate("&f&l● &6Status: " + (data.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
                 .addLoreLine(CC.translate("&f&l● &6Price: &e$" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())))
                 .addLoreLine("")
@@ -188,6 +206,63 @@ public class GrinderCustomBlockGUI {
 
             event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a You have received an expbottle worth " + NumberUtils.formatMoney(xp) + "XP"));
             mobGrinderCache.setXp(0);
+            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
+            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
+        }));
+
+
+        //Upgrade
+        //XPBottle key
+
+        ItemStack levelItem;
+        if (level != 3) {
+            levelItem = new ItemBuilder(Material.FEATHER, CC.translate("&e&lGrinder Block Upgrade &7&nLVL "+ level ))
+                    .addLoreLine(CC.translate("&7Click to upgrade this auto mob grinder."))
+                    .addLoreLine("")
+                    .addLoreLine(CC.translate("&f&l● &eCurrent Level: &f" + level))
+                    .addLoreLine(CC.translate("&8Price to Upgrade: &7$" + NumberUtils.formatMoney(price)))
+                    .addLoreLine("")
+                    .addLoreLine(CC.translate("&7Upgrading your grinder block will increase"))
+                    .addLoreLine(CC.translate("&7the chance of getting more and better crate"))
+                    .addLoreLine(CC.translate("&7keys and increase the grinding duration."))
+                    .addLoreLine(CC.translate("&7The max auto mob grinder level is 3."))
+                    .build();
+        } else {
+            levelItem = new ItemBuilder(Material.FEATHER, CC.translate("&e&lGrinder Block Upgrade &7&nLVL "+ level ))
+                    .addLoreLine(CC.translate("&7Your auto mob grinder block has reached max level."))
+                    .addLoreLine("")
+                    .addLoreLine(CC.translate("&f&l● &eCurrent Level: &f" + level))
+                    .addLoreLine("")
+                    .addLoreLine(CC.translate("&7Upgrading your grinder block will increase"))
+                    .addLoreLine(CC.translate("&7the chance of getting more and better crate"))
+                    .addLoreLine(CC.translate("&7keys and increase the grinding duration."))
+                    .addLoreLine(CC.translate("&7The max auto mob grinder level is 3."))
+
+                    .build();
+        }
+        int finalPrice = price;
+        this.customBlockGui.setItem(2, 8, new GuiItem(levelItem, event -> {
+            if (CoreSkulls.isSavingGrinderBlocks) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
+                return;
+            }
+
+            if (data.getLevel() == 3) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c This grinder customblock has reached the max level of 3."));
+                return;
+            }
+
+
+            if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), finalPrice)) {
+                EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), finalPrice);
+                data.setLevel(data.getLevel() + 1);
+                event.getWhoClicked().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(finalPrice)));
+                event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a You have upgraded your grinder customblock to level " + data.getLevel()));
+            } else {
+                event.getWhoClicked().sendMessage(CC.translate("&c(!)&c You don't not have enough money to purchase this upgrade."));
+            }
+
+
             GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
             grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
         }));

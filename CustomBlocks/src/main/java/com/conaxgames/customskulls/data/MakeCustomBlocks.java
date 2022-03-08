@@ -37,6 +37,7 @@ public class MakeCustomBlocks {
 
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(block.getLocation()));
         ymlFile.set("lastActivated", data.getLastActivated());
+        ymlFile.set("level", data.getLevel());
 
         if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
             ymlFile.set("astro", 0);
@@ -44,6 +45,7 @@ public class MakeCustomBlocks {
             ymlFile.set("godly", 0);
             ymlFile.set("xp", 0);
             data.setLastActivated(data.getLastActivated());
+            data.setLevel(data.getLevel());
             data.getCrateKeys().put(CrateType.ASTRO, 0);
             data.getCrateKeys().put(CrateType.LEGENDARY, 0);
             data.getCrateKeys().put(CrateType.GODLY, 0);

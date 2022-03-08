@@ -31,12 +31,14 @@ public class SaveCustomBlock {
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(block.getLocation()));
         MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
         ymlFile.set("lastActivated", data.getLastActivated());
+        ymlFile.set("level", data.getLevel());
 
         data.setOwner(player.getUniqueId());
         data.setUuid(AbilityData.getUUID(block.getLocation()));
         data.setLocation(block.getLocation());
         data.setAbilityType(abilityType);
         data.setLastActivated(data.getLastActivated());
+        data.setLevel(data.getLevel());
 
         if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
             ymlFile.set("astro", mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
@@ -45,6 +47,7 @@ public class SaveCustomBlock {
             ymlFile.set("xp", mobGrinderCache.getXp());
 
             data.setLastActivated(data.getLastActivated());
+            data.setLevel(data.getLevel());
             data.getCrateKeys().put(CrateType.ASTRO, mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
             data.getCrateKeys().put(CrateType.LEGENDARY, mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
             data.getCrateKeys().put(CrateType.GODLY, mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
