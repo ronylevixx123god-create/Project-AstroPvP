@@ -81,19 +81,24 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
         if (set.isEmpty() || chance == null) {
             return null;
         }
+        boolean mutatedFound = false;
         ArrayList<String> lore = Lists.newArrayList(CC.Green + chance.intValue() + "% Success Rate", CC.Gray + "Can be applied to any non", CC.Gray + "armor set that is not", CC.Gray + "already equipped with a", CC.Gray + "bonus crystal to gain", CC.Gray + "a passive advantage!", "");
         lore.add(CC.GoldB + "Crystal Bonus:");
         NBTTagListBuilder list = new NBTTagListBuilder();
         for (ArmorSetType s : set) {
+            if (s.name().contains("MUTATED")) {
+                mutatedFound = true;
+            }
             list.addString(s.name());
             lore.add(" " + s.getColor() + CC.Bold + s.getDisplay());
             for (String str : s.getArmorSet().getArmorCrystalLore()) {
-                if(str.contains("&")) {
+                if (str.contains("&")) {
                     lore.add(CC.translate("  " + s.getColor() + CC.Bold + "  " + s.getColor() + str));
                 } else {
                     lore.add("  " + CC.DarkGrayB + "● " + s.getColor() + str);
                 }
             }
+
         }
         String name = null;
         if (set.size() > 1) {
@@ -109,14 +114,23 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
         } else if (!set.isEmpty()) {
             name = CC.GoldB + "Armor Crystal (" + set.stream().findFirst().orElse(null).getDisplay() + CC.GoldB + ")";
         }
-        return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", chance.doubleValue()).get()).assignIID().build();
+        ItemStack crystal = this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", chance.doubleValue()).get()).assignIID().build();
+
+        if (mutatedFound) {
+            NBTWrapper wrapper = new NBTWrapper(crystal);
+            NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+            cosmicData.setString("tintColor", "-10237440"); //-10237440
+            return crystal;
+        } else {
+            return this.applyItemData(new ItemBuilder(Material.NETHER_STAR, name).lore(lore).build()).setNBTBase("cosmicData", new NBTTagCompoundBuilder().setNBTBase("bonuses", list.build()).setDouble("bonusChance", chance.doubleValue()).get()).assignIID().build();
+
+        }
     }
 
 
     public boolean acceptsInventoryClickType(InventoryItemType inventoryItemType) {
         return inventoryItemType == InventoryItemType.CURSOR;
     }
-
 
 
     public void onInventoryClick(Player player, ItemStack cursor, NBTWrapper cursorWrapper, NBTWrapper clickedWrapper, ItemStack clicked, InventoryClickEvent event) throws CosmicException {
@@ -159,14 +173,13 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
             chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
 
             if (player.hasPermission("astrocore.nebula")) {
-                chanceToApply += 25;
-                player.sendMessage(CC.translate("&a+25% Crystal apply chance &7(Nebula Perk)"));
-            } else if (player.hasPermission("astrocore.apollo")) {
                 chanceToApply += 10;
-                player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Apollo Perk)"));
+                player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Nebula Perk)"));
+            } else if (player.hasPermission("astrocore.apollo")) {
+                chanceToApply += 5;
+                player.sendMessage(CC.translate("&a+5% Crystal apply chance &7(Apollo Perk)"));
 
             }
-
 
 
             if (Math.random() > chanceToApply * 0.01) {

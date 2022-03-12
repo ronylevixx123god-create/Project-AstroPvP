@@ -36,6 +36,7 @@ public class SetGUI {
         Inventory inventory = Bukkit.createInventory(player, size, title);
 
         for(ArmorSetType setType : ArmorSetType.values()) {
+            if (setType.name().contains("MUTATED")) continue;
             ItemStack item = new ItemStack(setType.getDisplayItem());
             //item.addUnsafeEnchantment(Enchantment.DAMAGE_ALL, 1);
             ItemMeta meta = item.getItemMeta();
