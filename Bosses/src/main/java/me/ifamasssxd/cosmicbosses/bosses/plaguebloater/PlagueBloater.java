@@ -178,17 +178,17 @@ public class PlagueBloater extends Boss {
             event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) / 1.5);
         }
         if (this.random.nextBoolean() && this.getMinions().size() < 4) {
-            final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
+            /*final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
             minion.setMetadata("plague_ads", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
             minion.setMaxHealth(20.0);
             minion.setBaby(false);
             minion.setCanPickupItems(false);
             minion.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 600, 2), true);
             minion.getEquipment().setItemInHand(ItemBuilder.buildArmor(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT));
-            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);
+            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);*/
 
         } else if (this.getMinions().size() < 14) {
-            final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
+/*            final Zombie minion = (Zombie) this.spawnMinion(EntityType.ZOMBIE, BossUtils.getRandomLocationNearby(this.getEntity().getLocation(), 10, 5, 2));
             minion.setMaxHealth(10.0);
             minion.setBaby(true);
             minion.setCanPickupItems(false);
@@ -199,7 +199,7 @@ public class PlagueBloater extends Boss {
             minion.getEquipment().setBoots(ItemBuilder.buildArmor(Material.DIAMOND_BOOTS, Enchantment.DURABILITY, Enchantment.PROTECTION_ENVIRONMENTAL, Enchantment.THORNS));
             minion.getEquipment().setItemInHand(ItemBuilder.buildArmor(Material.DIAMOND_SWORD, Enchantment.DAMAGE_ALL, Enchantment.FIRE_ASPECT));
 
-            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);
+            Bukkit.getScheduler().runTaskLater(CosmicBosses.getInstance(), minion::remove, 20*300);*/
 
         }
         super.onDamageTaken(event, damager);
