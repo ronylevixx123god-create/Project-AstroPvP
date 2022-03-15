@@ -27,7 +27,7 @@ import me.astropvp.astrospawners.utils.EntityUtils;
 public class MobSpawnerListener implements Listener {
 
     //This is when you place a new spawner
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent event) {
         if (event.getBlockPlaced().getType() != Material.MOB_SPAWNER) {
             return;
@@ -45,7 +45,7 @@ public class MobSpawnerListener implements Listener {
         ItemStack item = event.getPlayer().getItemInHand();
         if (item.getAmount() > 1) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place stacked spawners!"));
-            event.getPlayer().sendMessage(CC.translate("&7Combine them by drag and dropping them together"));
+            event.getPlayer().sendMessage(CC.translate("&7Combine them by drag and dropping them together or type /stackspawners"));
             event.setCancelled(true);
             return;
         }
@@ -80,8 +80,8 @@ public class MobSpawnerListener implements Listener {
         }
         int math = Math.min(amount, ItemSpawner.getSpawnerLimit());
         int spawnersLeft = amount - math;
-        event.getPlayer().sendMessage(CC.translate("&c&l- " + amount + " &c&l" + EntityUtils.getEntityName(type) + "&c&l Spawners"));
-        event.getPlayer().sendMessage(CC.translate("&7There are now " + spawnersLeft + "&7 spawners left in your hand."));
+        event.getPlayer().sendMessage(CC.translate("&a&l+ &a&n" + amount + "&a " + EntityUtils.getEntityName(type) + " Spawner(s) &7[" + amount + " Total]"));
+
 
         AstroSpawners.coolDownSpawnerPlace.add(event.getPlayer());
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
@@ -105,11 +105,13 @@ public class MobSpawnerListener implements Listener {
             }
         }, 1);
         event.setCancelled(true);
+        event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.NOTE_PLING, 10f, 10f);
+
     }
 
 
     //This is when you place a spawner on a different spawner
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onSpawnerPlaceOnSpawner(BlockPlaceEvent event) {
         Block block = event.getBlock();
         if (block.getType() == Material.MOB_SPAWNER) {
@@ -174,6 +176,8 @@ public class MobSpawnerListener implements Listener {
                                         int spawnersLeft = amount - math;
                                         found.setSpawnerAmount(found.getSpawnerAmount() + math);
                                         MakeSpawner.newFileItem(event.getBlockAgainst().getLocation(), found.getEntityType(), found.getSpawnerAmount());
+                                        player.sendMessage(CC.translate("&a&l+ &a&n" + amount + "&a " + EntityUtils.getEntityName(type) + " Spawner(s) &7[" + found.getSpawnerAmount() + " Total]"));
+                                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
 
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
@@ -190,16 +194,9 @@ public class MobSpawnerListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onSpawnerInteract(PlayerInteractEvent event) {
-        if (event.getItem() != null) {
-            if (event.getClickedBlock() != null) {
-                if (event.getClickedBlock().getType() == Material.MOB_SPAWNER) {
-                    if (event.getItem().getType() != Material.DIAMOND_PICKAXE)
-                        event.getPlayer().sendMessage(CC.translate("&e&lTIP &fUse your fist to inspect this spawner!"));
-                }
-            }
-        }
+        if (event.isCancelled()) return;
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK && event.getItem() == null) {
             Block block = event.getClickedBlock();
             if (block.getType() == Material.MOB_SPAWNER) {

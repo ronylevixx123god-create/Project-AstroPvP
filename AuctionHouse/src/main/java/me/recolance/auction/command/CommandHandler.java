@@ -237,9 +237,9 @@ public class CommandHandler
         } else if (!Util.stringIsNumerical(price) && !CommandHandler.isValidAlternatePrice(price)) {
             Util.message(player, "&cThat is not a valid price.");
         } else if (price.length() > 11) {
-            Util.message(player, "&cYou can only list something for a max of $" + NumberUtils.formatMoney(Double.MAX_VALUE) + ".");
+            Util.message(player, "&cYou can only list something for a max of $99,999,999,999.");
         } else {
-            Controller.attemptSell(player, item, CommandHandler.isValidAlternatePrice(price) ? (int) Util.getMoneyValue(price) : Double.parseDouble(price));
+            Controller.attemptSell(player, item, CommandHandler.isValidAlternatePrice(price) ? Util.getMoneyValue(price) : Double.parseDouble(price));
         }
         return true;
     }

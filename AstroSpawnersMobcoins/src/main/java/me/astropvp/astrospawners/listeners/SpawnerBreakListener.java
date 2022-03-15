@@ -47,7 +47,7 @@ public class SpawnerBreakListener implements Listener {
                 CreeperTypes egg_type = CreeperTypes.valueOf(c.getMetadata("customCreeperType").get(0).asString());
 
                 if (egg_type == CreeperTypes.Lucky) {
-                    chance += 1.25;
+                    chance += 1.5;
                 }
             }
         }
@@ -97,8 +97,7 @@ public class SpawnerBreakListener implements Listener {
                 int amount = data.getSpawnerAmount();
                 data.setSpawnerAmount(0);
                 block.getWorld().dropItem(block.getLocation(), ItemSpawner.getItem(type, amount));
-                event.getPlayer().sendMessage(CC.translate("&a&l(!)&a You have mined a &f" + EntityUtils.getEntityName(type) + "&a Spawner!"));
-                event.getPlayer().sendMessage(CC.translate("&7The spawner has been dropped on the ground!"));
+                event.getPlayer().sendMessage(CC.translate("&c&l- &c&n" + amount + "&c " + EntityUtils.getEntityName(type) + " Spawner(s)"));
                 AstroSpawners.getInstance().getSpawnersMap().remove(block.getLocation());
                 DeleteSpawner.delete(block.getLocation());
                 block.setType(Material.AIR);

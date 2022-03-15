@@ -38,16 +38,20 @@ public class AstroDamageHandlerAPI {
                 if (this.debug) {
                     LivingEntity entity = (LivingEntity) event.getEntity();
                     double oldHealth = entity.getHealth();
+                    double finalNewDamage = newDamage;
                     Bukkit.getScheduler().runTaskLater(plugin, () -> {
                         if (!entity.isDead()) {
                             double healthDifference = this.getHealthDifference(entity.getHealth(), oldHealth);
                             String color = healthDifference > 9.0D ? "&4&l" : "&c&l";
-                            this.sendDebugMessage(event.getDamager(), "&a&l↑ Outgoing Damage &7(&a+" + Math.round(amountInPercentage) + "%&7) &7(&c" + (int) oldDamage + " &7-> &a" + (int) newDamage + " &7[&f" + entity.getName() + ": " + color + "-" + (int) healthDifference + "HP&7]) &7(Instance: " + instance + "&7)");
+                            this.sendDebugMessage(event.getDamager(), "&a&l↑ Outgoing Damage &7(&a+" + Math.round(amountInPercentage) + "%&7) &7(&c" + (int) oldDamage + " &7-> &a" + (int) finalNewDamage + " &7[&f" + entity.getName() + ": " + color + "-" + (int) healthDifference + "HP&7]) &7(Instance: " + instance + "&7)");
                         }
 
                     }, 1L);
                 }
 
+                if (newDamage > 17) {
+                    newDamage *= 0.75;
+                }
                 event.setDamage(newDamage);
             }
         }

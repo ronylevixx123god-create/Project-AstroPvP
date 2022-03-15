@@ -28,7 +28,6 @@ public class SpawnerShopGUI
     //TODO Add amount in the lorer
 
 
-
     @Override
     protected String getName() {
         return CC.translate("&8Spawner Shop (" + amount + ")");
@@ -176,19 +175,7 @@ public class SpawnerShopGUI
                 setItems();
                 break;
             case 4:
-                price = getSpawnerFromName("skeleton").getTotalPrice();
-                amount = getSpawnerFromName("skeleton").getAmount();
-                if (balance < price) {
-                    player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
-                    return;
-                } else {
-                    Economy.subtract(player.getName(), price);
-                    player.sendMessage(CC.translate("&c&l- $" + DecimalFormat.getInstance().format(price)));
-                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " skeleton");
-                }
-                setItems();
-                break;
-            case 5:
+
                 price = getSpawnerFromName("zombie").getTotalPrice();
                 amount = getSpawnerFromName("zombie").getAmount();
                 if (balance < price) {
@@ -198,6 +185,20 @@ public class SpawnerShopGUI
                     Economy.subtract(player.getName(), price);
                     player.sendMessage(CC.translate("&c&l- $" + DecimalFormat.getInstance().format(price)));
                     Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " zombie");
+                }
+                setItems();
+                break;
+            case 5:
+
+                price = getSpawnerFromName("skeleton").getTotalPrice();
+                amount = getSpawnerFromName("skeleton").getAmount();
+                if (balance < price) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You don't have enough money to purchase this spawner."));
+                    return;
+                } else {
+                    Economy.subtract(player.getName(), price);
+                    player.sendMessage(CC.translate("&c&l- $" + DecimalFormat.getInstance().format(price)));
+                    Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "givespawner spawner " + player.getName() + " " + amount + " skeleton");
                 }
                 setItems();
                 break;

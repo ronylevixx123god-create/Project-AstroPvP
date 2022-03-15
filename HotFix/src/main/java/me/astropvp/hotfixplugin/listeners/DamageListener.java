@@ -57,16 +57,6 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
-    public void dmgCap(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            double dmg = e.getFinalDamage();
-            if (dmg >= 17) {
-                e.setDamage(dmg*0.75);
-                System.out.println("[DamageCap] Normal Damage: " + dmg + ", Edited Damage: " + e.getFinalDamage() * 0.75);
-            }
-        }
-    }
 
     private String getFormattedName(ItemStack hand) {
         if (hand == null || hand.getType() == Material.AIR) {
