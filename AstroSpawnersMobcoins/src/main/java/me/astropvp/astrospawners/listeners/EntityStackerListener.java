@@ -215,9 +215,9 @@ public class EntityStackerListener implements Listener {
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.02) {
+                if (num >= 0 && num <= 0.01) {
                     p.getInventory().addItem(legKey);
-                } else if (num >= 0 && num <= 0.2) {
+                } else if (num >= 0 && num <= 0.125) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ignored) {
