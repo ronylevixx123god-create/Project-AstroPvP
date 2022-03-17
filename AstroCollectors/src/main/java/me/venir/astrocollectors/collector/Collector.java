@@ -120,6 +120,7 @@ public final class Collector {
         for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
             Location locationSpawner = entry.getKey();
             SpawnerData spawnerData = entry.getValue();
+            if (spawnerData.getEntityType() == EntityType.BLAZE) continue;
 
             if (ChunkUtil.isLocationAInSameChunkAsLocationB(locationSpawner, location)) {
                 this.spawnersInChunk.put(spawnerData.getEntityType(), spawnerData.getSpawnerAmount());

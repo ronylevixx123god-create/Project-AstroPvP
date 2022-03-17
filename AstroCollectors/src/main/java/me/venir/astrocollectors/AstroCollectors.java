@@ -5,12 +5,13 @@ import me.astropvp.astrospawners.AstroSpawners;
 import me.venir.astrocollectors.collector.CollectorManager;
 import me.venir.astrocollectors.commands.CollectorGiveCommand;
 import me.venir.astrocollectors.commands.RemoveCollectorCommand;
-import me.venir.astrocollectors.listeners.InventoryClickListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.BlockBreakListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.BlockPlaceListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.PlayerInteractListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.StackedMobDeathListener;
+import me.venir.astrocollectors.listeners.spawnerlisteners.SpawnerBlockBreakListener;
 import me.venir.astrocollectors.listeners.spawnerlisteners.SpawnerBlockPlaceListener;
+import me.venir.astrocollectors.listeners.spawnerlisteners.SpawnerExplodeListener;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -54,9 +55,10 @@ public class AstroCollectors extends JavaPlugin {
         PluginManager pm = getServer().getPluginManager();
         pm.registerEvents(new BlockPlaceListener(), this);
         pm.registerEvents(new BlockBreakListener(this), this);
-        pm.registerEvents(new InventoryClickListener(), this);
         pm.registerEvents(new PlayerInteractListener(this), this);
         pm.registerEvents(new SpawnerBlockPlaceListener(), this);
+        pm.registerEvents(new SpawnerBlockBreakListener(), this);
+        pm.registerEvents(new SpawnerExplodeListener(), this);
 
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
