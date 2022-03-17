@@ -7,13 +7,19 @@ import com.google.common.util.concurrent.AtomicDouble;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import lombok.Getter;
+import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.data.SpawnerData;
 import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.collector.CollectorSellLog;
 import me.venir.astrocollectors.language.Language;
+import me.venir.astrocollectors.utils.ChunkUtil;
 import me.venir.astrocollectors.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.*;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
@@ -22,10 +28,7 @@ import org.json.simple.JSONObject;
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 
@@ -36,6 +39,9 @@ public final class Collector {
     private final double x, y, z;
     private final Map<Material, Integer> lootMap;
     private final List<CollectorSellLog> sellLogs;
+    private long lastSold;
+    @Getter
+    private Map<EntityType, Integer> spawnersInChunk;
     Essentials essentials;
 
 
@@ -74,6 +80,26 @@ public final class Collector {
         y = Double.parseDouble(String.valueOf(uncastedLocationArray.get(1)));
         z = Double.parseDouble(String.valueOf(uncastedLocationArray.get(2)));
         sellLogs = new ArrayList<>();
+
+        //Load from file
+        lastSold = (long) data.get("lastSold");
+
+
+        //put all spawners from chunk in this list
+        this.spawnersInChunk = new HashMap<>();
+        Object potentialSpawnerArray = data.get("spawners");
+        if (!(potentialSpawnerArray instanceof JSONArray)) {
+            throw new IllegalArgumentException();
+        }
+        JSONArray uncastedSpawnerArray = (JSONArray) potentialSpawnerArray;
+        for (Object o : uncastedSpawnerArray) {
+            JSONObject jsonObject = ((JSONObject) o);
+            EntityType type = EntityType.valueOf(String.valueOf(jsonObject.get("type")));
+            int amount = Integer.parseInt(String.valueOf(jsonObject.get("amount")));
+            this.spawnersInChunk.put(type, amount);
+        }
+
+
     }
 
     public Collector(Location location) {
@@ -87,6 +113,18 @@ public final class Collector {
         chunkX = chunk.getX();
         chunkZ = chunk.getZ();
         sellLogs = new ArrayList<>();
+        lastSold = -1;
+
+        //put all spawners from chunk in this list
+        this.spawnersInChunk = new HashMap<>();
+        for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
+            Location locationSpawner = entry.getKey();
+            SpawnerData spawnerData = entry.getValue();
+
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(locationSpawner, location)) {
+                this.spawnersInChunk.put(spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
+            }
+        }
     }
 
     public int getAmount(Material material) {
@@ -236,7 +274,17 @@ public final class Collector {
         this.lootMap.forEach((key, value) -> lootObject.put(String.valueOf(key), value));
 
         jsonObject.put("Loot", lootObject);
+        JSONArray spawners = new JSONArray();
+        for (Map.Entry<EntityType, Integer> spawnerData : this.spawnersInChunk.entrySet()) {
+            JSONObject spawner = new JSONObject();
+            spawner.put("type", spawnerData.getKey());
+            spawner.put("amount", spawnerData.getValue());
+            spawners.add(spawner);
+        }
 
+
+        jsonObject.put("spawners", spawners);
+        jsonObject.put("lastSold", lastSold);
         return jsonObject;
     }
 

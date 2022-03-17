@@ -1,5 +1,7 @@
 package me.venir.astrocollectors.collector;
 
+import it.unimi.dsi.fastutil.Hash;
+import me.astropvp.astrospawners.data.SpawnerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -13,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -54,7 +57,7 @@ public class CollectorManager  {
             Map.Entry entry = (Map.Entry) obj;
             String key = String.valueOf(entry.getKey());
             String[] components = key.split(";");
-            if (components.length != 3) {
+            if (components.length != 5) {
                 continue;
             }
             World world = Bukkit.getWorld(components[0]);

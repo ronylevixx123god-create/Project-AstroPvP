@@ -77,7 +77,7 @@
         </dependency>
         <dependency>
             <groupId>com.astropvp</groupId>
-            <artifactId>AstroSpawners</artifactId>
+            <artifactId>AstroSpawnerss</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
