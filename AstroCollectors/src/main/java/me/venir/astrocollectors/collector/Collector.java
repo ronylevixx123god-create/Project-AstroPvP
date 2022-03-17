@@ -51,7 +51,7 @@ public final class Collector {
         this.chunkX = chunkX;
         this.chunkZ = chunkZ;
         lootMap = new EnumMap<>(Material.class);
-        if (data.size() != 2) {
+        if (data.size() != 4) {
             throw new IllegalArgumentException();
         }
         Object potentialLootMap = data.get("Loot");
@@ -277,7 +277,7 @@ public final class Collector {
         JSONArray spawners = new JSONArray();
         for (Map.Entry<EntityType, Integer> spawnerData : this.spawnersInChunk.entrySet()) {
             JSONObject spawner = new JSONObject();
-            spawner.put("type", spawnerData.getKey());
+            spawner.put("type", spawnerData.getKey().name());
             spawner.put("amount", spawnerData.getValue());
             spawners.add(spawner);
         }

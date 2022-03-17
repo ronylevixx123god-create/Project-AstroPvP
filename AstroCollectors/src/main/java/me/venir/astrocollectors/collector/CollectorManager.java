@@ -57,7 +57,7 @@ public class CollectorManager  {
             Map.Entry entry = (Map.Entry) obj;
             String key = String.valueOf(entry.getKey());
             String[] components = key.split(";");
-            if (components.length != 5) {
+            if (components.length != 3) {
                 continue;
             }
             World world = Bukkit.getWorld(components[0]);

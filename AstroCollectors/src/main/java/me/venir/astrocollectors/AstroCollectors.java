@@ -10,6 +10,7 @@ import me.venir.astrocollectors.listeners.collectorlisteners.BlockBreakListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.BlockPlaceListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.PlayerInteractListener;
 import me.venir.astrocollectors.listeners.collectorlisteners.StackedMobDeathListener;
+import me.venir.astrocollectors.listeners.spawnerlisteners.SpawnerBlockPlaceListener;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -55,6 +56,7 @@ public class AstroCollectors extends JavaPlugin {
         pm.registerEvents(new BlockBreakListener(this), this);
         pm.registerEvents(new InventoryClickListener(), this);
         pm.registerEvents(new PlayerInteractListener(this), this);
+        pm.registerEvents(new SpawnerBlockPlaceListener(), this);
 
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
