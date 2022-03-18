@@ -33,7 +33,7 @@ public class StackedMobDeathListener implements Listener {
 
     @EventHandler
     public void onStackedEntityDeath(StackedMobDeathEvent e) {
-        Entity entity = e.getEntity();
+/*        Entity entity = e.getEntity();
         if (!(entity instanceof LivingEntity)) return;
         if (entity instanceof Blaze) return;
         int stackSize = AstroSpawners.getInstance().getMobStackerUtils().getStackSize(entity);
@@ -59,8 +59,17 @@ public class StackedMobDeathListener implements Listener {
         Bukkit.getPluginManager().callEvent(stackedMobDeathEvent);
         e.getDrops().clear();
         e.setDroppedExp(0);
+
+ */
+    }
+    @EventHandler
+    public void stopMobSpawn(SpawnerSpawnEvent e) {
+        if (e.getEntityType() == EntityType.BLAZE) return;
+        e.setCancelled(true);
     }
 }
+
+
 
 /*
 public class StackedMobDeathListener implements Listener {

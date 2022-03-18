@@ -25,10 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CollectorsUI {
 
@@ -59,10 +56,8 @@ public class CollectorsUI {
                 .setLore(getMobDropsLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    int amount = collector.getTotalMobDropAmount();
-                    if (amount == 0) return;
-                    collector.addMobDropSellLog(player, amount, collector.getAllMobDropsWorth());
-                    collector.sellAllMobDrops(player);
+                    collector.addMobDropSellLog(player, collector.calculateWorth());
+                    collector.sellAll(player);
                     updateItems();
                 }));
 
@@ -72,9 +67,9 @@ public class CollectorsUI {
                 .setLore(getTntLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    int amount = collector.getAmount(Material.TNT);
-                    if (amount == 0) return;
-                    collector.sellTNT(player);
+                    //int amount = collector.getAmount(Material.TNT);
+                    //if (amount == 0) return;
+                    //collector.sellTNT(player);
                     updateItems();
                 }));
 
@@ -143,18 +138,19 @@ public class CollectorsUI {
             sellLogsLore.add("");
         }
         sellLogs.stream().limit(10).forEach(log -> {
-            String sellTypeString = log.getSellLogType() == CollectorSellLog.SellLogType.TNT ? "Deposited &c" + Utils.formatNum(log.getAmount()) + "&7 TNT" : "Sold &a" + Utils.formatNum(log.getAmount()) + "&7 drops for &2$&a" + Utils.formatNum(log.getWorth()) + "&7";
-            sellLogsLore.add(1, Utils.format("&7&o" + log.getSellerName() + "&r&7 " + sellTypeString + " &8(&7" + Utils.splitToComponentTimes((System.currentTimeMillis() - log.getSellDate()) / 1000) + "ago&8)"));
+            //String sellTypeString = log.getSellLogType() == CollectorSellLog.SellLogType.TNT ? "Deposited &c" + Utils.formatNum(log.getAmount()) + "&7 TNT" : "Sold &a" + Utils.formatNum(log.getAmount()) + "&7 drops for &2$&a" + Utils.formatNum(log.getWorth()) + "&7";
+            //sellLogsLore.add(1, Utils.format("&7&o" + log.getSellerName() + "&r&7 " + sellTypeString + " &8(&7" + Utils.splitToComponentTimes((System.currentTimeMillis() - log.getSellDate()) / 1000) + "ago&8)"));
         });
         return sellLogsLore;
     }
 
     private List<String> getTntLore() {
-        return Utils.format(Arrays.asList("",
+        return Collections.emptyList();
+        /*return Utils.format(Arrays.asList("",
                 "&7Right-Click to deposit your TNT",
                 "&7into your faction TNT bank",
                 "",
-                "&a&l * Amount: &f" + Utils.formatNum(collector.getAmount(Material.TNT))));
+                "&a&l * Amount: &f" + Utils.formatNum(collector.getAmount(Material.TNT))));*/
     }
 
     private List<String> getMobDropsLore() {
@@ -162,8 +158,7 @@ public class CollectorsUI {
                 "&7Right-Click to withdraw the money",
                 "&7to your own balance",
                 "",
-                "&a&l * Amount: &f" + Utils.formatNum(collector.getTotalMobDropAmount()),
-                "&a&l * Worth: &2$&f" + Utils.formatNum(collector.getAllMobDropsWorth())));
+                "&a&l * Worth: &2$&f" + Utils.formatNum(collector.calculateWorth())));
     }
 
     public static String getEntityName(EntityType type) {

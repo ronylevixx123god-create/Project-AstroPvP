@@ -51,6 +51,8 @@ public class PlayerInteractListener  implements Listener {
 
             CollectorsUI collectorUI = new CollectorsUI(plugin, player, location);
             collectorUI.getCollectorUI().open(player);
+
+
         }
     }
 }
