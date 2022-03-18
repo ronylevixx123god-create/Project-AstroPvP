@@ -4,7 +4,7 @@ import org.bukkit.entity.EntityType;
 
 public class SpawnerUtil {
     public static double getMoneyPerMinute(EntityType type) {
-        double price =0;
+        double price = 0;
         switch (type) {
             case IRON_GOLEM:
                 price = 16000;
@@ -28,5 +28,9 @@ public class SpawnerUtil {
                 break;
         }
         return price;
+    }
+
+    public static double getMoneyPerSecond(EntityType type) {
+        return getMoneyPerMinute(type) / 60;
     }
 }

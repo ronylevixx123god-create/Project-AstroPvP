@@ -1,75 +1,57 @@
 package me.venir.astrocollectors.collector;
 
-import com.conaxgames.customskulls.util.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.earth2me.essentials.Essentials;
 import com.google.common.collect.ImmutableList;
-import com.google.common.util.concurrent.AtomicDouble;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
 import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
-import me.venir.astrocollectors.AstroCollectors;
-import me.venir.astrocollectors.collector.CollectorSellLog;
-import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.ChunkUtil;
 import me.venir.astrocollectors.utils.SpawnerUtil;
-import me.venir.astrocollectors.utils.Utils;
-import net.milkbowl.vault.economy.Economy;
-import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
-import org.bukkit.*;
-import org.bukkit.entity.Entity;
+import org.bukkit.Location;
+import org.bukkit.Sound;
+import org.bukkit.World;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
-import java.text.NumberFormat;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.LinkedBlockingQueue;
 
 
 public final class Collector {
 
+    @Getter @Setter
+    private long lastUpdated;
+    @Getter
+    private double worth;
+    @Getter
+    private long tnt;
+    @Getter
+    private final Map<EntityType, Integer> spawnersInChunk;
     private final Reference<World> reference;
-    private final int chunkX, chunkZ;
     private final double x, y, z;
-    private final List<CollectorSellLog> sellLogs;
-    @Getter
-    @Setter
-    private long lastSold;
-    @Getter
-    private Map<EntityType, Integer> spawnersInChunk;
-    Essentials essentials;
+    private final Queue<CollectorSellLog> sellLogs;
 
 
-    public Collector(World world, int chunkX, int chunkZ, JSONObject data) {
-        this.essentials = EssentialsUtils.getEssentials();
-        reference = new WeakReference<>(world);
-        this.chunkX = chunkX;
-        this.chunkZ = chunkZ;
+    public Collector(World world, JSONObject data) {
+        this.reference = new WeakReference<>(world);
 
         Object potentialLocationArray = data.get("Location");
         if (!(potentialLocationArray instanceof JSONArray)) {
             throw new IllegalArgumentException();
         }
         JSONArray uncastedLocationArray = (JSONArray) potentialLocationArray;
-        x = Double.parseDouble(String.valueOf(uncastedLocationArray.get(0)));
-        y = Double.parseDouble(String.valueOf(uncastedLocationArray.get(1)));
-        z = Double.parseDouble(String.valueOf(uncastedLocationArray.get(2)));
-        sellLogs = new ArrayList<>();
+        this.x = Double.parseDouble(String.valueOf(uncastedLocationArray.get(0)));
+        this.y = Double.parseDouble(String.valueOf(uncastedLocationArray.get(1)));
+        this.z = Double.parseDouble(String.valueOf(uncastedLocationArray.get(2)));
+        this.sellLogs = new LinkedBlockingQueue<>(10);
 
-        //Load from file
-        lastSold = (long) data.get("lastSold");
+        this.lastUpdated = (long) data.get("lastUpdated");
 
-
-        //put all spawners from chunk in this list
         this.spawnersInChunk = new HashMap<>();
         Object potentialSpawnerArray = data.get("spawners");
         if (!(potentialSpawnerArray instanceof JSONArray)) {
@@ -83,22 +65,17 @@ public final class Collector {
             this.spawnersInChunk.put(type, amount);
         }
 
-
+        this.worth = (double) data.get("worth");;
     }
 
     public Collector(Location location) {
-        this.essentials = EssentialsUtils.getEssentials();
-        reference = new WeakReference<>(location.getWorld());
-        x = location.getBlockX();
-        y = location.getBlockY();
-        z = location.getBlockZ();
-        Chunk chunk = location.getChunk();
-        chunkX = chunk.getX();
-        chunkZ = chunk.getZ();
-        sellLogs = new ArrayList<>();
-        lastSold = -1;
+        this.reference = new WeakReference<>(location.getWorld());
+        this.x = location.getBlockX();
+        this.y = location.getBlockY();
+        this.z = location.getBlockZ();
+        this.sellLogs = new LinkedBlockingQueue<>(10);
+        this.lastUpdated = System.currentTimeMillis();
 
-        //put all spawners from chunk in this list
         this.spawnersInChunk = new HashMap<>();
         for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
             Location locationSpawner = entry.getKey();
@@ -109,10 +86,69 @@ public final class Collector {
                 this.spawnersInChunk.put(spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
             }
         }
+
+        this.worth = 0.0;
+    }
+
+    public void sellAll(Player player) {
+        if (this.worth <= 0) return;
+        player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
+        EconomyUtils.depositBalance(player, worth);
+        player.closeInventory();
+        this.worth = 0.0;
+    }
+
+    private double calculateWorth() {
+        long lastUpdated = this.getLastUpdated();
+        long current = System.currentTimeMillis();
+        long secondsPassed = (current - lastUpdated) / 1000;
+        double total = 0;
+        for (Map.Entry<EntityType, Integer> entry : getSpawnersInChunk().entrySet()) {
+            EntityType type = entry.getKey();
+            int amountSpawners = entry.getValue();
+            total += SpawnerUtil.getMoneyPerSecond(type) * secondsPassed * amountSpawners;
+        }
+        this.setLastUpdated(current);
+        return total;
+    }
+
+
+    public void updateWorth() {
+        this.addWorth(this.calculateWorth());
+    }
+
+    private void addWorth(double amount) {
+        this.worth += amount;
+    }
+
+    private void addTnt(double amount) {
+        this.tnt += amount;
+    }
+
+    public void addTNTSellLog(Player seller, int amount) {
+        boolean canOffer = this.sellLogs.offer(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.TNT, amount));
+
+        if (!canOffer) {
+            this.sellLogs.poll();
+            this.sellLogs.offer(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.TNT, amount));
+        }
+    }
+
+    public void addMobDropSellLog(Player seller, double worth) {
+        boolean canOffer = this.sellLogs.offer(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.MOB_DROPS, worth));
+
+        if (!canOffer) {
+            this.sellLogs.poll();
+            this.sellLogs.offer(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.MOB_DROPS, worth));
+        }
+    }
+
+    public List<CollectorSellLog> getSellLogs() {
+        return ImmutableList.copyOf(sellLogs);
     }
 
     public Location getLocation() {
-        World world = reference.get();
+        World world = this.reference.get();
         if (world == null) {
             return null;
         }
@@ -120,31 +156,7 @@ public final class Collector {
     }
 
     void invalidate() {
-        reference.clear();
-    }
-
-    public void sellAll(Player player) {
-        double worth = calculateWorth();
-        if (worth <= 0) return;
-        player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
-        EconomyUtils.depositBalance(player, worth);
-        this.setLastSold(System.currentTimeMillis());
-        player.closeInventory();
-
-    }
-
-    public double calculateWorth() {
-        long lastSold = getLastSold();
-        long current = System.currentTimeMillis();
-        long secondsPassed = (current - lastSold)/1000;
-        long minutesPassed = secondsPassed/60;
-        double total = 0;
-        for (Map.Entry<EntityType, Integer> entry : getSpawnersInChunk().entrySet()) {
-            EntityType type = entry.getKey();
-            int amountSpawners = entry.getValue();
-            total += SpawnerUtil.getMoneyPerMinute(type) * amountSpawners * minutesPassed;
-        }
-        return total;
+        this.reference.clear();
     }
 
     @SuppressWarnings("unchecked")
@@ -167,19 +179,8 @@ public final class Collector {
 
 
         jsonObject.put("spawners", spawners);
-        jsonObject.put("lastSold", lastSold);
+        jsonObject.put("lastUpdated", this.lastUpdated);
+        jsonObject.put("worth", this.worth);
         return jsonObject;
-    }
-
-    public void addTNTSellLog(Player seller, int amount) {
-        sellLogs.add(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.TNT, amount));
-    }
-
-    public void addMobDropSellLog(Player seller, double worth) {
-        sellLogs.add(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.MOB_DROPS, worth));
-    }
-
-    public List<CollectorSellLog> getSellLogs() {
-        return ImmutableList.copyOf(sellLogs);
     }
 }

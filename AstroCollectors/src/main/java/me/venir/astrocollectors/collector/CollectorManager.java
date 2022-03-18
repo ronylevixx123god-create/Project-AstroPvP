@@ -1,7 +1,5 @@
 package me.venir.astrocollectors.collector;
 
-import it.unimi.dsi.fastutil.Hash;
-import me.astropvp.astrospawners.data.SpawnerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
@@ -15,7 +13,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.function.Consumer;
 
@@ -64,18 +61,11 @@ public class CollectorManager  {
             if (world == null) {
                 continue;
             }
-            int x, z;
-            try {
-                x = Integer.parseInt(components[1]);
-                z = Integer.parseInt(components[2]);
-            } catch (NumberFormatException e) {
-                continue;
-            }
             Object value = entry.getValue();
             if (!(value instanceof JSONObject)) {
                 continue;
             }
-            collectors.put(key,new Collector(world,x,z,(JSONObject)value));
+            collectors.put(key,new Collector(world, (JSONObject)value));
         }
     }
 
@@ -100,8 +90,8 @@ public class CollectorManager  {
     private JSONObject save() {
         JSONObject jsonObject = new JSONObject();
 
-        collectors.forEach((key,value) -> {
-            jsonObject.put(key,value.toJsonObject());
+        collectors.forEach((key,collector) -> {
+            jsonObject.put(key,collector.toJsonObject());
         });
 
         return jsonObject;

@@ -1,7 +1,6 @@
 package me.venir.astrocollectors.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EntityUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -56,7 +55,7 @@ public class CollectorsUI {
                 .setLore(getMobDropsLore())
                 .asGuiItem(event -> {
                     event.setCancelled(true);
-                    collector.addMobDropSellLog(player, collector.calculateWorth());
+                    collector.addMobDropSellLog(player, collector.getWorth());
                     collector.sellAll(player);
                     updateItems();
                 }));
@@ -121,7 +120,7 @@ public class CollectorsUI {
             lore.add(CC.translate("&e&l * &f" + amount + "x " + getEntityName(type) + " Spawners &8➥ &a$" + NumberUtils.formatMoney(value*60*amount) + "/hour"));
             totalPerHour+=value*amount*60;
         }
-        lore.add(CC.translate("&e&lTotal: &a$" + NumberUtils.formatMoney( totalPerHour) + "/hour"));
+        lore.add(CC.translate("&e&lTotal: &a$" + NumberUtils.formatMoney(totalPerHour) + "/hour"));
         lore.add("");
         lore.add(CC.translate("&7The chunkcollector system allows spawners to"));
         lore.add(CC.translate("&7activate while the chunk is unloaded."));
@@ -138,8 +137,8 @@ public class CollectorsUI {
             sellLogsLore.add("");
         }
         sellLogs.stream().limit(10).forEach(log -> {
-            //String sellTypeString = log.getSellLogType() == CollectorSellLog.SellLogType.TNT ? "Deposited &c" + Utils.formatNum(log.getAmount()) + "&7 TNT" : "Sold &a" + Utils.formatNum(log.getAmount()) + "&7 drops for &2$&a" + Utils.formatNum(log.getWorth()) + "&7";
-            //sellLogsLore.add(1, Utils.format("&7&o" + log.getSellerName() + "&r&7 " + sellTypeString + " &8(&7" + Utils.splitToComponentTimes((System.currentTimeMillis() - log.getSellDate()) / 1000) + "ago&8)"));
+            String sellTypeString = log.getSellLogType() == CollectorSellLog.SellLogType.TNT ? "Deposited &cx&7 TNT" : "Sold &a&2$&a" + Utils.formatNum(log.getWorth()) + "&7 Worth of drops";
+            sellLogsLore.add(1, Utils.format("&7&o" + log.getSellerName() + "&r&7 " + sellTypeString + " &8(&7" + Utils.splitToComponentTimes((System.currentTimeMillis() - log.getSellDate()) / 1000) + "ago&8)"));
         });
         return sellLogsLore;
     }
@@ -158,7 +157,7 @@ public class CollectorsUI {
                 "&7Right-Click to withdraw the money",
                 "&7to your own balance",
                 "",
-                "&a&l * Worth: &2$&f" + Utils.formatNum(collector.calculateWorth())));
+                "&a&l * Worth: &2$&f" + Utils.formatNum(collector.getWorth())));
     }
 
     public static String getEntityName(EntityType type) {
