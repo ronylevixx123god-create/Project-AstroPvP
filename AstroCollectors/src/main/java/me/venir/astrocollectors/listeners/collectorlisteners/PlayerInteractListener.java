@@ -2,6 +2,9 @@ package me.venir.astrocollectors.listeners.collectorlisteners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.perms.PermissibleAction;
 import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
@@ -38,11 +41,19 @@ public class PlayerInteractListener  implements Listener {
             if (!collectorLocation.equals(location)) return;
             Collector collector = CollectorManager.DELEGATE.getCollector(event.getClickedBlock().getLocation());
 
+            FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+
             if (FactionUtils.getFaction(event.getPlayer()) != FactionUtils.getFactionAt(collectorLocation) && !event.getPlayer().isOp()) {
-                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need to be in the " + FactionUtils.getFactionAt(collectorLocation)) + " to open this collector!");
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need to be in the " + FactionUtils.getFactionAt(collectorLocation).getTag()) + " to open this collector!");
                 return;
             }
 
+            boolean hasAccess = fPlayer.getFaction().hasAccess(fPlayer, PermissibleAction.COLLECTOR_ACCESS);
+
+            if (!hasAccess) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You need a higher role in your faction to access this collector."));
+                return;
+            }
 
             if (player.isSneaking()) {
                 collector.sellWorth(player);

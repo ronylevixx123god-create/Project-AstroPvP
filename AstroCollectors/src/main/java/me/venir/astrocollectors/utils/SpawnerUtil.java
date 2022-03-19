@@ -1,41 +1,52 @@
 package me.venir.astrocollectors.utils;
 
+import me.venir.astrocollectors.AstroCollectors;
+import me.venir.astrocollectors.utils.config.ConfigManager;
+import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.EntityType;
 
+import java.util.EnumMap;
+
 public class SpawnerUtil {
-    public static double getMoneyPerMinute(EntityType type) {
-        double price = 0;
-        switch (type) {
-            case IRON_GOLEM:
-                price = 16000;
-                break;
-            case VILLAGER:
-                price = 50000;
-                break;
-            case PIG_ZOMBIE:
-                price = 1500;
-                break;
-            case ZOMBIE:
-            case SKELETON:
-                price = 383;
-                break;
-            case SPIDER:
-            case CAVE_SPIDER:
-                price = 316;
-                break;
-        }
-        return price;
+
+    private final ConfigManager configManager;
+    private final EnumMap<EntityType, Integer> mobIncomeMap;
+    private int tntPerHour;
+
+    public SpawnerUtil() {
+        this.configManager = AstroCollectors.INSTANCE.getConfigManager();
+        this.mobIncomeMap = new EnumMap<>(EntityType.class);
+        this.reloadMobIncomeMap();
+        this.reloadTntIncomeValue();
     }
 
-    public static double getMoneyPerSecond(EntityType type) {
+    public void reloadMobIncomeMap() {
+        this.mobIncomeMap.clear();
+        ConfigurationSection configurationSection = this.configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getConfigurationSection("spawner-income-per-hour");
+        for (String key : configurationSection.getKeys(false)) {
+            int value = configurationSection.getInt(key);
+            EntityType entityType = EntityType.valueOf(key);
+            mobIncomeMap.put(entityType, value);
+        }
+    }
+
+    public void reloadTntIncomeValue() {
+        this.tntPerHour = configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("tnt-per-hour");
+    }
+
+    public double getMoneyPerMinute(EntityType type) {
+        return this.mobIncomeMap.get(type);
+    }
+
+    public double getMoneyPerSecond(EntityType type) {
         return getMoneyPerMinute(type) / 60;
     }
 
-    public static double getTntPerMinute() {
-        return 85;
+    public double getTntPerMinute() {
+        return this.tntPerHour;
     }
 
-    public static double getTntPerSecond() {
+    public double getTntPerSecond() {
         return getTntPerMinute() / 60;
     }
 }

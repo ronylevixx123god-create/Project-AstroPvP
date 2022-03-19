@@ -9,9 +9,9 @@ import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
+import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.ChunkUtil;
-import me.venir.astrocollectors.utils.SpawnerUtil;
 import me.venir.astrocollectors.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -147,7 +147,7 @@ public final class Collector {
         for (Map.Entry<EntityType, Integer> entry : getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amountSpawners = entry.getValue();
-            total += SpawnerUtil.getMoneyPerSecond(type) * secondsPassed * amountSpawners;
+            total += AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerSecond(type) * secondsPassed * amountSpawners;
         }
         return total;
     }
@@ -156,7 +156,7 @@ public final class Collector {
         if (!this.getSpawnersInChunk().containsKey(EntityType.CREEPER)) return 0;
         long current = System.currentTimeMillis();
         long secondsPassed = (current - this.getLastUpdated()) / 1000;
-        double total = SpawnerUtil.getTntPerSecond() * secondsPassed * this.getSpawnersInChunk().get(EntityType.CREEPER);
+        double total = AstroCollectors.INSTANCE.getSpawnerUtil().getTntPerSecond() * secondsPassed * this.getSpawnersInChunk().get(EntityType.CREEPER);
         return (int) total;
     }
 

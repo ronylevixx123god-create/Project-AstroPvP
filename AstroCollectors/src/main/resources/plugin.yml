@@ -13,3 +13,5 @@ commands:
     permission-message: Permission denied
   removecollector:
     aliases: [removechunkcollector]
+  creload:
+    permission: astro.admin

@@ -13,7 +13,6 @@ import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import me.venir.astrocollectors.collector.CollectorSellLog;
-import me.venir.astrocollectors.utils.SpawnerUtil;
 import me.venir.astrocollectors.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -24,7 +23,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 public class CollectorsUI {
 
@@ -135,7 +137,7 @@ public class CollectorsUI {
         for (Map.Entry<EntityType, Integer> entry : collector.getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amount = entry.getValue();
-            double value = SpawnerUtil.getMoneyPerMinute(type);
+            double value = AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerMinute(type);
             lore.add(CC.translate("&e&l * &f" + amount + "x " + getEntityName(type) + " Spawners &8➥ &a$" + NumberUtils.formatMoney(value*60*amount) + "/hour"));
             totalPerHour += value * amount * 60;
         }
