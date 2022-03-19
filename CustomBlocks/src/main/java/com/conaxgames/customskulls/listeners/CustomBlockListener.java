@@ -100,6 +100,8 @@ public class CustomBlockListener implements Listener {
             return;
         }
 
+        if (event.isCancelled()) return;
+
         if (!(CustomBlockUtil.isCustomItem(item))) {
             return;
         }
