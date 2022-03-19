@@ -71,9 +71,9 @@ public class AstroCollectors extends JavaPlugin {
         pm.registerEvents(new BlockPlaceListener(), this);
         pm.registerEvents(new BlockBreakListener(this), this);
         pm.registerEvents(new PlayerInteractListener(this), this);
-        pm.registerEvents(new SpawnerBlockPlaceListener(), this);
-        pm.registerEvents(new SpawnerBlockBreakListener(), this);
-        pm.registerEvents(new SpawnerExplodeListener(), this);
+        //pm.registerEvents(new SpawnerBlockPlaceListener(), this);
+        //pm.registerEvents(new SpawnerBlockBreakListener(), this);
+        //pm.registerEvents(new SpawnerExplodeListener(), this);
         pm.registerEvents(new StackedMobDeathListener(this), this);
     }
 

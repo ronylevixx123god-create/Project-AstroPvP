@@ -6,6 +6,8 @@ import me.astropvp.astrospawners.configs.MakeSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
+import me.venir.astrocollectors.collector.Collector;
+import me.venir.astrocollectors.collector.CollectorManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -102,9 +104,16 @@ public class MobSpawnerListener implements Listener {
             public void run() {
                 location.getBlock().setType(Material.MOB_SPAWNER);
                 ((CreatureSpawner) location.getBlock().getState()).setSpawnedType(type);
+                if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
+                    Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
+                    collector.clearSpawners();
+                    collector.scanSpawners(event.getBlock().getLocation());
+                }
             }
+
         }, 1);
         event.setCancelled(true);
+
         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.NOTE_PLING, 10f, 10f);
 
     }
@@ -178,7 +187,11 @@ public class MobSpawnerListener implements Listener {
                                         MakeSpawner.newFileItem(event.getBlockAgainst().getLocation(), found.getEntityType(), found.getSpawnerAmount());
                                         player.sendMessage(CC.translate("&a&l+ &a&n" + amount + "&a " + EntityUtils.getEntityName(type) + " Spawner(s) &7[" + found.getSpawnerAmount() + " Total]"));
                                         player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
-
+                                        if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
+                                            Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
+                                            collector.clearSpawners();
+                                            collector.scanSpawners(event.getBlock().getLocation());
+                                        }
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
                                     } else {

@@ -8,6 +8,8 @@ import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import me.astropvp.astrospawners.utils.EntityUtils;
+import me.venir.astrocollectors.collector.Collector;
+import me.venir.astrocollectors.collector.CollectorManager;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -82,6 +84,11 @@ public class SpawnerBreakListener implements Listener {
                     }
                     data.setSpawnerAmount(0);
                     DeleteSpawner.delete(location);
+                    if (CollectorManager.DELEGATE.isCollectorContained(block.getLocation())) {
+                        Collector collector = CollectorManager.DELEGATE.getCollector(block.getLocation());
+                        collector.clearSpawners();
+                        collector.scanSpawners(block.getLocation());
+                    }
                 }
             }
         }
@@ -102,6 +109,11 @@ public class SpawnerBreakListener implements Listener {
                 DeleteSpawner.delete(block.getLocation());
                 block.setType(Material.AIR);
                 event.setCancelled(true);
+                if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
+                    Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
+                    collector.clearSpawners();
+                    collector.scanSpawners(event.getBlock().getLocation());
+                }
             }
         }
     }

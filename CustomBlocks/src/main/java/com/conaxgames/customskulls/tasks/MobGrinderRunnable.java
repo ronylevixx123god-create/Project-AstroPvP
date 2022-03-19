@@ -41,8 +41,8 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 mobGrinderCache.setXp(mobGrinderCache.getXp() + amountOfExpPerBlaze);
             }
 
-            double chanceGodlyKey = 0.0025;
-            double chanceLegKey = 0.015;
+            double chanceGodlyKey = 0.0015;
+            double chanceLegKey = 0.01;
             double chanceAstroKey = 0.085;
 
             int level = data.getLevel();
@@ -51,12 +51,12 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 chanceLegKey = 0.02;
                 chanceAstroKey = 0.095;
             } else if (level == 2) {
-                chanceGodlyKey = 0.0095;
-                chanceLegKey = 0.04;
+                chanceGodlyKey = 0.01;
+                chanceLegKey = 0.045;
                 chanceAstroKey = 0.095;
             } else if (level == 3) {
-                chanceGodlyKey = 0.02;
-                chanceLegKey = 0.055;
+                chanceGodlyKey = 0.03;
+                chanceLegKey = 0.06;
                 chanceAstroKey = 0.095;
             }
 
