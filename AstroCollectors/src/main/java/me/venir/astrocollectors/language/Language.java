@@ -6,6 +6,7 @@ import org.bukkit.command.CommandSender;
 import java.util.function.UnaryOperator;
 
 public enum Language {
+    NEED_FACTION("&c&l(!)&c You need a faction to do this."),
     COLLECTOR_HELP("&7/collector &a<player> <amount>"),
     COLLECTOR_SELL("&a&l+ $%price%"),
     COLLECTOR_TNT("&c&l+ %tnt% TNT"),

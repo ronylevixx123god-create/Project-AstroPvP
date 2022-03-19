@@ -45,7 +45,7 @@ public class PlayerInteractListener  implements Listener {
 
 
             if (player.isSneaking()) {
-                collector.sellAll(player);
+                collector.sellWorth(player);
                 return;
             }
 

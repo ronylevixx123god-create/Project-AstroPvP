@@ -14,6 +14,6 @@ public class CollectorWorthUpdateTask extends BukkitRunnable {
 
     @Override
     public void run() {
-        this.collectorManager.forEach(Collector::updateWorth);
+        this.collectorManager.forEach(Collector::update);
     }
 }

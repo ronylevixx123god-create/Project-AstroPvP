@@ -2,12 +2,17 @@ package me.venir.astrocollectors.collector;
 
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.google.common.collect.ImmutableList;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.Faction;
 import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
+import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.ChunkUtil;
 import me.venir.astrocollectors.utils.SpawnerUtil;
+import me.venir.astrocollectors.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -18,7 +23,10 @@ import org.json.simple.JSONObject;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -66,6 +74,7 @@ public final class Collector {
         }
 
         this.worth = (double) data.get("worth");;
+        this.tnt = (long) data.get("tnt");;
     }
 
     public Collector(Location location) {
@@ -88,33 +97,77 @@ public final class Collector {
         }
 
         this.worth = 0.0;
+        this.tnt = 0L;
     }
 
-    public void sellAll(Player player) {
+    public void sellWorth(Player player) {
         if (this.worth <= 0) return;
         player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
         EconomyUtils.depositBalance(player, worth);
-        player.closeInventory();
+        Language.COLLECTOR_SELL.send(player, str -> str.replace("%price%", Utils.formatNum((long) this.worth)));
         this.worth = 0.0;
     }
 
+    public void claimTNT(Player player) {
+        FPlayer fplayer = FPlayers.getInstance().getByPlayer(player);
+        Faction faction = fplayer.getFaction();
+        int amount = (int) this.tnt;
+
+        if (faction.isWilderness()) {
+            Language.NEED_FACTION.send(player);
+            return;
+        }
+
+        if (faction.getMaxTNT() <= faction.getTNTBank()) return;
+
+        if (faction.getMaxTNT() < faction.getTNTBank() + amount) {
+            amount = faction.getMaxTNT() - faction.getTNTBank() ;
+            faction.setTNTBank(faction.getTNTBank() + amount);
+            this.tnt = this.tnt - (amount / 2);
+        } else {
+            faction.setTNTBank(faction.getTNTBank() + amount);
+            this.tnt = 0;
+        }
+
+        int finalAmount = amount;
+        Language.COLLECTOR_TNT.send(player, str -> str.replace("%tnt%", Utils.formatNum(finalAmount)));
+
+        addTNTSellLog(player, amount);
+        player.playSound(player.getLocation(), Sound.ITEM_PICKUP, 5, 5);
+    }
+
     private double calculateWorth() {
-        long lastUpdated = this.getLastUpdated();
         long current = System.currentTimeMillis();
-        long secondsPassed = (current - lastUpdated) / 1000;
+        long secondsPassed = (current - this.getLastUpdated()) / 1000;
         double total = 0;
         for (Map.Entry<EntityType, Integer> entry : getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amountSpawners = entry.getValue();
             total += SpawnerUtil.getMoneyPerSecond(type) * secondsPassed * amountSpawners;
         }
-        this.setLastUpdated(current);
         return total;
     }
 
+    private int calculateTnt() {
+        if (!this.getSpawnersInChunk().containsKey(EntityType.CREEPER)) return 0;
+        long current = System.currentTimeMillis();
+        long secondsPassed = (current - this.getLastUpdated()) / 1000;
+        double total = SpawnerUtil.getTntPerSecond() * secondsPassed * this.getSpawnersInChunk().get(EntityType.CREEPER);
+        return (int) total;
+    }
 
-    public void updateWorth() {
+    public void update() {
+        this.updateWorth();
+        this.updateTnt();
+        this.setLastUpdated(System.currentTimeMillis());
+    }
+
+    private void updateWorth() {
         this.addWorth(this.calculateWorth());
+    }
+
+    private void updateTnt() {
+        this.addTnt(this.calculateTnt());
     }
 
     private void addWorth(double amount) {
@@ -181,6 +234,7 @@ public final class Collector {
         jsonObject.put("spawners", spawners);
         jsonObject.put("lastUpdated", this.lastUpdated);
         jsonObject.put("worth", this.worth);
+        jsonObject.put("tnt", this.tnt);
         return jsonObject;
     }
 }

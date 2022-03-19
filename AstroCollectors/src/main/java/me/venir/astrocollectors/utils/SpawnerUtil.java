@@ -12,9 +12,6 @@ public class SpawnerUtil {
             case VILLAGER:
                 price = 50000;
                 break;
-            case CREEPER:
-                price = 85;
-                break;
             case PIG_ZOMBIE:
                 price = 1500;
                 break;
@@ -32,5 +29,13 @@ public class SpawnerUtil {
 
     public static double getMoneyPerSecond(EntityType type) {
         return getMoneyPerMinute(type) / 60;
+    }
+
+    public static double getTntPerMinute() {
+        return 85;
+    }
+
+    public static double getTntPerSecond() {
+        return getTntPerMinute() / 60;
     }
 }
