@@ -186,6 +186,10 @@ public class DefaultPermissionsConfig {
 
         public FullPermInfo getCorner(){return this.corner;}
 
+        public FactionOnlyPermInfo getCollectorAccess() {
+            return this.collectorAccess;
+        }
+
         @Comment("Can change repeaters")
         private FullPermInfo repeater = new FullPermInfo(){
             {
@@ -358,6 +362,13 @@ public class DefaultPermissionsConfig {
         };
         @Comment("Can withdraw TNT from the bank")
         private FactionOnlyPermInfo tntWithdraw = new FactionOnlyPermInfo() {
+            {
+                this.coleader.value = true;
+                this.moderator.value = true;
+            }
+        };
+        @Comment("Can open collectors")
+        private FactionOnlyPermInfo collectorAccess = new FactionOnlyPermInfo() {
             {
                 this.coleader.value = true;
                 this.moderator.value = true;

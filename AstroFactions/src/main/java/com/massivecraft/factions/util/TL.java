@@ -985,6 +985,7 @@ public enum TL {
     PERM_TNTWITHDRAW("Withdraw TNT from faction bank"),
     PERM_WARP("Using faction warps"),
     PERM_CLAIMCORNER("Claim a corner for your faction"),
+    PERM_COLLECTOR_ACCESS("Access a factions collector"),
     PERM_FLY("Flying in faction territory"),
     PERM_OWNER("Set ownership of land using /f owner in faction territory"),
     PERM_ROSTERCONTROL("Control a faction's roster"),
@@ -1018,6 +1019,7 @@ public enum TL {
     PERM_SHORT_FLY("fly"),
     PERM_SHORT_OWNER("set ownership"),
     PERM_SHORT_CLAIMCORNER("claim a corner"),
+    PERM_SHORT_COLLECTOR_ACCESS("access a collector"),
     PERM_SHORT_ROSTERCONTROL("control roster"),
     PERM_SHORT_TASKS("manage tasks"),
 
@@ -1046,9 +1048,9 @@ public enum TL {
     GUI_PERMS_ACTION_ALLOW("Allow"),
     GUI_PERMS_ACTION_DENY("Deny"),
 
-    GUI_BUTTON_NEXT("NEXT"),
-    GUI_BUTTON_PREV("PREVIOUS"),
-    GUI_BUTTON_BACK("BACK"),
+    GUI_BUTTON_NEXT("&aNext"),
+    GUI_BUTTON_PREV("&cPrevious"),
+    GUI_BUTTON_BACK("&cBack"),
 
     /**
      * Strings lying around in other bits of the plugins
