@@ -84,6 +84,25 @@ public class CollectorsUI {
                 .setLore(getSpawnersLore())
                 .asGuiItem(event -> event.setCancelled(true)));
 
+        if (player.isOp()) {
+            collectorUI.setItem(5,9, ItemBuilder
+                    .from(Material.HOPPER_MINECART)
+                    .setName(ChatColor.GREEN + ChatColor.BOLD.toString() + CC.translate("Scan Spawners &8(&7Admin Only&8)"))
+                    .setLore(
+                            CC.translate(""),
+                            CC.translate("&7Right-Click this item when having issues with"),
+                            CC.translate("&7missing spawners in the collector,"),
+                            CC.translate("&7this will rescan the chunk to find any missing spawners"),
+                            CC.translate(""),
+                            CC.translate("&c&l(!)&c This item only appears when an admin opens the GUI")
+                    )
+                    .asGuiItem(event -> {
+                        event.setCancelled(true);
+                        this.collector.clearSpawners();
+                        this.collector.scanSpawners(this.collector.getLocation());
+                        player.closeInventory();
+                    }));
+        }
     }
 
     public void updateItems() {

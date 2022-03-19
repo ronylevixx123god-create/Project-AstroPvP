@@ -86,6 +86,13 @@ public final class Collector {
         this.lastUpdated = System.currentTimeMillis();
 
         this.spawnersInChunk = new HashMap<>();
+        this.scanSpawners(location);
+
+        this.worth = 0.0;
+        this.tnt = 0L;
+    }
+
+    public void scanSpawners(Location location) {
         for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
             Location locationSpawner = entry.getKey();
             SpawnerData spawnerData = entry.getValue();
@@ -95,9 +102,6 @@ public final class Collector {
                 this.spawnersInChunk.put(spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
             }
         }
-
-        this.worth = 0.0;
-        this.tnt = 0L;
     }
 
     public void sellWorth(Player player) {
@@ -198,6 +202,10 @@ public final class Collector {
 
     public List<CollectorSellLog> getSellLogs() {
         return ImmutableList.copyOf(sellLogs);
+    }
+
+    public void clearSpawners() {
+        this.spawnersInChunk.clear();
     }
 
     public Location getLocation() {
