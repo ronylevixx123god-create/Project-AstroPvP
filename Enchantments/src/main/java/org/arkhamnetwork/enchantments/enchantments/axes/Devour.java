@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import org.arkhamnetwork.enchantments.*;
@@ -24,11 +23,8 @@ public class Devour extends CustomEnchantment
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
-            double bleedStacks = Bleed.getBleedStack(target);
-            if (bleedStacks >= 100.0) {
-                bleedStacks = 99.0;
-            }
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(bleedStacks, event, "&6&lDevour");
+            double mod = (double)Bleed.getBleedStack(target) * 0.015D + (double)enchantLevel * 0.1D + 1.0D;
+            event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);

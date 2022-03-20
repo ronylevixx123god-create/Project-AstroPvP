@@ -30,7 +30,6 @@ import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.sets.LunaArmorSet;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
@@ -125,7 +124,7 @@ extends CustomEnchantment {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                 increase*=0.9;
             }
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(increase, e, "&c&lHero Killer");
+            e.setDamage(e.getDamage()*increase);
         }
     }
 

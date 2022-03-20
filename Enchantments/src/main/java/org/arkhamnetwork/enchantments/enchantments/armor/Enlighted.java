@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.*;
 import org.arkhamnetwork.enchantments.*;
@@ -41,9 +40,9 @@ public class Enlighted extends CustomEnchantment
                 @Override
                 public void run() {
                     if (player.hasMetadata("reflectedEnglighted")) {
-                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(player, 1.0, "&6&lReflected Enlighted");
+                        player.damage(1);
                     } else {
-                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, 1.0, "&6&lEnlighted");
+                        GeneralUtil.healPlayer(player, 1.0D);
                     }
                 }
             }, 1L);

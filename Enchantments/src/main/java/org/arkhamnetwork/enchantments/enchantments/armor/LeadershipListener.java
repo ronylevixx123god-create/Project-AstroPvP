@@ -12,7 +12,6 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

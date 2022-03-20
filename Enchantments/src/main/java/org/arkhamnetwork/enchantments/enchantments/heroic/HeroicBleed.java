@@ -4,7 +4,6 @@ import java.text.*;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;

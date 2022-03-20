@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import org.arkhamnetwork.enchantments.enchantments.axes.*;
@@ -37,7 +36,7 @@ public class HeroicArmored extends HeroicCustomEnchantment
         }
         final double damage_negation = level * 0.01;
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lHeroic Armored");
+            e.setDamage(e.getDamage() * (1.0D - damage_negation));
             final Location l = player.getLocation();
         }
     }

@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;

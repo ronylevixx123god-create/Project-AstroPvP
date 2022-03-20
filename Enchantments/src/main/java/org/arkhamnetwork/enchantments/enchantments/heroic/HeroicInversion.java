@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.event.entity.*;
 import org.arkhamnetwork.enchantments.*;
@@ -40,7 +39,7 @@ public class HeroicInversion extends HeroicCustomEnchantment
                     playerHit.sendMessage(ChatColor.DARK_PURPLE + "* CORRUPTED [" + ChatColor.RED + heal + ChatColor.DARK_PURPLE + " DMG] *");
                     return;
                 }
-                AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)playerHit, heal, "&d&lReality Inversion");
+                GeneralUtil.healPlayer(playerHit, heal);
                 playerHit.playSound(playerHit.getLocation(), Sound.PISTON_EXTEND, 0.8f, 2.0f);
             }
         }

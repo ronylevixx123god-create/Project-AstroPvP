@@ -2,6 +2,7 @@ package me.venir.astrocollectors;
 
 import lombok.Getter;
 import me.astropvp.astrospawners.AstroSpawners;
+import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import me.venir.astrocollectors.commands.CollectorGiveCommand;
 import me.venir.astrocollectors.commands.ReloadCommand;
@@ -44,6 +45,15 @@ public class AstroCollectors extends JavaPlugin {
         this.registerListeners();
         this.clearMobsTask();
         new CollectorWorthUpdateTask().runTaskTimer(this, 0L, 100L);
+
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
+            for (Collector collector : CollectorManager.DELEGATE.collectors.values()) {
+                collector.clearSpawners();
+                collector.scanSpawners(collector.getLocation());
+            }
+            System.out.println("[Collectors] Rescanned spawners for all chunk collectors!");
+        }, 140L);
+
     }
 
     @Override
@@ -55,6 +65,7 @@ public class AstroCollectors extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             if (AstroSpawners.getInstance().getMobStackerUtils().getMobMap().size() > 65000) {
                 Bukkit.broadcastMessage(ChatColor.GREEN + "Cleared all stacked mobs on the server!");
+                
                 Bukkit.getWorld("world").getEntities().forEach(entity -> {
                     if (AstroSpawners.getInstance().getMobStackerUtils().isStackedMob(entity)) {
                         AstroSpawners.getInstance().getMobStackerUtils().removeStackedMob(entity);

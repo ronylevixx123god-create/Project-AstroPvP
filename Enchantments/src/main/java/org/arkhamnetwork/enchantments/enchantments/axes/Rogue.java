@@ -9,7 +9,6 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.swords.Carver;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -92,19 +91,18 @@ public class Rogue extends CustomEnchantment {
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(multi*10, e, "Rogue");
-
+                e.setDamage(e.getDamage() * (1+multi));
                 ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&e&lSoul Harvester&c&l)"));
 
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(multi*10, e, "Rogue");
+                e.setDamage(e.getDamage() * (1+multi));
                 ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&c&lSoul Maui's Hook&c&l)"));
             } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD)) {
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(multi*10, e, "Rogue");
+                e.setDamage(e.getDamage() * (1+multi));
                 ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&2&lDoomsday Machete&c&l)"));
             } else {
                 ((Player) playerHit).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** " + ((Player) player).getName() + "'s ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(multi*10, e, "Rogue");
+                e.setDamage(e.getDamage() * (1+multi));
             }
 
 

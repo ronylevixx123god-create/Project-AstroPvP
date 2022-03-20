@@ -3,7 +3,6 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.*;
 import org.bukkit.plugin.*;
 import org.bukkit.event.entity.*;
@@ -34,18 +33,18 @@ public class Rage extends CustomEnchantment {
 
             final double mod = 0.06 * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0;
-            if (hitCombo > 5.0) {
-                hitCombo = 5.0;
+            if (hitCombo > 3.5) {
+                hitCombo = 3.5;
             }
 
             this.playRageEffect(target.getEyeLocation(), enchantLevel);
             if (target instanceof Player) {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
                     if (!(Math.random() < 0.35 && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS))) {
-                        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25 * hitCombo, event, "&6&lXmas Rage");
+                        event.setDamage(event.getDamage() * hitCombo * 1.15);
 
                     } else {
-                        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15 * hitCombo, event, "&6&lRage");
+                        event.setDamage(event.getDamage() * hitCombo);
                     }
                 }
             }

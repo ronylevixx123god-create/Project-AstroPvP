@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
@@ -39,7 +38,7 @@ public class HeroicExecute extends HeroicCustomEnchantment{
 
         if (random < chance) {
             int mod = 50;
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * mod), e, "&d&lPermanent Execute");
+            e.setDamage(e.getDamage() * (level));
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");

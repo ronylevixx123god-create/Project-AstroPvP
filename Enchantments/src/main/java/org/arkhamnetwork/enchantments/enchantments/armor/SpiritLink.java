@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -34,8 +33,7 @@ public class SpiritLink extends CustomEnchantment
                     if (!this.isAlly(playerHurt, playerNear)) {
                         continue;
                     }
-                    AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)playerNear, healAmount, "&e&lSpirit Link");
-                }
+                    GeneralUtil.healPlayer(playerNear, healAmount);                }
             }
         }
     }

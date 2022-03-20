@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -20,6 +19,6 @@ public class Barbarian extends CustomEnchantment
         if (!enemyHasAxe) {
             return;
         }
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)level, e, "&6&lBarbarian");
-    }
+        double mod = 1.0D + 0.05D * (double)level;
+        e.setDamage(e.getDamage() * mod);    }
 }

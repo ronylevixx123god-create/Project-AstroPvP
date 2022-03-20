@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -19,6 +18,5 @@ public class HeroicBarbarian extends HeroicCustomEnchantment
         if (!enemyHasAxe) {
             return;
         }
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 2), e, "&6&lBarbarian");
-    }
+        e.setDamage(e.getDamage() * 1.225D);    }
 }

@@ -11,7 +11,6 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -28,10 +27,11 @@ extends HeroicCustomEnchantment {
         final double random = Math.random();
         final double chance = enchantLevel * 0.01;
         if (random < chance) {
-            if (target instanceof Player && MaskType.hasEquipped((Player)((Player)target), (String)"NECROMANCER")) {
+            if (target instanceof Player && MaskType.hasEquipped((Player) ((Player) target), (String) "NECROMANCER")) {
                 return;
             }
-            AstroDamageHandler.getInstance().getDamageHandler().healPlayer(user, 3.0, "&D&lDemonic Lifesteal");        }
+            GeneralUtil.healPlayer(user, enchantLevel);
+        }
     }
 }
 

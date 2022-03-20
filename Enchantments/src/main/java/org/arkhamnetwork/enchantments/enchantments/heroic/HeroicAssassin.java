@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.*;
 import org.arkhamnetwork.enchantments.*;
@@ -22,25 +21,32 @@ public class HeroicAssassin extends CustomEnchantment
         }, 2L);
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!user.getWorld().equals(target.getWorld())) {
-            return;
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        if (user.getWorld().equals(target.getWorld())) {
+            double distance = user.getLocation().distance(target.getLocation());
+            double dmgMod = 1.0D;
+            if (distance < 0.625D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 1.25D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 1.875D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 2.5D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 3.75D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            event.setDamage(event.getDamage() * dmgMod);
         }
-        final double distance = user.getLocation().distance(target.getLocation());
-        if (distance < 0.25) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25.5, event, "&d&lShadow Assassin");
-        }
-        else if (distance < 0.5 && distance > 0.25) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20.0, event, "&d&lShadow Assassin");
-        }
-        else if (distance < 0.75 && distance > 0.5) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15.0, event, "&d&lShadow Assassin");
-        }
-        else if (distance < 1.0 && distance > 0.75) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10.0, event, "&d&lShadow Assassin");
-        }
-        else if (distance < 2.0 && distance > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5.0, event, "&d&lShadow Assassin");
-        }
+
     }
 }

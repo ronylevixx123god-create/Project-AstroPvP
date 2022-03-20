@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.entity.LivingEntity
@@ -14,7 +14,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
@@ -24,7 +23,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Paralyze
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public Paralyze() {
         super("Paralyze", GeneralUtil.swords, 2);
         this.max = 4;
@@ -55,7 +54,7 @@ extends CustomEnchantment {
             }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
 
-            AstroDamageHandler.getInstance().getDamageHandler().dealDamage(playerHit, 2, "&b&lParalyze");
+            playerHit.damage((double) (1 + level / 2));
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &7[5s] &5&l*"), "PARALYZE");
 
         }

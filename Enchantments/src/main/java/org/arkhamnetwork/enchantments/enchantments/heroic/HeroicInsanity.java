@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -22,6 +21,8 @@ public class HeroicInsanity extends HeroicCustomEnchantment
         if (playerHit instanceof Player) {
             return;
         }
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 3), e, "&6&lInsanity");
+        if (Math.random() < 0.2) {
+            e.setDamage(e.getDamage() * 2);
+        }
     }
 }

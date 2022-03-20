@@ -14,7 +14,6 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.DurabilityUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -48,8 +47,7 @@ extends CustomEnchantment {
             if (level >= 3) {
                 DurabilityUtil.healMostDamagedArmorPeice((Player)player, (short)1);
             }
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "BlackSmith");
-
+            e.setDamage(e.getDamage() * 0.5D);
         }
     }
 }

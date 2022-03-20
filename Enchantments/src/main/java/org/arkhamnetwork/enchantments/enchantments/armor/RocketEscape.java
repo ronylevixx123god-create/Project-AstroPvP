@@ -28,7 +28,6 @@ import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.util.ArmorUtil;
@@ -85,7 +84,7 @@ public class RocketEscape
                 }
 
                 if (((Player) player).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(100, e, "TommyTail");
+                    e.setDamage(e.getDamage()*1.5);
                     player.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7Heroic Rocket Escape 2x Damage&2&l] *"));
                 }
 

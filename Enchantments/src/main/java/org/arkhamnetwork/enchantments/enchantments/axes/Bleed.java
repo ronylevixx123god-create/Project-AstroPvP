@@ -3,7 +3,6 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;

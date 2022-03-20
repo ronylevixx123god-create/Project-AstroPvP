@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.*;
 import org.arkhamnetwork.enchantments.*;
@@ -46,10 +45,10 @@ public class HeroicEnlighted extends CustomEnchantment
             }
             if (player.hasMetadata("reflectedEnglighted")) {
                 double finalToGive1 = toGive;
-                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> AstroDamageHandler.getInstance().getDamageHandler().dealDamage(player, finalToGive1, "&d&lReflected Divine Enlighted"), 1L);
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.damage(finalToGive1), 1L);
             } else {
                 double finalToGive = toGive;
-                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> AstroDamageHandler.getInstance().getDamageHandler().healPlayer(player, finalToGive, "&d&lDivine Enlighted"), 1L);
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.setHealth(player.getHealth()+finalToGive), 1L);
             }
         }
     }

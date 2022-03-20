@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -20,6 +19,8 @@ public class Insanity extends CustomEnchantment
         if (!enemyHasSword) {
             return;
         }
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 2), e, "&6&lInsanity");
+        if (Math.random() < 0.2) {
+            e.setDamage(e.getDamage() * 2);
+        }
     }
 }

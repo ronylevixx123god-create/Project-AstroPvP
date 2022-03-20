@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -31,7 +30,7 @@ public class BossSlayer extends CustomEnchantment
             return;
         }
         if (playerHit.hasMetadata("boss")) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 2), e, "&6&lBoss Slayer");
+           e.setDamage(e.getDamage()*2);
         }
     }
 }

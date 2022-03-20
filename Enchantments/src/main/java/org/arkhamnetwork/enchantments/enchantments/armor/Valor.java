@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -28,8 +27,7 @@ public class Valor extends CustomEnchantment
         final double damage_negation = level * 0.05;
         final double hp_threshold = level * 2 + 8;
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(level * 4.5, e, "&e&lValor");
-            final Location l = player.getLocation();
+            e.setDamage(e.getDamage() * (1.0D - damage_negation));            final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 41, 2001);
         }
     }

@@ -11,7 +11,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.rit.sucy.CustomEnchantment;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;

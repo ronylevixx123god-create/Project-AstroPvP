@@ -20,7 +20,7 @@ public class CollectorManager  {
 
     public static final CollectorManager DELEGATE = new CollectorManager();
 
-    private final Map<String, Collector> collectors = new HashMap<>();
+    public final Map<String, Collector> collectors = new HashMap<>();
     private final JSONParser jsonParser = new JSONParser();
 
     private CollectorManager() {}

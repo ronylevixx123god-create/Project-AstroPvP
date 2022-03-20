@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.event.entity.*;
 import org.bukkit.metadata.*;
 import org.bukkit.entity.*;
@@ -11,13 +10,12 @@ import org.arkhamnetwork.Arkkit.libs.*;
 import org.bukkit.*;
 import org.bukkit.event.*;
 
-final class DivineImmolationListener implements Listener
-{
+final class DivineImmolationListener implements Listener {
     @EventHandler
     public void onEntityDamage(final EntityDamageEvent e) {
         if (e.getEntity().hasMetadata("divineFire") && e.getCause() == EntityDamageEvent.DamageCause.WITHER && e.getEntity() instanceof LivingEntity) {
             final int enchantLevel = e.getEntity().getMetadata("divineFireLevel").get(0).asInt();
-            if (e.getEntity() instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player)e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
+            if (e.getEntity() instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
                 return;
             }
 
@@ -25,16 +23,16 @@ final class DivineImmolationListener implements Listener
                 return;
             }
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000) {
-                final LivingEntity le = (LivingEntity)e.getEntity();
+                final LivingEntity le = (LivingEntity) e.getEntity();
                 double damage = Math.min(4, 4 + enchantLevel) / 4.0;
                 if (le instanceof Player) {
                     if (le.hasMetadata("reflectDivineTicks")) {
-                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(le, damage, "&c&lReflected ujiDivine Tick");
+                        GeneralUtil.healPlayer(le, damage);
                     } else {
-                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(le, damage, "&c&lDivine Tick");
+                        le.damage(damage);
                     }
-                    ((Player)le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
-                    ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
+                    ((Player) le).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
+                    ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
                 }
             }
         }

@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.*;
 import org.arkhamnetwork.enchantments.*;
@@ -50,7 +49,7 @@ public class Deathbringer extends CustomEnchantment
                 final double random = Math.random();
                 final double chance = 0.05 * (DeathbringEvents.playerLevels.containsKey((damage instanceof Projectile) ? ((Projectile)damage).getShooter() : damage) ? DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile)damage).getShooter() : damage) : 1);
                 if (random < chance) {
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(100.0, e, "&6&lDeathbringer");
+                    e.setDamage(e.getDamage()*2);
                 }
             }
         }

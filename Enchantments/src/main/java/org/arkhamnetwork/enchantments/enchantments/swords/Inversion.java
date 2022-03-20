@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -30,7 +29,7 @@ public class Inversion extends CustomEnchantment
                     playerHit.sendMessage(ChatColor.DARK_PURPLE + "* CORRUPTED [" + ChatColor.RED + heal + ChatColor.DARK_PURPLE + " DMG] *");
                     return;
                 }
-                AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)playerHit, heal, "&6&lInversion");
+                GeneralUtil.healPlayer(playerHit, heal);
                 playerHit.playSound(playerHit.getLocation(), Sound.PISTON_EXTEND, 0.8f, 2.0f);
             }
         }

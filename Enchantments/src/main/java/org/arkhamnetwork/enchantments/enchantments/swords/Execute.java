@@ -18,7 +18,6 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
@@ -52,8 +51,7 @@ public class Execute extends CustomEnchantment
         final double random = Math.random();
         final double chance = 0.03 * level;
         if (random < chance) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((double)(level * 10), e, "&b&lExecute");
-            final Location l = target.getLocation();
+            e.setDamage(e.getDamage() * (level/2.0));            final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");
         }

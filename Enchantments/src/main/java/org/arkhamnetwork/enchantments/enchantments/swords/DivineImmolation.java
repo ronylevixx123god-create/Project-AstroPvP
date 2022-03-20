@@ -7,7 +7,6 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -162,7 +161,7 @@ return;
                     }
                     final LivingEntity le = (LivingEntity)ent;
                     final Player attacker = (Player)player;
-                    AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(damage, e, "&c&lDivine Immolation");
+                    le.damage(damage);
                     if (le instanceof Player) {
                         ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
                         ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);

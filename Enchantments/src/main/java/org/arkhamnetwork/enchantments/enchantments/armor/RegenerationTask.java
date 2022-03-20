@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.scheduler.*;
 import org.bukkit.entity.*;
 import com.cosmicpvp.cosmicutils.utils.*;
@@ -28,6 +27,5 @@ final class RegenerationTask extends BukkitRunnable
         if (p.getHealth() == p.getMaxHealth() || p.isDead()) {
             return;
         }
-        AstroDamageHandler.getInstance().getDamageHandler().healPlayer((LivingEntity)p, amount, "&e&lAngelic");
-    }
+        GeneralUtil.healPlayer(p, amount);    }
 }

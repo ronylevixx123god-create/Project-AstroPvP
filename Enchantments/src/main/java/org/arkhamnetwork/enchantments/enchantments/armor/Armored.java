@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -36,8 +35,7 @@ public class Armored extends CustomEnchantment
         }
         final double damage_negation = level * 0.01;
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&6&lArmored");
-            final Location l = player.getLocation();
+            e.setDamage(e.getDamage() * (1.0D - damage_negation));            final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
         }
     }

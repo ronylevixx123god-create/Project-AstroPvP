@@ -3,7 +3,6 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -29,7 +28,7 @@ public class Lifesteal extends CustomEnchantment
         }
         final double chance = enchantLevel * 0.005;
         if (random < chance) {
-            AstroDamageHandler.getInstance().getDamageHandler().healPlayer(user, 0.5, "&6&lLifesteal");
+            GeneralUtil.healPlayer(user, 0.5);
         }
     }
 }

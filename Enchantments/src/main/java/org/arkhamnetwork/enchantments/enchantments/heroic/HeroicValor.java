@@ -2,7 +2,6 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -40,7 +39,7 @@ public class HeroicValor extends HeroicCustomEnchantment
         }
 
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage((double)level, e, "&d&lMartyr Valor");
+            e.setDamage(e.getDamage() * (1.0D - damage_negation));
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 41, 2001);
         }

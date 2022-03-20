@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.mastery;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -42,7 +41,7 @@ public class OpeningCombo extends MasteryCustomEnchantment {
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (!(user instanceof Player)) return;
         if (activePlayers.containsKey((Player)user)) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage((((2 * enchantLevel) / 100) + 1)*10, event, "HeroicBlackSmith");
+            event.setDamage(event.getDamage()*1.04);
 
             target.sendMessage(CC.translate( "&4&l** OPENING COMBO &4- &7" + user.getName() + " &4Dealt &7" + 2 * enchantLevel + " &4% More Damage &4&l**"));
         }

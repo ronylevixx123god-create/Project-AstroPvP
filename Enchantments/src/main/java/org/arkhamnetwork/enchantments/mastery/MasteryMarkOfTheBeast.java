@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import lombok.SneakyThrows;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
@@ -137,7 +136,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
             final Long expirations = ((MasteryMarkOfTheBeast) this.customEnchant).getMarkedPlayers().get(player.getUniqueId());
             if (expirations != null && expirations > System.currentTimeMillis()) {
                 final double original = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(100, event, "Armored");
+                event.setDamage(event.getDamage()*1.5);
                 if (original > 0.01) {
                     player.sendMessage(CC.Red + "* MARK OF THE BEAST [2X DMG] *");
                 }
