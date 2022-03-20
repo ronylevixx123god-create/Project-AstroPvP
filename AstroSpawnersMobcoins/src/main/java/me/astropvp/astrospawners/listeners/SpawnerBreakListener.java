@@ -87,7 +87,7 @@ public class SpawnerBreakListener implements Listener {
                     if (CollectorManager.DELEGATE.isCollectorContained(block.getLocation())) {
                         Collector collector = CollectorManager.DELEGATE.getCollector(block.getLocation());
                         collector.clearSpawners();
-                        collector.scanSpawners(block.getLocation());
+                        collector.scanSpawners(collector.getLocation());
                     }
                 }
             }
@@ -112,7 +112,7 @@ public class SpawnerBreakListener implements Listener {
                 if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
                     Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
                     collector.clearSpawners();
-                    collector.scanSpawners(event.getBlock().getLocation());
+                    collector.scanSpawners(collector.getLocation());
                 }
             }
         }

@@ -16,6 +16,8 @@ import me.venir.astrocollectors.utils.Utils;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
+import org.bukkit.block.BlockState;
+import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.json.simple.JSONArray;
@@ -93,13 +95,23 @@ public final class Collector {
     }
 
     public void scanSpawners(Location location) {
-        for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
+/*        for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
             Location locationSpawner = entry.getKey();
             SpawnerData spawnerData = entry.getValue();
             if (spawnerData.getEntityType() == EntityType.BLAZE) continue;
 
             if (ChunkUtil.isLocationAInSameChunkAsLocationB(locationSpawner, location)) {
                 this.spawnersInChunk.put(spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
+            }
+        }*/
+
+        for (BlockState blockState : location.getChunk().getTileEntities()) {
+            if (blockState instanceof CreatureSpawner) {
+                if (AstroSpawners.getInstance().getSpawnersMap().containsKey(blockState.getLocation())) {
+                    SpawnerData data = AstroSpawners.getInstance().getSpawnersMap().get(blockState.getLocation());
+                    if (data.getEntityType() == EntityType.BLAZE) continue;
+                    this.spawnersInChunk.put(data.getEntityType(), data.getSpawnerAmount());
+                }
             }
         }
     }

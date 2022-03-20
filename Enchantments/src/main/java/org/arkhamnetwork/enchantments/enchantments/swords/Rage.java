@@ -41,7 +41,7 @@ public class Rage extends CustomEnchantment {
             if (target instanceof Player) {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
                     if (!(Math.random() < 0.35 && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS))) {
-                        event.setDamage(event.getDamage() * hitCombo * 1.15);
+                        event.setDamage(event.getDamage() * hitCombo * 1.05);
 
                     } else {
                         event.setDamage(event.getDamage() * hitCombo);

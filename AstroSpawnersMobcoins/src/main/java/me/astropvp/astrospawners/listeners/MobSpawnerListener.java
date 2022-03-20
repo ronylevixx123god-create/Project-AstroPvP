@@ -107,7 +107,7 @@ public class MobSpawnerListener implements Listener {
                 if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
                     Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
                     collector.clearSpawners();
-                    collector.scanSpawners(event.getBlock().getLocation());
+                    collector.scanSpawners(collector.getLocation());
                 }
             }
 
@@ -190,7 +190,7 @@ public class MobSpawnerListener implements Listener {
                                         if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
                                             Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
                                             collector.clearSpawners();
-                                            collector.scanSpawners(event.getBlock().getLocation());
+                                            collector.scanSpawners(collector.getLocation());
                                         }
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));

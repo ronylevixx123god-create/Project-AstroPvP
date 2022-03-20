@@ -35,7 +35,11 @@ public class SpawnerUtil {
     }
 
     public double getMoneyPerMinute(EntityType type) {
-        return this.mobIncomeMap.get(type);
+        try {
+            return this.mobIncomeMap.get(type);
+        } catch (Exception e) {
+            return 0;
+        }
     }
 
     public double getMoneyPerSecond(EntityType type) {
