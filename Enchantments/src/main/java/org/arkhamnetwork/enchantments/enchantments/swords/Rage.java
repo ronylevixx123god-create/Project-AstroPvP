@@ -31,6 +31,10 @@ public class Rage extends CustomEnchantment {
                 return;
             }
 
+            if (GeneralUtil.isEffectedByDevour(target)) {
+                return;
+            }
+
             final double mod = 0.06 * enchantLevel;
             double hitCombo = ((target instanceof Player) ? getPVPHitCombo((Player) user) : getPVEHitCombo((Player) user)) * mod + 1.0;
             if (hitCombo > 3.5) {

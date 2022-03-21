@@ -15,6 +15,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.buffs.XpPetBuff;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -72,6 +73,10 @@ public class InventoryPetXpBooster extends InventoryPet {
             boolean xp = true;
             int duration = this.getDuration(petItem.getLevel());
             CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().put(player.getUniqueId(), new XpPetBuff(increase, System.currentTimeMillis() + (long)(duration * 1000)));
+            Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
+               CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().remove(player.getUniqueId());
+               player.sendMessage(CC.translate("&c&l** &cXP Booster Pet Multiplier has expired! &l**"));
+            },11*20*60);
             player.sendMessage(this.getOwner().getMsgWithPrefix(CC.Green) + CC.GreenB + " [" + CC.Gray + "XP Booster Pet (" + CC.Green + "+" + NumberUtils.formatMoney(increase) + CC.Gray + "x XP)" + CC.GreenB + "]");
             ASound.ORB_PICKUP.play(player, 1.0F, 3.0F);
             ASound.NOTE_PLING.play(player, 1.0F, 1.0F);

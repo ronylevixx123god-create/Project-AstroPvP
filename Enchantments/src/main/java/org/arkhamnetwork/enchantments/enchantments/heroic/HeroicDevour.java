@@ -29,10 +29,6 @@ public class HeroicDevour extends CustomEnchantment
                 return;
             }
 
-            if (Math.random() > 0.4D) {
-                return;
-            }
-
             double mod = (double)Bleed.getBleedStack(target) * 0.015D + (double)enchantLevel * 0.1D + 1.0D;
             event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));

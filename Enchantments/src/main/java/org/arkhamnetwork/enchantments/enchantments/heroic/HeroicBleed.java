@@ -2,6 +2,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import java.text.*;
 
+import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.*;
@@ -29,8 +30,11 @@ public class HeroicBleed extends HeroicCustomEnchantment
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
-            final double bleedChance = 0.1 * enchantLevel + 0.4;
+            final double bleedChance = 0.05 * enchantLevel;
             if (Math.random() < bleedChance && getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
+                if (Math.random() < 0.25 && user.hasMetadata("bleedStack") && EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Combat Medic")) {
+                    clearBleedEffect(user);
+                }
                 this.addBleedStack(user, target);
             }
         }
