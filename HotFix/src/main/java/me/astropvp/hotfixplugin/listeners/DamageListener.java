@@ -93,7 +93,7 @@ public class DamageListener implements Listener {
         }
     }
 
-        @EventHandler(priority = EventPriority.LOW)
+        @EventHandler(priority = EventPriority.HIGHEST)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
@@ -111,8 +111,8 @@ public class DamageListener implements Listener {
                     AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
                 }
 
-                if (((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD && ((Player) e.getDamager()).getItemInHand().getType() != Material.AIR) {
-                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, e, "DiamondSword");
+                if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD) {
+                    e.setDamage(e.getDamage()*0.75);
                 }
             }else {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
