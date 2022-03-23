@@ -51,7 +51,7 @@ extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.055;
+        final double chance = 0.005;
         final int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();
@@ -96,7 +96,7 @@ extends CustomEnchantment {
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
 
-            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
+            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 2));
         }
     }
 }

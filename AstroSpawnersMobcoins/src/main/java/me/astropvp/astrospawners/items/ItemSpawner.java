@@ -66,6 +66,6 @@ public class ItemSpawner {
     }
 
     public static int getSpawnerLimit() {
-        return 100000;
+        return 250000;
     }
 }

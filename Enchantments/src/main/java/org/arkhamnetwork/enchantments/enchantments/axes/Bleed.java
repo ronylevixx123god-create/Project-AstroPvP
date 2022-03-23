@@ -117,7 +117,7 @@ public class Bleed extends CustomEnchantment
             }
         }
         else {
-            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
+            //le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 20, Math.max(1, bleedStack / 3)));
         }
         this.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
     }
