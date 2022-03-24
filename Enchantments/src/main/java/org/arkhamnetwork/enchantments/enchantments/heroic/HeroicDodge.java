@@ -62,7 +62,7 @@ extends HeroicCustomEnchantment {
                         player.removeMetadata("carver_damage", Enchantments.getInstance());
                     }, 5*20);
                 }
-                e.setCancelled(true);
+                e.setDamage(0);
                 //e.setDamage(0.0);
                 ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
@@ -75,9 +75,7 @@ extends HeroicCustomEnchantment {
             if (player.getFallDistance() > 5.0f) {
                 ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*FALL DODGED*");
             }
-            e.setCancelled(true);
-            //e.setDamage(0.0);
-        }
+            e.setDamage(0);        }
     }
 }
 
