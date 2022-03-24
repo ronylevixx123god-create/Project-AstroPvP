@@ -23,8 +23,8 @@ public class EnchantmentCoderController {
 
     public void writeToJSONFile(EnchantmentCoderManager inst) {
         String fileName = inst.getFileName();
-        if (fileName == null || inst == null)
-            throw new NullPointerException((fileName == null) ? "File name is NULL" : " EnchantmentCoderManager is NULL");
+        if (fileName == null)
+            throw new NullPointerException("File name is NULL");
         File file = new File(fileName);
         eraseFileContents(file);
         Map<String, Map<String, List<String>>> storedData = inst.getStoredData();

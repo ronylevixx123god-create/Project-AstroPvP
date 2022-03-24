@@ -12,9 +12,12 @@ import me.astropvp.astropvpskins.listeners.MauiHookListener;
 import me.astropvp.astropvpskins.listeners.SnowflakeListener;
 import me.astropvp.astropvpskins.objects.BackpackSocketItem;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.astropvp.astropvpskins.tasks.SprayAndPrayTask;
+import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import net.astropvp.armorsets.commands.CommandDebugArmorSet;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
@@ -58,5 +61,11 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
             skins.add(type);
             this.categorisedSkins.put(type.getItemSkinType(), skins);
         }
+    }
+
+    public void registerTasks() {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new UndertowFieldTask(), 3*20, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SprayAndPrayTask(), 3*20, 20L);
+
     }
 }

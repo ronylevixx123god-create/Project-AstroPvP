@@ -6,6 +6,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 
 public class ItemSkin {
 
@@ -26,6 +27,10 @@ public class ItemSkin {
     }
 
     public void onKilled(Player killed, Entity killer, EntityDeathEvent event) {
+    }
+
+    public void onSneak(Player player, PlayerToggleSneakEvent event) {
+
     }
 
 

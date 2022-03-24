@@ -3,6 +3,7 @@ package me.astropvp.astropvpskins.listeners;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
@@ -23,10 +24,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerMoveEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -214,7 +212,7 @@ public class ItemSkinListener implements Listener {
         }
 
         if (damager instanceof Player && damaged instanceof Player) {
-            if (!ItemSkinUtils.canPvP((Player)damager, (Player)damaged, event)) return;
+            if (!ItemSkinUtils.canPvP((Player) damager, (Player) damaged, event)) return;
         }
         if (damager instanceof Player) {
             List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
@@ -226,6 +224,20 @@ public class ItemSkinListener implements Listener {
             for (SkinType skin : damagedSkins)
                 skin.getItemSkin().onAttacked((Player) damaged, damager, event);
         }
+    }
+
+    @EventHandler
+    public void onSneak(PlayerToggleSneakEvent event) {
+        if (event.isCancelled()) return;
+        if (DuelAPI.isSpectator(event.getPlayer())) return;
+        if (!WorldGuardUtils.isPvPEnabled(event.getPlayer().getLocation())) return;
+        List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) event.getPlayer());
+        for (SkinType skin : damagedSkins) {
+            skin.getItemSkin().onSneak(event.getPlayer(), event);
+        }
+
+
+
     }
 
     @EventHandler

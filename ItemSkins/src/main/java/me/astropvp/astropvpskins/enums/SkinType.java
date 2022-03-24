@@ -271,8 +271,104 @@ public enum SkinType {
     VALENTINES_2022_BOOTS(CC.translate("&d&lGolden Boots"), ItemSkinType.BOOTS, new ValentinesBoots(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Reduces enemy (Polymorphic) Metaphysical", CC.Red + "chance to proc by 25%", CC.Red + "50% chance to negate Incoming Knockback", CC.Red + "3.5% chance to clear (Deep) Bleed stacks", CC.Red + "when taking damage", CC.Red + "Gold Plating Ability", CC.Gray + " * 2.5% chance to proc, giving you 20 'gold", CC.Gray + " plating' stacks", CC.Gray + " * Each stack increases your outgoing", CC.Gray + " damage by +0.3%", CC.Gray + " *Each stack also reduces your incoming", CC.Gray + " damage by -0.5%", CC.Gray + " *Lose 1 stack every time you are hit", CC.Gray + " * Stacks are cleared 15s after initial proc")),
     VALENTINES_2022_MUTATED_BOOTS(CC.translate("&2&l&nMutated&r &d&lGolden Boots"), ItemSkinType.BOOTS, new MutatedValentinesBoots(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Reduces enemy (Polymorphic) Metaphysical", CC.Red + "chance to proc by 25%", CC.Red + "50% chance to negate Incoming Knockback", CC.Red + "3.5% chance to clear (Deep) Bleed stacks", CC.Red + "when taking damage", CC.Red + "Gold Plating Ability", CC.Gray + " * 2.5% chance to proc, giving you 20 'gold", CC.Gray + " plating' stacks", CC.Gray + " * Each stack increases your outgoing", CC.Gray + " damage by +0.3%", CC.Gray + " *Each stack also reduces your incoming", CC.Gray + " damage by -0.5%", CC.Gray + " *Lose 1 stack every time you are hit", CC.Gray + " * Stacks are cleared 15s after initial proc", CC.DarkGreen + "All for One Ability", CC.Gray + " (When 3 or more enemies are nearby, you", CC.Gray + " have a 3% chance when hitting to inflict", CC.Gray + " 'All for One' ability affecting all nearby", CC.Gray + " enemies with the following for 10s:", CC.Gray + " *-20% Movement Speed", CC.Gray + " *+3.5%Incoming Damage", CC.Gray + " *-10% Outgoing Soul Enchant Damage)")),
 
+
     VALENTINES_2022_SWORD(CC.translate("&c&lSkeleton Key"), ItemSkinType.SWORD, new ValentinesSword(), Arrays.asList(CC.Red + "Opening Combo VI", CC.Red + "Soul Master V", CC.Red + "Killer Instinct Ability", CC.Gray + " * Every hit you deal results in all enemies within", CC.Gray + " a radius (starting at 3x3, and increasing by 1", CC.Gray + " every 20 stacks) gaining a 'killer instinct' stack.", CC.Gray + " * For every stack an enemy has, you will deal", CC.Gray + " +0.11% Outgoing Damage (up to a max of +10%).", CC.Gray + " * Stacks decay by 1 every second unless", CC.Gray + " refreshed by a new stack.", CC.Gray + " * Once any enemy affected by your 'killer", CC.Gray + " instinct' stacks reaches 100, the ability clears", CC.Gray + " and you will instead deal +15% Outgoing Damage", CC.Gray + " to all affected enemies for the next 20 hits.")),
     VALENTINES_2022_MUTATED_SWORD(CC.translate("&2&l&nMutated&r &c&lSkeleton Key"), ItemSkinType.SWORD, new MutatedValentinesSword(), Arrays.asList(CC.Red + "Opening Combo VI", CC.Red + "Soul Master V", CC.Red + "Killer Instinct Ability", CC.Gray + " * Every hit you deal results in all enemies within", CC.Gray + " a radius (starting at 3x3, and increasing by 1", CC.Gray + " every 20 stacks) gaining a 'killer instinct' stack.", CC.Gray + " * For every stack an enemy has, you will deal", CC.Gray + " +0.11% Outgoing Damage (up to a max of +10%).", CC.Gray + " * Stacks decay by 1 every second unless", CC.Gray + " refreshed by a new stack.", CC.Gray + " * Once any enemy affected by your 'killer", CC.Gray + " instinct' stacks reaches 100, the ability clears", CC.Gray + " and you will instead deal +15% Outgoing Damage", CC.Gray + " to all affected enemies for the next 20 hits.", CC.DarkGreen + "Betrayal Ability", CC.Gray + " (When affected by an enemy's Banshee or", CC.Gray + " Bloodhound Pet, for the first 3s, you will gain:", CC.Gray + " * +5% Outgoing Damage", CC.Gray + " * -5% Incoming Damage", CC.Gray + " * Immune to Divine Immolation tick damage", CC.Gray + " Activator receives +5% Incoming Damage", CC.Gray + " from all of their opponents for 15s", CC.Gray + " Then, for 3s following, you will gain:", CC.Gray + " * +2.5% Outgoing Damage", CC.Gray + " * Blacksmith Pet Ability", CC.Gray + " * Regeneration III", CC.Gray + " * Gears V for 7s)")),
+
+
+    SPRING_BREAK_2022_BOOTS(CC.translate("&a&lSink or Swim Flippers", ItemSkinType.SWORD, new SinkOrSwipFlippers(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Inverts enemy Ragdoll", CC.Red + "Immune to Freezes", CC.Red + "When wielding a sword:", CC.Gray + " * Deal up to +25% damage if hitting your", CC.Gray + " enemy from behind", CC.Gray + " * 6% chance to silence enemy (Extreme)", CC.Gray + " Insanity and (Vampiric) Devour for 4s.", CC.Red + "Sink Effect", CC.Gray + " * Gain a stack when you negate a freeze.", CC.Gray + " * At 7 stacks, of the next 5 hits affecting", CC.Gray + " your enemy, they will receive Sink Effect", CC.Gray + " tick damage for 15s."))),
+    SPRING_BREAK_2022_MUTATED_BOOTS(CC.translate("&2&lMutated&r &a&lSink or Swim Flippers", ItemSkinType.SWORD, new SinkOrSwipFlippers(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Inverts enemy Ragdoll", CC.Red + "Immune to Freezes", CC.Red + "When wielding a sword:", CC.Gray + " * Deal up to +25% damage if hitting your", CC.Gray + " enemy from behind", CC.Gray + " * 6% chance to silence enemy (Extreme)", CC.Gray + " Insanity and (Vampiric) Devour for 4s.", CC.Red + "Sink Effect", CC.Gray + " * Gain a stack when you negate a freeze.", CC.Gray + " * At 7 stacks, of the next 5 hits affecting", CC.Gray + " your enemy, they will receive Sink Effect", CC.Gray + " tick damage for 15s.", CC.DarkGreen + "Swim Effect", CC.Gray + " * Receive the following effects when hitting", CC.Gray + " enemies with your Sing Effect tick damage:", CC.Gray + "  * +12.5% Outgoing Damage", CC.Gray + "  * Absolute Bypass of enemy Holy White", CC.Gray + "  Scrolls (for 1 piece only)"))),
+    SPRING_BREAK_2022_SWORD_YELLOW(CC.translate("&e&lWet Noodle Sword"), ItemSkinType.SWORD, new WetNoodleSword(), Arrays.asList(CC.Red + "For every 14HP you lose, you will deal +33%", CC.Red + "Outgoing Damage for 2s.", CC.Red + "2.5% chance when dealing damage to activate", CC.Red + "Wet Noodle Ability for 10s:", CC.Gray + " * All enemies you hit will receive +1 stack", CC.Gray + " * After 10s, all affected enemies will receive", CC.Gray + " -0.25HP for each stack they have (up to a", CC.Gray + " max of 50% of their current health)", CC.Gray + " * The enemy you hit to proc this ability will", CC.Gray + " also receive the following effects:", CC.Gray + "  * Mutated Crystal Silence for 10s", CC.Gray + "  * +7.5% Incoming Augmented Crystal Damage", CC.Gray + "  for 10s")),
+    SPRING_BREAK_2022_MUTATED_SWORD_YELLOW(CC.translate("&2&lMutated&r &e&lWet Noodle Sword"), ItemSkinType.SWORD, new MutatedWetNoodleSword(), Arrays.asList(CC.Red + "For every 14HP you lose, you will deal +33%", CC.Red + "Outgoing Damage for 2s.", CC.Red + "2.5% chance when dealing damage to activate", CC.Red + "Wet Noodle Ability for 10s:", CC.Gray + " * All enemies you hit will receive +1 stack", CC.Gray + " * After 10s, all affected enemies will receive", CC.Gray + " -0.25HP for each stack they have (up to a", CC.Gray + " max of 50% of their current health)", CC.Gray + " * The enemy you hit to proc this ability will", CC.Gray + " also receive the following effects:", CC.Gray + "  * Mutated Crystal Silence for 10s", CC.Gray + "  * +7.5% Incoming Augmented Crystal Damage", CC.Gray + "  for 10s", CC.DarkGreen + "For each player hit while your Wet Noodle effect", CC.DarkGreen + "is active, the duration will increase by 2s.", CC.Gray + " (up to a maximum of increase of 16s)")),
+    SPRING_BREAK_2022_HELMET(CC.translate("&a&lUndertow Helmet"), ItemSkinType.HELMET, new UndertowHelmet(), Arrays.asList(
+            CC.translate("&c1.5% chance when taking damage to summon a"),
+            CC.translate("&c5 block Undertow Field for 15s. You receive:"),
+            CC.translate(" &7* Immune to Pets"),
+            CC.translate(" &7* +3% Outgoing Soul Damage per enemy stacks"),
+            CC.translate("&cAll enemies in the field will receive:")
+            CC.translate(" &7* +1 stack per second for 5s (max 3 stacks)"),
+            CC.translate(" For each active stack:"),
+            CC.translate("  &7* -1HP per second"),
+            CC.translate("  &7* +3% Incoming Damage"),
+            CC.translate(" &7* Phoenix Silence"),
+            CC.translate(" &7* Inventory Pet Silence")
+    ) ),
+    SPRING_BREAK_2022_MUTATED_HELMET(CC.translate("&2&l&nMutated&r &a&lUndertow Helmet"), ItemSkinType.HELMET, new MutatedUndertowHelmet(), Arrays.asList(
+            CC.translate("&c1.5% chance when taking damage to summon a"),
+            CC.translate("&c5 block Undertow Field for 15s. You receive:"),
+            CC.translate(" &7* Immune to Pets"),
+            CC.translate(" &7* +3% Outgoing Soul Damage per enemy stacks"),
+            CC.translate(" &2* No EXP Pet Costs"),
+            CC.translate("&cAll enemies in the field will receive:")
+            CC.translate(" &7* +1 stack per second for 5s (max 3 stacks)"),
+            CC.translate(" For each active stack:"),
+            CC.translate("  &7* -1HP per second"),
+            CC.translate("  &7* +3% Incoming Damage"),
+            CC.translate(" &7* Phoenix Silence"),
+            CC.translate(" &7* Inventory Pet Silence"),
+            CC.translate(" &2* Ragdoll Silence"),
+            CC.translate(" &2* Custom Block Effect Silence:"),
+            CC.translate("  &7(Cauldron, Frosted Snowman, Heart Cookies,"),
+            CC.translate("  &7Pumpkin Pie, Roast Turkey, Teddy Bear")
+    ) ),
+    SPRING_BREAK_2022_AMULET(CC.translate("&e&lCannonball!!! Amulet"), ItemSkinType.AMULET, new CannonballAmulet(), Arrays.asList(
+            CC.translate("&cCrouch to activate Cannonball Ability in 3s."),
+            CC.translate("&cWhen activated, you will receive immunity to"),
+            CC.translate("&cenemy Armor Set Crystal outgoing abilities"),
+            CC.translate("&cfor 8s. Enemies within 8 blocks will receive"),
+            CC.translate("&c-3HP and the following effects for 12s:"),
+            CC.translate(" &7* Soul and Mastery Enchant Silence"),
+            CC.translate(" &7* Limits enemy stackable enchants by 75%"),
+            CC.translate(" &7* Ender Pearl Block"),
+            CC.translate(" &7(Cooldown: 5 minutes")
+    ) ),
+    SPRING_BREAK_2022_BACKPACK(CC.translate("&a&lSpray and Pray Backpack"), ItemSkinType.BACKPACK, new SprayPrayBackpack(), Arrays.asList(
+            CC.translate("&c2% chance when dealing damage to inflict the"),
+            CC.translate("&cfollowing Spray and Pray Ability for 10s:"),
+            CC.translate(" &7* -6% Outgoing Damage"),
+            CC.translate(" &7* +6% Incoming Damage"),
+            CC.translate(" &7* -2HP tick damage per second"),
+            CC.translate(" &7* When receiving this tick damage, your enemy"),
+            CC.translate(" &7* will infect a nearby enemy, within 7 blocks, with"),
+            CC.translate(" &7* the same effects and remaining time.")
+    ) ),
+    SPRING_BREAK_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &a&lSpray and Pray Backpack"), ItemSkinType.BACKPACK, new MutatedSprayPrayBackpack(), Arrays.asList(
+            CC.translate("&c2% chance when dealing damage to inflict the"),
+            CC.translate("&cfollowing Spray and Pray Ability for 10s:"),
+            CC.translate(" &7* -6% Outgoing Damage"),
+            CC.translate(" &7* +6% Incoming Damage"),
+            CC.translate(" &7* -2HP tick damage per second"),
+            CC.translate(" &7* When receiving this tick damage, your enemy"),
+            CC.translate(" &7* will infect a nearby enemy, within 7 blocks, with"),
+            CC.translate(" &7* the same effects and remaining time."),
+            CC.translate(" &2* A nearby ally, within 7 blocks, will also"),
+            CC.translate(" &2receive Regeneration I for the remaining time.")
+    ) ),
+    SPRING_BREAK_2022_BELT(CC.translate("&e&lSplash Zone Belt"), ItemSkinType.BELT, new SplashZoneBelt(), Arrays.asList(
+            CC.translate("&cAfter 3 Rogue procs, all blocks in a "),
+            CC.translate("&c5x5 area become \"Splashed\" for 7s."),
+            CC.translate("&cWhen standing ona splashed block,"),
+            CC.translate("&cenemies will receive:"),
+            CC.translate(" &7* -1HP"),
+            CC.translate(" &7* Pulled out of the area"),
+            CC.translate(" &7* Rogue Silence for 2s")
+    ) ),
+
+    SPRING_BREAK_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &e&lSplash Zone Belt"), ItemSkinType.BELT, new MutatedSplashZoneBelt(), Arrays.asList(
+            CC.translate("&cAfter 3 Rogue procs, all blocks in a "),
+            CC.translate("&c5x5 area become \"Splashed\" for 7s."),
+            CC.translate("&cWhen standing ona splashed block,"),
+            CC.translate("&cenemies will receive:"),
+            CC.translate(" &7* -1HP"),
+            CC.translate(" &7* Pulled out of the area"),
+            CC.translate(" &7* Rogue Silence for 2s"),
+            CC.translate("&2Soul Master VI"),
+            CC.translate("&233% chance when you get Soul Tethered"),
+            CC.translate("&2to redistribute reflected damage onto"),
+            CC.translate("&2nearby enemies within 4 blocks")
+    ) ),
+
+
     JULY_2021_BOOTS(CC.translate("&c&lBarry's Bolts"), ItemSkinType.BOOTS, new BarrysBoltsSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to Slowness Potion Effect", CC.Red + "-15% damage from enemy (Bloody) Deep Wounds", CC.Red + "Flash Ability", CC.translate("&7 (10% chance when damaged to activate. When"), CC.translate("&7 active, all enemies you hit will have their"), CC.translate("&7 pets and Phoenix enchantment silenced, your"), CC.translate("&7 Soul Tether will do +20% damage and incoming"), CC.translate("&7 soul damage to your allies within a 4x4"), CC.translate("&7radius is reduced by -5%")));
 
 
