@@ -27,7 +27,7 @@ public class TommyTail extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;
         if (damager.getItemInHand() != null && damager.getItemInHand().getType().name().endsWith("_SWORD")) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5, event, "&6&lTommy Tail");
+            event.setDamage(event.getDamage()*1.05);
         }
         if (Math.random() < 0.02) {
             if (damaged instanceof Player) {

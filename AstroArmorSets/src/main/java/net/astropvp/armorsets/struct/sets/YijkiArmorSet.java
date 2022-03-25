@@ -10,6 +10,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
@@ -129,7 +130,12 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
                 player.sendMessage(CC.translate("&c&l* Amulet of Angles &7(Blocked Yijki) &c&l*"));
                 continue;
             }
-            if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+
+            if (CannonballAmulet.active.contains(nearbyEnt.getUniqueId())) {
+                continue;
+            }
+
+                if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                 continue;
             pNear.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "** REVENGE OF YIJKI (" + ChatColor.RED + fp.getName() + " [1.5s]" + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") **");
             nearbyPlayers.add(pNear);

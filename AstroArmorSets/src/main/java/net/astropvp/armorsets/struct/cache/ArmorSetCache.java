@@ -43,6 +43,13 @@ public class ArmorSetCache extends Cache {
     public void addArmorSet(ArmorSetType type) {
         if (!this.currentArmorSets.containsKey(type)) {
             this.currentArmorSets.put(type, 1);
+
+            if (this.currentArmorSets.get(type) + omniPieces == 4) {
+                this.currentArmorSet = type;
+                for (String s : type.getArmorSet().getArmorEquipMessage()) {
+                    this.player.sendMessage(s);
+                }
+            }
         } else {
             this.currentArmorSets.put(type, this.currentArmorSets.get(type) + 1);
             if (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) == 4 || (this.currentArmorSets.containsKey(type) && this.currentArmorSets.get(type) + omniPieces == 4)) {

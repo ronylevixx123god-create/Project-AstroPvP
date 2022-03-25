@@ -15,8 +15,8 @@ public class OmniArmorDamageListener implements Listener {
         Player player = ((Player) e.getEntity()).getPlayer();
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
-            double totalReduction = cache.getOmniPieces() * 10;
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(totalReduction, e, "&3&lOmniSet");
+            double totalReduction = cache.getOmniPieces() * 15;
+            e.setDamage(e.getDamage() * (1-(totalReduction/100)));
         }
 
     }

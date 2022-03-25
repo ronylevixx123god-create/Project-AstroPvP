@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import org.arkhamnetwork.enchantments.*;
@@ -23,6 +24,11 @@ public class Devour extends CustomEnchantment
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
+
+                if (SinkOrSwipFlippers.insanityDevourSilenced.contains(user)) {
+                    return;
+                }
+
             double mod = (double)Bleed.getBleedStack(target) * 0.015D + (double)enchantLevel * 0.1D + 1.0D;
             event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));

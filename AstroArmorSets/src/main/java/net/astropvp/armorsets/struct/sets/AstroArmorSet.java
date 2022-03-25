@@ -7,6 +7,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import net.astropvp.armorsets.AstroArmorSets;
@@ -68,7 +69,8 @@ public class AstroArmorSet extends ArmorSet {
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "AstroSet");
         if (Math.random() < 0.01) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             if (Math.random() <= 0.35) {
                 if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
@@ -77,26 +79,30 @@ public class AstroArmorSet extends ArmorSet {
                 }
             }
 
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.28);
-            if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
-                if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
-                    return;
-                }
-                if (event.getDamager().getWorld().getName().equals("world_duels")) {
-                    return;
-                }
-                attacker.setMetadata("FalloutAbility", new FixedMetadataValue(AstroArmorSets.getInstance(), System.currentTimeMillis()));
-                FPlayer fp = FPlayers.getInstance().getByPlayer(attacker);
-                for (Entity nearbyEnt : attacker.getNearbyEntities(32.0, 64.0, 32.0)) {
-                    if (nearbyEnt instanceof Player) {
-                        Player pNear = (Player) nearbyEnt;
-                        FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
-                        if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
-                            continue;
-                        pNear.sendMessage(CC.translate("&a&l** &aAstro Cage Ability &7[" + fp.getName() + "] &a&l**"));
+
+            if (!CannonballAmulet.active.contains(event.getEntity().getUniqueId())) {
+
+
+                if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
+                    if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
+                        return;
                     }
-                    attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
-                    this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
+                    if (event.getDamager().getWorld().getName().equals("world_duels")) {
+                        return;
+                    }
+                    attacker.setMetadata("FalloutAbility", new FixedMetadataValue(AstroArmorSets.getInstance(), System.currentTimeMillis()));
+                    FPlayer fp = FPlayers.getInstance().getByPlayer(attacker);
+                    for (Entity nearbyEnt : attacker.getNearbyEntities(32.0, 64.0, 32.0)) {
+                        if (nearbyEnt instanceof Player) {
+                            Player pNear = (Player) nearbyEnt;
+                            FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
+                            if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                                continue;
+                            pNear.sendMessage(CC.translate("&a&l** &aAstro Cage Ability &7[" + fp.getName() + "] &a&l**"));
+                        }
+                        attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
+                        this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
+                    }
                 }
             }
         }
@@ -106,7 +112,9 @@ public class AstroArmorSet extends ArmorSet {
         AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroCrystal", amount);
 
         if (Math.random() < 0.01) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!CannonballAmulet.active.contains(event.getEntity().getUniqueId())) {
+
+                if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
 
             if (Math.random() <= 0.35) {
                 if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
@@ -115,7 +123,6 @@ public class AstroArmorSet extends ArmorSet {
                 }
             }
 
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.28);
             if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
                 if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
                     return;
@@ -136,6 +143,7 @@ public class AstroArmorSet extends ArmorSet {
                     attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
                     this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
                 }
+            }
             }
         }
     }

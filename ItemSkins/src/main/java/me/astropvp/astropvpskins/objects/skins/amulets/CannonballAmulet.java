@@ -3,6 +3,7 @@ package me.astropvp.astropvpskins.objects.skins.amulets;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -33,6 +34,10 @@ public class CannonballAmulet extends ItemSkin {
 
         if (event.isCancelled()) return;
 
+        if (!CombatLog.inCombat(player)) {
+            return;
+        }
+
         active.add(player.getUniqueId());
         cooldown.add(player.getUniqueId());
         player.sendMessage(CC.translate("&e&l* CANNONBALL ABILITY &7[3s] &e&l*"));
@@ -40,6 +45,10 @@ public class CannonballAmulet extends ItemSkin {
             if (entity instanceof Player) {
                 affected.add((Player) entity);
                 entity.sendMessage(CC.translate("&e&l* " + player.getName()+ "'s CANNONBALL ABILITY &7[3s] &e&l*"));
+
+                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
+                    affected.remove(entity);
+                },3*20);
             }
         }
 

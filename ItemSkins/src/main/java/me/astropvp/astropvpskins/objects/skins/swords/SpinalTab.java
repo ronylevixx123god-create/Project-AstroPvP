@@ -53,7 +53,8 @@ public class SpinalTab extends ItemSkin {
         }
 
         if (!playersStruck.isEmpty()) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5 * playersStruck.size(), event, "&6&lSpinal Tap");
+            event.setDamage(event.getDamage() * (1+(playersStruck.size()*5/100)));
+
         }
 
 

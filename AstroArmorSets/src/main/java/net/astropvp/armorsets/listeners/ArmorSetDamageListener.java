@@ -2,6 +2,7 @@ package net.astropvp.armorsets.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.objects.skins.swords.WetNoodleSword;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -83,6 +84,9 @@ public class ArmorSetDamageListener implements Listener {
                 Map<ArmorSetType, Integer> crystals = AstroArmorSetsAPI.getBonusCrystalsEquippedIncludingCorruption((Player)attacker, (Player)attacked);
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
+                    if (WetNoodleSword.isWetNoodled((Player) attacker)) {
+                        if (armorSetType.name().contains("MUTATED")) continue;
+                    }
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
 

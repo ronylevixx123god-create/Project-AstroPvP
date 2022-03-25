@@ -36,6 +36,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.boots.BarrysBoltsSkin;
+import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -165,6 +166,12 @@ extends CustomEnchantment {
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 return false;
             }
+
+            if (UndertowFieldTask.affected.contains(player)) {
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED &7Undertow Field&4&l *"));
+                return false;
+            }
+
             if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.65) {
                 damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));

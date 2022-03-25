@@ -30,7 +30,7 @@ public class UndertowHelmet extends ItemSkin {
 
         if (damaged instanceof Player) {
             if (UndertowFieldTask.affected.contains(damaged)) {
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5, event, "UnderTow Ability");
+                event.setDamage(event.getDamage()*1.05);
             }
         }
     }

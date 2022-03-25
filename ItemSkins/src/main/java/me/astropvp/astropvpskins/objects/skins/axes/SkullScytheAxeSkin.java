@@ -16,7 +16,7 @@ public class SkullScytheAxeSkin extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (damager.hasMetadata("frozenSkrrt")) return;
 
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(2.5, event, "Skull Scythe");
+        event.setDamage(event.getDamage()*1.025);
         if(Math.random() <= 0.1) {
             damaged.setMetadata("scytheSilence", (MetadataValue)new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), System.currentTimeMillis() + 10000));
         }

@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import lombok.SneakyThrows;
+import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -143,6 +144,12 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 player.sendMessage(CC.translate("&c&lPET: &cYour pets are silenced by a player's Transcendence Effect."));
                 return;
             }
+
+            if (UndertowFieldTask.affected.contains(player)) {
+                player.sendMessage(CC.translate("&c&lPET: &cYour pets are silenced by a player's UnderTow Field."));
+                return;
+            }
+
 
             if (player.hasMetadata("hazmatBoots")) {
 //         p.setMetadata("hazmatTime", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), TimeUnit.SECONDS.toMillis(12)));

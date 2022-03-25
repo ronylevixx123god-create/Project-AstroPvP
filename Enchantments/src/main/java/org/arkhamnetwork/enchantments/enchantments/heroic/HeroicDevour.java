@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import com.rit.sucy.*;
@@ -28,7 +29,9 @@ public class HeroicDevour extends CustomEnchantment
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
-
+            if (SinkOrSwipFlippers.insanityDevourSilenced.contains(user)) {
+                return;
+            }
             double mod = (double)Bleed.getBleedStack(target) * 0.015D + (double)enchantLevel * 0.1D + 1.0D;
             event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));

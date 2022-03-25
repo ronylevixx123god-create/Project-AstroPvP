@@ -12,7 +12,7 @@ public class SexyBeltSkin extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(damager instanceof Projectile)
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(7.5, event, "Sexy Belt");
+            event.setDamage(event.getDamage()*0.925);
     }
 }
 

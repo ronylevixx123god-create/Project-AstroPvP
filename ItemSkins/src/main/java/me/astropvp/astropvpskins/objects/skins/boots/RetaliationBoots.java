@@ -10,11 +10,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class RetaliationBoots extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(10, event, "Retaliation Boots");
+        event.setDamage(event.getDamage() * 0.9);
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if(!(damaged instanceof Player))
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5, event, "Retaliation Boots");
+            event.setDamage(event.getDamage() * 1.05);
     }
 }

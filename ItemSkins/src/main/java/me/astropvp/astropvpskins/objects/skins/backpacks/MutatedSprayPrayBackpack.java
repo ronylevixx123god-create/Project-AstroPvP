@@ -31,7 +31,7 @@ public class MutatedSprayPrayBackpack extends ItemSkin {
             return;
         if (!(damaged instanceof Player)) return;
         if (sprayed.contains(damaged)) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(6, event, "Spray Ability");
+            event.setDamage(event.getDamage()*1.06);
         }
         if (Math.random() < 0.02) {
             damager.sendMessage(CC.translate("&a&l*&e&l* &a&lSPRAY AND PRAY ABILITY &7[10s - " + damaged.getName() + "] &e&l*&a&l*"));
@@ -52,7 +52,7 @@ public class MutatedSprayPrayBackpack extends ItemSkin {
 
 
         if (sprayer.contains(damaged)) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(6, event, "Spray Ability");
+            event.setDamage(event.getDamage()*0.94);
         }
     }
 }

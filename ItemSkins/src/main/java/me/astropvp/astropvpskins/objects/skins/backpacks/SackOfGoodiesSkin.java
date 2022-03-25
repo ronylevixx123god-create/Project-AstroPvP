@@ -10,11 +10,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class SackOfGoodiesSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
+        event.setDamage(event.getDamage() * 1.02);
 
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(2, event, "Sack Goodies");
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(2, event, "Sack Goodies");
+        event.setDamage(event.getDamage() * 0.98);
     }
 }

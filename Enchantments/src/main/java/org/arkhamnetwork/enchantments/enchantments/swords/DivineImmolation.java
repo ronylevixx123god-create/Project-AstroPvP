@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.util.*;
@@ -50,6 +51,12 @@ public class DivineImmolation extends CustomEnchantment
 
         if (p.hasMetadata("noSoulProc")) {
 return;
+        }
+
+        if (playerHit instanceof Player) {
+            if (CannonballAmulet.affected.contains(playerHit)) {
+                return;
+            }
         }
 
 

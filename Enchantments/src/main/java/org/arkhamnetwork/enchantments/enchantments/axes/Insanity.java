@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.*;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -19,8 +20,14 @@ public class Insanity extends CustomEnchantment
         if (!enemyHasSword) {
             return;
         }
-        if (Math.random() < 0.2) {
-            e.setDamage(e.getDamage() * 2);
+
+        if (player instanceof Player) {
+            if (SinkOrSwipFlippers.insanityDevourSilenced.contains(player)) {
+                return;
+            }
+        }
+        if (Math.random() < 0.05) {
+            e.setDamage(e.getDamage() * 1.1);
         }
     }
 }

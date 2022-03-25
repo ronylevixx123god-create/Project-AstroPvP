@@ -25,6 +25,7 @@ public class SinkOrSwipFlippers extends ItemSkin {
     public SinkOrSwipFlippers() {
         insanityDevourSilenced = new ArrayList<>();
         sinkCounter = new HashMap<>();
+        sinked = new ArrayList<>();
     }
 
     @Override
@@ -76,7 +77,7 @@ public class SinkOrSwipFlippers extends ItemSkin {
 
     }
 
-    public void addSinkStack(Player damager) {
+    public static void addSinkStack(Player damager) {
         if (sinkCounter.containsKey(damager)) {
             int amount = sinkCounter.get(damager);
             sinkCounter.put(damager, amount+1);

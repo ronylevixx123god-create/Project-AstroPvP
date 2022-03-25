@@ -13,6 +13,7 @@ import java.util.concurrent.TimeUnit;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -136,6 +137,13 @@ public class InventorySkrrtPet extends InventoryPet {
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&8&lBig Timbs&7] &8&l*"));
                 continue;
             }
+
+            if (UndertowHelmet.undertowField.contains(p)) {
+                p.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Skrrt Pet &7[&f" + player.getName() + "&7] &a&l*"));
+                player.sendMessage(CC.translate("&a&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&a&lUndertow Helmet&7] &a&l*"));
+                continue;
+            }
+
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) {
                 player.sendMessage(CC.translate("&c" + p.getName() + " is in a non-pvp enabled region."));
                 continue;

@@ -48,7 +48,7 @@ public class HeroicEnlighted extends CustomEnchantment
                 Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.damage(finalToGive1), 1L);
             } else {
                 double finalToGive = toGive;
-                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.setHealth(player.getHealth()+finalToGive), 1L);
+                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> GeneralUtil.healPlayer(player, finalToGive), 1L);
             }
         }
     }

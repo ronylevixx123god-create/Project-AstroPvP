@@ -7,6 +7,7 @@ import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import net.astropvp.armorsets.struct.ArmorSet;
@@ -142,7 +143,8 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onEngineerAbility(Player player) {
-        List<Entity> affected = (List<Entity>)player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> {
+
+            List<Entity> affected = (List<Entity>)player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> {
             if (!(ent instanceof Player))
                 return false;
             Player p = (Player)ent;
@@ -150,7 +152,12 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
                 p.sendMessage(CC.translate("&2&l* PRISON BREAK &7(Hazmat Helmet) &2&l*"));
                 return false;
             }
-            if (p.hasMetadata("immune_freeze")) {
+
+                if (CannonballAmulet.active.contains(p.getUniqueId())) {
+                    return false;
+                }
+
+                    if (p.hasMetadata("immune_freeze")) {
                 p.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "B-2 Bomb blocked!" + CC.DarkGrayB + "] *");
                 return false;
             }

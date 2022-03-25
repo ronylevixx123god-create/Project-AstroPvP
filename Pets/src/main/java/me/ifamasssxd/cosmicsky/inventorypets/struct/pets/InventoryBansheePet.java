@@ -12,6 +12,7 @@ import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
@@ -96,6 +97,12 @@ public class InventoryBansheePet extends InventoryPet {
 
                     nearPlayer.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
                     player.sendMessage(CC.translate("&e&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&e&lWitch Hat&7] &e&l*"));
+                    continue;
+                }
+
+                if (UndertowHelmet.undertowField.contains(nearPlayer)) {
+                    nearPlayer.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &a&l*"));
+                    player.sendMessage(CC.translate("&a&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&a&lUndertow Helmet&7] &a&l*"));
                     continue;
                 }
 

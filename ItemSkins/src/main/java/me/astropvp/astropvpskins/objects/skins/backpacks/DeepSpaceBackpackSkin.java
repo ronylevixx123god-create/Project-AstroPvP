@@ -12,6 +12,6 @@ public class DeepSpaceBackpackSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
 
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(3, event, "Deep Space");
+        event.setDamage(event.getDamage()*1.03);
     }
 }

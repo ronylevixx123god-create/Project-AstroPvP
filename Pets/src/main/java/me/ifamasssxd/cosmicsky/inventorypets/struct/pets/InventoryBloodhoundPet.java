@@ -24,6 +24,7 @@ import java.util.concurrent.TimeUnit;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
@@ -127,6 +128,12 @@ public class InventoryBloodhoundPet extends InventoryPet {
       if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
          pTarget.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Bloodhound Pet &7[" + player.getName() + "&7] &8&l*"));
          player.sendMessage(CC.translate("&8&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&8&lBig Timbs&7] &8&l*"));
+         return true;
+      }
+
+      if (UndertowHelmet.undertowField.contains(pTarget)) {
+         pTarget.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Bloodhound Pet &7[&f" + player.getName() + "&7] &a&l*"));
+         player.sendMessage(CC.translate("&a&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&a&lUndertow Helmet&7] &a&l*"));
          return true;
       }
 

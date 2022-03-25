@@ -6,7 +6,6 @@ import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.enchantments.axes.Rogue;
 import org.arkhamnetwork.enchantments.mastery.MasteryMarkOfTheBeast;
 import org.arkhamnetwork.enchantments.mastery.SoulMaster;
@@ -23,11 +22,11 @@ public class MutatedSeasonsBeatings extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (!(damaged instanceof Player)) return;
         if (((Player) damaged).getItemInHand() != null &&  EnchantmentAPI.itemHasEnchantment(((Player) damaged).getItemInHand(), "Hero Killer")) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "&4&lSeasons Beatings");
+            event.setDamage(event.getDamage()*1.1);
         }
 
         if (KillTrackerAPI.hasGodMode((Player) damaged)) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(14, event, "&4&lSeasons Beatings");
+            event.setDamage(event.getDamage()*1.14);
         }
 
 

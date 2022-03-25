@@ -11,6 +11,6 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class TeddyBackpackSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(2, event, "Teddy Backpack");
+        event.setDamage(event.getDamage() * 1.02);
     }
 }

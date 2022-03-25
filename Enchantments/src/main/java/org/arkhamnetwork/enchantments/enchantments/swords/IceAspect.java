@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
  *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.WorldUtil
@@ -23,6 +23,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -38,7 +39,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class IceAspect
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public IceAspect() {
         super("IceAspect", GeneralUtil.swords, 2);
         this.max = 3;
@@ -55,18 +56,18 @@ extends CustomEnchantment {
         final int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();
-            if (!new CustomEnchantProcOnEntityEvent(player, playerHit, (Event)e, this, level).callEvent()) {
+            if (!new CustomEnchantProcOnEntityEvent(player, playerHit, (Event) e, this, level).callEvent()) {
                 return;
             }
             if (playerHit.hasMetadata("immune_freeze")) {
-                ((Player)playerHit).sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + (Object)ChatColor.GRAY + "Ice Aspect blocked!" + CC.DarkGrayB + "] *");
+                ((Player) playerHit).sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + (Object) ChatColor.GRAY + "Ice Aspect blocked!" + CC.DarkGrayB + "] *");
                 return;
             }
 
-            if (((Player)playerHit).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2021_BOOTS))
+            if (((Player) playerHit).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2021_BOOTS))
                 return;
 
-            if (((Player)playerHit).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.BACK_TO_SCHOOL_2021_AMULET))
+            if (((Player) playerHit).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.BACK_TO_SCHOOL_2021_AMULET))
                 return;
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
@@ -76,6 +77,12 @@ extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BOOTS)) {
                 playerHit.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Ice Aspect&c&l] **"));
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SPRING_BREAK_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS)) {
+                SinkOrSwipFlippers.addSinkStack((Player) playerHit);
+                playerHit.sendMessage(CC.translate("&a&l* BLOCKED FREEZE &7[+1 Stack] &a&l*"));
                 return;
             }
 

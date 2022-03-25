@@ -2,6 +2,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
@@ -87,6 +88,12 @@ public class InventoryStitchesPet extends InventoryPet {
                 player.sendMessage(CC.translate("&2&l(EQUALIZER) &a" + casted.getName() + "&2Immune to Stitches Pet!"));
                 return false;
             }
+            if (UndertowHelmet.undertowField.contains(casted)) {
+                casted.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &eStitches Pet &7[&f" + player.getName() + "&7] &a&l*"));
+                player.sendMessage(CC.translate("&a&l* &f" + casted.getName() + " &7Blocked &eStitches Pet &7[&a&lUndertow Helmet&7] &a&l*"));
+                return false;
+            }
+
             if (nearbyEntity.hasMetadata("lastStitches") &&
                     TimeUnit.SECONDS.toMillis(90) - (System.currentTimeMillis() - nearbyEntity.getMetadata("lastStitches").get(0).asLong()) > 0) {
                 return false;

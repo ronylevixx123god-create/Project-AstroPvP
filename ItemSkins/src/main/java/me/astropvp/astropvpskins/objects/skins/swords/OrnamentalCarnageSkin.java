@@ -21,9 +21,9 @@ public class OrnamentalCarnageSkin extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;
         if (damaged.hasMetadata("titantrap"))
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "Ornamental Carnage");
+            event.setDamage(event.getDamage()*1.1);
         if (Math.random() > 0.02) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "Ornamental Carnage");
+            event.setDamage(event.getDamage()*1.2);
         }
 
         if (damaged instanceof Player) {
@@ -37,9 +37,9 @@ public class OrnamentalCarnageSkin extends ItemSkin {
             return;
         if (damager instanceof Player) {
             if (KillTrackerAPI.hasGodMode((Player) damager)) {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "Ornamental Carnage");
+                event.setDamage(event.getDamage()*0.85);
             } else {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "Ornamental Carnage");
+                event.setDamage(event.getDamage()*0.95);
             }
         }
     }

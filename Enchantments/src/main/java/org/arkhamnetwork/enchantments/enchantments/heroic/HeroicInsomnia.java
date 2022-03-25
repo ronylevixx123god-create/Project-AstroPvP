@@ -3,6 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
 public class HeroicInsomnia extends HeroicCustomEnchantment {
     public HeroicInsomnia() {
@@ -17,5 +19,9 @@ public class HeroicInsomnia extends HeroicCustomEnchantment {
         double random = Math.random();
         double chance = 0.025 * (double)level;
         int n = time = level > 1 ? 6 : 4;
+        if (random < chance) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(time * 10, 40), Math.min(level - 1, 2)));
+
+        }
     }
 }

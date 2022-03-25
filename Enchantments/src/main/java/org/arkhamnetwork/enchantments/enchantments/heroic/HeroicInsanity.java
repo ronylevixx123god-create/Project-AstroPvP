@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -18,11 +19,13 @@ public class HeroicInsanity extends HeroicCustomEnchantment
         if (!enemyHasSword) {
             return;
         }
-        if (playerHit instanceof Player) {
-            return;
+        if (player instanceof Player) {
+            if (SinkOrSwipFlippers.insanityDevourSilenced.contains(player)) {
+                return;
+            }
         }
-        if (Math.random() < 0.2) {
-            e.setDamage(e.getDamage() * 2);
+        if (Math.random() < 0.1) {
+            e.setDamage(e.getDamage() * 1.2);
         }
     }
 }

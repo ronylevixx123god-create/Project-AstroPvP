@@ -124,7 +124,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Particleapi</artifactId>
+            <artifactId>Particleapssi</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ParticleAPI_v2.1.1.jar</systemPath>

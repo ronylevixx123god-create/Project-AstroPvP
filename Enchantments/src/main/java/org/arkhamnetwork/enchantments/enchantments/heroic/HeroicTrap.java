@@ -5,6 +5,7 @@ import java.text.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import me.astropvp.astropvpskins.utils.DamageIndicatorUtils;
 import org.bukkit.event.entity.*;
 import java.util.stream.*;
@@ -39,7 +40,7 @@ public class HeroicTrap extends HeroicCustomEnchantment
             return;
 
         final double random = Math.random();
-        double chance = 0.0075 * level;
+        double chance = 0.0095 * level;
         final double durationTicks = 35 + level * 10;
         if (random < chance) {
             final Player ptarget = (Player)target;
@@ -61,6 +62,13 @@ public class HeroicTrap extends HeroicCustomEnchantment
                 return;
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.FLAMING_HALO) && Math.random() < 0.50) {
                 ptarget.sendMessage(CC.translate("&6&l* FLAMING HALO BLOCKED &7[Titan Trap] &6&l*"));
+                return;
+            }
+
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.SPRING_BREAK_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS)) {
+                SinkOrSwipFlippers.addSinkStack((Player) ptarget);
+                ptarget.sendMessage(CC.translate("&a&l* BLOCKED FREEZE &7[+1 Stack] &a&l*"));
                 return;
             }
 

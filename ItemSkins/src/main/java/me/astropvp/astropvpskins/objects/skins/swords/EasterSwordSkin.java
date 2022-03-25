@@ -22,7 +22,7 @@ public class EasterSwordSkin extends ItemSkin {
         //(new Devour()).applyEffect(damager, (LivingEntity) damaged, 5, event);
         if(damaged instanceof Player)
             return;
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15, event, "Easter Sword");
+        event.setDamage(event.getDamage() * 1.15);
     }
 }
 

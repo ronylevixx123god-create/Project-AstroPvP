@@ -56,7 +56,7 @@ public class MutatedCrankedAmuletSkin extends ItemSkin {
             return;
         if (damager.hasMetadata("frozenSkrrt")) return;
         if (damager.hasMetadata("mageDamage")) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "&4&lCranked Amulet");
+            event.setDamage(event.getDamage()*1.2);
         }
     }
 

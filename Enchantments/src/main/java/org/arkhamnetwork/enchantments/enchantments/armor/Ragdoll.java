@@ -16,6 +16,7 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
@@ -47,7 +48,11 @@ extends CustomEnchantment {
                 return;
             }
 
-            Player p = (Player)player;
+            if (UndertowHelmet.undertowField.contains(player)) {
+                return;
+            }
+
+                Player p = (Player)player;
             if (Math.random() < (double)level * 0.125) {
                 GeneralUtil.pushAwayEntity(attacker, (Entity)p, 1.5 + 0.5 * (double)level);
             }

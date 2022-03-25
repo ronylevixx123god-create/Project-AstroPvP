@@ -19,6 +19,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Location;
@@ -63,6 +64,13 @@ extends CustomEnchantment {
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 attacker.sendMessage(CC.translate("&c&l* SNOWFLAKE SLIPPERS &7Blocked Slow Effect &c&l*"));
+                return;
+            }
+
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_BREAK_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS)) {
+                SinkOrSwipFlippers.addSinkStack((Player) attacker);
+                attacker.sendMessage(CC.translate("&a&l* BLOCKED FREEZE &7[+1 Stack] &a&l*"));
                 return;
             }
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));

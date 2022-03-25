@@ -29,6 +29,7 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -86,6 +87,14 @@ extends CustomEnchantment {
                 ptarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &eTrap &e&l*"));
                 return;
             }
+
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.SPRING_BREAK_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS)) {
+                SinkOrSwipFlippers.addSinkStack((Player) ptarget);
+                ptarget.sendMessage(CC.translate("&a&l* BLOCKED FREEZE &7[+1 Stack] &a&l*"));
+                return;
+            }
+
             ptarget.setWalkSpeed(0.0f);
             ptarget.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You have been trapped by " + ((Player)player).getName() + "!");
             DamageIndicatorUtils.sendDamageIndicator((Player) ptarget, CC.AquaB + "* TRAP " + CC.Gray + "[" + 3.25 + "]" + CC.AquaB + "*" + CC.DarkPurpleB +  "*", "TRAP");

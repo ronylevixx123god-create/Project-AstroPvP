@@ -22,7 +22,7 @@ public class CorpseGrinder extends ItemSkin {
 
 
         if (Math.random() < 0.01) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(25, event, "Corpse Grinder");
+            event.setDamage(event.getDamage()*0.75);
         }
     }
 }

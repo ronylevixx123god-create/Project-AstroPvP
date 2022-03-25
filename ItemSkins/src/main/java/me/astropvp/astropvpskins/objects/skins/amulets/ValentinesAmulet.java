@@ -25,7 +25,7 @@ public class ValentinesAmulet extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
 
         if (this.bloodyAmuletDamage.contains(damaged)) {
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(10, event, "&c&lValentine Amulet");
+            event.setDamage(event.getDamage()*0.9);
             return;
         }
 
@@ -50,7 +50,7 @@ public class ValentinesAmulet extends ItemSkin {
             return;
 
         if (this.bloodyAmuletDamage.contains(damaged)) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(25, event, "&c&lValentine Amulet");
+            event.setDamage(event.getDamage()*1.25);
         }
     }
 

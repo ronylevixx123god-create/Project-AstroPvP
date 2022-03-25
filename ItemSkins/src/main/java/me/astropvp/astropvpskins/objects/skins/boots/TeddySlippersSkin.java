@@ -10,11 +10,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class TeddySlippersSkin extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(1, event, "Teddy Slippers");
+        event.setDamage(event.getDamage() * 1.01);
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(2, event, "Teddy Slippers");
+        event.setDamage(event.getDamage() * 0.98);
     }
 }
 

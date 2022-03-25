@@ -11,7 +11,7 @@ import org.bukkit.potion.PotionEffectType;
 public class DivineUtils {
     public static void divinePlayer(Player damaged, int enchantLevel) {
         double damage = Math.min(4, 4 + enchantLevel) / 4.0;
-        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(damaged, damage, "&c&lDivine Tick");
+        damaged.damage(damage);
         ((Player) damaged).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** DIVINE IMMOLATION **");
         ((Player) damaged).playSound(damaged.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.6f, 0.8f);
         ((Player) damaged).playSound(damaged.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);

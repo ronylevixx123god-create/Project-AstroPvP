@@ -336,6 +336,14 @@ public class AstroArmorSetsAPI {
         return map;
     }
 
+
+    public static boolean hasMutatedCrystalEquipped(Player player) {
+        for (ArmorSetType type : getBonusCrystalsEquipped(player).keySet()) {
+            if (type.name().contains("MUTATED")) return true;
+        }
+        return false;
+    }
+
     public static boolean isDefensiveCrystal(ArmorSetType type) {
         switch (type) {
             case ANCIENT:

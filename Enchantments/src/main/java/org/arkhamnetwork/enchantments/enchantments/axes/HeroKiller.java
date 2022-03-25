@@ -25,6 +25,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -77,8 +78,13 @@ extends CustomEnchantment {
             return;
         }
 
+        if (CannonballAmulet.affected.contains(playerHit)) {
+            return;
+        }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BACKPACK) && !playerHit.hasMetadata("noCape")) {
+
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BACKPACK) && !playerHit.hasMetadata("noCape")) {
             return;
         }
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
@@ -106,25 +112,25 @@ extends CustomEnchantment {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player)p, (int)4);
             }
-            double increase = level * 5;
+            double increase = 0.1D * (double)level;
             if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {
-                increase *= 1.1;
+                increase += 0.1;
             }
 
             if (player.hasMetadata("carver_damage")) {
-                increase *= 1.3;
+                increase += 0.3;
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-                increase += 1.3;
+                increase += 0.3;
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2 && !player.hasMetadata("noCape")) {
-                increase *=1.15;
+                increase += 0.15;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
-                increase*=0.9;
+                increase -= 0.1;
             }
-            e.setDamage(e.getDamage()*increase);
+            e.setDamage(e.getDamage()*(1+increase));
         }
     }
 

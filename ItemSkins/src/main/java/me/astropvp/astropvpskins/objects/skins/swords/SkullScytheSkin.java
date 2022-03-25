@@ -5,7 +5,6 @@ import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -21,7 +20,7 @@ public class SkullScytheSkin extends ItemSkin {
         if (DuelAPI.isSpectator(damager)) return;
 
 
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(2.5, event, "Skull Scythe");
+        event.setDamage(event.getDamage()*1.025);
         if(Math.random() <= 0.1) {
             damaged.setMetadata("scytheSilence", (MetadataValue)new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), System.currentTimeMillis() + 10000));
         }

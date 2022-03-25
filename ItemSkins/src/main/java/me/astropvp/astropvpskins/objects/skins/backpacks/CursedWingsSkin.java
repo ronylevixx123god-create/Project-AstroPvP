@@ -15,6 +15,6 @@ public class CursedWingsSkin extends ItemSkin {
 
         if(GoldenAdmirer.isAdmirerSilenced(damaged))
             return;
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "Cursed Wings");
+        event.setDamage(event.getDamage()*0.97);
     }
 }

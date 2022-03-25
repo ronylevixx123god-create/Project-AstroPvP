@@ -14,7 +14,7 @@ public class CorruptAmuletDestructionSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
 
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7.5, event, "Corrupt Amulet");
+        event.setDamage(event.getDamage()*1.075);
     }
 }
 

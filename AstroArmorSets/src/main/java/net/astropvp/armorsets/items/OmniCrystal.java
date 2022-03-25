@@ -2,6 +2,7 @@ package net.astropvp.armorsets.items;
 
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
+import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
@@ -54,16 +55,15 @@ public class OmniCrystal extends CosmicItem
         if (meta.hasLore())  {
             if (meta.getLore().contains(CC.translate("&3&lOMNI SET BONUS"))) return;
         }
-        List<ArmorSetType> bonusApplied = AstroArmorSetsAPI.getFromArmorBonusCrystal(clickedWrapper);
-        if (bonusApplied != null && !bonusApplied.isEmpty()) {
-            event.getWhoClicked().sendMessage(CC.translate("&cYou cannot apply an omni crystal to a piece that contains crystals"));
-            event.setCancelled(true);
-            return;
-        }
 
         if (AstroArmorSetsAPI.getSetTypeOnItem(clicked) != null) {
             return;
         }
+
+        if (!AstroArmorSetsAPI.isHeroic(clicked)) {
+            throw new PrefixedException("You cannot apply crystals to non-heroic armor");
+        }
+
         if (player.getItemOnCursor().getAmount() <= 1) {
             player.setItemOnCursor(null);
         } else {

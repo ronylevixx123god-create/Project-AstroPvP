@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -108,6 +109,12 @@ public class InventoryWitcherPet extends InventoryPet {
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&8&lBig Timbs&7] &8&l*"));
+                continue;
+            }
+
+            if (UndertowHelmet.undertowField.contains(p)) {
+                p.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Witcher Pet &7[&f" + player.getName() + "&7] &a&l*"));
+                player.sendMessage(CC.translate("&a&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&a&lUndertow Helmet&7] &a&l*"));
                 continue;
             }
 

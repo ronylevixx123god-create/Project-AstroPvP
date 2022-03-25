@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -121,6 +122,10 @@ public class AncientArmorSet extends ArmorSet {
 
         if (pTarget.getItemInHand() != null && WeaponBonusUtils.hasWeaponBonus(((Player) pTarget).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
             pTarget.sendMessage(CC.translate("&3&l* BLOCKED ENEMY ANCIENT ABILITY &7(Hero Weapon Bonus) &3&l*"));
+            return;
+        }
+
+        if (CannonballAmulet.active.contains(pTarget.getUniqueId())) {
             return;
         }
 

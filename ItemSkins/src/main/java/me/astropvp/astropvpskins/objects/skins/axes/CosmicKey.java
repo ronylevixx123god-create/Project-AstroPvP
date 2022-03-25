@@ -26,7 +26,7 @@ public class CosmicKey extends ItemSkin {
         }
         //code atlas 3 ability
         if (damager.getHealth() <= 15) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "&9&lCosmic Key");
+            event.setDamage(event.getDamage()*1.1);
             damager.sendMessage(CC.translate("&9&l** COSMIC KEY [&7+10% Damage] &9&l**"));
         }
         //code kronos 8 ability

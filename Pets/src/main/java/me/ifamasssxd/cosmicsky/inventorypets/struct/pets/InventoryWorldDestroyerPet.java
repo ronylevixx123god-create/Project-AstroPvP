@@ -9,6 +9,7 @@ import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -125,9 +126,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             return true;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
-            target.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4World Destroyer Pet &7[" + player.getName() + "&7] &8&l*"));
-            player.sendMessage(CC.translate("&8&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&8&lBig Timbs&7] &8&l*"));
+        if (UndertowHelmet.undertowField.contains(target)) {
+            target.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4World Destroyer Pet &7[&f" + player.getName() + "&7] &a&l*"));
+            player.sendMessage(CC.translate("&a&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&a&lUndertow Helmet&7] &a&l*"));
             return true;
         }
         if (((Player)target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {

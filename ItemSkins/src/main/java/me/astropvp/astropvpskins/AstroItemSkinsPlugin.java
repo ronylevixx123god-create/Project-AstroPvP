@@ -6,10 +6,7 @@ import me.astropvp.astropvpskins.commands.CommandMultiSkin;
 import me.astropvp.astropvpskins.commands.RemoveBrokenSkinCommand;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astropvpskins.listeners.ItemSkinInventoryClickListener;
-import me.astropvp.astropvpskins.listeners.ItemSkinListener;
-import me.astropvp.astropvpskins.listeners.MauiHookListener;
-import me.astropvp.astropvpskins.listeners.SnowflakeListener;
+import me.astropvp.astropvpskins.listeners.*;
 import me.astropvp.astropvpskins.objects.BackpackSocketItem;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.tasks.SinkEffectTask;
@@ -44,6 +41,9 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new ItemSkinInventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new MauiHookListener(), this);
         getServer().getPluginManager().registerEvents(new SnowflakeListener(), this);
+        getServer().getPluginManager().registerEvents(new CannonBallPearlBlock(), this);
+        getServer().getPluginManager().registerEvents(new WetNoodleMutatedCrystal(), this);
+
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new BackpackSocketItem());
         this.categorisedSkins = new HashMap<>();
         categoriseSkins();

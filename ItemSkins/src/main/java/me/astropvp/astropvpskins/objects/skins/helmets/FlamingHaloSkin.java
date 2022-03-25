@@ -11,6 +11,6 @@ public class FlamingHaloSkin extends ItemSkin {
 
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(4, event, "Flaming Halo");
+        event.setDamage(event.getDamage() * 1.04);
     }
 }

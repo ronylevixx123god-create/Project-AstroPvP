@@ -5,6 +5,8 @@ import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.objects.skins.boots.MutatedSinkOrSwipFlippers;
+import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
@@ -81,6 +83,7 @@ public class HolyWhiteScrollListener implements Listener {
         Player killer = e.getEntity().getKiller();
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
         boolean controlling = (killer != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsCosmonautOutpost(killer));
+        boolean hasBeenSwimEffected = false;
         List<ItemStack> savedItems = new ArrayList<>();
         List<ItemStack> drops = e.getDrops();
         for (ItemStack i : drops) {
@@ -90,9 +93,14 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 boolean isControlling = (controlling && Math.random() > 0.1D);
-                double monoChance = (killerIsControllingFrozen ? 0.55D : 0.45D);
+                double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
+
+                if (MutatedSinkOrSwipFlippers.sinked.contains(e.getEntity()) && AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS) && !hasBeenSwimEffected) {
+                    isMonopolied = true;
+                    hasBeenSwimEffected = true;
+                }
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;
                 if (killer != null && AstroArmorSetsAPI.getCurrentArmorSet(killer) == ArmorSetType.DIMENSIONAL_TRAVELER) {

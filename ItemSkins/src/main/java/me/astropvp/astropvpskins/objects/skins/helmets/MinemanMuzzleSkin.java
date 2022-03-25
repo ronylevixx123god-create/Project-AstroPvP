@@ -37,7 +37,7 @@ public class MinemanMuzzleSkin extends ItemSkin {
             double dmg = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             nearby.forEach(player -> {
                 if (FactionUtils.isInEnemyFaction(damaged, (Player) player)) {
-                    AstroDamageHandler.getInstance().getDamageHandler().dealDamage((LivingEntity) player, dmg, "MimeMan MLuzzle");
+                    ((Player) player).damage(dmg);
 
                     player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmg + "DMG] &8&l**"));
                 }
@@ -60,7 +60,7 @@ public class MinemanMuzzleSkin extends ItemSkin {
         if (damaged.hasMetadata("frozenSkrrt")) return;
         if (damaged instanceof Player) {
             if (damaged.hasMetadata("muzzle")) {
-                AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(33, event, "Mimeman Muzzle");
+                event.setDamage(event.getDamage() * 1.33);
             }
 
         }

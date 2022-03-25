@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -104,7 +105,12 @@ public class LunaArmorSet extends ArmorSet {
     public void lunaStrike(Player enemy) {
         if (isLunaStriked(enemy)) return;
 
-        lunaStrikedPlayers.add(enemy.getUniqueId());
+        if (CannonballAmulet.active.contains(enemy.getUniqueId())) {
+            return;
+        }
+
+
+            lunaStrikedPlayers.add(enemy.getUniqueId());
         enemy.sendMessage("");
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8&l✰ &7&lLUNA STRIKE ABILITY (" + enemy.getName() + ") &8&l✰")));
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&l* &7Increased Rage Stack Limit")));

@@ -12,7 +12,7 @@ public class PortablePicnicSkin extends ItemSkin {
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
 
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(4, event, "Portable Picnic");
+        event.setDamage(event.getDamage()*0.96);
     }
     //TODO: DO THE EFFECT FOR THIS MAYBE?
 }

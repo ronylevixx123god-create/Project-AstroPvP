@@ -43,6 +43,9 @@ public class MutatedWetNoodleSword extends ItemSkin {
 
         if (Math.random() < 0.025) {
             damager.setMetadata("wetNoodleAbility", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), true));
+            if (damager.hasMetadata("wetNoodleAbility")) {
+                addNoodleStack(damager, (Player) damaged);
+            }
             damager.sendMessage(CC.translate("&e&l*&f&l* &e&lWET NODDLE ABILITY &7[10s] &f&l*&e&l*"));
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
                 damager.removeMetadata("wetNoodleAbility", AstroItemSkinsPlugin.getInstance());
@@ -56,15 +59,13 @@ public class MutatedWetNoodleSword extends ItemSkin {
                         damage = affected.getHealth() / 2;
                     }
                     affected.damage(damage);
-                    affected.sendMessage(CC.translate("&c&l-" + damage + " HP &7(" + stacks + " Wet Noodle Stacks)"));
+                    affected.sendMessage(CC.translate("&c&l-" + Math.round(damage) + " HP &7(" + stacks + " Wet Noodle Stacks)"));
                 }
                 wetNoodleAbility.remove(damager);
             }, 16 * 20);
         }
 
-        if (damager.hasMetadata("wetNoodleAbility")) {
-            addNoodleStack(damager, (Player) damaged);
-        }
+
 
     }
 
@@ -73,16 +74,17 @@ public class MutatedWetNoodleSword extends ItemSkin {
             Map<Player, Integer> newStacks = new HashMap<>();
             newStacks.put(damaged, 1);
             wetNoodleAbility.put(damager, newStacks);
-            damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a" + 1 + " Stack&7] &f&l*&e&l*"));
+            damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a1 Stack&7] &f&l*&e&l*"));
         } else {
             Map<Player, Integer> currentStacks = wetNoodleAbility.get(damager);
             if (!currentStacks.containsKey(damaged)) {
                 currentStacks.put(damaged, 1);
-                damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a" + 1 + " Stack&7] &f&l*&e&l*"));
+                damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a1 Stack&7] &f&l*&e&l*"));
             } else {
                 int currentAmount = currentStacks.get(damaged);
-                currentStacks.put(damaged, currentAmount + 1);
-                damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a" + currentAmount + 1 + " Stack&7] &f&l*&e&l*"));
+                currentStacks.put(damaged, currentAmount+1);
+                int display = currentStacks.get(damaged);
+                damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a" + display + " Stack&7] &f&l*&e&l*"));
             }
             wetNoodleAbility.put(damager, currentStacks);
         }
