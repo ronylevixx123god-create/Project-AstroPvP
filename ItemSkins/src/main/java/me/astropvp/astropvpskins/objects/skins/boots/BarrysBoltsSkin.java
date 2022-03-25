@@ -14,7 +14,6 @@ import java.util.List;
 
 @Getter
 public class BarrysBoltsSkin extends ItemSkin {
-    //TODO: add messages, make ability work in other plugins (gonna be longggggg :( )
     private List<Player> currentFlashPlayers = new ArrayList<>();
 
     private List<Player> currentSilencedPlayers = new ArrayList<>();

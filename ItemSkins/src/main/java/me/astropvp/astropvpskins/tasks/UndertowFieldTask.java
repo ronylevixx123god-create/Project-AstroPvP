@@ -1,6 +1,7 @@
 package me.astropvp.astropvpskins.tasks;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import de.inventivegames.particle.ParticleEffect;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
@@ -28,6 +29,7 @@ public class UndertowFieldTask implements Runnable{
                 List<Entity> nearby = p.getNearbyEntities(5, 5, 5);
                 for (Entity e : nearby) {
                     if (e instanceof Player) {
+                        if (!WorldGuardUtils.isPvPEnabled(e.getLocation())) continue;
                         affected.add((Player) e);
                     }
                 }
@@ -35,8 +37,9 @@ public class UndertowFieldTask implements Runnable{
         }
 
         for (Player p : affected) {
+            if (!WorldGuardUtils.isPvPEnabled(p.getLocation())) continue;
             p.damage(1);
-            p.sendMessage(CC.translate("&c&l- 1HP &7(Undertow Ability)"));
+            p.sendMessage(CC.translate("&c&l-1HP &7(Undertow Ability)"));
         }
     }
 }

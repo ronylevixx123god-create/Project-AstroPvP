@@ -16,9 +16,7 @@ import java.util.List;
 
 public class MutatedUndertowHelmet extends ItemSkin {
 
-    public static List<Player> undertowField;
     public MutatedUndertowHelmet() {
-        undertowField = new ArrayList<>();
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
@@ -41,10 +39,10 @@ public class MutatedUndertowHelmet extends ItemSkin {
         if (damaged.hasMetadata("frozenSkrrt")) return;
 
         if (Math.random() < 0.015) {
-            this.undertowField.add(damaged);
+            UndertowHelmet.undertowField.add(damaged);
             damaged.sendMessage(CC.translate("&a&l*&f&l* &a&lUNDERTOW FIELD &7[15s] &f&l*&a&l*"));
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
-                this.undertowField.remove(damaged);
+                UndertowHelmet.undertowField.remove(damaged);
                 damaged.sendMessage(CC.translate("&a&l*&f&l* &a&lUNDERTOW FIELD &cExpired &f&l*&a&l*"));
             },15*20);
         }

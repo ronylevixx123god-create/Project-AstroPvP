@@ -12,6 +12,7 @@ import me.astropvp.astropvpskins.listeners.MauiHookListener;
 import me.astropvp.astropvpskins.listeners.SnowflakeListener;
 import me.astropvp.astropvpskins.objects.BackpackSocketItem;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.astropvp.astropvpskins.tasks.SinkEffectTask;
 import me.astropvp.astropvpskins.tasks.SprayAndPrayTask;
 import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
@@ -36,7 +37,6 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
     public void onEnable() {
         instance = this;
         getCommand("itemskin").setExecutor(new CommandItemSkin());
-
         getCommand("multiskin").setExecutor(new CommandMultiSkin());
         getCommand("removeskin").setExecutor(new RemoveBrokenSkinCommand());
         getServer().getPluginManager().registerEvents(new ItemSkinListener(), this);
@@ -47,6 +47,7 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new BackpackSocketItem());
         this.categorisedSkins = new HashMap<>();
         categoriseSkins();
+        registerTasks();
     }
 
     public void onDisable() {
@@ -66,6 +67,8 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
     public void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new UndertowFieldTask(), 3*20, 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SprayAndPrayTask(), 3*20, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SinkEffectTask(), 3*20, 60L);
+
 
     }
 }
