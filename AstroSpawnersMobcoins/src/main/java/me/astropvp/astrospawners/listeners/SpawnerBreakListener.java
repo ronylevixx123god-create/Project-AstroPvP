@@ -49,7 +49,7 @@ public class SpawnerBreakListener implements Listener {
                 CreeperTypes egg_type = CreeperTypes.valueOf(c.getMetadata("customCreeperType").get(0).asString());
 
                 if (egg_type == CreeperTypes.Lucky) {
-                    chance += 1.5;
+                    chance += 0.5;
                 }
             }
         }
@@ -60,7 +60,7 @@ public class SpawnerBreakListener implements Listener {
                 TNTTypes tntType = TNTTypes.valueOf(tnt.getMetadata("custom_tnt").get(0).asString());
 
                 if(tntType == TNTTypes.Lucky)
-                    chance += 1.25;
+                    chance += 0.5;
             }
         }
         List<Block> blocks = event.blockList();

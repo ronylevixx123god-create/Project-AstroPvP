@@ -4,6 +4,7 @@ import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.util.RageUtils;
 import org.bukkit.plugin.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -20,7 +21,7 @@ public class Rage extends CustomEnchantment {
         Bukkit.getPluginManager().registerEvents(new RageListener(), (Plugin) Enchantments.getInstance());
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+/*    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (event.getDamage() > 0.0 && user instanceof Player) {
             final Player pUser = (Player) user;
@@ -58,6 +59,38 @@ public class Rage extends CustomEnchantment {
                 this.addPVEHitCombo((Player) user);
             }
         }
+    }*/
+
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
+        if (target instanceof ArmorStand) {
+            return;
+        }
+        if (event.isCancelled()) return;
+
+        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
+            Player pUser = (Player) user;
+
+            double mod = enchantLevel * 0.4 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
+
+            playRageEffect(target.getEyeLocation(), enchantLevel);
+
+
+            if (mod > 10) {
+                mod = 10;
+            }
+
+            double damage = event.getDamage();
+
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
+                if (!(Math.random() < 0.35 && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS))) {
+                    mod *=1.33;
+                }
+            }
+
+            event.setDamage((damage + mod));
+        }
+
     }
 
     public static int getPVPHitCombo(final Player p) {

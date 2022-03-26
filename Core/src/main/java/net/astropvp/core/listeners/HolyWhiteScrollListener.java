@@ -95,6 +95,11 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean isControlling = (controlling && Math.random() > 0.1D);
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
+                if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
+                    if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) == ArmorSetType.ASTRO) {
+                        monoChance+=0.15;
+                    }
+                }
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
 
                 if (MutatedSinkOrSwipFlippers.sinked.contains(e.getEntity()) && AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS) && !hasBeenSwimEffected) {

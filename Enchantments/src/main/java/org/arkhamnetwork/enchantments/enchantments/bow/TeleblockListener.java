@@ -61,6 +61,13 @@ implements Listener {
                     return;
                 }
 
+                if (AstroArmorSetsAPI.getCurrentArmorSet(pHurt) != null) {
+                    if (AstroArmorSetsAPI.getCurrentArmorSet(pHurt) == ArmorSetType.ENGINEER) {
+                        pHurt.sendMessage(CC.translate("&6&l(Engineer Armorset) &6Blocked Teleblock enchant."));
+                        return;
+                    }
+                }
+
                 pHurt.setMetadata("teleblock", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + (long)(5 + teleblockLevel * 3000))));
                 PlayerInventory pi = pHurt.getInventory();
                 int pearlsToDestroy = teleblockLevel * 3;

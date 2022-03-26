@@ -23,15 +23,6 @@ public class DamageFixes implements Listener {
         }
     }*/
 
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void damageCap(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            if (e.getFinalDamage() > 22) {
-                e.setDamage(22);
-            }
-        }
-    }
-
     @EventHandler()
     public void elfMaskReHeal(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {

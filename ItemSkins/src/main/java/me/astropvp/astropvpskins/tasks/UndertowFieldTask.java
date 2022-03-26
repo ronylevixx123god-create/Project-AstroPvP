@@ -25,7 +25,7 @@ public class UndertowFieldTask implements Runnable{
 
         for (Player p : UndertowHelmet.undertowField) {
             if (p != null) {
-                ParticleEffect.DRIP_LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(5.0, 1.0, 5.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.65f, 30);
+                ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation().add(2.0, 1.0, 2.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.45f, 60);
                 List<Entity> nearby = p.getNearbyEntities(5, 5, 5);
                 for (Entity e : nearby) {
                     if (e instanceof Player) {

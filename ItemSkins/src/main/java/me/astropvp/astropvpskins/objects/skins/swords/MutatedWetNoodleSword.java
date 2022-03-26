@@ -25,7 +25,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MutatedWetNoodleSword extends ItemSkin {
-    public static Map<Player, Map<Player, Integer>> wetNoodleAbility = WetNoodleSword.wetNoodleAbility;
+    public static Map<Player, Map<Player, Integer>> wetNoodleAbility;
+
+    public MutatedWetNoodleSword() {
+        wetNoodleAbility = WetNoodleSword.wetNoodleAbility;
+    }
 
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {

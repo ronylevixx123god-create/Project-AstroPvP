@@ -22,6 +22,8 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
@@ -56,6 +58,7 @@ extends CustomEnchantment {
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
+
             p.playSound(p.getLocation(), Sound.EAT, 0.4f, 0.2f);
             if (KillTrackerAPI.getAllSouls((Player)p) % 100 == 0) {
                 p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "** SOULS: " + (Object)ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls((Player)p) + ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + " **");

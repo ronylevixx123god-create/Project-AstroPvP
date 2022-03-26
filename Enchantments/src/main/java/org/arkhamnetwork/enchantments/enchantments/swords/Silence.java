@@ -3,6 +3,8 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -44,6 +46,7 @@ public class Silence extends CustomEnchantment
             final Player pTarget = (Player)target;
             final long durationTicks = (enchantLevel + solitudeLevel) * 20;
 
+
             this.silencePlayer((Player)user, pTarget, enchantLevel, (double)durationTicks, event);
         }
     }
@@ -72,6 +75,11 @@ public class Silence extends CustomEnchantment
             durationTicks *= 0.6;
         }
 
+        if (AstroArmorSetsAPI.getCurrentArmorSet(target) != null) {
+            if (AstroArmorSetsAPI.getCurrentArmorSet(target) == ArmorSetType.DRAGON) {
+                durationTicks *=0.25;
+            }
+        }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_HELMET)) {
             durationTicks *= 0.6;
         }
