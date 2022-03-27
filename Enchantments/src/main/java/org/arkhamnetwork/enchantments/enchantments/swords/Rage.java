@@ -62,9 +62,10 @@ public class Rage extends CustomEnchantment {
     }*/
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (target instanceof ArmorStand) {
+        if (!(target instanceof Player)) {
             return;
         }
+
         if (event.isCancelled()) return;
 
         if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {

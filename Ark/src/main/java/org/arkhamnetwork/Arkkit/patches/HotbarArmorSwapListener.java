@@ -69,28 +69,28 @@ final class HotbarArmorSwapListener
         if (n.contains("helmet")) {
             ItemStack old = inv.getHelmet();
             inv.setHelmet(is);
-            inv.removeItem(is);
+            player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
         } else if (n.contains("chestplate")) {
             ItemStack old = inv.getChestplate();
             inv.setChestplate(is);
-            inv.removeItem(is);
+            player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
         } else if (n.contains("leggings")) {
             ItemStack old = inv.getLeggings();
             inv.setLeggings(is);
-            inv.removeItem(is);
+        player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
         } else if (n.contains("boots")) {
             ItemStack old = inv.getBoots();
             inv.setBoots(is);
-            inv.removeItem(is);
+            player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
@@ -125,7 +125,7 @@ final class HotbarArmorSwapListener
         e.setUseInteractedBlock(Event.Result.DENY);
         e.setUseItemInHand(Event.Result.DENY);
         p.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
-        this.equipArmor(p, e.getItem());
+        this.equipArmor(p, e.getPlayer().getItemInHand());
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
             MaskType.rescanMask(p, true);
         }
