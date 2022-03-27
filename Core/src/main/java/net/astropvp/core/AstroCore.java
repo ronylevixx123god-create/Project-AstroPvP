@@ -115,12 +115,12 @@ public class AstroCore extends JavaPlugin {
     private PayToggle payToggles;
     ProtocolManager protocolManager;
     public static Map<UUID, Player> grindingMessages;
-    private HashMap<Player, ChatColor> cachedColors;
-    public HashMap<Player, ChatColor> getCachedColors() {
+    private HashMap<UUID, ChatColor> cachedColors;
+    public HashMap<UUID, ChatColor> getCachedColors() {
         return this.cachedColors;
     }
     public void addCachedColor(Player player, ChatColor color) {
-        cachedColors.put(player, color);
+        cachedColors.put(player.getUniqueId(), color);
     }
     private FilterManager filterManager;
     private ItemFilterListener itemListener;

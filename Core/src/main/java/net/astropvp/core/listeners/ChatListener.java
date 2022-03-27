@@ -45,6 +45,7 @@ public class ChatListener implements Listener {
     private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "nig", "fag", "faggot", "ddos", "doss", "niggar", "hitler");
     private final ShieldFeature shieldFeature;
     private double chatCooldown;
+
     public ChatListener(AstroCore plugin) {
         this.shieldFeature = FactionsKore.get().getFeature(ShieldFeature.class);
     }
@@ -114,8 +115,11 @@ public class ChatListener implements Listener {
             return;
         }
 
+        String message = ChatColor.stripColor(event.getMessage());
 
-        recipients.forEach(recipient -> {
+        for (Player recipient : recipients) {
+
+
             FPlayer fRecipient = FPlayers.getInstance().getByPlayer(recipient);
             Faction recipientFaction = fRecipient.getFaction();
 
@@ -151,22 +155,14 @@ public class ChatListener implements Listener {
                             "&6* &eBalance: &a$" + NumberUtils.formatMoney(EconomyUtils.getBalance(player)) + " \n" +
                             "&6* &eLogged in: &f" + DateUtil.formatDateDiff(EssentialsUtils.getEssentials().getUser(player).getLastLogin()) + " ago" + " \n" +
                             "&6* &eCosmic Client: &f" + ((CosmicPlayers.get().getCosmicPlayer(event.getPlayer()).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗") + " \n\n" +
-                    "&7&oClick to see when the player logged online",
+                            "&7&oClick to see when the player logged online",
                     "/seen " + player.getName()
             );
 
-
-            if (AstroCore.getInstance().getCachedColors().containsKey(event.getPlayer())) {
-                String message = event.getMessage();
-                message = (event.getPlayer().isOp() ? ChatColor.DARK_RED : AstroCore.getInstance().getCachedColors().get(event.getPlayer())) + message;
-                message = message.replaceAll(" ", " " + (event.getPlayer().isOp() ? ChatColor.DARK_RED : AstroCore.getInstance().getCachedColors().get(event.getPlayer())));
-                event.setMessage(message);
-            }
             ChatColor chatcolor;
-            chatcolor = AstroCore.getInstance().getCachedColors().getOrDefault(event.getPlayer(), ChatColor.WHITE);
+            chatcolor = AstroCore.getInstance().getCachedColors().getOrDefault(event.getPlayer().getUniqueId(), ChatColor.WHITE);
 
 
-            String message = event.getMessage();
             clickable.add("&8 » ");
 
 
@@ -190,12 +186,12 @@ public class ChatListener implements Listener {
                 message = message.replace("[brag]", "").replace("[BRAG]", "");
             }
 
-            clickable.add(chatcolor + message);
+            clickable.add(chatcolor +  message);
             clickable.sendToPlayer(recipient);
             if (!player.isOp()) {
-                AstroCore.getInstance().getCooldownUtils().add(player, "chatCooldown", (long) (chatCooldown*1000));
+                AstroCore.getInstance().getCooldownUtils().add(player, "chatCooldown", (long) (chatCooldown * 1000));
             }
-        });
+        }
     }
 
     public String getTag(Player player) {
