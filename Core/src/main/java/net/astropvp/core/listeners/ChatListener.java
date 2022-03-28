@@ -117,7 +117,7 @@ public class ChatListener implements Listener {
 
 
         for (Player recipient : recipients) {
-            String message = ChatColor.stripColor(event.getMessage());
+            String message = event.getMessage();
 
 
             FPlayer fRecipient = FPlayers.getInstance().getByPlayer(recipient);
