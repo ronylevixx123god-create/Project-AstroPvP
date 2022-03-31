@@ -61,7 +61,7 @@ public class AncientArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35, event, "AncientSet");
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AncientSet");
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
             startAncientEffect(attacker, (Player) attacked);

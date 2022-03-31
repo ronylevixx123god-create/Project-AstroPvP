@@ -37,7 +37,7 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "PhantomSet");
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "PhantomSet");
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {

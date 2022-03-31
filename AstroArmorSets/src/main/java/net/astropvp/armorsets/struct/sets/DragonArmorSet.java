@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -44,7 +45,7 @@ public class DragonArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15, event, "DragonSet");
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15* AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "DragonSet");
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {

@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -37,7 +38,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         if (attacked instanceof Player) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "KothSet");
+            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20* AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "KothSet");
         } else {
             AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50, event, "KothSetMob");
         }

@@ -2,6 +2,7 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Material;
@@ -42,7 +43,7 @@ public class TravelerArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "TravelerSet");
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30* AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "TravelerSet");
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {

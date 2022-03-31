@@ -67,7 +67,7 @@ public class AstroArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30, event, "AstroSet");
+        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroSet");
         if (Math.random() < 0.01) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
