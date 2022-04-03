@@ -132,17 +132,21 @@ public class HolyWhiteScrollListener implements Listener {
                     if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved your item from getting monoed &a&l*"));
+                        savedItems.add(i);
                         continue;
                     }
 
                     if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(),SkinType.DOOMSDAY_BACKPACK_BUGOUT) && Math.random() < 0.2) {
-                        killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask &a&l* "));
-                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved your item from getting monoed &a&l*"));
+                        killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask on an item &a&l* "));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved an item from getting monoed &a&l*"));
+                        savedItems.add(i);
+
                         continue;
                     }
 
                     if (MaskUtils.hasMaskEquipped(e.getEntity(), "ELF") && Math.random() <= 0.25) {
-                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &bMonopoly Item &a&l*"));
+                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Saved an Item from &bMonopoly &a&l*"));
+                        savedItems.add(i);
                         continue;
                     }
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));

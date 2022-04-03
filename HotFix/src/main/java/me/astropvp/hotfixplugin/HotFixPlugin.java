@@ -25,6 +25,7 @@ public class HotFixPlugin extends JavaPlugin {
 
         Bukkit.getPluginManager().registerEvents(new EnderPearlFixes(), this);
         Bukkit.getPluginManager().registerEvents(new CommandPingListener(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
