@@ -35,6 +35,9 @@ final class EssentialsWarpAliasesListener
             if (warp.equalsIgnoreCase("end")) {
                 continue;
             }
+
+            if (warp.equalsIgnoreCase("space")) continue;
+
             if (!e.getMessage().toLowerCase().equals("/" + warp.toLowerCase())) continue;
             e.setMessage("/warp " + warp);
         }

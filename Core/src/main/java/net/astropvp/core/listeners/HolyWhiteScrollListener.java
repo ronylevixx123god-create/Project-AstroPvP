@@ -136,6 +136,9 @@ public class HolyWhiteScrollListener implements Listener {
                         continue;
                     }
 
+                    //holies don't save in space lands
+                    if (killer.getLocation().getWorld().getName().equals("space")) continue;
+
                     if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(),SkinType.DOOMSDAY_BACKPACK_BUGOUT) && Math.random() < 0.2) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask on an item &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved an item from getting monoed &a&l*"));
@@ -161,13 +164,11 @@ public class HolyWhiteScrollListener implements Listener {
                         e.getEntity().sendMessage(CC.RedB + "* MONOPOLY MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* MONOPOLY MASK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                     }
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Monopoly Mask procing.");
                     continue;
                 }
                 if (isControlling) {
                     e.getEntity().sendMessage(CC.RedB + "* COSMONAUT OUTPOST PERK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                     killer.sendMessage(CC.GreenB + "* COSMONAUT OUTPOST PERK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Cosmonaut procing.");
                     continue;
                 }
                 if (isBansheed) {
@@ -180,7 +181,6 @@ public class HolyWhiteScrollListener implements Listener {
                     continue;
                 e.getEntity().sendMessage(CC.RedB + "* TRAVELER AXE HOLY WHITE SCROLL NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                 killer.sendMessage(CC.GreenB + "* TRAVELER AXE HOLY WHITE SCROLL NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Traveler Axe White Scroll Negation procing.");
             }
         }
         for (ItemStack i : savedItems)

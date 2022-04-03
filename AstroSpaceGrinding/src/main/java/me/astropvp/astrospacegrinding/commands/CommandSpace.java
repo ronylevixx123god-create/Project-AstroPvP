@@ -1,0 +1,50 @@
+package me.astropvp.astrospacegrinding.commands;
+
+import com.cosmicpvp.cosmicutils.utils.CC;
+import me.astropvp.astrospacegrinding.gui.SpaceGUI;
+import me.astropvp.astrospacegrinding.utils.Clickable;
+import me.astropvp.astrospacegrinding.utils.StringUtils;
+import me.astropvp.astrospacegrinding.utils.TimeUtils;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
+import me.astropvp.astrospacegrinding.data.SpacePlayerData;
+import me.astropvp.astrospacegrinding.enums.MonsterType;
+
+public class CommandSpace implements CommandExecutor {
+
+	@Override
+	public boolean onCommand(CommandSender sender, Command arg1, String arg2, String[] args) {
+		if(!(sender instanceof Player)) {
+			return false;
+		}
+		
+		Player player = (Player) sender;
+		
+		if(args.length >= 1 && args[0].equalsIgnoreCase("stats")) {
+			if(!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+				player.sendMessage(CC.translate("&c&l(!)&c You must be in the Space to view your Stats &7(/warp space)&c."));
+				return false;
+			}
+
+			SpacePlayerData data = SpacePlayerData.findPlayer(player);
+
+
+			player.sendMessage("");
+			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&lSpace Land Stats" + " &8«&b✰&8»")));
+			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN))));
+			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
+			player.sendMessage("");
+			return false;
+		}
+
+
+		SpaceGUI gui = new SpaceGUI(SpacePlayerData.findPlayer(player));
+		gui.getSpaceGUI().open(player);
+		return false;
+	}
+
+}

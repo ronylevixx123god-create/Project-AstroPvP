@@ -9,6 +9,9 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.Faction;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
+import me.astropvp.astroscoreboard.utils.TimeUtils;
+import me.astropvp.astrospacegrinding.data.SpacePlayerData;
+import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
@@ -140,7 +143,12 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&6&lDesert KOTH &7" + getDateSuffix());
         }
 
-        if (!FactionUtils.isWilderness(fplayer.getFaction())) {
+        if (player.getLocation().getWorld().getName().equals("space")) {
+            return CC.translate("&b&lSpace Lands &7" + getDateSuffix());
+
+        }
+
+            if (!FactionUtils.isWilderness(fplayer.getFaction())) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
@@ -437,6 +445,21 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
+        if (player.getLocation().getWorld().getName().equals("space")) {
+            SpacePlayerData data = SpacePlayerData.findPlayer(player);
+            List<String> board = new LinkedList<>();
+            board.add("");
+            board.add(CC.translate("&3&lAccount"));
+            board.add(player.getName());
+            board.add("");
+            board.add(CC.translate("&b&lStats"));
+            board.add(CC.translate("&8» &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN)));
+            board.add(CC.translate("&8» &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace())));
+            board.add(CC.translate(""));
+            board.add(CC.Gray + "play.astropvp.net");
+            return board;
+        }
+
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             List<String> board = new LinkedList<>();
             OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
@@ -482,12 +505,12 @@ public class Scoreboard implements BoardAdapter {
             List<String> board = new LinkedList<>();
             board.add("");
             if (koth.getPlayerCapping() != null) {
-                board.add(CC.translate("&f&l● &6Capper&7: &e" + koth.getPlayerCapping().getName()));
-                board.add(CC.translate("&f&l● &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
+                board.add(CC.translate("&8» &6Capper&7: &e" + koth.getPlayerCapping().getName()));
+                board.add(CC.translate("&8» &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
                 board.add("");
             }
-            board.add(CC.translate("&f&l● &6Nearby Players:&c " + player.getNearbyEntities(48, 60, 48).size()));
-            board.add(CC.translate("&f&l● &6Account:&f " + player.getName()));
+            board.add(CC.translate("&8» &6Nearby Players:&c " + player.getNearbyEntities(48, 60, 48).size()));
+            board.add(CC.translate("&8» &6Account:&f " + player.getName()));
             board.add("");
             board.add(CC.translate("&fX&72504&7, &fY&719, &fZ&74638"));
             board.add("");
@@ -724,7 +747,7 @@ public class Scoreboard implements BoardAdapter {
 
 
     public long getInterval() {
-        return 20;
+        return 10;
     }
 
     public int getPing() {
