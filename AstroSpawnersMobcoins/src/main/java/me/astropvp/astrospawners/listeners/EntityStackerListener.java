@@ -161,8 +161,8 @@ public class EntityStackerListener implements Listener {
             }
 
 
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
-                exp += 75;
+            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
+                exp*=1.25;
             }
 
 

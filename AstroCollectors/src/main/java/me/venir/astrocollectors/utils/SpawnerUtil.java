@@ -22,7 +22,7 @@ public class SpawnerUtil {
 
     public void reloadMobIncomeMap() {
         this.mobIncomeMap.clear();
-        ConfigurationSection configurationSection = this.configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getConfigurationSection("spawner-income-per-hour");
+        ConfigurationSection configurationSection = this.configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getConfigurationSection("spawner-income-per-minute");
         for (String key : configurationSection.getKeys(false)) {
             int value = configurationSection.getInt(key);
             EntityType entityType = EntityType.valueOf(key);
@@ -31,12 +31,21 @@ public class SpawnerUtil {
     }
 
     public void reloadTntIncomeValue() {
-        this.tntPerHour = configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("tnt-per-hour");
+        this.tntPerHour = configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("tnt-per-minute");
     }
 
     public double getMoneyPerMinute(EntityType type) {
         try {
+
             return this.mobIncomeMap.get(type);
+        } catch (Exception e) {
+            return 0;
+        }
+    }
+
+    public double getTnTPerHour() {
+        try {
+            return configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("tnt-per-minute");
         } catch (Exception e) {
             return 0;
         }

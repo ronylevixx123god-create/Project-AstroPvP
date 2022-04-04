@@ -1,11 +1,14 @@
 package me.venir.astrocollectors.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.Faction;
 import lombok.Getter;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.mattstudios.mfgui.gui.components.util.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
@@ -13,6 +16,7 @@ import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import me.venir.astrocollectors.collector.CollectorSellLog;
+import me.venir.astrocollectors.utils.SpawnerUtil;
 import me.venir.astrocollectors.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -56,6 +60,7 @@ public class CollectorsUI {
                 .setName(ChatColor.GREEN + ChatColor.BOLD.toString() + "Mob Drops")
                 .setLore(getMobDropsLore())
                 .asGuiItem(event -> {
+                    if (collector.getWorth() == 0) return;
                     event.setCancelled(true);
                     collector.addMobDropSellLog(player, collector.getWorth());
                     collector.sellWorth(player);
@@ -67,6 +72,7 @@ public class CollectorsUI {
                 .setName(ChatColor.GREEN + ChatColor.BOLD.toString() + "TNT Drops")
                 .setLore(getTntLore())
                 .asGuiItem(event -> {
+                    if (collector.getTnt() == 0) return;
                     event.setCancelled(true);
                     long amount = collector.getTnt();
                     if (amount == 0) return;
@@ -133,14 +139,33 @@ public class CollectorsUI {
     private List<String> getSpawnersLore() {
         List<String> lore = new ArrayList<>();
         double totalPerHour = 0;
-        lore.add(CC.translate("&e&lSpawners:"));
+        boolean hasFrozenStronghold = false;
+        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(collector.getLocation()), OutpostType.THE_GREAT_HALL)) {
+            hasFrozenStronghold = true;
+        }
+            lore.add(CC.translate("&e&lSpawners:"));
         for (Map.Entry<EntityType, Integer> entry : collector.getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amount = entry.getValue();
-            double value = AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerMinute(type);
-            lore.add(CC.translate("&e&l * &f" + amount + "x " + getEntityName(type) + " Spawners &8➥ &a$" + NumberUtils.formatMoney(value*60*amount) + "/hour"));
-            totalPerHour += value * amount * 60;
+            if (type == EntityType.BLAZE) continue;
+            if (type == EntityType.CREEPER) {
+                lore.add(CC.translate("&e&l * &f" + amount + "x " + getEntityName(type) + " Spawners &8➥ &a" + NumberUtils.formatMoney(AstroCollectors.INSTANCE.getSpawnerUtil().getTnTPerHour() * amount) + " TnT/hour"));
+
+            } else {
+                double value = AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerMinute(type);
+                if (hasFrozenStronghold) {
+                    value *= 1.25;
+                }
+                lore.add(CC.translate("&e&l * &f" + amount + "x " + getEntityName(type) + " Spawners &8➥ &a$" + NumberUtils.formatMoney(value * 60 * amount) + "/hour"));
+                totalPerHour += value * amount * 60;
+            }
         }
+        lore.add("");
+        lore.add(CC.translate("&e&lMultipliers:"));
+        if (hasFrozenStronghold) {
+            lore.add(CC.translate("&e&l * &fFrozen Stronghold&7 (1.25x Multiplier)"));
+        }
+        lore.add("");
         lore.add(CC.translate("&e&lTotal: &a$" + NumberUtils.formatMoney(totalPerHour) + "/hour"));
         lore.add("");
         lore.add(CC.translate("&7The chunkcollector system allows spawners to"));

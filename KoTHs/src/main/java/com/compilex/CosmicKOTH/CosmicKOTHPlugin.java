@@ -51,7 +51,6 @@ import lombok.Getter;
 import lombok.Setter;
 import me.ifamasssxd.cosmichcf.commands.CommandOutpost;
 import me.ifamasssxd.cosmichcf.listeners.OutpostPerkListener;
-import me.ifamasssxd.cosmichcf.listeners.OutpostPerkVanillaListener;
 import me.ifamasssxd.cosmichcf.listeners.OutpostWorldListener;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import net.milkbowl.vault.economy.Economy;
@@ -404,11 +403,9 @@ public class CosmicKOTHPlugin
         Bukkit.getPluginManager().registerEvents(new KothInventoryListener(), this);
 
         this.getServer().getPluginManager().registerEvents((Listener) new OutpostWorldListener(), (Plugin) this);
-        if (this.isVanillaPlanet()) {
-            this.getServer().getPluginManager().registerEvents((Listener) new OutpostPerkVanillaListener(), (Plugin) this);
-        } else if (this.isHcfPlanet()) {
+
             this.getServer().getPluginManager().registerEvents((Listener) new OutpostPerkListener(), (Plugin) this);
-        }
+
     }
 
     private void registerTasks() {

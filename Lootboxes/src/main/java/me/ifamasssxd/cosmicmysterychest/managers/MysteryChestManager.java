@@ -61,10 +61,7 @@ public class MysteryChestManager
             if (this.activeMysteryChest != null && this.activeMysteryChest.getActiveMysteryChest() != null) {
                 if (this.activeMysteryChest.getSecondsTillExpiration() == 1 || this.activeMysteryChest.getExpiration() < System.currentTimeMillis() && this.activeMysteryChest.getSecondsTillExpiration() != -1) {
                     this.activeMysteryChest.setSecondsTillExpiration(-1);
-                    Bukkit.broadcastMessage("");
-                    Bukkit.broadcastMessage(CC.GoldB + "*** " + CC.Gold + "The " + CC.GoldU + this.activeMysteryChest.getActiveMysteryChest().getDisplayName() + CC.Gold + " is no longer available! " + CC.GoldB + "***");
-                    Bukkit.broadcastMessage(CC.Gray + "A new /lootbox will be released soon, keep checking back!");
-                    Bukkit.broadcastMessage("");
+
                 } else if (this.activeMysteryChest.getSecondsTillExpiration() > 0) {
                     String string = this.activeMysteryChest.getSecondsTillExpiration() == 3600 ? "1 HOUR" : (expiration[0] = this.activeMysteryChest.getSecondsTillExpiration() == 1800 ? "30 MINUTES" : null);
                     if (this.activeMysteryChest.getSecondsTillExpiration() % this.DAY_SECONDS == 0) {
@@ -73,12 +70,7 @@ public class MysteryChestManager
                             expiration[0] = days[0] + " DAY" + (days[0] > 1 ? "S" : "");
                         }
                     }
-                    if (expiration[0] != null) {
-                        Bukkit.broadcastMessage("");
-                        Bukkit.broadcastMessage(CC.GoldB + "*** " + CC.Gold + "The " + CC.GoldU + this.activeMysteryChest.getActiveMysteryChest().getDisplayName() + CC.Gold + " will be sold out in " + CC.GoldB + expiration[0] + CC.Gold + "! " + CC.GoldB + "***");
-                        Bukkit.broadcastMessage(CC.Gray + "Use /lootbox to view more details and unlock before it's gone forever!");
-                        Bukkit.broadcastMessage("");
-                    }
+
                     this.activeMysteryChest.setSecondsTillExpiration(this.activeMysteryChest.getSecondsTillExpiration() - 1);
                 }
             }
@@ -97,7 +89,7 @@ public class MysteryChestManager
                     if (chest == null)
                         continue;
                     this.mysteryChestMap.put(chest.getInternalName(), chest);
-                    this.plugin.getLogger().info("Loaded Chest '" + chest.getInternalName() + "' into memory: " + chest.getLootItems().size() + " me.astropvp.cratekeys.items");
+                    this.plugin.getLogger().info("Loaded Chest '" + chest.getInternalName() + "' into memory: " + chest.getLootItems().size() + " items");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -135,10 +127,7 @@ public class MysteryChestManager
         this.plugin.getConfig().set("purchased", 0);
         this.plugin.saveConfig();
         if (chest != null && chest.getDisplayName() != null) {
-            Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(CC.GreenB + "*** " + CC.Green + "The Lootbox Merchant has restocked, a new /lootbox is now available: " + chest.getDisplayName() + CC.GreenB + " ***");
-            Bukkit.broadcastMessage(CC.Gray + "This /lootbox will expire in " + CC.GrayU + TimeUtils.formatFutureTime(expiration) + CC.Gray + ", get it before its sold out forever!");
-            Bukkit.broadcastMessage("");
+
         }
     }
 

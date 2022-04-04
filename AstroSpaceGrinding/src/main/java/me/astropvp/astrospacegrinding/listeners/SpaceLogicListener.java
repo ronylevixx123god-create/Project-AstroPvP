@@ -60,10 +60,8 @@ public class SpaceLogicListener implements Listener {
 				return;
 			}
 			SpacePlayerData.remove(player);
-			player.sendMessage("");
-			player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space, "
+			player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space Lands, "
 					+ "you have lost your /space stats!");
-			player.sendMessage("");
 			player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);
 			SpacePlayerData.remove(player);
 		}

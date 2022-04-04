@@ -157,7 +157,7 @@ implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = ((Player) e.getDamager());
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
-            //e.setDamage(e.getDamage()*1.1);
+            e.setDamage(e.getDamage()*1.15);
         }
     }
 
@@ -168,7 +168,7 @@ implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         Player p = ((Player) e.getEntity()).getPlayer();
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.THE_GREAT_HALL)) {
-            //e.setDamage(e.getDamage()*0.85);
+            e.setDamage(e.getDamage()*0.85);
         }
     }
 

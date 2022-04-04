@@ -5,10 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -79,7 +76,10 @@ public class DamageListener implements Listener {
 
 
             JSONMessage message = new JSONMessage("", ChatColor.GRAY);
-            message.addText(CC.translate("&c" + killer.getName() + "&e killed &c" + died.getName() + " &eusing "));
+            FPlayer fkiller = FPlayers.getInstance().getByPlayer(killer);
+            FPlayer fdied = FPlayers.getInstance().getByPlayer(died);
+
+            message.addText(CC.translate("&c" + killer.getName() + "&4["  + fkiller.getKills() + "&4]&e killed &c" + died.getName() + "&4[" + fdied.getKills() + "&4]" + " &eusing "));
             if (killer.getItemInHand() == null || killer.getItemInHand().getType() == Material.AIR) {
                 message.addText(this.getFormattedName(null));
             } else {

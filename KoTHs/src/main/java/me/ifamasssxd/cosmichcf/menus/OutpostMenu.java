@@ -76,8 +76,8 @@ extends CosmicGUI {
             lore.add(CC.translate(CC.Gray + "Control the &n" + CosmicKOTHPlugin.get_().getBaseName() + "&7 to gain access to"));
             lore.add(CC.translate( "&7these rewards for &nyou&7 and your &nfaction&7!"));
             this.setItem(index, new ItemBuilder(type.getGuiMaterial().getItemType(), outpost.getOutpostName(), new String[0]).lore((List)lore).data((short)type.getGuiMaterial().getData()).build(), () -> Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicKOTHPlugin.get_(), () -> {
-                this.player.closeInventory();
-                this.player.performCommand(CosmicKOTHPlugin.get_().getBaseName().toLowerCase());
+                //this.player.closeInventory();
+                //this.player.performCommand(CosmicKOTHPlugin.get_().getBaseName().toLowerCase());
             }));
             index += 2;
         }

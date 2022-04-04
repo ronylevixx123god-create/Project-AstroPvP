@@ -7,6 +7,7 @@ import com.compilex.CosmicKOTH.tasks.KothEventTask;
 import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astroscoreboard.utils.TimeUtils;
@@ -702,9 +703,9 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }*/
 
-
-        PlayerDataManager manager = AstroSpawners.getInstance().getManager();
-        PlayerData data = manager.getPlayerData(player);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+        int kill = fPlayer.getKills();
+        int death = fPlayer.getDeaths();
         List<String> board = new LinkedList<>();
         board.add(" ");
         board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
@@ -716,7 +717,9 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add("");
-
+        board.add(ChatColor.RED + ChatColor.BOLD.toString() + "KDR");
+        board.add(CC.translate("&f"+ String.format("%.1f", (double) kill / death) + "&7 [" + kill + ":" + death + "]"));
+        board.add("");
         if (!FactionUtils.getFaction(player).isWilderness()) {
             Faction faction = FactionUtils.getFaction(player);
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
