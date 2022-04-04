@@ -4,3 +4,4 @@ spaceAlienMinMoney: 100000
 spaceAlienMaxXP: 25000
 spaceAlienMinXP: 5000
 messagePerKills: 25
+spaceAlienRewardChance: 25

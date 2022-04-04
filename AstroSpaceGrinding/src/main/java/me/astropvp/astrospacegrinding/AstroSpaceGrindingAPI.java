@@ -3,6 +3,7 @@ package me.astropvp.astrospacegrinding;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.concurrent.ThreadLocalRandom;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
@@ -126,5 +127,25 @@ public class AstroSpaceGrindingAPI {
 			inventory.setItem(pos++, item);
 
 		return inventory;
+	}
+
+	public static ItemStack getRandomReward(Map<ItemStack, Double> items) {
+		double totalPercentage = getTotalPercentageOfItems(items);
+		double find = ThreadLocalRandom.current().nextDouble(0.0D, totalPercentage);
+		double total = 0.0D;
+		for (Map.Entry<ItemStack, Double> entry : items.entrySet()) {
+			double value = (Double) entry.getValue();
+			if (value + total >= find)
+				return entry.getKey();
+			total += value;
+		}
+		return null;
+	}
+
+	public static Double getTotalPercentageOfItems(Map<ItemStack, Double> items) {
+		double totalPercentage = 0.0D;
+		for (Map.Entry<ItemStack, Double> entry : items.entrySet())
+			totalPercentage += (Double) entry.getValue();
+		return totalPercentage;
 	}
 }

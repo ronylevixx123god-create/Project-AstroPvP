@@ -21,12 +21,15 @@ import me.astropvp.astrospacegrinding.tasks.SpawnMobsRepeatingTask;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class AstroSpaceGrindingPlugin extends JavaPlugin {
 	private static AstroSpaceGrindingPlugin astroSpaceGrindingPlugin;
 	@Getter
 	private ConfigManager configManager;
 	public static HashMap<MonsterType, Map<ItemStack, Double>> cachedCrateLoot;
+	public static HashMap<UUID, MonsterType> activeMonsters;
+
 
 
 	@Override
@@ -42,6 +45,7 @@ public class AstroSpaceGrindingPlugin extends JavaPlugin {
 			entity.remove();
 		}
 		cachedCrateLoot = new HashMap<>();
+		activeMonsters = new HashMap<>();
 		for (MonsterType monsterType : MonsterType.values()) {
 			cachedCrateLoot.put(monsterType, AstroSpaceGrindingAPI.getItems(monsterType));
 		}

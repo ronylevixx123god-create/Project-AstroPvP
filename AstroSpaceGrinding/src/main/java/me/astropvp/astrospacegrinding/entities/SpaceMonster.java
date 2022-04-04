@@ -20,15 +20,7 @@ public class SpaceMonster {
 	public LivingEntity spawn(Location location) {
 		return null;
 	}
-	
-	public boolean isMobType(LivingEntity entity) {
-		return entity.hasMetadata(getMetadata());
-	}
-	
-	public String getMetadata() {
-		return null;
-	}
-	
+
 	public List<ItemStack> getRewards(Player player){
 		return Lists.newArrayList();
 	}

@@ -20,47 +20,46 @@ import org.bukkit.inventory.ItemStack;
 
 
 public class SpaceMobListener implements Listener {
-	@EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
-	public void onKill(EntityDeathEvent event) {
-		LivingEntity entity = event.getEntity();
-		for(MonsterType type : MonsterType.values()) {
-			if(type.getInstance().isMobType(entity)) {
-				event.getDrops().clear();
-				event.setDroppedExp(0);
-				for (ItemStack item : type.getInstance().getRewards(event.getEntity().getKiller())) {
-					event.getDrops().add(item);
-				}
-				if(event.getEntity().getKiller() != null && event.getEntity().getKiller() != null) {
-					Player damager = event.getEntity().getKiller();
-					SpacePlayerData data = SpacePlayerData.findPlayer(damager);
-					data.increment(type);
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onKill(EntityDeathEvent event) {
+        LivingEntity entity = event.getEntity();
 
-					type.getInstance().onDeath(event, data);
+        if (AstroSpaceGrindingPlugin.activeMonsters.containsKey(entity.getUniqueId())) {
+            MonsterType type = AstroSpaceGrindingPlugin.activeMonsters.get(entity.getUniqueId());
 
-					int totalMobKills = data.getKills(MonsterType.SPACE_ALIEN);
+            event.getDrops().clear();
+            event.setDroppedExp(0);
+            for (ItemStack item : type.getInstance().getRewards(event.getEntity().getKiller())) {
+                event.getDrops().add(item);
+            }
+            if (event.getEntity().getKiller() != null && event.getEntity().getKiller() != null) {
+                Player damager = event.getEntity().getKiller();
+                SpacePlayerData data = SpacePlayerData.findPlayer(damager);
+                data.increment(type);
 
+                type.getInstance().onDeath(event, data);
 
-					int messagePerKills = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("messagePerKills");
-					if (totalMobKills%messagePerKills == 0) {
+                int totalMobKills = data.getKills(MonsterType.SPACE_ALIEN);
 
 
-						for (Player player : Bukkit.getOnlinePlayers()) {
-							player.sendMessage("");
-							player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&l" + damager.getName() + "'s Space Land Stats" + " &8«&b✰&8»")));
-							player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Mobs Killed:&b " + totalMobKills)));
-							player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
-							player.sendMessage("");
-							Clickable spaceClickable = new Clickable("");
-							spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7Click &f&nhere&7 to view " + damager.getName() + "'s collected rewards.")), CC.translate("&7View " + damager.getName() + "'s inventory"), "/invsee " + damager.getName());
-							spaceClickable.sendToPlayer(player);
-							player.sendMessage("");
+                int messagePerKills = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("messagePerKills");
+                if (totalMobKills % messagePerKills == 0) {
 
-						}
-					}
-				}
-				return;
-			}
-		}
-	}
 
+                    for (Player player : Bukkit.getOnlinePlayers()) {
+                        player.sendMessage("");
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&l" + damager.getName() + "'s Space Land Stats" + " &8«&b✰&8»")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Mobs Killed:&b " + totalMobKills)));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
+                        player.sendMessage("");
+                        Clickable spaceClickable = new Clickable("");
+                        spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7Click &f&nhere&7 to view " + damager.getName() + "'s collected rewards.")), CC.translate("&7View " + damager.getName() + "'s inventory"), "/invsee " + damager.getName());
+                        spaceClickable.sendToPlayer(player);
+                        player.sendMessage("");
+
+                    }
+                }
+            }
+        }
+    }
 }

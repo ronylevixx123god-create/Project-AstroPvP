@@ -19,11 +19,15 @@ public class SpacePlayerData {
 	private final String player;
 	private final Map<MonsterType, Integer> kills;
 	private final long when_created;
+	private double moneyMade;
+	private double xpMade;
 	
 	public SpacePlayerData(Player player) {
 		this.player = player.getName();
 		this.kills = Maps.newHashMap();
 		this.when_created = System.currentTimeMillis();
+		this.moneyMade = 0;
+		this.xpMade = 0;
 		data.add(this);
 	}
 	
@@ -58,7 +62,23 @@ public class SpacePlayerData {
 	public void remove() {
 		remove(this.getPlayer());
 	}
-	
+
+	public double getMoneyMade() {
+		return moneyMade;
+	}
+
+	public double getXpMade() {
+		return xpMade;
+	}
+
+	public void addMoney(double money) {
+		moneyMade += money;
+	}
+
+	public void addXp(double xp) {
+		xpMade += xp;
+	}
+
 	public static void remove(Player player) {
 		Iterator<SpacePlayerData> iterator = data.iterator();
 		String name = player.getName();

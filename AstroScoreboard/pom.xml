@@ -195,7 +195,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>AstroSpaceGrinding</artifactId>
+            <artifactId>AstroSpaceGrsinding</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroSpaceGrinding-0.1.jar</systemPath>

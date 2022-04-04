@@ -42,8 +42,7 @@ public class SpaceAlien extends SpaceMonster {
 
 		Zombie entity = (Zombie) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.ZOMBIE);
 		entity.setCustomName(CC.GreenB + "Space Alien");
-		entity.setMetadata(getMetadata(), new FixedMetadataValue(AstroSpaceGrindingPlugin.getInstance(), null));
-		entity.setMetadata("minion", (MetadataValue)new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), entity.getUniqueId()));
+		AstroSpaceGrindingPlugin.activeMonsters.remove(entity.getUniqueId());
 
 		entity.setRemoveWhenFarAway(false);
 		entity.setCustomNameVisible(true);
@@ -76,18 +75,16 @@ public class SpaceAlien extends SpaceMonster {
 			entity.getEquipment().setBootsDropChance(0.0F);
 		}
 
+		AstroSpaceGrindingPlugin.activeMonsters.put(entity.getUniqueId(), MonsterType.SPACE_ALIEN);
+
 		return entity;
 	}
-	
-	@Override
-	public String getMetadata() {
-		return "space_zombie";
-	}
+
 	
 	@Override
 	public List<ItemStack> getRewards(Player player) {
 		List<ItemStack> rewards = Lists.newArrayList();
-
+		SpacePlayerData data = SpacePlayerData.findPlayer(player);
 		Random random = new Random();
 
 
@@ -99,6 +96,7 @@ public class SpaceAlien extends SpaceMonster {
 			player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(randomNumberMoney)));
 			EconomyUtils.depositBalance(player, randomNumberMoney);
 			player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+			data.addMoney(randomNumberMoney);
 
 		} else {
 			int maxXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxXP");
@@ -107,22 +105,22 @@ public class SpaceAlien extends SpaceMonster {
 			player.sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(randomNumberXP)) + " xp");
 			player.giveExp(randomNumberXP);
 			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
-
+			data.addXp(randomNumberXP);
 
 		}
 
 
 		Map<ItemStack, Double> loot = AstroSpaceGrindingPlugin.cachedCrateLoot.get(MonsterType.SPACE_ALIEN);
-
-		if(Math.random() < 0.15) {
-			//TODO add loot
+		double chance = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienRewardChance");
+		if(Math.random() < chance/100) {
+			rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
 		}
 		return rewards;
 	}
 	
 	@Override
 	public void onDeath(EntityDeathEvent event, SpacePlayerData killer) {
-		event.getEntity().removeMetadata(getMetadata(), AstroSpaceGrindingPlugin.getInstance());
+		AstroSpaceGrindingPlugin.activeMonsters.remove(event.getEntity().getUniqueId());
 
 	}
 

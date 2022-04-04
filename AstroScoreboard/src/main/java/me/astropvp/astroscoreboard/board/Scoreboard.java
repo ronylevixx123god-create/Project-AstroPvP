@@ -455,6 +455,8 @@ public class Scoreboard implements BoardAdapter {
             board.add(CC.translate("&b&lStats"));
             board.add(CC.translate("&8» &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN)));
             board.add(CC.translate("&8» &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace())));
+            board.add(CC.translate("&8» &7Money Made: &3$&b" + NumberUtils.formatMoney(data.getMoneyMade())));
+            board.add(CC.translate("&8» &7XP Earned:&b " + NumberUtils.formatMoney(data.getXpMade())));
             board.add(CC.translate(""));
             board.add(CC.Gray + "play.astropvp.net");
             return board;

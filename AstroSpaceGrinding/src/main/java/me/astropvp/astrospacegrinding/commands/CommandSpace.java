@@ -1,6 +1,7 @@
 package me.astropvp.astrospacegrinding.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import me.astropvp.astrospacegrinding.gui.SpaceGUI;
 import me.astropvp.astrospacegrinding.utils.Clickable;
 import me.astropvp.astrospacegrinding.utils.StringUtils;
@@ -37,6 +38,8 @@ public class CommandSpace implements CommandExecutor {
 			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&lSpace Land Stats" + " &8«&b✰&8»")));
 			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN))));
 			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
+			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Money Made: &3$&b" + NumberUtils.formatMoney(data.getMoneyMade()))));
+			player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7XP Earned:&b " + NumberUtils.formatMoney(data.getXpMade()))));
 			player.sendMessage("");
 			return false;
 		}
