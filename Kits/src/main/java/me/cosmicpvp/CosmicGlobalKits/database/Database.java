@@ -1,14 +1,7 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  org.bukkit.Bukkit
- *  org.bukkit.configuration.file.FileConfiguration
- *  org.bukkit.configuration.file.YamlConfiguration
- *  org.bukkit.plugin.Plugin
- */
-package me.ifamasssxd.cosmicevolutionkits.sql;
+package me.cosmicpvp.CosmicGlobalKits.database;
 
+import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
+import org.bukkit.configuration.file.FileConfiguration;
 import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -20,6 +13,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.Plugin;
+import java.sql.Connection;
 
 public class Database {
     private String url;
@@ -37,10 +31,10 @@ public class Database {
         }
         YamlConfiguration config = YamlConfiguration.loadConfiguration((File)sqlFile);
         this.host = config.getString("sql.hostname");
-        this.username = config.getString("sql.username");
+        this.username = config.getString("sql.user");
         this.password = config.getString("sql.password");
         this.database = config.getString("sql.database");
-        this.url = "jdbc:mysql://" + this.host + ":3308/" + this.database + "?autoReconnect=true";
+        this.url = "jdbc:mysql://" + this.host + ":3306/" + this.database + "?autoReconnect=true";
     }
 
     /*
@@ -93,4 +87,3 @@ public class Database {
         return this.connection;
     }
 }
-

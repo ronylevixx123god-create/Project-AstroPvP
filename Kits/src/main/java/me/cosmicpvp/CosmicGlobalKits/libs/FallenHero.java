@@ -22,10 +22,7 @@
 package me.cosmicpvp.CosmicGlobalKits.libs;
 
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
-import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -45,9 +42,6 @@ public class FallenHero {
         return ItemUtils.buildItem(Material.BONE, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + (Object)ChatColor.UNDERLINE + "Fallen Hero:" + (Object)ChatColor.RESET + " " + gkit.getItemName().replace("Kit", ""), (Object)ChatColor.GRAY + "Summons a fallen hero equipped with", (Object)ChatColor.GRAY + "the " + gkit.getItemName() + (Object)ChatColor.GRAY + " equipment.", "", (Object)ChatColor.GRAY + "Defeat this hero for a " + (Object)ChatColor.UNDERLINE + "guranteed", (Object)ChatColor.GRAY + "drop of the " + (Object)ChatColor.WHITE + "/gkit item set" + (Object)ChatColor.GRAY + " and a ", (Object)ChatColor.WHITE + "" + (Object)ChatColor.UNDERLINE + "chance" + (Object)ChatColor.GRAY + " to get a " + (Object)ChatColor.WHITE + "/gkit Redemption Gem", (Object)ChatColor.GRAY + "that can be used to " + (Object)ChatColor.UNDERLINE + "unlock the /gkit", (Object)ChatColor.GRAY + "on your own account for regular use!", "", ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "USE: " + (Object)ChatColor.GRAY + "To summon this fallen hero", (Object)ChatColor.WHITE + "Right-Click" + (Object)ChatColor.GRAY + " this item inside the Warzone.", "", ChatColor.RED.toString() + ChatColor.BOLD.toString() + "WARNING: " + (Object)ChatColor.GRAY + "Whoever defeats the Fallen Hero", (Object)ChatColor.GRAY + "will receive its legendary treasures.", (Object)ChatColor.GRAY + "Do " + (Object)ChatColor.RED + "" + (Object)ChatColor.UNDERLINE + "not" + (Object)ChatColor.GRAY + " place in confined spaces,", (Object)ChatColor.GRAY + "as minecraft mobs tend to block glitch.");
     }
 
-    public static ItemStack getFallenHeroItem(EvolutionKit vkit) {
-        return ItemUtils.buildItem(Material.BONE, (short)0, ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + (Object)ChatColor.UNDERLINE + "Fallen Hero:" + (Object)ChatColor.RESET + " " + vkit.getItemName().replace("Kit", ""), (Object)ChatColor.GRAY + "Summons a fallen hero equipped with", (Object)ChatColor.GRAY + "the " + vkit.getItemName() + " Evolution Kit" + (Object)ChatColor.GRAY + " equipment.", "", (Object)ChatColor.GRAY + "Defeat this hero for a " + (Object)ChatColor.UNDERLINE + "guranteed", (Object)ChatColor.GRAY + "drop of the " + (Object)ChatColor.GOLD + "/vkit item set" + (Object)ChatColor.GRAY + " and a ", (Object)ChatColor.GOLD + "" + (Object)ChatColor.UNDERLINE + "chance" + (Object)ChatColor.GRAY + " to get a " + (Object)ChatColor.GOLD + "/vkit Redemption Gem", (Object)ChatColor.GRAY + "that can be used to " + (Object)ChatColor.UNDERLINE + "unlock the /vkit", (Object)ChatColor.GRAY + "on your own account for regular use!", "", ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + "USE: " + (Object)ChatColor.GRAY + "To summon this fallen hero", (Object)ChatColor.WHITE + "Right-Click" + (Object)ChatColor.GRAY + " this item inside the Warzone.", "", ChatColor.RED.toString() + ChatColor.BOLD.toString() + "WARNING: " + (Object)ChatColor.GRAY + "Whoever defeats the Fallen Hero", (Object)ChatColor.GRAY + "will receive its legendary treasures.", (Object)ChatColor.GRAY + "Do " + (Object)ChatColor.RED + "" + (Object)ChatColor.UNDERLINE + "not" + (Object)ChatColor.GRAY + " place in confined spaces,", (Object)ChatColor.GRAY + "as minecraft mobs tend to block glitch.");
-    }
 
     public static GlobalKits getGlobalKitFromFallenHeroItem(ItemStack i) {
         if (!FallenHero.isFallenHeroItem(i)) {
@@ -63,19 +57,7 @@ public class FallenHero {
         return null;
     }
 
-    public static EvolutionKits getEvolutionKitFromFallenHeroItem(ItemStack i) {
-        if (!FallenHero.isFallenHeroItem(i)) {
-            return null;
-        }
-        String itemName = i.getItemMeta().getDisplayName().split(":" + (Object)ChatColor.RESET + " ")[1];
-        String vkitName = ChatColor.stripColor((String)itemName).toLowerCase();
-        for (EvolutionKits vkit : EvolutionKits.values()) {
-            String cleanedName = ChatColor.stripColor((String)vkit.getKit().getItemName()).toLowerCase();
-            if (!cleanedName.equals(vkitName)) continue;
-            return vkit;
-        }
-        return null;
-    }
+
 
     public static boolean isFallenHeroItem(ItemStack i) {
         return i != null && i.getType() == Material.BONE && i.hasItemMeta() && i.getItemMeta().hasLore() && ((String)i.getItemMeta().getLore().get(0)).equals((Object)ChatColor.GRAY + "Summons a fallen hero equipped with");
@@ -110,29 +92,6 @@ public class FallenHero {
         return le;
     }
 
-    public static LivingEntity spawnFallenHero(EvolutionKits vkit, Location l) {
-        LivingEntity le = (LivingEntity)l.getWorld().spawnEntity(l, EntityType.PIG_ZOMBIE);
-        PigZombie s = (PigZombie)le;
-        s.setAngry(true);
-        s.setMaxHealth(150.0);
-        s.setHealth(150.0);
-        s.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2));
-        s.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, Integer.MAX_VALUE, 1));
-        s.addPotionEffect(new PotionEffect(PotionEffectType.REGENERATION, Integer.MAX_VALUE, 0));
-        s.addPotionEffect(new PotionEffect(PotionEffectType.FIRE_RESISTANCE, Integer.MAX_VALUE, 0));
-        s.addPotionEffect(new PotionEffect(PotionEffectType.WATER_BREATHING, Integer.MAX_VALUE, 0));
-        s.setFireTicks(32767);
-        s.setCustomName(ChatColor.WHITE.toString() + ChatColor.BOLD.toString() + (Object)ChatColor.UNDERLINE + "Fallen Hero:" + (Object)ChatColor.RESET + " " + vkit.getKit().getItemName());
-        s.getEquipment().setHelmet(new ItemStack(Material.DIAMOND_HELMET));
-        s.getEquipment().setChestplate(new ItemStack(Material.DIAMOND_CHESTPLATE));
-        s.getEquipment().setLeggings(new ItemStack(Material.DIAMOND_LEGGINGS));
-        s.getEquipment().setBoots(new ItemStack(Material.DIAMOND_BOOTS));
-        s.getEquipment().setItemInHand(new ItemStack(Material.DIAMOND_SWORD));
-        s.setCustomNameVisible(true);
-        le.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)true));
-        le.setMetadata("fallenHeroName", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)vkit.name()));
-        le.setMetadata("fallenHero", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)ChatColor.stripColor((String)vkit.getKit().getItemName()).toUpperCase()));
-        return le;
-    }
+
 }
 

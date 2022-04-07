@@ -58,7 +58,7 @@ commands:
     description: Root command.
     usage: /<command>
   armorcolor:
-    aliases: ['colorarmor', 'color', 'armor']
+    aliases: ['colorarmor', 'armor']
     description: Color Armor Command
   jackpot:
     description: Jackpot command.
@@ -80,7 +80,7 @@ commands:
     description: Spawn boss.
   coinflip:
     description: Coin flip command.
-    aliases: [cf, coinflips]
+    aliases: [cf, coinflips, rps]
   giveall:
     aliases: [tempgiveall]
     description: claim from autogiveall
@@ -103,4 +103,4 @@ commands:
     aliases: [ cl ]
   givepearl:
   chatcolor:
-  phoenix:
+    aliases: [ color ]

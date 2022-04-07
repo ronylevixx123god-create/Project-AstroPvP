@@ -167,15 +167,7 @@ public enum GlobalKits {
             Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(player, "GKIT_LEVELUP", new Object[]{this, 0}));
             return true;
         }
-        if (CosmicGlobalKitsAPI.canLevelUpGkit(player, this)) {
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("gkit levelup " + player.getName() + " " + this.name()));
-            Bukkit.getLogger().info("[KitUnlock] " + player.getName() + " (" + player.getUniqueId() + ") leveled up a " + this.getKitName() + " kit item!");
-            player.setItemInHand(null);
-            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
-            return true;
-        }
-        player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You already have the max tiered " + this.getItemName() + (Object)ChatColor.RED + " unlocked!");
-        player.sendMessage((Object)ChatColor.GRAY + "Use /gkit to redeem it!");
+        player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.RED + "You already have the " + this.getItemName() + (Object)ChatColor.RED + " unlocked!");
         return false;
     }
 

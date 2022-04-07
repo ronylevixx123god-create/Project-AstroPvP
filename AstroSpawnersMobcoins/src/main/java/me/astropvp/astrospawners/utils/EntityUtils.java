@@ -57,6 +57,7 @@ public class EntityUtils {
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
                 if (!(entity instanceof Player) && !(entity instanceof ArmorStand) && !(entity instanceof EnderCrystal)) {
+
                     entity.remove();
                 }
             }

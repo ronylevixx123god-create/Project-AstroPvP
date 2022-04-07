@@ -4,6 +4,7 @@ import com.astropvp.cc.CCVerify;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.compilex.CompilexPermissions.CompilexPermissions;
 
+import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.CustomEnchantment;
@@ -159,6 +160,10 @@ public class EntityStackerListener implements Listener {
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
                 exp*=1.25;
+            }
+
+            if (e.getDamager().hasPermission("astrocore.nebula")) {
+                exp*=2;
             }
 
 

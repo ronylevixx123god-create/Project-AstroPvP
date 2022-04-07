@@ -79,10 +79,6 @@ public class AstroSpawners extends JavaPlugin {
             @Override
             public void run() {
                 EntityUtils.clearAllEntities();
-                Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "killall named world");
-                Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "killall all world");
-                Bukkit.dispatchCommand(Bukkit.getServer().getConsoleSender(), "killall entities world");
-
 
             }
         }, 150L);
