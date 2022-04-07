@@ -50,29 +50,35 @@ public class AncientArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "AncientCrystal", amount);
+        double reductionPercent = 3;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * 0.01));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, event, "AncientSet");
+        double reductionPercent = 35;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * 0.01));
         attacked.setVelocity(attacked.getVelocity().multiply(0.8));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AncientSet");
+        double increasePercent = 35;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
         if (Math.random() < 0.01 && attacked instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
             startAncientEffect(attacker, (Player) attacked);
         }
 
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7, event, "AncientCrystal", amount);
+        double increasePercent = 7;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
         if (Math.random() < 0.01 && attacked instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             startAncientEffect(attacker, (Player) attacked);
         }
@@ -149,15 +155,15 @@ public class AncientArmorSet extends ArmorSet {
             pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
             pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
             //CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
-        },100L);
+        }, 100L);
 
     }
 
     private void focusTargetPlayer(Player player, Player pTarget) {
-            FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
-            Faction myFaction = fPlayer.getFaction();
-            FPlayer targetPlayer = FPlayers.getInstance().getByPlayer(pTarget);
-            //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+        Faction myFaction = fPlayer.getFaction();
+        FPlayer targetPlayer = FPlayers.getInstance().getByPlayer(pTarget);
+        //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
 
     }
 

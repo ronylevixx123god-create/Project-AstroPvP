@@ -28,8 +28,7 @@ public class HeroicArmorDamageListener implements Listener {
                     return;
                 }
             }
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(totalReduction, e, "&4&lHeroicArmor");
-        }
+            e.setDamage(e.getDamage() *1 - (totalReduction  * 0.01));        }
 
     }
 }

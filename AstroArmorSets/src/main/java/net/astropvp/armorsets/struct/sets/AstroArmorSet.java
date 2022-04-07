@@ -54,20 +54,21 @@ public class AstroArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroCrystal", amount);
-
+        double reductionPercent = 3;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * 0.01));
 
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(20, event, "AstroSet");
-        //TODO astro Ability
+        double reductionPercent = 20;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * 0.01));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroSet");
+        double increasePercent = 30;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
         if (Math.random() < 0.01) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
@@ -109,41 +110,42 @@ public class AstroArmorSet extends ArmorSet {
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "AstroCrystal", amount);
-
+        double increasePercent = 7;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
         if (Math.random() < 0.01) {
             if (!CannonballAmulet.active.contains(event.getEntity().getUniqueId())) {
 
-                if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+                if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                    return;
 
-            if (Math.random() <= 0.35) {
-                if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
-                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
-                    return;
-                }
-            }
-
-            if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
-                if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
-                    return;
-                }
-                if (event.getDamager().getWorld().getName().equals("world_duels")) {
-                    return;
-                }
-                attacker.setMetadata("FalloutAbility", new FixedMetadataValue(AstroArmorSets.getInstance(), System.currentTimeMillis()));
-                FPlayer fp = FPlayers.getInstance().getByPlayer(attacker);
-                for (Entity nearbyEnt : attacker.getNearbyEntities(32.0, 64.0, 32.0)) {
-                    if (nearbyEnt instanceof Player) {
-                        Player pNear = (Player) nearbyEnt;
-                        FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
-                        if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
-                            continue;
-                        pNear.sendMessage(CC.translate("&a&l** Astro Cage Ability &7[" + fp.getName() + "] &a&l**"));
+                if (Math.random() <= 0.35) {
+                    if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
+                        attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
+                        return;
                     }
-                    attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
-                    this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
                 }
-            }
+
+                if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
+                    if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {
+                        return;
+                    }
+                    if (event.getDamager().getWorld().getName().equals("world_duels")) {
+                        return;
+                    }
+                    attacker.setMetadata("FalloutAbility", new FixedMetadataValue(AstroArmorSets.getInstance(), System.currentTimeMillis()));
+                    FPlayer fp = FPlayers.getInstance().getByPlayer(attacker);
+                    for (Entity nearbyEnt : attacker.getNearbyEntities(32.0, 64.0, 32.0)) {
+                        if (nearbyEnt instanceof Player) {
+                            Player pNear = (Player) nearbyEnt;
+                            FPlayer fpNear = FPlayers.getInstance().getByPlayer(pNear);
+                            if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+                                continue;
+                            pNear.sendMessage(CC.translate("&a&l** Astro Cage Ability &7[" + fp.getName() + "] &a&l**"));
+                        }
+                        attacker.getLocation().getWorld().playSound(attacker.getLocation(), Sound.GHAST_SCREAM, 1.0f, 1.0f);
+                        this.activateFalloutKillerAbility(attacker, (Player) event.getEntity());
+                    }
+                }
             }
         }
     }
@@ -252,7 +254,6 @@ public class AstroArmorSet extends ArmorSet {
         }
         return null;
     }
-
 
 
 }

@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;

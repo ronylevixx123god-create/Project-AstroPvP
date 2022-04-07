@@ -706,6 +706,12 @@ public class Scoreboard implements BoardAdapter {
         FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
         int kill = fPlayer.getKills();
         int death = fPlayer.getDeaths();
+        double kdr;
+        if (death == 0) {
+            kdr = kill;
+        } else {
+            kdr = (double) kill / death;
+        }
         List<String> board = new LinkedList<>();
         board.add(" ");
         board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
@@ -718,7 +724,7 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add("");
         board.add(ChatColor.RED + ChatColor.BOLD.toString() + "KDR");
-        board.add(CC.translate("&f"+ String.format("%.1f", (double) kill / death) + "&7 [" + kill + ":" + death + "]"));
+        board.add(CC.translate("&f"+ String.format("%.1f", kdr) + "&7 [" + kill + ":" + death + "]"));
         board.add("");
         if (!FactionUtils.getFaction(player).isWilderness()) {
             Faction faction = FactionUtils.getFaction(player);

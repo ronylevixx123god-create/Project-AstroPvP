@@ -39,15 +39,7 @@
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
     </dependency>
-
-    <dependency>
-        <groupId>com.astropvp</groupId>
-        <artifactId>dmg</artifactId>
-        <version>1.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>
-    </dependency>
-
+    
     <dependency>
         <groupId>com.astropvp</groupId>
         <artifactId>proxy</artifactId>

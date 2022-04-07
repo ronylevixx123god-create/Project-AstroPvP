@@ -60,12 +60,13 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
         if (attacker instanceof Player) {
             if (Math.random() <= 0.15) {
                 if (((Player) attacker).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacker).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacker).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacker).getItemInHand()) == WeaponBonusType.DEMON) {
-                    amount = amount - 1;
+                    amount--;
                     attacker.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked an &6Engineer Crystal &7of " + attacked.getName() + "'s Set &6&l**"));
                 }
             }
         }
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(9, event, "EngineerCrystal", amount);
+        double reductionPercent = 9;
+        event.setDamage(event.getDamage() *1-(reductionPercent*amount*0.01));
 
         if (attacker instanceof Player) {
             if (ThreadLocalRandom.current().nextInt(100) <= 4) {
@@ -79,8 +80,8 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, event, "EngineerSet");
-        if (attacker instanceof Player) {
+        double reductionPercent = 35;
+        event.setDamage(event.getDamage() *1-(reductionPercent*0.01));        if (attacker instanceof Player) {
             if (ThreadLocalRandom.current().nextInt(100) <= 4) {
                 if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                     return;

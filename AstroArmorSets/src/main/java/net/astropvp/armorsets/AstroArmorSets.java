@@ -16,6 +16,9 @@ public class AstroArmorSets extends JavaPlugin {
     private static AstroArmorSets instance;
 
     public static double CUSTOM_SET_MULTIPLIER = 2;
+    public static double OMNI_MULTIPLIER = 10;
+
+
 
 
 

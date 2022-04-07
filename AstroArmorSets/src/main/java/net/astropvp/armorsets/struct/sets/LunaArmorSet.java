@@ -41,29 +41,33 @@ public class LunaArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(4*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "LunaCrystal", amount);
-
+        double reductionPercent = 4;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * 0.01));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(15, event, "LunaSet");
-
+        double reductionPercent = 15;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * 0.01));
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "LunaSet");
+        double increasePercent = 35;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
         if (Math.random() < 0.016 && attacked instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             lunaStrike((Player) attacked);
         }
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(6*AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "LunaCrystal", amount);
+        double increasePercent = 6;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
         if (Math.random() < 0.016 && attacked instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             lunaStrike((Player) attacked);
         }
@@ -110,7 +114,7 @@ public class LunaArmorSet extends ArmorSet {
         }
 
 
-            lunaStrikedPlayers.add(enemy.getUniqueId());
+        lunaStrikedPlayers.add(enemy.getUniqueId());
         enemy.sendMessage("");
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8&l✰ &7&lLUNA STRIKE ABILITY (" + enemy.getName() + ") &8&l✰")));
         enemy.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&l* &7Increased Rage Stack Limit")));
@@ -128,8 +132,6 @@ public class LunaArmorSet extends ArmorSet {
     public static boolean isLunaStriked(Player player) {
         return lunaStrikedPlayers.contains(player.getUniqueId());
     }
-
-
 
 
 }

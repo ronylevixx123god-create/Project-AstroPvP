@@ -43,12 +43,12 @@ public class TravelerArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(30* AstroArmorSets.CUSTOM_SET_MULTIPLIER, event, "TravelerSet");
-    }
+        double increasePercent = 30;
+        event.setDamage(event.getDamage() * 1 + (increasePercent  * 0.01));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7.5, event, "TravelerCrystal", amount);
-    }
+        double increasePercent = 7.5;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
