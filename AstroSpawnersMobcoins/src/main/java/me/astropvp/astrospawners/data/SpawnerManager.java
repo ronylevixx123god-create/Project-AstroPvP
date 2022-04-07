@@ -36,43 +36,6 @@ public class SpawnerManager {
         this.spawnersMap.remove(location);
     }
 
-    public void save() {
-        if (this.loading)
-            return;
-        try {
-            PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("DELETE FROM spawner_data");
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        for (Map.Entry<Location, SpawnerData> entry : spawnersMap.entrySet()) {
-            Location location = entry.getKey();
-            SpawnerData spawnerData = entry.getValue();
-            MakeSpawner.newFileItem(location, spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
-        }
-
-
-    }
-
-    public void load() {
-        this.loading = true;
-        try {
-            PreparedStatement statement = AstroSpawners.getInstance().getSqlDatabase().getConnection().prepareStatement("SELECT * FROM spawner_data");
-            ResultSet set = statement.executeQuery();
-            while (set.next()) {
-                Location location = LocationUtils.fromStringLocation(set.getString("location"));
-                EntityType type = EntityType.valueOf(set.getString("type"));
-                int amount = Integer.parseInt(set.getString("amount"));
-                SpawnerData spawnerData = new SpawnerData(type, amount);
-                //AstroSpawners.getInstance().getSpawnersMap().put(location, spawnerData);
-                MakeSpawner.newFileItem(location, type, amount);
-            }
-            this.loading = false;
-            statement.close();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public static boolean canPlaceStackedSpawnerInThisChunk(Chunk chunk, EntityType spawnertype) {
         for (BlockState blockState : chunk.getTileEntities()) {

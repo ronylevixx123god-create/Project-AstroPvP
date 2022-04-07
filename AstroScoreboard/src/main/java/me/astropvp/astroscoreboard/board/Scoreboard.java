@@ -36,6 +36,7 @@ import net.astropvp.astroevents.game.games.SumoMiniGame;
 import net.astropvp.astroevents.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 

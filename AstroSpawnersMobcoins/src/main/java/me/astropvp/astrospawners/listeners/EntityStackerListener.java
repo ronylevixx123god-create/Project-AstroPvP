@@ -16,6 +16,7 @@ import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.*;
+import me.astropvp.astrospawners.utils.config.ConfigManager;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
@@ -55,11 +56,6 @@ public class EntityStackerListener implements Listener {
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
     private Map<UUID, Long> blazeCooldown;
 
-    private Map<UUID, Integer> astroKeyLoot;
-    private Map<UUID, Integer> xpLoot;
-    private Map<UUID, Integer> legKeyLoot;
-
-
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
@@ -76,7 +72,7 @@ public class EntityStackerListener implements Listener {
     }
 
     @EventHandler
-    public void onStackedEntityDeath(StackedMobDeathEvent e) {
+    public void onStackedEntityDeath(StackedMobDeathEvent e) throws Exception {
         Entity entity = e.getEntity();
         if (e.getDamager() instanceof Player) {
 
@@ -94,14 +90,14 @@ public class EntityStackerListener implements Listener {
                 e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will resolve it."));
                 return;
             }
-            double exp = 150;
+            double exp = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("baseXp") * 0.01;
             int remove = 1;
 
             if (((Player) e.getDamager()).getItemInHand() != null) {
                 Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand());
 
                 if (enchants.containsKey(EnchantmentAPI.getEnchantment("Master Inquisitive"))) {
-                    exp += 50;
+                    exp += 150;
                 } else if (enchants.containsKey(EnchantmentAPI.getEnchantment("Inquisitive"))) {
                     exp += 100;
 
@@ -170,6 +166,12 @@ public class EntityStackerListener implements Listener {
 
             plugin.addPlayerToAfkGrinding(p);
 
+            boolean showParticles = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("showGrindParticles");
+
+            if (showParticles) {
+                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 0, 1, 0, 0.4f, 12);
+            }
+
         }
 
 
@@ -212,12 +214,15 @@ public class EntityStackerListener implements Listener {
     }
 
     public void blazeLoot(Player p) {
+        double legKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("legKeyChancePercent") * 0.01; //0.01
+        double astroKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroKeyChancePercent") * 0.01; //0.125
+
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.01) {
+                if (num >= 0 && num <= legKeyChance) {
                     p.getInventory().addItem(legKey);
-                } else if (num >= 0 && num <= 0.125) {
+                } else if (num >= 0 && num <= astroKeyChance) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ignored) {

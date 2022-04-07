@@ -10,13 +10,10 @@ import me.astropvp.astrospawners.ftop.CommandFactionsTop;
 import me.astropvp.astrospawners.ftop.FactionsTopAPI;
 import me.astropvp.astrospawners.ftop.RecalculationTask;
 import me.astropvp.astrospawners.guis.AntiAFKGrindingGUI;
-import me.astropvp.astrospawners.sql.Database;
-import me.astropvp.astrospawners.sql.SQLQueryCustomThread;
-import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
-import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.listeners.*;
 import me.astropvp.astrospawners.utils.*;
+import me.astropvp.astrospawners.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.command.CommandExecutor;
@@ -39,9 +36,10 @@ public class AstroSpawners extends JavaPlugin {
     @Getter
     private List<UUID> waitingForAfkGrindingVerification;
 
-    private Database sqlDatabase;
-    private SpawnerManager spawnerManager;
-    private SQLQueryCustomThread sqlQueryCustomThread = new SQLQueryCustomThread();
+    @Getter
+    private ConfigManager configManager;
+
+
 
     @Getter
     private Map<Location, SpawnerData> spawnersMap;
@@ -108,9 +106,6 @@ public class AstroSpawners extends JavaPlugin {
         }
 */
 
-        this.spawnerManager = new SpawnerManager();
-
-
         Bukkit.getConsoleSender().sendMessage("Started Loading Spawner Data");
 
 
@@ -133,6 +128,8 @@ public class AstroSpawners extends JavaPlugin {
         this.afkGrinders = new HashMap<>();
         this.waitingForAfkGrindingVerification = new ArrayList<>();
 
+        this.configManager = new ConfigManager(this);
+        this.configManager.setupFiles();
 
     }
 
@@ -187,6 +184,8 @@ public class AstroSpawners extends JavaPlugin {
 
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
         getCommand("stackspawners").setExecutor(new CommandStackSpawners());
+        getCommand("aspawner").setExecutor(new CommandAdminSpawner());
+
 
 
 
@@ -235,9 +234,4 @@ public class AstroSpawners extends JavaPlugin {
         return manager2;
     }
 
-    public Database getSqlDatabase() {
-        return this.sqlDatabase;
-    }
-
-    public SpawnerManager getSpawnerManager()  { return this.spawnerManager; }
 }
