@@ -29,6 +29,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.GrindingMessagesUtil;
+import net.ess3.api.IEssentials;
 import net.minecraft.server.v1_8_R3.BlockPosition;
 import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
@@ -56,6 +57,7 @@ public class EntityStackerListener implements Listener {
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
     private Map<UUID, Long> blazeCooldown;
+    private final Map<UUID, Integer> playerMoneyMap;
 
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
@@ -65,6 +67,7 @@ public class EntityStackerListener implements Listener {
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(AstroSpawners.getInstance(), () -> {
             this.blazeCooldown.clear();
         }, 10, 5 * 20 * 60);
+        this.playerMoneyMap = new HashMap<>();
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -158,6 +161,7 @@ public class EntityStackerListener implements Listener {
             }
 
 
+
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
                 exp*=1.25;
             }
@@ -166,7 +170,7 @@ public class EntityStackerListener implements Listener {
                 exp*=2;
             }
 
-
+            attemptGiveMoney(p);
             p.giveExp((int) exp);
 
             plugin.addPlayerToAfkGrinding(p);
@@ -232,6 +236,24 @@ public class EntityStackerListener implements Listener {
                 }
             } catch (IllegalArgumentException ignored) {
             }
+        }
+    }
+
+    public void attemptGiveMoney(Player player) {
+        UUID uuid = player.getUniqueId();
+        double blazeRodPrice = 28.75;
+        if (this.playerMoneyMap.containsKey(uuid)) {
+            int current = this.playerMoneyMap.get(uuid);
+            this.playerMoneyMap.put(uuid, current+1);
+        } else {
+            this.playerMoneyMap.put(uuid, 1);
+        }
+        if (this.playerMoneyMap.get(uuid) >= 10) {
+            this.playerMoneyMap.put(uuid, 0);
+            EconomyUtils.depositBalance(player, blazeRodPrice*10);
+            player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(blazeRodPrice*10)));
+            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+
         }
     }
 

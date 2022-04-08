@@ -8,10 +8,13 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
 import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
+import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import org.bukkit.Location;
@@ -22,6 +25,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -112,8 +116,14 @@ public class SpaceAlien extends SpaceMonster {
 
 		Map<ItemStack, Double> loot = AstroSpaceGrindingPlugin.cachedCrateLoot.get(MonsterType.SPACE_ALIEN);
 		double chance = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienRewardChance");
+		if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SUMMER_2021_BELT)){
+			chance *= 1.30;
+		}
 		if(Math.random() < chance/100) {
 			rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
+			if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET)) {
+				rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
+			}
 		}
 		return rewards;
 	}
@@ -122,6 +132,11 @@ public class SpaceAlien extends SpaceMonster {
 	public void onDeath(EntityDeathEvent event, SpacePlayerData killer) {
 		AstroSpaceGrindingPlugin.activeMonsters.remove(event.getEntity().getUniqueId());
 
+	}
+
+	@Override
+	public void onPlayerDamageMob(EntityDamageByEntityEvent event, Player attacker) {
+		ActionBarMessageUtils.sendMessage(attacker, CC.translate("&a&lSpace Alien &7(&f" + Math.round(((LivingEntity)event.getEntity()).getHealth()) + "/" +  Math.round(((LivingEntity)event.getEntity()).getMaxHealth()) + " HP&7) "));
 	}
 
 

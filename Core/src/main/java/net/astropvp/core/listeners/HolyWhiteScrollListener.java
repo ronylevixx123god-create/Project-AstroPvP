@@ -3,7 +3,9 @@ package net.astropvp.core.listeners;
 
 import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
+import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.boots.MutatedSinkOrSwipFlippers;
 import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
@@ -144,6 +146,13 @@ public class HolyWhiteScrollListener implements Listener {
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved an item from getting monoed &a&l*"));
                         savedItems.add(i);
 
+                        continue;
+                    }
+
+                    if (AstroItemSkinsAPI.hasItemSkin(i) && AstroItemSkinsAPI.getItemSkin(i).contains(SkinType.DEATH_KNIGHT_SKULL_BLADE)) {
+                        killer.sendMessage(CC.translate("&b&l* " + e.getEntity().getName() + " 's DEATH KNIGHT Skull Blade Saved b&l* "));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&b&l* DEATH KNIGHT Skull was Saved &b&l*"));
+                        savedItems.add(i);
                         continue;
                     }
 

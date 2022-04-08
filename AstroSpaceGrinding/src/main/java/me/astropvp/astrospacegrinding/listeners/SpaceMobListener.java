@@ -8,11 +8,13 @@ import me.astropvp.astrospacegrinding.utils.StringUtils;
 import me.astropvp.astrospacegrinding.utils.TimeUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
 import me.astropvp.astrospacegrinding.enums.MonsterType;
@@ -60,6 +62,18 @@ public class SpaceMobListener implements Listener {
                     }
                 }
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.NORMAL, ignoreCancelled = true)
+    public void onHit(EntityDamageByEntityEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof Player) return;
+        if (!(event.getDamager() instanceof Player)) return;
+
+        if (AstroSpaceGrindingPlugin.activeMonsters.containsKey(entity.getUniqueId())) {
+            MonsterType type = AstroSpaceGrindingPlugin.activeMonsters.get(entity.getUniqueId());
+            type.getInstance().onPlayerDamageMob(event, (Player) event.getDamager());
         }
     }
 }

@@ -73,6 +73,7 @@ public class SpaceLogicListener implements Listener {
 		if (e.getEnchant().heroicEnchantment) e.setCancelled(true);
 	}
 
+
 	
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
 	public void onRightClickEgg(PlayerInteractEvent event) {

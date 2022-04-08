@@ -9,6 +9,7 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
@@ -21,7 +22,7 @@ public class Block implements Listener {
       this.instance = instance;
    }
 
-   @EventHandler
+   @EventHandler(priority = EventPriority.LOWEST)
    public void onBlockPlace(BlockPlaceEvent event) {
       Player player = event.getPlayer();
       WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
@@ -38,7 +39,7 @@ public class Block implements Listener {
 
    }
 
-   @EventHandler
+   @EventHandler(priority = EventPriority.LOWEST)
    public void onBlockBreak(BlockBreakEvent event) {
       Player player = event.getPlayer();
       WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
@@ -55,7 +56,7 @@ public class Block implements Listener {
 
    }
 
-   @EventHandler
+   @EventHandler(priority = EventPriority.LOWEST)
    public void onEntityExplode(EntityExplodeEvent event) {
       WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
       if (!this.instance.getConfig().getBoolean("WildPvP.EntityExplosion.Enable")) {

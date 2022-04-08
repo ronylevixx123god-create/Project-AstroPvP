@@ -136,7 +136,7 @@ public enum SkinType {
     ) ),
     SUMMER_2021_BELT(CC.translate("&c&lHula Skirt"), ItemSkinType.BELT, new HulaSkirt(), Arrays.asList(
             CC.translate("&cImmune to Lifesteal"),
-            CC.translate("&cChance for Bonus Mobs to drop Rare Mob loot in /invasions")
+            CC.translate("&c+30% more chance to get loot in /warp space")
     ) ),
     /*INFINITY_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BELT, new InfinityBelt(), Arrays.asList(
             CC.translate("&cEquipped armor will regain to 10% durability"),
@@ -197,7 +197,7 @@ public enum SkinType {
     MEDIEVAL_AMULET_KING(CC.GoldB + "Amulet of Kings", ItemSkinType.AMULET, new AmuletOfKingsSkin(), Arrays.asList(CC.Red + "15% chance for /end envoy chest loot to auto-/collect") ),
     MEDIEVAL_AMULET_KNIGHT(CC.GrayB + "Diamond Necklace", ItemSkinType.AMULET, new DiamondNecklaceSkin(), Arrays.asList(CC.Red + "Increased view distance by 1 chunk") ),
     CHRISTMAS_AMULET_SNOWFLAKE(CC.RedB + "Preserved Snowflake", ItemSkinType.AMULET, new PreservedSnowflakeSkin(), Arrays.asList(CC.Red + "Immune to Soul Tether, Soul Trap", CC.Red + "Immune to Nature's Wrath", CC.Red + "Able to see invisible player", CC.Gray + " (Feign Death, Undead Ruse)") ),
-    NYE_AMULET(CC.LightPurpleB + "Radioactive Amulet", ItemSkinType.AMULET, new RadioactiveAmulet(), Arrays.asList(CC.Red + "50% chance for double loot from Rare Mobs in /invasions", CC.Red + "-25% Incoming PvE Damage in /invasions", CC.Red + "2x buffs from Junk Mobs in /invasions") ),
+    NYE_AMULET(CC.LightPurpleB + "Radioactive Amulet", ItemSkinType.AMULET, new RadioactiveAmulet(), Arrays.asList(CC.Red + "15% chance for double loot from Mobs in /warp space", CC.Red + "-50% Incoming PvE Damage in /warp space")),
     CHRISTMAS_AMULET_SANTA(CC.GreenB + "Secret Santa", ItemSkinType.AMULET, new SecretSantaSkin(), Arrays.asList(CC.Red + "Jolly Suprise ability", CC.Gray + " (5% chance to Feign Death for 2.5s, spawning", CC.Gray + " a \"Demonic Gateway\" where you vanished. On", CC.Gray + " your next attack, you will deal 2x damage", CC.Gray + " if dealt from behind, 30s Cooldown)", CC.Red + "Negates enemy Feign Death") ),
     HALLOWEEN_AMULET(CC.GoldB + "Silent Death", ItemSkinType.AMULET, new SilentDeathSkin(), Arrays.asList(CC.Red + "5% chance to afflict enemy", CC.Red + "with Silent Death ability", CC.Gray + " (Enemy will receive 20% Incoming DMG", CC.Gray + " until caster has been hit 5 times", CC.Gray + " or 15 seconds has elapsed.)", CC.Red + "Immune to Silent Death ability", CC.Red + "+3% Outgoing Damage") ),
     VALENTINES_2021_AMULET(CC.RedB + "Rose Amulet", ItemSkinType.AMULET, new RoseAmuletSkin(), Arrays.asList(CC.Red + "Immune to Snowflake Axe skin abilities", CC.Red + "-50% damage from enemy Rage", CC.Red + "Automatic Phoenix Feather (30m cooldown)") ),
