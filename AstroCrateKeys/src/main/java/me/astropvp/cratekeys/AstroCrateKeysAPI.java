@@ -133,8 +133,8 @@ public class AstroCrateKeysAPI {
     public static Map<ItemStack, Double> getItems(CrateType type) {
         String key = String.valueOf(type.name().toLowerCase()) + ".items";
         if (!AstroCrateKeysPlugin.getInstance().getConfig().contains(key))
-            return Maps.newHashMap();
-        Map<ItemStack, Double> map = Maps.newHashMap();
+            return Maps.newLinkedHashMap();
+        Map<ItemStack, Double> map = Maps.newLinkedHashMap();
         List<String> items = AstroCrateKeysPlugin.getInstance().getConfig().getStringList(key);
         for (String item : items) {
             String[] split = item.split(":");

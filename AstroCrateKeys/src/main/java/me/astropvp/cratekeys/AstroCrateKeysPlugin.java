@@ -19,12 +19,13 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class AstroCrateKeysPlugin extends JavaPlugin {
     public static AstroCrateKeysPlugin AstroCrateKeysPlugin;
     public static FileConfiguration config;
-    public static HashMap<CrateType, Map<ItemStack, Double>> cachedCrateLoot;
+    public static LinkedHashMap<CrateType, Map<ItemStack, Double>> cachedCrateLoot;
     //public FilterManager filterManager;
 
 
@@ -34,7 +35,7 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
         registerCommands();
         CrateDataManager.init();
         config = getConfig();
-        cachedCrateLoot = new HashMap<>();
+        cachedCrateLoot = new LinkedHashMap<>();
         for (CrateType crateType : CrateType.values()) {
             cachedCrateLoot.put(crateType, AstroCrateKeysAPI.getItems(crateType));
         }
