@@ -173,6 +173,9 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 throw new PrefixedPetException(CC.Red + "You cannot use that pet here (Safezone)!");
             }
 
+
+
+
             if (player.getItemInHand().getAmount() > 1) {
                 playerInteractEvent.setCancelled(true);
                 throw new PrefixedPetException(CC.Red + "You cannot use stacked pets!");

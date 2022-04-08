@@ -18,6 +18,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import net.astropvp.damagehandler.AstroDamageHandlerAPI;
 import org.bukkit.*;
@@ -142,6 +143,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             petItem.setLastUsed(System.currentTimeMillis());
             player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
             target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
+            return true;
+        }
+
+        if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target)) {
+            player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
             return true;
         }
 

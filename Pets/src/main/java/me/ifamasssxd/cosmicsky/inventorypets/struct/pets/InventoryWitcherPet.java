@@ -14,6 +14,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -118,10 +119,15 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             }
 
+            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player)) {
+                continue;
+            }
+
             /*if (WitcherCooldown.isOnWitcherCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
                 continue;
             }*/
+
             CrankedAmuletUtil.tryHatchAbility(p, player);
 
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));

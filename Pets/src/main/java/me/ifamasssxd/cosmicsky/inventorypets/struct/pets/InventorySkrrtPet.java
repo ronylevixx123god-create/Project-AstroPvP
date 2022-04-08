@@ -22,6 +22,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -135,6 +136,15 @@ public class InventorySkrrtPet extends InventoryPet {
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &8&l*"));
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&8&lBig Timbs&7] &8&l*"));
+                continue;
+            }
+
+            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p)) {
+                continue;
+            }
+
+            if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(p)) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot skrrt pet " + p.getName() + " while he has cage match immunity!" ));
                 continue;
             }
 

@@ -12,6 +12,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -91,6 +92,11 @@ public class InventoryStitchesPet extends InventoryPet {
             if (UndertowHelmet.undertowField.contains(casted)) {
                 casted.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &eStitches Pet &7[&f" + player.getName() + "&7] &a&l*"));
                 player.sendMessage(CC.translate("&a&l* &f" + casted.getName() + " &7Blocked &eStitches Pet &7[&a&lUndertow Helmet&7] &a&l*"));
+                return false;
+            }
+
+            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(casted) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(casted)) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
                 return false;
             }
 

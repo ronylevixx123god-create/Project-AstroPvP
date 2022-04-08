@@ -37,6 +37,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -113,15 +114,19 @@ public class InventoryBloodhoundPet extends InventoryPet {
          throw new PrefixedPetException(String.valueOf(CC.Red + "No valid target found!"));
 
 
-      petItem.setLastUsed(System.currentTimeMillis());
 
 
       player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.1F, 3.0F);
       final String name = player.getName();
 
-      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget)) && !(((SpinalTab)SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(pTarget.getName()) || !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
+      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(pTarget)) && !(((SpinalTab)SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(pTarget.getName()) && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
          pTarget.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Bloodhound Pet &7[&f" + player.getName() + "&7] &e&l*"));
          player.sendMessage(CC.translate("&e&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&e&lWitch Hat&7] &e&l*"));
+         return true;
+      }
+
+      if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(pTarget) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(pTarget)) {
+         player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
          return true;
       }
 
@@ -137,6 +142,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
          return true;
       }
 
+      petItem.setLastUsed(System.currentTimeMillis());
       player.chat("/f t " + pTarget.getName());
       pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
       pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));

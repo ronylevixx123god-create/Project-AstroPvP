@@ -41,7 +41,7 @@ public class PlagueBloater extends Boss {
         super(location, bossType);
         this.plagueBomb = new PlagueBomb(this);
         //this.plagueCarrier = new PlagueCarriers(this);
-        ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
+        ItemStack OPKey = CrateKeyItem.getItem(CrateType.SEASON);
         OPKey.setAmount(1);
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);

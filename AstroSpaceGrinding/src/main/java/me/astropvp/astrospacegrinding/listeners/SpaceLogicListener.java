@@ -37,9 +37,8 @@ public class SpaceLogicListener implements Listener {
 	
 	private static List<String> allowedCommands = Lists.newArrayList();
 	static {
-		allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms",
-		"koth", "ft", "filter", "r", "bless","blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-		"feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "ah", "r", "reply", "spawn", "warp spawn"));
+		allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless","blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
+		"feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots"));
 	}
 
 	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -112,12 +111,10 @@ public class SpaceLogicListener implements Listener {
 			return;
 		}
 
-		String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
-		assert rank != null;
-		if (rank.equalsIgnoreCase("srmod")) {
+		if (player.hasPermission("astrocore.staffmode")) {
 			return;
 		}
-		if (allowedCommands.contains(event.getMessage().toLowerCase().replace("/", ""))) {
+		if (allowedCommands.contains(event.getMessage().split(" ")[0].replace("/", "").toLowerCase())) {
 			return;
 		}
 		player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");

@@ -43,15 +43,12 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class EnderShift
 extends CustomEnchantment {
-    protected static HashMap<String, Long> last_ender_shift = new HashMap();
-    protected static List<String> ender_shifters = new ArrayList<String>();
+    protected static Map<UUID, Long> last_ender_shift = new HashMap();
+    protected static List<UUID> ender_shifters = new ArrayList<>();
 
     public EnderShift() {
         super("Ender Shift", GeneralUtil.helmets_and_boots, 3);
@@ -65,42 +62,41 @@ extends CustomEnchantment {
             if (player.hasMetadata("neutralized"))
                 return;
             double dmg = e.getFinalDamage();
-            if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player)player) && Math.random() < 0.2) {
+            double chance = 0.2;
+            if (player.isOp() && ((Player) player).isSneaking()) {
+                chance = 1;
+            }
+            if (player.getHealth() - dmg <= 0.0 && this.canEnderShift((Player)player) && Math.random() < chance) {
                 Player pl = (Player)player;
-                last_ender_shift.put(pl.getUniqueId().toString(), System.currentTimeMillis());
+                last_ender_shift.put(pl.getUniqueId(), System.currentTimeMillis());
                 e.setDamage(0);
                 pl.sendMessage("");
                 pl.sendMessage(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.LIGHT_PURPLE + "You were about to die, so you have entered the Ender dimension, escape to safety!");
                 pl.sendMessage("");
                 pl.playSound(pl.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 0.54f);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 20 * (level + 7), 0));
-                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 20 * (level + 7), level + 2), true);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 20 * (level + 7), level - 1), true);
-                player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 20 * (level + 3), level + 2));
-                final String uuid = player.getUniqueId().toString();
+                player.addPotionEffect(new PotionEffect(PotionEffectType.NIGHT_VISION, 10*20, 0));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 10*20, level + 2), true);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, 10*20, level - 1), true);
+                player.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 10*20, level + 2));
+                final UUID uuid = player.getUniqueId();
                 ender_shifters.add(uuid);
                 Location loc = pl.getLocation();
-                try {
-                    //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 1.0f,(float) Math.random() * 1.0f, (float) Math.random() * 1.0f, 1.25f, 100);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-                Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+                Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> {
                     ender_shifters.remove(uuid);
-                }, (long)(20L * (level + 7) + 10));
+                }, (long)(20L * 10));
             }
         }
     }
 
     private boolean canEnderShift(Player pl) {
-        if (!last_ender_shift.containsKey(pl.getUniqueId().toString())) {
+        if (!last_ender_shift.containsKey(pl.getUniqueId())) {
             return true;
         }
-        return System.currentTimeMillis() - last_ender_shift.get(pl.getUniqueId().toString()) > 30000L;
+        return System.currentTimeMillis() - last_ender_shift.get(pl.getUniqueId()) > 30000L;
     }
 
     private static boolean isEnderShifting(Player pl) {
-        return ender_shifters.contains(pl.getUniqueId().toString());
+        return ender_shifters.contains(pl.getUniqueId());
     }
 
 

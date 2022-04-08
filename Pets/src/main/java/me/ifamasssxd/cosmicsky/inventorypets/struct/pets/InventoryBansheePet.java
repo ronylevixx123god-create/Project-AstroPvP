@@ -24,6 +24,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -103,6 +104,15 @@ public class InventoryBansheePet extends InventoryPet {
                 if (UndertowHelmet.undertowField.contains(nearPlayer)) {
                     nearPlayer.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &a&l*"));
                     player.sendMessage(CC.translate("&a&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&a&lUndertow Helmet&7] &a&l*"));
+                    continue;
+                }
+
+                if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(nearPlayer) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(nearPlayer)) {
+                    continue;
+                }
+
+                if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(nearPlayer)) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You cannot banshee pet " + nearPlayer.getName() + " while he has cage match immunity!" ));
                     continue;
                 }
 
