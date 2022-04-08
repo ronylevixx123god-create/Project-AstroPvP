@@ -167,7 +167,11 @@ public class QueueListener implements Listener {
                     this.plugin.getQueueManager().createNewQueue(player);
                     player.closeInventory();
                 }
-            } else {
+            }
+            else if (event.getRawSlot() == 7){
+                player.closeInventory();
+                player.chat("/1v1");
+                } else {
                 WildQueue queue = this.plugin.getQueueManager().getQueueByItem(item);
                 if (queue != null) {
                     if (queueManager.getAcceptingPlayers().contains(player.getUniqueId())) {

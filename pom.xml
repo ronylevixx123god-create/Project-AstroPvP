@@ -73,6 +73,7 @@
         <module>MoneyShop</module>
         <module>ProxyPatch</module>
         <module>AntiPhase</module>
+        <module>AstroCagePvP</module>
     </modules>
 
     <build>

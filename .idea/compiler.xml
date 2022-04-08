@@ -40,7 +40,6 @@
         <module name="KoTHs" />
         <module name="Duels" />
         <module name="GiftcardShop" />
-        <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
         <module name="Ark" />
@@ -56,6 +55,7 @@
         <module name="CosmicShop" />
         <module name="CCVerify" />
         <module name="AstroScoreboard" />
+        <module name="AstroCagePvP" />
         <module name="Sets" />
         <module name="Factions-Legacy (2)" />
         <module name="Christmass" />
@@ -81,10 +81,21 @@
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Factions (1) (com.massivecraft)" />
-        <module name="Factions (2) (com.massivecraft)" />
         <module name="Factions (1)" />
         <module name="Factions (2)" />
         <module name="Factions (3)" />
+      </profile>
+      <profile name="Annotation profile for Factions-Legacy" enabled="true">
+        <sourceOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../AstroFactions/modules/Legacy/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions-Legacy" />
+      </profile>
+      <profile name="Annotation profile for Factions (2) (com.massivecraft)" enabled="true">
+        <sourceOutputDir name="../../../Factionss/target/generated-sources/annotations" />
+        <sourceTestOutputDir name="../../../Factionss/target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="Factions (2) (com.massivecraft)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
