@@ -34,95 +34,102 @@ import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 
 public class SpaceLogicListener implements Listener {
 
-	
-	private static List<String> allowedCommands = Lists.newArrayList();
-	static {
-		allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless","blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-		"feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots"));
-	}
 
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onWorldLeave(PlayerTeleportEvent event) {
-		if(event.getTo() == null) {
-			return;
-		}
-		if(!event.getFrom().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
-			if(event.getTo().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
-				new SpacePlayerData(event.getPlayer());
-			}
-			return;
-		}
-		Player player = event.getPlayer();
+    private static List<String> allowedCommands = Lists.newArrayList();
 
-		if(!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
-			if (CombatLog.inCombat(player)) {
-				return;
-			}
-			SpacePlayerData.remove(player);
-			player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space Lands, "
-					+ "you have lost your /space stats!");
-			player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);
-			SpacePlayerData.remove(player);
-		}
-	}
-	
+    static {
+        allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots"));
+    }
 
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onWorldLeave(PlayerTeleportEvent event) {
+        if (event.getTo() == null) {
+            return;
+        }
+        if (!event.getFrom().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            if (event.getTo().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+                new SpacePlayerData(event.getPlayer());
+            }
+            return;
+        }
+        Player player = event.getPlayer();
 
-	@EventHandler(priority = EventPriority.LOW)
-	public void enchantProc(CustomEnchantProcOnEntityEvent e) {
-		if (e.getEnchant().heroicEnchantment) e.setCancelled(true);
-	}
+        if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
+            if (CombatLog.inCombat(player)) {
+                return;
+            }
+            SpacePlayerData.remove(player);
+            player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space Lands, "
+                    + "you have lost your /space stats!");
+            player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);
+            SpacePlayerData.remove(player);
+        }
+    }
 
 
-	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onRightClickEgg(PlayerInteractEvent event) {
-		if(event.getAction() != Action.RIGHT_CLICK_BLOCK) {
-			return;
-		}
-		if(event.getClickedBlock().getType() == Material.DRAGON_EGG) {
-			event.setCancelled(true);
-		}
-	}
+    @EventHandler(priority = EventPriority.LOW)
+    public void enchantProc(CustomEnchantProcOnEntityEvent e) {
+        if (e.getEnchant().heroicEnchantment) e.setCancelled(true);
+    }
 
-	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onFlight(PlayerToggleFlightEvent event) {
-		Player player = event.getPlayer();
-		if(player.isOp()) {
-			return;
-		}
-		if(!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
-			return;
-		}
-		if(event.isFlying()) {
-			player.setAllowFlight(false);
-			event.setCancelled(true);
-		}
-	}
-	
-	@EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-	public void onCommand(PlayerCommandPreprocessEvent event) {
-		Player player = event.getPlayer();
-		if(!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
-			return;
-		}
 
-		if (player.isOp()) {
-			return;
-		}
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onRightClickEgg(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_BLOCK) {
+            return;
+        }
+        if (event.getClickedBlock().getType() == Material.DRAGON_EGG) {
+            event.setCancelled(true);
+        }
+    }
 
-		if (player.hasPermission("astrocore.staffmode")) {
-			return;
-		}
-		if (allowedCommands.contains(event.getMessage().split(" ")[0].replace("/", "").toLowerCase())) {
-			return;
-		}
-		player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");
-		event.setMessage("/null");
-		event.setCancelled(true);
-	}
 
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onFlight(PlayerToggleFlightEvent event) {
+        Player player = event.getPlayer();
+        if (player.isOp()) {
+            return;
+        }
+        if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            return;
+        }
+        if (event.isFlying()) {
+            player.setAllowFlight(false);
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+        if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            return;
+        }
+
+        if (player.isOp()) {
+            return;
+        }
+
+        if (player.hasPermission("astrocore.staffmode")) {
+            return;
+        }
+        if (allowedCommands.contains(event.getMessage().split(" ")[0].replace("/", "").toLowerCase())) {
+            return;
+        }
+        player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");
+        event.setMessage("/null");
+        event.setCancelled(true);
+    }
+
+
+    @EventHandler
+    public void PlayerSpawnMob(PlayerInteractEvent e) {
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getMaterial() == Material.MONSTER_EGG && e.getPlayer().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot use spawn eggs in the space."));
+        }
+    }
 
 
 }
