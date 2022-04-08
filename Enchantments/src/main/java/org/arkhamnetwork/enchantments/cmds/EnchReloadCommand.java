@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.cmds;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -9,16 +9,17 @@ import org.bukkit.entity.Player;
 
 public class EnchReloadCommand implements CommandExecutor {
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
 
-        Player player = (Player) commandSender;
-        if (!player.isOp())  {
-            player.sendMessage(CC.Red + "No perms.");
+        if (!sender.isOp()) {
+            sender.sendMessage(CC.Red + "No Perms.");
             return false;
         }
-        CustomConfig.reload();
-        player.sendMessage(CC.translate("&a&l(!)&a Reloaded the damage modifiers config!"));
 
+        Enchantments.getInstance().getConfigManager().reloadFiles();
+        sender.sendMessage(CC.translate("&aReloaded config..."));
+        return false;
 
-        return true;    }
+    }
+
 }

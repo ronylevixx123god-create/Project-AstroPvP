@@ -5,6 +5,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.RageUtils;
+import org.arkhamnetwork.enchantments.util.config.ConfigManager;
 import org.bukkit.plugin.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -71,7 +72,8 @@ public class Rage extends CustomEnchantment {
         if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
             Player pUser = (Player) user;
 
-            double mod = enchantLevel * 0.6 * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
+            double rageModifier = Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
+            double mod = enchantLevel * rageModifier * RageUtils.getComboOfPlayer(pUser, target instanceof Player);
 
             playRageEffect(target.getEyeLocation(), enchantLevel);
 

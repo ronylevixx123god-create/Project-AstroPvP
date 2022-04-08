@@ -16,7 +16,12 @@ public class HeroicInsanity extends HeroicCustomEnchantment
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
+        final boolean playerHAsAxe = player.getEquipment().getItemInHand().getType().name().contains("_AXE");
+
         if (!enemyHasSword) {
+            return;
+        }
+        if (!playerHAsAxe) {
             return;
         }
         if (player instanceof Player) {
@@ -24,8 +29,7 @@ public class HeroicInsanity extends HeroicCustomEnchantment
                 return;
             }
         }
-        if (Math.random() < 0.1) {
-            e.setDamage(e.getDamage() * 1.2);
-        }
+            e.setDamage(e.getDamage() * 1.4);
+
     }
 }
