@@ -199,7 +199,7 @@ public class DamageListener implements Listener {
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {
                 if (!armor.getType().name().startsWith("LEATHER_")) {
-                    dmgBuff += 40;
+                    dmgBuff += 25;
                 }
             }
             e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));

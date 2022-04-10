@@ -27,6 +27,11 @@ public class ArmorSetDamageListener implements Listener {
         if (attacker instanceof Player) {
             if (DuelAPI.isSpectator((Player) attacker)) return;
         }
+
+        if (attacker.getWorld().getName().equals("cosmic-station-vanilla")) {
+            return;
+        }
+
         if (e.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(attacked.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacker.getLocation()))
             return;
@@ -71,6 +76,9 @@ public class ArmorSetDamageListener implements Listener {
         if (e.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(attacked.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacker.getLocation()))
             return;
+        if (attacker.getWorld().getName().equals("cosmic-station-vanilla")) {
+            return;
+        }
         ArmorSetCache cache;
         if (attacker instanceof Player && attacked instanceof Player) {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");

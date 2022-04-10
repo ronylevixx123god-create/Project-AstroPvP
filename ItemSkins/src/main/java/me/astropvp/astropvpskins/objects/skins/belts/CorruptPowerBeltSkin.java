@@ -16,6 +16,8 @@ public class CorruptPowerBeltSkin extends ItemSkin {
             return;
         if (player.getLocation().getWorld().getName().equals("world_the_end"))
             return;
+        if (player.getLocation().getWorld().getName().equals("space"))
+            return;
         EnchantmentAPI.getEnchantment("Godly Overload").applyEquipEffect(player, 5);
     }
 

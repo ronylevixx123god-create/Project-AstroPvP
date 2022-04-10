@@ -3,6 +3,7 @@ package net.astropvp.giftcardshop;
 import lombok.Getter;
 import net.astropvp.giftcardshop.commands.CreateGiftcardCommand;
 import net.astropvp.giftcardshop.commands.GiftcardsCommand;
+import net.astropvp.giftcardshop.commands.ResetGiftcards;
 import net.astropvp.giftcardshop.data.LoadGiftcards;
 import net.astropvp.giftcardshop.struct.Giftcard;
 import org.bukkit.Bukkit;
@@ -22,6 +23,8 @@ public class GiftcardShopPlugin extends JavaPlugin {
         instance = this;
         getCommand("creategiftcard").setExecutor(new CreateGiftcardCommand());
         getCommand("giftcards").setExecutor(new GiftcardsCommand());
+        getCommand("resetgiftcards").setExecutor(new ResetGiftcards());
+
 
         File file = new File(this.getDataFolder() + File.separator + "data");
         if(!file.exists()) {

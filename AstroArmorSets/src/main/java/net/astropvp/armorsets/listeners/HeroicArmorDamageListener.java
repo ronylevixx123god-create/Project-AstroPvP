@@ -17,7 +17,9 @@ public class HeroicArmorDamageListener implements Listener {
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
-
+        if (e.getDamager().getWorld().getName().equals("cosmic-station-vanilla")) {
+            return;
+        }
 
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getHeroicPieces() != 0) {

@@ -19,7 +19,7 @@ import java.util.UUID;
 
 public class TrapBlockListener implements Listener {
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onPlace(BlockPlaceEvent e) {
         if (e.getPlayer() != null) {
             if (TrapBlockerItem.isTrapped(e.getPlayer().getUniqueId())) {
@@ -30,7 +30,7 @@ public class TrapBlockListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onDestroy(BlockBreakEvent e) {
         if (e.getPlayer() != null) {
             if (TrapBlockerItem.isTrapped(e.getPlayer().getUniqueId())) {
@@ -40,7 +40,7 @@ public class TrapBlockListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onDoor(PlayerInteractEvent e) {
         Action action = e.getAction();
         Block clicked = e.getClickedBlock();

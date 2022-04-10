@@ -14,6 +14,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.SkullUtils;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -86,6 +87,7 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 exp = 0;
             }
 
+
             Number lastUsed = (Number) ((Number) (objects.length > 3 ? (objects[3] instanceof Number ? objects[3] : NumberUtils.parseNumberOrNull(objects[3].toString())) : null));
             if (lastUsed == null || ((Number) lastUsed).longValue() < 0L) {
                 lastUsed = 0;
@@ -150,10 +152,14 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 return;
             }
 
+            if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(player)) {
+                player.sendMessage(CC.translate("&c&lPET: &cYou cannot use pets while you are in immunity."));
+                return;
+            }
 
-            if (player.hasMetadata("hazmatBoots")) {
-//         p.setMetadata("hazmatTime", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), TimeUnit.SECONDS.toMillis(12)));
 
+
+                if (player.hasMetadata("hazmatBoots")) {
                 //
                 long lastUse = player.getMetadata("hazmatBoots").get(0).asLong();
                 long delay = TimeUnit.SECONDS.toMillis(12);

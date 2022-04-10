@@ -13,7 +13,7 @@ import org.bukkit.entity.Player;
 public class GiftcardsCommand implements CommandExecutor {
 
     @Override
-    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] strings) {
+    public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
         if (!(commandSender instanceof Player)) return false;
         Player sender = (Player)commandSender;
 
@@ -21,6 +21,7 @@ public class GiftcardsCommand implements CommandExecutor {
             sender.sendMessage(CC.translate("&c&l(!)&c You do not have available giftcards!"));
             return false;
         }
+
 
         GiftcardMenu giftcardMenu = new GiftcardMenu(sender.getUniqueId());
         giftcardMenu.getGiftcardsMenu().open(sender);

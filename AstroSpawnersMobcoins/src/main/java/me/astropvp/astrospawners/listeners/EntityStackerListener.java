@@ -56,6 +56,8 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
+    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+
     private Map<UUID, Long> blazeCooldown;
     private final Map<UUID, Integer> playerMoneyMap;
 
@@ -161,13 +163,12 @@ public class EntityStackerListener implements Listener {
             }
 
 
-
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
-                exp*=1.25;
+                exp *= 1.25;
             }
 
             if (e.getDamager().hasPermission("astrocore.nebula")) {
-                exp*=2;
+                exp *= 2;
             }
 
             attemptGiveMoney(p);
@@ -225,11 +226,14 @@ public class EntityStackerListener implements Listener {
     public void blazeLoot(Player p) {
         double legKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("legKeyChancePercent") * 0.01; //0.01
         double astroKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroKeyChancePercent") * 0.01; //0.125
+        double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.001
 
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= legKeyChance) {
+                if (num >= 0 && num <= godlyKeyChance) {
+                    p.getInventory().addItem(godlyKey);
+                } else if (num >= 0 && num <= legKeyChance) {
                     p.getInventory().addItem(legKey);
                 } else if (num >= 0 && num <= astroKeyChance) {
                     p.getInventory().addItem(astroKey);
@@ -241,17 +245,17 @@ public class EntityStackerListener implements Listener {
 
     public void attemptGiveMoney(Player player) {
         UUID uuid = player.getUniqueId();
-        double blazeRodPrice = 28.75;
+        double blazeRodPrice = 12;
         if (this.playerMoneyMap.containsKey(uuid)) {
             int current = this.playerMoneyMap.get(uuid);
-            this.playerMoneyMap.put(uuid, current+1);
+            this.playerMoneyMap.put(uuid, current + 1);
         } else {
             this.playerMoneyMap.put(uuid, 1);
         }
         if (this.playerMoneyMap.get(uuid) >= 10) {
             this.playerMoneyMap.put(uuid, 0);
-            EconomyUtils.depositBalance(player, blazeRodPrice*10);
-            player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(blazeRodPrice*10)));
+            EconomyUtils.depositBalance(player, blazeRodPrice * 10);
+            player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(blazeRodPrice * 10)));
             player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
 
         }

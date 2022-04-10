@@ -14,6 +14,9 @@ public class OmniArmorDamageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
+        if (e.getDamager().getWorld().getName().equals("cosmic-station-vanilla")) {
+            return;
+        }
         Player player = ((Player) e.getEntity()).getPlayer();
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
@@ -26,6 +29,9 @@ public class OmniArmorDamageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGH)
     public void increaseDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
+        if (e.getDamager().getWorld().getName().equals("cosmic-station-vanilla")) {
+            return;
+        }
         Player player = ((Player) e.getEntity()).getPlayer();
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {

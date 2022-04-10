@@ -143,7 +143,6 @@ public class InventoryBloodhoundPet extends InventoryPet {
       }
 
       petItem.setLastUsed(System.currentTimeMillis());
-      player.chat("/f t " + pTarget.getName());
       pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
       pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));
       pTarget.setMetadata("bloodhound", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));

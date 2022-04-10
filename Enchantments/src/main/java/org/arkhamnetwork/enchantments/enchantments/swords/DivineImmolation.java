@@ -39,7 +39,7 @@ public class DivineImmolation extends CustomEnchantment
 
         final Player p = (Player)player;
         double radius = 1.0 * level;
-        double damage = Math.floor((level*1.5));
+        double damage = Math.floor((level));
 
         if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
             radius += 2.0;
@@ -88,11 +88,6 @@ return;
             damage *= player.getMetadata("soulEnchantMultiplier").get(0).asDouble();
         }
 
-
-        if (!GeneralUtil.isSword(p.getItemInHand())) {
-
-            return;
-        }
 
         if (playerHit instanceof Player) {
 

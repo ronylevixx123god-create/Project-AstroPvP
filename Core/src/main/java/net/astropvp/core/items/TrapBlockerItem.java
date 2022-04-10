@@ -127,7 +127,7 @@ public class TrapBlockerItem extends CosmicItem
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                         trappedPlayers.remove(p.getUniqueId());
                         p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
-                    }, 300L);
+                    }, 20 *15);
 
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                         trappedPlayersCooldown.remove(p.getUniqueId());

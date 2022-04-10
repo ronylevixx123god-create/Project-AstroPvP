@@ -59,6 +59,7 @@ import java.util.ArrayList;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -113,6 +114,13 @@ implements Listener {
         if (e.getCause() == EntityDamageEvent.DamageCause.FALL && CosmicOutpostsAPI.getOutpost(e.getEntity()) != null) {
             e.setCancelled(true);
             e.setDamage(0.0);
+        }
+    }
+
+    @EventHandler
+    public void blockTraineeEnchants(CustomEnchantProcOnEntityEvent e) {
+        if (e.getPlayer().getWorld().getName().equals("cosmic-station-vanilla")) {
+            e.setCancelled(true);
         }
     }
 

@@ -24,7 +24,7 @@ final class DivineImmolationListener implements Listener {
             }
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000) {
                 final LivingEntity le = (LivingEntity) e.getEntity();
-                double damage = Math.min(4, 4 + enchantLevel) / 4.0;
+                double damage = Math.min(4, 6) / 4.0;
                 if (le instanceof Player) {
                     if (le.hasMetadata("reflectDivineTicks")) {
                         GeneralUtil.healPlayer(le, damage);

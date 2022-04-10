@@ -39,9 +39,9 @@ public class GrinderCustomBlockGUI {
         int level = data.getLevel();
         int price = 0;
         if (level == 0) {
-            price = 50000000;
+            price = 15000000;
         } else if (level == 1) {
-            price = 100000000;
+            price = 50000000;
         } else if (level == 2) {
             price = 250000000;
         }

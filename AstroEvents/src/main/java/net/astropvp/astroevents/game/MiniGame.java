@@ -204,7 +204,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
     public void giveWinnerRewards(Player player) {
         this.getRewardCommands().forEach(command -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), command.replace("{player}", player.getName())));
         try {
-            if (Math.random() < 0.2) {
+            if (Math.random() < 0.1) {
                 GiftcardAPI.createGiftCard(player, 10);
             } else {
                player.sendMessage(CC.translate("&c&l(!)&c Unfortunately you didn't get a 5$ Buycraft Giftcard, better luck next time!"));

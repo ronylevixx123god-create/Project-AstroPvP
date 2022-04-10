@@ -1,4 +1,5 @@
 legKeyChancePercent: 1
 astroKeyChancePercent: 13
+godlyKeyChancePercent: 0.1
 baseXp: 150
 showGrindParticles: true
