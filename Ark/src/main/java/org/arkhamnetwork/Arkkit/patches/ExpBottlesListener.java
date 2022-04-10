@@ -89,8 +89,8 @@ final class ExpBottlesListener
             Player p = e.getPlayer();
             int xpValue = ExpBottles.getXpAmount(e.getItem()) * e.getItem().getAmount();
             e.setCancelled(true);
-            e.setUseInteractedBlock(Event.Result.DENY);
-            e.setUseItemInHand(Event.Result.DENY);
+            //e.setUseInteractedBlock(Event.Result.DENY);
+            //e.setUseItemInHand(Event.Result.DENY);
             p.setItemInHand(null);
             int exp = (p.getTotalExperience() +xpValue);
             p.setTotalExperience(0);

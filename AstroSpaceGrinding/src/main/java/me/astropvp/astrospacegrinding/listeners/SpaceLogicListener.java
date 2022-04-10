@@ -39,7 +39,7 @@ public class SpaceLogicListener implements Listener {
 
     static {
         allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots"));
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters"));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -100,7 +100,7 @@ public class SpaceLogicListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {

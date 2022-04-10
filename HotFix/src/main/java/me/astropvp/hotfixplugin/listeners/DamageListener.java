@@ -115,7 +115,7 @@ public class DamageListener implements Listener {
                     e.setDamage(e.getDamage() * 0.75);
                 }
             } else {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, e, "EnchantReduction");
 
             }
         }
@@ -192,14 +192,11 @@ public class DamageListener implements Listener {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
             if (((Player) e.getDamager()).getItemInHand() == null) return;
-            if (EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand()).size() < 6) {
-                return;
-            }
             double dmgBuff = 0;
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {
                 if (!armor.getType().name().startsWith("LEATHER_")) {
-                    dmgBuff += 25;
+                    dmgBuff += 1500;
                 }
             }
             e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));

@@ -57,6 +57,7 @@ public class EntityStackerListener implements Listener {
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
     private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+    private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
 
     private Map<UUID, Long> blazeCooldown;
     private final Map<UUID, Integer> playerMoneyMap;
@@ -70,6 +71,7 @@ public class EntityStackerListener implements Listener {
             this.blazeCooldown.clear();
         }, 10, 5 * 20 * 60);
         this.playerMoneyMap = new HashMap<>();
+        this.cachedWeaponEnchants = new HashMap<>();
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -100,7 +102,17 @@ public class EntityStackerListener implements Listener {
             int remove = 1;
 
             if (((Player) e.getDamager()).getItemInHand() != null) {
-                Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand());
+                Map<CustomEnchantment, Integer> enchants;
+                UUID uuid = e.getDamager().getUniqueId();
+                if (cachedWeaponEnchants.containsKey(uuid)) {
+                    enchants = cachedWeaponEnchants.get(e.getDamager().getUniqueId());
+                } else {
+                    enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand());
+                    cachedWeaponEnchants.put(uuid, enchants);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+                        cachedWeaponEnchants.remove(uuid);
+                    }, 60*20L);
+                }
 
                 if (enchants.containsKey(EnchantmentAPI.getEnchantment("Master Inquisitive"))) {
                     exp += 150;
@@ -245,7 +257,7 @@ public class EntityStackerListener implements Listener {
 
     public void attemptGiveMoney(Player player) {
         UUID uuid = player.getUniqueId();
-        double blazeRodPrice = 12;
+        double blazeRodPrice = 22;
         if (this.playerMoneyMap.containsKey(uuid)) {
             int current = this.playerMoneyMap.get(uuid);
             this.playerMoneyMap.put(uuid, current + 1);
