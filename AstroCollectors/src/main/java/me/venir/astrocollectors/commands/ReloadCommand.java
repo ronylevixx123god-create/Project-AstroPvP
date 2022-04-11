@@ -1,5 +1,6 @@
 package me.venir.astrocollectors.commands;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.venir.astrocollectors.AstroCollectors;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -11,6 +12,8 @@ public class ReloadCommand implements CommandExecutor {
         AstroCollectors.INSTANCE.getConfigManager().reloadFiles();
         AstroCollectors.INSTANCE.getSpawnerUtil().reloadTntIncomeValue();
         AstroCollectors.INSTANCE.getSpawnerUtil().reloadMobIncomeMap();
+        sender.sendMessage(CC.Green + "Reloaded config");
+
         return true;
     }
 }

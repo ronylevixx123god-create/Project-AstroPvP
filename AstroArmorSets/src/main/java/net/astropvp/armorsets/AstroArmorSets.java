@@ -8,14 +8,16 @@ import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
 import net.astropvp.armorsets.items.OmniCrystal;
 import net.astropvp.armorsets.listeners.*;
+import net.astropvp.armorsets.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class AstroArmorSets extends JavaPlugin {
     @Getter
     private static AstroArmorSets instance;
+    @Getter
+    private ConfigManager configManager;
 
-    public static double CUSTOM_SET_MULTIPLIER = 2;
     public static double OMNI_MULTIPLIER = 10;
 
 
@@ -27,12 +29,17 @@ public class AstroArmorSets extends JavaPlugin {
         registerCommands();
         registerListeners();
         registerCustomItems();
+
+        this.configManager = new ConfigManager(this);
+        this.configManager.setupFiles();
+
         System.out.println("[AstroArmorSets] Plugin has been enabled!");
     }
 
 
     public void onDisable() {
         System.out.println("[AstroArmorSets] Plugin has been disabled!");
+        this.configManager = null;
         instance = null;
     }
 
@@ -42,6 +49,8 @@ public class AstroArmorSets extends JavaPlugin {
         getCommand("heroicupgrade").setExecutor(new CommandGiveHeroicUpgrade());
         getCommand("debugarmorsets").setExecutor(new CommandDebugArmorSet());
         getCommand("armorsets").setExecutor(new CommandOpenGUI());
+        getCommand("aarmorset").setExecutor(new CommandAdminArmorSet());
+
 
 
     }

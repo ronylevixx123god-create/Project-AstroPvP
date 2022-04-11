@@ -12,6 +12,7 @@ import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
+import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
@@ -51,20 +52,20 @@ public class AncientArmorSet extends ArmorSet {
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         double reductionPercent = 3;
-        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * 0.01));
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease") * 0.01));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         double reductionPercent = 35;
-        event.setDamage(event.getDamage() * 1 - (reductionPercent * 0.01));
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease") * 0.01));
         attacked.setVelocity(attacked.getVelocity().multiply(0.8));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 35;
-        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
+        event.setDamage(event.getDamage() * 1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01));
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
@@ -75,7 +76,7 @@ public class AncientArmorSet extends ArmorSet {
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 7;
-        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01));
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;

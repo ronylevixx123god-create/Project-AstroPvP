@@ -27,6 +27,7 @@ public class Move implements Listener {
       Location toLocation = event.getTo();
       WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
       if (wildPvPManager.hasWildPvP(player)) {
+         if (player.isOp()) return;
          WildPvP wildPvP = wildPvPManager.getWildPvP(player);
          if (fromLocation.getChunk().getX() == wildPvP.getChunk().getX() && fromLocation.getChunk().getZ() == wildPvP.getChunk().getZ() && (toLocation.getChunk().getX() != wildPvP.getChunk().getX() || toLocation.getChunk().getZ() != wildPvP.getChunk().getZ())) {
             Location location = player.getLocation().clone().add(fromLocation.toVector().subtract(toLocation.toVector()).normalize().multiply(2.0D));
@@ -49,6 +50,7 @@ public class Move implements Listener {
          Location toLocation = event.getTo();
          WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
          if (wildPvPManager.hasWildPvP(toLocation.getChunk())) {
+            if (player.isOp()) return;
             WildPvP wildPvP = wildPvPManager.getWildPvP(toLocation.getChunk());
             if (!wildPvP.isParticipant(player)) {
                Location location = player.getLocation().clone().add(fromLocation.toVector().subtract(toLocation.toVector()).normalize().multiply(2.0D));
