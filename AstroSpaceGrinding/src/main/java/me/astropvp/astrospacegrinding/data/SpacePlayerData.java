@@ -21,7 +21,7 @@ public class SpacePlayerData {
 	private final long when_created;
 	private double moneyMade;
 	private double xpMade;
-	
+
 	public SpacePlayerData(Player player) {
 		this.player = player.getName();
 		this.kills = Maps.newHashMap();
@@ -74,6 +74,9 @@ public class SpacePlayerData {
 	public void addMoney(double money) {
 		moneyMade += money;
 	}
+
+
+
 
 	public void addXp(double xp) {
 		xpMade += xp;

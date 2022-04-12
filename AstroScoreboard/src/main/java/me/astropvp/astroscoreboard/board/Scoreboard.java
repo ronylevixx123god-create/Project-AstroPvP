@@ -9,8 +9,10 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import com.sk89q.worldedit.internal.expression.runtime.For;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astroscoreboard.utils.TimeUtils;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospawners.AstroSpawners;
@@ -449,16 +451,25 @@ public class Scoreboard implements BoardAdapter {
 
         if (player.getLocation().getWorld().getName().equals("space")) {
             SpacePlayerData data = SpacePlayerData.findPlayer(player);
+            ForceFieldData fdata = ForceFieldData.findPlayer(player);
             List<String> board = new LinkedList<>();
             board.add("");
             board.add(CC.translate("&3&lAccount"));
             board.add(player.getName());
+            board.add("");
+            board.add(CC.translate("&b&lForcefield"));
+            if (fdata.isActive()) {
+                board.add(CC.translate("&aActive &7(" + fdata.getRemainingForceFieldTimeFormatted() + "&7)"));
+            } else {
+                board.add(CC.translate("&cInactive"));
+            }
             board.add("");
             board.add(CC.translate("&b&lStats"));
             board.add(CC.translate("&8» &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN)));
             board.add(CC.translate("&8» &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace())));
             board.add(CC.translate("&8» &7Money Made: &3$&b" + NumberUtils.formatMoney(data.getMoneyMade())));
             board.add(CC.translate("&8» &7XP Earned:&b " + NumberUtils.formatMoney(data.getXpMade())));
+
             board.add(CC.translate(""));
             board.add(CC.Gray + "play.astropvp.net");
             return board;
@@ -734,7 +745,6 @@ public class Scoreboard implements BoardAdapter {
         } else {
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
             board.add(CC.Gray + "play.astropvp.net");
-
         }
 
         /*board.add("");

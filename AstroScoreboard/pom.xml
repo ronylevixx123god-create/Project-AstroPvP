@@ -122,7 +122,7 @@
         <!-- System repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>MCMsMO</artifactId>
+            <artifactId>MCMsMOs</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>

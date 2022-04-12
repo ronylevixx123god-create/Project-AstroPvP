@@ -1,5 +1,8 @@
 package me.astropvp.hotfixplugin;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
+import com.massivecraft.factions.util.Clickable;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.hotfixplugin.listeners.*;
 
@@ -30,6 +33,19 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
         }, 400L, 400);
+
+
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            Clickable spaceClickable = new Clickable("");
+            spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
+            for (Player player : Bukkit.getOnlinePlayers()) {
+                player.sendMessage("");
+                player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &7&lG&f&li&7&lv&f&le&7&ln&f&lc&7&lh&f&ly &6on the store.")));
+                spaceClickable.sendToPlayer(player);
+                player.sendMessage("");
+
+            }
+        }, 40L, 5*20*60);
     }
 
     @Override

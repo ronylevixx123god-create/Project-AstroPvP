@@ -1,64 +1,109 @@
 package me.astropvp.astrospacegrinding.gui;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import lombok.Getter;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
+import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
+import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class SpaceGUI {
-        @Getter
-        private final PaginatedGui spaceGUI;
+    @Getter
+    private final PaginatedGui spaceGUI;
 
-        public SpaceGUI(SpacePlayerData spacePlayerData) {
-            Player player = spacePlayerData.getPlayer();
-            this.spaceGUI = new PaginatedGui(5, "Space Menu");
+    public SpaceGUI(SpacePlayerData spacePlayerData) {
+        Player player = spacePlayerData.getPlayer();
+        this.spaceGUI = new PaginatedGui(5, "Space Menu");
 
-            this.spaceGUI.setDefaultClickAction(event -> event.setCancelled(true));
-            player.sendMessage(CC.translate("&a&l(!)&a Opening the space menu..."));
+        this.spaceGUI.setDefaultClickAction(event -> event.setCancelled(true));
+        player.sendMessage(CC.translate("&a&l(!)&a Opening the space menu..."));
 
-            spaceGUI.getFiller().fillBorder(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).name(CC.translate("&7")).build()));
-            ItemStack infoItem = new ItemBuilder(Material.BOOK, CC.translate("&b&lSpace Warp"))
-                    .addLoreLine(CC.translate("&7The space lands have been invaded by numerous"))
-                    .addLoreLine(CC.translate("&7weird creatures. &bAstronauts&7 team up to try and"))
-                    .addLoreLine(CC.translate("&7fight against these monsters."))
-                    .addLoreLine("")
-                    .addLoreLine(CC.translate("&7The creatures have already invaded certain"))
-                    .addLoreLine(CC.translate("&7spots in the space lands. Fight the monsters"))
-                    .addLoreLine(CC.translate("&7to obtain some of the &bbest items&7 in the universe."))
-                    .addLoreLine("")
-                    .addLoreLine(CC.translate("&7Once you are in the space lands, you can"))
-                    .addLoreLine(CC.translate("&7type &b/space stats&7 to view your space stats."))
-                    .addLoreLine("")
-                    .addLoreLine(CC.translate("&dHeroic Enchantments&7 &7and &6Holy Whitescrolls&7."))
-                    .addLoreLine(CC.translate("&7are disabled in the space lands."))
-                    .addLoreLine("")
-                    .addLoreLine(CC.translate("&7&nClick here&7 to teleport to the space lands."))
-                    .build();
-
-            this.spaceGUI.setItem(3, 4, new GuiItem(infoItem, event -> {
-                player.chat("/warp space");
-            }));
+        spaceGUI.getFiller().fillBorder(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 8)).name(CC.translate("&7")).build()));
+        ItemStack infoItem = new ItemBuilder(Material.BOOK, CC.translate("&b&lSpace Warp"))
+                .addLoreLine(CC.translate("&7The space lands have been invaded by numerous"))
+                .addLoreLine(CC.translate("&7weird creatures. &bAstronauts&7 team up to try and"))
+                .addLoreLine(CC.translate("&7fight against these monsters."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7The creatures have already invaded certain"))
+                .addLoreLine(CC.translate("&7spots in the space lands. Fight the monsters"))
+                .addLoreLine(CC.translate("&7to obtain some of the &bbest items&7 in the universe."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7Once you are in the space lands, you can"))
+                .addLoreLine(CC.translate("&7type &b/space stats&7 to view your space stats."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&dHeroic Enchantments&7 &7and &6Holy Whitescrolls&7."))
+                .addLoreLine(CC.translate("&7are disabled in the space lands."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7&nClick here&7 to teleport to the space lands."))
+                .build();
 
 
-            ItemStack lootItem = new ItemBuilder(Material.CHEST, CC.translate("&6&lPossible Loot"))
-                    .addLoreLine(CC.translate("&7Possible loot you can get from killing"))
-                    .addLoreLine(CC.translate("&7space creatures in the space lands."))
-                    .addLoreLine("")
-                    .addLoreLine(CC.translate("&7&nClick here&7 to view the loot."))
-                    .build();
+        ItemStack forceField = new ItemBuilder(Material.DIAMOND_SWORD, CC.translate("&e&lPurchase Forcefield"))
+                .addLoreLine(CC.translate("&7You can buy forcefield to grind peacefully"))
+                .addLoreLine(CC.translate("&7without having to worry about enemies."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7While you have an active forcefield you cannot"))
+                .addLoreLine(CC.translate("&7hit or be hit by enemy faction players."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&e&l* Price: &f$" + NumberUtils.formatMoney(AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("forceFieldPrice")) + "/30 minutes"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7&nClick here&7 to purchase 30 minutes of forcefield."))
+                .build();
 
-            this.spaceGUI.setItem(3, 6, new GuiItem(lootItem, event -> {
-                player.openInventory(AstroSpaceGrindingAPI.getLootInventory(MonsterType.SPACE_ALIEN));
-            }));
-        }
+        this.spaceGUI.setItem(3, 3, new GuiItem(infoItem, event -> {
+            player.chat("/warp space");
+        }));
 
+        this.spaceGUI.setItem(3, 5, new GuiItem(forceField, event -> {
+            if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+                player.sendMessage(CC.translate("&b&l(!)&b You can only enable &f&lFORCEFIELD&b in the space warp."));
+                return;
+            }
+
+            if (CombatLog.inCombat(player)) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot purchase a forcefield while in combat!"));
+                return;
+            }
+
+            if (ForceFieldData.findPlayer(player).isActive()) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot purchase a forcefield while you already have an active forcefield!"));
+                return;
+            }
+
+            double price = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("forceFieldPrice");
+
+            if (EconomyUtils.hasBalance(player, price)) {
+                player.sendMessage(CC.translate("&b&l(!)&b You have purchased a forcefield. This will last for &f&l30 MINUTES&b. During this time you cannot hit or be hit by enemies."));
+                EconomyUtils.withdrawBalance(player, price);
+                ForceFieldData.findPlayer(player).activateShield();
+            } else {
+                player.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate the forcefield."));
+            }
+        }));
+
+
+        ItemStack lootItem = new ItemBuilder(Material.CHEST, CC.translate("&6&lPossible Loot"))
+                .addLoreLine(CC.translate("&7Possible loot you can get from killing"))
+                .addLoreLine(CC.translate("&7space creatures in the space lands."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7&nClick here&7 to view the loot."))
+                .build();
+
+        this.spaceGUI.setItem(3, 7, new GuiItem(lootItem, event -> {
+            player.openInventory(AstroSpaceGrindingAPI.getLootInventory(MonsterType.SPACE_ALIEN));
+        }));
+    }
 
 
 }

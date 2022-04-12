@@ -6,7 +6,9 @@ import java.util.List;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.sk89q.worldedit.internal.expression.runtime.For;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.bukkit.*;
@@ -63,7 +65,9 @@ public class SpaceLogicListener implements Listener {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space Lands, "
                     + "you have lost your /space stats!");
             player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);
+            ForceFieldData.remove(player);
             SpacePlayerData.remove(player);
+
         }
     }
 
@@ -81,6 +85,32 @@ public class SpaceLogicListener implements Listener {
         }
         if (event.getClickedBlock().getType() == Material.DRAGON_EGG) {
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onForcefieldDamage(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            Player damaged = (Player) e.getEntity();
+            if (!damager.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName()) || !damaged.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+                return;
+            }
+
+            SpacePlayerData dataDamager = SpacePlayerData.findPlayer(damager);
+            SpacePlayerData dataDamaged = SpacePlayerData.findPlayer(damaged);
+
+            if (ForceFieldData.findPlayer(dataDamager.getPlayer()).isActive()) {
+                e.setCancelled(true);
+                damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() +   " because you are still on &f&lFORCEFIELD &bprotection."));
+                damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);
+            }
+
+            if (ForceFieldData.findPlayer(dataDamaged.getPlayer()).isActive()) {
+                e.setCancelled(true);
+                damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() + " because he is still on &f&lFORCEFIELD &bprotection."));
+                damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);
+            }
         }
     }
 
