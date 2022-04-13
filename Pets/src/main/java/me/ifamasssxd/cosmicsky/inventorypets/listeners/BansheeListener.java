@@ -24,7 +24,13 @@ public class BansheeListener implements Listener {
             return;
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
-            if (damager.hasMetadata("banshee_active")) {
+            if (damager.hasMetadata("mutated_banshee")) {
+                if (LunaArmorSet.isLunaStriked((Player) event.getEntity())) return;
+                if (!event.getEntity().hasMetadata("bloodHoundNoBless") && !event.getDamager().hasMetadata("bloodHoundNoBless")) {
+                    event.setDamage(event.getDamage() * 1.6);
+                }
+                damager.sendMessage(CC.translate("&a&l** &2&l&nMUTATED&r &a&lBANSHEE PET &8➥ &22x DMG &a&l**"));
+            } else if (damager.hasMetadata("banshee_active")) {
                 if (LunaArmorSet.isLunaStriked((Player) event.getEntity())) return;
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless") && !event.getDamager().hasMetadata("bloodHoundNoBless")) {
                     event.setDamage(event.getDamage() * 1.3);
@@ -43,7 +49,8 @@ public class BansheeListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player) event.getDamager();
             if (event.getEntity().hasMetadata("banshee_Scrolls")) return;
-            if ((((SpinalTab)SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(damager.getName())) return;
+            if ((((SpinalTab) SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(damager.getName()))
+                return;
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) event.getEntity(), SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced((Player) event.getEntity())) && Math.random() < 0.002) {
                 event.getEntity().sendMessage(CC.translate("&e&l* WITCH HAT &7Activated &4Banshee Pet &7on&f " + damager.getName() + " &e&l*"));
                 damager.sendMessage(CC.translate("&e&l* &f" + event.getEntity().getName() + " &e&lWITCH HAT &4Banshee Pet &7Ability &e&l*"));

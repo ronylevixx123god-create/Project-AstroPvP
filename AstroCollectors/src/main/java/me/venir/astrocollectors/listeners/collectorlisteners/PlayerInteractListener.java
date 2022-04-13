@@ -2,6 +2,7 @@ package me.venir.astrocollectors.listeners.collectorlisteners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.PermissibleAction;
@@ -56,7 +57,10 @@ public class PlayerInteractListener  implements Listener {
             }
 
             if (player.isSneaking()) {
+                if (collector.getWorth() == 0) return;
+                collector.addMobDropSellLog(player, collector.getWorth());
                 collector.sellWorth(player);
+                player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(collector.getWorth())));
                 return;
             }
 

@@ -18,9 +18,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityPortalEnterEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
@@ -102,7 +100,7 @@ public class SpaceLogicListener implements Listener {
 
             if (ForceFieldData.findPlayer(dataDamager.getPlayer()).isActive()) {
                 e.setCancelled(true);
-                damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() +   " because you are still on &f&lFORCEFIELD &bprotection."));
+                damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() + " because you are still on &f&lFORCEFIELD &bprotection."));
                 damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);
             }
 
