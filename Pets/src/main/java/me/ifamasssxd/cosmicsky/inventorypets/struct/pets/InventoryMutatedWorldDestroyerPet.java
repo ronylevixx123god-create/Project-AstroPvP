@@ -10,6 +10,7 @@ import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -115,7 +116,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
             }
         }
 
-        if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+        if (MaskType.hasEquipped(player, "ELF")) {
             cageDuration = 10;
         } else {
             cageDuration = 7.5;

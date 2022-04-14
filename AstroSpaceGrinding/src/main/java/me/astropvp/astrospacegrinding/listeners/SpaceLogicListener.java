@@ -61,7 +61,7 @@ public class SpaceLogicListener implements Listener {
             }
             SpacePlayerData.remove(player);
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space Lands, "
-                    + "you have lost your /space stats!");
+                    + "you have lost your /space stats and your forcefield if you had one!");
             player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);
             ForceFieldData.remove(player);
             SpacePlayerData.remove(player);

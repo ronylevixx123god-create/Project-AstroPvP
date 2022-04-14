@@ -16,6 +16,7 @@ import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -130,7 +131,7 @@ public class InventoryMutatedBansheePet extends InventoryPet {
         int duration;
 
 
-        if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+        if (MaskType.hasEquipped(player, "ELF")) {
             duration = 14;
         } else {
             duration = 10;

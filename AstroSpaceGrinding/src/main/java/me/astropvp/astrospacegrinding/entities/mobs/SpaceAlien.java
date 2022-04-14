@@ -12,6 +12,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
@@ -40,104 +41,114 @@ import org.bukkit.potion.PotionEffectType;
 
 
 public class SpaceAlien extends SpaceMonster {
-	
-	@Override
-	public LivingEntity spawn(Location location) {
 
-		Zombie entity = (Zombie) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.ZOMBIE);
-		entity.setCustomName(CC.GreenB + "Space Alien");
-		AstroSpaceGrindingPlugin.activeMonsters.remove(entity.getUniqueId());
+    @Override
+    public LivingEntity spawn(Location location) {
 
-		entity.setRemoveWhenFarAway(false);
-		entity.setCustomNameVisible(true);
-		entity.setCanPickupItems(false);
+        Zombie entity = (Zombie) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.ZOMBIE);
+        entity.setCustomName(CC.GreenB + "Space Alien");
+        AstroSpaceGrindingPlugin.activeMonsters.remove(entity.getUniqueId());
 
-		entity.getEquipment().setHelmet(new ItemBuilder(new ItemStack(Material.GLASS, 1, (short)95))
-				.enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
-				.enchant(Enchantment.DURABILITY, 3).build());
-		entity.setMaxHealth(12.5);
-		entity.setHealth(entity.getMaxHealth());
-		entity.getEquipment().setChestplate(new ItemBuilder(Material.IRON_CHESTPLATE)
-		.enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
-		.enchant(Enchantment.DURABILITY, 3).build());
-		entity.getEquipment().setLeggings(new ItemBuilder(Material.IRON_LEGGINGS)
-		.enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
-		.enchant(Enchantment.DURABILITY, 3).build());
-		entity.getEquipment().setBoots(new ItemBuilder(Material.IRON_BOOTS)
-		.enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
-		.enchant(Enchantment.DURABILITY, 3).build());
-		entity.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD)
-		.enchant(Enchantment.DAMAGE_ALL, 5)
-		.enchant(Enchantment.DURABILITY, 3).build());
-		entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 2));
-		entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 3));
-		if (entity.getEquipment() != null) {
-			entity.getEquipment().setItemInHandDropChance(0.0F);
-			entity.getEquipment().setHelmetDropChance(0.0F);
-			entity.getEquipment().setChestplateDropChance(0.0F);
-			entity.getEquipment().setLeggingsDropChance(0.0F);
-			entity.getEquipment().setBootsDropChance(0.0F);
-		}
+        entity.setRemoveWhenFarAway(false);
+        entity.setCustomNameVisible(true);
+        entity.setCanPickupItems(false);
 
-		AstroSpaceGrindingPlugin.activeMonsters.put(entity.getUniqueId(), MonsterType.SPACE_ALIEN);
+        entity.getEquipment().setHelmet(new ItemBuilder(new ItemStack(Material.GLASS, 1, (short) 95))
+                .enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
+                .enchant(Enchantment.DURABILITY, 3).build());
+        entity.setMaxHealth(12.5);
+        entity.setHealth(entity.getMaxHealth());
+        entity.getEquipment().setChestplate(new ItemBuilder(Material.IRON_CHESTPLATE)
+                .enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
+                .enchant(Enchantment.DURABILITY, 3).build());
+        entity.getEquipment().setLeggings(new ItemBuilder(Material.IRON_LEGGINGS)
+                .enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
+                .enchant(Enchantment.DURABILITY, 3).build());
+        entity.getEquipment().setBoots(new ItemBuilder(Material.IRON_BOOTS)
+                .enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
+                .enchant(Enchantment.DURABILITY, 3).build());
+        entity.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD)
+                .enchant(Enchantment.DAMAGE_ALL, 5)
+                .enchant(Enchantment.DURABILITY, 3).build());
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 2));
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 3));
+        if (entity.getEquipment() != null) {
+            entity.getEquipment().setItemInHandDropChance(0.0F);
+            entity.getEquipment().setHelmetDropChance(0.0F);
+            entity.getEquipment().setChestplateDropChance(0.0F);
+            entity.getEquipment().setLeggingsDropChance(0.0F);
+            entity.getEquipment().setBootsDropChance(0.0F);
+        }
 
-		return entity;
-	}
+        AstroSpaceGrindingPlugin.activeMonsters.put(entity.getUniqueId(), MonsterType.SPACE_ALIEN);
 
-	
-	@Override
-	public List<ItemStack> getRewards(Player player) {
-		List<ItemStack> rewards = Lists.newArrayList();
-		SpacePlayerData data = SpacePlayerData.findPlayer(player);
-		Random random = new Random();
+        return entity;
+    }
 
 
-
-		if (Math.random() < 0.5) {
-			int maxMoney = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxMoney");
-			int minMoney = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMinMoney");
-			int randomNumberMoney = random.nextInt(maxMoney - minMoney + 1) + minMoney;
-			player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(randomNumberMoney)));
-			EconomyUtils.depositBalance(player, randomNumberMoney);
-			player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
-			data.addMoney(randomNumberMoney);
-
-		} else {
-			int maxXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxXP");
-			int minXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMinXP");
-			int randomNumberXP = random.nextInt(maxXP - minXP + 1) + minXP;
-			player.sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(randomNumberXP)) + " xp");
-			player.giveExp(randomNumberXP);
-			player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
-			data.addXp(randomNumberXP);
-
-		}
+    @Override
+    public List<ItemStack> getRewards(Player player) {
+        List<ItemStack> rewards = Lists.newArrayList();
+        SpacePlayerData data = SpacePlayerData.findPlayer(player);
+        Random random = new Random();
 
 
-		Map<ItemStack, Double> loot = AstroSpaceGrindingPlugin.cachedCrateLoot.get(MonsterType.SPACE_ALIEN);
-		double chance = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienRewardChance");
-		if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SUMMER_2021_BELT)){
-			chance *= 1.30;
-		}
-		if(Math.random() < chance/100) {
-			rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
-			if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET)) {
-				rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
-			}
-		}
-		return rewards;
-	}
-	
-	@Override
-	public void onDeath(EntityDeathEvent event, SpacePlayerData killer) {
-		AstroSpaceGrindingPlugin.activeMonsters.remove(event.getEntity().getUniqueId());
+        if (Math.random() < 0.5) {
+            int maxMoney = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxMoney");
+            int minMoney = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMinMoney");
+            int randomNumberMoney = random.nextInt(maxMoney - minMoney + 1) + minMoney;
+            if (ForceFieldData.findPlayer(player).isActive()) {
+                randomNumberMoney *= 0.7;
+            }
+            player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(randomNumberMoney)));
+            EconomyUtils.depositBalance(player, randomNumberMoney);
+            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+            data.addMoney(randomNumberMoney);
 
-	}
+        } else {
+            int maxXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxXP");
+            int minXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMinXP");
+            int randomNumberXP = random.nextInt(maxXP - minXP + 1) + minXP;
+            if (ForceFieldData.findPlayer(player).isActive()) {
+                randomNumberXP *= 0.70;
+            }
+            player.sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(randomNumberXP)) + " xp");
+            player.giveExp(randomNumberXP);
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+            data.addXp(randomNumberXP);
 
-	@Override
-	public void onPlayerDamageMob(EntityDamageByEntityEvent event, Player attacker) {
-		ActionBarMessageUtils.sendMessage(attacker, CC.translate("&a&lSpace Alien &7(&f" + Math.round(((LivingEntity)event.getEntity()).getHealth()) + "/" +  Math.round(((LivingEntity)event.getEntity()).getMaxHealth()) + " HP&7) "));
-	}
+        }
 
 
-	}
+        Map<ItemStack, Double> loot = AstroSpaceGrindingPlugin.cachedCrateLoot.get(MonsterType.SPACE_ALIEN);
+        double chance = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienRewardChance");
+        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SUMMER_2021_BELT)) {
+            chance *= 1.30;
+        }
+
+        if (ForceFieldData.findPlayer(player).isActive()) {
+            chance *= 0.70;
+        }
+
+        if (Math.random() < chance / 100) {
+            rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
+            if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET)) {
+                rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
+            }
+        }
+        return rewards;
+    }
+
+    @Override
+    public void onDeath(EntityDeathEvent event, SpacePlayerData killer) {
+        AstroSpaceGrindingPlugin.activeMonsters.remove(event.getEntity().getUniqueId());
+
+    }
+
+    @Override
+    public void onPlayerDamageMob(EntityDamageByEntityEvent event, Player attacker) {
+        ActionBarMessageUtils.sendMessage(attacker, CC.translate("&a&lSpace Alien &7(&f" + Math.round(((LivingEntity) event.getEntity()).getHealth()) + "/" + Math.round(((LivingEntity) event.getEntity()).getMaxHealth()) + " HP&7) "));
+    }
+
+
+}

@@ -7,6 +7,8 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import org.bukkit.entity.Player;
@@ -36,7 +38,7 @@ public class PetLeashListener implements Listener {
                 if (petItem.isLeashed()) {
                     petItem.setLeashed(false);
                     event.getDrops().set(i, petItem.build());
-                    if (event.getEntity().getKiller() != null && event.getEntity().getKiller() instanceof Player && MaskUtils.hasMaskEquipped(event.getEntity().getKiller(), "ANIMAL_CONTROL") && Math.random() < 0.33D) {
+                    if (event.getEntity().getKiller() != null && event.getEntity().getKiller() instanceof Player && MaskType.hasEquipped(event.getEntity().getKiller(), "ANIMAL_CONTROL") && Math.random() < 0.33D) {
                         Player killer = event.getEntity().getKiller();
                         event.getEntity().sendMessage(CC.RedB + "* ANIMAL CONTROL MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(item) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* ANIMAL CONTROL MASK [" + CC.Gray + event.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(item) + CC.Gray + ")" + CC.GreenB + "] *");

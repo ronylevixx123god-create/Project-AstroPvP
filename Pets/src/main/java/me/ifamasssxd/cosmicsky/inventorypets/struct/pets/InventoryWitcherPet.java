@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -82,7 +83,7 @@ public class InventoryWitcherPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         int sum = petItem.getLevel() * 2;
 
- if(MaskUtils.hasMaskEquipped(player, "ELF")) {
+ if(MaskType.hasEquipped(player, "ELF")) {
             sum*=1.5;
         }
 

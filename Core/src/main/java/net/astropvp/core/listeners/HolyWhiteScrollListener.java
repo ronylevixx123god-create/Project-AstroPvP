@@ -94,7 +94,7 @@ public class HolyWhiteScrollListener implements Listener {
                 HolyWhiteScrollUtils.removeHolyWhitescroll(i);
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
-                boolean isControlling = (controlling && Math.random() > 0.1D);
+                boolean isControlling = (controlling && Math.random() < 0.1D);
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
                 if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
