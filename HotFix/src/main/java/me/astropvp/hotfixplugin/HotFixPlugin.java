@@ -37,15 +37,26 @@ public class HotFixPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             Clickable spaceClickable = new Clickable("");
-            spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
-            for (Player player : Bukkit.getOnlinePlayers()) {
-                player.sendMessage("");
-                player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &7&lG&f&li&7&lv&f&le&7&ln&f&lc&7&lh&f&ly &6on the store.")));
-                spaceClickable.sendToPlayer(player);
-                player.sendMessage("");
+            if (Math.random() < 0.5) {
+                spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendMessage("");
+                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &4&l&nS&c&l&nU&4&l&nP&c&l&nE&4&l&nR&c&l&nI&4&l&nO&c&l&nR&r &6on the store.")));
+                    spaceClickable.sendToPlayer(player);
+                    player.sendMessage("");
 
+                }
+            } else {
+                spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendMessage("");
+                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &6&l&n&oCRYPTO&r &f&lBundle &6on the store.")));
+                    spaceClickable.sendToPlayer(player);
+                    player.sendMessage("");
+
+                }
             }
-        }, 40L, 5*20*60);
+        }, 40L, 3*20*60);
     }
 
     @Override

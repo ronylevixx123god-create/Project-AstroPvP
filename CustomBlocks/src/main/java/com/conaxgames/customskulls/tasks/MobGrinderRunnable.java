@@ -51,7 +51,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 chanceLegKey = 0.02;
                 chanceAstroKey = 0.045;
             } else if (level == 2) {
-                chanceGodlyKey = 0.01;
+                chanceGodlyKey = 0.015;
                 chanceLegKey = 0.035;
                 chanceAstroKey = 0.055;
             } else if (level == 3) {
