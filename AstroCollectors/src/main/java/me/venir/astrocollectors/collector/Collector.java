@@ -167,9 +167,10 @@ public final class Collector {
             EntityType type = entry.getKey();
             int amountSpawners = entry.getValue();
             total += AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerSecond(type) * secondsPassed * amountSpawners;
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(this.getLocation()), OutpostType.THE_GREAT_HALL)) {
-                total *= 1.25;
-            }
+
+        }
+        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(this.getLocation()), OutpostType.THE_GREAT_HALL)) {
+            total *= 1.25;
         }
         return total;
     }

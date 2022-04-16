@@ -93,7 +93,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
@@ -103,6 +103,8 @@ public class DamageListener implements Listener {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
             }
             if (((Player) e.getDamager()).getItemInHand() != null) {
+                if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
+
                 int enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand()).size();
                 if (enchants < 14) {
                     AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
@@ -186,12 +188,14 @@ public class DamageListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
             if (((Player) e.getDamager()).getItemInHand() == null) return;
+            if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
+
             double dmgBuff = 0;
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {

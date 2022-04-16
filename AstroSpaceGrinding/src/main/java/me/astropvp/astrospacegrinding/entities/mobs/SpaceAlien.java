@@ -22,10 +22,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Zombie;
+import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
@@ -45,8 +42,8 @@ public class SpaceAlien extends SpaceMonster {
     @Override
     public LivingEntity spawn(Location location) {
 
-        Zombie entity = (Zombie) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.ZOMBIE);
-        entity.setCustomName(CC.GreenB + "Space Alien");
+        Rabbit entity = (Rabbit) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.RABBIT);
+        entity.setCustomName(CC.GreenB + "Space Bunny");
         AstroSpaceGrindingPlugin.activeMonsters.remove(entity.getUniqueId());
 
         entity.setRemoveWhenFarAway(false);
