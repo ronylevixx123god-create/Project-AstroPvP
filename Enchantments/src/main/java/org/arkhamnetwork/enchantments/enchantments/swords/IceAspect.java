@@ -64,6 +64,10 @@ public class IceAspect
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_MUTATED_BOOTS)) {
+                return;
+            }
+
             if (((Player) playerHit).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2021_BOOTS))
                 return;
 

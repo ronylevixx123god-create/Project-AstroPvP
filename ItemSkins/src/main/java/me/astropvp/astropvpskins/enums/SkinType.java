@@ -226,11 +226,12 @@ public enum SkinType {
     THANKSGIVING_2021_BOOTS(CC.translate("&8&lLoafers"), ItemSkinType.BOOTS, new LoafersSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "3.5% chance to make enemy (Vampiric) Devour heal", CC.Red + "instead of hurt you by the same % for 5s", CC.Red + "2.5% chance to silence enemy Pets in a 6x6 radius for 10s", CC.translate("&cGears V for 6s when affected by an enemy's Heroic Pet")) ),
 
 
-    CHRISTMAS_2021_BOOTS(CC.translate("&2&lSleigh Riders"), ItemSkinType.BOOTS, new SleighRiders(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Limit enemy Amulet of Corruption to 1 armor set type", CC.Red + "When affected by any Slowness, you will receive -1%", CC.Red + "Incoming Damage (up to a max of 8%) and +1% Outgoing", CC.translate("&cDamage (up to a max of 15%) per 5% HP lost"), CC.translate("&c&l3% chance to clear your enemy's rage stacks and"), CC.translate("&csilence their ability to gain more for 7s"), CC.translate("&c&l7% chance to negate enemy Rogue for 8s when their"), CC.translate("&c&lhealth is below 20 HP")) ),
+    CHRISTMAS_2021_BOOTS(CC.translate("&2&lSleigh Riders"), ItemSkinType.BOOTS, new SleighRiders(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Limit enemy Amulet of Corruption to 1 armor set type", CC.Red + "When affected by any Slowness, you will receive -1%", CC.Red + "Incoming Damage (up to a max of 8%) and +1% Outgoing", CC.translate("&cDamage (up to a max of 15%) per 5% HP lost"), CC.translate("&c3% chance to clear your enemy's rage stacks and"), CC.translate("&csilence their ability to gain more for 7s"), CC.translate("&c7% chance to negate enemy Rogue for 8s when their"), CC.translate("&chealth is below 20 HP")) ),
 
 
     JULY_2021_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BELT, new InfinityBeltSkin(), Arrays.asList(CC.Red + "Equipped armor will regain to 10% durability", CC.Red + "instead of breaking (10m cooldown)", CC.Red + "Immune to Soul trap", CC.Red + "Immune to (Obsidian) Guardians", CC.translate("&cNegates enemy (Reinforced) Tank")) ),
 
+    JULY_2021_BOOTS(CC.translate("&c&lBarry's Bolts"), ItemSkinType.BOOTS, new BarrysBoltsSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to Slowness Potion Effect", CC.Red + "-15% damage from enemy (Bloody) Deep Wounds", CC.Red + "Flash Ability", CC.translate("&7 (10% chance when damaged to activate. When"), CC.translate("&7 active, all enemies you hit will have their"), CC.translate("&7 pets and Phoenix enchantment silenced, your"), CC.translate("&7 Soul Tether will do +20% damage and incoming"), CC.translate("&7 soul damage to your allies within a 4x4"), CC.translate("&7radius is reduced by -5%"))),
 
     BACK_TO_SCHOOL_2021_BOOTS(CC.translate("&8&lBig Timbs"), ItemSkinType.BOOTS, new BigTimbsSkin(), Arrays.asList(CC.Red + "35% chance on incoming damage to", CC.Red + "negate enemy Rage stack multipliers", CC.Red + "Immune to Hero Killer", CC.Red + "Immune to enemy outgoing Heroic Pet abilities", CC.translate("&cGears IV")) ),
     HALLOWEEN_2021_BOOTS(CC.translate("&8&lBloodstained Galoshes"), ItemSkinType.BOOTS, new BloodstainedGaloshesSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to World Destroyer Cage", CC.Red + "25% chance to reflect cage back at the user", CC.Red + "Immune to Slownesses/Freezes", CC.Red + "Increases Execute HP threshold to proc by 1.3x", CC.translate("&cPsychotic Pursuit Ability"), CC.translate("&7 (+5% chance to proc Dodge +7 Outgoing"), CC.translate("&7 Damage on successful (Ethereal) Dodge procs"), CC.translate("&7 for a short duration")) ),
@@ -368,9 +369,94 @@ public enum SkinType {
             CC.translate("&2nearby enemies within 4 blocks")
     ) ),
 
+    EASTER_2022_HELMET(CC.translate("&d&lMad Hat"), ItemSkinType.HELMET, new MadHat(), Arrays.asList(
+            CC.translate("&c1.25x Banshee Duration"),
+            CC.translate("&cImmune to opening combo enchant"),
+            CC.translate("&cBypass Utility Belt Skin")
+    ) ),
 
-    JULY_2021_BOOTS(CC.translate("&c&lBarry's Bolts"), ItemSkinType.BOOTS, new BarrysBoltsSkin(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Immune to Slowness Potion Effect", CC.Red + "-15% damage from enemy (Bloody) Deep Wounds", CC.Red + "Flash Ability", CC.translate("&7 (10% chance when damaged to activate. When"), CC.translate("&7 active, all enemies you hit will have their"), CC.translate("&7 pets and Phoenix enchantment silenced, your"), CC.translate("&7 Soul Tether will do +20% damage and incoming"), CC.translate("&7 soul damage to your allies within a 4x4"), CC.translate("&7radius is reduced by -5%")));
+    EASTER_2022_MUTATED_HELMET(CC.translate("&2&l&nMutated&r &d&lMad Hat"), ItemSkinType.HELMET, new MutatedMadHat(), Arrays.asList(
+            CC.translate("&c1.25x Banshee Duration"),
+            CC.translate("&cImmune to opening combo enchant"),
+            CC.translate("&cBypass Utility Belt Skin"),
+            CC.translate("&2Chance to fully heal your hp when below 14HP")
+    ) ),
 
+    EASTER_2022_BACKPACK(CC.translate("&d&lDoor to Wonderland"), ItemSkinType.BACKPACK, new DoorWonderland(), Arrays.asList(
+            CC.translate("&cImmune to Hero Killer"),
+            CC.translate("&cImmune to trap blockers"),
+            CC.translate("&c-35% Silence duration")
+    ) ),
+
+    EASTER_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &d&lDoor to Wonderland"), ItemSkinType.BACKPACK, new MutatedDoorWonderland(), Arrays.asList(
+            CC.translate("&cImmune to Hero Killer"),
+            CC.translate("&cImmune to trap blockers"),
+            CC.translate("&c-35% Silence duration"),
+            CC.translate("&2Escape Ability"),
+            CC.translate("&7 When sneaking, remove all (trap) doors, fence"),
+            CC.translate("&7 gates and ladders in a 6x6 radius (15m cooldown)")
+    ) ),
+
+    EASTER_2022_BELT(CC.translate("&e&lMischievous Tail"), ItemSkinType.BELT, new Tail(), Arrays.asList(
+            CC.translate("&c100% chance to monopoly atleast 1 piece"),
+            CC.translate("&cImmune to (Demonic) Lifesteal"),
+            CC.translate("&c50% chance to bypass Bloodstained Galoshes")
+    ) ),
+
+    EASTER_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &e&lMischievous Tail"), ItemSkinType.BELT, new MutatedTail(), Arrays.asList(
+            CC.translate("&c100% chance to monopoly atleast 1 piece"),
+            CC.translate("&cImmune to (Demonic) Lifesteal"),
+            CC.translate("&c50% chance to bypass Bloodstained Galoshes"),
+            CC.translate("&2Stun Ability"),
+            CC.translate("&7 Chance to stun nearby enemies upon being hit")
+    ) ),
+
+    EASTER_2022_BOOTS(CC.translate("&d&lMary Janes"), ItemSkinType.BOOTS, new MaryJanes(), Arrays.asList(
+            CC.translate("&cGears IV"),
+            CC.translate("&cImmune to Amulet of Corruption"),
+            CC.translate("&c1.25x Critical Damage"),
+            CC.translate("&cImmune to slowness and freezes")
+    ) ),
+
+    EASTER_2022_MUTATED_BOOTS(CC.translate("&2&l&nMutated&r &d&lMary Janes"), ItemSkinType.BOOTS, new MutatedMaryJanes(), Arrays.asList(
+            CC.translate("&cGears IV"),
+            CC.translate("&cImmune to Amulet of Corruption"),
+            CC.translate("&c1.25x Critical Damage"),
+            CC.translate("&cImmune to slowness and freezes"),
+            CC.translate("&2-33% Rogue Enchant damage")
+    ) ),
+
+    EASTER_2022_SWORD(CC.translate("&e&lQueen's Verdict"), ItemSkinType.SWORD, new QueensVerdict(), Arrays.asList(
+            CC.translate("&cBypass enemy (Paladin) Armored"),
+            CC.translate("&cIncrease outgoing soul enchant damage by 1.3x"),
+            CC.translate("&c15% chance to bypass enemy Ancient Crystals"),
+            CC.translate("&cDevour VI"),
+            CC.translate("&c20% chance to block enemy Divine Immolation")
+    ) ),
+
+    EASTER_2022_MUTATED_SWORD(CC.translate("&2&l&nMutated&r &e&lQueen's Verdict"), ItemSkinType.SWORD, new MutatedQueensVerdict(), Arrays.asList(
+            CC.translate("&cBypass enemy (Paladin) Armored"),
+            CC.translate("&cIncrease outgoing soul enchant damage by 1.3x"),
+            CC.translate("&c15% chance to bypass enemy Ancient Crystals"),
+            CC.translate("&cDevour VI"),
+            CC.translate("&c20% chance to block enemy Divine Immolation"),
+            CC.translate("&2Double Strike IV")
+    ) ),
+
+    EASTER_2022_AMULET(CC.translate("&e&lCheshire Grin"), ItemSkinType.AMULET, new Grin(), Arrays.asList(
+            CC.translate("&c-30% Incoming Rage Damage"),
+            CC.translate("&cImmune to Divine Light Enchant"),
+            CC.translate("&c-5% Incoming damage")
+    ) ),
+
+
+
+    EASTER_2022_MUTATED_AMULET(CC.translate("&2&l&nMutated&r &e&lCheshire Grin"), ItemSkinType.AMULET, new MutatedGrin(), Arrays.asList(
+            CC.translate("&c-30% Incoming Rage Damage"),
+            CC.translate("&cImmune to Divine Light Enchant"),
+            CC.translate("&c-5% Incoming damage"),
+            CC.translate("&2Immune to Stitches & Skrrt Pet")
+    ) );
 
 
 

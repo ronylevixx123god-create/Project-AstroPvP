@@ -86,6 +86,7 @@ public class HolyWhiteScrollListener implements Listener {
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
         boolean controlling = (killer != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsCosmonautOutpost(killer));
         boolean hasBeenSwimEffected = false;
+        boolean hasBeenTailed = false;
         List<ItemStack> savedItems = new ArrayList<>();
         List<ItemStack> drops = e.getDrops();
         for (ItemStack i : drops) {
@@ -107,6 +108,11 @@ public class HolyWhiteScrollListener implements Listener {
                 if (MutatedSinkOrSwipFlippers.sinked.contains(e.getEntity()) && AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS) && !hasBeenSwimEffected) {
                     isMonopolied = true;
                     hasBeenSwimEffected = true;
+                }
+
+                if ((AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_BELT)) && !hasBeenTailed) {
+                    isMonopolied = true;
+                    hasBeenTailed = true;
                 }
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;

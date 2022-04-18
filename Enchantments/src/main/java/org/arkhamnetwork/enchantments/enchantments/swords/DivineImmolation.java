@@ -63,8 +63,19 @@ return;
 
             return;
         }
+
+
+        if (playerHit instanceof Player) {
+            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_MUTATED_SWORD)) && Math.random() < 0.2)
+                return;
+        }
+
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
             damage *= 1.25;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
+            damage *=1.3;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
             damage *= 1.3;

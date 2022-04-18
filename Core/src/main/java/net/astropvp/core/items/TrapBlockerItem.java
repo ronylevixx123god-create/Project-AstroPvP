@@ -4,6 +4,9 @@ import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.massivecraft.factions.Factions;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
@@ -109,6 +112,11 @@ public class TrapBlockerItem extends CosmicItem
                     if (!isTrapped(p.getUniqueId())) {
                         if (MaskUtils.hasMaskEquipped(p, "ELF") && Math.random() <= 0.25) {
                             p.sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &cTrap Blocker &a&l*"));
+                            continue;
+                        }
+
+                        if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_MUTATED_BACKPACK)) {
+                            p.sendMessage(CC.translate("&d&l* Door to Wonderland &7Blocked &cTrap Blocker &d&l*"));
                             continue;
                         }
 

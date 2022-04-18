@@ -67,7 +67,7 @@ public class SpaceAlien extends SpaceMonster {
         entity.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD)
                 .enchant(Enchantment.DAMAGE_ALL, 5)
                 .enchant(Enchantment.DURABILITY, 3).build());
-        entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 2));
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 0));
         entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 3));
         if (entity.getEquipment() != null) {
             entity.getEquipment().setItemInHandDropChance(0.0F);

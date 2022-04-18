@@ -491,7 +491,7 @@ public class EListener implements Listener {
 
     private static boolean enchantmentStacks(CustomEnchantment ce) {
         String n = ce.name();
-        if (n.equals("Armored") || n.equals("Paladin Armored") || n.equals("Valor") || n.equals("Tank") || n.equals("Angelic") || n.equals("Heavy"))
+        if (n.equals("Armored") || n.equals("Paladin Armored") || n.equals("Valor") || n.equals("Tank") || n.equals("Angelic") || n.equals("Heavy") || n.equals("Martyr Valor") || n.equals("Reinforced Tank"))
             return true;
         if (n.equals("Anti Gravity") || n
                 .equals("Aquatic") || n

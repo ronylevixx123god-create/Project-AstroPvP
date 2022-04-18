@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -22,11 +24,19 @@ public class Armored extends CustomEnchantment
         if (!(player instanceof Player)) {
             return;
         }
+
+
         if (player.hasMetadata("neutralized")) {
             return;
         }
         if (player.hasMetadata("noDefenseProcs")) {
             return;
+        }
+
+        if (attacker instanceof Player) {
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_MUTATED_SWORD)) return;
+
         }
         ItemStack i = null;
         if (attacker instanceof Player) {

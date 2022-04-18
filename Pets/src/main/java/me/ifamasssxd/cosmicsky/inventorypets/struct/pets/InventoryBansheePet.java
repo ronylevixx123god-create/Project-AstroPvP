@@ -165,6 +165,11 @@ public class InventoryBansheePet extends InventoryPet {
             duration = 8;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_HELMET)) {
+            duration*=1.25;
+        }
+
+        int finalDuration = duration;
         nearbyEnemies.forEach(enemy -> {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
@@ -175,7 +180,7 @@ public class InventoryBansheePet extends InventoryPet {
 
 
             if ((AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.25 && !enemy.hasMetadata("SSFCooldown")) {
-                startBansheeEffect(enemy, player, duration);
+                startBansheeEffect(enemy, player, finalDuration);
                 enemy.sendMessage(CC.translate("&d&l** SSF HELMET [&7Banshee Reflect on " + player.getName() + " &d&l] **"));
                 player.sendMessage(CC.translate("&d&l** " + enemy.getName() + "'s SSF HELMET [&7Reflected Banshee&d&l] **"));
                 enemy.setMetadata("SSFCooldown", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
@@ -183,7 +188,7 @@ public class InventoryBansheePet extends InventoryPet {
                     enemy.removeMetadata("SSFCooldown", CosmicSkyInventoryPets.get());
                 }, 20 * 360);
             } else {
-                startBansheeEffect(player, enemy, duration);
+                startBansheeEffect(player, enemy, finalDuration);
             }
         });
         return true;

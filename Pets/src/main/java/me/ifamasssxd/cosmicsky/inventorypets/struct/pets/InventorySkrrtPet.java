@@ -139,6 +139,12 @@ public class InventorySkrrtPet extends InventoryPet {
                 continue;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_MUTATED_AMULET)) {
+                p.sendMessage(CC.translate("&5&l* Cheshire Grin &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &5&l*"));
+                player.sendMessage(CC.translate("&5&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&5&lCheshire Grin&7] &5&l*"));
+                continue;
+            }
+
             if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p)) {
                 continue;
             }

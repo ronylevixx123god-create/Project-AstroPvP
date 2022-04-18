@@ -30,13 +30,15 @@ extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        double chance;
-        int time = (int)(Math.random() * (double)enchantLevel * 20.0);
-        double random = Math.random();
-        if (random < (chance = 0.1 * (double)enchantLevel)) {
-            target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, time, enchantLevel - 1));
-            DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
+        if (target instanceof Player && user instanceof Player) {
+            double chance;
+            int time = (int) (Math.random() * (double) enchantLevel * 20.0);
+            double random = Math.random();
+            if (random < (chance = 0.1 * (double) enchantLevel)) {
+                target.addPotionEffect(new PotionEffect(PotionEffectType.POISON, time, enchantLevel - 1));
+                DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.YellowB + "* POISON *", "POISON");
 
+            }
         }
     }
 }

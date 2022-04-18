@@ -18,6 +18,7 @@ import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.enchantments.enchantments.swords.Block;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -50,6 +51,22 @@ public class DamageListener implements Listener {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_AXE) {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "axedebuff");
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void onIllegalSandStacking(EntityChangeBlockEvent event) {
+        if (event.getTo() != Material.SAND) return;
+        Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getBlock()));
+        if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void creeperDmg(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Creeper) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING || event.getCause() == EntityDamageEvent.DamageCause.LAVA || event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
+                event.setDamage(0);
             }
         }
     }
@@ -215,13 +232,6 @@ public class DamageListener implements Listener {
             e.getPlayer().sendMessage(CC.translate("&cYou are not allowed to place this block!"));
             e.setCancelled(true);
         }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onIllegalSandStacking(EntityChangeBlockEvent event) {
-        if (event.getTo() != Material.SAND) return;
-        Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getBlock()));
-        if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
     }
 
     @EventHandler

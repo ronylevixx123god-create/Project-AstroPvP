@@ -147,10 +147,16 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
         if (((Player)target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
-            petItem.setLastUsed(System.currentTimeMillis());
-            player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
-            target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
-            return true;
+
+            if ((AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_BELT)) && Math.random() < 0.5) {
+                target.sendMessage(CC.translate("&e&l* " + player.getName() + "'s Mischievous Tail Bypassed &7Bloodstained Galoshes &e&l*"));
+            } else{
+
+                petItem.setLastUsed(System.currentTimeMillis());
+                player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
+                target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
+                return true;
+            }
         }
 
         if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target)) {

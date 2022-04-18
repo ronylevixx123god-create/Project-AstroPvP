@@ -41,7 +41,7 @@ public class HotFixPlugin extends JavaPlugin {
                 spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
-                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &4&l&nS&c&l&nU&4&l&nP&c&l&nE&4&l&nR&c&l&nI&4&l&nO&c&l&nR&r &6on the store.")));
+                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &d&lEaster &nBunny&r &6on the store.")));
                     spaceClickable.sendToPlayer(player);
                     player.sendMessage("");
 
@@ -50,7 +50,7 @@ public class HotFixPlugin extends JavaPlugin {
                 spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
-                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &6&l&n&oCRYPTO&r &f&lBundle &6on the store.")));
+                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &e&lEaster &d&lBasket &f&lBundle &6on the store.")));
                     spaceClickable.sendToPlayer(player);
                     player.sendMessage("");
 

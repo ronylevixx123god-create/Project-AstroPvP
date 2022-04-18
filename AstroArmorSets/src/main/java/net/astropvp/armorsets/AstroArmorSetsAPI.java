@@ -314,6 +314,10 @@ public class AstroArmorSetsAPI {
             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.RUINS_HELMET)) {
                 return cacheOther.getCurrentSetCrystals();
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.EASTER_2022_MUTATED_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.EASTER_2022_BOOTS)) {
+                return cacheOther.getCurrentSetCrystals();
+            }
             List<ArmorSetType> chestplateCrystalsPlayer = getCrystalsFromItem(attacker.getInventory().getChestplate());
             for (Map.Entry<ArmorSetType, Integer> entry : cacheOther.getCurrentSetCrystals().entrySet()) {
                 ArmorSetType type = entry.getKey();

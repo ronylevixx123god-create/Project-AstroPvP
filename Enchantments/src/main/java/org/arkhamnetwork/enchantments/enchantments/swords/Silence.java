@@ -84,6 +84,10 @@ public class Silence extends CustomEnchantment
             durationTicks *= 0.6;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.EASTER_2022_MUTATED_BACKPACK)) {
+            durationTicks *=0.65;
+        }
+
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
             durationTicks *= 0.55;
         }
