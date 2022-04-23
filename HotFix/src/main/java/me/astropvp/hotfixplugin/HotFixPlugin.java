@@ -37,25 +37,14 @@ public class HotFixPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             Clickable spaceClickable = new Clickable("");
-            if (Math.random() < 0.5) {
-                spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
+                spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it by clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
-                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &d&lEaster &nBunny&r &6on the store.")));
+                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&k&e&lButter&f&k;&r &f&lLootbox &6on the store.")));
                     spaceClickable.sendToPlayer(player);
                     player.sendMessage("");
 
                 }
-            } else {
-                spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it buy clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage("");
-                    player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &e&lEaster &d&lBasket &f&lBundle &6on the store.")));
-                    spaceClickable.sendToPlayer(player);
-                    player.sendMessage("");
-
-                }
-            }
         }, 40L, 3*20*60);
     }
 

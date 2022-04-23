@@ -66,7 +66,7 @@ public class DamageListener implements Listener {
     public void creeperDmg(EntityDamageEvent event) {
         if (event.getEntity() instanceof Creeper) {
             if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING || event.getCause() == EntityDamageEvent.DamageCause.LAVA || event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
-                event.setDamage(0);
+                event.getEntity().remove();
             }
         }
     }

