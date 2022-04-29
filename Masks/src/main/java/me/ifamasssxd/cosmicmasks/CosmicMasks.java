@@ -36,16 +36,13 @@ public final class CosmicMasks
 extends JavaPlugin {
     private MaskManager maskManager;
     private static CosmicMasks instance;
-    private boolean outposts = false;
     private MultiMaskItem multiMaskItem;
 
     public MaskManager getMaskManager() {
         return this.maskManager;
     }
 
-    public boolean isOutposts() {
-        return this.outposts;
-    }
+
 
     public MultiMaskItem getMultiMaskItem() {
         return this.multiMaskItem;
@@ -64,7 +61,6 @@ extends JavaPlugin {
         }, 200L, 60L);
         this.multiMaskItem = new MultiMaskItem("multi_mask");
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)this.multiMaskItem);
-        this.outposts = new File("plugins/CosmicOutposts.jar").exists();
     }
 
     public void onDisable() {

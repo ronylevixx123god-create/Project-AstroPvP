@@ -1,7 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
+
 import com.rit.sucy.EnchantmentAPI;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -27,16 +26,12 @@ final class ImmortalListener implements Listener
     public void onEntityDamage(final EntityDamageEvent e) throws Exception {
         if (e.getEntity() instanceof Player) {
             final Player p = (Player)e.getEntity();
-            if (CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)p) == OutpostTier.COSMONAUT) {
-                return;
-            }
+
             for (final ItemStack i : p.getInventory().getArmorContents()) {
                 if (i != null && EnchantmentAPI.itemHasEnchantment(i, "Immortal")) {
                     final int enchLevel = EnchantmentAPI.getEnchantments(i).get(EnchantmentAPI.getEnchantment("Immortal"));
                     int soulCost = 5 - enchLevel;
-                    if (Immortal.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p)) {
-                        soulCost /= 2;
-                    }
+
 
                     soulCost = Math.max(1, soulCost);
                     if (KillTrackerAPI.hasSoulAmount(p, soulCost)) {

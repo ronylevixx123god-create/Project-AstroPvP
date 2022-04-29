@@ -56,14 +56,7 @@ public class TerminatorMask extends CosmicMask {
     }
 
     public void onUpdate(Player player) {
-        if (CosmicMasks.get().isOutposts()) {
-            OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)player);
-            if (tier != null && tier != OutpostTier.COSMONAUT && tier != OutpostTier.NONE) {
-                if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-                    player.removePotionEffect(PotionEffectType.SPEED);
-                return;
-            }
-        }
+
         boolean detectedNew = false;
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         if (effects != null)

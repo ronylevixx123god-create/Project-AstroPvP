@@ -33,7 +33,6 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
@@ -73,7 +72,6 @@ public class NatureWrath
 extends CustomEnchantment {
     int soulCost;
     Essentials ess;
-    boolean cosmicOutposts;
     boolean factionUpgrades;
 
     public NatureWrath() {
@@ -83,7 +81,6 @@ extends CustomEnchantment {
         this.interval = 3.0;
         this.soulCost = 75;
         this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
-        this.cosmicOutposts = new File("plugins/CosmicOutposts.jar").exists();
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         Bukkit.getPluginManager().registerEvents((Listener)new NatureWrathListener(), (Plugin)Enchantments.getInstance());
     }
@@ -116,9 +113,7 @@ extends CustomEnchantment {
             if(p.hasMetadata("witcher_ability"))
                 return;
             int n = cost = KOTH ? this.soulCost * 2 : this.soulCost;
-            if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost((Player)p)) {
-                cost /= 2;
-            }
+
 
             if (KillTrackerAPI.hasSoulAmount((Player)p, (int)cost)) {
                 KillTrackerAPI.removeSoulsFromGems((Player)p, (int)cost);

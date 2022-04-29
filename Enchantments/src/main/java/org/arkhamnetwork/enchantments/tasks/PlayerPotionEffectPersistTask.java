@@ -1,7 +1,5 @@
 package org.arkhamnetwork.enchantments.tasks;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
@@ -12,13 +10,10 @@ import java.util.Map;
 import java.util.UUID;
 
 public class PlayerPotionEffectPersistTask implements Runnable {
-    boolean cosmicOutpostsEnabled;
     boolean statusPlusEnabled;
 
     public PlayerPotionEffectPersistTask() {
-        this.cosmicOutpostsEnabled = false;
         this.statusPlusEnabled = false;
-        this.cosmicOutpostsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
     }
 
     @Override
@@ -26,9 +21,7 @@ public class PlayerPotionEffectPersistTask implements Runnable {
         for (final Map.Entry<UUID, PlayerPotionEffects> trackedEffects : PlayerPotionEffectListener.getPlayerPotionEffectTracker().entrySet()) {
             final Player p = trackedEffects.getValue().getBukkitPlayer();
             if (p != null && !p.isDead() && p.isValid()) {
-                if (this.cosmicOutpostsEnabled && CosmicOutpostsAPI.getOutpostTierOfWorld(p) == OutpostTier.VANILLA) {
-                    continue;
-                }
+
                 if (p.getLocation().getWorld().getName().equals("events_world")) {
                     continue;
                 }

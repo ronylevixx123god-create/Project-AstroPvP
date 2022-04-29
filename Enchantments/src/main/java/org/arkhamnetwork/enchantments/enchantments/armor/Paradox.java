@@ -23,8 +23,6 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
@@ -45,7 +43,6 @@ import java.util.ArrayList;
 public class Paradox
 extends CustomEnchantment {
     int soulCost;
-    private boolean cosmicOutposts;
     private boolean factionUpgrades;
     Essentials ess;
 
@@ -55,7 +52,6 @@ extends CustomEnchantment {
         this.base = 15.0;
         this.interval = 3.0;
         this.soulCost = 5;
-        this.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
         this.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
     }
 
@@ -78,9 +74,7 @@ extends CustomEnchantment {
             Player p = (Player)player;
             double amountToHeal = e.getDamage() * (double)(level / 10);
             int cost = this.soulCost;
-            if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost((Player)p)) {
-                cost /= 2;
-            }
+
 
             if (KillTrackerAPI.hasSoulAmount((Player)p, (int)cost)) {
                 int highImpactPlayers = 0;

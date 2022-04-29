@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
@@ -443,10 +442,7 @@ public class EnchantmentBook {
 
 
         int destroy_rate = getEnchantmentBookDestructionRate(ench_book);
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(pl)) {
-            success_rate_mod += 10;
-            destroy_rate -= 25;
-        }
+
         if (pl.hasPermission("cosmicpvp.heroic")) {
             success_rate_mod += 5;
         }

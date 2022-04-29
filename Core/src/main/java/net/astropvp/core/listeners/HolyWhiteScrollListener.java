@@ -1,7 +1,6 @@
 package net.astropvp.core.listeners;
 
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -84,7 +83,6 @@ public class HolyWhiteScrollListener implements Listener {
         //return;
         Player killer = e.getEntity().getKiller();
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
-        boolean controlling = (killer != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsCosmonautOutpost(killer));
         boolean hasBeenSwimEffected = false;
         boolean hasBeenTailed = false;
         List<ItemStack> savedItems = new ArrayList<>();
@@ -95,7 +93,6 @@ public class HolyWhiteScrollListener implements Listener {
                 HolyWhiteScrollUtils.removeHolyWhitescroll(i);
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
-                boolean isControlling = (controlling && Math.random() < 0.1D);
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
                 if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
@@ -130,7 +127,7 @@ public class HolyWhiteScrollListener implements Listener {
                             isKilledHoldingTravAxe = true;
                     }
                 assert killer != null;
-                if (!isBansheed && !isControlling && !isMonopolied && !isTravAxe) {
+                if (!isBansheed &&  !isMonopolied && !isTravAxe) {
                     savedItems.add(i);
                     continue;
                 }
@@ -181,11 +178,7 @@ public class HolyWhiteScrollListener implements Listener {
                     }
                     continue;
                 }
-                if (isControlling) {
-                    e.getEntity().sendMessage(CC.RedB + "* COSMONAUT OUTPOST PERK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                    killer.sendMessage(CC.GreenB + "* COSMONAUT OUTPOST PERK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                    continue;
-                }
+
                 if (isBansheed) {
                     e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                     killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");

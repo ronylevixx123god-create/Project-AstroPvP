@@ -17,8 +17,6 @@
  */
 package com.rit.sucy.enchanting;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import com.rit.sucy.enchanting.EListener;
@@ -148,12 +146,11 @@ extends BukkitRunnable {
             return;
         }
         for (String lore : meta.getLore()) {
-            OutpostTier outpostTier;
             String name = ENameParser.parseName(lore);
             int level = ENameParser.parseLevel(lore);
             if (name == null || level == 0 || !EnchantmentAPI.isRegistered(name)) continue;
             int tier = TieredEnchantments.getEnchantmentTier((String)name);
-            if (EListener.cosmicOutposts && (outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)le)) != OutpostTier.NONE && (outpostTier == OutpostTier.VANILLA || outpostTier == OutpostTier.TRAINEE && tier > 2 || outpostTier == OutpostTier.HERO && tier > 3 || outpostTier == OutpostTier.COSMONAUT && tier > 5) || le.getWorld().getEnvironment() == World.Environment.THE_END && tier > 5) continue;
+            if (le.getWorld().getEnvironment() == World.Environment.THE_END && tier > 5) continue;
             if (name.equals("Repair Guard")) {
                 EnchantmentAPI.getEnchantment(name).applyEquipEffect(this.player, level, item);
                 continue;

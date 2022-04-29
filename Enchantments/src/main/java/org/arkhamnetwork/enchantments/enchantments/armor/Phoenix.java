@@ -28,7 +28,6 @@
  */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
@@ -65,7 +64,6 @@ import java.util.UUID;
 public class Phoenix
         extends CustomEnchantment {
     Essentials ess;
-    protected static boolean cosmicOutposts;
     protected static boolean factionUpgrades;
     protected static HashMap<String, Long> last_phoenix;
     public static Map<UUID, Integer> phoenixEquipped;
@@ -80,7 +78,6 @@ public class Phoenix
         this.max = 3;
         this.base = 15.0;
         this.interval = 3.0;
-        cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
         factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         Bukkit.getPluginManager().registerEvents(new PhoenixListener(this), Enchantments.getInstance());
@@ -271,9 +268,7 @@ public class Phoenix
         while (procsSinceOutOfCombat-- > 0) {
             soulCost *= 2;
         }
-        if (cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(player)) {
-            soulCost /= 2;
-        }
+
         soulCost = Math.min(soulCost, 8000);
         return soulCost;
 

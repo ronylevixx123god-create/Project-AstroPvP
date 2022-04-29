@@ -1,18 +1,13 @@
 package me.astropvp.astropvpskins.objects.skins.helmets;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.utils.DamageIndicatorUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;

@@ -14,8 +14,6 @@
  */
 package me.ifamasssxd.cosmicmasks.struct;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -73,14 +71,7 @@ public class ReindeerMask extends CosmicMask {
 
     @Override
     public void onUpdate(Player player) {
-        if (CosmicMasks.get().isOutposts()) {
-            OutpostTier tier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)player);
-            if (tier != null && tier != OutpostTier.COSMONAUT && tier != OutpostTier.NONE) {
-                if (hasEffect(player, PotionEffectType.SPEED, 3, false))
-                    player.removePotionEffect(PotionEffectType.SPEED);
-                return;
-            }
-        }
+
         boolean detectedNew = false;
         PlayerPotionEffects effects = PlayerPotionEffects.getTrackedPotionEffects(player);
         if (effects != null)

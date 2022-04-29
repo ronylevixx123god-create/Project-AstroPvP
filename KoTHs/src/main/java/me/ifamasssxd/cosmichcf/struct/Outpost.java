@@ -62,7 +62,6 @@ package me.ifamasssxd.cosmichcf.struct;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
@@ -455,9 +454,7 @@ public abstract class Outpost {
         if (CosmicUtils.get().isOutpostsEnabled()) {
             for (FPlayer capping : cappingMembers) {
                 Player pl = FactionUtils.getPlayer(capping);
-                if (pl != null && CosmicOutpostsAPI.controlsHeroOutpost(pl)) {
-                    heroOutpost = true;
-                }
+
                 if (pl == null || !MaskUtils.hasMaskEquipped(pl, "STRONGHOLD")) continue;
                 strongholdMask = true;
             }

@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
@@ -17,11 +16,8 @@ import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class SoulModeTask implements Runnable {
-    boolean cosmicOutposts;
 
     public SoulModeTask() {
-        this.cosmicOutposts = false;
-        this.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
     }
 
     @SneakyThrows
@@ -40,8 +36,6 @@ public class SoulModeTask implements Runnable {
                     p.playSound(p.getLocation(), Sound.FIRE_IGNITE, 1.0F, 1.2F);
                 } else {
                     int cost = KOTH ? (getSoulCostPerSecond(p) * 2) : getSoulCostPerSecond(p);
-                    if (this.cosmicOutposts && CosmicOutpostsAPI.controlsCosmonautOutpost(p))
-                        cost = Math.max(0, cost / 2);
                     if (cost > 0) {
                         KillTrackerAPI.removeSoulsFromGems(p, cost);
                         p.setMetadata("lastSoulRemoveEvent", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
@@ -67,6 +61,8 @@ public class SoulModeTask implements Runnable {
             if (EnchantmentAPI.itemHasEnchantment(hand, "Divine Immolation"))
                 x += 5;
             if (EnchantmentAPI.itemHasEnchantment(hand, "Soul Trap"))
+                x += 2;
+            if (EnchantmentAPI.itemHasEnchantment(hand, "Rogue"))
                 x += 2;
             if (EnchantmentAPI.itemHasEnchantment(hand, "Hero Killer"))
                 x++;

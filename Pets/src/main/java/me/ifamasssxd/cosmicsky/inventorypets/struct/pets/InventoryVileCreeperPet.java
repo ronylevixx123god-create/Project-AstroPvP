@@ -1,8 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
@@ -54,8 +52,6 @@ public class InventoryVileCreeperPet extends InventoryPet {
          return false;
       }
       if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
-         OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(player);
-         if (outpostTier != OutpostTier.VANILLA && outpostTier != OutpostTier.TRAINEE && outpostTier != OutpostTier.HERO) {
             petItem.setLastUsed(System.currentTimeMillis());
             Creeper c = CosmicCustomTNT.get().getCreeperListener().processCustomCreeperPlaced(event, CreeperTypes.Vile);
             if (c == null) {
@@ -65,9 +61,6 @@ public class InventoryVileCreeperPet extends InventoryPet {
                player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
                player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
                return true;
-            }
-         } else {
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Cannot spawn Vile Creepers in Vanilla, Trainee, or Hero /outpost!");
          }
       } else {
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));

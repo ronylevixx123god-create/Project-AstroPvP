@@ -1,7 +1,5 @@
 package org.arkhamnetwork.enchantments.listeners;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.enchanting.EEquip;
 import com.rit.sucy.enchanting.EListener;
@@ -73,9 +71,8 @@ public class PlayerPotionEffectListener implements Listener {
     public void onPlayerJoin(final PlayerJoinEvent e) {
         final Player p = e.getPlayer();
         PlayerPotionEffectListener.playerPotionEffectTracker.put(p.getUniqueId(), new PlayerPotionEffects(p));
-        if (CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) p) == OutpostTier.NONE) {
             rescanPlayerArmor(e.getPlayer());
-        }
+
     }
 
     @EventHandler(priority = EventPriority.HIGH)
@@ -96,7 +93,7 @@ public class PlayerPotionEffectListener implements Listener {
     @EventHandler
     public void onPlayerChangeWorld(final PlayerChangedWorldEvent e) {
         e.getPlayer().setMetadata("lastWorldChange", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
-        if (CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity) e.getPlayer()) == OutpostTier.NONE && !e.getFrom().getName().contains("duel")) {
+        if (!e.getFrom().getName().contains("duel")) {
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override
                 public void run() {

@@ -21,7 +21,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.wimbli.WorldBorder.WorldBorder;
 import org.arkhamnetwork.Arkkit.libs.ExpUtils;
 import org.bukkit.Bukkit;
@@ -68,10 +67,7 @@ final class ExpBottlesListener
                     noLimit = true;
                 }
             }
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(p)) {
-                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "No XP Exhaustion " + ChatColor.GRAY + "[Hero Outpost Perk]");
-                noLimit = true;
-            }
+
             if (!noLimit) {
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot teleport for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()) + " due to EXP exhaustion.");
                 if (!p.hasPermission("playervaults.amount.15")) {
