@@ -18,7 +18,7 @@ public class AstroArmorSets extends JavaPlugin {
     @Getter
     private ConfigManager configManager;
 
-    public static double OMNI_MULTIPLIER = 10;
+    public static double OMNI_MULTIPLIER = 20;
 
 
 

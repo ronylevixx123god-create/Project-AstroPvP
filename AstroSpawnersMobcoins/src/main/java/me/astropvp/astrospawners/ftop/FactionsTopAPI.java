@@ -38,12 +38,23 @@ public class FactionsTopAPI {
 
     public static Map<Integer, FactionData> getTopFactions(int from, int to) {
         Map<Integer, FactionData> data = Maps.newHashMap();
-        for (Map.Entry<Integer, FactionData> entry : (Iterable<Map.Entry<Integer, FactionData>>)FactionCacher.getData().entrySet()) {
+        for (Map.Entry<Integer, FactionData> entry : FactionCacher.getData().entrySet()) {
             int value = ((Integer)entry.getKey()).intValue();
             if (from <= value && to >= value)
                 data.put(Integer.valueOf(value), entry.getValue());
         }
         return data;
+    }
+
+    public static int getFactionTop(Faction faction) {
+        int place=0;
+        for (Map.Entry<Integer, FactionData> entry : getTopFactions(0, 9999).entrySet()) {
+            if (entry.getValue().getFaction().getId().equals(faction.getId())) {
+                place = entry.getKey();
+                return place +1;
+            }
+        }
+        return place;
     }
 
     public static long getValueOfSpawner(EntityType type) {

@@ -15,6 +15,7 @@ import com.massivecraft.factions.tag.Tag;
 import com.massivecraft.factions.util.MiscUtil;
 import com.massivecraft.factions.util.TL;
 import com.massivecraft.factions.util.TextUtil;
+import me.astropvp.astrospawners.ftop.FactionsTopAPI;
 import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -128,6 +129,8 @@ public class CmdShow extends FCommand {
         }
         try {
             messageList.add(CC.translate("&6 * &eKoth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(faction)));
+            messageList.add(CC.translate("&6 * &eFtop: &f#" + FactionsTopAPI.getFactionTop(faction)));
+
             messageList.add(CC.translate("&8&m---------------------------------"));
 
         } catch (IOException e) {

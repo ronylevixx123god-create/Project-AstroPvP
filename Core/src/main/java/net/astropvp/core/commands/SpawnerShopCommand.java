@@ -47,8 +47,8 @@ public class SpawnerShopCommand
             return false;
         }
 
-        if (amount > 100000) {
-            sender.sendMessage(CC.translate("&c&l(!)&c You cannot buy more than 100,000 spawners at a time."));
+        if (amount > 1000000) {
+            sender.sendMessage(CC.translate("&c&l(!)&c You cannot buy more than 1,000,000 spawners at a time."));
             return false;
         }
 
