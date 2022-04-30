@@ -9,6 +9,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.sk89q.worldedit.internal.expression.runtime.For;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
 import me.astropvp.astrospacegrinding.data.ForceFieldData;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.bukkit.*;
@@ -112,6 +113,20 @@ public class SpaceLogicListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onOutpostHit(EntityDamageByEntityEvent e) {
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            Player damaged = (Player) e.getEntity();
+            if (!damager.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName()) || !damaged.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+                return;
+            }
+
+            if (OutpostUtil.hasMarsOutpost(damager)) {
+                e.setDamage(e.getDamage() * 1.25);
+            }
+        }
+    }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onFlight(PlayerToggleFlightEvent event) {

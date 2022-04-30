@@ -18,6 +18,7 @@ import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
+import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -121,6 +122,10 @@ public class SpaceAlien extends SpaceMonster {
         double chance = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienRewardChance");
         if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SUMMER_2021_BELT)) {
             chance *= 1.30;
+        }
+
+        if (OutpostUtil.hasMarsOutpost(player)) {
+            chance *=2;
         }
 
         if (ForceFieldData.findPlayer(player).isActive()) {

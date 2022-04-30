@@ -1,42 +1,33 @@
 package me.astropvp.astrospawners.listeners;
 
-import com.astropvp.cc.CCVerify;
 import com.astropvp.cc.player.CosmicPlayers;
-import com.compilex.CompilexPermissions.CompilexPermissions;
-
-import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.conaxgames.customskulls.util.CustomBlockUtil;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.utils.PlayerData;
+import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
-import me.astropvp.astrospawners.utils.*;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
-import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
-import net.astropvp.core.utils.GrindingMessagesUtil;
-import net.ess3.api.IEssentials;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import net.astropvp.core.utils.OutpostUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -44,9 +35,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.github.paperspigot.Title;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class EntityStackerListener implements Listener {
 
@@ -177,6 +169,10 @@ public class EntityStackerListener implements Listener {
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
                 exp *= 1.25;
+            }
+
+            if (OutpostUtil.hasMarsOutpost(p)) {
+                exp *= 1.5;
             }
 
             if (e.getDamager().hasPermission("astrocore.nebula")) {

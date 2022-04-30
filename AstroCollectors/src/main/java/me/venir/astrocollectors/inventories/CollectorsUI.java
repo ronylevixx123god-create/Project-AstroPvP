@@ -18,6 +18,7 @@ import me.venir.astrocollectors.collector.CollectorManager;
 import me.venir.astrocollectors.collector.CollectorSellLog;
 import me.venir.astrocollectors.utils.SpawnerUtil;
 import me.venir.astrocollectors.utils.Utils;
+import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
@@ -140,8 +141,14 @@ public class CollectorsUI {
         List<String> lore = new ArrayList<>();
         double totalPerHour = 0;
         boolean hasFrozenStronghold = false;
+        boolean hasPlutoOutpost = false;
+
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(collector.getLocation()), OutpostType.THE_GREAT_HALL)) {
             hasFrozenStronghold = true;
+        }
+
+        if (OutpostUtil.hasPlutoOutpost(FactionUtils.getFactionAt(collector.getLocation()))) {
+            hasPlutoOutpost = true;
         }
             lore.add(CC.translate("&e&lSpawners:"));
         for (Map.Entry<EntityType, Integer> entry : collector.getSpawnersInChunk().entrySet()) {
@@ -164,6 +171,9 @@ public class CollectorsUI {
         lore.add(CC.translate("&e&lMultipliers:"));
         if (hasFrozenStronghold) {
             lore.add(CC.translate("&e&l * &fFrozen Stronghold&7 (1.25x Multiplier)"));
+        }
+        if (hasPlutoOutpost) {
+            lore.add(CC.translate("&e&l * &fPluto Outpost&7 (1.25x Multiplier)"));
         }
         lore.add("");
         lore.add(CC.translate("&e&lTotal: &a$" + NumberUtils.formatMoney(totalPerHour) + "/hour"));

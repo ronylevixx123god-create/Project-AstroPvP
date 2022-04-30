@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.Faction;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
@@ -10,6 +11,7 @@ import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.swords.Carver;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -93,6 +95,10 @@ public class Rogue extends CustomEnchantment {
 
             if (player.hasMetadata("carver_damage")) {
                 multi += 0.10;
+            }
+
+            if (OutpostUtil.hasMarsOutpost((Faction) player)) {
+                multi += 0.15;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {

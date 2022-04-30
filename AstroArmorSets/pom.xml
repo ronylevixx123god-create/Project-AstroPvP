@@ -34,7 +34,7 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>core</artifactId>
+        <artifactId>coreee</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>

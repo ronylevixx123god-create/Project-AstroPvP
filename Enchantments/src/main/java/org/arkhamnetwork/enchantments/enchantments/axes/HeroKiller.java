@@ -19,6 +19,7 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.massivecraft.factions.Faction;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -31,6 +32,7 @@ import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.sets.LunaArmorSet;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
@@ -131,6 +133,10 @@ public class HeroKiller
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
                 increase += 0.15;
+            }
+
+            if (OutpostUtil.hasMarsOutpost((Faction) player)) {
+                increase +=0.15;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {

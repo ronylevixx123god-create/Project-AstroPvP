@@ -18,6 +18,7 @@ import me.ily2bb.slotbot.objects.ItemDeleter;
 import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.LootTable;
 import me.ily2bb.slotbot.utils.Utils;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -135,6 +136,12 @@ public class SlotBotInventoryListener implements Listener {
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&b&lCosmicGames Hat: &fHas returned your SlotBot Tickets!"));
                     player.sendMessage("");
+                }else if (OutpostUtil.hasPlutoOutpost(player) && Math.random() < 0.075) {
+                    returnTickets(tickets, player);
+                    player.sendMessage("");
+                    player.sendMessage(CC.translate("&e&l* PLUTO OUTPOST &7Saved Slotbot Ticket(s) &e&l*"));
+                    player.sendMessage("");
+
                 } else if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
                     FPlayer killer = FactionUtils.getFPlayer(player);
                     for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {

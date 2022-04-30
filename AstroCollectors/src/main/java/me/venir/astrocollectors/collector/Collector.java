@@ -16,6 +16,7 @@ import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.ChunkUtil;
 import me.venir.astrocollectors.utils.Utils;
+import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -170,6 +171,10 @@ public final class Collector {
 
         }
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(this.getLocation()), OutpostType.THE_GREAT_HALL)) {
+            total *= 1.25;
+        }
+
+        if (OutpostUtil.hasPlutoOutpost(FactionUtils.getFactionAt(this.getLocation()))) {
             total *= 1.25;
         }
         return total;

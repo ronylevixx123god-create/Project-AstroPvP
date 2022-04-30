@@ -1,12 +1,14 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.massivecraft.factions.Faction;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -72,6 +74,10 @@ return;
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
             damage *= 1.25;
+        }
+
+        if (OutpostUtil.hasMarsOutpost((Faction) player)) {
+            damage *=1.15;
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
