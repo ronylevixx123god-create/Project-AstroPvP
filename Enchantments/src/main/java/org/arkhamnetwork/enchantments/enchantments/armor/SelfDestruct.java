@@ -80,7 +80,7 @@ extends CustomEnchantment {
                 }
                 int fuseTicks = 120 - level * 20;
                 for (int tntAmount = radius; tntAmount > 0; --tntAmount) {
-                    this.spawnExplosion(p, this.getNearbyLocation(player.getLocation(), 3, 1), fuseTicks);
+                    //this.spawnExplosion(p, this.getNearbyLocation(player.getLocation(), 3, 1), fuseTicks);
                 }
             }
         }
