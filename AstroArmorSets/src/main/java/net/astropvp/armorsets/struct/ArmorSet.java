@@ -2,12 +2,13 @@ package net.astropvp.armorsets.struct;
 
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
-public abstract class ArmorSet {
+public abstract class ArmorSet implements Listener {
     public abstract ItemStack getHelmet();
     public abstract ItemStack getChestplate();
     public abstract ItemStack getLeggings();

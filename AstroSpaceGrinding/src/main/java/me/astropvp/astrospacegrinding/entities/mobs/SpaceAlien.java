@@ -43,8 +43,8 @@ public class SpaceAlien extends SpaceMonster {
     @Override
     public LivingEntity spawn(Location location) {
 
-        Rabbit entity = (Rabbit) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.RABBIT);
-        entity.setCustomName(CC.GreenB + "Space Bunny");
+        Zombie entity = (Zombie) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.ZOMBIE);
+        entity.setCustomName(CC.GreenB + "Space Zombie");
         AstroSpaceGrindingPlugin.activeMonsters.remove(entity.getUniqueId());
 
         entity.setRemoveWhenFarAway(false);

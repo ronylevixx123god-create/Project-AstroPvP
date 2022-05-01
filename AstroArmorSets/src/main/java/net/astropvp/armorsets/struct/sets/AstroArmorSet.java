@@ -70,13 +70,13 @@ public class AstroArmorSet extends ArmorSet {
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 30;
         event.setDamage(event.getDamage() * 1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.02) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 
             if (Math.random() <= 0.35) {
                 if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
-                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Nonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
+                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
                     return;
                 }
             }

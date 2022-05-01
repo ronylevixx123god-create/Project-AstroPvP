@@ -55,7 +55,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(ignoreCancelled = true)
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
     public void onIllegalSandStacking(EntityChangeBlockEvent event) {
         if (event.getTo() != Material.SAND) return;
         Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getBlock()));

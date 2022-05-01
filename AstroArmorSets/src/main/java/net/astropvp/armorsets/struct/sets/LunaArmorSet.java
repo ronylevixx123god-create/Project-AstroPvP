@@ -55,7 +55,7 @@ public class LunaArmorSet extends ArmorSet {
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 35;
         event.setDamage(event.getDamage() * 1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.016 && attacked instanceof Player) {
+        if (Math.random() < 0.02 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 
@@ -66,7 +66,7 @@ public class LunaArmorSet extends ArmorSet {
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 6;
         event.setDamage(event.getDamage() * 1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * amount * 0.01));
-        if (Math.random() < 0.016 && attacked instanceof Player) {
+        if (Math.random() < 0.0185 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 
