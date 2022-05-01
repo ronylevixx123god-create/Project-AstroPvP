@@ -165,7 +165,7 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
     }
 
     public double getRandomDamage() {
-        return (8 + (new Random()).nextInt(14));
+        return (4 + (new Random()).nextInt(10));
     }
 
     private void spawnDimensionalBlocks(Player player, Player damaged) {
