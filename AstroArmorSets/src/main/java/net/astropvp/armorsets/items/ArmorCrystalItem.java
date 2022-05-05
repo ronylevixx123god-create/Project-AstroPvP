@@ -157,7 +157,7 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
             if (cursorWrapper.isBlacklistedIID()) {
                 throw new ItemDupedException("Armor set crystal already used!");
             }
-            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getName().equals("world_end")) {
+            if (!player.getWorld().getName().equals("world") && !player.getWorld().getName().equals("flat")) {
                 throw new PrefixedException("You must apply this Armor Set Crystal in the Overworld!");
             }
             List<ArmorSetType> bonusApplied = AstroArmorSetsAPI.getCrystalsFromItem(clicked);

@@ -25,6 +25,9 @@ public class PlayerPotionEffectPersistTask implements Runnable {
                 if (p.getLocation().getWorld().getName().equals("events_world")) {
                     continue;
                 }
+                if (p.getLocation().getWorld().getName().equals("world_outpost_pluto")) {
+                    continue;
+                }
                 if (p.hasMetadata("armorRescanRunning")) {
                     continue;
                 }

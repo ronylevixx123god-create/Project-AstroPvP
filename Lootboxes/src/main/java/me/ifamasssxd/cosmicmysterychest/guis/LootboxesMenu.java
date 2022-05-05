@@ -71,6 +71,7 @@ public class LootboxesMenu {
 
             lootboxMenu.addItem(new GuiItem(item, event -> {
                 player.getInventory().addItem(item);
+                player.sendMessage(CC.translate("&a&l(!)&a Given you &a" + chest.getInternalName() + "&a."));
                 }
             ));
         }

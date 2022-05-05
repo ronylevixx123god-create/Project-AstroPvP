@@ -182,6 +182,8 @@ public class PlayerPotionEffects {
         if (p == null)
             return;
         if (p.getLocation().getWorld().getName().equals("events_world")) return;
+        if (p.getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         String regionName = WorldGuardUtils.getRegionName(p.getLocation());
         if (regionName.contains("parkour") && !regionName.contains("enchants"))
             return;

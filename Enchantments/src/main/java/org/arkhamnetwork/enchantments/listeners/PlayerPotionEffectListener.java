@@ -39,6 +39,8 @@ public class PlayerPotionEffectListener implements Listener {
         if (p.hasMetadata("armorRescanRunning")) {
             return;
         }
+
+        if (p.getWorld().getName().equals("world_outpost_pluto")) return;
         p.setMetadata("armorRescanRunning", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
         final ArrayList<ItemStack> armor = new ArrayList<>();
         for (final ItemStack item : p.getInventory().getArmorContents()) {

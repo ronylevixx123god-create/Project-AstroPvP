@@ -17,7 +17,7 @@ public class HeroicArmorDamageListener implements Listener {
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
-        if (e.getDamager().getWorld().getName().equals("cosmic-station-vanilla")) {
+        if (e.getDamager().getWorld().getName().equals("world_outpost_pluto")) {
             return;
         }
 

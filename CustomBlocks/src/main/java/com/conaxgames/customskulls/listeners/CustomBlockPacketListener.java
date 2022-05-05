@@ -32,7 +32,7 @@ public class CustomBlockPacketListener extends PacketAdapter {
             exc.printStackTrace();
         }
 
-        Bukkit.getLogger().info(String.format("[%s] - Registered packet listener!", CoreSkulls.instance.getName()));
+        Bukkit.getLogger().info(String.format("[%s] - Registered packet me.astropvp.outpost.listener!", CoreSkulls.instance.getName()));
     }
 
     @Override

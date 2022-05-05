@@ -364,10 +364,10 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
 
             //getServer().getPluginManager().registerEvents(new FactionsSpawnerBoostListener(this), this);
         }catch(ClassNotFoundException exc){
-            Bukkit.getLogger().severe("[Factions] - Not able to register spawner boost listener as you are not using taco spigot!");
+            Bukkit.getLogger().severe("[Factions] - Not able to register spawner boost me.astropvp.outpost.listener as you are not using taco spigot!");
         }
 
-        // Version specific portal listener check.
+        // Version specific portal me.astropvp.outpost.listener check.
         if (mcVersion >= 1400) { // Starting with 1.14
             getServer().getPluginManager().registerEvents(new PortalListener_114(this), this);
         } else {
@@ -953,7 +953,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
             return tag;
         }
 
-        // if listener isn't set, or config option is disabled, give back uncolored tag
+        // if me.astropvp.outpost.listener isn't set, or config option is disabled, give back uncolored tag
         if (listener == null || !this.conf().factions().chat().isTagRelationColored()) {
             tag = me.getChatTag().trim();
         } else {

@@ -66,7 +66,7 @@ public abstract class ArkPlugin {
     public void registerListener(Listener l) {
         this.listeners.add(l);
         Bukkit.getPluginManager().registerEvents(l, this.bukkit_plugin);
-        Bukkit.getLogger().info("(" + this.getClass().getSimpleName() + ") Registered listener: " + l.getClass().getSimpleName() + "!");
+        Bukkit.getLogger().info("(" + this.getClass().getSimpleName() + ") Registered me.astropvp.outpost.listener: " + l.getClass().getSimpleName() + "!");
     }
 
     public void registerTask(BukkitTask bt, Class<?> c) {
@@ -87,7 +87,7 @@ public abstract class ArkPlugin {
 
     public void unregisterListeners() {
         for (Listener l : this.listeners) {
-            Bukkit.getLogger().info("(" + this.getClass().getSimpleName() + ") Unregistered listener: " + l.getClass().getSimpleName() + "!");
+            Bukkit.getLogger().info("(" + this.getClass().getSimpleName() + ") Unregistered me.astropvp.outpost.listener: " + l.getClass().getSimpleName() + "!");
             HandlerList.unregisterAll(l);
             Object var2_2 = null;
         }

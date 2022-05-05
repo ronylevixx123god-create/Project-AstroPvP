@@ -74,6 +74,7 @@
         <module>ProxyPatch</module>
         <module>AntiPhase</module>
         <module>AstroCagePvP</module>
+        <module>Outpost</module>
     </modules>
 
     <build>

@@ -43,9 +43,10 @@ public class WarpGUI {
         ItemStack desert = new ItemBuilder(Material.SAND, CC.translate("&6&lDesert Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack crates = new ItemBuilder(Material.CHEST, CC.translate("&b&lCrates Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack space = new ItemBuilder(Material.ENDER_STONE, CC.translate("&e&lSpace Warp"), CC.translate("&7Click to teleport to this warp")).build();
+        ItemStack pluto = new ItemBuilder(Material.QUARTZ, CC.translate("&a&lPluto Outpost"), CC.translate("&7Click to teleport to this warp")).build();
+        ItemStack mars = new ItemBuilder(Material.NETHER_STALK, CC.translate("&c&lMars Outpost"), CC.translate("&7Click to teleport to this warp")).build();
 
         ItemStack nebula;
-        String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
         if (player.hasPermission("astrocore.nebula")) {
             nebula = new ItemBuilder(Material.NETHER_STAR, CC.translate("&5&lNebula Lounge"), CC.translate("&7Click to teleport to this warp")).build();
@@ -61,6 +62,8 @@ public class WarpGUI {
         expShopUI.setItem(1, 2, new GuiItem((crates), event -> player.performCommand("warp crates")));
         expShopUI.setItem(1, 3, new GuiItem((nebula), event -> player.performCommand("warp nebula")));
         expShopUI.setItem(1, 4, new GuiItem((space), event -> player.performCommand("warp space")));
+        expShopUI.setItem(1, 5, new GuiItem((pluto), event -> player.performCommand("warp outpost-pluto")));
+        expShopUI.setItem(1, 6, new GuiItem((mars), event -> player.performCommand("warp outpost-mars")));
 
 
 
