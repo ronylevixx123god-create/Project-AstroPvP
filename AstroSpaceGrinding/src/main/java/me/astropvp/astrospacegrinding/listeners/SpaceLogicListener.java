@@ -40,7 +40,7 @@ public class SpaceLogicListener implements Listener {
 
     static {
         allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters"));
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost"));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -160,7 +160,7 @@ public class SpaceLogicListener implements Listener {
         if (allowedCommands.contains(event.getMessage().split(" ")[0].replace("/", "").toLowerCase())) {
             return;
         }
-        player.sendMessage(CC.RedB + "(!) " + event.getMessage() + " is denied in this world!");
+        player.sendMessage(CC.translate(  "&c&l(!) &c" + event.getMessage() + " is denied in this world!"));
         event.setMessage("/null");
         event.setCancelled(true);
     }

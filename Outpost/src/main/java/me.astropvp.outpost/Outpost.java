@@ -3,6 +3,7 @@ package me.astropvp.outpost;
 import lombok.Getter;
 import me.astropvp.outpost.config.ConfigManager;
 import me.astropvp.outpost.listener.*;
+import me.astropvp.outpost.task.NoFlyTask;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class Outpost extends JavaPlugin {
@@ -18,7 +19,7 @@ public class Outpost extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
-        registerCommands();
+        registerTasks();
         registerListeners();
 
         this.configManager = new ConfigManager(this);
@@ -34,19 +35,19 @@ public class Outpost extends JavaPlugin {
         instance = null;
     }
 
-    public void registerCommands() {
+    public void registerTasks() {
 
+        new NoFlyTask().runTaskTimer(this, 20, 10);
 
 
     }
 
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new GuiListener(), this);
-        getServer().getPluginManager().registerEvents(new WorldChange(), this);
-
         getServer().getPluginManager().registerEvents(new MarsListener(), this);
         getServer().getPluginManager().registerEvents(new PlutoListener(), this);
         getServer().getPluginManager().registerEvents(new CommandAliasListener(), this);
+        getServer().getPluginManager().registerEvents(new BlockCommandListener(), this);
 
     }
 }

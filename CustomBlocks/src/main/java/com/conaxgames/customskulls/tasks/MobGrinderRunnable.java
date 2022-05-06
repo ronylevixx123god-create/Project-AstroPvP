@@ -18,22 +18,19 @@ public class MobGrinderRunnable extends BukkitRunnable {
         for (MobGrinderCache mobGrinderCache : CoreSkulls.instance.getGrinderBlocks().values()) {
             if (mobGrinderCache == null) continue;
             if (!mobGrinderCache.getAbilityData().isActive()) continue;
-            AbilityData data = mobGrinderCache.getAbilityData();
-            if (data.getLocation().getChunk().getEntities().length == 0) continue;
-
-            //KILL NEARBY STACKED MOB
             boolean stackedBlazesFound = false;
-            for (Entity entity : mobGrinderCache.getAbilityData().getLocation().getChunk().getEntities()) {
-                if (entity.getType() == EntityType.BLAZE) {
-                    if (CoreSkulls.mobStackerUtils.isStackedMob(entity)) {
-                        stackedBlazesFound = true;
-                        CoreSkulls.mobStackerUtils.setStackSize(entity, CoreSkulls.mobStackerUtils.getStackSize(entity) - 1);
-                        break;
-                    }
-                }
+            AbilityData data = mobGrinderCache.getAbilityData();
+            if (mobGrinderCache.getBlaze() != null) {
+                stackedBlazesFound = true;
             }
 
             if (!stackedBlazesFound) continue;
+
+            //KILL NEARBY STACKED MOB
+
+            if (CoreSkulls.mobStackerUtils.isStackedMob(mobGrinderCache.getBlaze())) {
+                CoreSkulls.mobStackerUtils.setStackSize(mobGrinderCache.getBlaze(), CoreSkulls.mobStackerUtils.getStackSize(mobGrinderCache.getBlaze()) - 1);
+            }
 
 
             //ADD LOOT TO THE CHEST
@@ -64,13 +61,13 @@ public class MobGrinderRunnable extends BukkitRunnable {
             double chance = Math.random();
             if (chance < chanceGodlyKey) {
                 int godlyKeys = mobGrinderCache.getCrateKeys().get(CrateType.GODLY);
-                mobGrinderCache.getCrateKeys().put(CrateType.GODLY,  godlyKeys+ 1);
+                mobGrinderCache.getCrateKeys().put(CrateType.GODLY, godlyKeys + 1);
             } else if (chance < chanceLegKey) {
                 int legKeys = mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY);
-                mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, legKeys+1);
+                mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, legKeys + 1);
             } else if (chance < chanceAstroKey) {
                 int astroKeys = mobGrinderCache.getCrateKeys().get(CrateType.ASTRO);
-                mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, astroKeys+1);
+                mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, astroKeys + 1);
             }
         }
 

@@ -7,3 +7,6 @@ commands:
   removeblocks:
     description: remove cblocks
     aliases: [removeblock]
+  cleargrinderblocks:
+    description: clear gblocks
+    aliases: [cleargrinder, clearblocks]
