@@ -15,6 +15,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.utils.SkullUtils;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import me.ifamasssxd.cosmicskycustoms.struct.PlayerInteractable;
 import me.kingsavaqe.cagepvp.AstroCagePvP;
+import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
@@ -154,6 +155,11 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
 
             if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(player)) {
                 player.sendMessage(CC.translate("&c&lPET: &cYou cannot use pets while you are in immunity."));
+                return;
+            }
+
+            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && AstroCagePvP.getInstance().getWildPvPManager().getWildPvP(player).isGrace()) {
+                player.sendMessage(CC.translate("&c&lPET: &cYou cannot use pets before the match has started."));
                 return;
             }
 

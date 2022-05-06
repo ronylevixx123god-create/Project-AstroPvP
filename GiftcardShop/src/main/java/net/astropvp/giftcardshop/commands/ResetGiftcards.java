@@ -69,7 +69,7 @@ public class ResetGiftcards implements CommandExecutor {
 
     private String hasOver10GetID(String inputLine) {
         String getID = "Error";
-        String getAmount = "10";
+        String getAmount = "1";
         String getMonth = "1";
 
 
@@ -93,7 +93,7 @@ public class ResetGiftcards implements CommandExecutor {
 
         System.out.println("Amount: " + getAmount);
         System.out.println("Float: " + Float.parseFloat(getAmount));
-        if(Float.parseFloat(getAmount) >= 2 && !getMonth.startsWith("2022-04")) {
+        if(Float.parseFloat(getAmount) >= 0.01) {
             System.out.println("Returns: " + getID);
             return getID;
         }
@@ -108,7 +108,7 @@ public class ResetGiftcards implements CommandExecutor {
         }
         if (!sender.getName().equals("Bryside")) return false;
         voidAllGiftcardsOver10();
-        sender.sendMessage(CC.Red + "Reset all gc's over 10");
+        sender.sendMessage(CC.Red + "Reset all gc's over 0.01");
         return true;
     }
 }

@@ -29,15 +29,15 @@ import java.util.UUID;
 public class TrapBlockerItem extends CosmicItem
         implements InventoryInteractable {
 
-    private static Map<UUID, Player> trappedPlayers;
-    private static Map<UUID, Player> trapCooldown;
-    private static Map<UUID, Player> trappedPlayersCooldown;
+    private static Map<UUID, UUID> trappedPlayers;
+    private static Map<UUID, UUID> trapCooldown;
+    private static Map<UUID, UUID> trappedPlayersCooldown;
 
 
     public TrapBlockerItem() {
         super("trap_blocker");
-        trappedPlayers = new HashMap<UUID, Player>();
-        trapCooldown = new HashMap<UUID, Player>();
+        trappedPlayers = new HashMap<UUID, UUID>();
+        trapCooldown = new HashMap<UUID, UUID>();
         trappedPlayersCooldown = new HashMap<>();
     }
 
@@ -106,9 +106,10 @@ public class TrapBlockerItem extends CosmicItem
             if (!(entity instanceof Player))
                 continue;
             Player p = (Player) entity;
+            UUID puuid = p.getUniqueId();
             try {
                 if (FactionUtils.getFaction(p) == null) continue;
-                if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p)) {
+                if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p) && !GeneralUtil.isAtleastTruce(player, p)) {
                     if (!isTrapped(p.getUniqueId())) {
                         if (MaskUtils.hasMaskEquipped(p, "ELF") && Math.random() <= 0.25) {
                             p.sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &cTrap Blocker &a&l*"));
@@ -120,12 +121,12 @@ public class TrapBlockerItem extends CosmicItem
                             continue;
                         }
 
-                        if (trappedPlayersCooldown.containsKey(p.getUniqueId())) {
+                        if (trappedPlayersCooldown.containsKey(puuid)) {
                             player.sendMessage(CC.translate("&c&l(Trap Blocker)&c " + p.getName() + " is still on trap blocker cooldown, this lasts 5m."));
                             continue;
                         }
-                        trappedPlayers.put(p.getUniqueId(), p);
-                        trappedPlayersCooldown.put(p.getUniqueId(), p);
+                        trappedPlayers.put(p.getUniqueId(), puuid);
+                        trappedPlayersCooldown.put(p.getUniqueId(), p.getUniqueId());
                         p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
                         p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 1, 1);
                         amountOfPlayers++;
@@ -133,17 +134,17 @@ public class TrapBlockerItem extends CosmicItem
 
 
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
-                        trappedPlayers.remove(p.getUniqueId());
+                        trappedPlayers.remove(puuid);
                         p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
                     }, 20 *15);
 
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
-                        trappedPlayersCooldown.remove(p.getUniqueId());
+                        trappedPlayersCooldown.remove(puuid);
                         p.sendMessage(CC.translate("&c&l(Trap Blocker)&c You can now get trap blocked again."));
                     }, 20 * 300);
                 }
             } catch (Exception e) {
-                trappedPlayers.remove(p.getUniqueId());
+                trappedPlayers.remove(puuid);
                 e.printStackTrace();
             }
 
@@ -160,10 +161,10 @@ public class TrapBlockerItem extends CosmicItem
 
 
             player.sendMessage(CC.translate("&c&l* TRAP BLOCKED &f" + amountOfPlayers + "&7 nearby enemies &c&l*"));
-            for (Player pl : trappedPlayers.values()) {
-                player.sendMessage(CC.translate(" &c&l* &7" + pl.getName()));
+            for (UUID u : trappedPlayers.values()) {
+                player.sendMessage(CC.translate(" &c&l* &7" + Bukkit.getPlayer(u).getName()));
             }
-            trapCooldown.put(player.getUniqueId(), player);
+            trapCooldown.put(player.getUniqueId(), player.getUniqueId());
 
             Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
                 player.sendMessage(CC.translate("&a&l* YOU CAN NOW USE A NEW TRAP BLOCKER *"));

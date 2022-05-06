@@ -4,7 +4,7 @@ bless:
 
 heal:
   msg: '&6&l** &6&lHEALED &6&l**'
-  cooldownMessage: '&7[&a&lAstro&e&lPvP&7] &c/heal is still on cooldown'
+  cooldownMessage: '&7[&6&lAstro&f&lPvP&7] &c/heal is still on cooldown'
 
 broadcast:
   enabled: true
@@ -13,7 +13,7 @@ broadcast:
     - '/broadcast'
   message:
     - ' '
-    - '&a&lAstro&e&lPvP &8| &f%broadcast%'
+    - '&6&lAstro&f&lPvP &8| &f%broadcast%'
     - ' '
 
 # KILL TRACKER

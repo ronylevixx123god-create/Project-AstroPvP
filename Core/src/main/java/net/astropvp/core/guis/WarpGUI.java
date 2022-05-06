@@ -45,6 +45,7 @@ public class WarpGUI {
         ItemStack space = new ItemBuilder(Material.ENDER_STONE, CC.translate("&e&lSpace Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack pluto = new ItemBuilder(Material.QUARTZ, CC.translate("&a&lPluto Outpost"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack mars = new ItemBuilder(Material.NETHER_STALK, CC.translate("&c&lMars Outpost"), CC.translate("&7Click to teleport to this warp")).build();
+        ItemStack flat = new ItemBuilder(Material.RED_SANDSTONE, CC.translate("&d&lFlat World"), CC.translate("&7Click to teleport to this warp")).build();
 
         ItemStack nebula;
 
@@ -64,7 +65,7 @@ public class WarpGUI {
         expShopUI.setItem(1, 4, new GuiItem((space), event -> player.performCommand("warp space")));
         expShopUI.setItem(1, 5, new GuiItem((pluto), event -> player.performCommand("warp outpost-pluto")));
         expShopUI.setItem(1, 6, new GuiItem((mars), event -> player.performCommand("warp outpost-mars")));
-
+        expShopUI.setItem(1, 7, new GuiItem((flat), event -> player.performCommand("warp flat")));
 
 
 

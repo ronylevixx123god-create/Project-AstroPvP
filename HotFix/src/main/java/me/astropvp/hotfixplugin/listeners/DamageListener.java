@@ -49,6 +49,9 @@ public class DamageListener implements Listener {
     @EventHandler
     public void axe(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+            if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
             if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_AXE) {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "axedebuff");
             }
@@ -112,6 +115,9 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+        if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
 
@@ -207,6 +213,9 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void diaPvP(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+        if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
