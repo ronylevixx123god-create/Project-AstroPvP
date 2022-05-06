@@ -40,7 +40,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
             double chanceGodlyKey = 0.0015;
             double chanceLegKey = 0.01;
-            double chanceAstroKey = 0.085;
+            double chanceAstroKey = 0.065;
 
             int level = data.getLevel();
             if (level == 1) {

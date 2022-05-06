@@ -189,7 +189,7 @@ public class GrinderCustomBlockGUI {
 
         //XPBottle key
         double xp = mobGrinderCache.getXp();
-        ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + (int) xp + "&8)"), CC.translate("&7Click to redeem the experience")).build();
+        ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + NumberUtils.formatMoney((int) xp) + "&8)"), CC.translate("&7Click to redeem the experience")).build();
         this.customBlockGui.setItem(4, 8, new GuiItem(xpBottle, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));

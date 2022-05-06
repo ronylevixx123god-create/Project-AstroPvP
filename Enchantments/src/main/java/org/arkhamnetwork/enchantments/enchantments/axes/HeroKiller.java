@@ -135,7 +135,7 @@ public class HeroKiller
                 increase += 0.15;
             }
 
-            if (OutpostUtil.hasMarsOutpost((Faction) player)) {
+            if (OutpostUtil.hasMarsOutpost((Player) player)) {
                 increase +=0.15;
             }
 

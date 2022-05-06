@@ -97,7 +97,7 @@ public class Rogue extends CustomEnchantment {
                 multi += 0.10;
             }
 
-            if (OutpostUtil.hasMarsOutpost((Faction) player)) {
+            if (OutpostUtil.hasMarsOutpost((Player) player)) {
                 multi += 0.15;
             }
 

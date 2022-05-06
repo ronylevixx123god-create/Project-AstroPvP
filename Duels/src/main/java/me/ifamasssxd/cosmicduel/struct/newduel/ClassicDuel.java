@@ -95,13 +95,6 @@ public class ClassicDuel extends NewDuel {
         this.duelID = id++;
     }
 
-    public ClassicDuel(Player initiator, List<String> pendingInvites, boolean ranked) {
-        super(initiator, pendingInvites, ranked);
-        this.ending = false;
-        this.format = new DecimalFormat("#.#");
-        this.duelID = id++;
-    }
-
     public String getName() {
         return "1v1";
     }
