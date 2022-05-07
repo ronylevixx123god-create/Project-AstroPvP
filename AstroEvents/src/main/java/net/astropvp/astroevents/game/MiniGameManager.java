@@ -11,7 +11,7 @@ import net.astropvp.astroevents.utils.Utils;
 @Setter
 public class MiniGameManager {
 
-    private static final long TIME_BETWEEN_EVENTS_IN_SECS = 300;
+    private static final long TIME_BETWEEN_EVENTS_IN_SECS = 7200;
 
     private long lastMiniGameTime;
     private final MiniGameRegister miniGameRegister;
