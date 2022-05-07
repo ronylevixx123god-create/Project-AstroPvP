@@ -5,29 +5,29 @@ import lombok.Setter;
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.tasks.AutoMiniGameTask;
 import net.astropvp.astroevents.utils.Utils;
-import org.bukkit.scheduler.BukkitRunnable;
 
+
+@Getter
+@Setter
 public class MiniGameManager {
 
-    @Getter
-    @Setter
-    private long lastMiniGameTime;
+    private static final long TIME_BETWEEN_EVENTS_IN_SECS = 300;
 
+    private long lastMiniGameTime;
     private final MiniGameRegister miniGameRegister;
     private final AstroEvents plugin;
-    private BukkitRunnable autoMiniGameTask;
+    private AutoMiniGameTask autoMiniGameTask;
     private MiniGameType previousMiniGame;
 
     public MiniGameManager(AstroEvents plugin) {
         this.miniGameRegister = plugin.getMiniGameRegister();
+        this.previousMiniGame = MiniGameType.SUMO;
         this.plugin = plugin;
     }
 
     public void startAutoMiniGameTask() {
-        MiniGameType nextMiniGame = getNextMiniGame();
-        this.autoMiniGameTask = new AutoMiniGameTask(miniGameRegister.getMiniGame(nextMiniGame), this);
-        this.autoMiniGameTask.runTaskTimer(plugin, 144000L, 144000L);
-        this.previousMiniGame = nextMiniGame;
+        this.autoMiniGameTask = new AutoMiniGameTask(this, this.miniGameRegister);
+        this.autoMiniGameTask.runTaskTimer(plugin, TIME_BETWEEN_EVENTS_IN_SECS * 20, TIME_BETWEEN_EVENTS_IN_SECS * 20);
         this.lastMiniGameTime = System.currentTimeMillis();
     }
 
@@ -35,12 +35,8 @@ public class MiniGameManager {
         return previousMiniGame == MiniGameType.PARKOUR ? MiniGameType.SUMO : MiniGameType.PARKOUR;
     }
 
-    public void stopAutoMiniGameTask() {
-        this.autoMiniGameTask.cancel();
-    }
-
     public long getTimeInMsUntilNextMiniGame() {
-        return (lastMiniGameTime + 7200000L) - System.currentTimeMillis();
+        return (lastMiniGameTime + TIME_BETWEEN_EVENTS_IN_SECS * 1000) - System.currentTimeMillis();
     }
 
     public String getTimeUntilNextMiniGame() {
