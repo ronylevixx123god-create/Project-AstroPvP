@@ -1,19 +1,17 @@
 package net.astropvp.astroevents.game.tasks;
 
-import net.astropvp.astroevents.game.MiniGame;
+import lombok.AllArgsConstructor;
 import net.astropvp.astroevents.game.MiniGameManager;
+import net.astropvp.astroevents.game.MiniGameRegister;
+import net.astropvp.astroevents.game.MiniGameType;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
+@AllArgsConstructor
 public class AutoMiniGameTask extends BukkitRunnable {
 
-    private final MiniGame<?> miniGame;
     private final MiniGameManager miniGameManager;
-
-    public AutoMiniGameTask(MiniGame<?> miniGame, MiniGameManager miniGameManager) {
-        this.miniGame = miniGame;
-        this.miniGameManager = miniGameManager;
-    }
+    private final MiniGameRegister miniGameRegister;
 
     @Override
     public void run() {
@@ -23,8 +21,10 @@ public class AutoMiniGameTask extends BukkitRunnable {
             return;
         }
 
-        this.miniGame.startMiniGameCountDown();
-        this.miniGameManager.setLastMiniGameTime(System.currentTimeMillis());
+        MiniGameType nextMiniGame = this.miniGameManager.getNextMiniGame();
 
+        this.miniGameRegister.getMiniGame(nextMiniGame).startMiniGameCountDown();
+        this.miniGameManager.setLastMiniGameTime(System.currentTimeMillis());
+        this.miniGameManager.setPreviousMiniGame(nextMiniGame);
     }
 }
