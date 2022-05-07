@@ -21,16 +21,14 @@
  */
 package me.cosmicpvp.CosmicGlobalKits.commands;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.KitItems;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
+import me.cosmicpvp.CosmicGlobalKits.libs.KitItems;
 import me.cosmicpvp.CosmicGlobalKits.utils.ItemUtils;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKit;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
@@ -158,22 +156,7 @@ implements CommandExecutor {
             }
             return true;
         }
-        if (args[0].equalsIgnoreCase("vgive")) {
-            playerName = args[1];
-            String vkitName = args[2];
-            EvolutionKit ekit = EvolutionKits.valueOf((String)vkitName).getKit();
-            if (Bukkit.getPlayer((String)playerName) != null) {
-                Player p4 = Bukkit.getPlayer((String)playerName);
-                ItemStack hero = FallenHero.getFallenHeroItem(ekit);
-                if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                    hero = ItemID.setItemID((ItemStack)hero, (long)ItemID.generateNewItemID());
-                }
-                ItemUtils.giveItemToPlayer(p4, hero);
-            } else {
-                sender.sendMessage((Object)ChatColor.RED + "Player '" + playerName + "' not online!");
-            }
-            return true;
-        }
+
         return true;
     }
 

@@ -181,13 +181,7 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>outpost</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicOutposts.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>hcfoutpost</artifactId>

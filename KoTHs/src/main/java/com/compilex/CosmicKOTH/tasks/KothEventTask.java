@@ -196,7 +196,7 @@ implements Runnable {
             CombatLog.flagCombat(this.playerCapped);
         }
 
-        if (Math.random() < 0.2) {
+        if (Math.random() < 0.1) {
             GiftcardAPI.createGiftCard(this.playerCapped, 10);
         } else {
             this.playerCapped.sendMessage(CC.translate("&c&l(!)&c Unfortunately you didn't get a 10$ Buycraft Giftcard, better luck next time!"));

@@ -52,6 +52,10 @@ public class Paralyze
                 playerHit.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Paralyze&c&l] **"));
                 return;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_MUTATED_BOOTS)) {
+                return;
+            }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &5&l*"), "PARALYZE");
 

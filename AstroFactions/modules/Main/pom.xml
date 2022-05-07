@@ -497,16 +497,15 @@
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
-
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>KoTHs</artifactId>
+            <artifactId>AstroSpawnersMobcoins</artifactId>
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
+            <artifactId>KoTHs</artifactId>
             <version>0.1</version>
             <scope>provided</scope>
         </dependency>

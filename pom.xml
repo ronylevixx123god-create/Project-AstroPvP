@@ -37,7 +37,7 @@
         <module>Masks</module>
         <module>EnchantmentsAPI</module>
         <module>CustomBlocks</module>
-        <module>AstroEndGrinding</module>
+        <module>AstroSpaceGrinding</module>
         <module>Tournaments</module>
         <module>AstroSpawnersMobcoins</module>
         <module>AstroScoreboard</module>
@@ -73,6 +73,8 @@
         <module>MoneyShop</module>
         <module>ProxyPatch</module>
         <module>AntiPhase</module>
+        <module>AstroCagePvP</module>
+        <module>Outpost</module>
     </modules>
 
     <build>

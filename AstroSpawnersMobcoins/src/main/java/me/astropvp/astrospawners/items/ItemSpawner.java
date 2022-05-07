@@ -6,7 +6,9 @@ import java.util.UUID;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.EntityUtils;
+import me.astropvp.astrospawners.utils.config.ConfigManager;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.ChatColor;
@@ -66,6 +68,6 @@ public class ItemSpawner {
     }
 
     public static int getSpawnerLimit() {
-        return 500000;
+        return AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("max-spawner-stack");
     }
 }

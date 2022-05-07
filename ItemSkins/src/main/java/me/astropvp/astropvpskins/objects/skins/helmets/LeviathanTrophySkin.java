@@ -7,7 +7,6 @@ import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.utils.DamageIndicatorUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
@@ -37,4 +36,6 @@ public class LeviathanTrophySkin extends ItemSkin {
             damager.sendMessage(CC.translate("&3&l* LEVIATHAN TROPHY &7(7x7 Soul Enchant Silence, " + players.size() + " enem" + ((players.size() > 1) ? "ies" : "y") + " affected) &3&l*"));
         }
     }
+
+
 }

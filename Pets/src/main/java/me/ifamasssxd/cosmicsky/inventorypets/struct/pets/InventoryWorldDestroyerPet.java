@@ -10,6 +10,7 @@ import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -18,6 +19,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import net.astropvp.damagehandler.AstroDamageHandlerAPI;
 import org.bukkit.*;
@@ -46,7 +48,13 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     public List<String> getPetDescription(int level) {
-        return Lists.newArrayList(CC.Gray + "A fragment of the legendary", CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Ability", CC.Gray + "Summon the power of Yijki's", CC.Gray + "[" + CC.DarkRed + "Dimensional Cage" + CC.Gray + "] ability (" + this.cageDuration + "s)", (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
+        return Lists.newArrayList(CC.Gray + "A fragment of the legendary",
+                CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(),
+                CC.WhiteB + "Ability",
+                CC.Gray + "Summon the power of Yijki's",
+                CC.Gray + "[" + CC.DarkRed + "Dimensional Cage" + CC.Gray + "] ability (" + this.cageDuration + "s)",
+                (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown",
+                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
     }
 
     private double cageDuration = 5.0;
@@ -104,7 +112,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             }
         }
 
-        if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+        if (MaskType.hasEquipped(player, "ELF")) {
             cageDuration = 7.5;
         } else {
             cageDuration = 5.0;
@@ -139,9 +147,20 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
         if (((Player)target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
-            petItem.setLastUsed(System.currentTimeMillis());
-            player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
-            target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
+
+            if ((AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_BELT)) && Math.random() < 0.5) {
+                target.sendMessage(CC.translate("&e&l* " + player.getName() + "'s Mischievous Tail Bypassed &7Bloodstained Galoshes &e&l*"));
+            } else{
+
+                petItem.setLastUsed(System.currentTimeMillis());
+                player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
+                target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
+                return true;
+            }
+        }
+
+        if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target)) {
+            player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
             return true;
         }
 

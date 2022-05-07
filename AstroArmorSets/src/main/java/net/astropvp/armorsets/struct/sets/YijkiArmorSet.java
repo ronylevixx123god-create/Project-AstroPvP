@@ -47,9 +47,11 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) throws Exception {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "YijkiCrystal", amount);
+        double reductionPercent = 5;
+        event.setDamage(event.getDamage() *1 - (reductionPercent * amount * 0.01));
         if (Math.random() < 0.07 && attacker instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             activateYijki(attacker.getLocation(), attacked);
         }
@@ -57,9 +59,11 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) throws Exception {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(30, event, "YijkiSet");
+        double reductionPercent = 30;
+        event.setDamage(event.getDamage() *1-(reductionPercent*0.01));
         if (Math.random() < 0.07 && attacker instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             activateYijki(attacker.getLocation(), attacked);
         }
@@ -135,7 +139,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
                 continue;
             }
 
-                if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
+            if (fpNear.getRelationTo(fp).isAtLeast(Relation.TRUCE) || !WorldGuardUtils.isPvPEnabled(pNear.getLocation()))
                 continue;
             pNear.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "** REVENGE OF YIJKI (" + ChatColor.RED + fp.getName() + " [1.5s]" + ChatColor.DARK_PURPLE + ChatColor.BOLD + ") **");
             nearbyPlayers.add(pNear);

@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -35,20 +36,24 @@ public class DragonArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(5, event, "DragonCrystal", amount);
+        double reductionPercent = 5;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * 0.01));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(20, event, "DragonSet");
+        double reductionPercent = 20;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * 0.01));
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15, event, "DragonSet");
+        double increasePercent = 15;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(3, event, "DragonCrystal", amount);
+        double increasePercent = 3;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
     }
 
     public List<String> getArmorLore() {
@@ -84,7 +89,6 @@ public class DragonArmorSet extends ArmorSet {
         message.add("");
         return message;
     }
-
 
 
 }

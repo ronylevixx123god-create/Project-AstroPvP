@@ -10,6 +10,8 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
@@ -25,12 +27,18 @@ extends HeroicCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         final double random = Math.random();
-        final double chance = enchantLevel * 0.01;
-        if (random < chance) {
+        final double chance = enchantLevel * 0.075;
+        if (random <= chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) ((Player) target), (String) "NECROMANCER")) {
                 return;
             }
-            GeneralUtil.healPlayer(user, enchantLevel);
+            if (target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.SUMMER_2021_BELT)) {
+                return;
+            }
+
+            if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
+
+            GeneralUtil.healPlayer(user, 3);
         }
     }
 }

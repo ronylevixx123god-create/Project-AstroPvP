@@ -2,16 +2,20 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
+import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
@@ -50,29 +54,40 @@ public class AncientArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(3, event, "AncientCrystal", amount);
+        double reductionPercent = 3;
+
+        if ((AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_MUTATED_SWORD)) && Math.random() < 0.15) {
+            amount--;
+            attacker.sendMessage(CC.translate("&e&l** &eQueens Verdict &7Blocked an &6Ancient Crystal &7of " + attacked.getName() + "'s Set &e&l**"));
+        }
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease") * 0.01));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, event, "AncientSet");
+        double reductionPercent = 35;
+        event.setDamage(event.getDamage() * 1 - (reductionPercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease") * 0.01));
         attacked.setVelocity(attacked.getVelocity().multiply(0.8));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(35, event, "AncientSet");
+        double increasePercent = 35;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01));
         if (Math.random() < 0.01 && attacked instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
             startAncientEffect(attacker, (Player) attacked);
         }
 
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(7, event, "AncientCrystal", amount);
+        double increasePercent = 7;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01));
         if (Math.random() < 0.01 && attacked instanceof Player) {
-            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation())) return;
+            if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
+                return;
 
             startAncientEffect(attacker, (Player) attacked);
         }
@@ -149,15 +164,15 @@ public class AncientArmorSet extends ArmorSet {
             pTarget.removeMetadata("noDefenseProcs", Enchantments.getInstance());
             pTarget.removeMetadata("bloodHoundNoBless", CosmicSkyInventoryPets.get());
             //CmdUnfocus.unfocusPlayer(FPlayers.i.get(player).getFaction(), pTarget);
-        },100L);
+        }, 100L);
 
     }
 
     private void focusTargetPlayer(Player player, Player pTarget) {
-            FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
-            Faction myFaction = fPlayer.getFaction();
-            FPlayer targetPlayer = FPlayers.getInstance().getByPlayer(pTarget);
-            //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+        Faction myFaction = fPlayer.getFaction();
+        FPlayer targetPlayer = FPlayers.getInstance().getByPlayer(pTarget);
+        //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
 
     }
 

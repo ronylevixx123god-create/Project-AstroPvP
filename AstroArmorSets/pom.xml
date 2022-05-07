@@ -34,20 +34,12 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>core</artifactId>
+        <artifactId>coreee</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
     </dependency>
-
-    <dependency>
-        <groupId>com.astropvp</groupId>
-        <artifactId>dmg</artifactId>
-        <version>1.0</version>
-        <scope>system</scope>
-        <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>
-    </dependency>
-
+    
     <dependency>
         <groupId>com.astropvp</groupId>
         <artifactId>proxy</artifactId>
@@ -84,7 +76,7 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>skissss</artifactId>
+        <artifactId>skisss</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>

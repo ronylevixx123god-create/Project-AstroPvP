@@ -39,9 +39,9 @@ public class GrinderCustomBlockGUI {
         int level = data.getLevel();
         int price = 0;
         if (level == 0) {
-            price = 50000000;
+            price = 15000000;
         } else if (level == 1) {
-            price = 100000000;
+            price = 50000000;
         } else if (level == 2) {
             price = 250000000;
         }
@@ -189,7 +189,7 @@ public class GrinderCustomBlockGUI {
 
         //XPBottle key
         double xp = mobGrinderCache.getXp();
-        ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + (int) xp + "&8)"), CC.translate("&7Click to redeem the experience")).build();
+        ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + NumberUtils.formatMoney((int) xp) + "&8)"), CC.translate("&7Click to redeem the experience")).build();
         this.customBlockGui.setItem(4, 8, new GuiItem(xpBottle, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));

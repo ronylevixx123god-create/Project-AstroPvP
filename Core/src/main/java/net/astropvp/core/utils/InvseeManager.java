@@ -19,7 +19,7 @@ public class InvseeManager {
     public InvseeManager(Player p, Player t) {
         this.size = 45;
         this.title = t.getName() + "'s Inventory";
-        this.placeholder = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 0);
+        this.placeholder = new ItemStack(Material.STAINED_GLASS_PANE, 1, (byte) 7);
         ItemMeta im = placeholder.getItemMeta();
         im.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&f"));
         placeholder.setItemMeta(im);

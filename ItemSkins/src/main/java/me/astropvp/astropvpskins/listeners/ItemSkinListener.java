@@ -209,85 +209,91 @@ public class ItemSkinListener implements Listener {
         if (event.isCancelled()) return;
         if (damager instanceof Player) {
             if (DuelAPI.isSpectator((Player) damager)) return;
-        }
-
-        if (damager instanceof Player && damaged instanceof Player) {
-            if (!ItemSkinUtils.canPvP((Player) damager, (Player) damaged, event)) return;
-        }
-        if (damager instanceof Player) {
+            if (damaged instanceof Player) {
+                if (!ItemSkinUtils.canPvP((Player) damager, (Player) damaged, event)) return;
+            }
+            if (damager.getWorld().getName().equals("world_outpost_pluto")) {
+                return;
+            }
             List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
             for (SkinType skin : damagerSkins)
                 skin.getItemSkin().onAttack((Player) damager, damaged, event);
-        }
-        if (damaged instanceof Player) {
-            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damaged);
-            for (SkinType skin : damagedSkins)
-                skin.getItemSkin().onAttacked((Player) damaged, damager, event);
-        }
-    }
-
-    @EventHandler
-    public void onSneak(PlayerToggleSneakEvent event) {
-        if (event.isCancelled()) return;
-        if (DuelAPI.isSpectator(event.getPlayer())) return;
-        if (!WorldGuardUtils.isPvPEnabled(event.getPlayer().getLocation())) return;
-        List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) event.getPlayer());
-        for (SkinType skin : damagedSkins) {
-            skin.getItemSkin().onSneak(event.getPlayer(), event);
-        }
-
-
-
-    }
-
-    @EventHandler
-    private void onInteract(PlayerInteractEvent event) {
-        ItemStack item = event.getPlayer().getItemInHand();
-        if (item == null || item.getType() == Material.AIR)
-            return;
-        if (AstroItemSkinsAPI.isItemSkin(item)) {
-            event.setCancelled(true);
-            event.getPlayer().updateInventory();
+            if (damaged instanceof Player) {
+                List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damaged);
+                for (SkinType skin : damagedSkins)
+                    skin.getItemSkin().onAttacked((Player) damaged, damager, event);
+            }
         }
     }
 
-    @EventHandler
-    public void onJoin(PlayerJoinEvent event) {
-        AstroItemSkinsAPI.updateSkins(event.getPlayer());
-    }
+        @EventHandler
+        public void onSneak (PlayerToggleSneakEvent event){
+            if (event.isCancelled()) return;
+            if (DuelAPI.isSpectator(event.getPlayer())) return;
+            if (!WorldGuardUtils.isPvPEnabled(event.getPlayer().getLocation())) return;
+            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) event.getPlayer());
+            if (event.getPlayer().getWorld().getName().equals("world_outpost_pluto")) {
+                return;
+            }
+            for (SkinType skin : damagedSkins) {
+                skin.getItemSkin().onSneak(event.getPlayer(), event);
+            }
 
-    @EventHandler
-    public void onWorldChange(PlayerChangedWorldEvent event) {
-        AstroItemSkinsAPI.updateSkins(event.getPlayer());
-    }
 
-    @EventHandler
-    public void onArmorChange(ArmorEquipEvent event) {
-        if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
-            List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
-            assert skins != null;
-            skins.forEach(skin -> skin.getItemSkin().onUnequip(event.getPlayer()));
         }
-        if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
-            List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
-            assert skins != null;
-            skins.forEach(skin -> skin.getItemSkin().onEquip(event.getPlayer()));
-        }
-    }
 
-    @EventHandler
-    public void onDeath(EntityDeathEvent event) {
-        LivingEntity killed = event.getEntity();
-        Player player = killed.getKiller();
-        if (player != null) {
-            List<SkinType> killerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer(player);
-            for (SkinType skin : killerSkins)
-                skin.getItemSkin().onKill(player, (Entity) killed, event);
+        @EventHandler
+        private void onInteract (PlayerInteractEvent event){
+            ItemStack item = event.getPlayer().getItemInHand();
+            if (item == null || item.getType() == Material.AIR)
+                return;
+            if (AstroItemSkinsAPI.isItemSkin(item)) {
+                event.setCancelled(true);
+                event.getPlayer().updateInventory();
+            }
         }
-        if (killed instanceof Player) {
-            List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) killed);
-            for (SkinType skin : damagedSkins)
-                skin.getItemSkin().onKilled((Player) killed, (Entity) player, event);
+
+        @EventHandler
+        public void onJoin (PlayerJoinEvent event){
+            AstroItemSkinsAPI.updateSkins(event.getPlayer());
+        }
+
+        @EventHandler
+        public void onWorldChange (PlayerChangedWorldEvent event){
+            AstroItemSkinsAPI.updateSkins(event.getPlayer());
+        }
+
+        @EventHandler
+        public void onArmorChange (ArmorEquipEvent event){
+            if (event.getPlayer().getWorld().getName().equals("world_outpost_pluto")) {
+                return;
+            }
+
+            if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
+                List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
+                assert skins != null;
+                skins.forEach(skin -> skin.getItemSkin().onUnequip(event.getPlayer()));
+            }
+            if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
+                List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
+                assert skins != null;
+                skins.forEach(skin -> skin.getItemSkin().onEquip(event.getPlayer()));
+            }
+        }
+
+        @EventHandler
+        public void onDeath (EntityDeathEvent event){
+            LivingEntity killed = event.getEntity();
+            Player player = killed.getKiller();
+            if (player != null) {
+                List<SkinType> killerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer(player);
+                for (SkinType skin : killerSkins)
+                    skin.getItemSkin().onKill(player, (Entity) killed, event);
+            }
+            if (killed instanceof Player) {
+                List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) killed);
+                for (SkinType skin : damagedSkins)
+                    skin.getItemSkin().onKilled((Player) killed, (Entity) player, event);
+            }
         }
     }
-}

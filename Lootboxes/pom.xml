@@ -87,7 +87,7 @@
         </dependency>
         <dependency>
             <groupId>dev.triumphteam</groupId>
-            <artifactId>triumph-net.astropvp.armorsets.gui</artifactId>
+            <artifactId>triumph-gui</artifactId>
             <version>3.0.3</version> <!-- replace version here -->
         </dependency>
 

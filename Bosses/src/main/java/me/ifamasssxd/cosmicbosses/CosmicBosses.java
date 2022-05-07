@@ -109,9 +109,11 @@ public class CosmicBosses extends JavaPlugin {
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossUpdateTask(), 20L, 5L);
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BossTickTask(), 1L, 1L);
         this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) new BleedTask(), 0L, 10L);
-        this.task = new BossSpawnTask();
+
+        //AUTO BOSS SPAWN
+/*        this.task = new BossSpawnTask();
         final int delay = 72000; //72000
-        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) this.task, (long) delay, (long) delay);
+        this.getServer().getScheduler().scheduleSyncRepeatingTask((Plugin) this, (Runnable) this.task, (long) delay, (long) delay);*/
     }
 
     public void loadBosses() {

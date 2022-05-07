@@ -58,7 +58,7 @@ implements PlayerInteractable {
             playerInteractEvent.setUseItemInHand(Event.Result.DENY);
             Player p = playerInteractEvent.getPlayer();
             FLocation fl = new FLocation(p.getLocation());
-            if (!Board.getFactionAt((FLocation)fl).isWarZone()) {
+            if (!Board.getInstance().getFactionAt((FLocation)fl).isWarZone()) {
                 p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot summon a Fallen Hero outside the Warzone.");
                 return;
             }

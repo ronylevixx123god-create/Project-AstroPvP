@@ -10,6 +10,7 @@ import me.astropvp.astroscoreboard.board.Board;
 import me.astropvp.astroscoreboard.manager.PlayerDisplayManager;
 import me.astropvp.proxypach.ProxyPatch;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,6 +20,9 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.scoreboard.Criterias;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 
 import java.util.Collection;
 
@@ -29,6 +33,12 @@ public class ListenerSB implements Listener {
         if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
             AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
         }
+
+        Objective h = AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().get(player.getUniqueId()).getScoreboard().registerNewObjective("showhealth", Criterias.HEALTH);
+
+        h.setDisplaySlot(DisplaySlot.BELOW_NAME);
+        h.setDisplayName(ChatColor.RED + "❤");
+
         //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);
     }
 

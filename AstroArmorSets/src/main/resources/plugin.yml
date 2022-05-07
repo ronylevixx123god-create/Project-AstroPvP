@@ -17,3 +17,6 @@ commands:
   armorsets:
     description: Open the Armor Sets GUI
     aliases: ['armorgui', 'setsgui', 'armorset', 'set', 'sets']
+  aarmorset:
+    aliases: ['aarmorset', 'aset', 'asets' ]
+

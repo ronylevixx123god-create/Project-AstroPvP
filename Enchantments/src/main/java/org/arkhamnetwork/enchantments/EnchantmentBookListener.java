@@ -1,6 +1,5 @@
 package org.arkhamnetwork.enchantments;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
@@ -143,9 +142,7 @@ public class EnchantmentBookListener implements Listener {
 
                 e.setCancelled(true);
                 e.setResult(Event.Result.DENY);
-                if (Bukkit.getPluginManager().isPluginEnabled("CosmicKOTH") && CosmicOutpostsAPI.controlsHeroOutpost(pl)) {
-                    pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+10% SUCCESS " + ChatColor.RED + ChatColor.BOLD + "-25% DESTROY " + ChatColor.GRAY + "(Hero Outpost Perk)");
-                }
+
                 final boolean success = EnchantmentBook.applyEnchantmentBook(pl, ench_book, e.getCurrentItem());
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && pl.getItemOnCursor() == null) {
                     final long itemID = ItemID.getItemID(ench_book);
@@ -347,9 +344,7 @@ public class EnchantmentBookListener implements Listener {
                 }
                 final int level = allEnchants.get(ce);
                 int blackscrollMod = 0;
-                if (CosmicOutpostsAPI.controlsVanillaOutpost(pl)) {
-                    blackscrollMod = 10;
-                }
+
                 int chance;
                 if (heroicBlackscroll && wrapper.hasKey("conaxData")) {
                     final NBTTagCompoundBuilder builder = new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"));

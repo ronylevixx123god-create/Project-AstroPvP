@@ -16,6 +16,7 @@ import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -24,6 +25,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -52,7 +54,7 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
     public List getPetDescription(int level) {
-        return Lists.newArrayList(CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players(8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (5s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (5s) ",
+        return Lists.newArrayList(CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players (8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (8s) ",
                 CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
     }
 
@@ -106,6 +108,15 @@ public class InventoryBansheePet extends InventoryPet {
                     continue;
                 }
 
+                if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(nearPlayer) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(nearPlayer)) {
+                    continue;
+                }
+
+                if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(nearPlayer)) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You cannot banshee pet " + nearPlayer.getName() + " while he has cage match immunity!" ));
+                    continue;
+                }
+
 
 
                 if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
@@ -148,12 +159,17 @@ public class InventoryBansheePet extends InventoryPet {
         int duration;
 
 
-        if (MaskUtils.hasMaskEquipped(player, "ELF")) {
+        if (MaskType.hasEquipped(player, "ELF")) {
             duration = 12;
         } else {
             duration = 8;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_HELMET)) {
+            duration*=1.25;
+        }
+
+        int finalDuration = duration;
         nearbyEnemies.forEach(enemy -> {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.THANKSGIVING_HELMET_WITCH) && AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
@@ -164,7 +180,7 @@ public class InventoryBansheePet extends InventoryPet {
 
 
             if ((AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.25 && !enemy.hasMetadata("SSFCooldown")) {
-                startBansheeEffect(enemy, player, duration);
+                startBansheeEffect(enemy, player, finalDuration);
                 enemy.sendMessage(CC.translate("&d&l** SSF HELMET [&7Banshee Reflect on " + player.getName() + " &d&l] **"));
                 player.sendMessage(CC.translate("&d&l** " + enemy.getName() + "'s SSF HELMET [&7Reflected Banshee&d&l] **"));
                 enemy.setMetadata("SSFCooldown", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
@@ -172,7 +188,7 @@ public class InventoryBansheePet extends InventoryPet {
                     enemy.removeMetadata("SSFCooldown", CosmicSkyInventoryPets.get());
                 }, 20 * 360);
             } else {
-                startBansheeEffect(player, enemy, duration);
+                startBansheeEffect(player, enemy, finalDuration);
             }
         });
         return true;

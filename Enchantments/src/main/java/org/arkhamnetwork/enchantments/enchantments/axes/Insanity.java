@@ -17,17 +17,20 @@ public class Insanity extends CustomEnchantment
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
+        final boolean playerHAsAxe = player.getEquipment().getItemInHand().getType().name().contains("_AXE");
+
         if (!enemyHasSword) {
             return;
         }
-
+        if (!playerHAsAxe) {
+            return;
+        }
         if (player instanceof Player) {
             if (SinkOrSwipFlippers.insanityDevourSilenced.contains(player)) {
                 return;
             }
         }
-        if (Math.random() < 0.05) {
-            e.setDamage(e.getDamage() * 1.1);
-        }
+        e.setDamage(e.getDamage() * 1.3);
+
     }
 }

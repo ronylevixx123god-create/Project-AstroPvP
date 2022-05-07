@@ -67,6 +67,10 @@ extends CustomEnchantment {
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_MUTATED_BOOTS)) {
+                return;
+            }
+
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_BREAK_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS)) {
                 SinkOrSwipFlippers.addSinkStack((Player) attacker);

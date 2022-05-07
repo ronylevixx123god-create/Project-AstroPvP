@@ -1,7 +1,5 @@
 package me.astropvp.astropvpskins.objects.skins.backpacks;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.ItemSkin;
@@ -10,9 +8,7 @@ import org.bukkit.entity.Player;
 
 public class PowerCoreSkin extends ItemSkin {
     public void onEquip(Player player) {
-        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)player);
-        if (outpostTier == OutpostTier.TRAINEE || outpostTier == OutpostTier.VANILLA || outpostTier == OutpostTier.HERO)
-            return;
+
         if (player.getLocation().getWorld().getName().equals("world_the_end"))
             return;
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());

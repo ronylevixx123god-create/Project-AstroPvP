@@ -58,7 +58,7 @@ public class UndeadAssassin extends Boss {
         this.lastHit = System.currentTimeMillis();
         this.timeSinceInvincible = System.currentTimeMillis();
         this.storedHealth = this.getMaxHealth();
-        ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
+        ItemStack OPKey = CrateKeyItem.getItem(CrateType.SEASON);
         OPKey.setAmount(1);
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);

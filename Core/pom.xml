@@ -171,7 +171,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Skinss</artifactId>
+            <artifactId>Skinsss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>

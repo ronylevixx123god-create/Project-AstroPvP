@@ -5,10 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -21,6 +18,7 @@ import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.enchantments.enchantments.swords.Block;
 import org.bukkit.*;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
@@ -51,8 +49,27 @@ public class DamageListener implements Listener {
     @EventHandler
     public void axe(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+            if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
             if (((Player) e.getDamager()).getItemInHand() != null && ((Player) e.getDamager()).getItemInHand().getType() == Material.DIAMOND_AXE) {
-               AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "axedebuff");
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "axedebuff");
+            }
+        }
+    }
+
+    @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
+    public void onIllegalSandStacking(EntityChangeBlockEvent event) {
+        if (event.getTo() != Material.SAND) return;
+        Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getBlock()));
+        if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
+    }
+
+    @EventHandler(ignoreCancelled = true)
+    public void creeperDmg(EntityDamageEvent event) {
+        if (event.getEntity() instanceof Creeper) {
+            if (event.getCause() == EntityDamageEvent.DamageCause.DROWNING || event.getCause() == EntityDamageEvent.DamageCause.LAVA || event.getCause() == EntityDamageEvent.DamageCause.SUFFOCATION) {
+                event.getEntity().remove();
             }
         }
     }
@@ -79,7 +96,10 @@ public class DamageListener implements Listener {
 
 
             JSONMessage message = new JSONMessage("", ChatColor.GRAY);
-            message.addText(CC.translate("&c" + killer.getName() + "&e killed &c" + died.getName() + " &eusing "));
+            FPlayer fkiller = FPlayers.getInstance().getByPlayer(killer);
+            FPlayer fdied = FPlayers.getInstance().getByPlayer(died);
+
+            message.addText(CC.translate("&c" + killer.getName() + "&4[" + fkiller.getKills() + "&4]&e killed &c" + died.getName() + "&4[" + fdied.getKills() + "&4]" + " &eusing "));
             if (killer.getItemInHand() == null || killer.getItemInHand().getType() == Material.AIR) {
                 message.addText(this.getFormattedName(null));
             } else {
@@ -93,8 +113,11 @@ public class DamageListener implements Listener {
         }
     }
 
-        @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+        if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
 
@@ -103,6 +126,8 @@ public class DamageListener implements Listener {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
             }
             if (((Player) e.getDamager()).getItemInHand() != null) {
+                if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
+
                 int enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand()).size();
                 if (enchants < 14) {
                     AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
@@ -112,10 +137,10 @@ public class DamageListener implements Listener {
                 }
 
                 if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD) {
-                    e.setDamage(e.getDamage()*0.75);
+                    e.setDamage(e.getDamage() * 0.75);
                 }
-            }else {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
+            } else {
+                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, e, "EnchantReduction");
 
             }
         }
@@ -126,7 +151,6 @@ public class DamageListener implements Listener {
     public void onJoin(PlayerJoinEvent e) {
         e.getPlayer().setAllowFlight(true);
     }
-
 
 
     public double getProtectionReduction(Player p) {
@@ -158,23 +182,23 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
         if (WorldGuardUtils.getRegionsIn(e.getPlayer()) == null) return;
-        if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") ||WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter"))) {
-                e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed in this region!"));
-                e.setMessage("/null");
-                e.setCancelled(true);
-            }
+        if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter"))) {
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed in this region!"));
+            e.setMessage("/null");
+            e.setCancelled(true);
+        }
 
     }
 
 
-    @EventHandler
+/*    @EventHandler
     public void onDamageBoss(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() != null) {
             if (e.getEntity().hasMetadata("boss")) {
                 e.setDamage(e.getDamage() *5);
             }
         }
-    }
+    }*/
 
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -187,20 +211,25 @@ public class DamageListener implements Listener {
     }
 
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void diaPvP(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+        if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
+            if (((Player) e.getDamager()).getItemInHand() == null) return;
+            if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
 
             double dmgBuff = 0;
 
             for (ItemStack armor : damaged.getInventory().getArmorContents()) {
                 if (!armor.getType().name().startsWith("LEATHER_")) {
-                    dmgBuff+=40;
+                    dmgBuff += 1500;
                 }
             }
-            e.setDamage(e.getDamage() * 1+dmgBuff);
+            e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));
 
         }
     }
@@ -208,17 +237,10 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onPlace(BlockPlaceEvent e) {
-        if ((e.getBlock().getType() == Material.BEDROCK && !e.getPlayer().isOp())) {
+        if (((e.getBlock().getType() == Material.BEDROCK || e.getBlock().getType() == Material.BARRIER) && !e.getPlayer().isOp())) {
             e.getPlayer().sendMessage(CC.translate("&cYou are not allowed to place this block!"));
             e.setCancelled(true);
         }
-    }
-
-    @EventHandler(ignoreCancelled = true)
-    public void onIllegalSandStacking(EntityChangeBlockEvent event) {
-        if (event.getTo() != Material.SAND) return;
-        Faction faction = Board.getInstance().getFactionAt(new FLocation(event.getBlock()));
-        if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
     }
 
     @EventHandler

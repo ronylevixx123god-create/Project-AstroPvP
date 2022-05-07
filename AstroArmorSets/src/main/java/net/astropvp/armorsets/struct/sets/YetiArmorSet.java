@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -36,20 +37,20 @@ public class YetiArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(10, event, "YetiSet");
-    }
+        double increasePercent = 10;
+        event.setDamage(event.getDamage() * 1 + (increasePercent  * 0.01));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(2.5, event, "YetiCrystal", amount);
-    }
+        double increasePercent = 2.5;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(2.5, event, "YetiCrystal", amount);
-    }
+        double reductionPercent = 2.5;
+        event.setDamage(event.getDamage() *1-(reductionPercent*amount*0.01));    }
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(10, event, "YetiSet");
-
+        double reductionPercent = 10;
+        event.setDamage(event.getDamage() *1-(reductionPercent*0.01));
     }
 
     public List<String> getArmorLore() {

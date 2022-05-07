@@ -4,10 +4,14 @@ import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.massivecraft.factions.Factions;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
 import net.astropvp.core.AstroCore;
+import net.astropvp.core.titles.events.TitleChangeEvent;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -25,15 +29,15 @@ import java.util.UUID;
 public class TrapBlockerItem extends CosmicItem
         implements InventoryInteractable {
 
-    private static Map<UUID, Player> trappedPlayers;
-    private static Map<UUID, Player> trapCooldown;
-    private static Map<UUID, Player> trappedPlayersCooldown;
+    private static Map<UUID, UUID> trappedPlayers;
+    private static Map<UUID, UUID> trapCooldown;
+    private static Map<UUID, UUID> trappedPlayersCooldown;
 
 
     public TrapBlockerItem() {
         super("trap_blocker");
-        trappedPlayers = new HashMap<UUID, Player>();
-        trapCooldown = new HashMap<UUID, Player>();
+        trappedPlayers = new HashMap<UUID, UUID>();
+        trapCooldown = new HashMap<UUID, UUID>();
         trappedPlayersCooldown = new HashMap<>();
     }
 
@@ -102,65 +106,75 @@ public class TrapBlockerItem extends CosmicItem
             if (!(entity instanceof Player))
                 continue;
             Player p = (Player) entity;
-            if (FactionUtils.getFaction(p) == null) continue;
-            if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p)) {
-                if (!isTrapped(p.getUniqueId())) {
-                    if (MaskUtils.hasMaskEquipped(p, "ELF") && Math.random() <= 0.25) {
-                        p.sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &cTrap Blocker &a&l*"));
-                        continue;
+            UUID puuid = p.getUniqueId();
+            try {
+                if (FactionUtils.getFaction(p) == null) continue;
+                if (WorldGuardUtils.isPvPEnabled(p.getLocation()) && (FactionUtils.getFaction(p) != FactionUtils.getFaction(player)) && !FactionUtils.isInAllyFaction(player, p) && !GeneralUtil.isAtleastTruce(player, p)) {
+                    if (!isTrapped(p.getUniqueId())) {
+                        if (MaskUtils.hasMaskEquipped(p, "ELF") && Math.random() <= 0.25) {
+                            p.sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &cTrap Blocker &a&l*"));
+                            continue;
+                        }
+
+                        if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_MUTATED_BACKPACK)) {
+                            p.sendMessage(CC.translate("&d&l* Door to Wonderland &7Blocked &cTrap Blocker &d&l*"));
+                            continue;
+                        }
+
+                        if (trappedPlayersCooldown.containsKey(puuid)) {
+                            player.sendMessage(CC.translate("&c&l(Trap Blocker)&c " + p.getName() + " is still on trap blocker cooldown, this lasts 5m."));
+                            continue;
+                        }
+                        trappedPlayers.put(p.getUniqueId(), puuid);
+                        trappedPlayersCooldown.put(p.getUniqueId(), p.getUniqueId());
+                        p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
+                        p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 1, 1);
+                        amountOfPlayers++;
                     }
 
-                    if (trappedPlayersCooldown.containsKey(p.getUniqueId())) {
-                        player.sendMessage(CC.translate("&c&l(Trap Blocker)&c " + p.getName() + " is still on trap blocker cooldown, this lasts 5m."));
-                        continue;
-                    }
-                    trappedPlayers.put(p.getUniqueId(), p);
-                    trappedPlayersCooldown.put(p.getUniqueId(), p);
-                    p.sendMessage(CC.translate("&c&l* TRAP BLOCKED &7by &f" + player.getName() + "&c&l *"));
-                    p.playSound(p.getLocation(), Sound.ANVIL_BREAK, 1, 1);
-                    amountOfPlayers++;
+
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
+                        trappedPlayers.remove(puuid);
+                        p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
+                    }, 20 *15);
+
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
+                        trappedPlayersCooldown.remove(puuid);
+                        p.sendMessage(CC.translate("&c&l(Trap Blocker)&c You can now get trap blocked again."));
+                    }, 20 * 300);
                 }
-
-
-
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
-                    trappedPlayers.remove(p.getUniqueId());
-                    p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
-                }, 300L);
-
-                Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
-                    trappedPlayersCooldown.remove(p.getUniqueId());
-                    p.sendMessage(CC.translate("&c&l(Trap Blocker)&c You can now get trap blocked again."));
-                }, 20*300);
+            } catch (Exception e) {
+                trappedPlayers.remove(puuid);
+                e.printStackTrace();
             }
+
+            if (amountOfPlayers == 0) {
+                throw new PrefixedException("There are no available nearby enemies.");
+            }
+
+            if (item.getAmount() == 1) {
+                player.setItemInHand(null);
+            } else {
+                item.setAmount(item.getAmount() - 1);
+
+            }
+
+
+            player.sendMessage(CC.translate("&c&l* TRAP BLOCKED &f" + amountOfPlayers + "&7 nearby enemies &c&l*"));
+            for (UUID u : trappedPlayers.values()) {
+                player.sendMessage(CC.translate(" &c&l* &7" + Bukkit.getPlayer(u).getName()));
+            }
+            trapCooldown.put(player.getUniqueId(), player.getUniqueId());
+
+            Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
+                player.sendMessage(CC.translate("&a&l* YOU CAN NOW USE A NEW TRAP BLOCKER *"));
+                trapCooldown.remove(player.getUniqueId());
+            }, 2400L);
+
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1, 1);
+
+
         }
-
-        if (amountOfPlayers == 0) {
-            throw new PrefixedException("There are no available nearby enemies.");
-        }
-
-        if (item.getAmount() == 1) {
-            player.setItemInHand(null);
-        } else {
-            item.setAmount(item.getAmount() - 1);
-
-        }
-
-
-        player.sendMessage(CC.translate("&c&l* TRAP BLOCKED &f" + amountOfPlayers + "&7 nearby enemies &c&l*"));
-        for (Player p : trappedPlayers.values()) {
-            player.sendMessage(CC.translate(" &c&l* &7" + p.getName()));
-        }
-        trapCooldown.put(player.getUniqueId(), player);
-
-        Bukkit.getScheduler().runTaskLater(AstroCore.getInstance(), () -> {
-            player.sendMessage(CC.translate("&a&l* YOU CAN NOW USE A NEW TRAP BLOCKER *"));
-            trapCooldown.remove(player.getUniqueId());
-        }, 2400L);
-
-        player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1, 1);
-
-
     }
 
 

@@ -5,6 +5,7 @@ import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
@@ -14,6 +15,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -81,7 +83,7 @@ public class InventoryWitcherPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         int sum = petItem.getLevel() * 2;
 
- if(MaskUtils.hasMaskEquipped(player, "ELF")) {
+ if(MaskType.hasEquipped(player, "ELF")) {
             sum*=1.5;
         }
 
@@ -118,10 +120,15 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             }
 
+            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player)) {
+                continue;
+            }
+
             /*if (WitcherCooldown.isOnWitcherCooldown(p)) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
                 continue;
             }*/
+
             CrankedAmuletUtil.tryHatchAbility(p, player);
 
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));

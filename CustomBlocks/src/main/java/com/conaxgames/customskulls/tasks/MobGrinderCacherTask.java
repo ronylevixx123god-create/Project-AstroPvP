@@ -4,6 +4,7 @@ import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.struct.MobGrinderCache;
+import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,6 +22,10 @@ public class MobGrinderCacherTask extends BukkitRunnable {
             if (!AbilityData.getAbilityDataMap().containsKey((entry.getKey()))) {
                 CoreSkulls.instance.getGrinderBlocks().remove(entry.getKey());
             }
+            if (!entry.getValue().getBlaze().isValid() || entry.getValue().getBlaze().isDead()) {
+                CoreSkulls.instance.getGrinderBlocks().remove(entry.getKey());
+                System.out.println("[!] Removed a grinder block from cache due to missing blaze");
+            }
         }
         final Map<String, AbilityData> abilityDataMap = AbilityData.getAbilityDataMap();
         for (Map.Entry<String, AbilityData> entry : abilityDataMap.entrySet()) {
@@ -34,18 +39,24 @@ public class MobGrinderCacherTask extends BukkitRunnable {
             if (data.getAbilityType() != AbilityType.BLAZE_STONE_TOTEM) continue;
 
             boolean playerFound = false;
+            Entity blaze = null;
 
             for (Entity entity : data.getLocation().getWorld().getNearbyEntities(data.getLocation(), 16, 6, 16)) {
                 if (entity instanceof Player) {
                     playerFound = true;
-                    break;
                 }
+                if (entity instanceof Blaze) {
+                    blaze = entity;
+                }
+
+                if (playerFound && blaze != null) break;
             }
 
             if (!playerFound) continue;
+            if (blaze == null) continue;
 
             if (!CoreSkulls.instance.getGrinderBlocks().containsKey(key)) {
-                MobGrinderCache mobGrinderCache = new MobGrinderCache(data);
+                MobGrinderCache mobGrinderCache = new MobGrinderCache(data, blaze);
                 CoreSkulls.instance.getGrinderBlocks().put(key, mobGrinderCache);
             }
 

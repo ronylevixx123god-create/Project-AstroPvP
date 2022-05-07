@@ -1,7 +1,5 @@
 package me.cosmicpvp.CosmicGlobalKits.listeners;
 
-import com.cosmicpvp.CosmicSpaceChests.libs.EvolutionKitItems;
-import com.cosmicpvp.CosmicSpaceChests.libs.KitItems;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Board;
@@ -10,8 +8,8 @@ import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKits;
 import me.cosmicpvp.CosmicGlobalKits.CosmicGlobalKitsAPI;
 import me.cosmicpvp.CosmicGlobalKits.libs.FallenHero;
 import me.cosmicpvp.CosmicGlobalKits.libs.GlobalKits;
+import me.cosmicpvp.CosmicGlobalKits.libs.KitItems;
 import me.cosmicpvp.CosmicGlobalKits.utils.WorldGuardUtils;
-import me.ifamasssxd.cosmicevolutionkits.structure.EvolutionKits;
 import org.bukkit.*;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Item;
@@ -47,7 +45,7 @@ implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             Player p = e.getPlayer();
             FLocation fl = new FLocation(p.getLocation());
-            if (!Board.getFactionAt((FLocation)fl).isWarZone()) {
+            if (!Board.getInstance().getFactionAt((FLocation)fl).isWarZone()) {
                 p.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot summon a Fallen Hero outside the Warzone.");
                 return;
             }
@@ -68,7 +66,6 @@ implements Listener {
                 return;
             }
             GlobalKits gkit = FallenHero.getGlobalKitFromFallenHeroItem(e.getItem());
-            EvolutionKits vkit = FallenHero.getEvolutionKitFromFallenHeroItem(e.getItem());
             if (gkit != null) {
                 i = e.getItem();
                 if (i.getAmount() > 1) {
@@ -93,31 +90,6 @@ implements Listener {
                 }
                 p.playSound(p.getLocation(), Sound.WITHER_SPAWN, 1.0f, 1.2f);
             }
-            if (vkit != null) {
-                i = e.getItem();
-                if (i.getAmount() > 1) {
-                    i.setAmount(i.getAmount() - 1);
-                    p.setItemInHand(i);
-                } else {
-                    p.setItemInHand(null);
-                }
-                l = p.getTargetBlock((HashSet<Byte>) null, 6).getLocation().add(0.0, 1.0, 0.0);
-                fallenHero = FallenHero.spawnFallenHero(vkit, l);
-                fallenHero.setMetadata("fallenHeroSummoner", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)p.getName()));
-                itemName = vkit.getKit().getItemName();
-                p.sendMessage("");
-                p.sendMessage((Object)ChatColor.WHITE + "" + (Object)ChatColor.BOLD + "*** " + (Object)ChatColor.UNDERLINE + "Fallen Hero:" + (Object)ChatColor.RESET + " " + itemName + (Object)ChatColor.WHITE + "" + (Object)ChatColor.BOLD + " ***");
-                p.sendMessage((Object)ChatColor.GRAY + "You have summoned a Fallen Hero! Defeat it to claim its treasures and a chance to " + (Object)ChatColor.UNDERLINE + "unlock its /vkit!");
-                p.sendMessage("");
-                for (Entity ent : p.getNearbyEntities(32.0, 32.0, 32.0)) {
-                    if (!(ent instanceof Player)) continue;
-                    pNear = (Player)ent;
-                    pNear.sendMessage((Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.YELLOW + p.getName() + " has summoned a " + itemName + (Object)ChatColor.YELLOW + " Fallen Hero!");
-                    pNear.sendMessage((Object)ChatColor.GRAY + "Locate and slay the Fallen Hero to steal its loot for yourself!");
-                }
-                p.playSound(p.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 1.0f, 1.2f);
-
-            }
         }
     }
 
@@ -129,13 +101,6 @@ implements Listener {
             GlobalKits gkit = null;
             try {
                 gkit = GlobalKits.valueOf(((MetadataValue)ent.getMetadata("fallenHero").get(0)).asString());
-            }
-            catch (IllegalArgumentException illegalArgumentException) {
-                // empty catch block
-            }
-            EvolutionKits vkit = null;
-            try {
-                vkit = EvolutionKits.valueOf((String)(internalName != null ? internalName : ((MetadataValue)ent.getMetadata("fallenHero").get(0)).asString()));
             }
             catch (IllegalArgumentException illegalArgumentException) {
                 // empty catch block
@@ -152,34 +117,6 @@ implements Listener {
                 } else {
                     for (ItemStack i : CosmicGlobalKitsAPI.getGlobalKitItems(gkit, null)) {
                         this.createCustomItem(ent.getWorld().dropItem(ent.getLocation(), i));
-                    }
-                }
-                ent.remove();
-            }
-            if (vkit != null) {
-                ent.setMetadata("hasDied", (MetadataValue)new FixedMetadataValue((Plugin)CosmicGlobalKits.getPlugin(), (Object)true));
-                if (Math.random() <= 0.1) {
-                    this.createCustomItem(ent.getWorld().dropItem(ent.getLocation(), vkit.getLevelUpItem(true)));
-                    Bukkit.getLogger().info("Dropping Vkit Level up Crystal at " + (Object)ent.getLocation() + " vkit: " + vkit.name());
-                }
-                if (Math.random() <= 0.22) {
-                    this.createCustomItem(ent.getWorld().dropItem(ent.getLocation(), EvolutionKitItems.getKitItem((EvolutionKits)vkit)));
-                    String playerName = ((MetadataValue)ent.getMetadata("fallenHeroSummoner").get(0)).asString();
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.GOLD + playerName + " has unlocked the " + vkit.getKit().getItemName() + (Object)ChatColor.GOLD + " /vkit from a Fallen Hero!"));
-                } else {
-                    LivingEntity le = ent;
-                    Player p = le.getKiller();
-                    if (p == null) {
-                        for (Entity eNear : le.getNearbyEntities(16.0, 16.0, 16.0)) {
-                            if (!(eNear instanceof Player)) continue;
-                            p = (Player)eNear;
-                            break;
-                        }
-                    }
-                    if (p != null) {
-                        for (ItemStack i : vkit.getKit().getItems(p, 1 + ThreadLocalRandom.current().nextInt(4))) {
-                            this.createCustomItem(ent.getWorld().dropItem(ent.getLocation(), i));
-                        }
                     }
                 }
                 ent.remove();

@@ -11,7 +11,6 @@ import org.bukkit.plugin.*;
 
 public class Immortal extends CustomEnchantment
 {
-    protected static boolean cosmicOutposts;
     protected static boolean factionUpgrades;
     Essentials ess;
 
@@ -20,7 +19,6 @@ public class Immortal extends CustomEnchantment
         this.max = 4;
         this.base = 15.0;
         this.interval = 3.0;
-        Immortal.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
         Immortal.factionUpgrades = Bukkit.getPluginManager().isPluginEnabled("FactionUpgrades");
         this.ess = (Essentials)Bukkit.getPluginManager().getPlugin("Essentials");
         Bukkit.getPluginManager().registerEvents((Listener)new ImmortalListener(), (Plugin) Enchantments.getInstance());

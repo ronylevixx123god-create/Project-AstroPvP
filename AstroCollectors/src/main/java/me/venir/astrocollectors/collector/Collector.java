@@ -1,6 +1,7 @@
 package me.venir.astrocollectors.collector;
 
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.ImmutableList;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -9,10 +10,13 @@ import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.ChunkUtil;
 import me.venir.astrocollectors.utils.Utils;
+import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -34,7 +38,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 
 public final class Collector {
 
-    @Getter @Setter
+    @Getter
+    @Setter
     private long lastUpdated;
     @Getter
     private double worth;
@@ -75,8 +80,10 @@ public final class Collector {
             this.spawnersInChunk.put(type, amount);
         }
 
-        this.worth = (double) data.get("worth");;
-        this.tnt = (long) data.get("tnt");;
+        this.worth = (double) data.get("worth");
+        ;
+        this.tnt = (long) data.get("tnt");
+        ;
     }
 
     public Collector(Location location) {
@@ -137,7 +144,7 @@ public final class Collector {
         if (faction.getMaxTNT() <= faction.getTNTBank()) return;
 
         if (faction.getMaxTNT() < faction.getTNTBank() + amount) {
-            amount = faction.getMaxTNT() - faction.getTNTBank() ;
+            amount = faction.getMaxTNT() - faction.getTNTBank();
             faction.setTNTBank(faction.getTNTBank() + amount);
             this.tnt = this.tnt - (amount / 2);
         } else {
@@ -156,10 +163,19 @@ public final class Collector {
         long current = System.currentTimeMillis();
         long secondsPassed = (current - this.getLastUpdated()) / 1000;
         double total = 0;
+
         for (Map.Entry<EntityType, Integer> entry : getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amountSpawners = entry.getValue();
             total += AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerSecond(type) * secondsPassed * amountSpawners;
+
+        }
+        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(this.getLocation()), OutpostType.THE_GREAT_HALL)) {
+            total *= 1.25;
+        }
+
+        if (OutpostUtil.hasPlutoOutpost(FactionUtils.getFactionAt(this.getLocation()))) {
+            total *= 1.25;
         }
         return total;
     }

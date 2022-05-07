@@ -96,6 +96,7 @@ public class CmdShow extends FCommand {
                 }
                 this.msg(CC.translate("&aShield: " + (FactionShield.getPlugin().isFactionShieldActive(finalFaction) ? "&a&lENABLED&7" + shieldHours : "&c&lDISABLED&7" + shieldHours)));
                 this.msg(CC.translate("&aKoth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(finalFaction)));
+                //this.msg(CC.translate("&aFTop: &f" + FactionsTop);
 
                 if (Conf.bankEnabled) {
                     this.msg(ChatColor.translateAlternateColorCodes('&',"<c>&aBank Balance: <p>&f$%s"), this.df.format(econ));

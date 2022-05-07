@@ -1,13 +1,14 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.massivecraft.factions.Faction;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -40,7 +41,7 @@ public class DivineImmolation extends CustomEnchantment
 
         final Player p = (Player)player;
         double radius = 1.0 * level;
-        double damage = Math.floor((level*1.5));
+        double damage = Math.floor((level));
 
         if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
             radius += 2.0;
@@ -64,8 +65,23 @@ return;
 
             return;
         }
+
+
+        if (playerHit instanceof Player) {
+            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_MUTATED_SWORD)) && Math.random() < 0.2)
+                return;
+        }
+
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
             damage *= 1.25;
+        }
+
+        if (OutpostUtil.hasMarsOutpost((Player) player)) {
+            damage *=1.15;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
+            damage *=1.3;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
             damage *= 1.3;
@@ -89,11 +105,6 @@ return;
             damage *= player.getMetadata("soulEnchantMultiplier").get(0).asDouble();
         }
 
-
-        if (!GeneralUtil.isSword(p.getItemInHand())) {
-
-            return;
-        }
 
         if (playerHit instanceof Player) {
 

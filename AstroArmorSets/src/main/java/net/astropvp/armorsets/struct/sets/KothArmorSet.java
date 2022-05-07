@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -36,19 +37,23 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
+        double increasePercent;
         if (attacked instanceof Player) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(20, event, "KothSet");
+            increasePercent = 20;
         } else {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(50, event, "KothSetMob");
+            increasePercent = 50;
         }
+        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
+        double increasePercent;
         if (attacked instanceof Player) {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(5, event, "KothCrystal", amount);
+            increasePercent = 5;
         } else {
-            AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(12.5, event, "KothCrystalMob", amount);
+            increasePercent = 12.5;
         }
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
     }
 
 

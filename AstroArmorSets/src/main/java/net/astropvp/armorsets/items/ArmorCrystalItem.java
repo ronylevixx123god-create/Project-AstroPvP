@@ -13,6 +13,7 @@ import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
+import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -156,7 +157,7 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
             if (cursorWrapper.isBlacklistedIID()) {
                 throw new ItemDupedException("Armor set crystal already used!");
             }
-            if (!player.getWorld().getName().equals(Bukkit.getWorlds().get(0).getName()) && !player.getName().equals("world_end")) {
+            if (!player.getWorld().getName().equals("world") && !player.getWorld().getName().equals("flat")) {
                 throw new PrefixedException("You must apply this Armor Set Crystal in the Overworld!");
             }
             List<ArmorSetType> bonusApplied = AstroArmorSetsAPI.getCrystalsFromItem(clicked);
@@ -179,6 +180,11 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
                 chanceToApply += 5;
                 player.sendMessage(CC.translate("&a+5% Crystal apply chance &7(Apollo Perk)"));
 
+            }
+
+            if (OutpostUtil.hasPlutoOutpost(player)) {
+                chanceToApply+=10;
+                player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Pluto Outpost)"));
             }
 
 

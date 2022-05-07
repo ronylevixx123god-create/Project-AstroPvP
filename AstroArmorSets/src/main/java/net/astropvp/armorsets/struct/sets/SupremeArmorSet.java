@@ -3,6 +3,7 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -34,17 +35,17 @@ public class SupremeArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(15, event, "SupremeSet");
-    }
+        double increasePercent = 15;
+        event.setDamage(event.getDamage() * 1 + (increasePercent  * 0.01));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(3, event, "SupremeCrystal", amount);
-    }
+        double increasePercent = 3;
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(10, event, "SupremeSet");
-
+        double reductionPercent = 10;
+        event.setDamage(event.getDamage() *1-(reductionPercent*0.01));
     }
 
     public List<String> getArmorLore() {

@@ -49,6 +49,8 @@ public class QueueManager {
             queueInventory.addItem(queue.getQueueDisplayItem(viewer));
         });
         queueInventory.setItem(8, KrizzUtil.createItem(Material.STAINED_GLASS_PANE, "&a&lEnter Wild PvP Queue", 1, 5, Arrays.asList("", "&7Click to create a &nWild PvP", "&7match at your current location.", "", "&a&lWhat is Wild PvP?", "&7Wild PvP is when a player or", "&7players fight inside Wilderness", "&7chunks (unclaimed land) to", "&7ensure the most fair fight.", "", "&7Once an opponent accepts your Wild PvP", "&7match they will be teleported to your", "&7location and you will each receive", "&77 seconds of immunity - then, you fight!")));
+        queueInventory.setItem(7, KrizzUtil.createItem(Material.IRON_FENCE, "&6&l1v1 Cage Match", 1, 5, Arrays.asList("", "&7Click to create a &n1v1 Cage PvP Match", "&7match at your current location.", "", "&6&lWhat is a 1v1 Cage Match?", "&71v1 Cage PvP is where", "&72 players fight in the wilderness", "&7in a chunk until a player", "&7defeats the other one.", "", "&7Once an opponent accepts your 1v1 Cage PvP", "&7match they will be teleported to your", "&7location and you will each receive", "&77 seconds of immunity - then, you fight!")));
+
         return queueInventory;
     }
 

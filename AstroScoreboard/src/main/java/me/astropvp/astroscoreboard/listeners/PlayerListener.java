@@ -6,6 +6,7 @@ import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
 import me.astropvp.astroscoreboard.manager.TabListManager;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -14,21 +15,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.scoreboard.Criterias;
+import org.bukkit.scoreboard.DisplaySlot;
+import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
 public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onJoin(PlayerJoinEvent event) {
-
-
-        //board.registerNewObjective("astro", "dummy");
-
-        //String objectiveName = ChatColor.RED + "\u2764";
-        //Player player = event.getPlayer();
-        //player.setHealth(player.getHealth());
-        //board.registerNewObjective(objectiveName, "health").setDisplaySlot(DisplaySlot.BELOW_NAME);
-        //player.setScoreboard(board);
 /*        try {
             TabListManager.sendTablist(player,
                     CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),

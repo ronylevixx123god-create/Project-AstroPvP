@@ -1,5 +1,7 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffMember;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.InteractModule;
 import org.bukkit.Bukkit;
@@ -18,11 +20,18 @@ public class RandomTpModule extends InteractModule {
 
     @Override
     protected void onPlayerInteract(PlayerInteractEvent event) {
-        Random random = new Random();
-        Player player = (Player) Bukkit.getOnlinePlayers().toArray()[random.nextInt(Bukkit.getOnlinePlayers().size())];
-
+        Player target = null;
         StaffMember staffMember = super.getStaffModeManager().getStaffMember(event.getPlayer());
 
-        staffMember.getPlayer().teleport(player, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!WorldGuardUtils.getRegionsIn(player.getLocation()).contains("spawn_region")) {
+                target = player;
+            }
+        }
+        if (target == null) {
+            staffMember.sendMessage(CC.translate("&cNo Valid Target found!"));
+        }
+
+        staffMember.getPlayer().teleport(target, PlayerTeleportEvent.TeleportCause.UNKNOWN);
     }
 }

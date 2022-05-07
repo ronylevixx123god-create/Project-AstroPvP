@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.Faction;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.SneakyThrows;
@@ -10,6 +11,7 @@ import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.swords.Carver;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -87,12 +89,24 @@ public class Rogue extends CustomEnchantment {
                 multi += 0.15;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
+                multi +=0.1;
+            }
+
             if (player.hasMetadata("carver_damage")) {
                 multi += 0.10;
             }
 
+            if (OutpostUtil.hasMarsOutpost((Player) player)) {
+                multi += 0.15;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                 multi -= 0.10;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_MUTATED_BOOTS)) {
+                multi*=0.67;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {

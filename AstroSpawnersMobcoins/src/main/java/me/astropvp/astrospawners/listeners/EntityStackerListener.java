@@ -1,39 +1,33 @@
 package me.astropvp.astrospawners.listeners;
 
-import com.astropvp.cc.CCVerify;
 import com.astropvp.cc.player.CosmicPlayers;
-import com.compilex.CompilexPermissions.CompilexPermissions;
-
-import com.conaxgames.customskulls.util.CustomBlockUtil;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.utils.PlayerData;
+import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
-import me.astropvp.astrospawners.utils.*;
+import me.astropvp.astrospawners.utils.config.ConfigManager;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
-import me.ifamasssxd.cosmiccoinflip.struct.CoinFlipManager;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
-import net.astropvp.core.utils.GrindingMessagesUtil;
-import net.minecraft.server.v1_8_R3.BlockPosition;
-import net.minecraft.server.v1_8_R3.PacketPlayOutWorldEvent;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatExpireTask;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.entity.*;
+import net.astropvp.core.utils.OutpostUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -41,9 +35,10 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.github.paperspigot.Title;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class EntityStackerListener implements Listener {
 
@@ -53,12 +48,11 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
+    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+    private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
+
     private Map<UUID, Long> blazeCooldown;
-
-    private Map<UUID, Integer> astroKeyLoot;
-    private Map<UUID, Integer> xpLoot;
-    private Map<UUID, Integer> legKeyLoot;
-
+    private final Map<UUID, Integer> playerMoneyMap;
 
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
@@ -68,6 +62,8 @@ public class EntityStackerListener implements Listener {
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(AstroSpawners.getInstance(), () -> {
             this.blazeCooldown.clear();
         }, 10, 5 * 20 * 60);
+        this.playerMoneyMap = new HashMap<>();
+        this.cachedWeaponEnchants = new HashMap<>();
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -76,7 +72,7 @@ public class EntityStackerListener implements Listener {
     }
 
     @EventHandler
-    public void onStackedEntityDeath(StackedMobDeathEvent e) {
+    public void onStackedEntityDeath(StackedMobDeathEvent e) throws Exception {
         Entity entity = e.getEntity();
         if (e.getDamager() instanceof Player) {
 
@@ -94,14 +90,24 @@ public class EntityStackerListener implements Listener {
                 e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will resolve it."));
                 return;
             }
-            double exp = 150;
+            double exp = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("baseXp") * 0.01;
             int remove = 1;
 
             if (((Player) e.getDamager()).getItemInHand() != null) {
-                Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand());
+                Map<CustomEnchantment, Integer> enchants;
+                UUID uuid = e.getDamager().getUniqueId();
+                if (cachedWeaponEnchants.containsKey(uuid)) {
+                    enchants = cachedWeaponEnchants.get(e.getDamager().getUniqueId());
+                } else {
+                    enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand());
+                    cachedWeaponEnchants.put(uuid, enchants);
+                    Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+                        cachedWeaponEnchants.remove(uuid);
+                    }, 60*20L);
+                }
 
                 if (enchants.containsKey(EnchantmentAPI.getEnchantment("Master Inquisitive"))) {
-                    exp += 50;
+                    exp += 150;
                 } else if (enchants.containsKey(EnchantmentAPI.getEnchantment("Inquisitive"))) {
                     exp += 100;
 
@@ -161,14 +167,28 @@ public class EntityStackerListener implements Listener {
             }
 
 
-            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD) && Math.random() < 0.1) {
-                exp += 75;
+            if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
+                exp *= 1.25;
             }
 
+            if (OutpostUtil.hasMarsOutpost(p)) {
+                exp *= 1.5;
+            }
 
+            if (e.getDamager().hasPermission("astrocore.nebula")) {
+                exp *= 2;
+            }
+
+            attemptGiveMoney(p);
             p.giveExp((int) exp);
 
             plugin.addPlayerToAfkGrinding(p);
+
+            boolean showParticles = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("showGrindParticles");
+
+            if (showParticles) {
+                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 0, 1, 0, 0.4f, 12);
+            }
 
         }
 
@@ -212,16 +232,40 @@ public class EntityStackerListener implements Listener {
     }
 
     public void blazeLoot(Player p) {
+        double legKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("legKeyChancePercent") * 0.01; //0.01
+        double astroKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroKeyChancePercent") * 0.01; //0.125
+        double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.001
+
         if (p != null) {
             double num = Math.random();
             try {
-                if (num >= 0 && num <= 0.01) {
+                if (num >= 0 && num <= godlyKeyChance) {
+                    p.getInventory().addItem(godlyKey);
+                } else if (num >= 0 && num <= legKeyChance) {
                     p.getInventory().addItem(legKey);
-                } else if (num >= 0 && num <= 0.125) {
+                } else if (num >= 0 && num <= astroKeyChance) {
                     p.getInventory().addItem(astroKey);
                 }
             } catch (IllegalArgumentException ignored) {
             }
+        }
+    }
+
+    public void attemptGiveMoney(Player player) {
+        UUID uuid = player.getUniqueId();
+        double blazeRodPrice = 22;
+        if (this.playerMoneyMap.containsKey(uuid)) {
+            int current = this.playerMoneyMap.get(uuid);
+            this.playerMoneyMap.put(uuid, current + 1);
+        } else {
+            this.playerMoneyMap.put(uuid, 1);
+        }
+        if (this.playerMoneyMap.get(uuid) >= 10) {
+            this.playerMoneyMap.put(uuid, 0);
+            EconomyUtils.depositBalance(player, blazeRodPrice * 10);
+            player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(blazeRodPrice * 10)));
+            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
+
         }
     }
 

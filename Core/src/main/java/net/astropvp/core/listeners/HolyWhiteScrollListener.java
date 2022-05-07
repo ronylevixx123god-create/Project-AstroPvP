@@ -1,9 +1,10 @@
 package net.astropvp.core.listeners;
 
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
+import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.boots.MutatedSinkOrSwipFlippers;
 import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
@@ -82,8 +83,8 @@ public class HolyWhiteScrollListener implements Listener {
         //return;
         Player killer = e.getEntity().getKiller();
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
-        boolean controlling = (killer != null && CosmicUtils.get().isOutpostsEnabled() && CosmicOutpostsAPI.controlsCosmonautOutpost(killer));
         boolean hasBeenSwimEffected = false;
+        boolean hasBeenTailed = false;
         List<ItemStack> savedItems = new ArrayList<>();
         List<ItemStack> drops = e.getDrops();
         for (ItemStack i : drops) {
@@ -92,7 +93,6 @@ public class HolyWhiteScrollListener implements Listener {
                 HolyWhiteScrollUtils.removeHolyWhitescroll(i);
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
-                boolean isControlling = (controlling && Math.random() > 0.1D);
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
                 if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
@@ -105,6 +105,11 @@ public class HolyWhiteScrollListener implements Listener {
                 if (MutatedSinkOrSwipFlippers.sinked.contains(e.getEntity()) && AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS) && !hasBeenSwimEffected) {
                     isMonopolied = true;
                     hasBeenSwimEffected = true;
+                }
+
+                if ((AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_BELT)) && !hasBeenTailed) {
+                    isMonopolied = true;
+                    hasBeenTailed = true;
                 }
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;
@@ -122,7 +127,7 @@ public class HolyWhiteScrollListener implements Listener {
                             isKilledHoldingTravAxe = true;
                     }
                 assert killer != null;
-                if (!isBansheed && !isControlling && !isMonopolied && !isTravAxe) {
+                if (!isBansheed &&  !isMonopolied && !isTravAxe) {
                     savedItems.add(i);
                     continue;
                 }
@@ -132,17 +137,31 @@ public class HolyWhiteScrollListener implements Listener {
                     if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(), SkinType.CHRISTMAS_HELMET_STAR) && Math.random() < 0.33) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's NORTH STAR &7Blocked Monopoly Mask &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* NORTH STAR &7Saved your item from getting monoed &a&l*"));
+                        savedItems.add(i);
                         continue;
                     }
 
+                    //holies don't save in space lands
+                    if (killer.getLocation().getWorld().getName().equals("space")) continue;
+
                     if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(),SkinType.DOOMSDAY_BACKPACK_BUGOUT) && Math.random() < 0.2) {
-                        killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask &a&l* "));
-                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved your item from getting monoed &a&l*"));
+                        killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask on an item &a&l* "));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved an item from getting monoed &a&l*"));
+                        savedItems.add(i);
+
+                        continue;
+                    }
+
+                    if (AstroItemSkinsAPI.hasItemSkin(i) && AstroItemSkinsAPI.getItemSkin(i).contains(SkinType.DEATH_KNIGHT_SKULL_BLADE)) {
+                        killer.sendMessage(CC.translate("&b&l* " + e.getEntity().getName() + " 's DEATH KNIGHT Skull Blade Saved b&l* "));
+                        e.getEntity().getPlayer().sendMessage(CC.translate("&b&l* DEATH KNIGHT Skull was Saved &b&l*"));
+                        savedItems.add(i);
                         continue;
                     }
 
                     if (MaskUtils.hasMaskEquipped(e.getEntity(), "ELF") && Math.random() <= 0.25) {
-                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Blocked &bMonopoly Item &a&l*"));
+                        e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK &7Saved an Item from &bMonopoly &a&l*"));
+                        savedItems.add(i);
                         continue;
                     }
                     Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getEntity(), "HOLY_WHITESCROLL_DEATH", Lists.newArrayList(new ItemStack[1])));
@@ -157,15 +176,9 @@ public class HolyWhiteScrollListener implements Listener {
                         e.getEntity().sendMessage(CC.RedB + "* MONOPOLY MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* MONOPOLY MASK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                     }
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Monopoly Mask procing.");
                     continue;
                 }
-                if (isControlling) {
-                    e.getEntity().sendMessage(CC.RedB + "* COSMONAUT OUTPOST PERK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                    killer.sendMessage(CC.GreenB + "* COSMONAUT OUTPOST PERK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Cosmonaut procing.");
-                    continue;
-                }
+
                 if (isBansheed) {
                     e.getEntity().sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                     killer.sendMessage(CC.GreenB + "* BANSHEE RKO [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
@@ -176,7 +189,6 @@ public class HolyWhiteScrollListener implements Listener {
                     continue;
                 e.getEntity().sendMessage(CC.RedB + "* TRAVELER AXE HOLY WHITE SCROLL NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                 killer.sendMessage(CC.GreenB + "* TRAVELER AXE HOLY WHITE SCROLL NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
-                Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Traveler Axe White Scroll Negation procing.");
             }
         }
         for (ItemStack i : savedItems)

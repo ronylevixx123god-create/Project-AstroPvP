@@ -421,7 +421,7 @@ patches:
   # Enables /shop to teleport to server shop location.
   shop_command: false
 
-  # Enables special party login listener.
+  # Enables special party login me.astropvp.outpost.listener.
   party: false
 
   # Adds limitations to amount of stackable physics me.astropvp.cratekeys.items.

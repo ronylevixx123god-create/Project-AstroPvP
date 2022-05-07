@@ -19,7 +19,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
@@ -76,10 +75,6 @@ final class ExpBottlesCommand
                 } else {
                     noLimit = true;
                 }
-            }
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.controlsHeroOutpost(p)) {
-                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + "No XP Bottle Delay " + ChatColor.GRAY + "[Hero Outpost Perk]");
-                noLimit = true;
             }
             if (!noLimit) {
                 p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot create another XP Bottle for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()));

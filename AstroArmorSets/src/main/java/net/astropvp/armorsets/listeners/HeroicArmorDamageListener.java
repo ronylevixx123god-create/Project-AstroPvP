@@ -17,7 +17,9 @@ public class HeroicArmorDamageListener implements Listener {
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
-
+        if (e.getDamager().getWorld().getName().equals("world_outpost_pluto")) {
+            return;
+        }
 
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getHeroicPieces() != 0) {
@@ -28,8 +30,7 @@ public class HeroicArmorDamageListener implements Listener {
                     return;
                 }
             }
-            AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(totalReduction, e, "&4&lHeroicArmor");
-        }
+            e.setDamage(e.getDamage() *1 - (totalReduction  * 0.01));        }
 
     }
 }

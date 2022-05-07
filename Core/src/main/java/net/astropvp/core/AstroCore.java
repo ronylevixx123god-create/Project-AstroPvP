@@ -382,7 +382,6 @@ public class AstroCore extends JavaPlugin {
         getCommand("jackpot").setExecutor(new CommandJackpot());
         getCommand("chatcolor").setExecutor(new ChatColorCommand());
         getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
-        getCommand("phoenix").setExecutor(new PhoenixCommand());
         getCommand("randomtp").setExecutor(new RandomTpCommand());
         freezeCommand = new Freeze();
 

@@ -36,6 +36,6 @@ public class Overwhelm extends CustomEnchantment
             if (to != null) {
                 to.removeMetadata("noReflectiveBlock", (Plugin)Enchantments.getInstance());
             }
-        }, 20 * seconds);
+        }, 20L * seconds);
     }
 }

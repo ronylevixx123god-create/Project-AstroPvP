@@ -4,11 +4,11 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import org.bukkit.Material;
-
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
+import org.bukkit.Material;
+import org.bukkit.Material;
 
 public class EnchantmentCoderManager {
     private Map<String, Map<String, List<String>>> storedData;
@@ -79,4 +79,3 @@ public class EnchantmentCoderManager {
         this.storedData = storedData;
     }
 }
-

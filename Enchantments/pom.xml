@@ -132,7 +132,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>core</artifactId>
+            <artifactId>coreee</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
@@ -219,7 +219,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>ItemSkins</artifactId>
+            <artifactId>ItemSkinss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>

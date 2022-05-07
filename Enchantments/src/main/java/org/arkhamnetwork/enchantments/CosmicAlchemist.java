@@ -1,7 +1,5 @@
 package org.arkhamnetwork.enchantments;
 
-import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.rit.sucy.CustomEnchantment;
@@ -202,9 +200,7 @@ public class CosmicAlchemist {
                 highestCost = Math.max(highestCost, cost);
             }
         }
-        if (Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts") && CosmicOutpostsAPI.isDefender(p, CosmicKOTHPlugin.get_().getTraineeOutpost())) {
-            highestCost *= 0.65;
-        }
+
         return (int) (highestCost * 0.65);
     }
 }

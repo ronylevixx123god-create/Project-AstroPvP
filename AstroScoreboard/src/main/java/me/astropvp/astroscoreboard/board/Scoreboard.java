@@ -4,11 +4,16 @@ import com.compilex.CosmicDungeons.DungeonsAPI;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.tasks.KothEventTask;
-import com.compilex.CosmicOutposts.outpost.Outpost;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import com.sk89q.worldedit.internal.expression.runtime.For;
 import me.astropvp.astroscoreboard.AstroScoreboardPlugin;
+import me.astropvp.astroscoreboard.utils.TimeUtils;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
+import me.astropvp.astrospacegrinding.data.SpacePlayerData;
+import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.PlayerData;
 import me.astropvp.astrospawners.utils.PlayerDataManager;
@@ -32,6 +37,7 @@ import net.astropvp.astroevents.game.games.SumoMiniGame;
 import net.astropvp.astroevents.utils.Utils;
 import org.bukkit.ChatColor;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -140,7 +146,12 @@ public class Scoreboard implements BoardAdapter {
             return CC.translate("&6&lDesert KOTH &7" + getDateSuffix());
         }
 
-        if (!FactionUtils.isWilderness(fplayer.getFaction())) {
+        if (player.getLocation().getWorld().getName().equals("space")) {
+            return CC.translate("&b&lSpace Lands &7" + getDateSuffix());
+
+        }
+
+            if (!FactionUtils.isWilderness(fplayer.getFaction())) {
             return CC.translate("&a&l" + fplayer.getFaction().getTag() + " &7" + getDateSuffix());
         }
 
@@ -437,6 +448,32 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }
 
+        if (player.getLocation().getWorld().getName().equals("space")) {
+            SpacePlayerData data = SpacePlayerData.findPlayer(player);
+            ForceFieldData fdata = ForceFieldData.findPlayer(player);
+            List<String> board = new LinkedList<>();
+            board.add("");
+            board.add(CC.translate("&3&lAccount"));
+            board.add(player.getName());
+            board.add("");
+            board.add(CC.translate("&b&lForcefield"));
+            if (fdata.isActive()) {
+                board.add(CC.translate("&aActive &7(" + fdata.getRemainingForceFieldTimeFormatted() + "&7)"));
+            } else {
+                board.add(CC.translate("&cInactive"));
+            }
+            board.add("");
+            board.add(CC.translate("&b&lStats"));
+            board.add(CC.translate("&8» &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN)));
+            board.add(CC.translate("&8» &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace())));
+            board.add(CC.translate("&8» &7Money Made: &3$&b" + NumberUtils.formatMoney(data.getMoneyMade())));
+            board.add(CC.translate("&8» &7XP Earned:&b " + NumberUtils.formatMoney(data.getXpMade())));
+
+            board.add(CC.translate(""));
+            board.add(CC.Gray + "play.astropvp.net");
+            return board;
+        }
+
         if (WorldGuardUtils.getRegionName(player.getLocation()).contains("frozen")) {
             List<String> board = new LinkedList<>();
             OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
@@ -479,15 +516,23 @@ public class Scoreboard implements BoardAdapter {
 
         KothEventTask koth = CosmicKOTHPlugin.get_().getKoth();
         if (koth != null && WorldGuardUtils.getRegionsIn(player) != null && (WorldGuardUtils.getRegionsIn(player).contains("desertkoth") || WorldGuardUtils.getRegionsIn(player).contains("desertkoth2"))) {
+
+            int nearby = 0;
+            for (Entity entity : player.getNearbyEntities(32, 32, 32)) {
+                if (entity instanceof Player) {
+                    nearby++;
+                }
+            }
+
             List<String> board = new LinkedList<>();
             board.add("");
             if (koth.getPlayerCapping() != null) {
-                board.add(CC.translate("&f&l● &6Capper&7: &e" + koth.getPlayerCapping().getName()));
-                board.add(CC.translate("&f&l● &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
+                board.add(CC.translate("&8» &6Capper&7: &e" + koth.getPlayerCapping().getName()));
+                board.add(CC.translate("&8» &6Time Left&7: &a") + koth.getSecondsUntilCap() + "s");
                 board.add("");
             }
-            board.add(CC.translate("&f&l● &6Nearby Players:&c " + player.getNearbyEntities(48, 60, 48).size()));
-            board.add(CC.translate("&f&l● &6Account:&f " + player.getName()));
+            board.add(CC.translate("&8» &6Nearby Players:&c " + nearby));
+            board.add(CC.translate("&8» &6Account:&f " + player.getName()));
             board.add("");
             board.add(CC.translate("&fX&72504&7, &fY&719, &fZ&74638"));
             board.add("");
@@ -532,94 +577,6 @@ public class Scoreboard implements BoardAdapter {
                 board.add(CC.translate("&e") + player.getName());
                 return board;
             }
-        }
-
-        if (player.getLocation().getWorld().getName().equals("cosmic-station-vanilla")) {
-            Outpost vanillaOutpost = CosmicKOTHPlugin.get_().getVanillaOutpost();
-            List<String> board = new LinkedList<>();
-            board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&c&lVanilla Outpost"));
-            if (vanillaOutpost.getCapTask().getAttackingFaction() != null) {
-                board.add(CC.translate("&c Attacking&7: &f") + vanillaOutpost.getCapTask().getAttackingFaction().getTag());
-            }
-
-            if (vanillaOutpost.getCapTask().getDefendingFaction() != null) {
-                board.add(CC.translate("&c Defending&7: &f") + vanillaOutpost.getCapTask().getDefendingFaction().getTag());
-            }
-            board.add(CC.translate("&c Cap&7: &a") + vanillaOutpost.getCapTask().roundCapPercentDisplay() + "%");
-            board.add("");
-            if (vanillaOutpost.getCapStatus() != null) {
-                board.add(CC.translate("&c Status&7: &f") + vanillaOutpost.getCapStatus());
-            }
-            board.add("");
-            board.add(CC.White + "play.astropvp.net");
-            return board;
-        }
-
-        if (player.getLocation().getWorld().getName().equals("cosmic-station-1")) {
-            Outpost vanillaOutpost = CosmicKOTHPlugin.get_().getTraineeOutpost();
-            List<String> board = new LinkedList<>();
-            board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&7&lTrainee Outpost"));
-            if (vanillaOutpost.getCapTask().getAttackingFaction() != null) {
-                board.add(CC.translate("&7 Attacking&7: &f") + vanillaOutpost.getCapTask().getAttackingFaction().getTag());
-            }
-
-            if (vanillaOutpost.getCapTask().getDefendingFaction() != null) {
-                board.add(CC.translate("&7 Defending&7: &f") + vanillaOutpost.getCapTask().getDefendingFaction().getTag());
-            }
-            board.add(CC.translate("&7 Cap&7: &a") + vanillaOutpost.getCapTask().roundCapPercentDisplay() + "%");
-            board.add("");
-            if (vanillaOutpost.getCapStatus() != null) {
-                board.add(CC.translate("&7 Status&7: &f") + vanillaOutpost.getCapStatus());
-            }
-            board.add("");
-            board.add(CC.White + "play.astropvp.net");
-            return board;
-        }
-
-        if (player.getLocation().getWorld().getName().equals("cosmic-station-2")) {
-            Outpost vanillaOutpost = CosmicKOTHPlugin.get_().getHeroOutpost();
-            List<String> board = new LinkedList<>();
-            board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&b&lHero Outpost"));
-            if (vanillaOutpost.getCapTask().getAttackingFaction() != null) {
-                board.add(CC.translate("&b Attacking&7: &f") + vanillaOutpost.getCapTask().getAttackingFaction().getTag());
-            }
-
-            if (vanillaOutpost.getCapTask().getDefendingFaction() != null) {
-                board.add(CC.translate("&b Defending&7: &f") + vanillaOutpost.getCapTask().getDefendingFaction().getTag());
-            }
-            board.add(CC.translate("&b Cap&7: &a") + vanillaOutpost.getCapTask().roundCapPercentDisplay() + "%");
-            board.add("");
-            if (vanillaOutpost.getCapStatus() != null) {
-                board.add(CC.translate("&b Status&7: &f") + vanillaOutpost.getCapStatus());
-            }
-            board.add("");
-            board.add(CC.White + "play.astropvp.net");
-            return board;
-        }
-
-        if (player.getLocation().getWorld().getName().equals("cosmic-station-3")) {
-            Outpost vanillaOutpost = CosmicKOTHPlugin.get_().getCosmonautOutpost();
-            List<String> board = new LinkedList<>();
-            board.add("");
-            board.add(CC.translate(CC.White + "➥ " + "&6&lCosmonaut Outpost"));
-            if (vanillaOutpost.getCapTask().getAttackingFaction() != null) {
-                board.add(CC.translate("&6 Attacking&7: &f") + vanillaOutpost.getCapTask().getAttackingFaction().getTag());
-            }
-
-            if (vanillaOutpost.getCapTask().getDefendingFaction() != null) {
-                board.add(CC.translate("&6 Defending&7: &f") + vanillaOutpost.getCapTask().getDefendingFaction().getTag());
-            }
-            board.add(CC.translate("&6 Cap&7: &a") + vanillaOutpost.getCapTask().roundCapPercentDisplay() + "%");
-            board.add("");
-            if (vanillaOutpost.getCapStatus() != null) {
-                board.add(CC.translate("&6 Status&7: &f") + vanillaOutpost.getCapStatus());
-            }
-            board.add("");
-            board.add(CC.White + "play.astropvp.net");
-            return board;
         }
 
         if (player.getLocation().getWorld().getName().equals("events_world")) {
@@ -677,9 +634,15 @@ public class Scoreboard implements BoardAdapter {
             return board;
         }*/
 
-
-        PlayerDataManager manager = AstroSpawners.getInstance().getManager();
-        PlayerData data = manager.getPlayerData(player);
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+        int kill = fPlayer.getKills();
+        int death = fPlayer.getDeaths();
+        double kdr;
+        if (death == 0) {
+            kdr = kill;
+        } else {
+            kdr = (double) kill / death;
+        }
         List<String> board = new LinkedList<>();
         board.add(" ");
         board.add(ChatColor.AQUA + ChatColor.BOLD.toString() + "Account");
@@ -691,7 +654,9 @@ public class Scoreboard implements BoardAdapter {
         board.add(ChatColor.LIGHT_PURPLE + ChatColor.BOLD.toString() + "XP");
         board.add(ChatColor.WHITE.toString() + NumberUtils.formatMoney(player.getTotalExperience()));
         board.add("");
-
+        board.add(ChatColor.RED + ChatColor.BOLD.toString() + "KDR");
+        board.add(CC.translate("&f"+ String.format("%.1f", kdr) + "&7 [" + kill + ":" + death + "]"));
+        board.add("");
         if (!FactionUtils.getFaction(player).isWilderness()) {
             Faction faction = FactionUtils.getFaction(player);
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Faction");
@@ -699,7 +664,6 @@ public class Scoreboard implements BoardAdapter {
         } else {
             board.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Server");
             board.add(CC.Gray + "play.astropvp.net");
-
         }
 
         /*board.add("");

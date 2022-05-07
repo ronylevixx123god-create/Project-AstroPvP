@@ -1,7 +1,5 @@
 package com.rit.sucy.enchanting;
 
-import com.compilex.CosmicOutposts.CosmicOutpostsAPI;
-import com.compilex.CosmicOutposts.outpost.enums.OutpostTier;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.rit.sucy.CustomEnchantment;
@@ -69,21 +67,15 @@ public class EListener implements Listener {
 
     public static boolean excuse = false;
 
-    public static boolean cosmicOutposts = false;
 
     public EListener(EnchantmentAPI plugin) {
         plugin.getServer().getPluginManager().registerEvents(this, (Plugin)plugin);
         this.plugin = plugin;
-        Bukkit.getScheduler().runTaskLater((Plugin)plugin, new Runnable() {
-            public void run() {
-                EListener.cosmicOutposts = Bukkit.getPluginManager().isPluginEnabled("CosmicOutposts");
-                Bukkit.getLogger().info("[EnchantmentAPI] cosmicOutposts = " + EListener.cosmicOutposts);
-            }
-        },  20L);
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onHit(EntityDamageByEntityEvent event) {
+    public void onHit(EntityDamageByEntityEvent event) throws Exception {
         if (excuse) {
             excuse = false;
             return;
@@ -357,19 +349,7 @@ public class EListener implements Listener {
                         EnchantmentAPI.isRegistered(name)) {
                     CustomEnchantment ce = EnchantmentAPI.getEnchantment(name);
                     int tier = TieredEnchantments.getEnchantmentTier(name);
-                    if (cosmicOutposts) {
-                        OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld(le);
-                        if (outpostTier != OutpostTier.NONE) {
-                            if (outpostTier == OutpostTier.VANILLA)
-                                continue;
-                            if (outpostTier == OutpostTier.TRAINEE && tier > 2)
-                                continue;
-                            if (outpostTier == OutpostTier.HERO && tier > 3)
-                                continue;
-                            if (outpostTier == OutpostTier.COSMONAUT && tier > 5)
-                                continue;
-                        }
-                    }
+
                     if (le.getWorld().getEnvironment() == World.Environment.THE_END && tier > 5)
                         continue;
                     if (arrayListMultimap.containsKey(ce) && !enchantmentStacks(ce))
@@ -429,19 +409,7 @@ public class EListener implements Listener {
                     level != 0 &&
                     EnchantmentAPI.isRegistered(name)) {
                 int tier = TieredEnchantments.getEnchantmentTier(name);
-                if (cosmicOutposts) {
-                    OutpostTier outpostTier = CosmicOutpostsAPI.getOutpostTierOfWorld((LivingEntity)p);
-                    if (outpostTier != OutpostTier.NONE) {
-                        if (outpostTier == OutpostTier.VANILLA)
-                            continue;
-                        if (outpostTier == OutpostTier.TRAINEE && tier > 2)
-                            continue;
-                        if (outpostTier == OutpostTier.HERO && tier > 3)
-                            continue;
-                        if (outpostTier == OutpostTier.COSMONAUT && tier > 5)
-                            continue;
-                    }
-                }
+
                 if (p.getWorld().getEnvironment() == World.Environment.THE_END && tier > 5)
                     continue;
                 CustomEnchantment ce = EnchantmentAPI.getEnchantment(name);
@@ -491,7 +459,7 @@ public class EListener implements Listener {
 
     private static boolean enchantmentStacks(CustomEnchantment ce) {
         String n = ce.name();
-        if (n.equals("Armored") || n.equals("Paladin Armored") || n.equals("Valor") || n.equals("Tank") || n.equals("Angelic") || n.equals("Heavy"))
+        if (n.equals("Armored") || n.equals("Paladin Armored") || n.equals("Valor") || n.equals("Tank") || n.equals("Angelic") || n.equals("Heavy") || n.equals("Martyr Valor") || n.equals("Reinforced Tank"))
             return true;
         if (n.equals("Anti Gravity") || n
                 .equals("Aquatic") || n

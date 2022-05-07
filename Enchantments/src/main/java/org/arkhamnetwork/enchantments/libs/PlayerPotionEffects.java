@@ -52,6 +52,8 @@ public class PlayerPotionEffects {
     public void addPotionEffect(SpecificCustomEnchantment ce, PotionEffect pe, Consumer<AbstractPotionEffect> consumer) {
         AbstractPotionEffect retr;
         boolean hasBetterActiveEffect = false;
+        if (getPlayer().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         for (Map.Entry<SpecificCustomEnchantment, CopyOnWriteArrayList<AbstractPotionEffect>> effects : this.effects.entrySet()) {
             if (hasBetterActiveEffect)
                 break;
@@ -182,6 +184,8 @@ public class PlayerPotionEffects {
         if (p == null)
             return;
         if (p.getLocation().getWorld().getName().equals("events_world")) return;
+        if (p.getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
         String regionName = WorldGuardUtils.getRegionName(p.getLocation());
         if (regionName.contains("parkour") && !regionName.contains("enchants"))
             return;

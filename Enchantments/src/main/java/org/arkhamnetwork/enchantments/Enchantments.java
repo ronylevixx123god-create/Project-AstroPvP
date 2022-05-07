@@ -7,9 +7,7 @@ import com.rit.sucy.EnchantmentAPI;
 import lombok.Getter;
 import lombok.Setter;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.arkhamnetwork.enchantments.cmds.*;
-import org.arkhamnetwork.enchantments.customfiles.CustomConfig;
 import org.arkhamnetwork.enchantments.enchantments.armor.*;
 import org.arkhamnetwork.enchantments.enchantments.axes.*;
 import org.arkhamnetwork.enchantments.enchantments.bow.*;
@@ -24,6 +22,7 @@ import org.arkhamnetwork.enchantments.mastery.MasteryBlackout;
 import org.arkhamnetwork.enchantments.mastery.MasteryNeutralize;
 import org.arkhamnetwork.enchantments.tasks.PlayerPotionEffectPersistTask;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
+import org.arkhamnetwork.enchantments.util.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -46,7 +45,8 @@ public class Enchantments extends EnchantPlugin {
     public boolean armorsetEnabled = false;
     private MasteryPermafrost permafrostEnchant;
     private IceAspect iceAspectEnchant;
-
+    @Getter
+    private ConfigManager configManager;
     private NatureWrath naturesWrathEnchant;
 
     public static Essentials getEssentials() {
@@ -106,9 +106,7 @@ public class Enchantments extends EnchantPlugin {
 
         (new File("plugins/Enchantments/config.yml")).delete();
         saveDefaultConfig();
-        CustomConfig.setup();
-        CustomConfig.get().options().copyDefaults(true);
-        CustomConfig.save();
+
 
         try {
             getConfig().load("plugins/Enchantments/config.yml");
@@ -125,6 +123,9 @@ public class Enchantments extends EnchantPlugin {
             CosmicSkyCustomItems.get().getItemManager().registerCustomItem(empPulseItem);
             Bukkit.getPluginManager().registerEvents(empPulseItem, this);
         }
+
+        this.configManager = new ConfigManager(this);
+        this.configManager.setupFiles();
     }
 
     public void registerEnchantments() {
