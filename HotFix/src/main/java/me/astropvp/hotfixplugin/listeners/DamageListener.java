@@ -10,6 +10,7 @@ import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.hotfixplugin.HotFixPlugin;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.apache.commons.lang.StringUtils;
@@ -34,9 +35,19 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 public class DamageListener implements Listener {
+
+
+    private List<UUID> killCooldown;
+
+    public DamageListener() {
+        this.killCooldown = new ArrayList<>();
+    }
+
 
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
@@ -93,8 +104,10 @@ public class DamageListener implements Listener {
         if (e.getEntity() instanceof Player && e.getEntity().getKiller() != null) {
             Player killer = e.getEntity().getKiller();
             Player died = (Player) e.getEntity();
+            final UUID kuuid = killer.getUniqueId();
 
-
+            if (this.killCooldown.contains(kuuid)) return;
+            this.killCooldown.add(kuuid);
             JSONMessage message = new JSONMessage("", ChatColor.GRAY);
             FPlayer fkiller = FPlayers.getInstance().getByPlayer(killer);
             FPlayer fdied = FPlayers.getInstance().getByPlayer(died);
@@ -109,7 +122,9 @@ public class DamageListener implements Listener {
                 message.sendToPlayer(player);
 
             }
-
+            Bukkit.getScheduler().runTaskLaterAsynchronously(HotFixPlugin.getInstance(), () -> {
+                this.killCooldown.remove(kuuid);
+            }, 10L);
         }
     }
 
