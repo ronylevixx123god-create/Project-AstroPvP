@@ -43,7 +43,7 @@ public class Outpost extends JavaPlugin {
     }
 
     public void registerListeners() {
-        getServer().getPluginManager().registerEvents(new GuiListener(), this);
+        //getServer().getPluginManager().registerEvents(new GuiListener(), this);
         getServer().getPluginManager().registerEvents(new MarsListener(), this);
         getServer().getPluginManager().registerEvents(new PlutoListener(), this);
         getServer().getPluginManager().registerEvents(new CommandAliasListener(), this);
