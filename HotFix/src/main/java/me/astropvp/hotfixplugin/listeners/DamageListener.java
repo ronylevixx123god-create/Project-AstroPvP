@@ -108,6 +108,9 @@ public class DamageListener implements Listener {
 
             if (this.killCooldown.contains(kuuid)) return;
             this.killCooldown.add(kuuid);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(HotFixPlugin.getInstance(), () -> {
+                this.killCooldown.remove(kuuid);
+            }, 10L);
             JSONMessage message = new JSONMessage("", ChatColor.GRAY);
             FPlayer fkiller = FPlayers.getInstance().getByPlayer(killer);
             FPlayer fdied = FPlayers.getInstance().getByPlayer(died);
@@ -122,9 +125,7 @@ public class DamageListener implements Listener {
                 message.sendToPlayer(player);
 
             }
-            Bukkit.getScheduler().runTaskLaterAsynchronously(HotFixPlugin.getInstance(), () -> {
-                this.killCooldown.remove(kuuid);
-            }, 10L);
+
         }
     }
 

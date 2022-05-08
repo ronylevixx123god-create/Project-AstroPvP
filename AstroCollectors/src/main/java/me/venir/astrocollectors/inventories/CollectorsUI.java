@@ -163,6 +163,9 @@ public class CollectorsUI {
                 if (hasFrozenStronghold) {
                     value *= 1.25;
                 }
+                if (hasPlutoOutpost) {
+                    value *= 1.25;
+                }
                 lore.add(CC.translate("&e&l * &f" + amount + "x " + getEntityName(type) + " Spawners &8➥ &a$" + NumberUtils.formatMoney(value * 60 * amount) + "/hour"));
                 totalPerHour += value * amount * 60;
             }

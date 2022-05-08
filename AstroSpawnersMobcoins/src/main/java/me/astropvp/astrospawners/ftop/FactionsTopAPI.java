@@ -61,7 +61,7 @@ public class FactionsTopAPI {
 
         switch (type) {
             case BLAZE:
-                return 750000L;
+                return 0L;
             case IRON_GOLEM:
                 return 5000000L;
             case VILLAGER:
