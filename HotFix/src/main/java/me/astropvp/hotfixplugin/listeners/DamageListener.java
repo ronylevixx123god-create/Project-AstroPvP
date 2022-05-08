@@ -129,6 +129,14 @@ public class DamageListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onShoot (EntityShootBowEvent e) {
+        if (e.getEntity().getWorld().getName().equals("space")) {
+            e.getEntity().sendMessage(CC.translate("&cBows are disable in /warp space"));
+            e.setCancelled(true);
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
