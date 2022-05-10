@@ -103,12 +103,6 @@
         <outputRelativeToContentRoot value="true" />
         <module name="Factions (2) (com.massivecraft)" />
       </profile>
-      <profile name="Annotation profile for Factions-Legacy (1)" enabled="true">
-        <sourceOutputDir name="../../../Factionss/modules/Legacy/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../Factionss/modules/Legacy/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="Factions-Legacy (1)" />
-      </profile>
       <profile name="Annotation profile for Factions (3)" enabled="true">
         <sourceOutputDir name="../../../AstroFactions/target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../../AstroFactions/target/generated-test-sources/test-annotations" />

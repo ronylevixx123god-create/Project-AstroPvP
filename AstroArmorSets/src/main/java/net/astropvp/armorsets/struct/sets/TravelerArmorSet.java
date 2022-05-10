@@ -32,6 +32,12 @@ import java.util.stream.Collectors;
 
 public class TravelerArmorSet extends ArmorSet implements Listener {
 
+    private final Map<UUID, TravelerFallingBlock> fallingBlocks;
+
+    public TravelerArmorSet() {
+        this.fallingBlocks = new HashMap<>();
+    }
+
 
     public ItemStack getHelmet() {
         return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&5&lTraveler Hood")).addLoreLines(CC.translate("&5A hood that fades in and out.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
@@ -51,12 +57,20 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-
+        if (attacker instanceof Player) {
+            if (Math.random() < 0.0075) {
+                onDimensionalRift((Player) attacked);
+            }
+        }
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-
+        if (attacker instanceof Player) {
+            if (Math.random() < 0.015) {
+                onDimensionalRift((Player) attacked);
+            }
+        }
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
@@ -93,6 +107,119 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
         return message;
     }
 
+
+    public void onDimensionalRift(Player victim) {
+        FPlayer damagedFPlayer = FPlayers.getInstance().getByPlayer(victim);
+        for (Entity nearbyEnt : victim.getNearbyEntities(25.0D, 32.0D, 25.0D)) {
+            if (nearbyEnt instanceof Player) {
+                Player nearbyPlayer = (Player)nearbyEnt;
+                FPlayer fpNear = FPlayers.getInstance().getByPlayer(nearbyPlayer);
+                if ((fpNear.hasFaction() && fpNear.getRelationTo(damagedFPlayer).isAtLeast(Relation.TRUCE)) || !WorldGuardUtils.isPvPEnabled(damagedFPlayer.getLocation()))
+                    continue;
+                if (!WorldGuardUtils.isPvPEnabled(nearbyPlayer.getLocation()))
+                    continue;
+                if (nearbyPlayer.hasMetadata("NPC"))
+                    continue;
+                nearbyPlayer.playSound(nearbyPlayer.getLocation().add(0.0D, 4.0D, 0.0D), Sound.ENDERMAN_TELEPORT, 1.0F, 1.1F);
+                nearbyPlayer.playSound(nearbyPlayer.getLocation().add(0.0D, 4.0D, 0.0D), Sound.ANVIL_LAND, 1.0F, 1.1F);
+                nearbyPlayer.sendMessage(CC.DarkPurpleB + "** DIMENSIONAL SHIFT (" + CC.Red + fpNear.getRelationTo(damagedFPlayer).getColor() + victim.getName() + " [4s]" + CC.DarkPurpleB + ") **");
+
+                this.spawnDimensionalBlocks(nearbyPlayer, victim);
+            }
+        }
+    }
+
+    @EventHandler()
+    public void onBlockDamage(EntityChangeBlockEvent event) {
+        if (event.getEntity().getType() != EntityType.FALLING_BLOCK) return;
+
+        FallingBlock fallingBlock = (FallingBlock)event.getEntity();
+
+        TravelerFallingBlock block = this.getTravelerBlock(fallingBlock.getUniqueId());
+
+        if (block == null) return;
+
+        event.setCancelled(true);
+        this.fallingBlocks.remove(block.getUUID());
+        FPlayer blockFPlayer = FPlayers.getInstance().getByPlayer(block.getPlayer());
+
+        List<Player> nearbyEnemies = event.getBlock().getLocation().getWorld()
+                .getNearbyEntities(event.getBlock().getLocation(), 2.0D, 2.0D, 2.0D)
+                .stream()
+                .filter(entity -> entity instanceof Player)
+                .map(entity -> (Player)entity).filter(player -> {
+                    FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+                    Relation relationTo = fPlayer.getRelationTo(blockFPlayer);
+                    return ((relationTo == Relation.ENEMY || relationTo == Relation.NEUTRAL) && !WorldGuardUtils.isPvPDisabled(player.getLocation()));
+                }).collect(Collectors.toList());
+
+        nearbyEnemies.remove(block.getPlayer());
+        nearbyEnemies.forEach(player -> {
+            player.damage(1.0D, block.getPlayer());
+            player.damage(this.getRandomDamage());
+        });
+    }
+
+    public TravelerFallingBlock getTravelerBlock(UUID fallingBlockUUID) {
+        return this.fallingBlocks.get(fallingBlockUUID);
+    }
+
+    public double getRandomDamage() {
+        return (4 + (new Random()).nextInt(10));
+    }
+
+    private void spawnDimensionalBlocks(Player player, Player damaged) {
+        Location center = player.getLocation().add(0.0D, 10.0D, 0.0D);
+        int playerX = center.getBlockX(), playerZ = center.getBlockZ(), playerY = center.getBlockY();
+        int minX = playerX - 3, minZ = playerZ - 3;
+        int maxX = playerX + 3, maxZ = playerZ + 3;
+        for (int x = minX; x <= maxX; x++) {
+            for (int z = minZ; z <= maxZ; z++) {
+                double locX = x + this.getRandomOffset(5.8D);
+                double locZ = z + this.getRandomOffset(5.8D);
+                Location location = new Location(center.getWorld(), locX, playerY, locZ);
+                Material material = (new Random()).nextBoolean() ? Material.NETHERRACK : Material.ENDER_STONE;
+                FallingBlock fallingBlock = location.getWorld().spawnFallingBlock(location, material, (byte)0);
+                fallingBlock.setVelocity(new Vector(0, -1, 0));
+                fallingBlock.setHurtEntities(false);
+                fallingBlock.setDropItem(false);
+                fallingBlock.setMetadata("dimensionalShift", new FixedMetadataValue(AstroArmorSets.getInstance(), Boolean.TRUE));
+                this.fallingBlocks.put(fallingBlock.getUniqueId(), new TravelerFallingBlock(damaged, fallingBlock.getUniqueId()));
+            }
+        }
+    }
+
+    public double getRandomOffset(double baseDouble) {
+        Random r = new Random();
+        return (r.nextFloat() * r.nextFloat()) * baseDouble;
+    }
+
+    public static class TravelerFallingBlock {
+        private Player player;
+
+        private UUID UUID;
+
+        public TravelerFallingBlock(Player player, UUID blockUUID) {
+            this.player = player;
+            this.UUID = blockUUID;
+        }
+
+        public Player getPlayer() {
+            return this.player;
+        }
+
+        public void setPlayer(Player player) {
+            this.player = player;
+        }
+
+        public UUID getUUID() {
+            return this.UUID;
+        }
+
+        public void setUUID(UUID uUID) {
+            this.UUID = uUID;
+        }
+    }
 
 
 }

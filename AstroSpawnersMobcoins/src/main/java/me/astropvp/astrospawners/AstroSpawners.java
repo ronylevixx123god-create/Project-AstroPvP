@@ -16,6 +16,7 @@ import me.astropvp.astrospawners.utils.*;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -109,12 +110,22 @@ public class AstroSpawners extends JavaPlugin {
 
 
         //getSpawnerManager().load();
-        LoadSpawner.load();
+        try {
+            new WorldCreator(getConfig().getString("flat")).createWorld();
+            new WorldCreator(getConfig().getString("flat2")).createWorld();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        Bukkit.getScheduler().runTaskLater(this, () -> {
+            LoadSpawner.load();
+            Bukkit.getConsoleSender().sendMessage("Finished loading spawners!");
+        }, 2 * 20L);
 
 
 
 
-        Bukkit.getConsoleSender().sendMessage("Finished loading spawners!");
+
 
         runTasks();
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);

@@ -36,8 +36,14 @@ public class LoadSpawner {
                 int amount = Integer.parseInt(ymlFile.getString("amount"));
                 EntityType type = EntityType.valueOf(ymlFile.getString("type"));
 
-                // This CustomBlock doesn't exist? Oh noes, we better delete it! It's always nice to keep things clean.
-                if (AstroSpawners.getInstance().getServer().getWorld(location.getWorld().getName()).getBlockAt(location).getType() != Material.MOB_SPAWNER) {
+                System.out.println("Attempting : " + location);
+                if (Bukkit.getWorld(location.getWorld().getName()).getBlockAt(location) == null) {
+                    System.out.println("Deleted block at " + location + " because it was not a mobspawner");
+                    file.delete();
+                    continue;
+                }
+
+                if (Bukkit.getWorld(location.getWorld().getName()).getBlockAt(location).getType() != Material.MOB_SPAWNER) {
                     System.out.println("Deleted block at " + location + " because it was not a mobspawner");
                     file.delete();
                     continue;

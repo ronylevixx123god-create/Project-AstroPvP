@@ -65,7 +65,6 @@ public class AstroArmorSets extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new OmniArmorDamageListener(), this);
         getServer().getPluginManager().registerEvents(new GUIInventoryListener(), this);
         getServer().getPluginManager().registerEvents(new ArmorSetDamageListener(), this);
-        getServer().getPluginManager().registerEvents(ArmorSetType.DIMENSIONAL_TRAVELER.getArmorSet(), this);
 
 
 
