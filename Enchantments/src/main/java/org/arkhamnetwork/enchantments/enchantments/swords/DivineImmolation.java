@@ -76,7 +76,7 @@ return;
             damage *= 1.25;
         }
 
-        if (OutpostUtil.hasMarsOutpost((Faction) player)) {
+        if (OutpostUtil.hasMarsOutpost((Player) player)) {
             damage *=1.15;
         }
 

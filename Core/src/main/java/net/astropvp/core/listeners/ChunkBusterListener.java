@@ -40,7 +40,7 @@ public class ChunkBusterListener implements Listener {
                 return;
             }
 
-            if (FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.NORMAL || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.RECRUIT || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.MODERATOR) {
+            if (FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.NORMAL || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.RECRUIT || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.MODERATOR || FactionUtils.getFPlayer(event.getPlayer()).getRole() == Role.ALT) {
                 event.getPlayer().sendMessage(CC.translate("Your faction role is not high enough to place this!"));
                 event.getPlayer().sendMessage(CC.translate("&c&l* &cRequired Role: &4Co-Leader or Higher."));
                 event.setCancelled(true);
