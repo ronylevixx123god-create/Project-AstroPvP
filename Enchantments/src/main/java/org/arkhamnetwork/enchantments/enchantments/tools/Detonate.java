@@ -89,7 +89,7 @@ extends CustomEnchantment {
         this.max = 9;
         this.base = 10.0;
         this.interval = 10.0;
-        pickaxeMaterials = new ArrayList<Material>(Arrays.asList(new Material[]{Material.SANDSTONE, Material.STONE, Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.SMOOTH_BRICK, Material.OBSIDIAN, Material.MOB_SPAWNER, Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.NETHERRACK}));
+        pickaxeMaterials = new ArrayList<Material>(Arrays.asList(new Material[]{Material.SANDSTONE, Material.STONE, Material.COBBLESTONE, Material.MOSSY_COBBLESTONE, Material.SMOOTH_BRICK, Material.OBSIDIAN, Material.COAL_ORE, Material.IRON_ORE, Material.GOLD_ORE, Material.DIAMOND_ORE, Material.LAPIS_ORE, Material.REDSTONE_ORE, Material.EMERALD_ORE, Material.NETHERRACK}));
         spadeMaterials = new ArrayList<Material>(Arrays.asList(new Material[]{Material.DIRT, Material.SAND, Material.GRAVEL, Material.GRASS, Material.MYCEL, Material.CLAY}));
         Bukkit.getPluginManager().registerEvents((Listener)new DetonateListener(), (Plugin)Enchantments.getInstance());
         Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
@@ -135,7 +135,7 @@ extends CustomEnchantment {
             Block above;
             Material aboveType;
             Material m = bl.getType();
-            if (m == Material.LADDER || m == Material.GLOWSTONE || m == Material.BEDROCK || m == Material.WATER || m == Material.STATIONARY_WATER || m == Material.LAVA || m == Material.STATIONARY_LAVA || m == Material.SIGN || m == Material.SIGN_POST || m == Material.AIR || m == Material.BEDROCK || m == Material.OBSIDIAN || m == Material.SPONGE || m == Material.IRON_DOOR || m == Material.IRON_DOOR_BLOCK || m == Material.WOODEN_DOOR || m == Material.WOOD_DOOR || m == Material.HOPPER || m == Material.ANVIL || m == Material.REDSTONE_COMPARATOR || m == Material.REDSTONE_COMPARATOR_OFF || m == Material.REDSTONE_COMPARATOR_ON || pickaxeMaterials.contains((Object)m) && !pickaxe || spadeMaterials.contains((Object)m) && !spade || (aboveType = (above = bl.getRelative(BlockFace.UP)).getType()) == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF || aboveType == Material.DIODE_BLOCK_ON) continue;
+            if (m == Material.LADDER || m == Material.GLOWSTONE || m == Material.BEDROCK || m == Material.WATER || m == Material.STATIONARY_WATER || m == Material.LAVA || m == Material.STATIONARY_LAVA || m == Material.SIGN || m == Material.SIGN_POST || m == Material.AIR || m == Material.BEDROCK || m == Material.OBSIDIAN || m == Material.SPONGE || m == Material.IRON_DOOR || m == Material.IRON_DOOR_BLOCK || m == Material.WOODEN_DOOR || m == Material.WOOD_DOOR || m == Material.HOPPER || m == Material.MOB_SPAWNER || m == Material.ANVIL || m == Material.REDSTONE_COMPARATOR || m == Material.REDSTONE_COMPARATOR_OFF || m == Material.REDSTONE_COMPARATOR_ON || pickaxeMaterials.contains((Object)m) && !pickaxe || spadeMaterials.contains((Object)m) && !spade || (aboveType = (above = bl.getRelative(BlockFace.UP)).getType()) == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF || aboveType == Material.DIODE_BLOCK_ON) continue;
             FLocation floc = new FLocation(bl.getLocation());
             Faction f = FactionUtils.getFactionAt((FLocation)floc);
             if (!f.isNone()) {
@@ -144,10 +144,6 @@ extends CustomEnchantment {
                 }
             }
             if (f.isWarZone()) continue;
-            EntityType spawnerType = null;
-            if (m == Material.MOB_SPAWNER && (state = bl.getState()) instanceof CreatureSpawner) {
-                spawnerType = ((CreatureSpawner)state).getSpawnedType();
-            }
             try {
                 ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 0.025f, 0.025f, 0.1f, 1);
             } catch (Exception exception) {

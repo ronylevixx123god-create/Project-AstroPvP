@@ -132,7 +132,7 @@ extends CustomEnchantment {
             Block above;
             Material aboveType;
             Material m = bl.getType();
-            if (m == Material.LADDER || m == Material.GLOWSTONE || m == Material.BEDROCK || m == Material.WATER || m == Material.STATIONARY_WATER || m == Material.LAVA || m == Material.STATIONARY_LAVA || m == Material.SIGN || m == Material.SIGN_POST || m == Material.AIR || m == Material.OBSIDIAN || m == Material.SPONGE || m == Material.IRON_DOOR || m == Material.IRON_DOOR_BLOCK || m == Material.WOODEN_DOOR || m == Material.WOOD_DOOR || m == Material.HOPPER || m == Material.ANVIL || m == Material.REDSTONE_COMPARATOR || m == Material.REDSTONE_COMPARATOR_OFF || m == Material.REDSTONE_COMPARATOR_ON || pickaxeMaterials.contains((Object)m) && !pickaxe && !explosivesExpert || spadeMaterials.contains((Object)m) && !spade && !explosivesExpert || bl.getLocation().getY() <= 0.0 || affectedLowerBlocks && bl.getLocation().getY() > 200.0 || (aboveType = (above = bl.getRelative(BlockFace.UP)).getType()) == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF || aboveType == Material.DIODE_BLOCK_ON) continue;
+            if (m == Material.LADDER || m == Material.GLOWSTONE || m == Material.BEDROCK || m==Material.MOB_SPAWNER || m == Material.WATER || m == Material.STATIONARY_WATER || m == Material.LAVA || m == Material.STATIONARY_LAVA || m == Material.SIGN || m == Material.SIGN_POST || m == Material.AIR || m == Material.OBSIDIAN || m == Material.SPONGE || m == Material.IRON_DOOR || m == Material.IRON_DOOR_BLOCK || m == Material.WOODEN_DOOR || m == Material.WOOD_DOOR || m == Material.HOPPER || m == Material.ANVIL || m == Material.REDSTONE_COMPARATOR || m == Material.REDSTONE_COMPARATOR_OFF || m == Material.REDSTONE_COMPARATOR_ON || pickaxeMaterials.contains((Object)m) && !pickaxe && !explosivesExpert || spadeMaterials.contains((Object)m) && !spade && !explosivesExpert || bl.getLocation().getY() <= 0.0 || affectedLowerBlocks && bl.getLocation().getY() > 200.0 || (aboveType = (above = bl.getRelative(BlockFace.UP)).getType()) == Material.REDSTONE_COMPARATOR || aboveType == Material.REDSTONE_COMPARATOR_OFF || aboveType == Material.REDSTONE_COMPARATOR_ON || aboveType == Material.DIODE || aboveType == Material.DIODE_BLOCK_OFF || aboveType == Material.DIODE_BLOCK_ON) continue;
             FLocation floc = new FLocation(bl.getLocation());
             Faction f = FactionUtils.getFactionAt((FLocation)floc);
             if (!f.isNone()) {
@@ -141,10 +141,6 @@ extends CustomEnchantment {
                 }
             }
             if (f.isWarZone()) continue;
-            EntityType spawnerType = null;
-            if (m == Material.MOB_SPAWNER && (state = bl.getState()) instanceof CreatureSpawner) {
-                spawnerType = ((CreatureSpawner)state).getSpawnedType();
-            }
             try {
                 //ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), bl.getLocation().add(0.0, 0.5, 0.0), 0.025f, 0.025f, 0.025f, 0.1f, 1);
             } catch (Exception exception) {
