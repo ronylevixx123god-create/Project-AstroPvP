@@ -21,6 +21,7 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 
@@ -75,11 +76,11 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 30;
-        event.setDamage(event.getDamage() * 1 + (increasePercent  * 0.01));    }
+        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent  * 0.01));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 7.5;
-        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
+        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();

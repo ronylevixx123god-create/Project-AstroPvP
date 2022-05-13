@@ -96,7 +96,7 @@ public class Rage extends CustomEnchantment {
                 mod*=0.7;
             }
 
-            event.setDamage((damage + mod));
+            event.setDamage(EntityDamageEvent.DamageModifier.BASE,damage + mod);
         }
 
     }

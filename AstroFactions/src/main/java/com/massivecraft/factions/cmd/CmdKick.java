@@ -75,6 +75,11 @@ public class CmdKick extends FCommand {
                 return;
             }
 
+            if (toKick.getRole().value == context.fPlayer.getRole().value) {
+                context.msg(TL.COMMAND_KICK_INSUFFICIENTRANK);
+                return;
+            }
+
             if (!FactionsPlugin.getInstance().getLandRaidControl().canKick(toKick, context)) {
                 return;
             }

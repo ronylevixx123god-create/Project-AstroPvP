@@ -39,6 +39,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.MetadataValue;
 
@@ -142,7 +143,7 @@ public class HeroKiller
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                 increase -= 0.1;
             }
-            e.setDamage(e.getDamage() * (1 + increase));
+            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * (1 + increase));
         }
     }
 

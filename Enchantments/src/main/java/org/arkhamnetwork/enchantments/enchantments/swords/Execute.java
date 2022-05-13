@@ -26,6 +26,7 @@ import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 
 public class Execute extends CustomEnchantment
@@ -51,7 +52,7 @@ public class Execute extends CustomEnchantment
         final double random = Math.random();
         final double chance = 0.03 * level;
         if (random < chance) {
-            e.setDamage(e.getDamage() * (level/2.0));            final Location l = target.getLocation();
+            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * (level/2.0));            final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");
         }

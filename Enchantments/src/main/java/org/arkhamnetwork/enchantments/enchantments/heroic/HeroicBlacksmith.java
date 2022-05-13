@@ -21,6 +21,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
 public class HeroicBlacksmith
@@ -48,7 +49,7 @@ extends CustomEnchantment {
             if (level >= 3) {
                 DurabilityUtil.healMostDamagedArmorPeice((Player)player, (short)2);
             }
-            e.setDamage(e.getDamage() * (0.25D - (double)level * 0.05D));
+            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * (0.25D - (double)level * 0.05D));
         }
     }
 }

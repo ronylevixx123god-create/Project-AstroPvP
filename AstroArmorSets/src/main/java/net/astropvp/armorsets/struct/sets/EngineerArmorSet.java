@@ -20,6 +20,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -66,7 +67,7 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
             }
         }
         double reductionPercent = 9;
-        event.setDamage(event.getDamage() *1-(reductionPercent*amount*0.01));
+        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() *1-(reductionPercent*amount*0.01));
 
         if (attacker instanceof Player) {
             if (ThreadLocalRandom.current().nextInt(100) <= 4) {
@@ -81,7 +82,7 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         double reductionPercent = 35;
-        event.setDamage(event.getDamage() *1-(reductionPercent*0.01));        if (attacker instanceof Player) {
+        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() *1-(reductionPercent*0.01));        if (attacker instanceof Player) {
             if (ThreadLocalRandom.current().nextInt(100) <= 4) {
                 if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                     return;

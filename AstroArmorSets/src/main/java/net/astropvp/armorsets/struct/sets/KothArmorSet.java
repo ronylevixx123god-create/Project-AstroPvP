@@ -12,6 +12,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -43,7 +44,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
         } else {
             increasePercent = 50;
         }
-        event.setDamage(event.getDamage() * 1 + (increasePercent * 0.01));
+        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent * 0.01));
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
@@ -53,7 +54,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
         } else {
             increasePercent = 12.5;
         }
-        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));
+        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent * amount * 0.01));
     }
 
 

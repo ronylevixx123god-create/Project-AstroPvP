@@ -18,5 +18,5 @@ public class HeroicBarbarian extends HeroicCustomEnchantment
         if (!enemyHasAxe) {
             return;
         }
-        e.setDamage(e.getDamage() * 1.225D);    }
+        e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * 1.225D);    }
 }

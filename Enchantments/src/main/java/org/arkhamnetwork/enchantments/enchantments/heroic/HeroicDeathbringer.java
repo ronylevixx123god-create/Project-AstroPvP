@@ -58,12 +58,12 @@ public class HeroicDeathbringer extends CustomEnchantment
                 double chance = 0.05 * DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage);
                 chance *= 1.6;
                 if (random < chance) {
-                    e.setDamage(e.getDamage()*1.15);
+                    e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage()*1.15);
                     if (damage instanceof Player)
                         if (((Player) damage).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) damage).getPlayer(), SkinType.CHRISTMAS_2021_AMULET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) damage).getPlayer(), SkinType.CHRISTMAS_2021_MUTATED_AMULET))) {
 
                             if (Math.random() < 0.03) {
-                                e.setDamage(e.getDamage()*1.15);
+                                e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage()*1.15);
                             }
 
                         }

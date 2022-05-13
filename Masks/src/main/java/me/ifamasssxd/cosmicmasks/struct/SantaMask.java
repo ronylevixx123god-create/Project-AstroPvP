@@ -24,7 +24,11 @@ import java.util.Collection;
 
 public class SantaMask extends CosmicMask {
     public void onEquip(Player player) {
+        if (player.getWorld().getName().equals("world_outpost_pluto")) {
+            return;
+        }
         if (!modifyStoredEffect(player, PotionEffectType.HEALTH_BOOST, false))
+
             player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, 0), true);
     }
 

@@ -17,6 +17,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Longbow
 extends CustomEnchantment {
@@ -29,7 +30,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (playerHit.getEquipment().getItemInHand().getType() == Material.BOW) {
-            e.setDamage(e.getDamage() * (1.0 + 0.25 * (double)level));
+            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * (1.0 + 0.25 * (double)level));
             if (playerHit instanceof Player) {
                 ((Player)playerHit).playSound(playerHit.getLocation(), Sound.ARROW_HIT, 1.0f, 0.4f);
             }

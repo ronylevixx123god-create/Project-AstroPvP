@@ -11,6 +11,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HeroicArmorDamageListener implements Listener {
     @EventHandler(priority = EventPriority.HIGHEST)
@@ -30,7 +31,7 @@ public class HeroicArmorDamageListener implements Listener {
                     return;
                 }
             }
-            e.setDamage(e.getDamage() *1 - (totalReduction  * 0.01));        }
+            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() *1 - (totalReduction  * 0.01));        }
 
     }
 }

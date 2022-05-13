@@ -24,11 +24,12 @@ public class TerminatorMask extends CosmicMask {
         String regionName = WorldGuardUtils.getRegionName(player.getLocation());
         if (regionName.contains("parkour") || regionName.contains("find_corrupt_room") || regionName.contains("maze") || regionName.equalsIgnoreCase("fireball_alley"))
             return;
+        if (player.getWorld().getName().equals("world_outpost_pluto")) {
+            return;
+        }
         if (effects != null)
             effects.getEffects().forEach((enchantment, effect) -> {
-                Iterator<AbstractPotionEffect> iterator = effect.iterator();
-                while (iterator.hasNext()) {
-                    AbstractPotionEffect pEffect = iterator.next();
+                for (AbstractPotionEffect pEffect : effect) {
                     if (pEffect.getEffectType().getId() == PotionEffectType.SPEED.getId() && pEffect.getPotionLevel() < 3) {
                         Bukkit.getLogger().info("[" + getClass().getSimpleName() + "] Found equipped speed: " + pEffect.getPotionLevel());
                         pEffect.setPotionLevel(3);

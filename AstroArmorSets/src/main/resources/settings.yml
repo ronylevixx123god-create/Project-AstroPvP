@@ -1,2 +1,8 @@
-customSetDamageIncrease: 5
-customSetDamageDecrease: 5
+customSetDamageIncrease: 10
+customSetDamageDecrease: 10
+
+ancientSetDamageIncrease: 6.5
+ancientSetDamageDecrease: 6.5
+
+omniSetDamageIncrease: 15
+omniSetDamageDecrease: 15

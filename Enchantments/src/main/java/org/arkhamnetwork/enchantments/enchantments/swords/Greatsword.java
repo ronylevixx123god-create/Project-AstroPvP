@@ -12,6 +12,7 @@ import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Greatsword
 extends CustomEnchantment {
@@ -28,7 +29,7 @@ extends CustomEnchantment {
             return;
         }
         double mod = 1.0 + 0.05 * (double)level;
-        e.setDamage(e.getDamage() * mod);
+        e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * mod);
     }
 }
 

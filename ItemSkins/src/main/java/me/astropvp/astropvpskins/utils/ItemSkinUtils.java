@@ -21,7 +21,9 @@ public class ItemSkinUtils {
         Faction factionTarget = FactionUtils.getFaction(target);
 
         if (factionAtacker.getRelationTo(factionTarget) == Relation.ALLY) return false;
-
+        if (attacker.getWorld().getName().equals("world_outpost_pluto")) {
+            return false;
+        }
         if (factionAtacker.getRelationTo(factionTarget) == Relation.TRUCE) return false;
 
         if (attacker.getLocation().getWorld().getName().equals("nebula")) return false;

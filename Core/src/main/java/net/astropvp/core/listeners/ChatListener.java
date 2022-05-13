@@ -75,7 +75,7 @@ public class ChatListener implements Listener {
         if (StaffUtil.inStaffChat.contains(event.getPlayer())) return;
 
         if (player.hasPermission("astrocore.nebula")) {
-            chatCooldown = 0.5;
+            chatCooldown = 0;
         } else if (player.hasPermission("astrocore.apollo")) {
             chatCooldown = 1;
         } else {
@@ -85,6 +85,7 @@ public class ChatListener implements Listener {
         if (AstroCore.getInstance().getCooldownUtils().isOnCooldown(player, "chatCooldown")) {
             long msLeft = AstroCore.getInstance().getCooldownUtils().getRemainingMillis(player, "chatCooldown");
             player.sendMessage(CC.translate("&c&l(!)&c You cannot send messages for another " + msLeft + "ms."));
+            player.sendMessage(CC.translate("&cTo reduce this cooldown, purchase a higher rank at &7buy.astropvp.net&c!"));
             return;
         }
 

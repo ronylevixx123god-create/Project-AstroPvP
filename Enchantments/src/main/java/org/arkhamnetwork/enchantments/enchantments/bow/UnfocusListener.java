@@ -20,6 +20,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.MetadataValue;
 
 class UnfocusListener
@@ -32,7 +33,7 @@ implements Listener {
         Player p;
         Projectile pj;
         if (e.getDamager() instanceof Projectile && (pj = (Projectile)e.getDamager()).getShooter() instanceof Player && (p = (Player)pj.getShooter()).hasMetadata("unfocusEnchantmentExpire") && System.currentTimeMillis() < ((MetadataValue)p.getMetadata("unfocusEnchantmentExpire").get(0)).asLong()) {
-            e.setDamage(e.getDamage() / 2.0);
+            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() / 2.0);
             p.sendMessage((Object)ChatColor.DARK_GREEN + "** UNFOCUSED [50% BOW DMG] **");
         }
     }
