@@ -48,7 +48,7 @@ extends CustomEnchantment {
             if (level >= 3) {
                 DurabilityUtil.healMostDamagedArmorPeice((Player)player, (short)1);
             }
-            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * 0.5D);
+            e.setDamage(e.getDamage() * 0.5D);
         }
     }
 }

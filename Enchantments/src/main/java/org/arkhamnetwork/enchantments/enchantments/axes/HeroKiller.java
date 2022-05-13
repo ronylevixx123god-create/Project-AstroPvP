@@ -143,7 +143,7 @@ public class HeroKiller
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                 increase -= 0.1;
             }
-            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * (1 + increase));
+            e.setDamage(e.getDamage() * (1 + increase));
         }
     }
 

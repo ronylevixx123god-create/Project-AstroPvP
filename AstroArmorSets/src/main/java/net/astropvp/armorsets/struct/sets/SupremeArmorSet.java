@@ -37,16 +37,16 @@ public class SupremeArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 15;
-        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent  * 0.01));    }
+        event.setDamage(event.getDamage() * 1 + (increasePercent  * 0.01));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 3;
-        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         double reductionPercent = 10;
-        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() *1-(reductionPercent*0.01));
+        event.setDamage(event.getDamage() *1-(reductionPercent*0.01));
     }
 
     public List<String> getArmorLore() {

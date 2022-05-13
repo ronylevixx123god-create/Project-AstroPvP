@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HeroicArmorDamageListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
@@ -31,7 +31,7 @@ public class HeroicArmorDamageListener implements Listener {
                     return;
                 }
             }
-            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() *1 - (totalReduction  * 0.01));        }
+            e.setDamage(e.getDamage() *1 - (totalReduction  * 0.01));        }
 
     }
 }

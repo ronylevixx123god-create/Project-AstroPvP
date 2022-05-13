@@ -19,7 +19,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.Map;
 
 public class ArmorSetDamageListener implements Listener {
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onAttack(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -64,7 +64,7 @@ public class ArmorSetDamageListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();

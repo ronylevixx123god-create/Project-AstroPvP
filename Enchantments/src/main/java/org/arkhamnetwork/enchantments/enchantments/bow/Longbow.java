@@ -30,7 +30,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (playerHit.getEquipment().getItemInHand().getType() == Material.BOW) {
-            e.setDamage(EntityDamageEvent.DamageModifier.BASE,e.getDamage() * (1.0 + 0.25 * (double)level));
+            e.setDamage(e.getDamage() * (1.0 + 0.25 * (double)level));
             if (playerHit instanceof Player) {
                 ((Player)playerHit).playSound(playerHit.getLocation(), Sound.ARROW_HIT, 1.0f, 0.4f);
             }

@@ -45,7 +45,7 @@ public class HeroicAssassin extends CustomEnchantment
                 dmgMod += 0.015D * (double)enchantLevel;
             }
 
-            event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * dmgMod);
+            event.setDamage(event.getDamage() * dmgMod);
         }
 
     }

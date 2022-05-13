@@ -33,7 +33,7 @@ public class HeroicDevour extends CustomEnchantment
                 return;
             }
             double mod = (double)Bleed.getBleedStack(target) * 0.015D + (double)enchantLevel * 0.1D + 1.0D;
-            event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * mod);
+            event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
             Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);

@@ -39,11 +39,11 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 20;
-        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent  * 0.01));    }
+        event.setDamage(event.getDamage() * 1 + (increasePercent  * 0.01));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 5;
-        event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
+        event.setDamage(event.getDamage() * 1 + (increasePercent * amount * 0.01));    }
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
