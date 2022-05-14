@@ -47,6 +47,9 @@ public class Outpost extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlutoListener(), this);
         getServer().getPluginManager().registerEvents(new CommandAliasListener(), this);
         getServer().getPluginManager().registerEvents(new BlockCommandListener(), this);
+        getServer().getPluginManager().registerEvents(new WorldChange(), this);
+        getServer().getPluginManager().registerEvents(new NoFlyListener(), this);
+
 
     }
 }

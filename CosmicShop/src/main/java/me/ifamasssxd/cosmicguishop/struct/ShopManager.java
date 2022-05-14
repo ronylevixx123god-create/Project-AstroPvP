@@ -14,6 +14,9 @@ import me.ifamasssxd.cosmicguishop.menus.GUIMenu;
 import me.ifamasssxd.cosmicguishop.utils.ItemBuilder;
 import me.ifamasssxd.cosmicguishop.utils.ItemUtils;
 import me.ifamasssxd.cosmicguishop.utils.SlotUtils;
+import me.venir.astrocollectors.collector.CollectorManager;
+import me.venir.astrocollectors.collector.CollectorUtils;
+import net.astropvp.core.utils.ChunkBusterUtils;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
@@ -40,7 +43,7 @@ public class ShopManager {
     private static final String SHOP_NAME = "Shop Items";
     public static DecimalFormat moneyFormat = new DecimalFormat("#,###.##");
     int loreThreshold = 1;
-    private Map<ShopCategory, ShopItemMap> shopItems = new HashMap<ShopCategory, ShopItemMap>();
+    private final Map<ShopCategory, ShopItemMap> shopItems = new HashMap<ShopCategory, ShopItemMap>();
     private File priceFile;
     private YamlConfiguration priceConfig;
 
@@ -61,7 +64,7 @@ public class ShopManager {
         if (!this.priceFile.exists()) {
             CosmicGUIShop.get().saveResource("prices.yml", false);
         }
-        this.priceConfig = YamlConfiguration.loadConfiguration((File) this.priceFile);
+        this.priceConfig = YamlConfiguration.loadConfiguration(this.priceFile);
         ConfigurationSection section = this.priceConfig.getConfigurationSection("prices");
         for (String category : section.getKeys(false)) {
             ShopCategory cat = ShopCategory.getFromName(category);
@@ -113,7 +116,7 @@ public class ShopManager {
         if (itemString.contains("#")) {
             String countString = itemString.split("#")[1];
             itemString = itemString.split("#")[0];
-            if (StringUtils.isNumeric((String) countString)) {
+            if (StringUtils.isNumeric(countString)) {
                 count = Integer.parseInt(countString);
             }
         }
@@ -121,7 +124,7 @@ public class ShopManager {
             String name = itemString;
             name = name.replace(":", "@");
             String matName = name.split("@")[0];
-            Material material = Material.matchMaterial((String) matName);
+            Material material = Material.matchMaterial(matName);
             short extra = Short.parseShort(name.split("@")[1]);
             if (material == null) {
                 Bukkit.getLogger().info("Unable to load material for " + itemString);
@@ -129,7 +132,7 @@ public class ShopManager {
             }
             data = new ShopMaterialData(material, extra, count);
         } else {
-            Material found = Material.matchMaterial((String) itemString);
+            Material found = Material.matchMaterial(itemString);
             if (found == null) {
                 Bukkit.getLogger().info("Unable to load material for " + itemString);
                 return null;
@@ -152,7 +155,7 @@ public class ShopManager {
             if (slot == 9) {
                 slot = 11;
             }
-            menu.setItem(slot++, new ClickableItemStack(ItemBuilder.buildItem(category.getDisplayData().getType(), category.getDisplayData().getData(), category.getDisplayName(), (List<String>) Lists.newArrayList(new String[]{ ChatColor.GRAY + "Click to view this category."}))).setClickCallback(new GUIItemCallback() {
+            menu.setItem(slot++, new ClickableItemStack(ItemBuilder.buildItem(category.getDisplayData().getType(), category.getDisplayData().getData(), category.getDisplayName(), Lists.newArrayList(new String[]{ ChatColor.GRAY + "Click to view this category."}))).setClickCallback(new GUIItemCallback() {
 
                 @Override
                 public void onClick(InventoryClickEvent event) {
@@ -165,7 +168,7 @@ public class ShopManager {
 
     public GUIMenu getCategoryMenu(final Player player, ShopCategory category) {
         ShopItemMap items = this.shopItems.get( category);
-        String name = "Shop Items (" + ChatColor.stripColor((String) category.getDisplayName()) + ")";
+        String name = "Shop Items (" + ChatColor.stripColor(category.getDisplayName()) + ")";
         if (name.length() > 32) {
             name = name.substring(0, 32);
         }
@@ -183,7 +186,7 @@ public class ShopManager {
                 int potionBundleCount = isPotionBundle ? data.getData() - 100 : 0;
                 ArrayList lore = Lists.newArrayList();
                 if (isCollectionChest) {
-                    lore.addAll(Lists.newArrayList( new String[]{ ChatColor.GRAY + "Create a chest that will",  ChatColor.GRAY + "automatically collect specified",  ChatColor.GRAY + "mob drops when a creature dies",  ChatColor.GRAY + "within the same chunk.", ""}));
+                    lore.addAll(Lists.newArrayList(ChatColor.GRAY + "Create a chest that will", ChatColor.GRAY + "automatically collect specified", ChatColor.GRAY + "mob drops when a creature dies", ChatColor.GRAY + "within the same chunk.", ""));
                 } else {
                     lore.add("");
                 }
@@ -204,7 +207,7 @@ public class ShopManager {
                     lore.add( ChatColor.YELLOW + "Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + "1x");
                         lore.add( ChatColor.YELLOW + "Shift Left-Click " +  ChatColor.GRAY + "to buy " +  ChatColor.YELLOW + data.getType().getMaxStackSize() + "x");
                         if (emptySlots > 1) {
-                            lore.add( ChatColor.YELLOW + "Middle-Click" +  ChatColor.GRAY + " to buy me.astropvp.cratekeys.inventory " +  ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
+                            lore.add( ChatColor.YELLOW + "Middle-Click" +  ChatColor.GRAY + " to buy inventory " +  ChatColor.YELLOW + data.getType().getMaxStackSize() * emptySlots + "x");
                         }
                     }
 
@@ -257,7 +260,7 @@ public class ShopManager {
                                 player.sendMessage( ChatColor.GREEN + ChatColor.BOLD.toString() + "+ $" + moneyFormat.format(cashToGive));
                                 player.sendMessage( ChatColor.GREEN + "Successfully sold " +  ChatColor.GREEN +  ChatColor.BOLD + sellAmount + "x " +  ChatColor.GREEN + ItemUtils.getPrettyName(data) + " for " +  ChatColor.GREEN +  ChatColor.BOLD + "$" +  ChatColor.GREEN + moneyFormat.format(price.getSellPrice()) +  ChatColor.GREEN + "/ea");
                                 Bukkit.getLogger().info(player.getName() + " sold " + sellAmount + " " + data.toString() + " for " + cashToGive);
-                                Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_SELL", new Object[]{cashToGive, sellAmount, data.getType(), data.getData()}));
+                                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "SHOP_SELL", new Object[]{cashToGive, sellAmount, data.getType(), data.getData()}));
                             } else if (amountInInventory <= 0) {
                                 player.sendMessage( ChatColor.RED + "You do not have any to sell!");
                             }
@@ -273,7 +276,7 @@ public class ShopManager {
                                 return;
                             }
                             if (player.getInventory().firstEmpty() == -1) {
-                                player.sendMessage( ChatColor.RED + "You do not have enough me.astropvp.cratekeys.inventory space!");
+                                player.sendMessage( ChatColor.RED + "You do not have enough inventory space!");
                                 return;
                             }
                             if (fillInventory) {
@@ -286,12 +289,12 @@ public class ShopManager {
                                             return;
                                         }
                                         if (player.getInventory().firstEmpty() == -1) {
-                                            player.sendMessage(ChatColor.RED + "You do not have enough me.astropvp.cratekeys.inventory space!");
+                                            player.sendMessage(ChatColor.RED + "You do not have enough inventory space!");
                                             return;
                                         }
                                         int slots = SlotUtils.getEmptySlots(player);
                                         if (slots < emptySlots) {
-                                            player.sendMessage(ChatColor.RED + "You do not have the me.astropvp.cratekeys.inventory space needed!");
+                                            player.sendMessage(ChatColor.RED + "You do not have the inventory space needed!");
                                             return;
                                         }
                                         ShopManager.this.finishPurchase(player, data, totalPrice, buyAmount);
@@ -321,13 +324,15 @@ public class ShopManager {
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.4f);
         Material type = data.getType();
         if (type == Material.CHEST && data.getData() == 100) {
-            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("c " + player.getName() + " " + buyAmount));
-            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, data, buyAmount}));
+            player.getInventory().addItem(CollectorUtils.createCollector(buyAmount));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "SHOP_BUY", totalPrice, data, buyAmount));
             return;
         }
         if (type == Material.ENDER_PORTAL_FRAME && data.getData() == 100) {
-            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("kit chunkbuster " + player.getName()));
-            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, data, buyAmount}));
+            ItemStack buster = ChunkBusterUtils.getItem().clone();
+            buster.setAmount(buyAmount);
+            player.getInventory().addItem(buster);
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "SHOP_BUY", totalPrice, data, buyAmount));
             return;
         }
         int maxStack = type.getMaxStackSize();
@@ -335,7 +340,7 @@ public class ShopManager {
         if (isPotionBundle) {
             for (int i = 0; i < buyAmount; ++i) {
                 ItemStack toGive = this.getCustomItem(data, data.getSellCount(), ChatColor.WHITE.toString());
-                player.getInventory().addItem(new ItemStack[]{toGive});
+                player.getInventory().addItem(toGive);
             }
             return;
         }
@@ -344,17 +349,17 @@ public class ShopManager {
             buyAmount -= stacksToGive * maxStack;
             for (int i = 0; i < stacksToGive; ++i) {
                 ItemStack toGive = this.getCustomItem(data, maxStack, ChatColor.WHITE.toString());
-                player.getInventory().addItem(new ItemStack[]{toGive});
+                player.getInventory().addItem(toGive);
             }
             if (buyAmount > 0 && buyAmount > maxStack) {
                 ItemStack toGive = this.getCustomItem(data, maxStack, ChatColor.WHITE.toString());
-                player.getInventory().addItem(new ItemStack[]{toGive});
+                player.getInventory().addItem(toGive);
             }
         } else {
             ItemStack toGive = this.getCustomItem(data, buyAmount, ChatColor.WHITE.toString());
-            player.getInventory().addItem(new ItemStack[]{toGive});
+            player.getInventory().addItem(toGive);
         }
-        Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, buyAmount, data.getType(), data.getData()}));
+        Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "SHOP_BUY", new Object[]{totalPrice, buyAmount, data.getType(), data.getData()}));
     }
 
     public ItemStack getCustomItem(ShopMaterialData data, int amount, String color) {
@@ -368,22 +373,22 @@ public class ShopManager {
                 }
                 toGive = ShopManager.getMobSpawner(type);
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                    toGive = ItemID.setItemID((ItemStack) toGive, (long) ItemID.generateNewItemID());
+                    toGive = ItemID.setItemID(toGive, ItemID.generateNewItemID());
                 }
             }
         if (data.getType() == Material.POTION && data.getSellCount() > 1) {
             ItemMeta im = toGive.getItemMeta();
-            ArrayList lore = Lists.newArrayList( new String[]{CC.Gray + "Stackable (" + data.getSellCount() + ")"});
-            im.setLore((List) lore);
+            ArrayList lore = Lists.newArrayList(CC.Gray + "Stackable (" + data.getSellCount() + ")");
+            im.setLore(lore);
             toGive.setItemMeta(im);
-            toGive = new NBTWrapper(toGive).setString("cosmicType", "stackable").setNBTBase("conaxData", (NBTBase) new NBTTagCompoundBuilder().setInt("maxStackSize", Integer.valueOf(data.getSellCount())).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
+            toGive = new NBTWrapper(toGive).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", Integer.valueOf(data.getSellCount())).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
             toGive.setAmount(data.getSellCount());
         }
         return toGive;
     }
 
     public ClickableItemStack getBackArrow(final Player player) {
-        return new ClickableItemStack(ItemBuilder.buildItem(Material.ARROW, 1, (short) 0, ChatColor.GREEN.toString() +  ChatColor.BOLD + "Back", (List<String>) Lists.newArrayList(new String[]{ ChatColor.GRAY + "Click to return to categories."}))).setClickCallback(new GUIItemCallback() {
+        return new ClickableItemStack(ItemBuilder.buildItem(Material.ARROW, 1, (short) 0, ChatColor.GREEN.toString() +  ChatColor.BOLD + "Back", Lists.newArrayList(new String[]{ ChatColor.GRAY + "Click to return to categories."}))).setClickCallback(new GUIItemCallback() {
 
             @Override
             public void onClick(InventoryClickEvent event) {

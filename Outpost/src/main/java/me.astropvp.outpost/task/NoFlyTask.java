@@ -2,6 +2,7 @@ package me.astropvp.outpost.task;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class NoFlyTask extends BukkitRunnable {

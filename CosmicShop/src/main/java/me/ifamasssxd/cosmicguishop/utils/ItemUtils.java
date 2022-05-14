@@ -25,7 +25,7 @@ public class ItemUtils {
     public static boolean hasEssentialsPrice(ItemStack item) {
         try {
             Essentials ess = (Essentials) JavaPlugin.getPlugin(Essentials.class);
-            if (ess != null && ess.getWorth().getPrice(ess, item) != null) {
+            if (ess != null && ess.getWorth().getPrice(ess,item) != null) {
                 return true;
             }
         } catch (Exception exception) {

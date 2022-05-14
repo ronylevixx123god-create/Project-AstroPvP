@@ -56,6 +56,11 @@ public class FPromoteCommand extends FCommand {
             return;
         }
 
+        if (context.fPlayer.getRole().value == target.getRole().value) {
+            context.msg(TL.COMMAND_PROMOTE_NOT_ALLOWED);
+            return;
+        }
+
         String action = relative > 0 ? TL.COMMAND_PROMOTE_PROMOTED.toString() : TL.COMMAND_PROMOTE_DEMOTED.toString();
 
         // Success!

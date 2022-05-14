@@ -62,70 +62,10 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.puharesource.mc</groupId>
-            <artifactId>TitleManager</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+
 
         <!-- New Cosmic Repos -->
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Arkkit</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-        </dependency>
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>CompilexPermissions</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Enchantments</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Lootboxes</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>SpaceChests</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Duels</artifactId>
-            <version>0.1</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Conquest</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>AuctionHouse</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Lootboxes</artifactId>
-            <version>0.1</version>
-        </dependency>
 
         <!-- System repos -->
         <dependency>
@@ -335,9 +275,10 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Pets</artifactId>
+            <artifactId>dmg</artifactId>
             <version>0.1</version>
-            <scope>compile</scope>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroDamageHandler-0.1.jar</systemPath>
         </dependency>
     </dependencies>
 

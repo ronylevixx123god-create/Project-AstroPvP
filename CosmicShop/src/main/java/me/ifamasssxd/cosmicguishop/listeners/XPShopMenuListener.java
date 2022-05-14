@@ -33,7 +33,6 @@ public class XPShopMenuListener implements Listener {
 
         if (event.getClickedInventory().getType() == InventoryType.PLAYER) {
             event.setCancelled(true);
-            return;
         }
         //((XpShopMenu)holder).onClick((Player)event.getWhoClicked(), event.getSlot(), event.getClick(), event);
     }

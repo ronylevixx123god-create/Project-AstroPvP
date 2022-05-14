@@ -11,9 +11,7 @@
 package me.ifamasssxd.cosmicguishop;
 
 import com.google.common.collect.Lists;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
+
 import me.ifamasssxd.cosmicguishop.commands.CommandBankNote;
 import me.ifamasssxd.cosmicguishop.commands.CommandShop;
 import me.ifamasssxd.cosmicguishop.commands.CommandXpShop;
@@ -24,11 +22,8 @@ import me.ifamasssxd.cosmicguishop.struct.ShopManager;
 import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.Material;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
@@ -41,8 +36,7 @@ public class CosmicGUIShop extends JavaPlugin {
     private static Economy economy;
     private ShopManager shopManager;
 
-    @Setter
-    @Getter
+
     List<String> itemList;
 
     public static CosmicGUIShop get() {
@@ -52,7 +46,6 @@ public class CosmicGUIShop extends JavaPlugin {
         return economy;
     }
 
-    @SneakyThrows
     public void onEnable() {
         instance = this;
         plugin = this;
@@ -82,6 +75,14 @@ public class CosmicGUIShop extends JavaPlugin {
             this.getConfig().addDefault("items", list);
             this.getLogger().info("Created XP Shop Config");
         }
+    }
+
+    public List<String> getItemList() {
+        return itemList;
+    }
+
+    public void setItemList(List<String> itemList) {
+        this.itemList = itemList;
     }
 
     @Override

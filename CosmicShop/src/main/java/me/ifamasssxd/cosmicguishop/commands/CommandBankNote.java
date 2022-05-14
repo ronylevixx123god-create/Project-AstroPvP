@@ -61,7 +61,7 @@ public class CommandBankNote implements CommandExecutor {
             return true;
         }
         if (pl.getInventory().firstEmpty() == -1) {
-            pl.sendMessage((Object)ChatColor.RED + "You do not have enough room in your me.astropvp.cratekeys.inventory.");
+            pl.sendMessage((Object)ChatColor.RED + "You do not have enough room in your inventory.");
             return true;
         }
         CosmicGUIShop.getEconomy().withdrawPlayer((OfflinePlayer)pl, (double)withdraw_val);

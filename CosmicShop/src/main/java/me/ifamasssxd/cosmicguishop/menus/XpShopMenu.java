@@ -27,7 +27,6 @@ import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.Getter;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
 import me.mattstudios.mfgui.gui.components.util.ItemBuilder;

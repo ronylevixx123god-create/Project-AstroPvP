@@ -14,6 +14,7 @@ import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerItemConsumeEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
@@ -99,5 +100,12 @@ public class AntiInvis implements Listener {
         p.updateInventory();
         Bukkit.getLogger().warning(String.valueOf(p.getName()) + " tried to splash Lingering Invisibility Potion!");
         p.sendMessage(ChatColor.YELLOW + "Invisibility Potions have been disabled on the server!");
+    }
+
+    @EventHandler
+    public void onjoin(PlayerJoinEvent e) {
+        if (e.getPlayer().getMaxHealth() > 44) {
+            e.getPlayer().setMaxHealth(44);
+        }
     }
 }

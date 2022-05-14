@@ -1,5 +1,6 @@
 package me.astropvp.outpost.listener;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.outpost.Outpost;
 import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
@@ -15,6 +16,7 @@ public class WorldChange implements Listener {
         Bukkit.getScheduler().runTaskLater(Outpost.getInstance(), () -> {
             if (e.getFrom().getWorld() != e.getTo().getWorld() && e.getTo().getWorld().getName().equals("world_outpost_pluto")) {
                 e.getPlayer().setMaxHealth(20);
+                e.getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
             }
 
         }, 10L);

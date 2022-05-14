@@ -12,7 +12,6 @@
  */
 package me.ifamasssxd.cosmicguishop.commands;
 
-import lombok.SneakyThrows;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.struct.*;
 import org.apache.commons.lang.Validate;
@@ -28,7 +27,6 @@ import java.util.Arrays;
 
 public class CommandShop
         implements CommandExecutor {
-    @SneakyThrows
     public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
         if (sender.isOp()) {
             if (args.length == 1) {
