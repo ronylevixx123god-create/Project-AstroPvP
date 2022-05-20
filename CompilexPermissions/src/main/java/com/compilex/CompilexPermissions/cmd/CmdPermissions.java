@@ -107,7 +107,7 @@ implements CommandExecutor {
             });
             return true;
         }
-        if (!(!(sender instanceof Player) || (pName = (p = (Player)sender).getName()).equals("Bryside") || pName.equals("Venir"))) {
+        if (!(!(sender instanceof Player) || (pName = (p = (Player)sender).getName()).equals("Bryside") || pName.equals("Venir") || pName.equals("KingSavaqe"))) {
             p.sendMessage(ChatColor.RED + "You are not authorized to use that command.");
             p.sendMessage(ChatColor.GRAY + "Please contact an administrator.");
             return true;

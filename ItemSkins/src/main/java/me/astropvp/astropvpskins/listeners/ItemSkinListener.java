@@ -268,7 +268,9 @@ public class ItemSkinListener implements Listener {
             if (event.getPlayer().getWorld().getName().equals("world_outpost_pluto")) {
                 return;
             }
-
+            if (event.getMethod() == ArmorEquipEvent.EquipMethod.HOTBAR) {
+                return;
+            }
             if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
                 List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
                 assert skins != null;

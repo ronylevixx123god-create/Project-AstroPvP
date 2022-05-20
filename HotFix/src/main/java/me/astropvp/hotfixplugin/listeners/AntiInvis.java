@@ -17,6 +17,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
+import org.bukkit.potion.PotionEffectType;
 import org.bukkit.potion.PotionType;
 
 public class AntiInvis implements Listener {
@@ -104,8 +105,6 @@ public class AntiInvis implements Listener {
 
     @EventHandler
     public void onjoin(PlayerJoinEvent e) {
-        if (e.getPlayer().getMaxHealth() > 44) {
-            e.getPlayer().setMaxHealth(44);
-        }
+            e.getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
     }
 }

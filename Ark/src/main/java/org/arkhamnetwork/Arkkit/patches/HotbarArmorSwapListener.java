@@ -83,7 +83,7 @@ final class HotbarArmorSwapListener
         } else if (n.contains("leggings")) {
             ItemStack old = inv.getLeggings();
             inv.setLeggings(is);
-        player.setItemInHand(null);
+            player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
                 inv.setItemInHand(old);
             }
@@ -120,6 +120,14 @@ final class HotbarArmorSwapListener
         }
         if (getOldArmorPiece(p, e.getItem()) != null && getOldArmorPiece(p, e.getItem()).getType() != Material.AIR) {
             AstroArmorSetsAPI.refreshArmorPiece(e.getItem(), getOldArmorPiece(p, e.getItem()), e.getPlayer());
+        }
+        if (getOldArmorPiece(p, e.getItem()) != null && getOldArmorPiece(p, e.getItem()).getType() != Material.AIR) {
+            if (AstroItemSkinsAPI.hasItemSkin(getOldArmorPiece(p, e.getItem()))) {
+                AstroItemSkinsAPI.getItemSkin(getOldArmorPiece(p, e.getItem())).forEach(s -> s.getItemSkin().onUnequip(p));
+            }
+            if (AstroItemSkinsAPI.hasItemSkin(e.getItem())) {
+                AstroItemSkinsAPI.getItemSkin(e.getItem()).forEach(s -> s.getItemSkin().onEquip(p));
+            }
         }
         e.setCancelled(true);
         e.setUseInteractedBlock(Event.Result.DENY);

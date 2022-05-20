@@ -6,21 +6,18 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 
-public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
-    private static final HandlerList handlers = new HandlerList();
-
-    private boolean cancel = false;
-
+public final class ArmorEquipEvent extends PlayerEvent implements Cancellable
+{
+    private static final HandlerList handlers;
+    private boolean cancel;
     private final EquipMethod equipType;
-
     private final ArmorType type;
-
     private ItemStack oldArmorPiece;
-
     private ItemStack newArmorPiece;
 
-    public ArmorEquipEvent(Player player, EquipMethod equipType, ArmorType type, ItemStack oldArmorPiece, ItemStack newArmorPiece) {
+    public ArmorEquipEvent(final Player player, final EquipMethod equipType, final ArmorType type, final ItemStack oldArmorPiece, final ItemStack newArmorPiece) {
         super(player);
+        this.cancel = false;
         this.equipType = equipType;
         this.type = type;
         this.oldArmorPiece = oldArmorPiece;
@@ -28,17 +25,20 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
     }
 
     public static final HandlerList getHandlerList() {
-        return handlers;
+        return ArmorEquipEvent.handlers;
     }
 
+    @Override
     public final HandlerList getHandlers() {
-        return handlers;
+        return ArmorEquipEvent.handlers;
     }
 
-    public final void setCancelled(boolean cancel) {
+    @Override
+    public final void setCancelled(final boolean cancel) {
         this.cancel = cancel;
     }
 
+    @Override
     public final boolean isCancelled() {
         return this.cancel;
     }
@@ -51,7 +51,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
         return this.oldArmorPiece;
     }
 
-    public final void setOldArmorPiece(ItemStack oldArmorPiece) {
+    public final void setOldArmorPiece(final ItemStack oldArmorPiece) {
         this.oldArmorPiece = oldArmorPiece;
     }
 
@@ -59,7 +59,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
         return this.newArmorPiece;
     }
 
-    public final void setNewArmorPiece(ItemStack newArmorPiece) {
+    public final void setNewArmorPiece(final ItemStack newArmorPiece) {
         this.newArmorPiece = newArmorPiece;
     }
 
@@ -67,7 +67,20 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
         return this.equipType;
     }
 
-    public enum EquipMethod {
-        SHIFT_CLICK, DRAG, PICK_DROP, HOTBAR, HOTBAR_SWAP, DISPENSER, BROKE, DEATH;
+    static {
+        handlers = new HandlerList();
+    }
+
+    public enum EquipMethod
+    {
+        SHIFT_CLICK,
+        DRAG,
+        PICK_DROP,
+        HOTBAR,
+        HOTBAR_SWAP,
+        DISPENSER,
+        BROKE,
+        DEATH,
+        QUIT_SERVER;
     }
 }

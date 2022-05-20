@@ -294,8 +294,9 @@ public class AstroItemSkinsAPI {
             getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onEquip(player));
         if (inventory.getChestplate() != null && inventory.getChestplate().getType() != Material.AIR && hasItemSkin(inventory.getChestplate()))
             getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onEquip(player));
-        if (inventory.getLeggings() != null && inventory.getLeggings().getType() != Material.AIR && hasItemSkin(inventory.getLeggings()))
+        if (inventory.getLeggings() != null && inventory.getLeggings().getType() != Material.AIR && hasItemSkin(inventory.getLeggings())) {
             getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onEquip(player));
+        }
         if (inventory.getBoots() != null && inventory.getBoots().getType() != Material.AIR && hasItemSkin(inventory.getBoots()))
             getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onEquip(player));
     }

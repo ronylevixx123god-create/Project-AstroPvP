@@ -57,7 +57,6 @@
         <module name="AstroScoreboard" />
         <module name="AstroCagePvP" />
         <module name="Sets" />
-        <module name="Factions-Legacy (2)" />
         <module name="Christmass" />
         <module name="Kits" />
         <module name="NebulaShop" />
@@ -80,15 +79,9 @@
         <sourceOutputDir name="../../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Factions (1)" />
         <module name="Factions (2) (com.massivecraft)" />
+        <module name="Factions (1)" />
         <module name="Factions (2)" />
-      </profile>
-      <profile name="Annotation profile for Factions (3)" enabled="true">
-        <sourceOutputDir name="../../../AstroFactions/target/generated-sources/annotations" />
-        <sourceTestOutputDir name="../../../AstroFactions/target/generated-test-sources/test-annotations" />
-        <outputRelativeToContentRoot value="true" />
-        <module name="Factions (3)" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -111,8 +104,10 @@
       <module name="FactionFights" target="8" />
       <module name="Factions" target="8" />
       <module name="Factions (1) (com.massivecraft)" target="1.8" />
+      <module name="Factions (3)" target="1.8" />
       <module name="Factions-aggregator" target="1.8" />
       <module name="Factions-Legacy" target="1.8" />
+      <module name="Factions-Legacy (2)" target="1.5" />
       <module name="GenBuckets" target="8" />
       <module name="GUIShop" target="8" />
       <module name="ItemFilter" target="8" />
