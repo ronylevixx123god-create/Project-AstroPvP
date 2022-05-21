@@ -8,4 +8,6 @@ import me.astropvp.factionlogs.enums.LogType;
 @Getter
 public abstract class FactionLog {
     private final LogType logtype;
+    private final Long time = System.currentTimeMillis();
+    //TODO Does this make sense? (I was still tired)
 }

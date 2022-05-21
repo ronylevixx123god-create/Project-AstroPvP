@@ -7,21 +7,26 @@ import java.util.Map;
 
 @Getter
 public class LogManager {
-    private final Map<Long, FactionLogManager> logs;
+    private final Map<String, FactionLogManager> logs;
 
     public LogManager() {
         this.logs = new HashMap<>();
     }
 
-    public void log(Long id, FactionLog factionLog) {
-        if (logs.containsKey(id)) {
-            FactionLogManager factionLogManager = getFactionLogManager(id);
-        } else {
-            this.logs.put(id, new FactionLogManager());
-        }
+    public void log(String id, FactionLog factionLog) {
+        FactionLogManager factionLogManager = getFactionLogManager(id);
+        factionLogManager.addFactionLogToFaction(factionLog.getLogtype(), factionLog);
+        //TODO: Check if this makes sense (I was tired)
     }
 
-    public FactionLogManager getFactionLogManager(Long id) {
-       return logs.get(id);
+    public FactionLogManager getFactionLogManager(String id) {
+        if (!logs.containsKey(id)) {
+            this.logs.put(id, new FactionLogManager());
+        }
+        return logs.get(id);
+    }
+
+    public void load() {
+        //Load data here
     }
 }
