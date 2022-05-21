@@ -73,6 +73,7 @@
         <module>AntiPhase</module>
         <module>AstroCagePvP</module>
         <module>Outpost</module>
+        <module>FactionLogs</module>
     </modules>
 
     <build>

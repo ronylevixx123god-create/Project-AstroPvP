@@ -7,7 +7,6 @@ import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.hotfixplugin.commands.FixHealth;
 import me.astropvp.hotfixplugin.listeners.*;
 
-import me.ifamasssxd.cosmicduel.commands.CommandSetDuelWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -27,10 +26,11 @@ public class HotFixPlugin extends JavaPlugin {
         System.out.println("[HotFix] HotFixPlugin has been Loaded!");
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportSafetyListener(), this);
-        this.getCommand("fixhealth").setExecutor(new FixHealth());
+
         Bukkit.getPluginManager().registerEvents(new EnderPearlFixes(), this);
         Bukkit.getPluginManager().registerEvents(new CommandPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
+        getCommand("fixhealth").setExecutor(new FixHealth());
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
@@ -42,11 +42,7 @@ public class HotFixPlugin extends JavaPlugin {
                 spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it by clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
-                    if (Math.random() < 0.5) {
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &6&lT-Bone &6on the store.")));
-                    } else {
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &a&lTop&2&lG &f&lBundle&r &6on the store.")));
-                    }
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &e&lB&6&ll&e&li&6&lt&e&lz&r &6on the store.")));
                     spaceClickable.sendToPlayer(player);
                     player.sendMessage("");
 
