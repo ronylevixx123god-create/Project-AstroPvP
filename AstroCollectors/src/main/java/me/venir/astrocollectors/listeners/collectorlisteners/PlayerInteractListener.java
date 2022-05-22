@@ -15,6 +15,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -27,10 +28,11 @@ public class PlayerInteractListener  implements Listener {
         this.plugin = plugin;
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (event.getClickedBlock() == null ||event.getClickedBlock().getType() == Material.AIR) return;
         if (event.getAction() != Action.RIGHT_CLICK_BLOCK) return;
+        if (event.isCancelled()) return;
         if (event.getClickedBlock().getType() == Material.BEACON) {
             Player player = event.getPlayer();
             Location location = event.getClickedBlock().getLocation();

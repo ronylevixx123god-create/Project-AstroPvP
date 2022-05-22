@@ -16,7 +16,10 @@ public class MobGrinderRunnable extends BukkitRunnable {
         if (CoreSkulls.isSavingGrinderBlocks) return;
 
         for (MobGrinderCache mobGrinderCache : CoreSkulls.instance.getGrinderBlocks().values()) {
-            if (mobGrinderCache == null) continue;
+            if (mobGrinderCache == null) {
+                System.out.println("[Debug] Cache is null");
+
+            }
             if (!mobGrinderCache.getAbilityData().isActive()) continue;
             boolean stackedBlazesFound = false;
             AbilityData data = mobGrinderCache.getAbilityData();
@@ -24,7 +27,10 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 stackedBlazesFound = true;
             }
 
-            if (!stackedBlazesFound) continue;
+            if (!stackedBlazesFound) {
+                System.out.println("[Debug] No blaze found in task");
+
+            }
 
             //KILL NEARBY STACKED MOB
 
@@ -53,8 +59,8 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 chanceAstroKey = 0.0575;
             } else if (level == 3) {
                 chanceGodlyKey = 0.02;
-                chanceLegKey = 0.04;
-                chanceAstroKey = 0.06;
+                chanceLegKey = 0.045;
+                chanceAstroKey = 0.065;
             }
 
 

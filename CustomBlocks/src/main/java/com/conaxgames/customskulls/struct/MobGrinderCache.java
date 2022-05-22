@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.Location;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.Entity;
 
 import java.util.Map;
@@ -15,8 +16,8 @@ public class MobGrinderCache {
     private AbilityData abilityData;
     private Map<CrateType, Integer> crateKeys;
     private double xp;
-    private Entity blaze;
-    public MobGrinderCache(AbilityData abilityData, Entity blaze) {
+    private CraftEntity blaze;
+    public MobGrinderCache(AbilityData abilityData, CraftEntity blaze) {
         this.abilityData = abilityData;
         this.crateKeys = abilityData.getCrateKeys();
         this.xp = abilityData.getXp();
