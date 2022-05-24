@@ -19,7 +19,9 @@ public class DeleteCustomBlocks {
             file.delete();
         }
         // Delete the data from memory as we don't need it anymore!
+
         AbilityData.getAbilityDataMap().remove(AbilityData.getUUID(location));
+
         if (player != null) {
             player.sendMessage(CC.translate("&c&l(!)&c You broke a " + customBlock.getName() + "&c Custom Block!"));
         }

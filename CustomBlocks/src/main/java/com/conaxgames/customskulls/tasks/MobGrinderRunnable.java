@@ -8,28 +8,36 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Collection;
+
 public class MobGrinderRunnable extends BukkitRunnable {
     int amountOfExpPerBlaze = 35;
 
     @Override
     public void run() {
         if (CoreSkulls.isSavingGrinderBlocks) return;
+        if(CoreSkulls.isCachingGrinderBlocks()) return;
+        final Collection<? extends MobGrinderCache> caches = CoreSkulls.instance.getGrinderBlocks().values();
+        for (MobGrinderCache mobGrinderCache : caches) {
+            if (mobGrinderCache == null) continue;
 
-        for (MobGrinderCache mobGrinderCache : CoreSkulls.instance.getGrinderBlocks().values()) {
-            if (mobGrinderCache == null) {
-                System.out.println("[Debug] Cache is null");
-
-            }
-            if (!mobGrinderCache.getAbilityData().isActive()) continue;
-            boolean stackedBlazesFound = false;
             AbilityData data = mobGrinderCache.getAbilityData();
-            if (mobGrinderCache.getBlaze() != null) {
-                stackedBlazesFound = true;
+
+            if (!data.isActive()) {
+                continue;
             }
 
-            if (!stackedBlazesFound) {
-                System.out.println("[Debug] No blaze found in task");
-
+            if (mobGrinderCache.getBlaze() == null) {
+                System.out.println("[Auto Grinders] Skipping because is null");
+                continue;
+            }
+            if (mobGrinderCache.getBlaze().isDead()) {
+                System.out.println("[Auto Grinders] Skipping because dead");
+                continue;
+            }
+            if (!mobGrinderCache.getBlaze().isValid()) {
+                System.out.println("[Auto Grinders] Skipping because invalid");
+                continue;
             }
 
             //KILL NEARBY STACKED MOB
@@ -58,7 +66,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 chanceLegKey = 0.0375;
                 chanceAstroKey = 0.0575;
             } else if (level == 3) {
-                chanceGodlyKey = 0.02;
+                chanceGodlyKey = 0.025;
                 chanceLegKey = 0.045;
                 chanceAstroKey = 0.065;
             }

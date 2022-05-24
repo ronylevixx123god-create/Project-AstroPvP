@@ -10,7 +10,6 @@ import com.conaxgames.customskulls.commands.ClearGrinderBlocksCommand;
 import com.conaxgames.customskulls.commands.RemoveBlocks;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.data.SaveAllGrinderCustomBlocks;
-import com.conaxgames.customskulls.data.SaveCustomBlock;
 import com.conaxgames.customskulls.listeners.*;
 import com.conaxgames.customskulls.struct.MobGrinderCache;
 import com.conaxgames.customskulls.tasks.MobGrinderCacherTask;
@@ -24,8 +23,6 @@ import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import org.bukkit.Bukkit;
-import org.bukkit.Chunk;
-import org.bukkit.Location;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.inventory.ItemStack;
@@ -49,6 +46,10 @@ public class CoreSkulls extends JavaPlugin {
     @Getter
     public static boolean isSavingGrinderBlocks = false;
 
+
+    @Setter
+    @Getter
+    public static boolean isCachingGrinderBlocks = false;
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
 
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
@@ -61,6 +62,7 @@ public class CoreSkulls extends JavaPlugin {
 
     @Getter
     public Map<String, MobGrinderCache> grinderBlocks;
+
 
 
 
@@ -140,7 +142,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 5);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 5*20, 10*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 5*20, 15*20);
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SaveAllGrinderCustomBlocks::saveAllGrinderCustomBlocks,120*20L, 1200*20);
 
     }

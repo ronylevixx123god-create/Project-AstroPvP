@@ -16,13 +16,14 @@ public class MobGrinderCache {
     private AbilityData abilityData;
     private Map<CrateType, Integer> crateKeys;
     private double xp;
-    private CraftEntity blaze;
-    public MobGrinderCache(AbilityData abilityData, CraftEntity blaze) {
+    private Entity blaze;
+    public MobGrinderCache(AbilityData abilityData, Entity blaze) {
         this.abilityData = abilityData;
         this.crateKeys = abilityData.getCrateKeys();
         this.xp = abilityData.getXp();
         this.blaze = blaze;
     }
+
 
 
 }

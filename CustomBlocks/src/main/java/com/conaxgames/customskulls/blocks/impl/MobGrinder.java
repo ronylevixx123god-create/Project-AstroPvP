@@ -77,8 +77,8 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
-        if (CoreSkulls.instance.getGrinderBlocks().get(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())).getUuid()) == null) {
-            p1.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, the grinder block is still warming up or loading new data..."));
+        if (!CoreSkulls.instance.getGrinderBlocks().containsKey(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())).getUuid())) {
+            p1.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, the grinder block is still warming up, loading new data or trying to fetch a nearby blaze..."));
             return;
         }
 
@@ -150,6 +150,9 @@ public class MobGrinder extends CustomBlock {
                 //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
                 p1.getBlock().setType(Material.AIR);
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
+                if (CoreSkulls.instance.grinderBlocks.containsKey(data.getUuid())) {
+                    CoreSkulls.instance.grinderBlocks.remove(data.getUuid());
+                }
                 DeleteCustomBlocks.func(p2.getLocation(), breaker, this); // delete file and memory.
             } else {
                 breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.BLAZE_STONE_TOTEM.getPickupPrice() + " to pick this block up.");
