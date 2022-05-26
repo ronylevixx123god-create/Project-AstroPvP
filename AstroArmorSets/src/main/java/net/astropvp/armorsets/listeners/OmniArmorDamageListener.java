@@ -22,8 +22,8 @@ public class OmniArmorDamageListener implements Listener {
         Player player = ((Player) e.getEntity()).getPlayer();
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
-            double totalReduction = cache.getOmniPieces() * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageDecrease");
-            e.setDamage(e.getDamage() * (1-(totalReduction/100)));
+            double totalReduction =  AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageDecrease");
+            e.setDamage(e.getDamage() * (1-(totalReduction/100) * (1+(cache.getOmniPieces()/10F))));
         }
 
     }
@@ -37,8 +37,8 @@ public class OmniArmorDamageListener implements Listener {
         Player player = ((Player) e.getEntity()).getPlayer();
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
-            double totalIncrease = cache.getOmniPieces() * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageIncrease");
-            e.setDamage(e.getDamage() * (1+(totalIncrease/100)));
+            double totalIncrease = AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageIncrease");
+            e.setDamage(e.getDamage() * (1+(totalIncrease/100) * (1+(cache.getOmniPieces()/10F))));
         }
 
     }

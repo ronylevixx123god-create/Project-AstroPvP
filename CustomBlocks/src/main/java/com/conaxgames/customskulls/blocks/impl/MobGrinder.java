@@ -125,7 +125,7 @@ public class MobGrinder extends CustomBlock {
             p0.sendMessage(CC.RED + "You must have a faction to place a block of this type.");
             return;
         }
-        if (fPlayer.getRelationToLocation().isMember()) {
+        if (FactionUtils.getFactionAt(p1.getBlock().getLocation()) == fPlayer.getFaction()) {
             MakeCustomBlocks.newFileItem(p0, AbilityType.BLAZE_STONE_TOTEM, p1.getBlock(), this);
             fPlayer.getPlayer().sendMessage(CC.translate("&c&l* &cIt can take up to 30 seconds for this block to enable."));
         } else {

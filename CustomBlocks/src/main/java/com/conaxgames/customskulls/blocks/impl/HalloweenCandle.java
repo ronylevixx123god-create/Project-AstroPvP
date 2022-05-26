@@ -111,7 +111,7 @@ public class HalloweenCandle extends CustomBlock {
             p0.sendMessage(CC.RED + "You must have a faction to place a block of this type.");
             return;
         }
-        if (fPlayer.getRelationToLocation().isMember()) {
+        if (FactionUtils.getFactionAt(p1.getBlock().getLocation()) == fPlayer.getFaction()) {
             MakeCustomBlocks.newFileItem(p0, AbilityType.HALLOWEEN_CANDLES, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");

@@ -16,7 +16,6 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (CoreSkulls.isSavingGrinderBlocks) return;
         final Map<? extends String, ? extends AbilityData> grinderBlocks = CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders();
 
         for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : grinderBlocks.entrySet()) {
@@ -30,7 +29,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             if (mobGrinder.getBlaze() == null) {
                 continue;
             }
-            final Entity blaze = mobGrinder.getBlaze();
+            Entity blaze = mobGrinder.getBlaze();
 
             if (blaze.isDead() || !blaze.isValid()) {
                 continue;

@@ -28,16 +28,16 @@ public class ChunkUtil {
     }
 
     public static Chunk getIfLoaded(final int chunkX, final int chunkZ, final World bWorld) {
-        final net.minecraft.server.v1_8_R3.World world = (net.minecraft.server.v1_8_R3.World) ((CraftWorld) bWorld).getHandle();
-        final net.minecraft.server.v1_8_R3.Chunk theChunk = world.getChunkIfLoaded(chunkX, chunkZ);
+         net.minecraft.server.v1_8_R3.World world = ((CraftWorld) bWorld).getHandle();
+         net.minecraft.server.v1_8_R3.Chunk theChunk = world.getChunkIfLoaded(chunkX, chunkZ);
         return (theChunk == null) ? null : theChunk.bukkitChunk;
     }
 
     public static List<CraftEntity> getEntities(Chunk chunk) {
-        final net.minecraft.server.v1_8_R3.Chunk nmsChunk = ((CraftChunk) chunk).getHandle();
-        final List<CraftEntity> toReturn = new ArrayList<>();
-        for (final List<net.minecraft.server.v1_8_R3.Entity> entities : nmsChunk.entitySlices) {
-            for (final net.minecraft.server.v1_8_R3.Entity entity : entities) {
+         net.minecraft.server.v1_8_R3.Chunk nmsChunk = ((CraftChunk) chunk).getHandle();
+         List<CraftEntity> toReturn = new ArrayList<>();
+        for (List<net.minecraft.server.v1_8_R3.Entity> entities : nmsChunk.entitySlices) {
+            for (net.minecraft.server.v1_8_R3.Entity entity : entities) {
                 toReturn.add(entity.getBukkitEntity());
             }
         }

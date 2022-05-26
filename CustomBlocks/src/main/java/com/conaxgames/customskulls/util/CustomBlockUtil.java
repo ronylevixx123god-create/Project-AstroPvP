@@ -64,6 +64,22 @@ public class CustomBlockUtil {
         return abilityDataList;
     }
 
+    public static List<AbilityData> getBlockDatasInChunkLocation(Location loc) {
+        List<AbilityData> abilityDataList = new ArrayList<>();
+        final Collection<AbilityData> map = AbilityData.getAbilityDataMap().values();
+        //final Chunk chunk = player.getLocation().getChunk();
+
+        for (AbilityData data : map) {
+            if (data == null || data.getLocation() == null) continue;
+            if (data.getAbilityType() == null) continue;
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(data.getLocation(), loc)) { // The chunk the player is in has a CustomBlock in it!
+                abilityDataList.add(data);
+
+            }
+        }
+        return abilityDataList;
+    }
+
     public static Location getClosestChestLocation(Location location) {
         if (location.clone().add(-1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(-1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
             Chest chest = (Chest) location.clone().add(-1, 0, 0).getBlock().getState();

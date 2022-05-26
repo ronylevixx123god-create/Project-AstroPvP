@@ -72,6 +72,7 @@ public class MobGrinderManager {
             e.printStackTrace();
         }
         get(uuid).setLastActivated(System.currentTimeMillis());
+        rescanBlaze(uuid);
         activeMobGrinders.put(uuid, get(uuid));
     }
 
