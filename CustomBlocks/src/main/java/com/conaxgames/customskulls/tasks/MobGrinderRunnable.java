@@ -18,6 +18,8 @@ public class MobGrinderRunnable extends BukkitRunnable {
         if (CoreSkulls.isSavingGrinderBlocks) return;
         if(CoreSkulls.isCachingGrinderBlocks()) return;
         final Collection<? extends MobGrinderCache> caches = CoreSkulls.instance.getGrinderBlocks().values();
+        final Collection<? extends String> gblocks = CoreSkulls.instance.getGrinderBlocks().keySet();
+
         for (MobGrinderCache mobGrinderCache : caches) {
             if (mobGrinderCache == null) continue;
 
@@ -27,16 +29,8 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 continue;
             }
 
-            if (mobGrinderCache.getBlaze() == null) {
-                System.out.println("[Auto Grinders] Skipping because is null");
-                continue;
-            }
-            if (mobGrinderCache.getBlaze().isDead()) {
-                System.out.println("[Auto Grinders] Skipping because dead");
-                continue;
-            }
-            if (!mobGrinderCache.getBlaze().isValid()) {
-                System.out.println("[Auto Grinders] Skipping because invalid");
+            if (mobGrinderCache.getBlaze() == null || mobGrinderCache.getBlaze().isDead() || !mobGrinderCache.getBlaze().isValid()) {
+                gblocks.remove(data.getUuid());
                 continue;
             }
 

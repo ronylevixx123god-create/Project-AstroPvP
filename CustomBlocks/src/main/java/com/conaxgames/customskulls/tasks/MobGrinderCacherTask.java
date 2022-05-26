@@ -11,10 +11,7 @@ import com.conaxgames.customskulls.struct.MobGrinderCache;
 import com.earth2me.essentials.craftbukkit.FakeWorld;
 import org.bukkit.Bukkit;
 import org.bukkit.World;
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.Mob;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collection;
@@ -42,14 +39,12 @@ public class MobGrinderCacherTask extends BukkitRunnable {
                 continue;
             }
             boolean playerFound = false;
-            Entity blaze = null;
-            AsyncBlock asyncBlock = new AsyncBlock(new AsyncWorld(data.getLocation().getWorld(), false), FaweAPI.createQueue(data.getLocation().getWorld().getName(), true), data.getLocation().getBlockX(), data.getLocation().getBlockY(), data.getLocation().getBlockZ());
-            for (Entity entity : asyncBlock.world.getNearbyEntities(asyncBlock.getLocation(), 12, 4, 12)) {
+            Blaze blaze = null;
+            for (Entity entity : data.getLocation().getWorld().getNearbyEntities(data.getLocation(),10, 4, 10)) {
                 if (entity instanceof Player) {
                     playerFound = true;
-                }
-                if (entity instanceof Blaze) {
-                    blaze = entity;
+                } else if (entity instanceof Blaze) {
+                    blaze = (Blaze) entity;
                 }
 
                 if (playerFound && blaze != null) break;
