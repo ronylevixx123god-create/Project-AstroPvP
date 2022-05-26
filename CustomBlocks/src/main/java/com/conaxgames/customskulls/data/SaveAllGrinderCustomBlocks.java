@@ -2,8 +2,8 @@ package com.conaxgames.customskulls.data;
 
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.blocks.impl.MobGrinder;
 import com.conaxgames.customskulls.enums.AbilityType;
-import com.conaxgames.customskulls.struct.MobGrinderCache;
 import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -32,25 +32,24 @@ public class SaveAllGrinderCustomBlocks {
 
                     YamlConfiguration ymlFile = YamlConfiguration.loadConfiguration(file);
 
-                    MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
+                    AbilityData mobGrinder = CoreSkulls.instance.getMobGrinderManager().get(data.getUuid());
 
-                    ymlFile.set("lastActivated", data.getLastActivated());
-                    ymlFile.set("level", data.getLevel());
+                    ymlFile.set("lastActivated", mobGrinder.getLastActivated());
+                    ymlFile.set("level", mobGrinder.getLevel());
 
-                    data.setLastActivated(data.getLastActivated());
+                    mobGrinder.setLastActivated(mobGrinder.getLastActivated());
 
-                    if (mobGrinderCache != null) {
-                        ymlFile.set("astro", mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
-                        ymlFile.set("legendary", mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
-                        ymlFile.set("godly", mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
-                        ymlFile.set("xp", mobGrinderCache.getXp());
-                        data.setLevel(data.getLevel());
-                        data.setLastActivated(data.getLastActivated());
-                        mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
-                        mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
-                        mobGrinderCache.getCrateKeys().put(CrateType.GODLY, mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
-                        mobGrinderCache.setXp(mobGrinderCache.getXp());
-                    }
+                        ymlFile.set("astro", mobGrinder.getCrateKeys().get(CrateType.ASTRO));
+                        ymlFile.set("legendary", mobGrinder.getCrateKeys().get(CrateType.LEGENDARY));
+                        ymlFile.set("godly", mobGrinder.getCrateKeys().get(CrateType.GODLY));
+                        ymlFile.set("xp", mobGrinder.getXp());
+                        mobGrinder.setLevel(mobGrinder.getLevel());
+                        mobGrinder.setLastActivated(mobGrinder.getLastActivated());
+                        mobGrinder.getCrateKeys().put(CrateType.ASTRO, mobGrinder.getCrateKeys().get(CrateType.ASTRO));
+                        mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, mobGrinder.getCrateKeys().get(CrateType.LEGENDARY));
+                        mobGrinder.getCrateKeys().put(CrateType.GODLY, mobGrinder.getCrateKeys().get(CrateType.GODLY));
+                        mobGrinder.setXp(mobGrinder.getXp());
+
 
 
                     try {

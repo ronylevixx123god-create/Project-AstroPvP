@@ -2,8 +2,9 @@ package com.conaxgames.customskulls.guis;
 
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.blocks.impl.MobGrinder;
 import com.conaxgames.customskulls.data.SaveCustomBlock;
-import com.conaxgames.customskulls.struct.MobGrinderCache;
+import com.conaxgames.customskulls.struct.MobGrinderManager;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.TimeUtil;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
@@ -32,11 +33,11 @@ public class GrinderCustomBlockGUI {
     private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
     private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
     private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
-
+    private final MobGrinderManager mobGrinderManager = CoreSkulls.instance.getMobGrinderManager();
 
     public GrinderCustomBlockGUI(AbilityData data, Block block) {
-        MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
-        int level = data.getLevel();
+        AbilityData mobGrinder = mobGrinderManager.get(data.getUuid());
+        int level = mobGrinder.getLevel();
         int price = 0;
         if (level == 0) {
             price = 15000000;
@@ -58,8 +59,8 @@ public class GrinderCustomBlockGUI {
         this.customBlockGui = new PaginatedGui(5, 27, "Grinder Custom Block Menu");
         ItemStack activateButton = new ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
                 .addLoreLine("")
-                .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((data.getLastActivated() + time) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.fancy((data.getLastActivated() + time) - System.currentTimeMillis()))))
-                .addLoreLine(CC.translate("&f&l● &6Status: " + (data.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
+                .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((mobGrinder.getLastActivated() + time) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.fancy((mobGrinder.getLastActivated() + time) - System.currentTimeMillis()))))
+                .addLoreLine(CC.translate("&f&l● &6Status: " + (mobGrinder.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
                 .addLoreLine(CC.translate("&f&l● &6Price: &e$" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())))
                 .addLoreLine("")
                 .addLoreLine(CC.translate("&7Click to activate this custom block"))
@@ -75,34 +76,22 @@ public class GrinderCustomBlockGUI {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
                 return;
             }
-            if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), data.getAbilityType().getPricePerAction())) {
-                EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), data.getAbilityType().getPricePerAction());
-                data.setLastActivated(System.currentTimeMillis());
-                SaveCustomBlock.saveCustomBlock((Player) event.getWhoClicked(), data.getAbilityType(), block);
-                event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock for 1 hour!"));
-                event.getWhoClicked().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())));
-                ((Player) event.getWhoClicked()).playSound(event.getWhoClicked().getLocation(), Sound.VILLAGER_YES, 20, 20);
-                event.getWhoClicked().closeInventory();
-                try {
-                    ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), data.getLocation(), 2, 2, 2, 0.05f, 60);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            } else {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to reactivate this custom block."));
-                event.getWhoClicked().closeInventory();
-            }
+
+
+            mobGrinder.activate((Player) event.getWhoClicked(), mobGrinder.getUuid());
+            event.getWhoClicked().closeInventory();
+
 
         }));
 
         //Astro key
-        ItemStack astroKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&a&lAstro Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.ASTRO) + "&8)"), CC.translate("&7Click to redeem the astro crate keys")).build();
+        ItemStack astroKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&a&lAstro Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.ASTRO) + "&8)"), CC.translate("&7Click to redeem the astro crate keys")).build();
         this.customBlockGui.setItem(2, 2, new GuiItem(astroKey, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
                 return;
             }
-            int astroKeys = mobGrinderCache.getCrateKeys().get(CrateType.ASTRO);
+            int astroKeys = mobGrinder.getCrateKeys().get(CrateType.ASTRO);
             if (astroKeys == 0) return;
             int givenKeys = 0;
             int amountToGive;
@@ -120,20 +109,20 @@ public class GrinderCustomBlockGUI {
 
 
             event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " Astro &f&lCrate Keys"));
-            mobGrinderCache.getCrateKeys().put(CrateType.ASTRO, astroKeys - givenKeys);
+            mobGrinder.getCrateKeys().put(CrateType.ASTRO, astroKeys - givenKeys);
             GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
             grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
 
         }));
 
         //Legendary key
-        ItemStack legKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&6&lLegendary Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY) + "&8)"), CC.translate("&7Click to redeem the legendary crate keys")).build();
+        ItemStack legKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&6&lLegendary Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.LEGENDARY) + "&8)"), CC.translate("&7Click to redeem the legendary crate keys")).build();
         this.customBlockGui.setItem(3, 2, new GuiItem(legKey, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
                 return;
             }
-            int legKeys = mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY);
+            int legKeys = mobGrinder.getCrateKeys().get(CrateType.LEGENDARY);
             if (legKeys == 0) return;
             int givenKeys = 0;
             int amountToGive;
@@ -151,19 +140,19 @@ public class GrinderCustomBlockGUI {
 
 
             event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &6&lLegendary &f&lCrate Keys"));
-            mobGrinderCache.getCrateKeys().put(CrateType.LEGENDARY, legKeys - givenKeys);
+            mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, legKeys - givenKeys);
             GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
             grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
         }));
 
         //Godly key
-        ItemStack godlyKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&4&lGodly Crate Keys &8(&7" + mobGrinderCache.getCrateKeys().get(CrateType.GODLY) + "&8)"), CC.translate("&7Click to redeem the godly crate keys")).build();
+        ItemStack godlyKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&4&lGodly Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.GODLY) + "&8)"), CC.translate("&7Click to redeem the godly crate keys")).build();
         this.customBlockGui.setItem(4, 2, new GuiItem(godlyKey, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
                 return;
             }
-            int godlyKeys = mobGrinderCache.getCrateKeys().get(CrateType.GODLY);
+            int godlyKeys = mobGrinder.getCrateKeys().get(CrateType.GODLY);
             if (godlyKeys == 0) return;
             int givenKeys = 0;
             int amountToGive;
@@ -181,14 +170,14 @@ public class GrinderCustomBlockGUI {
 
 
             event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &4&lGodly &f&lCrate Keys"));
-            mobGrinderCache.getCrateKeys().put(CrateType.GODLY, godlyKeys - givenKeys);
+            mobGrinder.getCrateKeys().put(CrateType.GODLY, godlyKeys - givenKeys);
             GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
             grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
 
         }));
 
         //XPBottle key
-        double xp = mobGrinderCache.getXp();
+        double xp = mobGrinder.getXp();
         ItemStack xpBottle = new ItemBuilder(Material.EXP_BOTTLE, CC.translate("&d&lExp Bottle &8(&7" + NumberUtils.formatMoney((int) xp) + "&8)"), CC.translate("&7Click to redeem the experience")).build();
         this.customBlockGui.setItem(4, 8, new GuiItem(xpBottle, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
@@ -205,7 +194,7 @@ public class GrinderCustomBlockGUI {
             event.getWhoClicked().getInventory().addItem(ExpBottles.getXpBottle((int) xp, "MobGrinder"));
 
             event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a You have received an expbottle worth " + NumberUtils.formatMoney(xp) + "XP"));
-            mobGrinderCache.setXp(0);
+            mobGrinder.setXp(0);
             GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
             grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
         }));
@@ -216,7 +205,7 @@ public class GrinderCustomBlockGUI {
 
         ItemStack levelItem;
         if (level != 3) {
-            levelItem = new ItemBuilder(Material.FEATHER, CC.translate("&e&lGrinder Block Upgrade &7&nLVL "+ level ))
+            levelItem = new ItemBuilder(Material.FEATHER, CC.translate("&e&lGrinder Block Upgrade &7&nLVL " + level))
                     .addLoreLine(CC.translate("&7Click to upgrade this auto mob grinder."))
                     .addLoreLine("")
                     .addLoreLine(CC.translate("&f&l● &eCurrent Level: &f" + level))
@@ -228,7 +217,7 @@ public class GrinderCustomBlockGUI {
                     .addLoreLine(CC.translate("&7The max auto mob grinder level is 3."))
                     .build();
         } else {
-            levelItem = new ItemBuilder(Material.FEATHER, CC.translate("&e&lGrinder Block Upgrade &7&nLVL "+ level ))
+            levelItem = new ItemBuilder(Material.FEATHER, CC.translate("&e&lGrinder Block Upgrade &7&nLVL " + level))
                     .addLoreLine(CC.translate("&7Your auto mob grinder block has reached max level."))
                     .addLoreLine("")
                     .addLoreLine(CC.translate("&f&l● &eCurrent Level: &f" + level))
@@ -247,7 +236,7 @@ public class GrinderCustomBlockGUI {
                 return;
             }
 
-            if (data.getLevel() == 3) {
+            if (mobGrinder.getLevel() == 3) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c This grinder customblock has reached the max level of 3."));
                 return;
             }
@@ -255,9 +244,9 @@ public class GrinderCustomBlockGUI {
 
             if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), finalPrice)) {
                 EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), finalPrice);
-                data.setLevel(data.getLevel() + 1);
+                mobGrinder.setLevel(mobGrinder.getLevel() + 1);
                 event.getWhoClicked().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(finalPrice)));
-                event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a You have upgraded your grinder customblock to level " + data.getLevel()));
+                event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a You have upgraded your grinder customblock to level " + mobGrinder.getLevel()));
             } else {
                 event.getWhoClicked().sendMessage(CC.translate("&c(!)&c You don't not have enough money to purchase this upgrade."));
             }

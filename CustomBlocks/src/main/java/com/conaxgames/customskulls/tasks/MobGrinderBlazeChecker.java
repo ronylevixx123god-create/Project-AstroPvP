@@ -1,0 +1,38 @@
+package com.conaxgames.customskulls.tasks;
+
+import com.conaxgames.customskulls.CoreSkulls;
+import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.blocks.impl.MobGrinder;
+import org.bukkit.entity.Entity;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Map;
+
+public class MobGrinderBlazeChecker extends BukkitRunnable {
+
+
+    @Override
+    public void run() {
+        if (CoreSkulls.isSavingGrinderBlocks) return;
+        final Map<? extends String, ? extends AbilityData> grinderBlocks = CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders();
+
+        for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : grinderBlocks.entrySet()) {
+            String uuid = mobGrinderBlock.getKey();
+            AbilityData mobGrinder = mobGrinderBlock.getValue();
+
+            if (mobGrinder.getBlaze() == null) {
+                CoreSkulls.instance.getMobGrinderManager().rescanBlaze(uuid);
+                continue;
+            }
+            final Entity blaze = mobGrinder.getBlaze();
+
+            if (blaze == null) {
+                CoreSkulls.instance.getMobGrinderManager().rescanBlaze(uuid);
+                continue;
+            }
+            if (blaze.isDead() || !blaze.isValid()) {
+                CoreSkulls.instance.getMobGrinderManager().rescanBlaze(uuid);
+            }
+        }
+    }
+}

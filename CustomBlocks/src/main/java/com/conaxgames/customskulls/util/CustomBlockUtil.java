@@ -169,11 +169,10 @@ public class CustomBlockUtil {
 
     public static List<AbilityData> getBlockDatasInChunk(Location l) {
         List<AbilityData> abilityDataList = new ArrayList<>();
-        Chunk chunk = l.getChunk();
         for (AbilityData data : AbilityData.getAbilityDataMap().values()) {
             if (data == null) continue;
             if (data.getAbilityType() == null) continue;
-            if (chunk == data.getLocation().getChunk()) { // The chunk the player is in has a CustomBlock in it!
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(l, data.getLocation())) {
                 abilityDataList.add(data);
             }
         }

@@ -30,6 +30,8 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new EnderPearlFixes(), this);
         Bukkit.getPluginManager().registerEvents(new CommandPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
+
         getCommand("fixhealth").setExecutor(new FixHealth());
 
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {

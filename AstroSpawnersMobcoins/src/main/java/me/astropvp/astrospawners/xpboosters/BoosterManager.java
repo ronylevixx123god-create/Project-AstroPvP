@@ -32,7 +32,7 @@ public class BoosterManager {
                 if (player.isOnline()) {
                     player.sendMessage(CC.translate("&b&l(XP Booster) &bYour xp booster has expired!"));
                 }
-            }, timeInMinutes*20*60);
+            }, (long) timeInMinutes *20*60);
         } else {
             activeDropBoosters.put(uuid, amount);
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
@@ -40,7 +40,7 @@ public class BoosterManager {
                 if (player.isOnline()) {
                     player.sendMessage(CC.translate("&6&l(Drop Booster) &6Your drop booster has expired!"));
                 }
-            }, timeInMinutes*20*60);
+            }, (long) timeInMinutes *20*60);
         }
     }
 }
