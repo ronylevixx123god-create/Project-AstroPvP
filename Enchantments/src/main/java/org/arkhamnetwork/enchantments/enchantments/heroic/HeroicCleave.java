@@ -23,7 +23,6 @@ public class HeroicCleave extends HeroicCustomEnchantment
         this.mcmmo = false;
         this.max = 5;
         this.mcmmo = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
-        Bukkit.getLogger().info("[Enchantments (Mighty Cleave)] mcMMO support = " + this.mcmmo);
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {

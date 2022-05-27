@@ -11,6 +11,8 @@ package org.arkhamnetwork.CosmicCustomTNT;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
+import com.compilex.CosmicCustomCreepers.cmds.CommandCCC;
+import com.compilex.CosmicCustomCreepers.listeners.CreeperListener;
 import lombok.Getter;
 import org.arkhamnetwork.CosmicCustomTNT.cmds.CommandCTNT;
 import org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener;
@@ -41,10 +43,14 @@ extends JavaPlugin {
 
     private void registerListeners() {
         this.getServer().getPluginManager().registerEvents((Listener)new TNTListener(), (Plugin)this);
+        this.getServer().getPluginManager().registerEvents((Listener)new CreeperListener(), (Plugin)this);
+
     }
 
     private void registerCommands() {
         this.getCommand("ctnt").setExecutor((CommandExecutor)new CommandCTNT());
+        this.getCommand("ccc").setExecutor((CommandExecutor)new CommandCCC());
+
     }
 }
 

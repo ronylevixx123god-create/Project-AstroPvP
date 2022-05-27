@@ -21,6 +21,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
         for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : grinderBlocks.entrySet()) {
             String uuid = mobGrinderBlock.getKey();
             AbilityData mobGrinder = mobGrinderBlock.getValue();
+
             if (!mobGrinder.isActive()) {
                 mobGrinder.deActivate(uuid);
                 continue;
@@ -31,7 +32,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             }
             Entity blaze = mobGrinder.getBlaze();
 
-            if (blaze.isDead() || !blaze.isValid()) {
+            if (!blaze.isValid()) {
                 continue;
             }
 

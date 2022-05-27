@@ -13,21 +13,25 @@ public class MobGrinderBlazeChecker extends BukkitRunnable {
 
     @Override
     public void run() {
+        if (CoreSkulls.isSavingGrinderBlocks) return;
         final Map<? extends String, ? extends AbilityData> grinderBlocks = CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders();
-
         for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : grinderBlocks.entrySet()) {
+            if (mobGrinderBlock == null) continue;
             String uuid = mobGrinderBlock.getKey();
             AbilityData mobGrinder = mobGrinderBlock.getValue();
+            if (mobGrinder == null) continue;
+            if (uuid == null) continue;
 
             if (mobGrinder.getBlaze() == null) {
                 CoreSkulls.instance.getMobGrinderManager().rescanBlaze(uuid);
                 continue;
             }
-            final Entity blaze = mobGrinder.getBlaze();
+            Entity blaze = mobGrinder.getBlaze();
 
-            if (blaze.isDead() || !blaze.isValid()) {
+            if (!blaze.isValid()) {
                 CoreSkulls.instance.getMobGrinderManager().rescanBlaze(uuid);
             }
+
         }
     }
 }

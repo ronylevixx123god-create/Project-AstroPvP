@@ -13,6 +13,7 @@
 package com.compilex.CosmicCustomCreepers.cmds;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -28,8 +29,8 @@ implements CommandExecutor {
             return true;
         }
         if (args.length < 2) {
-            sender.sendMessage("/ccc <player> <creeperType>");
-            sender.sendMessage("creeperType: Huge, Lucky, Tactical, Stun");
+            sender.sendMessage(CC.Yellow + "/ccc <player> <creeperType>");
+            sender.sendMessage(CC.Gray + "creeperType: Huge, Lucky, Stun");
             return true;
         }
         String pName = args[0];
