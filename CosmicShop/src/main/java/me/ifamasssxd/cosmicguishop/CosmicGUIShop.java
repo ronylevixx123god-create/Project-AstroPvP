@@ -17,7 +17,7 @@ import me.ifamasssxd.cosmicguishop.commands.CommandShop;
 import me.ifamasssxd.cosmicguishop.commands.CommandXpShop;
 import me.ifamasssxd.cosmicguishop.listeners.MenuListener;
 import me.ifamasssxd.cosmicguishop.listeners.PlayerListener;
-import me.ifamasssxd.cosmicguishop.listeners.XPShopMenuListener;
+import me.ifamasssxd.cosmicguishop.listeners.xpShopMenuListener;
 import me.ifamasssxd.cosmicguishop.struct.ShopManager;
 import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
 import net.milkbowl.vault.economy.Economy;
@@ -60,7 +60,7 @@ public class CosmicGUIShop extends JavaPlugin {
         }
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new MenuListener(), this);
-        this.getServer().getPluginManager().registerEvents(new XPShopMenuListener(), this);
+        this.getServer().getPluginManager().registerEvents(new xpShopMenuListener(), this);
         this.getCommand("cosmicshop").setExecutor(new CommandShop());
         this.getCommand("banknote").setExecutor(new CommandBankNote());
         this.getCommand("xpshop").setExecutor(new CommandXpShop());

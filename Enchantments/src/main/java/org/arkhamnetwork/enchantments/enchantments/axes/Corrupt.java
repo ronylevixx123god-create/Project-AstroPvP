@@ -35,7 +35,7 @@ public class Corrupt extends CustomEnchantment
             if (playerHit.hasMetadata("corruptTaskID")) {
                 return;
             }
-            final int damageAmount = (level >= 3) ? 2 : 1;
+            final int damageAmount = (level >= 3) ? 3 : 2;
             final int damageInterval = level;
             final int taskID = new CorruptDamageTask((Player)playerHit, damageInterval, damageAmount).runTaskTimer((Plugin)Enchantments.getInstance(), 0L, damageInterval * 20).getTaskId();
             Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), new Runnable() {

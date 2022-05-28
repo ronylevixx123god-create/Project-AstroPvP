@@ -19,7 +19,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryHolder;
 
-public class XPShopMenuListener implements Listener {
+public class xpShopMenuListener implements Listener {
     @EventHandler(ignoreCancelled=true)
     private void onClick(InventoryClickEvent event) {
         InventoryHolder holder = event.getInventory().getHolder();

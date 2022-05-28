@@ -30,24 +30,18 @@ import net.astropvp.core.utils.GrindingMessagesUtil;
 import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
+import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 public enum CosmicToggle {
-    GLOBAL_CHAT("Global Chat", "/f global"),
     FILTER("Chat Filter", "/togglefilter"),
     MSG("Private Messages", "/msgtoggle"),
-    F_TP("Teleportation Requests", "/f tptoggle"),
-    SCOREBOARD("Faction Scoreboard", "/togglesb"),
-    SMOKE("Fly Particles", "/togglesmoke"),
-    PARTICLE("Toggle Particles", "/particles"),
     ITEM_FILTER("Item Filter", "/filter toggle"),
-    DEATH_MESSAGES("Death Messages", "/toggledeathmessage"),
     COINFLIP("Coin Flip Notifications", "/coinflip stfu"),
     JACKPOT("Jackpot Notifications", "/jackpot stfu"),
     AUCTION("Auction Bid Alerts", "/ah stfu"),
     DUELS("Duel Requests", "/duel toggle"),
-    RELATION_REQUESTS("Relation Requests", "/f tr"),
     GRINDING_NOTIFICATIONS("Grinding Notifications", "/grinding stfu"),
     CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
 
@@ -60,17 +54,15 @@ public enum CosmicToggle {
             return !ChatFilter.disabledFilteredPlayers.contains(player.getUniqueId());
         }
 
-
-        if (this == SCOREBOARD) {
-            return !AstroCore.getInstance().getToggleManager().getScoreboardToggles().contains(player.getUniqueId());
+        if (this == MSG) {
+            return !EssentialsUtils.getEssentials().getUser(player).isIgnoreMsg();
         }
+
         if (this == ITEM_FILTER) {
             Filter filter = AstroCore.getInstance().getFilterManager().getItemFilters().get(player.getUniqueId());
             return filter != null && filter.isEnabled();
         }
-        if (this == DEATH_MESSAGES) {
-            return !player.hasMetadata("deathMessageToggle");
-        }
+
         if (this == COINFLIP) {
             return !AstroCore.getInstance().getCoinFlipManager().getToggledNotifications().contains(player.getUniqueId());
         }

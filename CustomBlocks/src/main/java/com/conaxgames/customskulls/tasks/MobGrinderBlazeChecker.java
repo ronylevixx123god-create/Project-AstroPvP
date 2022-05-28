@@ -13,7 +13,6 @@ public class MobGrinderBlazeChecker extends BukkitRunnable {
 
     @Override
     public void run() {
-        if (CoreSkulls.isSavingGrinderBlocks) return;
         final Map<? extends String, ? extends AbilityData> grinderBlocks = CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders();
         for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : grinderBlocks.entrySet()) {
             if (mobGrinderBlock == null) continue;

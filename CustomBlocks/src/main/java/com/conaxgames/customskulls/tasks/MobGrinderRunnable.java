@@ -33,8 +33,9 @@ public class MobGrinderRunnable extends BukkitRunnable {
             Entity blaze = mobGrinder.getBlaze();
 
             if (!blaze.isValid()) {
-                continue;
+                mobGrinder.setBlaze(null);
             }
+
 
             if (CoreSkulls.mobStackerUtils.isStackedMob(blaze)) {
                 CoreSkulls.mobStackerUtils.setStackSize(blaze, CoreSkulls.mobStackerUtils.getStackSize(blaze) - 1);

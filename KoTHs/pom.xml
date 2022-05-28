@@ -63,12 +63,7 @@
         </dependency>
         <!-- New Cosmic Repos -->
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Arkkit</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Utils</artifactId>
@@ -84,6 +79,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicFactionQuests.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ark</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
