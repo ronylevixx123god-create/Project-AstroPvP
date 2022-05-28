@@ -26,11 +26,11 @@ public class AstroArmorSets extends JavaPlugin {
     public void onEnable() {
         instance = this;
         registerCommands();
-        registerListeners();
         registerCustomItems();
 
         this.configManager = new ConfigManager(this);
         this.configManager.setupFiles();
+        registerListeners();
 
         System.out.println("[AstroArmorSets] Plugin has been enabled!");
     }

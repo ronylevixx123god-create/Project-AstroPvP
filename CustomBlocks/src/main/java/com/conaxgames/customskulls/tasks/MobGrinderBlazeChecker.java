@@ -27,7 +27,7 @@ public class MobGrinderBlazeChecker extends BukkitRunnable {
             }
             Entity blaze = mobGrinder.getBlaze();
 
-            if (!blaze.isValid()) {
+            if (blaze.isDead() || !blaze.isValid()) {
                 CoreSkulls.instance.getMobGrinderManager().rescanBlaze(uuid);
             }
 

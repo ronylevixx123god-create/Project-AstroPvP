@@ -30,6 +30,11 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.*;
 
 public class AstroArmorSetsAPI {
+
+    public static final Map<UUID, Long> applyCooldown = new HashMap<>();
+
+
+
     public static ArmorSetType getSetTypeOnItem(ItemStack item) {
         if (item != null && item.getType() != Material.AIR) {
             NBTWrapper wrapper = new NBTWrapper(item);
@@ -85,6 +90,13 @@ public class AstroArmorSetsAPI {
     }
 
     public static void refreshArmorSets(Player player) {
+        if (applyCooldown.containsKey(player.getUniqueId())) {
+            long lastApplied = applyCooldown.get(player.getUniqueId());
+            if (System.currentTimeMillis() < lastApplied + 200L) {
+                System.out.println("[ArmorDebug] Cancelling because applying too quick for player: " + player.getName());
+                return;
+            }
+        }
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
         cache.setHeroicPieces(0);
@@ -125,9 +137,19 @@ public class AstroArmorSetsAPI {
                 }
             }
         }
+        applyCooldown.put(player.getUniqueId(), System.currentTimeMillis());
+
     }
 
     public static void refreshArmorPiece(ItemStack newArmorPiece, ItemStack oldArmorPiece, Player player) {
+        if (applyCooldown.containsKey(player.getUniqueId())) {
+            long lastApplied = applyCooldown.get(player.getUniqueId());
+            if (System.currentTimeMillis() < lastApplied + 200L) {
+                System.out.println("[ArmorDebug] Cancelling because applying too quick for player: " + player.getName());
+
+                return;
+            }
+        }
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
         if (hasSetTypeOnItem(oldArmorPiece)) {
@@ -180,6 +202,8 @@ public class AstroArmorSetsAPI {
             }
         }
 
+
+        applyCooldown.put(player.getUniqueId(), System.currentTimeMillis());
     }
 
     public static List<ArmorSetType> getArmorCrystalsFromCrystalItem(NBTTagCompoundBuilder wrapper) {
