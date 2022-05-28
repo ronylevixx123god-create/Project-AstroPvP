@@ -29,7 +29,7 @@ public class HeroicInsanity extends HeroicCustomEnchantment
                 return;
             }
         }
-            e.setDamage(e.getDamage() * 1.75);
+            e.setDamage(e.getDamage() * 1.65);
 
     }
 }

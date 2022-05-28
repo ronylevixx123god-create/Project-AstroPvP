@@ -74,6 +74,7 @@
         <module>AstroCagePvP</module>
         <module>Outpost</module>
         <module>FactionLogs</module>
+        <module>AstroDiscordSync</module>
     </modules>
 
     <build>
