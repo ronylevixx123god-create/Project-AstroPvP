@@ -1,6 +1,7 @@
 package me.astropvp.astrospawners.listeners;
 
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
+import com.compilex.CosmicCustomCreepers.listeners.CreeperListener;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.configs.DeleteSpawner;
@@ -11,6 +12,7 @@ import me.astropvp.astrospawners.utils.EntityUtils;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
+import org.arkhamnetwork.CosmicCustomTNT.listeners.TNTListener;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
@@ -32,7 +34,7 @@ public class SpawnerBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onExplode(EntityExplodeEvent event) {
-        double chance = event.getEntity() instanceof TNTPrimed ? 0.15 : event.getEntity() instanceof Creeper ? 0.50 : 0;
+        double chance = event.getEntity() instanceof TNTPrimed ? 0.20 : event.getEntity() instanceof Creeper ? 0.30 : 0;
         if (chance <= 0) {
             return;
         }
@@ -44,23 +46,25 @@ public class SpawnerBreakListener implements Listener {
 
             Creeper c = (Creeper)event.getEntity();
 
-            if (c.hasMetadata("customCreeperType")) {
+            if (CreeperListener.creepers.containsKey(c.getUniqueId())) {
 
-                CreeperTypes egg_type = CreeperTypes.valueOf(c.getMetadata("customCreeperType").get(0).asString());
-
+                CreeperTypes egg_type = CreeperListener.creepers.get(c.getUniqueId());
+                if (egg_type == CreeperTypes.Raid) {
+                    chance = 1;
+                } else
                 if (egg_type == CreeperTypes.Lucky) {
-                    chance += 0.5;
+                    chance += 0.3;
                 }
             }
         }
         if(event.getEntity() instanceof TNTPrimed) {
             TNTPrimed tnt = (TNTPrimed) event.getEntity();
-            if(tnt.hasMetadata("custom_tnt")) {
+            if(TNTListener.customTnt.containsKey(tnt.getUniqueId())) {
 
-                TNTTypes tntType = TNTTypes.valueOf(tnt.getMetadata("custom_tnt").get(0).asString());
+                TNTTypes tntType = TNTListener.customTnt.get(tnt.getUniqueId());
 
                 if(tntType == TNTTypes.Lucky)
-                    chance += 0.5;
+                    chance += 0.35;
             }
         }
         List<Block> blocks = event.blockList();

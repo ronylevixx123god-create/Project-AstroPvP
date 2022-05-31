@@ -9,6 +9,7 @@ import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -108,7 +109,7 @@ public class TreasureChest extends CustomBlock {
             p0.sendMessage(CC.RED + "You must have a faction to place a block of this type.");
             return;
         }
-        if (fPlayer.getRelationToLocation().isMember()) {
+        if (FactionUtils.getFactionAt(p1.getBlock().getLocation()) == fPlayer.getFaction()) {
             MakeCustomBlocks.newFileItem(p0, AbilityType.TREASURE_CHEST, p1.getBlock(), this);
         } else {
             p0.sendMessage(CC.RED + "You must be in your own claim to place a block of this type");

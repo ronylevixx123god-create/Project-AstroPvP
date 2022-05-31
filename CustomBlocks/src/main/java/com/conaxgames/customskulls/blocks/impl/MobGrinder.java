@@ -7,7 +7,6 @@ import com.conaxgames.customskulls.data.DeleteCustomBlocks;
 import com.conaxgames.customskulls.data.MakeCustomBlocks;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.guis.GrinderCustomBlockGUI;
-import com.conaxgames.customskulls.struct.MobGrinderCache;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.ItemBuilderUtils;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
@@ -15,6 +14,9 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
+import lombok.Getter;
+import lombok.Setter;
+import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -28,9 +30,15 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+@Getter
+@Setter
 public class MobGrinder extends CustomBlock {
+
+
 
 
     public MobGrinder() {
@@ -41,7 +49,7 @@ public class MobGrinder extends CustomBlock {
     @Override
     public List<String> addLore() {
         return Arrays.asList(
-                CC.translate("&cCost to Mine: &f$" + NumberUtils.formatMoney( AbilityType.BLAZE_STONE_TOTEM.getPickupPrice())),
+                CC.translate("&cCost to Mine: &f$" + NumberUtils.formatMoney(AbilityType.BLAZE_STONE_TOTEM.getPickupPrice())),
                 CC.translate("&cActivate Price: &f$" + NumberUtils.formatMoney(AbilityType.BLAZE_STONE_TOTEM.getPricePerAction())),
                 "",
                 CC.translate("&7Automatically grinds Blazes"),
@@ -77,11 +85,6 @@ public class MobGrinder extends CustomBlock {
 
     @Override
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
-        if (!CoreSkulls.instance.getGrinderBlocks().containsKey(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())).getUuid())) {
-            p1.getPlayer().sendMessage(CC.translate("&c&l(!)&c Please be patient, the grinder block is still warming up, loading new data or trying to fetch a nearby blaze..."));
-            return;
-        }
-
         GrinderCustomBlockGUI mainCustomBlockGUI = new GrinderCustomBlockGUI(AbilityData.getByUUID(AbilityData.getUUID(p1.getClickedBlock().getLocation())), p1.getClickedBlock());
         mainCustomBlockGUI.getCustomBlockGui().open(p1.getPlayer());
         p1.getPlayer().sendMessage(CC.translate("&a&l(!)&a Opening the Custom Block menu..."));
@@ -122,7 +125,7 @@ public class MobGrinder extends CustomBlock {
             p0.sendMessage(CC.RED + "You must have a faction to place a block of this type.");
             return;
         }
-        if (fPlayer.getRelationToLocation().isMember()) {
+        if (FactionUtils.getFactionAt(p1.getBlock().getLocation()) == fPlayer.getFaction()) {
             MakeCustomBlocks.newFileItem(p0, AbilityType.BLAZE_STONE_TOTEM, p1.getBlock(), this);
             fPlayer.getPlayer().sendMessage(CC.translate("&c&l* &cIt can take up to 30 seconds for this block to enable."));
         } else {
@@ -136,7 +139,6 @@ public class MobGrinder extends CustomBlock {
         FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
         Player breaker = p1.getPlayer();
         if (fPlayer == null) {
-            // The block must be in the land to remove it.
             return;
         }
         if (FactionUtils.isWilderness(p2.getLocation()) || (fPlayer.getRelationToLocation().isMember())) {
@@ -150,9 +152,7 @@ public class MobGrinder extends CustomBlock {
                 //p2.breakNaturally(new ItemBuilderUtils(Material.AIR).toItemStack()); // break the block
                 p1.getBlock().setType(Material.AIR);
                 p2.getWorld().dropItemNaturally(p2.getLocation(), item.toItemStack()); // dropping our item stack
-                if (CoreSkulls.instance.grinderBlocks.containsKey(data.getUuid())) {
-                    CoreSkulls.instance.grinderBlocks.remove(data.getUuid());
-                }
+                CoreSkulls.instance.getMobGrinderManager().deActivate(data.getUuid());
                 DeleteCustomBlocks.func(p2.getLocation(), breaker, this); // delete file and memory.
             } else {
                 breaker.sendMessage(CC.RED + "You do not have the required $" + AbilityType.BLAZE_STONE_TOTEM.getPickupPrice() + " to pick this block up.");

@@ -75,12 +75,7 @@
         </dependency>
         <!-- New Cosmic Repos -->
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Arkkit</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
-        </dependency>
+
 
 
 
@@ -168,16 +163,10 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicRankQuests.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>spawners</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/SilkSpawners.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>astspawners</artifactId>
+            <artifactId>astspawnerss</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/AstroSpawners.jar</systemPath>
@@ -335,6 +324,13 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicBossEggs.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ark</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Arkkit.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

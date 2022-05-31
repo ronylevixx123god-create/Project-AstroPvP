@@ -3,6 +3,7 @@ package com.conaxgames.customskulls.data;
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
+import com.conaxgames.customskulls.blocks.impl.MobGrinder;
 import com.conaxgames.customskulls.enums.AbilityType;
 import com.conaxgames.customskulls.util.CC;
 import me.astropvp.cratekeys.enums.CrateType;
@@ -36,20 +37,23 @@ public class MakeCustomBlocks {
         ymlFile.set("location", block.getLocation());
 
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(block.getLocation()));
-        ymlFile.set("lastActivated", data.getLastActivated());
-        ymlFile.set("level", data.getLevel());
 
         if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
+            AbilityData mobGrinder = CoreSkulls.instance.getMobGrinderManager().get(data.getUuid());
+
+            ymlFile.set("lastActivated", mobGrinder.getLastActivated());
+            ymlFile.set("level", mobGrinder.getLevel());
+
             ymlFile.set("astro", 0);
             ymlFile.set("legendary", 0);
             ymlFile.set("godly", 0);
             ymlFile.set("xp", 0);
-            data.setLastActivated(data.getLastActivated());
-            data.setLevel(data.getLevel());
-            data.getCrateKeys().put(CrateType.ASTRO, 0);
-            data.getCrateKeys().put(CrateType.LEGENDARY, 0);
-            data.getCrateKeys().put(CrateType.GODLY, 0);
-            data.setXp(0);
+            mobGrinder.setLastActivated(mobGrinder.getLastActivated());
+            mobGrinder.setLevel(mobGrinder.getLevel());
+            mobGrinder.getCrateKeys().put(CrateType.ASTRO, 0);
+            mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, 0);
+            mobGrinder.getCrateKeys().put(CrateType.GODLY, 0);
+            mobGrinder.setXp(0);
 
         }
 
@@ -57,7 +61,6 @@ public class MakeCustomBlocks {
         data.setUuid(AbilityData.getUUID(block.getLocation()));
         data.setLocation(block.getLocation());
         data.setAbilityType(abilityType);
-
 
 
         try {

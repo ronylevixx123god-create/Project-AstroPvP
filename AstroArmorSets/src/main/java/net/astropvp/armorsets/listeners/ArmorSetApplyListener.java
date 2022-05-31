@@ -31,6 +31,7 @@ public class ArmorSetApplyListener implements Listener {
 
     @EventHandler
     public void onArmorChange(ArmorEquipEvent e) {
+
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(e.getPlayer()).getCache("armor_set");
 
         //Remove
@@ -71,6 +72,13 @@ public class ArmorSetApplyListener implements Listener {
 
         //Add
         if (e.getNewArmorPiece() != null && e.getNewArmorPiece().getType() != Material.AIR) {
+            if (AstroArmorSetsAPI.applyCooldown.containsKey(e.getPlayer().getUniqueId())) {
+                long lastApplied = AstroArmorSetsAPI.applyCooldown.get(e.getPlayer().getUniqueId());
+                if (System.currentTimeMillis() < lastApplied + 200L) {
+                    System.out.println("[ArmorDebug] Cancelling because applying too quick for player: " + e.getPlayer().getName());
+                    return;
+                }
+            }
             if (AstroArmorSetsAPI.hasSetTypeOnItem(e.getNewArmorPiece())) {
                 cache.addArmorSet(AstroArmorSetsAPI.getSetTypeOnItem(e.getNewArmorPiece()));
 
@@ -100,6 +108,8 @@ public class ArmorSetApplyListener implements Listener {
                 cache.addOmniPiece(e.getNewArmorPiece());
             }
         }
+        AstroArmorSetsAPI.applyCooldown.put(e.getPlayer().getUniqueId(), System.currentTimeMillis());
+
     }
 
 

@@ -121,6 +121,10 @@ public class SpawnerShopGUI
         double balance = Economy.getMoney(player.getName());
         double price;
         int amount;
+        if (player.getInventory().firstEmpty() == -1) {
+            player.sendMessage(CC.translate("&c&l(!)&c You cannot buy this with a full inventory"));
+            return;
+        }
         switch (event.getSlot()) {
             case 0:
                 price = getSpawnerFromName("blaze").getTotalPrice();

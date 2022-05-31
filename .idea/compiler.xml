@@ -65,6 +65,7 @@
         <module name="AstroSpawnersMobcoins" />
         <module name="AstroDiscordBot" />
         <module name="FactionBanners" />
+        <module name="AstroDiscordSync" />
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="Pets" />

@@ -12,6 +12,7 @@ import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.struct.ChatMode;
+import me.astropvp.astrospawners.ftop.FactionsTopAPI;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.conaxgames.staff.StaffChat;
 import net.astropvp.core.conaxgames.staff.StaffUtil;
@@ -59,7 +60,7 @@ public class ChatListener implements Listener {
 
     // Chat Filter
     @EventHandler(priority = EventPriority.HIGH)
-    public void playerChat(AsyncPlayerChatEvent event) {
+    public void playerChat(AsyncPlayerChatEvent event) throws IOException {
 
         if (event.isCancelled()) return;
 
@@ -125,6 +126,10 @@ public class ChatListener implements Listener {
             Faction recipientFaction = fRecipient.getFaction();
 
             Clickable clickable = new Clickable("");
+            String nitroLeader = getNitroLeader(player);
+
+            clickable.add(nitroLeader);
+
             if (!faction.isWilderness()) {
                 String shieldStatus;
                 if (shieldFeature.isShieldActive(faction.getId()) && shieldFeature.isSetup(faction.getId()) && shieldFeature.isTimeConfigured(faction.getId())) {
@@ -133,21 +138,19 @@ public class ChatListener implements Listener {
                     shieldStatus = "&cOFF";
                 }
 
-                try {
-                    clickable.add("&8[" + faction.getRelationTo(recipientFaction).getColor() + fPlayer.getChatTag() + "&8]&r ",
-                            "&6&lFaction Info: &f" + faction.getTag() + " \n" +
-                                    "&6* &eStrikes: &f" + faction.getStrikes().size() + " \n" +
-                                    "&6* &ePower: &a" + (int) faction.getPower() + "&8/&a" + (int) faction.getPowerMax() + " \n" +
-                                    "&6* &eShield: &f" + shieldStatus + "\n" +
-                                    "&6* &eOnline: &f" + faction.getOnlinePlayers().size() + " \n" +
-                                    "&6* &eFaction Koth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(FactionUtils.getFaction(event.getPlayer())) + " \n\n" +
-                                    "&7&oClick to view this faction",
-                            "/f who " + player.getName()
-                    );
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                clickable.add( "&8[" + faction.getRelationTo(recipientFaction).getColor() + fPlayer.getChatTag() + "&8]&r ",
+                        "&6&lFaction Info: &f" + faction.getTag() + " \n" +
+                                "&6* &eStrikes: &f" + faction.getStrikes().size() + " \n" +
+                                "&6* &ePower: &a" + (int) faction.getPower() + "&8/&a" + (int) faction.getPowerMax() + " \n" +
+                                "&6* &eShield: &f" + shieldStatus + "\n" +
+                                "&6* &eOnline: &f" + faction.getOnlinePlayers().size() + " \n" +
+                                "&6* &eFtop: &f" + FactionsTopAPI.getFactionTop(faction) + " \n" +
+                                "&6* &eFaction Koth Wins: &f" + CosmicKOTHAPI.getFactionKothWins(FactionUtils.getFaction(event.getPlayer())) + " \n\n" +
+                                "&7&oClick to view this faction",
+                        "/f who " + player.getName()
+                );
             }
+
 
             clickable.add(PermissionsAPI.getPermissionUser(player.getUniqueId()).getPrefix() + player.getName() + getTag(player),
                     "&6&lUser: &f" + player.getName() + " \n" +
@@ -159,6 +162,7 @@ public class ChatListener implements Listener {
                             "&7&oClick to see when the player logged online",
                     "/seen " + player.getName()
             );
+
 
             ChatColor chatcolor;
             chatcolor = AstroCore.getInstance().getCachedColors().getOrDefault(event.getPlayer().getUniqueId(), ChatColor.WHITE);
@@ -187,7 +191,7 @@ public class ChatListener implements Listener {
                 message = message.replace("[brag]", "").replace("[BRAG]", "");
             }
 
-            clickable.add(chatcolor +  message);
+            clickable.add(chatcolor + message);
             clickable.sendToPlayer(recipient);
             if (!player.isOp()) {
                 AstroCore.getInstance().getCooldownUtils().add(player, "chatCooldown", (long) (chatCooldown * 1000));
@@ -203,6 +207,21 @@ public class ChatListener implements Listener {
             } else {
                 title = " &8[&a" + PlayerTitleAPI.getEquippedTitle(player.getUniqueId()) + "&8]";
             }
+
         return title;
+    }
+
+    public String getNitroLeader(Player player) {
+        String prefix = "";
+        if (me.astropvp.discordsync.listeners.ChatListener.isNitroBooster(player)) {
+            prefix += me.astropvp.discordsync.listeners.ChatListener.BOOSTER_BADGE;
+        }
+        if (me.astropvp.discordsync.listeners.ChatListener.isFactionLeader(player)) {
+            prefix += me.astropvp.discordsync.listeners.ChatListener.LEADER_BADGE;
+        }
+        if (!prefix.equals("")) {
+            prefix = "&8<" + prefix + "&8> ";
+        }
+        return prefix;
     }
 }

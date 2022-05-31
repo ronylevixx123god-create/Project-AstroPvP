@@ -1,20 +1,14 @@
 package com.conaxgames.customskulls.ability;
 
-import com.boydti.fawe.FaweAPI;
-import com.boydti.fawe.bukkit.wrapper.AsyncBlock;
-import com.boydti.fawe.bukkit.wrapper.AsyncWorld;
 import com.conaxgames.customskulls.CoreSkulls;
-import com.conaxgames.customskulls.blocks.impl.MobGrinder;
 import com.conaxgames.customskulls.enums.AbilityType;
-import com.conaxgames.customskulls.struct.MobGrinderCache;
-import com.conaxgames.customskulls.util.CC;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.Location;
-import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -33,10 +27,12 @@ public class AbilityData {
     private String uuid;
     private Location location;
     private AbilityType abilityType;
-    private long lastActivated = 0;
+
     private Map<CrateType, Integer> crateKeys = new HashMap<>();
     private double xp = 0;
+    private Entity blaze;
     private int level = 0;
+    private long lastActivated = 0;
 
     public AbilityData(String uuid) {
         this.uuid = uuid;
@@ -55,6 +51,7 @@ public class AbilityData {
         return x + "_" + y + "_" + z;
     }
 
+
     public boolean isActive() {
         int time = 3600000;
         if (level == 1) {
@@ -66,5 +63,14 @@ public class AbilityData {
         }
         return System.currentTimeMillis() < lastActivated + time;
     }
+
+    public void activate(Player player, String uuid) {
+        CoreSkulls.instance.getMobGrinderManager().activate(player, uuid);
+    }
+
+    public void deActivate(String uuid) {
+        CoreSkulls.instance.getMobGrinderManager().deActivate(uuid);
+    }
+
 
 }

@@ -2,10 +2,7 @@ package com.conaxgames.customskulls.data;
 
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
-import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.enums.AbilityType;
-import com.conaxgames.customskulls.struct.MobGrinderCache;
-import com.conaxgames.customskulls.util.CC;
 import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -29,29 +26,30 @@ public class SaveCustomBlock {
         ymlFile.set("location", block.getLocation());
 
         AbilityData data = AbilityData.getByUUID(AbilityData.getUUID(block.getLocation()));
-        MobGrinderCache mobGrinderCache = CoreSkulls.instance.getGrinderBlocks().get(data.getUuid());
-        ymlFile.set("lastActivated", data.getLastActivated());
-        ymlFile.set("level", data.getLevel());
+        AbilityData mobGrinder = CoreSkulls.instance.getMobGrinderManager().get(data.getUuid());
+        ymlFile.set("lastActivated", mobGrinder.getLastActivated());
+        ymlFile.set("level", mobGrinder.getLevel());
 
         data.setOwner(player.getUniqueId());
         data.setUuid(AbilityData.getUUID(block.getLocation()));
         data.setLocation(block.getLocation());
         data.setAbilityType(abilityType);
-        data.setLastActivated(data.getLastActivated());
-        data.setLevel(data.getLevel());
+
 
         if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
-            ymlFile.set("astro", mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
-            ymlFile.set("legendary", mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
-            ymlFile.set("godly", mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
-            ymlFile.set("xp", mobGrinderCache.getXp());
+            mobGrinder.setLastActivated(mobGrinder.getLastActivated());
+            mobGrinder.setLevel(mobGrinder.getLevel());
+            ymlFile.set("astro", mobGrinder.getCrateKeys().get(CrateType.ASTRO));
+            ymlFile.set("legendary", mobGrinder.getCrateKeys().get(CrateType.LEGENDARY));
+            ymlFile.set("godly", mobGrinder.getCrateKeys().get(CrateType.GODLY));
+            ymlFile.set("xp", mobGrinder.getXp());
 
-            data.setLastActivated(data.getLastActivated());
-            data.setLevel(data.getLevel());
-            data.getCrateKeys().put(CrateType.ASTRO, mobGrinderCache.getCrateKeys().get(CrateType.ASTRO));
-            data.getCrateKeys().put(CrateType.LEGENDARY, mobGrinderCache.getCrateKeys().get(CrateType.LEGENDARY));
-            data.getCrateKeys().put(CrateType.GODLY, mobGrinderCache.getCrateKeys().get(CrateType.GODLY));
-            data.setXp(mobGrinderCache.getXp());
+            mobGrinder.setLastActivated(mobGrinder.getLastActivated());
+            mobGrinder.setLevel(mobGrinder.getLevel());
+            mobGrinder.getCrateKeys().put(CrateType.ASTRO, mobGrinder.getCrateKeys().get(CrateType.ASTRO));
+            mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, mobGrinder.getCrateKeys().get(CrateType.LEGENDARY));
+            mobGrinder.getCrateKeys().put(CrateType.GODLY, mobGrinder.getCrateKeys().get(CrateType.GODLY));
+            mobGrinder.setXp(mobGrinder.getXp());
 
         }
 

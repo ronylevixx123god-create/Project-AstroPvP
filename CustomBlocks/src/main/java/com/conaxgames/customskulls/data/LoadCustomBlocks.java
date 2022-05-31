@@ -2,7 +2,9 @@ package com.conaxgames.customskulls.data;
 
 import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
+import com.conaxgames.customskulls.blocks.impl.MobGrinder;
 import com.conaxgames.customskulls.enums.AbilityType;
+import com.conaxgames.customskulls.struct.MobGrinderManager;
 import me.astropvp.cratekeys.enums.CrateType;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -48,18 +50,24 @@ public class LoadCustomBlocks {
             data.setUuid(AbilityData.getUUID(location));
             data.setLocation(location);
             data.setAbilityType(AbilityType.valueOf(ability));
-            data.setLastActivated(lastActivated);
-            data.setLevel(level);
 
-            if (abilityType == AbilityType.BLAZE_STONE_TOTEM) {
+            if (data.getAbilityType() == AbilityType.BLAZE_STONE_TOTEM) {
+                AbilityData mobGrinder = CoreSkulls.instance.getMobGrinderManager().get(data.getUuid());
+                mobGrinder.setLastActivated(lastActivated);
+                mobGrinder.setLevel(level);
+
                 int astroKeys = ymlFile.getInt("astro");
                 int legKeys = ymlFile.getInt("legendary");
                 int godKeys = ymlFile.getInt("godly");
                 double xp =  ymlFile.getInt("xp");
-                data.getCrateKeys().put(CrateType.ASTRO, astroKeys);
-                data.getCrateKeys().put(CrateType.LEGENDARY, legKeys);
-                data.getCrateKeys().put(CrateType.GODLY, godKeys);
-                data.setXp(xp);
+                mobGrinder.getCrateKeys().put(CrateType.ASTRO, astroKeys);
+                mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, legKeys);
+                mobGrinder.getCrateKeys().put(CrateType.GODLY, godKeys);
+                mobGrinder.setXp(xp);
+
+                if (mobGrinder.isActive()) {
+                    CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders().put(data.getUuid(), mobGrinder);
+                }
             }
 
 

@@ -49,7 +49,6 @@ extends CustomEnchantment {
             if (level >= 3) {
                 DurabilityUtil.healMostDamagedArmorPeice((Player)player, (short)2);
             }
-            e.setDamage(e.getDamage() * (0.25D - (double)level * 0.05D));
         }
     }
 }

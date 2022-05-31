@@ -20,16 +20,9 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
+import com.google.gson.JsonSyntaxException;
 import io.netty.buffer.Unpooled;
-import java.nio.charset.StandardCharsets;
-import java.util.*;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentLinkedDeque;
-
 import me.astropvp.proxypach.ProxyPatch;
-import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
-import me.ifamasssxd.cosmicsky.inventorypets.managers.InventoryPetManager;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import net.minecraft.server.v1_8_R3.PacketDataSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayInCustomPayload;
 import net.minecraft.server.v1_8_R3.PacketPlayOutCustomPayload;
@@ -39,6 +32,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+
+import java.nio.charset.StandardCharsets;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class PacketIO {
     private static final long timeInit = System.currentTimeMillis();
@@ -84,7 +82,13 @@ public class PacketIO {
     private boolean verifyQueue(ConcurrentLinkedDeque<FutureInPacket> var1) {
         if (!var1.isEmpty()) {
             FutureInPacket var2 = var1.getLast();
-            PacketContainer var3 = (PacketContainer)PacketContainer.GSON.fromJson(new String(var2.getData(), StandardCharsets.UTF_8), PacketContainer.class);
+            PacketContainer var3;
+            try {
+                var3 = PacketContainer.GSON.fromJson(new String(var2.getData(), StandardCharsets.UTF_8), PacketContainer.class);
+            } catch (IllegalStateException | JsonSyntaxException exception) {
+                return false;
+            }
+            if (var3 == null) return false;
             if (var1.size() >= 1000000) {
                 var1.clear();
                 return false;

@@ -62,11 +62,7 @@
             <version>1.7</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>io.puharesource.mc</groupId>
-            <artifactId>TitleManager</artifactId>
-            <version>2.2.0</version>
-        </dependency>
+
 
         <!-- New Cosmic Repos -->
         <dependency>
@@ -146,7 +142,7 @@
         <!-- System repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>MCMyMO</artifactId>
+            <artifactId>MCMyMsO</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>

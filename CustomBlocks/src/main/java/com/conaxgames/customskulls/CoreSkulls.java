@@ -6,13 +6,12 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.blocks.impl.*;
 import com.conaxgames.customskulls.commands.AbilityBlocksCommand;
-import com.conaxgames.customskulls.commands.ClearGrinderBlocksCommand;
 import com.conaxgames.customskulls.commands.RemoveBlocks;
 import com.conaxgames.customskulls.data.LoadCustomBlocks;
 import com.conaxgames.customskulls.data.SaveAllGrinderCustomBlocks;
 import com.conaxgames.customskulls.listeners.*;
-import com.conaxgames.customskulls.struct.MobGrinderCache;
-import com.conaxgames.customskulls.tasks.MobGrinderCacherTask;
+import com.conaxgames.customskulls.struct.MobGrinderManager;
+import com.conaxgames.customskulls.tasks.MobGrinderBlazeChecker;
 import com.conaxgames.customskulls.tasks.MobGrinderRunnable;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.inventoryui.UIListener;
@@ -46,22 +45,11 @@ public class CoreSkulls extends JavaPlugin {
     @Getter
     public static boolean isSavingGrinderBlocks = false;
 
-
-    @Setter
-    @Getter
-    public static boolean isCachingGrinderBlocks = false;
-    private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
-
-    private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
-
-
     public static Map<UUID, AbilityData> inSlotbotMachine;
 
     public static MobStackerUtils mobStackerUtils;
 
-
-    @Getter
-    public Map<String, MobGrinderCache> grinderBlocks;
+    private MobGrinderManager mobGrinderManager;
 
 
 
@@ -87,14 +75,16 @@ public class CoreSkulls extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CustomAbilityListener(), this);
         getServer().getPluginManager().registerEvents(new CrateKeyGUIListener(), this);
         mobStackerUtils = AstroSpawners.getInstance().getMobStackerUtils();
+        this.mobGrinderManager = new MobGrinderManager();
+
         LoadCustomBlocks.load();
         inSlotbotMachine = new HashMap<>();
-        grinderBlocks = new HashMap<>();
+
+
+
         ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
         registerTasks();
         this.getCommand("removeblocks").setExecutor(new RemoveBlocks());
-        this.getCommand("cleargrinderblocks").setExecutor(new ClearGrinderBlocksCommand());
-
         info("CustomBlocks has been loaded!");
 
 
@@ -142,7 +132,7 @@ public class CoreSkulls extends JavaPlugin {
 
     private void registerTasks() {
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderRunnable(), 15*20, 5);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderCacherTask(), 5*20, 15*20);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new MobGrinderBlazeChecker(), 5*20, 15*20);
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, SaveAllGrinderCustomBlocks::saveAllGrinderCustomBlocks,120*20L, 1200*20);
 
     }
