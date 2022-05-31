@@ -1,5 +1,6 @@
 package net.astropvp.struct;
 
+import lombok.Getter;
 import net.astropvp.CollectPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 public class CollectManager {
+    @Getter
     private HashMap<UUID, PlayerCollect> collectList;
 
     public CollectManager() {

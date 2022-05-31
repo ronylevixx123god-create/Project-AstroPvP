@@ -1,6 +1,7 @@
 package net.astropvp.utils;
 
 import java.sql.Timestamp;
+import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -35,6 +36,17 @@ public final class TimeUtil {
 
     public static long getCurrentMillis() {
         return System.currentTimeMillis();
+    }
+
+    public static String fancy(long seconds) {
+        seconds = seconds/1000;
+        int day = (int) TimeUnit.SECONDS.toDays(seconds);
+        long hours = TimeUnit.SECONDS.toHours(seconds) - (day * 24);
+        long minute = TimeUnit.SECONDS.toMinutes(seconds) - (TimeUnit.SECONDS.toHours(seconds) * 60);
+        long second = TimeUnit.SECONDS.toSeconds(seconds) - (TimeUnit.SECONDS.toMinutes(seconds) * 60);
+
+        return hours + "h " + minute + "m " + second + "s ";
+
     }
 
     public static String millisToRoundedTime(long millis) {

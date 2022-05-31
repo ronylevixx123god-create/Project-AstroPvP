@@ -5,6 +5,7 @@ import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.CollectManager;
 import net.astropvp.struct.CollectType;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +17,9 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerListener implements Listener {
     @EventHandler
     public void onLeave(PlayerQuitEvent e) {
-        CollectPlugin.getInstance().getCollectManager().getPlayerCollect(e.getPlayer().getUniqueId()).save(false);
+        Bukkit.getScheduler().runTaskAsynchronously(CollectPlugin.getInstance(), () -> {
+            //CollectPlugin.getInstance().getCollectManager().getPlayerCollect(e.getPlayer().getUniqueId()).save(false);
+        });
     }
 
 

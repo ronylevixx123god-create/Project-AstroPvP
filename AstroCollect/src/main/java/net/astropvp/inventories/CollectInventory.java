@@ -77,8 +77,8 @@ public class CollectInventory {
     }
 
     private ItemStack getCategoryItem(Player player, CollectCategory cat) {
-        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&a&lLeft-Click&7 to open inventory"), CC.translate("&c&lSHIFT Right-Click&7 to remove inventory"), "", CC.translate("&6&lExpires in&7: &f") +
-                ((cat.getTimeCollected() + 86400000) - System.currentTimeMillis() <= 0 ? "Now" : TimeUtil.millisToRoundedTime( (cat.getTimeCollected() + 86400000) - System.currentTimeMillis()))).build();
+        return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&aLeft-Click&7 to open inventory"), CC.translate("&cSHIFT Right-Click&7 to remove inventory"), "", CC.translate("&6Expires in&7: &f") +
+                ((cat.getTimeCollected() + 86400000) - System.currentTimeMillis() <= 0 ? "Now" : TimeUtil.fancy( (cat.getTimeCollected() + 86400000) - System.currentTimeMillis()))).build();
     }
 
 
