@@ -11,6 +11,8 @@ import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.FieldAccessException;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
+import net.astropvp.core.giveaway.GiveAwayCommand;
+import net.astropvp.core.giveaway.GiveAwayManager;
 import net.astropvp.core.stats.StatsManager;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
@@ -138,6 +140,9 @@ public class AstroCore extends JavaPlugin {
     private Freeze freezeCommand;
     private StatsManager statsManager;
 
+    @Getter
+    public GiveAwayManager giveAwayManager;
+
     @SneakyThrows
     public void onEnable() {
         instance = this;
@@ -159,6 +164,7 @@ public class AstroCore extends JavaPlugin {
         this.filterManager = new FilterManager();
         this.filterManager.loadFilters();
         this.statsManager = new StatsManager(this);
+        this.giveAwayManager = new GiveAwayManager(this);
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunload lava_sponge");
         WorldGuardPlugin.inst().getConfig().set("simulation.sponge.enable", false);
@@ -383,6 +389,8 @@ public class AstroCore extends JavaPlugin {
         getCommand("chatcolor").setExecutor(new ChatColorCommand());
         getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
         getCommand("randomtp").setExecutor(new RandomTpCommand());
+        getCommand("giveaway").setExecutor(new GiveAwayCommand());
+
         freezeCommand = new Freeze();
 
         Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new StaffModeCommand()).forEach(this::registerCommand);

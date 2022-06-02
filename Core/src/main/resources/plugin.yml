@@ -22,6 +22,8 @@ commands:
     aliases: ['trailerclaim', 'claimtrailer']
   givechunkbuster:
     aliases: ['givecb']
+  giveaway:
+    aliases: ['ga']
   trash:
     aliases: ['bin']
   lastmanstanding:
