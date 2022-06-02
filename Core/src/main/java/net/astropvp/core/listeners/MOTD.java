@@ -2,6 +2,9 @@ package net.astropvp.core.listeners;
 
 import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.StringUtils;
+import com.golfing8.kore.FactionsKore;
+import com.golfing8.kore.feature.GracePeriodFeature;
 import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -12,6 +15,12 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.github.paperspigot.Title;
 
 public class MOTD implements Listener {
+    private GracePeriodFeature gracePeriodFeature;
+
+    public MOTD() {
+        this.gracePeriodFeature = (GracePeriodFeature) FactionsKore.get().getFeature("grace");
+    }
+
     @EventHandler
     public void onJoin(PlayerJoinEvent e) {
 
@@ -56,20 +65,22 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(CC.translate("&c "));
             player.sendMessage(CC.translate("&f"));
-            player.sendMessage(CC.translate("&f                   Welcome, &6" + player.getName() + "&f to &6&lAstro&f&lPvP&f!"));
+            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&fWelcome, &6" + player.getName() + "&f to &6&lAstro&f&lPvP&f!")));
             player.sendMessage(CC.translate(""));
-            player.sendMessage(CC.translate("                     &a&lSHOP &fbuy.astropvp.net"));
-            player.sendMessage(CC.translate("               &6&lDISCORD &fdiscord.astropvp.net"));
-            player.sendMessage(CC.translate("                   &c&lRULES &frules.astropvp.net"));
+            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&a&lSHOP &fbuy.astropvp.net")));
+            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&6&lDISCORD &fdiscord.astropvp.net")));
+            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&c&lRULES &frules.astropvp.net")));
+            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&e&lCRYPTO &fcrypto.astropvp.net")));
+
             player.sendMessage("");
-            player.sendMessage(CC.translate("&f&l  WE RECOMMEND YOU TO USE &6client.astropvp.net &f&lOR &61.8.9"));
+            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&f&lWE RECOMMEND YOU TO USE &6CosmicClient &f&lOR &61.8.9")));
             player.sendMessage("");
 
-            //TODO Recode: Check for grace in factions
-            /*if (Conf.gracePeriod) {
-                player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled. TnT Explosives are Disabled."));
+
+            if (gracePeriodFeature.isGracePeriod()) {
+                player.sendMessage(CC.translate("&c&l[!]&c Grace Period is enabled &7(" + gracePeriodFeature.getGraceString() + "&7)&c. All Explosives are Disabled."));
                 player.sendMessage("");
-            }*/
+            }
 
 
 
@@ -87,7 +98,6 @@ public class MOTD implements Listener {
                     player.sendMessage(CC.translate("&eYou now have 1.5x EXP and 1.5x Grinding Lootboxes chance."));
                     player.sendMessage("");
                 }
-                //player.performCommand("vc proximity");
             } else {
                 player.sendMessage("");
                 player.sendMessage(CC.translate("&a&l[!]&a Hello &f" + player.getName() + "&a, you are not on the supported version of &f&nCosmicClient&a."));

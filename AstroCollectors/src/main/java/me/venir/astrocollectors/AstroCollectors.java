@@ -43,7 +43,6 @@ public class AstroCollectors extends JavaPlugin {
 
         this.registerCommands();
         this.registerListeners();
-        this.clearMobsTask();
         new CollectorWorthUpdateTask().runTaskTimer(this, 0L, 100L);
 
         Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
@@ -61,21 +60,7 @@ public class AstroCollectors extends JavaPlugin {
         CollectorManager.DELEGATE.saveToFile(collectorsFile);
     }
 
-    private void clearMobsTask() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            if (AstroSpawners.getInstance().getMobStackerUtils().getMobMap().size() > 65000) {
-                Bukkit.broadcastMessage(ChatColor.GREEN + "Cleared all stacked mobs on the server!");
-                
-                Bukkit.getWorld("world").getEntities().forEach(entity -> {
-                    if (AstroSpawners.getInstance().getMobStackerUtils().isStackedMob(entity)) {
-                        AstroSpawners.getInstance().getMobStackerUtils().removeStackedMob(entity);
-                    }
-                });
-                AstroSpawners.getInstance().getMobStackerUtils().getMobMap().clear();
-            }
 
-        }, 500L, 6000L);
-    }
 
     private void registerListeners() {
         PluginManager pm = getServer().getPluginManager();
