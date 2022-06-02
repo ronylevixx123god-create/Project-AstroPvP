@@ -35,6 +35,7 @@ public class GiveAwayTask extends BukkitRunnable {
                 break;
             case 15:
                 AstroCore.getInstance().getGiveAwayManager().announce(15, giveAway);
+                break;
             case 30:
                 AstroCore.getInstance().getGiveAwayManager().announce(30, giveAway);
                 break;

@@ -77,6 +77,10 @@ public class GiveAwayManager {
     public void endGiveAway() {
         if (this.currentGiveAway != null) {
             GiveAway giveAway = this.currentGiveAway;
+            if (giveAway.getPlayersJoined().isEmpty()) {
+                Bukkit.broadcastMessage(CC.translate("&c&l(!)&c No one has entered the giveaway!"));
+                return;
+            }
             List<Player> winners = selectWinner(giveAway.getWinnersAmount());
             announceWinners(winners, giveAway);
             for (Player winner : winners) {
