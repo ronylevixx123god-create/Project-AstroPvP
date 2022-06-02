@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import me.matthawkk.chat.messages.PrefixedMessage;
 import net.astropvp.christmas.NebulaShop;
+import net.astropvp.christmas.inventories.NebulaShopInventory;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -44,6 +45,12 @@ public class NebulaCommand implements CommandExecutor {
         if(args[0].equalsIgnoreCase("setspawn")) {
             NebulaShop.getInstance().getNebulaShopManager().setShopLocation(player.getLocation());
             player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Success.").get());
+            return true;
+        }
+
+        if (args[0].equalsIgnoreCase("shop")) {
+            new NebulaShopInventory().open(player);
+            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Opening Nebula Shop.").get());
             return true;
         }
 

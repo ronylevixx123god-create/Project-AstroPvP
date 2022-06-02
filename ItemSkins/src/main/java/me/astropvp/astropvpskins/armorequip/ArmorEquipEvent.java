@@ -6,8 +6,7 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.inventory.ItemStack;
 
-public final class ArmorEquipEvent extends PlayerEvent implements Cancellable
-{
+public final class ArmorEquipEvent extends PlayerEvent implements Cancellable {
     private static final HandlerList handlers;
     private boolean cancel;
     private final EquipMethod equipType;
@@ -71,8 +70,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable
         handlers = new HandlerList();
     }
 
-    public enum EquipMethod
-    {
+    public enum EquipMethod {
         SHIFT_CLICK,
         DRAG,
         PICK_DROP,
@@ -81,6 +79,7 @@ public final class ArmorEquipEvent extends PlayerEvent implements Cancellable
         DISPENSER,
         BROKE,
         DEATH,
+        DOUBLE_PICK_DROP,
         QUIT_SERVER;
     }
 }

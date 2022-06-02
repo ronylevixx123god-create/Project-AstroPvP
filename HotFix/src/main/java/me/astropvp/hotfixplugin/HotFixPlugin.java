@@ -34,9 +34,9 @@ public class HotFixPlugin extends JavaPlugin {
 
         getCommand("fixhealth").setExecutor(new FixHealth());
 
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
+/*        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
-        }, 400L, 400);
+        }, 400L, 400);*/
 
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {

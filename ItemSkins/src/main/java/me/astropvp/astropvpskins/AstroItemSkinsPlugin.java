@@ -37,7 +37,7 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
         getCommand("multiskin").setExecutor(new CommandMultiSkin());
         getCommand("removeskin").setExecutor(new RemoveBrokenSkinCommand());
         getServer().getPluginManager().registerEvents(new ItemSkinListener(), this);
-        getServer().getPluginManager().registerEvents(new ArmorListener(getConfig().getStringList("blocked")), this);
+        getServer().getPluginManager().registerEvents(new ArmorListener(), this);
         getServer().getPluginManager().registerEvents(new ItemSkinInventoryClickListener(), this);
         getServer().getPluginManager().registerEvents(new MauiHookListener(), this);
         getServer().getPluginManager().registerEvents(new SnowflakeListener(), this);

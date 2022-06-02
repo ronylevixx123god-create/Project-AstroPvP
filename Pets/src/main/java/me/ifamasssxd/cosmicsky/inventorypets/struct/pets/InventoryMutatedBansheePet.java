@@ -168,7 +168,7 @@ public class InventoryMutatedBansheePet extends InventoryPet {
         enemy.sendMessage(CC.translate(String.format("&2&l*** " + player.getName() + "&4&l's &nMUTATED&r &a&lBANSHEE PET [&6" + duration + "s&a&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
         enemy.sendMessage(CC.translate(String.format("&2( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
         enemy.sendMessage("");
-        DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&a&l* &2&lMUTATED&r &a&lBANSHEE RKO [&7" + duration + "&a&l] *"), "RKO");
+        DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&a&l* &2&lMUTATED&r &a&lBANSHEE RKO [&7" + duration + "s&a&l] *"), "RKO");
         CombatLog.flagCombat(player);
         player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
