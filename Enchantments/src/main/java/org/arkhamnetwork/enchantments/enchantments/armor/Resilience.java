@@ -19,6 +19,7 @@ import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -38,7 +39,7 @@ extends CustomEnchantment {
         double minDmgToProc = 10 - level;
         double chance = (double)level * 0.05;
         if (player.getHealth() - dmg <= 0.0 && dmg >= minDmgToProc && Math.random() < chance) {
-            e.setDamage(e.getDamage()*0.5);
+            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*0.5);
 
             ((Player)player).sendMessage((Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "** RESILIENCE (" + (Object)ChatColor.DARK_GREEN + "50% DMG TAKEN" + (Object)ChatColor.BOLD + ") **");
         }

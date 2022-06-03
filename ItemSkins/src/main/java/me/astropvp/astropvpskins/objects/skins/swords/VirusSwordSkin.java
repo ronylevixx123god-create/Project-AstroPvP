@@ -19,7 +19,7 @@ public class VirusSwordSkin extends ItemSkin {
         if (DuelAPI.isSpectator(damager)) return;
         if (damager.hasMetadata("frozenSkrrt")) return;
 
-        event.setDamage(event.getDamage() * 1.035);
+        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.035);
         (new HeroicCleave()).applyEffect(damager, (LivingEntity)damaged, 5, event);
     }
 }

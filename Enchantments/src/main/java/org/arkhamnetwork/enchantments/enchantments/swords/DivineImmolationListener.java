@@ -22,7 +22,7 @@ final class DivineImmolationListener implements Listener {
             if (WorldGuardUtils.isPvPDisabled(e.getEntity().getLocation())) {
                 return;
             }
-            if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000) {
+            if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000L) {
                 final LivingEntity le = (LivingEntity) e.getEntity();
                 double damage = Math.min(4, 6) / 4.0;
                 if (le instanceof Player) {

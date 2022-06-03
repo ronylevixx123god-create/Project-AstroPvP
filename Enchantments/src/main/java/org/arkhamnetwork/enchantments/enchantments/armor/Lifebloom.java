@@ -30,6 +30,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -51,7 +52,7 @@ extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
             Player p = (Player)player;
-            double dmg = e.getDamage();
+            double dmg = e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE);
             dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
                 if (p.hasMetadata("Lifeblooming") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("Lifeblooming").get(0)).asLong() <= 10000L) {

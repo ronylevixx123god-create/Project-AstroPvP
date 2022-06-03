@@ -28,7 +28,7 @@ public class DeathAndTaxesSkin extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
 
         if(damaged instanceof Player && this.markList.containsKey(damaged) && !event.isCancelled())
-            this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage());
+            this.markList.put((Player) damaged, this.markList.get(damaged) + event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE));
         if(damaged instanceof Player && Math.random() <= 0.02 && !markList.containsKey(damaged)) {
             damager.sendMessage(CC.GoldB + " ** MARKED " + damaged.getName() + " WITH DEATH AND TAXES **");
             damaged.sendMessage(CC.GoldB + " ** DEATH AND TAXES MARK " + CC.Gray + "[" + damager.getName() + "]" + CC.GoldB + " **");

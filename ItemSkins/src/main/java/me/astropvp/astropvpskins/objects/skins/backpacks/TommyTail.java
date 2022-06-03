@@ -27,9 +27,9 @@ public class TommyTail extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;
         if (damager.getItemInHand() != null && damager.getItemInHand().getType().name().endsWith("_SWORD")) {
-            event.setDamage(event.getDamage()*1.05);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.05);
         }
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.0075) {
             if (damaged instanceof Player) {
                 InventoryBansheePet.startBansheeEffect(damager, (Player) damaged, 8);
             }

@@ -10,11 +10,11 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class RetaliationBoots extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-        event.setDamage(event.getDamage() * 0.9);
+        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 0.9);
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if(!(damaged instanceof Player))
-            event.setDamage(event.getDamage() * 1.05);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.05);
     }
 }

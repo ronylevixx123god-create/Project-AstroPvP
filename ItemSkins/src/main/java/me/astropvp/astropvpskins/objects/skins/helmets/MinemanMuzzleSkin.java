@@ -60,7 +60,7 @@ public class MinemanMuzzleSkin extends ItemSkin {
         if (damaged.hasMetadata("frozenSkrrt")) return;
         if (damaged instanceof Player) {
             if (damaged.hasMetadata("muzzle")) {
-                event.setDamage(event.getDamage() * 1.33);
+                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.33);
             }
 
         }

@@ -36,6 +36,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 import java.util.ArrayList;
@@ -72,7 +73,7 @@ extends CustomEnchantment {
         ArrayList<Player> affectedPlayers = new ArrayList<Player>();
         if (random < chance) {
             Player p = (Player)player;
-            double amountToHeal = e.getDamage() * (double)(level / 10);
+            double amountToHeal = e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (double)(level / 10);
             int cost = this.soulCost;
 
 

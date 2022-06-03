@@ -12,7 +12,7 @@ public class SexyBeltSkin extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(damager instanceof Projectile)
-            event.setDamage(event.getDamage()*0.925);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*0.925);
     }
 }
 

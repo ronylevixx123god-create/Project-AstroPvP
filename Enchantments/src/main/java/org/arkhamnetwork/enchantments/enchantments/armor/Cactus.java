@@ -2,6 +2,8 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
 import java.util.concurrent.*;
+
+import org.arkhamnetwork.enchantments.enchantments.swords.Rage;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -38,12 +40,19 @@ public class Cactus extends CustomEnchantment
             if (player.hasMetadata("noDefenseProcs")) {
                 return;
             }
-            final Player p = (Player)player;
-            if (Cactus.cactus.containsKey(p.getName()) && attacker != null && attacker instanceof Player) {
-                final Player pAttacker = (Player)attacker;
+            if (player.hasMetadata("neutralized")) {
+                return;
+            }
+            final Player p = (Player) player;
+            if (attacker instanceof Player) {
+                final Player pAttacker = (Player) attacker;
                 //pAttacker.damage(0.5 * level);
-                final Location l = p.getLocation();
-                WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
+                if (Rage.getPVPHitCombo(pAttacker) != 0) {
+                    Rage.subtractPVPHitCombo(pAttacker);
+
+                    final Location l = p.getLocation();
+                    WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
+                }
             }
         }
     }

@@ -69,7 +69,7 @@ extends CustomEnchantment {
         if (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) {
             boolean heal;
             boolean bl = heal = Math.random() <= (double)level * 0.15;
-/*            if (heal &&GeneralUtil.healPlayer(player, e.getDamage())) {
+/*            if (heal &&GeneralUtil.healPlayer(player, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE))) {
                 try {
                     //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 40);
                 } catch (Exception exception) {

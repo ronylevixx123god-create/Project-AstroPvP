@@ -14,13 +14,13 @@ public class SpikedBaseballBatSkin extends ItemSkin {
         if(!(damaged instanceof Player))
             return;
         if(((Player) damaged).getItemInHand().getType().toString().endsWith("_SWORD"))
-            event.setDamage(event.getDamage()*1.1);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.1);
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(!(damager instanceof Player))
             return;
         if(((Player) damager).getItemInHand().getType().toString().endsWith("_SWORD"))
-            event.setDamage(event.getDamage()*1.05);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.05);
     }
 }

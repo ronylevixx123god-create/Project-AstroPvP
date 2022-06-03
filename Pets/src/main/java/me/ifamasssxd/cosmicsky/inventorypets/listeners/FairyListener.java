@@ -20,7 +20,7 @@ public class FairyListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player)event.getDamager();
             if (damager.hasMetadata("fairy_pet")) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.05);
+                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageEvent.DamageModifier.BASE) * 0.05);
             }
 
         }

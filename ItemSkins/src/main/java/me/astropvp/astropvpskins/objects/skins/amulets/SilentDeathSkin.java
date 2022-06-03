@@ -27,12 +27,12 @@ public class SilentDeathSkin extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        event.setDamage(event.getDamage()*1.03);
+        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.03);
         if(!(damaged instanceof Player))
             return;
         if(silentDeath.containsKey(damaged)) {
             silentDeath.put((Player) damaged, silentDeath.get(damaged) + 1);
-            event.setDamage(event.getDamage()*1.2);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.2);
         }
         if(Math.random() <= 0.05) {
             if(AstroItemSkinsAPI.hasSkinEquipped((Player) damaged, SkinType.HALLOWEEN_AMULET))

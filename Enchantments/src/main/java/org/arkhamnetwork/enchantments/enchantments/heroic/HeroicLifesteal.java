@@ -38,7 +38,7 @@ extends HeroicCustomEnchantment {
 
             if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
 
-            GeneralUtil.healPlayer(user, 3);
+            GeneralUtil.healPlayer(user, 4);
         }
     }
 }

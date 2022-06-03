@@ -75,12 +75,10 @@ extends CustomEnchantment {
                 return;
             }
             double multiplier = level * 0.42 + 1.0;
-            event.setDamage(event.getDamage() * multiplier);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
-            if (target instanceof Player) {
-                ((Player)target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");
-                ((Player)target).playSound(target.getLocation(), Sound.HURT_FLESH, 2.0f, 0.3f);
-            }
+            ((Player)target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");
+            ((Player)target).playSound(target.getLocation(), Sound.HURT_FLESH, 2.0f, 0.3f);
         }
     }
 

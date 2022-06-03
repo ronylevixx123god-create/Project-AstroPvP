@@ -14,6 +14,7 @@ package org.arkhamnetwork.enchantments.enchantments.bow;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.MetadataValue;
 
@@ -27,7 +28,7 @@ implements Listener {
         Player p;
         if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) && (p = (Player)e.getEntity()).hasMetadata("virusEnchantmentExpire") && System.currentTimeMillis() < ((MetadataValue)p.getMetadata("virusEnchantmentExpire").get(0)).asLong()) {
             int level = ((MetadataValue)p.getMetadata("virusEnchantmentLevel").get(0)).asInt();
-            e.setDamage(e.getDamage() * (double)(level + 1));
+            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (double)(level + 1));
         }
     }
 }

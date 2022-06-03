@@ -49,7 +49,7 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onBlockExplode(EntityExplodeEvent e) {
-        if (e.getEntity() != null && e.getEntity().hasMetadata("SelfDestructTNT")) {
+        if (e.getEntity() != null && SelfDestruct.tntList.containsKey(e.getEntity().getUniqueId())) {
             e.setYield(0.0f);
             e.blockList().clear();
             if (WorldGuardUtils.isPvPDisabled(e.getLocation())) {
@@ -57,18 +57,13 @@ implements Listener {
             }
             Location loc = e.getLocation();
             loc.getWorld().playSound(loc, Sound.EXPLODE, 1.0f, 1.0f);
-            try {
-                //ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 3);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            String exploder = ((MetadataValue)e.getEntity().getMetadata("SelfDestructTNT").get(0)).asString();
-            Player pExploder = Bukkit.getPlayer((String)exploder);
+
+            Player pExploder = SelfDestruct.tntList.get(e.getEntity().getUniqueId());
             FPlayer fp = pExploder != null ? (FPlayer)FPlayers.getInstance().getByPlayer(pExploder) : null;
             for (Entity ent : e.getEntity().getNearbyEntities(4.0, 4.0, 4.0)) {
                 FPlayer fpEnt;
                 if (!(ent instanceof LivingEntity) || ent.hasMetadata("spectator") || ent instanceof Player && fp != null && fp.getRelationTo((RelationParticipator)(fpEnt = (FPlayer)FPlayers.getInstance().getByPlayer((Player) ent))).isAtLeast(Relation.TRUCE) || WorldGuardUtils.isPvPDisabled(ent.getLocation())) continue;
-                ((LivingEntity)ent).damage(16.0);
+                ((LivingEntity)ent).damage(10.0);
                 ((LivingEntity)ent).setFireTicks(40);
                 GeneralUtil.pushAwayEntity((LivingEntity)ent, e.getEntity(), (double)1.7f);
             }

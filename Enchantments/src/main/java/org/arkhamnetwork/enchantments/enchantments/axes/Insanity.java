@@ -30,7 +30,7 @@ public class Insanity extends CustomEnchantment
                 return;
             }
         }
-        e.setDamage(e.getDamage() * 1.5);
+        e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.1);
 
     }
 }

@@ -53,7 +53,7 @@ public class SnowflakeListener implements Listener {
     @EventHandler
     public void onSnowballHit(EntityDamageByEntityEvent e) {
         if(e.getEntity() instanceof Player && snowflake.contains(e.getEntity()))
-            e.setDamage(e.getDamage()*1.08);
+            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.08);
         Entity ent = e.getDamager();
         if(ent instanceof Snowball && e.getEntity() instanceof Player) {
             Player hit = (Player) e.getEntity();

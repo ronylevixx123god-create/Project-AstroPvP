@@ -24,14 +24,17 @@ public class HeroicCactus extends HeroicCustomEnchantment
             if (attacker != null && attacker instanceof Player) {
                 final Player pAttacker = (Player)attacker;
                 //pAttacker.damage(0.5 * level);
-                   // Rage.subtractPVPHitCombo(pAttacker);
 
-                final Location l = p.getLocation();
-                WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
+                if (Rage.getPVPHitCombo(pAttacker) != 0) {
+                    Rage.subtractPVPHitCombo(pAttacker);
+
+                    final Location l = p.getLocation();
+                    WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
+                }
             }
             final double thornNegateChance = (level == 1) ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {
-                //e.setDamage(0);
+                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0);
             }
         }
     }

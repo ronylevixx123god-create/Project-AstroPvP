@@ -24,11 +24,11 @@ public class SeasonsBeatings extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
         if (!(damaged instanceof Player)) return;
         if (((Player) damaged).getItemInHand() != null &&  EnchantmentAPI.itemHasEnchantment(((Player) damaged).getItemInHand(), "Hero Killer")) {
-            event.setDamage(event.getDamage() * 1.07);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.07);
         }
 
         if (KillTrackerAPI.hasGodMode((Player) damaged)) {
-            event.setDamage(event.getDamage() * 1.1);
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.1);
         }
 
 

@@ -37,7 +37,7 @@ public class PieBelt extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if(hypnosis.containsKey(damager)) {
-            event.setDamage(event.getDamage() * (1+hypnosis.get(damager)/100));
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1+hypnosis.get(damager)/100));
 
         }
     }

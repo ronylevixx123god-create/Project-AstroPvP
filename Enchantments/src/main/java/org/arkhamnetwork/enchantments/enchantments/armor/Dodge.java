@@ -55,7 +55,7 @@ public class Dodge extends CustomEnchantment
                     }, 5*20);
                 }
                 if (attacker instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_2021_SWORD)) {
-                    e.setDamage(0);
+                    e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0);
                     ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
                     player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
                 }

@@ -18,6 +18,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -136,7 +137,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
             final Long expirations = ((MasteryMarkOfTheBeast) this.customEnchant).getMarkedPlayers().get(player.getUniqueId());
             if (expirations != null && expirations > System.currentTimeMillis()) {
                 final double original = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
-                event.setDamage(EntityDamageEvent.DamageModifier.BASE,event.getDamage()*1.5);
+                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.5);
                 if (original > 0.01) {
                     player.sendMessage(CC.Red + "* MARK OF THE BEAST [2X DMG] *");
                 }

@@ -52,8 +52,9 @@ public class Assassin extends CustomEnchantment {
             }
 
             if (distance > 3.0D) {
-                double var10000 = dmgMod - 0.025D * (double)enchantLevel;
+                dmgMod -= 0.015D * (double)enchantLevel;
             }
+            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * dmgMod);
 
         }
     }

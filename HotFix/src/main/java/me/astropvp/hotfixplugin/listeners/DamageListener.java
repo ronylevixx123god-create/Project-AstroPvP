@@ -51,7 +51,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler
+/*    @EventHandler
     public void axe(EntityDamageByEntityEvent e) {
         if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
             if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
@@ -61,7 +61,7 @@ public class DamageListener implements Listener {
                 AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "axedebuff");
             }
         }
-    }
+    }*/
 
 
     @EventHandler(ignoreCancelled = true, priority = EventPriority.LOWEST)
@@ -105,7 +105,7 @@ public class DamageListener implements Listener {
             this.killCooldown.add(kuuid);
             Bukkit.getScheduler().runTaskLaterAsynchronously(HotFixPlugin.getInstance(), () -> {
                 this.killCooldown.remove(kuuid);
-            }, 5*20L);
+            }, 5 * 20L);
             JSONMessage message = new JSONMessage("", ChatColor.GRAY);
             FPlayer fkiller = FPlayers.getInstance().getByPlayer(killer);
             FPlayer fdied = FPlayers.getInstance().getByPlayer(died);
@@ -125,7 +125,7 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler
-    public void onShoot (EntityShootBowEvent e) {
+    public void onShoot(EntityShootBowEvent e) {
         if (e.getEntity().getWorld().getName().equals("space")) {
             e.getEntity().sendMessage(CC.translate("&cBows are disable in /warp space"));
             e.setCancelled(true);
@@ -139,28 +139,20 @@ public class DamageListener implements Listener {
 
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
-
-            //e.setDamage(e.getDamage() * (1 + getProtectionReduction(phurt)));
             if (getProtectionReduction(phurt) != 0) {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(getProtectionReduction(phurt), e, "Protection");
+                double totalReduction = getProtectionReduction(phurt);
+                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1 - (totalReduction * 0.01));
             }
-            if (((Player) e.getDamager()).getItemInHand() != null) {
-                if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
 
-                int enchants = EnchantmentAPI.getEnchantments(((Player) e.getDamager()).getItemInHand()).size();
-                if (enchants < 14) {
-                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
-                }
-                if (((Player) e.getDamager()).getItemInHand().getType() == Material.WOOD_SWORD || ((Player) e.getDamager()).getItemInHand().getType() == Material.IRON_SWORD) {
-                    AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(50, e, "EnchantReduction");
-                }
 
-                if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD) {
-                    e.setDamage(e.getDamage() * 0.75);
-                }
-            } else {
-                AstroDamageHandler.getInstance().getDamageHandler().reduceDamage(35, e, "EnchantReduction");
+            if (((Player) e.getDamager()).getItemInHand() == null) {
+                //e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, e.getDamage() * 0.65);
+                return;
+            }
 
+
+            if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD || ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_AXE) {
+                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, e.getDamage() * 0.75);
             }
         }
     }
@@ -179,8 +171,8 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 8;
-                if (protLevel == 5) decrease += 3;
+                if (protLevel == 6) decrease += 10;
+                if (protLevel == 5) decrease += 5;
             }
         }
         return decrease;
@@ -201,7 +193,7 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
         if (WorldGuardUtils.getRegionsIn(e.getPlayer()) == null) return;
-        if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear") ||  e.getMessage().equalsIgnoreCase("/nearby")||  e.getMessage().equalsIgnoreCase("/enearby")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter")) || e.getPlayer().getLocation().getY() >= 255) {
+        if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear") || e.getMessage().equalsIgnoreCase("/nearby") || e.getMessage().equalsIgnoreCase("/enearby")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter")) || e.getPlayer().getLocation().getY() >= 255) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed here!"));
             e.setMessage("/null");
             e.setCancelled(true);
@@ -230,7 +222,7 @@ public class DamageListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.HIGH)
+/*    @EventHandler(priority = EventPriority.HIGH)
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -251,7 +243,7 @@ public class DamageListener implements Listener {
             e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));
 
         }
-    }
+    }*/
 
 
     @EventHandler
@@ -262,7 +254,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler
+/*    @EventHandler
     public void onPvPInInvis(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Player)) return;
@@ -273,7 +265,7 @@ public class DamageListener implements Listener {
         }
 
 
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDurabilityLoss(PlayerItemDamageEvent event) {

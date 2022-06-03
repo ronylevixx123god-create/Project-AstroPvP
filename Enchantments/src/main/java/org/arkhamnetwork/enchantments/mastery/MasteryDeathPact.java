@@ -26,7 +26,7 @@ public class MasteryDeathPact extends MasteryCustomEnchantment {
         final double increments = 2 + enchantLevel * 2;
         final double healthChunksGone = percentMissing / 0.1;
         final double toDecrement = Math.min(25.0, increments * healthChunksGone);
-        //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - 0.01 * toDecrement));
+        //event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASEevent.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - 0.01 * toDecrement));
     }
 
     public void applyDefenseEffect(final LivingEntity damaged, final LivingEntity target, final int enchantLevel, EntityDamageEvent event) {
@@ -35,6 +35,6 @@ public class MasteryDeathPact extends MasteryCustomEnchantment {
         final double healthChunksGone = percentMissing / 0.1;
         final double toDecrement = Math.min(50.0, increments * healthChunksGone);
         final double finalMod = 1.0 - 0.01 * toDecrement;
-        //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * finalMod);
+        //event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASEevent.getDamage(EntityDamageEvent.DamageModifier.BASE) * finalMod);
     }
 }

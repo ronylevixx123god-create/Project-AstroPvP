@@ -44,7 +44,7 @@ extends CustomEnchantment {
                 return;
             }
         }
-        double extra_dmg = armor_percent_ignored / 100.0 * e.getDamage();
+        double extra_dmg = armor_percent_ignored / 100.0 * e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE);
         playerHit.damage(extra_dmg);
         ((Player)player).playSound(player.getLocation(), Sound.ARROW_HIT, 1.2f, 0.6f);
         try {

@@ -36,15 +36,12 @@ public class LoadSpawner {
                 int amount = Integer.parseInt(ymlFile.getString("amount"));
                 EntityType type = EntityType.valueOf(ymlFile.getString("type"));
 
-                System.out.println("Attempting : " + location);
                 if (Bukkit.getWorld(location.getWorld().getName()).getBlockAt(location) == null) {
-                    System.out.println("Deleted block at " + location + " because it was not a mobspawner");
                     file.delete();
                     continue;
                 }
 
                 if (Bukkit.getWorld(location.getWorld().getName()).getBlockAt(location).getType() != Material.MOB_SPAWNER) {
-                    System.out.println("Deleted block at " + location + " because it was not a mobspawner");
                     file.delete();
                     continue;
                 }
@@ -52,9 +49,6 @@ public class LoadSpawner {
                 SpawnerData data = new SpawnerData(type, amount);
                 AstroSpawners.getInstance().getSpawnersMap().put(location, data);
 
-
-                // This is a debug message which can be deleted at a later date!
-                System.out.println("[SpawnersData] Put" + location + " into memory with type :" + type);
             } catch (Exception e) {
                 e.printStackTrace();
             }

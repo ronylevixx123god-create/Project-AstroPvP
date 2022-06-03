@@ -25,7 +25,7 @@ public class SpiritLink extends CustomEnchantment
         final double chance = level * 0.1;
         if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && Math.random() < chance) {
             final Player playerHurt = (Player)player;
-            final double healAmount = Math.min(4.0, e.getDamage() / (this.max - (level - 1)) / 4.0);
+            final double healAmount = Math.min(4.0, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) / (this.max - (level - 1)) / 4.0);
             final double radius = level * 2;
             for (final Entity ent : player.getNearbyEntities(radius, radius, radius)) {
                 if (ent instanceof Player) {

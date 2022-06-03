@@ -40,11 +40,14 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.Random;
+import java.util.*;
 
 public class SelfDestruct
 extends CustomEnchantment {
+
+    public static Map<UUID, Player> tntList= new HashMap<>();
+
+
     public SelfDestruct() {
         super("Self Destruct", GeneralUtil.armor, 3);
         this.max = 3;
@@ -80,7 +83,7 @@ extends CustomEnchantment {
                 }
                 int fuseTicks = 120 - level * 20;
                 for (int tntAmount = radius; tntAmount > 0; --tntAmount) {
-                    //this.spawnExplosion(p, this.getNearbyLocation(player.getLocation(), 3, 1), fuseTicks);
+                    this.spawnExplosion(p, this.getNearbyLocation(player.getLocation(), 3, 1), fuseTicks);
                 }
             }
         }
@@ -92,7 +95,8 @@ extends CustomEnchantment {
         }
         TNTPrimed tnt = (TNTPrimed)l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
         tnt.setFuseTicks(fuseTicks);
-        tnt.setMetadata("SelfDestructTNT", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)exploder.getName()));
+        //tnt.setMetadata("SelfDestructTNT", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)exploder.getName()));
+        tntList.put(tnt.getUniqueId(), exploder);
     }
 
     private Location getNearbyLocation(Location l, int radius, int y_boost) {

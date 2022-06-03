@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.bryside.astroattributes.DragonTitanAttributesAPI;
 import com.bryside.astroattributes.enums.RuneType;
 import com.bryside.astroattributes.objects.RuneCacher;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
@@ -18,74 +19,25 @@ import org.bukkit.plugin.Plugin;
 import java.util.Objects;
 
 final class RageListener implements Listener {
-    /*@EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageByEntityEvent event) {
-        if (event.getEntity() instanceof Player && (event.getEntity().hasMetadata("pvp_rageHitCombo") || event.getEntity().hasMetadata("pve_rageHitCombo"))) {
-            if (RuneCacher.isContained((Player) event.getEntity()) && Objects.requireNonNull(RuneCacher.getRuneCacher((Player) event.getEntity())).getRuneType() == RuneType.KRONOS)
-                if (event.getEntity().hasMetadata("pvp_rageHitCombo")) {
-                    int newRageNum = (int)(((MetadataValue)event.getEntity().getMetadata("pvp_rageHitCombo").get(0)).asInt() * Objects.requireNonNull(RuneCacher.getRuneCacher((Player) event.getEntity())).getLevel() * 0.05D);
-                    event.getEntity().setMetadata("pvp_rageHitCombo", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), newRageNum));
-                    event.getEntity().setMetadata("pve_rageHitCombo", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), newRageNum));
+    @EventHandler(
+            priority = EventPriority.HIGH,
+            ignoreCancelled = true
+    )
+    public void onEntityDamage(EntityDamageEvent e) {
+        if (e.getEntity() instanceof Player && (e.getEntity().hasMetadata("pvp_rageHitCombo")) && ((Player) e.getEntity()).getItemInHand() != null) {
+            if (DragonTitanAttributesAPI.getRuneType(((Player)e.getEntity()).getItemInHand()) != null) {
+                RuneType titanAttribute = DragonTitanAttributesAPI.getRuneType(((Player)e.getEntity()).getItemInHand());
+                if (titanAttribute == RuneType.KRONOS && e.getEntity().hasMetadata("pvp_rageHitCombo")) {
+                    int newRageNum = (int)((double)((MetadataValue)e.getEntity().getMetadata("pvp_rageHitCombo").get(0)).asInt() * DragonTitanAttributesAPI.getLevelOfRune(((Player) e.getEntity()).getItemInHand()) * 0.05D);
+                    e.getEntity().setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), newRageNum));
+                    e.getEntity().setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), newRageNum));
                     return;
                 }
             }
-            event.getEntity().removeMetadata("pvp_rageHitCombo", (Plugin)Enchantments.getInstance());
-            event.getEntity().removeMetadata("pve_rageHitCombo", (Plugin)Enchantments.getInstance());
-        }*/
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onDamaged(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player) {
-            Player entity = (Player) event.getEntity();
-            if (entity.hasMetadata("combo_pvp")) {
-                entity.removeMetadata("combo_pvp", Enchantments.getInstance());
-            }
-            if (entity.hasMetadata("last_combo_pvp")) {
-                entity.removeMetadata("last_combo_pvp", Enchantments.getInstance());
-            }
-            if (entity.hasMetadata("combo_pve")) {
-                entity.removeMetadata("combo_pve", Enchantments.getInstance());
-            }
-            if (entity.hasMetadata("last_combo_pve")) {
-                entity.removeMetadata("last_combo_pve", Enchantments.getInstance());
-            }
+            e.getEntity().removeMetadata("pvp_rageHitCombo", Enchantments.getInstance());
+            e.getEntity().removeMetadata("pve_rageHitCombo", Enchantments.getInstance());
         }
-    }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
-    public void onDamage(EntityDamageByEntityEvent event) {
-        if (event.getDamager() instanceof Player) {
-            Player damager = (Player) event.getDamager();
-            if (event.getEntity() instanceof Player) {
-                int pvp_combo = damager.hasMetadata("combo_pvp") ? damager.getMetadata("combo_pvp").get(0).asInt() : 0;
-                long last_pvp_combo = damager.hasMetadata("last_combo_pvp")
-                        ? damager.getMetadata("last_combo_pvp").get(0).asLong()
-                        : 0;
-                if (last_pvp_combo != 0 && last_pvp_combo - System.currentTimeMillis() <= -15000) {
-                    pvp_combo = 0;
-                }
-                pvp_combo++;
-                last_pvp_combo = System.currentTimeMillis();
-                damager.setMetadata("last_combo_pvp",
-                        new FixedMetadataValue(Enchantments.getInstance(), last_pvp_combo));
-                damager.setMetadata("combo_pvp", new FixedMetadataValue(Enchantments.getInstance(), pvp_combo));
-                return;
-            }
-            if (event.getEntity() instanceof LivingEntity) {
-                int pve_combo = damager.hasMetadata("combo_pve") ? damager.getMetadata("combo_pve").get(0).asInt() : 0;
-                long last_pve_combo = damager.hasMetadata("last_combo_pve")
-                        ? damager.getMetadata("last_combo_pve").get(0).asLong()
-                        : 0;
-                if (last_pve_combo != 0 && last_pve_combo - System.currentTimeMillis() <= -15000) {
-                    pve_combo = 0;
-                }
-                pve_combo++;
-                last_pve_combo = System.currentTimeMillis();
-                damager.setMetadata("last_combo_pve",
-                        new FixedMetadataValue(Enchantments.getInstance(), last_pve_combo));
-                damager.setMetadata("combo_pve", new FixedMetadataValue(Enchantments.getInstance(), pve_combo));
-            }
-        }
     }
-    }
-
+}

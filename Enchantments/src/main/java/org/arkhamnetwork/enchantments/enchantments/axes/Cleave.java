@@ -26,7 +26,6 @@ public class Cleave extends CustomEnchantment
         this.base = 15.0;
         this.interval = 5.0;
         this.mcmmo = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
-        Bukkit.getLogger().info("[Enchantments (Cleave)] mcMMO support = " + this.mcmmo);
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
@@ -39,7 +38,7 @@ public class Cleave extends CustomEnchantment
             return;
         }
         player.setMetadata("previous_cleave_use", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
-        if (damage > 0.0 && e.getDamage() > 0.0) {
+        if (damage > 0.0 && e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) > 0.0) {
             final List<Entity> aoe = e.getEntity().getNearbyEntities(radius, radius, radius);
             for (final Entity aoe_ent : aoe) {
                 if (aoe_ent.equals(player)) {

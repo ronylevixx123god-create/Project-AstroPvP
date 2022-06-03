@@ -117,7 +117,7 @@ public class HeroKiller
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue) p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player) p, (int) 4);
             }
-            double increase = 0.1D * (double) level;
+            double increase = 0.05D * (double) level;
             if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {
                 increase += 0.1;
             }
@@ -143,7 +143,7 @@ public class HeroKiller
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                 increase -= 0.1;
             }
-            e.setDamage(e.getDamage() * (1 + increase));
+            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1 + increase));
         }
     }
 

@@ -22,6 +22,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -47,7 +48,7 @@ implements Listener {
                     }.runTaskLater((Plugin)Enchantments.getInstance(), 1L);
                 }
                 if (level == 3) {
-                    GeneralUtil.healPlayer((LivingEntity)player, Math.min(6.0, e.getDamage() * 0.1));
+                    GeneralUtil.healPlayer((LivingEntity)player, Math.min(6.0, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 0.1));
                 }
             }
         }

@@ -89,7 +89,7 @@ public class HeroicRocketEscape
                 Player pl = (Player) player;
 
                 if (((Player) player).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
-                    event.setDamage(event.getDamage()*1.5);
+                    event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.5);
                     player.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7Heroic Rocket Escape 2x Damage&2&l] *"));
                 }
                 RocketEscape.last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
@@ -155,7 +155,7 @@ public class HeroicRocketEscape
 
                     }
                     RocketEscape.rocket_escapists.remove(uuid);
-                }, (long) (20 * (level + 2) + 5));
+                }, (long) (20L * (level + 2) + 5));
             }
         }
     }
