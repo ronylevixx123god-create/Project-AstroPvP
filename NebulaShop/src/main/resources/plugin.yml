@@ -3,4 +3,3 @@ main: net.astropvp.christmas.NebulaShop
 version: 1.0
 commands:
   nebula:
-    aliases: [nebulashop]

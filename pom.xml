@@ -75,6 +75,7 @@
         <module>Outpost</module>
         <module>FactionLogs</module>
         <module>AstroDiscordSync</module>
+        <module>AstroEnvoy</module>
     </modules>
 
     <build>

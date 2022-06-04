@@ -64,6 +64,7 @@
         <module name="AstroSpaceGrinding" />
         <module name="AstroSpawnersMobcoins" />
         <module name="AstroDiscordBot" />
+        <module name="AstroEnvoy" />
         <module name="FactionBanners" />
         <module name="AstroDiscordSync" />
         <module name="Disguises" />

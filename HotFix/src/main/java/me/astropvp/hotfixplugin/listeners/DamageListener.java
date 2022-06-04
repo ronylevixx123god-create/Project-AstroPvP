@@ -71,6 +71,29 @@ public class DamageListener implements Listener {
         if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
     }
 
+    @EventHandler(priority = EventPriority.HIGH)
+    public void diaPvP(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+        if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            Player damager = (Player) e.getDamager();
+            Player damaged = (Player) e.getEntity();
+            if (((Player) e.getDamager()).getItemInHand() == null) return;
+            if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
+
+            double dmgBuff = 0;
+
+            for (ItemStack armor : damaged.getInventory().getArmorContents()) {
+                if (!armor.getType().name().startsWith("LEATHER_")) {
+                    dmgBuff += 1500;
+                }
+            }
+            e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));
+
+        }
+    }
+
     @EventHandler(ignoreCancelled = true)
     public void creeperDmg(EntityDamageEvent event) {
         if (event.getEntity() instanceof Creeper) {

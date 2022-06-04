@@ -24,6 +24,13 @@ public class NebulaCommand implements CommandExecutor {
             player.sendMessage("");
             return true;
         }
+
+        if (args.length != 0 && args[0].equalsIgnoreCase("shop")) {
+            new NebulaShopInventory().open(player);
+            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Opening Nebula Shop.").get());
+            return true;
+        }
+
         if(!player.isOp() || args.length == 0) {
             player.teleport(NebulaShop.getInstance().getNebulaShopManager().getShopLocation());
             player.sendMessage(CC.translate("&a&l(!)&a Teleporting to Nebula Lounge..."));
@@ -48,11 +55,7 @@ public class NebulaCommand implements CommandExecutor {
             return true;
         }
 
-        if (args[0].equalsIgnoreCase("shop")) {
-            new NebulaShopInventory().open(player);
-            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Opening Nebula Shop.").get());
-            return true;
-        }
+
 
 
 

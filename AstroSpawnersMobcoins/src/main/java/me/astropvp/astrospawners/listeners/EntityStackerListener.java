@@ -236,7 +236,14 @@ public class EntityStackerListener implements Listener {
         double astroKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroKeyChancePercent") * 0.01; //0.125
         double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.001
 
-        if (p != null) {
+        if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
+            legKeyChance *= 1.1;
+            astroKeyChance *= 1.1;
+            godlyKeyChance *= 1.1;
+
+        }
+
+            if (p != null) {
             double num = Math.random();
             try {
                 if (num >= 0 && num <= godlyKeyChance) {

@@ -136,7 +136,7 @@ public class GiveAwayManager {
         for (Player player : Bukkit.getOnlinePlayers()) {
             message.sendToPlayer(player);
             clickable.sendToPlayer(player);
-            Bukkit.broadcastMessage("");
+            player.sendMessage("");
         }
     }
 
@@ -154,7 +154,7 @@ public class GiveAwayManager {
         for (Player player : Bukkit.getOnlinePlayers()) {
             message.sendToPlayer(player);
             clickable.sendToPlayer(player);
-            Bukkit.broadcastMessage("");
+            player.sendMessage("");
         }
     }
 
@@ -178,8 +178,9 @@ public class GiveAwayManager {
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             message.sendToPlayer(player);
-            Bukkit.broadcastMessage("");
+            player.sendMessage("");
         }
+
 
 
     }
