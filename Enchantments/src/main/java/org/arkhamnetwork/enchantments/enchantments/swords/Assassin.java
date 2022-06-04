@@ -23,38 +23,27 @@ public class Assassin extends CustomEnchantment {
         if (user.getWorld().equals(target.getWorld())) {
             double distance = user.getLocation().distance(target.getLocation());
             double dmgMod = 1.0D;
+
             if (distance < 0.25D) {
-                dmgMod += 0.01D * (double)enchantLevel;
+                dmgMod = 1.15;
             }
 
             if (distance < 0.5D) {
-                dmgMod += 0.01D * (double)enchantLevel;
+                dmgMod = 1.10;
             }
 
             if (distance < 0.75D) {
-                dmgMod += 0.01D * (double)enchantLevel;
+                dmgMod = 1.08;
             }
 
             if (distance < 1.0D) {
-                dmgMod += 0.01D * (double)enchantLevel;
+                dmgMod = 1.05;
             }
 
-            if (distance < 1.5D) {
-                dmgMod += 0.01D * (double)enchantLevel;
+            if (distance < 2.0D) {
+                dmgMod = 1.04;
             }
-
-            if (distance > 2.0D) {
-                dmgMod -= 0.01D * (double)enchantLevel;
-            }
-
-            if (distance > 2.5D) {
-                dmgMod -= 0.0125D * (double)enchantLevel;
-            }
-
-            if (distance > 3.0D) {
-                dmgMod -= 0.015D * (double)enchantLevel;
-            }
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * dmgMod);
+            event.setDamage(event.getDamage() * dmgMod);
 
         }
     }

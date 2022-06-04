@@ -18,7 +18,7 @@ public class MutatedMaryJanes extends ItemSkin {
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (isCritical(damager)) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.15);
+            event.setDamage(event.getDamage() * 1.15);
         }
     }
 

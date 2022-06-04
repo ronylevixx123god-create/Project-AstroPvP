@@ -30,7 +30,7 @@ public class BossSlayer extends CustomEnchantment
             return;
         }
         if (playerHit.hasMetadata("boss")) {
-           e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*2);
+           e.setDamage(e.getDamage()*2);
         }
     }
 }

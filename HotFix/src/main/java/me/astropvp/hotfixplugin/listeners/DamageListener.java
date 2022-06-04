@@ -132,7 +132,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -141,7 +141,7 @@ public class DamageListener implements Listener {
             Player phurt = (Player) e.getEntity();
             if (getProtectionReduction(phurt) != 0) {
                 double totalReduction = getProtectionReduction(phurt);
-                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1 - (totalReduction * 0.01));
+                e.setDamage(e.getDamage() * 1 - (totalReduction * 0.01));
             }
 
 
@@ -152,7 +152,7 @@ public class DamageListener implements Listener {
 
 
             if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD || ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_AXE) {
-                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, e.getDamage() * 0.75);
+                e.setDamage( e.getDamage() * 0.75);
             }
         }
     }

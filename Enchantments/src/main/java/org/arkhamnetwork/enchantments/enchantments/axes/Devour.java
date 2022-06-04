@@ -20,7 +20,7 @@ public class Devour extends CustomEnchantment
     }
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
@@ -30,7 +30,7 @@ public class Devour extends CustomEnchantment
                 }
 
             double mod = (double)Bleed.getBleedStack(target) * 0.01D + ((double)enchantLevel * 0.1D + 1.0D)/2;
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * mod);
+            event.setDamage(event.getDamage() * mod);
             target.setMetadata("effectedByDevour", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);

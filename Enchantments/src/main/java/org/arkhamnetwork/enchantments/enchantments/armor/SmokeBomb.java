@@ -87,7 +87,7 @@ extends CustomEnchantment {
 /*                    ((Player)victim).addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, Math.max(level, 3) * 20, Math.min(level, 3)));
                     ((Player)victim).addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(level, 3) * 20, Math.min(level, 3)));*/
                 }
-                //e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0.0);
+                //e.setDamage(0.0);
             }
         }
     }

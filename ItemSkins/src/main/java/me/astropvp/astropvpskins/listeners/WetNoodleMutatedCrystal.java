@@ -13,7 +13,7 @@ public class WetNoodleMutatedCrystal implements Listener {
         if (event.getEntity() instanceof Player) {
             if (WetNoodleSword.isWetNoodled((Player) event.getEntity())) {
                 if (AstroArmorSetsAPI.hasMutatedCrystalEquipped((Player) event.getEntity())) {
-                    event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.075);
+                    event.setDamage(event.getDamage()*1.075);
                 }
             }
         }

@@ -112,7 +112,7 @@ public class AstroSpawners extends JavaPlugin {
         //getSpawnerManager().load();
         try {
             new WorldCreator(getConfig().getString("flat")).createWorld();
-            new WorldCreator(getConfig().getString("flat2")).createWorld();
+            //new WorldCreator(getConfig().getString("flat2")).createWorld();
         } catch (Exception e) {
             e.printStackTrace();
         }

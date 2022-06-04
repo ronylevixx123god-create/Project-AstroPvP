@@ -48,7 +48,7 @@ implements Listener {
                     }.runTaskLater((Plugin)Enchantments.getInstance(), 1L);
                 }
                 if (level == 3) {
-                    GeneralUtil.healPlayer((LivingEntity)player, Math.min(6.0, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 0.1));
+                    GeneralUtil.healPlayer((LivingEntity)player, Math.min(6.0, e.getDamage() * 0.1));
                 }
             }
         }

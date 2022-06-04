@@ -55,7 +55,7 @@ public class MutatedSinkOrSwipFlippers extends ItemSkin {
             if (damager.getItemInHand().getType().name().endsWith("_SWORD")) {
 
                 if (isPlayerBehind(damager, damaged)) {
-                    event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.25);
+                    event.setDamage(event.getDamage() * 1.25);
                     damager.sendMessage(CC.translate("&c&lx1.25 DMG &7(Sink Or Swim Flippers)"));
                 }
                 if (Math.random() < 0.06) {
@@ -71,7 +71,7 @@ public class MutatedSinkOrSwipFlippers extends ItemSkin {
         }
 
         if (sinked.contains(damaged)) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.125);
+            event.setDamage(event.getDamage() * 1.125);
         }
 
     }

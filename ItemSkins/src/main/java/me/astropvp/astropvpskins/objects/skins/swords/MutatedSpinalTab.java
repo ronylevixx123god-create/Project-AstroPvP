@@ -51,7 +51,7 @@ public class MutatedSpinalTab extends ItemSkin {
         }
 
         if (!playersStruck.isEmpty()) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1+(playersStruck.size()*5/100)));
+            event.setDamage(event.getDamage() * (1+(playersStruck.size()*5/100)));
         }
 
 

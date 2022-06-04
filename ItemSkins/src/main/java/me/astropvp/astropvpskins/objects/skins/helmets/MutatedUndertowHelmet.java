@@ -27,7 +27,7 @@ public class MutatedUndertowHelmet extends ItemSkin {
 
         if (damaged instanceof Player) {
             if (UndertowFieldTask.affected.contains(damaged)) {
-                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.05);
+                event.setDamage(event.getDamage() * 1.05);
             }
         }
     }

@@ -28,7 +28,7 @@ public class HeroicOverwhelm extends HeroicCustomEnchantment{
         if (Math.random() < 0.08) {
             target.setMetadata("overwhelm_effect", new FixedMetadataValue(Enchantments.getInstance(), true));
             target.sendMessage(CC.translate("&6&l* STRUCK BY OVERWHELM EFFECT &7[" + user.getName() + "&7]&6&l *"));
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.15);
+            event.setDamage(event.getDamage()*1.15);
 
             Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
                 target.removeMetadata("overwhelm_effect", Enchantments.getInstance());

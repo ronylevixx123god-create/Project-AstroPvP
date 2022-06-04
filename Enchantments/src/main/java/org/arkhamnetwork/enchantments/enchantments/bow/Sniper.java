@@ -75,7 +75,7 @@ extends CustomEnchantment {
                 return;
             }
             double multiplier = level * 0.42 + 1.0;
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * multiplier);
+            event.setDamage(event.getDamage() * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
             ((Player)target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");
             ((Player)target).playSound(target.getLocation(), Sound.HURT_FLESH, 2.0f, 0.3f);

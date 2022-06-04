@@ -76,11 +76,11 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 30;
-        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1 + (increasePercent  * 0.01)));    }
+        event.setDamage(event.getDamage() * (1 + (increasePercent  * 0.01)));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 7.5;
-        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1 + (increasePercent * amount * 0.01)));
+        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
     }
 
     public List<String> getArmorLore() {

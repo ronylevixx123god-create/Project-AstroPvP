@@ -37,7 +37,7 @@ implements Listener {
             boolean koth = e.getDamager().getWorld().getName().equals("world_koth");
             boolean outpost = e.getDamager().getWorld().getName().startsWith("cosmic-station");
             double incre = Math.min(1.75, 1.0 + (double)level * (koth || outpost ? 0.05 : 0.1));
-            double damage = e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE);
+            double damage = e.getDamage();
             //AstroDamageHandler.getInstance().getDamageHandler().increaseDamage(incre*10, e, "Leadership");
 
         }

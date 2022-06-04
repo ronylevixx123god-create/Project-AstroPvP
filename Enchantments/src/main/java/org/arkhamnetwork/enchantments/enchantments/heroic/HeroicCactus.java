@@ -25,6 +25,7 @@ public class HeroicCactus extends HeroicCustomEnchantment
                 final Player pAttacker = (Player)attacker;
                 //pAttacker.damage(0.5 * level);
 
+
                 if (Rage.getPVPHitCombo(pAttacker) != 0) {
                     Rage.subtractPVPHitCombo(pAttacker);
 
@@ -34,7 +35,7 @@ public class HeroicCactus extends HeroicCustomEnchantment
             }
             final double thornNegateChance = (level == 1) ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {
-                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0);
+                e.setDamage(0);
             }
         }
     }

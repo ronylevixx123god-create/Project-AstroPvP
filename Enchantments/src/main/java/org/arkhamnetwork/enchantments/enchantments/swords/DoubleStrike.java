@@ -46,7 +46,7 @@ public class DoubleStrike
         if (random < (chance = 0.02 * (double) level)) {
             double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
             if (dmg == 0.0) {
-                dmg = e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE);
+                dmg = e.getDamage();
             }
             final double fdmg = dmg;
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {

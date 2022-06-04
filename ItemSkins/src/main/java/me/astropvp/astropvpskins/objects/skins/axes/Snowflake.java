@@ -50,7 +50,7 @@ public class Snowflake extends ItemSkin {
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {stacks.put(damager, stacks.get(damager) - 1);}, 200L);
         if(Math.random() <= 0.04) {
             ((Player) damaged).addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 40, 1));
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.05);
+            event.setDamage(event.getDamage()*1.05);
             damager.sendMessage(CC.AquaB + "** DEEP FREEZE " + CC.Gray + "[" + damaged.getName() + "]" + CC.AquaB + " **");
         }
         if(Math.random() <= 0.33) {
@@ -66,7 +66,7 @@ public class Snowflake extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if(stacks.containsKey(damaged) && stacks.get(damaged) > 0) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*(1-stacks.get(damaged)/100));
+            event.setDamage(event.getDamage()*(1-stacks.get(damaged)/100));
 
         }
     }

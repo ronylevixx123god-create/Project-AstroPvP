@@ -44,7 +44,7 @@ implements Listener {
             String summoner = ((MetadataValue)e.getDamager().getMetadata("guardianSummoner").get(0)).asString();
             Player pSummoner = Bukkit.getPlayer((String)summoner);
             if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAtleastTruce(p, pSummoner))) {
-                //e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0.0);
+                //e.setDamage(0.0);
                 return;
             }
         }
@@ -58,7 +58,7 @@ implements Listener {
                 String summoner = ((MetadataValue)e.getEntity().getMetadata("guardianSummoner").get(0)).asString();
                 Player pSummoner = Bukkit.getPlayer((String)summoner);
                 if (pSummoner != null && (summoner.equalsIgnoreCase(p.getName()) || GeneralUtil.isAlly(p, pSummoner))) {
-                    //e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0.0);
+                    //e.setDamage(0.0);
                     return;
                 }
                 if (pSummoner != null && pSummoner.hasMetadata("bloodLink")) {

@@ -19,7 +19,7 @@ public class DemonicListener implements Listener {
         if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
             Player damager = (Player)event.getDamager();
             if (damager.hasMetadata("demonic_pet"))
-                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.05D);
+                event.setDamage(event.getDamage() * 1.05D);
         }
     }
 }

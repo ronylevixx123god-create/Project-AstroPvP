@@ -23,9 +23,9 @@ public class MutatedTommyTail extends ItemSkin {
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation()))
             return;
         if (damager.getItemInHand() != null && damager.getItemInHand().getType().name().endsWith("_SWORD")) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.05);
+            event.setDamage(event.getDamage()*1.05);
         }
-        if (Math.random() < 0.009) {
+        if (Math.random() < 0.004) {
             if (damaged instanceof Player) {
                 InventoryBansheePet.startBansheeEffect(damager, (Player) damaged,8);
                 damaged.sendMessage(CC.translate("&2&l* " + damager.getName() + "'s TOMMY TAIL &7Banshee Effect &2&l*"));
@@ -33,7 +33,7 @@ public class MutatedTommyTail extends ItemSkin {
         }
 
         if (damager.getHealth() <= damager.getMaxHealth()*0.6) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.1);
+            event.setDamage(event.getDamage()*1.1);
             damager.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7+10% DMG&2&l] *"));
         }
     }

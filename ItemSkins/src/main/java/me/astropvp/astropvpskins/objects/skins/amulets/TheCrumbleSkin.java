@@ -25,7 +25,7 @@ public class TheCrumbleSkin extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
         if (this.crumbledPlayers.contains(damaged)) {
             damaged.sendMessage(CC.translate("&e&l* THE CRUMBLE [&7-10% DMG&e&l] &e&l*"));
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*0.9);
+            event.setDamage(event.getDamage()*0.9);
         } else if (damaged.hasMetadata("divineFire")) {
             if (Math.random() < 0.075) {
                 this.crumbledPlayers.add(damaged);

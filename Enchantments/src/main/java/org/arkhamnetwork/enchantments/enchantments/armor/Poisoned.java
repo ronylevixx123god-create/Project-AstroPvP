@@ -28,15 +28,14 @@ extends CustomEnchantment {
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        double chance;
         if (attacker == null) {
             return;
         }
         int time = (int)(Math.random() * (double)level + 0.5 * (double)level);
         int amp = level > 2 ? 1 : 0;
         double random = Math.random();
-        double d = chance = level > 3 ? 0.3 : 0.1 * (double)level;
-        if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
+        double chance = 0.005;
+        if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.POISON, time * 20, amp));
         }
     }

@@ -84,7 +84,7 @@ public class RocketEscape
                 }
 
                 if (((Player) player).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
-                    e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.5);
+                    e.setDamage(e.getDamage()*1.5);
                     player.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7Heroic Rocket Escape 2x Damage&2&l] *"));
                 }
 
@@ -98,7 +98,7 @@ public class RocketEscape
                         return;
                     }
                 }
-                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0.0);
+                e.setDamage(0.0);
                 pl.sendMessage("");
                 pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
                 pl.sendMessage("");

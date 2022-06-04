@@ -28,7 +28,7 @@ implements Listener {
         Player p;
         if (e.getEntity() instanceof Player && (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) && (p = (Player)e.getEntity()).hasMetadata("virusEnchantmentExpire") && System.currentTimeMillis() < ((MetadataValue)p.getMetadata("virusEnchantmentExpire").get(0)).asLong()) {
             int level = ((MetadataValue)p.getMetadata("virusEnchantmentLevel").get(0)).asInt();
-            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (double)(level + 1));
+            e.setDamage(e.getDamage() * (double)(level + 1));
         }
     }
 }

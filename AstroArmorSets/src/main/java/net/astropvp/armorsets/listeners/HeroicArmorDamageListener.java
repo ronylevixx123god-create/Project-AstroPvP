@@ -14,7 +14,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HeroicArmorDamageListener implements Listener {
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(
+            priority = EventPriority.NORMAL)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
@@ -24,14 +25,15 @@ public class HeroicArmorDamageListener implements Listener {
 
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getHeroicPieces() != 0) {
-            double totalReduction = cache.getHeroicPieces() * 20;
+            double totalReduction = cache.getHeroicPieces() * 15.0;
             if (e.getDamager() instanceof Player) {
                 if (Math.random() < 0.33 && AstroItemSkinsAPI.hasSkinEquipped((Player) e.getDamager(), SkinType.THANKSGIVING_2021_SWORD)) {
                     e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + e.getDamager().getName() + "'s Carver &4&l] *"));
                     return;
                 }
             }
-            e.setDamage(e.getDamage() *1 - (totalReduction  * 0.01));        }
+            e.setDamage( e.getDamage() * 1 - (totalReduction * 0.01));
+        }
 
     }
 }

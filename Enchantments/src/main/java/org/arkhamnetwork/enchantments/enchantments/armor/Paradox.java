@@ -73,7 +73,7 @@ extends CustomEnchantment {
         ArrayList<Player> affectedPlayers = new ArrayList<Player>();
         if (random < chance) {
             Player p = (Player)player;
-            double amountToHeal = e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (double)(level / 10);
+            double amountToHeal = e.getDamage() * (double)(level / 10);
             int cost = this.soulCost;
 
 

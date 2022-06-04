@@ -32,9 +32,9 @@ extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player.hasMetadata("neutralized"))
             return;
-        double chance;
         double random = Math.random();
-        if (random < (chance = 0.015 * (double)level) && attacker != null) {
+        double chance = 0.005;
+        if (random < chance && attacker != null) {
             DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.YellowB + "* WITHER " + CC.Gray + "[" + level + "s]" + CC.YellowB + " *" + CC.YellowB +  "*", "WITHER");
 
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * level, level - 1));

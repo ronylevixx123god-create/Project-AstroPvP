@@ -34,7 +34,7 @@ public class SprayPrayBackpack extends ItemSkin {
             return;
         if (!(damaged instanceof Player)) return;
         if (sprayed.contains(damaged)) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.06);
+            event.setDamage(event.getDamage() * 1.06);
         }
         if (Math.random() < 0.02) {
             damager.sendMessage(CC.translate("&a&l*&e&l* &a&lSPRAY AND PRAY ABILITY &7[10s - " + damaged.getName() + "] &e&l*&a&l*"));
@@ -55,7 +55,7 @@ public class SprayPrayBackpack extends ItemSkin {
 
 
         if (sprayer.contains(damaged)) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 0.94);
+            event.setDamage(event.getDamage() * 0.94);
         }
     }
 }

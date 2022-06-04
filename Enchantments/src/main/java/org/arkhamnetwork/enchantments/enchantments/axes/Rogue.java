@@ -112,18 +112,18 @@ public class Rogue extends CustomEnchantment {
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
-                    e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, damage + multi * 0.1);
+                    e.setDamage( damage + multi * 0.1);
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&e&lSoul Harvester&c&l)"));
 
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
-                    e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, damage + multi * 0.1);
+                    e.setDamage( damage + multi * 0.1);
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&c&lSoul Maui's Hook&c&l)"));
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD)) {
-                    e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, damage + multi * 0.1);
+                    e.setDamage( damage + multi * 0.1);
                     ((Player) player).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&2&lDoomsday Machete&c&l)"));
                 } else {
                     ((Player) playerHit).sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** " + ((Player) player).getName() + "'s ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));
-                    e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, damage + multi * 0.1);
+                    e.setDamage( damage + multi * 0.1);
                 }
 
 

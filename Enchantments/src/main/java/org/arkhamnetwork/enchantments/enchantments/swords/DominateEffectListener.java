@@ -17,7 +17,7 @@ final class DominateEffectListener implements Listener {
             if ((long)MinecraftServerUtils.getCurrentServerTick() < expireTick) {
                 int dominateLevel = ((MetadataValue)e.getDamager().getMetadata(Dominate.dominateEffectLevel_metadata).get(0)).asInt();
                 double mod = 1.0D - (double)(dominateLevel * 5 / 100);
-                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * mod);
+                e.setDamage(e.getDamage() * mod);
             } else {
                 e.getDamager().removeMetadata(Dominate.dominateEffectExpire_metadata, Enchantments.getInstance());
                 e.getDamager().removeMetadata(Dominate.dominateEffectLevel_metadata, Enchantments.getInstance());

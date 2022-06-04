@@ -16,7 +16,7 @@ public class CupidsHeart extends ItemSkin {
         if(!(damaged instanceof Player))
             return;
         if(damaged.hasMetadata("noDefenseProcs"))
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.1);
+            event.setDamage(event.getDamage()*1.1);
     }
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {

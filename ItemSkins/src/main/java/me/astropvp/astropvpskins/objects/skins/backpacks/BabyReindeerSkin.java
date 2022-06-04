@@ -34,7 +34,7 @@ public class BabyReindeerSkin extends ItemSkin {
             nearby.removeIf(entity -> !(entity instanceof Player));
             nearby.removeIf(entity -> !GeneralUtil.isAtleastTruce(damaged, (Player) damager));
             if (nearby.size() == 0 && damaged.getHealth() <= 6) {
-                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*0.75);
+                event.setDamage(event.getDamage()*0.75);
             } else if (Math.random() > 0.5) {
                 if (event.getFinalDamage() - damaged.getHealth() < 6) {
                     if (nearby.size() == 0)
@@ -43,7 +43,7 @@ public class BabyReindeerSkin extends ItemSkin {
                     if (FactionUtils.isInEnemyFaction((Player) damager, target)) {
                         target.damage(event.getFinalDamage());
                     }
-                    //event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,0);
+                    //event.setDamage(0);
                 }
             }
         }

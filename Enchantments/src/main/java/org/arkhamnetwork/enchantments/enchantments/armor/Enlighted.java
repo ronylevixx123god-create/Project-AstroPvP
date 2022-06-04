@@ -34,7 +34,7 @@ public class Enlighted extends CustomEnchantment
         if (level > 3) {
             level = 3;
         }
-        final double chance = 0.03 * level;
+        final double chance = 0.005 * level;
         if (random < chance) {
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
                 @Override

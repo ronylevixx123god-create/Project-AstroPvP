@@ -20,7 +20,7 @@ public class SkullScytheSkin extends ItemSkin {
         if (DuelAPI.isSpectator(damager)) return;
 
 
-        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*1.025);
+        event.setDamage(event.getDamage()*1.025);
         if(Math.random() <= 0.1) {
             damaged.setMetadata("scytheSilence", (MetadataValue)new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), System.currentTimeMillis() + 10000));
         }

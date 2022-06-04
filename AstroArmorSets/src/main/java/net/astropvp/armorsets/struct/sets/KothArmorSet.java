@@ -44,7 +44,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
         } else {
             increasePercent = 50;
         }
-        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1 + (increasePercent * 0.01)));
+        event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
@@ -54,7 +54,7 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
         } else {
             increasePercent = 12.5;
         }
-        event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1 + (increasePercent * amount * 0.01)));
+        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
     }
 
 

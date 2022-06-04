@@ -33,7 +33,7 @@ implements Listener {
         Player p;
         Projectile pj;
         if (e.getDamager() instanceof Projectile && (pj = (Projectile)e.getDamager()).getShooter() instanceof Player && (p = (Player)pj.getShooter()).hasMetadata("unfocusEnchantmentExpire") && System.currentTimeMillis() < ((MetadataValue)p.getMetadata("unfocusEnchantmentExpire").get(0)).asLong()) {
-            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) / 2.0);
+            e.setDamage(e.getDamage() / 2.0);
             p.sendMessage((Object)ChatColor.DARK_GREEN + "** UNFOCUSED [50% BOW DMG] **");
         }
     }

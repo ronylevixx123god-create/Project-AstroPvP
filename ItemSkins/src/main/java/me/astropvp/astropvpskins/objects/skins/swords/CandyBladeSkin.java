@@ -33,7 +33,7 @@ public class CandyBladeSkin extends ItemSkin {
 
         if (damager.hasMetadata("candyBladeAbility") && Math.random() < 0.15) {
             //damager.sendMessage(CC.translate("&c&l* SUGAR RUSH&7 [+20% DMG] &c&l*"));
-            //event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.2);
+            //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.2);
         }
 
 

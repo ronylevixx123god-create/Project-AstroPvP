@@ -52,7 +52,7 @@ extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
             Player p = (Player)player;
-            double dmg = e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE);
+            double dmg = e.getDamage();
             dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
                 if (p.hasMetadata("Lifeblooming") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("Lifeblooming").get(0)).asLong() <= 10000L) {

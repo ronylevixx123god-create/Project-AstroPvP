@@ -29,7 +29,7 @@ extends CustomEnchantment {
             return;
         }
         double mod = 1.0 + 0.05 * (double)level;
-        e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * mod);
+        e.setDamage(e.getDamage() * mod);
     }
 }
 

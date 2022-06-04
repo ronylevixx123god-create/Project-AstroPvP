@@ -50,11 +50,12 @@ public class Rage extends CustomEnchantment {
             }
 
             // && !GeneralUtil.isEffectedByDevour(target)
-            if (hitCombo > 1.0D) {
                 this.playRageEffect(target.getEyeLocation(), enchantLevel);
-                event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1 + (hitCombo *mod)));
+
+                event.setDamage( event.getDamage() * (1 + (hitCombo *mod)));
+
                 target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
-            }
+
 
             this.addPVPHitCombo((Player) user);
 
@@ -69,7 +70,7 @@ public class Rage extends CustomEnchantment {
 
         if (event.isCancelled()) return;
 
-        if (!event.isCancelled() && event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
+        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
 
             Player pUser = (Player) user;
 
@@ -85,7 +86,7 @@ public class Rage extends CustomEnchantment {
                 mod = 10;
             }
 
-            double damage = event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE);
+            double damage = event.getDamage();
 
 
 
@@ -99,7 +100,7 @@ public class Rage extends CustomEnchantment {
                 mod*=0.7;
             }
 
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,damage + mod);
+            event.setDamage(damage + mod);
         }
 
     }*/

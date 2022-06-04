@@ -1,5 +1,6 @@
 package net.astropvp.armorsets.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.skins.swords.WetNoodleSword;
@@ -8,6 +9,7 @@ import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.core.AstroCore;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -19,7 +21,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import java.util.Map;
 
 public class ArmorSetDamageListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(
+            priority = EventPriority.HIGHEST)
     public void onAttack(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -49,12 +52,14 @@ public class ArmorSetDamageListener implements Listener {
             if (!cache.getCurrentSetCrystals().isEmpty()) {
                 if (((Player) attacker).getItemInHand() == null) return;
                 if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
-                if (!((Player) attacker).getItemInHand().getType().name().endsWith("_SWORD") && !((Player) attacker).getItemInHand().getType().name().endsWith("_AXE")) return;
+                if (!((Player) attacker).getItemInHand().getType().name().endsWith("_SWORD") && !((Player) attacker).getItemInHand().getType().name().endsWith("_AXE"))
+                    return;
 
                 Map<ArmorSetType, Integer> crystals = cache.getCurrentSetCrystals();
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
+
                     armorSetType.getArmorSet().onAttackCrystal((Player) attacker, attacked, e, amount);
 
                 }
@@ -64,7 +69,8 @@ public class ArmorSetDamageListener implements Listener {
 
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(
+            priority = EventPriority.HIGHEST)
     public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -89,7 +95,7 @@ public class ArmorSetDamageListener implements Listener {
 
             //crystals damaged
             if (cache != null && !cache.getCurrentSetCrystals().isEmpty()) {
-                Map<ArmorSetType, Integer> crystals = AstroArmorSetsAPI.getBonusCrystalsEquippedIncludingCorruption((Player)attacker, (Player)attacked);
+                Map<ArmorSetType, Integer> crystals = AstroArmorSetsAPI.getBonusCrystalsEquippedIncludingCorruption((Player) attacker, (Player) attacked);
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     if (WetNoodleSword.isWetNoodled((Player) attacker)) {

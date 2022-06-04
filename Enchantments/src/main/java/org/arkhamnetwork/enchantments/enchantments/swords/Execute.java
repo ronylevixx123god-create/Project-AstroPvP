@@ -52,7 +52,7 @@ public class Execute extends CustomEnchantment
         final double random = Math.random();
         final double chance = 0.03 * level;
         if (random < chance) {
-            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (level/2.0));
+            e.setDamage(e.getDamage() * (level/2.0));
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");

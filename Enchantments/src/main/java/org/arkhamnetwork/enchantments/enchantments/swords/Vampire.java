@@ -20,7 +20,7 @@ public class Vampire extends CustomEnchantment
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        final double chance = 0.05 * level;
+        final double chance = 0.0025 * level;
         final double healthGain = level;
         if (Math.random() < chance) {
             if (playerHit instanceof Player && MaskUtils.hasMaskEquipped((Player)playerHit, "NECROMANCER")) {

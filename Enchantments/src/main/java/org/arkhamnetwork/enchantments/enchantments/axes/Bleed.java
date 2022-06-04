@@ -25,7 +25,7 @@ public class Bleed extends CustomEnchantment
     }
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) > 0.0 && user instanceof Player) {
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
             final double bleedChance = 0.02 * enchantLevel;
             if (Math.random() < bleedChance && getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
                 if (Math.random() < 0.25 && user.hasMetadata("bleedStack") && EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Combat Medic")) {

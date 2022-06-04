@@ -27,7 +27,7 @@ extends HeroicCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         final double random = Math.random();
-        final double chance = enchantLevel * 0.075;
+        final double chance = enchantLevel * 0.065;
         if (random <= chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) ((Player) target), (String) "NECROMANCER")) {
                 return;
@@ -38,7 +38,7 @@ extends HeroicCustomEnchantment {
 
             if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
 
-            GeneralUtil.healPlayer(user, 4);
+            GeneralUtil.healPlayer(user, 3);
         }
     }
 }

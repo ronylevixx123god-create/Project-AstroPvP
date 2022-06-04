@@ -39,7 +39,7 @@ extends CustomEnchantment {
         double minDmgToProc = 10 - level;
         double chance = (double)level * 0.05;
         if (player.getHealth() - dmg <= 0.0 && dmg >= minDmgToProc && Math.random() < chance) {
-            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*0.5);
+            e.setDamage(e.getDamage()*0.5);
 
             ((Player)player).sendMessage((Object)ChatColor.DARK_GREEN + "" + (Object)ChatColor.BOLD + "** RESILIENCE (" + (Object)ChatColor.DARK_GREEN + "50% DMG TAKEN" + (Object)ChatColor.BOLD + ") **");
         }

@@ -19,8 +19,15 @@ public class HeroicInversion extends HeroicCustomEnchantment
         this.interval = 4.0;
     }
 
-    public void applyDefenseEffect(final LivingEntity entityHit, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        final float procChance = (float)(0.05 * level);
+    public void applyDefenseEffect(final LivingEntity entityHit, final LivingEntity attacker, final int level, final EntityDamageByEntityEvent e) {
+
+        if (attacker.hasMetadata("neutralized")) {
+            return;
+        }
+        if (attacker.hasMetadata("noDefenseProcs")) {
+            return;
+        }
+        final float procChance = (float)(0.0025 * level);
         if (Math.random() < 0.28 && Bleed.getBleedStack(entityHit) > 1) {
             final int newStack = Bleed.getBleedStack(entityHit) - 1;
             if (newStack > 0) {
@@ -32,7 +39,7 @@ public class HeroicInversion extends HeroicCustomEnchantment
         }
         if (Math.random() <= procChance) {
             final Player playerHit = (Player)entityHit;
-            final double heal = new Random().nextInt(5) + 1;
+            final double heal = new Random().nextInt(2) + 1;
             if (heal >= 1.0) {
                 if (Corrupt.isCorrupted(playerHit) && Math.random() < Corrupt.getCorruptLevel(playerHit) * 0.2f) {
                     playerHit.damage(heal);

@@ -22,7 +22,7 @@ public class CorpseGrinder extends ItemSkin {
 
 
         if (Math.random() < 0.01) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE)*0.75);
+            event.setDamage(event.getDamage()*0.75);
         }
     }
 }

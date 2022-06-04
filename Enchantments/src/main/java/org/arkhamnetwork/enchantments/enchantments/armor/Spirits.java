@@ -99,7 +99,7 @@ extends CustomEnchantment {
                         Player player;
                         if (!(nearby instanceof Player) || (player = (Player)nearby).hasMetadata("heal_cd") && (cd = ((MetadataValue)player.getMetadata("heal_cd").get(0)).asLong()) > System.currentTimeMillis() || (fpl = FPlayers.getInstance().getByPlayer(player)) == null || !fpl.hasFaction() || fpl.getRelationTo((RelationParticipator)faction) != Relation.ALLY || player.getHealth() >= player.getMaxHealth() || player.isDead()) continue;
                         ++healed;
-                        GeneralUtil.healPlayer((LivingEntity)player, toHeal);
+                        //GeneralUtil.healPlayer((LivingEntity)player, toHeal);
                         player.setMetadata("heal_cd", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)((double)System.currentTimeMillis() + (double)required / 20.0 * 1000.0)));
                         try {
                          //   ParticleEffect.HEART.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().clone().add(0.0, 1.0, 1.0), 0.75f, 0.75f, 0.75f, 0.01f, 15);

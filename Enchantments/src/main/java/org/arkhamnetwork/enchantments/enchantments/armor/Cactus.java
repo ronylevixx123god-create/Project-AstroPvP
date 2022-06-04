@@ -47,6 +47,8 @@ public class Cactus extends CustomEnchantment
             if (attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;
                 //pAttacker.damage(0.5 * level);
+
+
                 if (Rage.getPVPHitCombo(pAttacker) != 0) {
                     Rage.subtractPVPHitCombo(pAttacker);
 

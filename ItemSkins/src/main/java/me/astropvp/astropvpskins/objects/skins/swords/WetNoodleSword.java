@@ -33,7 +33,7 @@ public class WetNoodleSword extends ItemSkin {
 
         if (!(damaged instanceof Player)) return;
         if (damager.getHealth() < 14) {
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.33);
+            event.setDamage(event.getDamage() * 1.33);
         }
 
         if (Math.random() < 0.025) {

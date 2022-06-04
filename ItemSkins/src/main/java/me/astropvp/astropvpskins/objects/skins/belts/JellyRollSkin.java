@@ -10,6 +10,6 @@ public class JellyRollSkin extends ItemSkin {
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if(damager.getItemInHand().getType().name().endsWith("_AXE"))
-            event.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,event.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * 1.05);
+            event.setDamage(event.getDamage() * 1.05);
     }
 }

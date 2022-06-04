@@ -40,7 +40,7 @@ extends CustomEnchantment {
             }
             if (marksmanLevel > 0) {
                 double mod = 1.0 + (double)marksmanLevel * 0.015625;
-                e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE,e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * mod);
+                e.setDamage(e.getDamage() * mod);
             }
         }
     }
