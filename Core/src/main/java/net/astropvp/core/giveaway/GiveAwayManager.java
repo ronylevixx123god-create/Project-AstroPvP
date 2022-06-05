@@ -162,12 +162,12 @@ public class GiveAwayManager {
         JSONMessage message = new JSONMessage("", ChatColor.GRAY);
         message.addText(CC.translate("&c&l * &cPrize: &f"));
         message.addItem(this.currentGiveAway.getPrize(), ItemLinking.formatColors(ChatColor.WHITE + this.getFormattedName(this.currentGiveAway.getPrize())).getText());
-        String winnersString = "";
+        StringBuilder winnersString = new StringBuilder();
         for (Player player : winners) {
-            winnersString += player.getName() + ", ";
+            winnersString.append(player.getName()).append(", ");
         }
-        winnersString = removeLastCharOptional(winnersString);
-        winnersString = removeLastCharOptional(winnersString);
+        winnersString = new StringBuilder(removeLastCharOptional(winnersString.toString()));
+        winnersString = new StringBuilder(removeLastCharOptional(winnersString.toString()));
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(CC.translate("&c&lAstro Giveaway Ended"));
         Bukkit.broadcastMessage(CC.translate("&c&l * &cWinners: &f" + winnersString));

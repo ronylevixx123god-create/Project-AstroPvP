@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder
  *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
@@ -40,10 +40,13 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
+import me.astropvp.astropvpskins.armorequip.ArmorType;
 import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicmasks.items.MultiMaskItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.*;
@@ -78,10 +81,10 @@ public class MaskListener implements Listener {
         return availableMasks.get(ThreadLocalRandom.current().nextInt(availableMasks.size()));
     }
 
-    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGameModeChange(PlayerGameModeChangeEvent event) {
         if (event.getNewGameMode() == GameMode.CREATIVE) {
-            Bukkit.getScheduler().runTaskLater((Plugin)CosmicMasks.get(), () -> event.getPlayer().updateInventory(), 1L);
+            Bukkit.getScheduler().runTaskLater((Plugin) CosmicMasks.get(), () -> event.getPlayer().updateInventory(), 1L);
         }
     }
 
@@ -92,32 +95,32 @@ public class MaskListener implements Listener {
         if (item != null && item.getType() == Material.CHEST && (wrapper = new NBTWrapper(item)).getString("cosmicType").equalsIgnoreCase("RANDOM_MASK")) {
             event.setCancelled(true);
             Player player = event.getPlayer();
-            if (!player.getWorld().getName().equalsIgnoreCase(((World)Bukkit.getWorlds().get(0)).getName()) && !player.getWorld().getName().contains("_nether")) {
+            if (!player.getWorld().getName().equalsIgnoreCase(((World) Bukkit.getWorlds().get(0)).getName()) && !player.getWorld().getName().contains("_nether")) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must open this in the Overworld!");
                 return;
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                long id = ItemID.getItemID((ItemStack)item);
+                long id = ItemID.getItemID((ItemStack) item);
                 if (id != -1L && ItemID.blacklist_iid.contains(id)) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your inventory.");
-                    player.setItemInHand((ItemStack)null);
+                    player.setItemInHand((ItemStack) null);
                     player.updateInventory();
                     return;
                 }
                 if (id != -1L) {
-                    ItemID.blacklistIID((long)id, (String)("random mask: " + player.getName()));
+                    ItemID.blacklistIID((long) id, (String) ("random mask: " + player.getName()));
                 }
             }
-            player.setItemInHand((ItemStack)null);
+            player.setItemInHand((ItemStack) null);
             MaskType type = this.getRandomMask();
             player.setItemInHand(type.createMask(true));
-            Bukkit.broadcastMessage((String)(CC.YellowB + "(!) " + CC.Yellow + player.getName() + " has received a " + type.getMaskData().getDisplayName() + CC.Yellow + " from their Mask Generator!"));
+            Bukkit.broadcastMessage((String) (CC.YellowB + "(!) " + CC.Yellow + player.getName() + " has received a " + type.getMaskData().getDisplayName() + CC.Yellow + " from their Mask Generator!"));
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerPlace(BlockPlaceEvent event) {
         if (event.getItemInHand() != null && event.getItemInHand().getType() == Material.SKULL_ITEM && new NBTWrapper(event.getItemInHand()).getString("cosmicType").equals("COSMIC_MASK")) {
             event.setCancelled(true);
@@ -125,10 +128,10 @@ public class MaskListener implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerDamageOther(EntityDamageByEntityEvent event) throws Exception {
         if (event.getDamager() instanceof Player) {
-            Player player = (Player)event.getDamager();
+            Player player = (Player) event.getDamager();
             MaskType equipped = MaskType.fromPlayer(player);
             if (equipped == MaskType.PURGE) {
                 event.setDamage(event.getDamage() * 1.025);
@@ -141,11 +144,11 @@ public class MaskListener implements Listener {
             }
         }
         if (event.getEntity() instanceof Player) {
-            MaskType found = MaskType.fromPlayer((Player)event.getEntity());
+            MaskType found = MaskType.fromPlayer((Player) event.getEntity());
             if (Math.random() <= 0.02 && found == MaskType.TURKEY) {
                 event.setCancelled(true);
-                ((Player)event.getEntity()).sendMessage(CC.YellowB + "* DODGED [" + CC.Gray + "Turkey Mask" + CC.YellowB + "]");
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(),event.getEntity().getLocation().add(0.0, 0.5, 0.0), (float)0.2f, (float)0.2f, (float)0.2f, (float)0.1f, (int)10);
+                ((Player) event.getEntity()).sendMessage(CC.YellowB + "* DODGED [" + CC.Gray + "Turkey Mask" + CC.YellowB + "]");
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation().add(0.0, 0.5, 0.0), (float) 0.2f, (float) 0.2f, (float) 0.2f, (float) 0.1f, (int) 10);
 
             } else if (found == MaskType.MONOPOLY || found == MaskType.PARTY_HAT) {
                 event.setDamage(event.getDamage() * 0.95);
@@ -153,27 +156,27 @@ public class MaskListener implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onEntityDeath(EntityDeathEvent event) {
         Player killer;
         if (event.getEntity() instanceof Player) {
             return;
         }
         if (event.getEntity().getKiller() != null && MaskType.PILGRIM.hasEquipped(killer = event.getEntity().getKiller())) {
-            event.setDroppedExp((int)((double)event.getDroppedExp() * 1.25));
+            event.setDroppedExp((int) ((double) event.getDroppedExp() * 1.25));
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onPlayerFoodLoss(FoodLevelChangeEvent event) {
-        if (event.getEntity() instanceof Player && event.getFoodLevel() < ((Player)event.getEntity()).getFoodLevel() && MaskType.SCARECROW.hasEquipped((Player)event.getEntity())) {
+        if (event.getEntity() instanceof Player && event.getFoodLevel() < ((Player) event.getEntity()).getFoodLevel() && MaskType.SCARECROW.hasEquipped((Player) event.getEntity())) {
             event.setCancelled(true);
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onDamageByFire(EntityDamageEvent event) {
-        if (event.getEntity() instanceof Player && MaskType.DRAGON_MASK.hasEquipped((Player)event.getEntity()) && (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.LAVA)) {
+        if (event.getEntity() instanceof Player && MaskType.DRAGON_MASK.hasEquipped((Player) event.getEntity()) && (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.LAVA)) {
             event.setCancelled(true);
             event.setDamage(0.0);
         }
@@ -191,7 +194,7 @@ public class MaskListener implements Listener {
             applyingInvalidHelmet = true;
         }
         if (applyingInvalidHelmet) {
-            Player player = (Player)event.getWhoClicked();
+            Player player = (Player)((Object)event.getWhoClicked());
             if (player.isOp()) {
                 player.sendMessage(CC.Red + "Allowing you to equip this due to your OP status.");
                 return;
@@ -211,7 +214,9 @@ public class MaskListener implements Listener {
         return world.equalsIgnoreCase("world") || world.equalsIgnoreCase("world_nether") || world.contains("_end");
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+
+
+    @EventHandler(priority = EventPriority.HIGH)
     public void onInventoryClick(InventoryClickEvent event) {
         MaskType type2;
         NBTWrapper clickedWrapper;
@@ -220,11 +225,14 @@ public class MaskListener implements Listener {
         if (event.getClickedInventory() == null || !(event.getWhoClicked() instanceof Player)) {
             return;
         }
-        Player player = (Player)event.getWhoClicked();
+
+
+        Player player = (Player) event.getWhoClicked();
         if (!event.getClickedInventory().getName().equals("container.inventory")) {
             return;
         }
-        if (event.getSlotType() != InventoryType.SlotType.CONTAINER && event.getSlotType() != InventoryType.SlotType.QUICKBAR) {
+
+        if (event.getSlotType() != InventoryType.SlotType.CONTAINER && event.getSlotType() != InventoryType.SlotType.QUICKBAR && event.getSlotType() != InventoryType.SlotType.ARMOR) {
             return;
         }
         ItemStack clicked = event.getCurrentItem();
@@ -261,7 +269,7 @@ public class MaskListener implements Listener {
             }
             event.setCancelled(true);
             event.setCurrentItem(type.applyMaskNBT(cursorWrapper, other));
-            player.setItemOnCursor((ItemStack)null);
+            player.setItemOnCursor((ItemStack) null);
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 2.0f, 1.4f);
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 3.0f, 1.1f);

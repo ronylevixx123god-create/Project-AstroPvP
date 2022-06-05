@@ -22,7 +22,7 @@ public enum ArmorType
             return null;
         }
         final String type = itemStack.getType().name();
-        if (type.endsWith("_HELMET") || type.endsWith("_SKULL")) {
+        if (type.endsWith("_HELMET") || type.startsWith("SKULL")) {
             return ArmorType.HELMET;
         }
         if (type.endsWith("_CHESTPLATE")) {

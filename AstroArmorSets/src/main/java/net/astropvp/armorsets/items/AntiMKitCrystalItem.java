@@ -105,7 +105,7 @@ public class AntiMKitCrystalItem extends CosmicItem implements InventoryInteract
             return;
         Pair<Set<AntiMkit>, Integer> crystal = AstroArmorSetsAPI.getFromAntiMkitCrystal(nbtWrapper);
         if (crystal != null) {
-            if (AstroArmorSetsAPI.getAntiMkitCrystal(clickedWrapper) != null)
+            if (!AstroArmorSetsAPI.getAntiMkitCrystal(clickedWrapper).isEmpty())
                 throw new PrefixedException(
                         "You can not apply more than 1 Anti M-Kit Crystal to a single piece of gear!");
             if (nbtWrapper.isBlacklistedIID())

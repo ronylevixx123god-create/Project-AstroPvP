@@ -132,6 +132,17 @@ public class AstroArmorSetsAPI {
 
     }
 
+    public static void clearCache(Player player) {
+
+        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
+        ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
+        cache.setHeroicPieces(0);
+        cache.setOmniPieces(0);
+        cache.getCurrentAntiMkitCrystals().clear();
+        cache.setCurrentArmorSet(null);
+        cache.getCurrentSetCrystals().clear();
+    }
+
     public static void refreshArmorPiece(ItemStack newArmorPiece, ItemStack oldArmorPiece, Player player) {
 
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
@@ -381,20 +392,20 @@ public class AstroArmorSetsAPI {
     }
 
     public static List<ArmorSetType> getCrystalsFromItem(ItemStack item) {
+        List<ArmorSetType> crystals = new ArrayList<>();
 
         if (item == null) {
-            return null;
+            return crystals;
         }
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
         if (cosmicData == null) {
-            return null;
+            return crystals;
         }
-        List<ArmorSetType> crystals = new ArrayList<>();
         if (cosmicData.hasKey("crystalBonus")) {
             String upgrade = cosmicData.getString("crystalBonus");
             if (upgrade == null) {
-                return null;
+                return crystals;
             }
             ArmorSetType from = armorSetTypeFromName(upgrade);
             if (from != null) {
@@ -488,15 +499,15 @@ public class AstroArmorSetsAPI {
     }
 
     public static Set<AntiMkit> getAntiMkitCrystal(NBTWrapper wrapper) {
+        Set<AntiMkit> retr = new HashSet<>();
+
         if (wrapper == null)
-            return null;
+            return retr;
         NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
         if (cosmicData != null) {
-            Set<AntiMkit> retr = null;
             String abilityArmorSetEquipped = cosmicData.getString("antiMkit");
             if (abilityArmorSetEquipped != null && !abilityArmorSetEquipped.isEmpty()) {
                 AntiMkit set = mkitFromName(abilityArmorSetEquipped);
-                retr = new HashSet<>();
                 retr.add(set);
                 return retr;
             }
@@ -512,7 +523,7 @@ public class AstroArmorSetsAPI {
                 return retr;
             }
         }
-        return null;
+        return retr;
     }
 
     public static boolean hasMkitEquipped(Player player, AntiMkit armorSet) {
