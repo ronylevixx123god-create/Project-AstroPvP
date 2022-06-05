@@ -106,7 +106,7 @@ public class DamageListener implements Listener {
             if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
 
 
-            e.setDamage(e.getDamage() * 1.75);
+            e.setDamage(e.getDamage() * 2);
 
         }
     }
@@ -166,13 +166,13 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onShoot(EntityShootBowEvent e) {
-        if (e.getEntity().getWorld().getName().equals("space")) {
-            e.getEntity().sendMessage(CC.translate("&cBows are disable in /warp space"));
+        if (e.getEntity().getWorld().getName().equals("space") || e.getEntity().getLocation().getWorld().getName().equals("world_outpost_pluto") ) {
+            e.getEntity().sendMessage(CC.translate("&cBows are disabled here"));
             e.setCancelled(true);
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.NORMAL)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
