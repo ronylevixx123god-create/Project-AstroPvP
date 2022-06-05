@@ -89,7 +89,24 @@ public class DamageListener implements Listener {
                     dmgBuff += 1500;
                 }
             }
-            e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));
+            e.setDamage(e.getDamage() * 1 + (dmgBuff * 0.01));
+
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
+    public void plutoPvP(EntityDamageByEntityEvent e) {
+
+        if (e.getEntity() instanceof Player && e.getDamager() instanceof Player) {
+            if (!e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
+            Player damager = (Player) e.getDamager();
+            Player damaged = (Player) e.getEntity();
+            if (((Player) e.getDamager()).getItemInHand() == null) return;
+            if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
+
+
+            e.setDamage(e.getDamage() * 1.75);
 
         }
     }
@@ -175,7 +192,7 @@ public class DamageListener implements Listener {
 
 
             if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD || ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_AXE) {
-                e.setDamage( e.getDamage() * 0.75);
+                e.setDamage(e.getDamage() * 0.75);
             }
         }
     }
