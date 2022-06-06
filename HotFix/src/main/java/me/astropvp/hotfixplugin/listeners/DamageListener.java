@@ -172,7 +172,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -181,7 +181,7 @@ public class DamageListener implements Listener {
             Player phurt = (Player) e.getEntity();
             if (getProtectionReduction(phurt) != 0) {
                 double totalReduction = getProtectionReduction(phurt);
-                e.setDamage(e.getDamage() * 1 - (totalReduction * 0.01));
+                e.setDamage(e.getDamage() * (1 - (totalReduction * 0.01)));
             }
 
 
@@ -211,8 +211,8 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 10;
-                if (protLevel == 5) decrease += 5;
+                if (protLevel == 6) decrease += 7;
+                if (protLevel == 5) decrease += 4;
             }
         }
         return decrease;
