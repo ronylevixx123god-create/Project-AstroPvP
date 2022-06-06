@@ -96,7 +96,8 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
         player.playSound(player.getLocation(), Sound.NOTE_BASS, 0.5F, 0.5F);
         e.setCursor(null);
         e.setCancelled(true);
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> player.openInventory(getInventory(items)), 1L);
+        //player.getInventory().remove(clicked);
+        player.openInventory(getInventory(items));
     }
 
     public void onItemUse(Player player, ItemStack item, NBTWrapper wrapper, PlayerInteractEvent event) throws CosmicException {

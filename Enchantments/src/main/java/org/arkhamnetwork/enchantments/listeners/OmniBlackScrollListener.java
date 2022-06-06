@@ -48,8 +48,6 @@ public class OmniBlackScrollListener implements Listener {
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 0.5F, 0.5F);
             Location l = player.getLocation();
             Random random = new Random();
-            ParticleEffect.sendToLocation(ParticleEffect.WITCH_MAGIC, l.add(0.0D, 1.0D, 0.0D), random.nextFloat(), random.nextFloat(), random.nextFloat(), 0.8F, 85);
-            ParticleEffect.sendToLocation(ParticleEffect.MAGIC_CRIT, l.add(0.0D, 1.0D, 0.0D), random.nextFloat(), random.nextFloat(), random.nextFloat(), 0.65F, 30);
             player.removeMetadata("omniBlackScrollEdit", (Plugin)Enchantments.getInstance());
             player.closeInventory();
             PlayerUtil.giveOrDropProtectedItem(player, EnchantmentBook.getEnchantmentBook(enchantment, enchantment.getMaxLevel(), 100, 0), 60);
@@ -62,8 +60,7 @@ public class OmniBlackScrollListener implements Listener {
         if (!event.getInventory().getName().equalsIgnoreCase(CC.translate("&8Select an enchantment to remove.")))
             return;
         Player player = (Player)event.getPlayer();
-        if (OmniBlackscroll.getModifiedItems().containsValue(player.getUniqueId()))
-            OmniBlackscroll.getModifiedItems().remove(player.getUniqueId());
+        OmniBlackscroll.getModifiedItems().remove(player.getUniqueId());
         if (player.hasMetadata("omniBlackScrollEdit")) {
             player.sendMessage(CC.translate("&c&l(!) &cYou have exited the inventory without using the Omni Black Scroll!"));
             ItemStack item = CosmicSkyCustomItems.get().getItemManager().getCustomItem("omni_black_scroll").createItem(player, null);

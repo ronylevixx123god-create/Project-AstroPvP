@@ -55,26 +55,26 @@ public class AncientArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        double reductionPercent = 3;
+        double reductionPercent = 3 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageDecrease")  *  0.01));
 
         if ((AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_MUTATED_SWORD)) && Math.random() < 0.15) {
             amount--;
             attacker.sendMessage(CC.translate("&e&l** &eQueens Verdict &7Blocked an &6Ancient Crystal &7of " + attacked.getName() + "'s Set &e&l**"));
         }
-        event.setDamage(event.getDamage() * (1 - (reductionPercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageDecrease") * 0.01)));
+        event.setDamage(event.getDamage() * (1 - (reductionPercent * amount) * 0.01));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        double reductionPercent = 35;
-        event.setDamage(event.getDamage() * (1 - (reductionPercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageDecrease") * 0.01)));
+        double reductionPercent = 15 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageDecrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 - (reductionPercent * 0.01)));
         attacked.setVelocity(attacked.getVelocity().multiply(0.8));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 35;
-        event.setDamage(event.getDamage() * (1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01)));
+        double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageIncrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
@@ -84,8 +84,8 @@ public class AncientArmorSet extends ArmorSet {
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        double increasePercent = 7;
-        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01)));
+        double increasePercent = 7 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageIncrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;

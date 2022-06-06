@@ -35,10 +35,6 @@ public class Rage extends CustomEnchantment {
                 return;
             }
 
-            if (user.hasMetadata("noRageUntil") && ((MetadataValue) user.getMetadata("noRageUntil").get(0)).asLong() > System.currentTimeMillis()) {
-                return;
-            }
-
             double mod = Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
             double hitCombo = getPVPHitCombo((Player) user);
             if (hitCombo > 12.0D) {
@@ -46,7 +42,7 @@ public class Rage extends CustomEnchantment {
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
-                hitCombo *= 0.5;
+                hitCombo *= 0.75;
             }
 
             // && !GeneralUtil.isEffectedByDevour(target)

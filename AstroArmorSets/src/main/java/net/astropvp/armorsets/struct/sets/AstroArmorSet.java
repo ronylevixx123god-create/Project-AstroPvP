@@ -55,21 +55,21 @@ public class AstroArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        double reductionPercent = 3;
-        event.setDamage(event.getDamage() * (1 - (reductionPercent * amount * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease") * 0.01)));
+        double reductionPercent = 3 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 - (reductionPercent * amount *  0.01)));
 
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        double reductionPercent = 20;
-        event.setDamage(event.getDamage() * (1 - (reductionPercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease") * 0.01)));
+        double reductionPercent = 20 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 - (reductionPercent  *  0.01)));
 
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 30;
-        event.setDamage(event.getDamage() * (1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") * 0.01)));
+        double increasePercent = 30 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 + (increasePercent  * 0.01)));
         if (Math.random() < 0.02) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
@@ -111,8 +111,8 @@ public class AstroArmorSet extends ArmorSet {
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        double increasePercent = 7;
-        event.setDamage(event.getDamage() * (1 + (increasePercent * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease") *  amount * 0.01)));
+        double increasePercent = 7 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease")  *  0.01));
+        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
         if (Math.random() < 0.01) {
             if (!CannonballAmulet.active.contains(event.getEntity().getUniqueId())) {
 
