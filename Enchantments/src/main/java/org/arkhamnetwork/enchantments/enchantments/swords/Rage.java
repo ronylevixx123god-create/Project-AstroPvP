@@ -37,8 +37,8 @@ public class Rage extends CustomEnchantment {
 
             double mod = Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
             double hitCombo = getPVPHitCombo((Player) user);
-            if (hitCombo > 12.0D) {
-                hitCombo = 12.0D;
+            if (hitCombo > 10.0D) {
+                hitCombo = 10.0D;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
@@ -46,11 +46,11 @@ public class Rage extends CustomEnchantment {
             }
 
             // && !GeneralUtil.isEffectedByDevour(target)
-                this.playRageEffect(target.getEyeLocation(), enchantLevel);
+            this.playRageEffect(target.getEyeLocation(), enchantLevel);
 
-                event.setDamage( event.getDamage() * (1 + (hitCombo *mod)));
+            event.setDamage(event.getDamage() * (1 + (hitCombo * mod)));
 
-                target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+            target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
 
 
             this.addPVPHitCombo((Player) user);

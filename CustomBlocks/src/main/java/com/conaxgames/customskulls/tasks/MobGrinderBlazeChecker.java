@@ -13,8 +13,8 @@ public class MobGrinderBlazeChecker extends BukkitRunnable {
 
     @Override
     public void run() {
-        final Map<? extends String, ? extends AbilityData> grinderBlocks = CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders();
-        for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : grinderBlocks.entrySet()) {
+        final Map<? extends String, ? extends AbilityData> activeMobGrinders = CoreSkulls.instance.getMobGrinderManager().getActiveMobGrinders();
+        for (Map.Entry<? extends String, ? extends AbilityData> mobGrinderBlock : activeMobGrinders.entrySet()) {
             if (mobGrinderBlock == null) continue;
             String uuid = mobGrinderBlock.getKey();
             AbilityData mobGrinder = mobGrinderBlock.getValue();

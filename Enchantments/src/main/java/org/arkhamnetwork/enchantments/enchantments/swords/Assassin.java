@@ -25,23 +25,23 @@ public class Assassin extends CustomEnchantment {
             double dmgMod = 1.0D;
 
             if (distance < 0.25D) {
-                dmgMod = 1.15;
+                dmgMod = 1.04;
             }
 
             if (distance < 0.5D) {
-                dmgMod = 1.10;
+                dmgMod = 1.03;
             }
 
             if (distance < 0.75D) {
-                dmgMod = 1.08;
+                dmgMod = 1.025;
             }
 
             if (distance < 1.0D) {
-                dmgMod = 1.05;
+                dmgMod = 1.02;
             }
 
             if (distance < 2.0D) {
-                dmgMod = 1.04;
+                dmgMod = 1.001;
             }
             event.setDamage(event.getDamage() * dmgMod);
 

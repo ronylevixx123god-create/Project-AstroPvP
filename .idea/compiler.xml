@@ -82,8 +82,8 @@
         <sourceOutputDir name="../../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Factions (1)" />
         <module name="Factions (2) (com.massivecraft)" />
+        <module name="Factions (1)" />
         <module name="Factions (2)" />
       </profile>
     </annotationProcessing>

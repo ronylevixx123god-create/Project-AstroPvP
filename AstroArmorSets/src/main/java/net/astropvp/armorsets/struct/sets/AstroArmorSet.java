@@ -81,6 +81,9 @@ public class AstroArmorSet extends ArmorSet {
                 }
             }
 
+            if (attacked.hasMetadata("caged")) return;
+            if (attacker.hasMetadata("caged")) return;
+
 
             if (!CannonballAmulet.active.contains(event.getEntity().getUniqueId())) {
 
@@ -125,6 +128,9 @@ public class AstroArmorSet extends ArmorSet {
                         return;
                     }
                 }
+
+                if (attacked.hasMetadata("caged")) return;
+                if (attacker.hasMetadata("caged")) return;
 
                 if (event.getEntity() instanceof Player && event.getEntity().getLocation().distance(attacker.getLocation()) <= 2.0 && ((Player) event.getEntity()).getHealth() < attacker.getHealth()) {
                     if (attacker.hasMetadata("FalloutAbility") && System.currentTimeMillis() - attacker.getMetadata("FalloutAbility").get(0).asLong() <= 120000L) {

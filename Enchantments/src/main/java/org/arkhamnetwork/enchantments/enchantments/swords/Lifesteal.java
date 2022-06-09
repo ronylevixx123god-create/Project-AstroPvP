@@ -21,7 +21,7 @@ public class Lifesteal extends CustomEnchantment {
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         final double random = Math.random();
 
-        final double chance = enchantLevel * 0.055;
+        final double chance = enchantLevel * 0.025;
         if (random <= chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) target, "NECROMANCER")) {
                 return;
@@ -31,7 +31,7 @@ public class Lifesteal extends CustomEnchantment {
             }
 
             if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
-            GeneralUtil.healPlayer(user, 3);
+            GeneralUtil.healPlayer(user, 2);
         }
     }
 }

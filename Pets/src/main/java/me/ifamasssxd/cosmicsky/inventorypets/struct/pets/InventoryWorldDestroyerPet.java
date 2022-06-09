@@ -175,6 +175,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 
+        target.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        player.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+
+
         player.sendMessage("");
         player.sendMessage(CC.translate("&a&l*** WORLD DESTROYER PET [&f" + target.getName() + "&a&l] - CAGED! **"));
         player.sendMessage("");
@@ -199,6 +203,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             try {
                 PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
+                player.removeMetadata("caged", CosmicSkyInventoryPets.get());
+                finalTarget1.removeMetadata("caged", CosmicSkyInventoryPets.get());
             } catch (Exception e) {
             }
 

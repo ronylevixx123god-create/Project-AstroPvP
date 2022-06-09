@@ -27,17 +27,19 @@ public class ChunkUtil {
 
     }
 
-    public static Chunk getIfLoaded(final int chunkX, final int chunkZ, final World bWorld) {
-         net.minecraft.server.v1_8_R3.World world = ((CraftWorld) bWorld).getHandle();
-         net.minecraft.server.v1_8_R3.Chunk theChunk = world.getChunkIfLoaded(chunkX, chunkZ);
+    public static Chunk getIfLoaded(int chunkX, int chunkZ, World bWorld) {
+        net.minecraft.server.v1_8_R3.World world = ((CraftWorld) bWorld).getHandle();
+        net.minecraft.server.v1_8_R3.Chunk theChunk = world.getChunkIfLoaded(chunkX, chunkZ);
         return (theChunk == null) ? null : theChunk.bukkitChunk;
     }
 
     public static List<CraftEntity> getEntities(Chunk chunk) {
-         net.minecraft.server.v1_8_R3.Chunk nmsChunk = ((CraftChunk) chunk).getHandle();
-         List<CraftEntity> toReturn = new ArrayList<>();
+        net.minecraft.server.v1_8_R3.Chunk nmsChunk = ((CraftChunk) chunk).getHandle();
+        List<CraftEntity> toReturn = new ArrayList<>();
+        if (nmsChunk == null) return toReturn;
         for (List<net.minecraft.server.v1_8_R3.Entity> entities : nmsChunk.entitySlices) {
             for (net.minecraft.server.v1_8_R3.Entity entity : entities) {
+                if (entity.getBukkitEntity() == null) continue;
                 toReturn.add(entity.getBukkitEntity());
             }
         }

@@ -27,7 +27,7 @@ public class HeroicExecute extends HeroicCustomEnchantment{
             return;
         }
 
-        double healThres = 10.0;
+        double healThres = 12.0;
         if (((Player)player).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_2021_BOOTS))
             healThres*=1.3;
 

@@ -53,7 +53,7 @@ public class SpinalTab extends ItemSkin {
         }
 
         if (!playersStruck.isEmpty()) {
-            event.setDamage(event.getDamage() * (1+(playersStruck.size()*5/100)));
+            event.setDamage(event.getDamage() * (1+(playersStruck.size()*0.05)));
 
         }
 

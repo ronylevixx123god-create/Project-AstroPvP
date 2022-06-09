@@ -85,11 +85,12 @@ public class MobGrinderManager {
     public void rescanBlaze(String uuid) {
         AbilityData data = AbilityData.getByUUID(uuid);
         if (data == null) return;
+
         Chunk chunk = ChunkUtil.getIfLoaded(data.getLocation().getBlockX() >> 4, data.getLocation().getBlockZ() >> 4, data.getLocation().getWorld());
         if (chunk == null) return;
         for (Entity entity : ChunkUtil.getEntities(chunk)) {
             if (entity instanceof Blaze) {
-                get(uuid).setBlaze(entity);
+                data.setBlaze(entity);
                 return;
             }
         }
