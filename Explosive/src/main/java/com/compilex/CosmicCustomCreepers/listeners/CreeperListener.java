@@ -199,7 +199,7 @@ public class CreeperListener
     }
 
     private void spawnFastExplosion(Location l) {
-        if (this.nonSolidBlocks.contains(l.getBlock().getType())) {
+        if (this.nonSolidBlocks.contains(l.getBlock().getType()) || l.getBlock().isLiquid()) {
             return;
         }
         CraftCreeper creeper = l.getWorld().spawn(l, CraftCreeper.class);

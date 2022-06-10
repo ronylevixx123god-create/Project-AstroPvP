@@ -30,13 +30,11 @@ final class RageListener implements Listener {
                 if (titanAttribute == RuneType.KRONOS && e.getEntity().hasMetadata("pvp_rageHitCombo")) {
                     int newRageNum = (int)((double)((MetadataValue)e.getEntity().getMetadata("pvp_rageHitCombo").get(0)).asInt() * DragonTitanAttributesAPI.getLevelOfRune(((Player) e.getEntity()).getItemInHand()) * 0.05D);
                     e.getEntity().setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), newRageNum));
-                    e.getEntity().setMetadata("pve_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), newRageNum));
                     return;
                 }
             }
 
             e.getEntity().removeMetadata("pvp_rageHitCombo", Enchantments.getInstance());
-            e.getEntity().removeMetadata("pve_rageHitCombo", Enchantments.getInstance());
         }
 
     }
