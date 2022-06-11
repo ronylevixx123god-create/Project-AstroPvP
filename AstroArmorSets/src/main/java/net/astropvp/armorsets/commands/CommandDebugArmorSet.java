@@ -20,22 +20,22 @@ public class CommandDebugArmorSet implements CommandExecutor {
 
 
         if (args.length == 1) {
-            checkArmor(Bukkit.getPlayer(args[0]));
+            checkArmor(Bukkit.getPlayer(args[0]), (Player) sender);
         } else {
-            checkArmor((Player) sender);
+            checkArmor((Player) sender, (Player) sender);
         }
 
         return false;
     }
 
 
-    public void checkArmor(Player sender) {
-        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) sender);
-        ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache((Player) sender))));
+    public void checkArmor(Player toCheck, Player sender) {
+        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) toCheck);
+        ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache((Player) toCheck))));
 
 
 
-        sender.sendMessage(CC.translate("&fChecking armorsets for: " + sender));
+        sender.sendMessage(CC.translate("&fChecking armorsets for: " + toCheck));
         sender.sendMessage(CC.translate("&aCurrent ArmorSet: &f" + cache.getCurrentArmorSet()));
         sender.sendMessage(CC.translate("&bCrystals: &f" + cache.getCurrentSetCrystals()));
         sender.sendMessage(CC.translate("&cEquipped Heroic Pieces: &f" + cache.getHeroicPieces()));

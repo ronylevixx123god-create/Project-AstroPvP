@@ -127,6 +127,15 @@ public class Phoenix
                 }
             }
 
+            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
+
+                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
+                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+
+            }
+
 
             if (player.hasMetadata("noPhoenixProcs")) {
                 if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
@@ -189,15 +198,7 @@ public class Phoenix
                 }
             }
 
-            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.65) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
 
-                    damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
-                    player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    return false;
-                }
-            }
 
             if (((BarrysBoltsSkin) SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
                 if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
