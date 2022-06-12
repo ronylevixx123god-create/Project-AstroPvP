@@ -80,7 +80,7 @@ implements CommandExecutor {
             }
             for (i = list.size() - 1; i >= 0; --i) {
                 ItemStack x = items[i];
-                if (x.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) continue;
+                if (!x.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) continue;
                 list.remove(i);
                 CosmicGUIShop.getInstance().getConfig().set("items", (Object)list);
                 CosmicGUIShop.getInstance().saveConfig();

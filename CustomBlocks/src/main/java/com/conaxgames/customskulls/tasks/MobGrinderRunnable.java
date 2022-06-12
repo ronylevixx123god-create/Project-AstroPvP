@@ -34,10 +34,12 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
             if (!blaze.isValid()) {
                 mobGrinder.setBlaze(null);
+                continue;
             }
 
             if (blaze.isDead()) {
                 mobGrinder.setBlaze(null);
+                continue;
             }
 
 

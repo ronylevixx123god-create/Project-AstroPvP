@@ -69,8 +69,6 @@ public class CreeperListener
             Location spawnLoc;
             Block b;
             e.setCancelled(true);
-            e.setUseItemInHand(Event.Result.DENY);
-            e.setUseInteractedBlock(Event.Result.DENY);
             Player p = e.getPlayer();
             Block chestBlock = null;
             try {
@@ -80,14 +78,14 @@ public class CreeperListener
                 } catch (Exception err) {
                     b = e.getClickedBlock();
                 }
-                if (e.getClickedBlock().getY() >= 255 && e.getBlockFace() != BlockFace.UP) {
+                if (e.getClickedBlock().getY() >= 254 && e.getBlockFace() != BlockFace.UP) {
                     return;
                 }
                 if (WorldGuardUtils.isPvPDisabled(b.getLocation())) {
                     return;
                 }
                 Material m1 = b.getType();
-                Material material = m2 = b.getY() >= 254 ? b.getType() : b.getLocation().add(0.0, 1.0, 0.0).getBlock().getType();
+                m2 = b.getY() >= 254 ? b.getType() : b.getLocation().add(0.0, 1.0, 0.0).getBlock().getType();
                 if (b.getY() < 254 && m1 != Material.AIR && m1 != Material.CHEST && m1 != Material.TRAPPED_CHEST && m1 != Material.BEDROCK && m2 != Material.AIR && m2 != Material.CHEST && m2 != Material.TRAPPED_CHEST && m2 != Material.BEDROCK) {
                     Bukkit.getLogger().info("[CosmicCustomCreepers] Blocking cegg due to non air/chest block above spawn location. m=" + m1 + ", m+1=" + m2);
                     return;
@@ -95,7 +93,7 @@ public class CreeperListener
                 if (m1 == Material.CHEST || m2 == Material.CHEST || m1 == Material.TRAPPED_CHEST || m2 == Material.TRAPPED_CHEST) {
                     chestBlock = m1 == Material.CHEST || m1 == Material.TRAPPED_CHEST ? e.getClickedBlock() : e.getClickedBlock().getLocation().add(0.0, 1.0, 0.0).getBlock();
                 }
-                Location location = spawnLoc = b.getLocation().getY() >= 255.0 ? b.getLocation() : b.getLocation().add(0.0, 1.0, 0.0);
+                spawnLoc = b.getLocation().getY() >= 255.0 ? b.getLocation() : b.getLocation().add(0.0, 1.0, 0.0);
                 if (spawnLoc.getBlock().isLiquid() || spawnLoc.clone().add(0.0, 1.0, 0.0).getBlock().isLiquid()) {
                     Bukkit.getLogger().info("[CosmicCustomCreepers] Blocking custom cegg due to LIQUID at y or y+1.");
                     return;
@@ -104,7 +102,6 @@ public class CreeperListener
                     Bukkit.getLogger().info("[CosmicCustomCreepers] Blocking custom cegg due to MOB_SPAWNER at y+1.");
                     return;
                 }
-                FLocation fLocation = new FLocation(spawnLoc);
                 ItemStack egg = e.getItem();
                 if (egg.getAmount() > 1) {
                     egg.setAmount(egg.getAmount() - 1);
