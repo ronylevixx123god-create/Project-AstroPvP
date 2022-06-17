@@ -23,7 +23,7 @@ public class VanillaDamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onEntityDamage(final EntityDamageEvent e) {
         if ((e.getEntity() instanceof Player && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) || e.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
-            e.getEntity().setMetadata("lastDamageEventRawDamage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getDamage(EntityDamageEvent.DamageModifier.BASE)));
+            e.getEntity().setMetadata("lastDamageEventRawDamage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getDamage()));
             e.getEntity().setMetadata("lastDamageEventFinalDamage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getFinalDamage()));
         }
     }

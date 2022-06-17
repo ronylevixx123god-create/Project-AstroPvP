@@ -29,10 +29,12 @@ import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
@@ -69,8 +71,8 @@ public class QueueListener implements Listener {
         WildQueue queue = this.plugin.getQueueManager().getQueueContainingPlayer(player);
         if (queue != null) {
             if (!cmd.contains("spawn") && !cmd.contains("pvp leave")) {
-                KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!) Command Not Permitted (!)");
-                KrizzUtil.sendMessage((LivingEntity)player, (String)"&7You must use &c/spawn&7 or &c/pvp leave&7 to exit.");
+                KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!) Command Not Permitted (!)");
+                KrizzUtil.sendMessage((LivingEntity) player, (String) "&7You must use &c/spawn&7 or &c/pvp leave&7 to exit.");
                 event.setCancelled(true);
             } else {
                 queue.cancelQueue(player, true);
@@ -88,7 +90,7 @@ public class QueueListener implements Listener {
         if (location != null) {
             Chunk chunk = location.getChunk();
             if (this.plugin.getQueueManager().getQueueByChunk(chunk) != null) {
-                KrizzUtil.sendMessage((LivingEntity)fPlayer.getPlayer(), (String)"&c&l(!)&c You cannot claim this land during a &lPvP Queue.");
+                KrizzUtil.sendMessage((LivingEntity) fPlayer.getPlayer(), (String) "&c&l(!)&c You cannot claim this land during a &lPvP Queue.");
                 event.setCancelled(true);
             }
         }
@@ -98,7 +100,7 @@ public class QueueListener implements Listener {
     @EventHandler
     public void onEntityDamage(EntityDamageEvent event) {
         if (event.getEntity() instanceof Player) {
-            Player player = (Player)event.getEntity();
+            Player player = (Player) event.getEntity();
             WildQueue queue = this.plugin.getQueueManager().getQueueContainingPlayer(player);
             if (queue == null) {
                 return;
@@ -110,6 +112,8 @@ public class QueueListener implements Listener {
         }
 
     }
+
+
 
     @EventHandler
     public void onQueueRemove(QueueRemoveEvent event) {
@@ -134,11 +138,11 @@ public class QueueListener implements Listener {
     )
     public void onQueueCreate(QueueCreateEvent event) {
         Player player = event.getHost();
-        FPlayer fPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
+        FPlayer fPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(player);
         Faction factionAt = FactionUtils.getFactionAt(player.getLocation());
         if (this.plugin.getQueueManager().getQueueByHost(player) != null) {
-            KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You are already in the Wild PvP Queue.");
-            KrizzUtil.sendMessage((LivingEntity)player, (String)"&7You may use &c/pvp leave&7 to exit the queue.");
+            KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You are already in the Wild PvP Queue.");
+            KrizzUtil.sendMessage((LivingEntity) player, (String) "&7You may use &c/pvp leave&7 to exit the queue.");
             event.setCancelled(true);
         } else {
             if (factionAt != null && factionAt.isNone()) {
@@ -153,8 +157,8 @@ public class QueueListener implements Listener {
 
     @EventHandler
     public void onQueueInventoryClick(InventoryClickEvent event) {
-        Player player = (Player)event.getWhoClicked();
-        FPlayer fPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
+        Player player = (Player) event.getWhoClicked();
+        FPlayer fPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(player);
         Inventory inventory = event.getInventory();
         ItemStack item = event.getCurrentItem();
         if (inventory.getTitle().endsWith(ChatColor.DARK_GRAY + "Wild PvP Queue") && inventory.getSize() == 9) {
@@ -167,11 +171,10 @@ public class QueueListener implements Listener {
                     this.plugin.getQueueManager().createNewQueue(player);
                     player.closeInventory();
                 }
-            }
-            else if (event.getRawSlot() == 7){
+            } else if (event.getRawSlot() == 7) {
                 player.closeInventory();
                 player.chat("/1v1");
-                } else {
+            } else {
                 WildQueue queue = this.plugin.getQueueManager().getQueueByItem(item);
                 if (queue != null) {
                     if (queueManager.getAcceptingPlayers().contains(player.getUniqueId())) {
@@ -179,11 +182,11 @@ public class QueueListener implements Listener {
                     } else if (event.isRightClick()) {
                         (new PlayerInventoryDisplay(queue.getHost())).show(player);
                     } else if (this.plugin.getQueueManager().getQueueContainingPlayer(player) != null) {
-                        KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You are already in a pvp queue.");
+                        KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You are already in a pvp queue.");
                     } else if (queue.getDenied().contains(player.getUniqueId())) {
-                        KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c You cannot join this queue as you have been denied.");
+                        KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c You cannot join this queue as you have been denied.");
                     } else if (!queue.getState().isJoinable()) {
-                        KrizzUtil.sendMessage((LivingEntity)player, (String)"&c&l(!)&c This queue currently cannot be joined.");
+                        KrizzUtil.sendMessage((LivingEntity) player, (String) "&c&l(!)&c This queue currently cannot be joined.");
                     } else {
                         new AcceptInventory(queue.getHost(), player, queue);
                         KrizzUtil.sendMessage(player, "&a&l(!) &aYou have sent a /pvp request to &f" + queue.getHost().getName() + "&a.");
@@ -196,7 +199,7 @@ public class QueueListener implements Listener {
 
     @EventHandler
     public void onPreviewInventoryClick(InventoryClickEvent event) {
-        Player player = (Player)event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         Inventory inventory = event.getInventory();
         if (inventory.getTitle().endsWith(ChatColor.GREEN + "'s Inventory")) {
             event.setCancelled(true);
@@ -207,4 +210,3 @@ public class QueueListener implements Listener {
 
     }
 }
- 

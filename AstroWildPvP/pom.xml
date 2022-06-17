@@ -160,13 +160,7 @@
         </dependency>
 
 
-        <dependency>
-            <groupId>net.astropvp</groupId>
-            <artifactId>AstroDamageHandler</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
 
-        </dependency>
 
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -175,13 +169,14 @@
             <scope>provided</scope>
         </dependency>
 
-
         <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
+            <groupId>com.astropvp</groupId>
+            <artifactId>util</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
+
         <dependency>
             <groupId>co.aikar</groupId>
             <artifactId>acf-paper</artifactId>

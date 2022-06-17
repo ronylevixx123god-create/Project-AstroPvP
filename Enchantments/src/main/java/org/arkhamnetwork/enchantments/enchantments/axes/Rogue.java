@@ -80,7 +80,7 @@ public class Rogue extends CustomEnchantment {
                 if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                     KillTrackerAPI.removeSoulsFromGems(p, 35);
                 }
-                double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+                double damage = e.getDamage();
                 if (!(e.getDamager() instanceof Player)) return;
                 if (((Player) e.getDamager()).getItemInHand() == null) return;
                 if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master")) {

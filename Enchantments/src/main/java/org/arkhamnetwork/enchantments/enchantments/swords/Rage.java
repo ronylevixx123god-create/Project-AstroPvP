@@ -34,6 +34,9 @@ public class Rage extends CustomEnchantment {
             if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
                 return;
             }
+            if (user.hasMetadata("noRageUntil") && user.getMetadata("noRageUntil").get(0).asLong() > System.currentTimeMillis()) {
+                return;
+            }
 
             double mod = Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
             double hitCombo = getPVPHitCombo((Player) user);
@@ -45,15 +48,16 @@ public class Rage extends CustomEnchantment {
                 hitCombo *= 0.75;
             }
 
-            // && !GeneralUtil.isEffectedByDevour(target)
-            this.playRageEffect(target.getEyeLocation(), enchantLevel);
+            if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
+                this.playRageEffect(target.getEyeLocation(), enchantLevel);
 
-            event.setDamage(event.getDamage() * (1 + (hitCombo * mod)));
+                event.setDamage(event.getDamage() * (1 + (hitCombo * mod)));
 
-            target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+                target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
 
 
-            this.addPVPHitCombo((Player) user);
+                this.addPVPHitCombo((Player) user);
+            }
 
         }
 

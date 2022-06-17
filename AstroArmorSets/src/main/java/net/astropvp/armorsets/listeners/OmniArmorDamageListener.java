@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class OmniArmorDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.NORMAL)
+            priority = EventPriority.HIGHEST)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (e.getDamager().getWorld().getName().equals("world_outpost_pluto")) {
@@ -24,7 +24,7 @@ public class OmniArmorDamageListener implements Listener {
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
             double totalReduction =  AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageDecrease");
-            e.setDamage(EntityDamageByEntityEvent.DamageModifier.BASE, e.getDamage(EntityDamageByEntityEvent.DamageModifier.BASE) * (1-(totalReduction/100) * (1+(cache.getOmniPieces()/10F))));
+            e.setDamage( e.getDamage() * (1-(totalReduction/100) * (1+(cache.getOmniPieces()/10F))));
         }
 
     }

@@ -147,7 +147,7 @@ public class MasteryHorrify extends MasteryCustomEnchantment {
                 if (e.getDamager() instanceof Player) {
                     UUID uuid = e.getDamager().getUniqueId();
                     if (this.pendingHighestToUncancel.remove(uuid)) {
-                        if (event.getDamage(EntityDamageEvent.DamageModifier.BASE) <= 0.0D)
+                        if (event.getDamage() <= 0.0D)
                             return;
                         if (!WorldGuardUtils.isPvPEnabled(e.getEntity().getLocation()) ||
                                 !WorldGuardUtils.isPvPEnabled(e.getDamager().getLocation()))

@@ -136,7 +136,7 @@ public class MasteryMarkOfTheBeast extends MasteryCustomEnchantment {
             final Player player = (Player) event.getEntity();
             final Long expirations = ((MasteryMarkOfTheBeast) this.customEnchant).getMarkedPlayers().get(player.getUniqueId());
             if (expirations != null && expirations > System.currentTimeMillis()) {
-                final double original = event.getDamage(EntityDamageEvent.DamageModifier.BASE);
+                final double original = event.getDamage();
                 event.setDamage(event.getDamage()*1.5);
                 if (original > 0.01) {
                     player.sendMessage(CC.Red + "* MARK OF THE BEAST [2X DMG] *");
