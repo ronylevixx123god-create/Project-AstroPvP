@@ -13,6 +13,7 @@ import me.astropvp.astroscoreboard.manager.BoardManager;
 import me.astropvp.astroscoreboard.manager.PlayerDisplayManager;
 import me.astropvp.astroscoreboard.manager.TabListManager;
 import me.astropvp.proxypach.ProxyPatch;
+import me.neznamy.tab.api.TABAPI;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -31,6 +32,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     public static BoardManager boardManager;
     public static final DecimalFormat df = new DecimalFormat("#.#");
 
+
     public static void registerListener(Listener listener) {
         Bukkit.getServer().getPluginManager().registerEvents(listener, astroScoreboardPlugin);
     }
@@ -45,23 +47,6 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerCommands();
         registerListeners();
         getInstance().setBoardManager(new BoardManager((BoardAdapter) new Scoreboard()));
-
-        /*Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            try {
-
-                String tps = df.format(EssentialsUtils.getEssentials().getTimer().getAverageTPS());
-                int players = Bukkit.getOnlinePlayers().size();
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    if (ProxyPatch.playerNames.contains(player.getName())) continue;
-                    TabListManager.sendTablist(player,
-                            CC.translate("\n&e&l●&6&l●&f&l● &f[ &6&lAstro&f&lPvP &f] &f&l●&6&l●&e&l●\n&7play.astropvp.net\n"),
-                            CC.translate("\n&6  Factions &e// &d" + PlayerListener.getPing(player) + "ms &e// &a" + tps + " &7&oTPS &8➥ &f&ohttps://astropvp.net  \n" +
-                                    "&e" + players + " &fOnline &8➥ &f&ohttps://buy.astropvp.net\n"));
-                }
-            } catch (Exception ignored) {
-            }
-        }, 100L, 200L);*/
-
     }
 
     @Override

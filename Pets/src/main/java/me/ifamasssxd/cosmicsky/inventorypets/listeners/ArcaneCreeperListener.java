@@ -14,18 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityExplodeEvent;
 
 public class ArcaneCreeperListener implements Listener {
-   @EventHandler(
-      priority = EventPriority.LOWEST
-   )
-   public void arcaneCreeperExplode(EntityExplodeEvent event) {
-      if (event.getEntity() != null && event.getEntity().hasMetadata("arcaneCreeper")) {
-         Creeper creeperEntity = (Creeper)event.getEntity();
-         if (creeperEntity.hasMetadata("arcaneCreeper")) {
-            List block = getBlocks((Location)creeperEntity.getLocation(), 1);
-         }
 
-      }
-   }
 
    public static List getBlocks(Location location, int halfWidth) {
       return getBlocks(location.getBlock(), halfWidth);

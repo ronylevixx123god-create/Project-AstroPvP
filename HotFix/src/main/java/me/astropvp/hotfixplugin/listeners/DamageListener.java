@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.*;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.hotfixplugin.HotFixPlugin;
+import me.astropvp.hotfixplugin.utils.DeathUtils;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -135,7 +136,7 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler
-    public void killMsg(EntityDeathEvent e) {
+    public void killMsg(EntityDeathEvent e) throws NoSuchFieldException, IllegalAccessException {
         if (e.getEntity() instanceof Player && e.getEntity().getKiller() != null) {
             Player killer = e.getEntity().getKiller();
             Player died = (Player) e.getEntity();
@@ -160,7 +161,7 @@ public class DamageListener implements Listener {
                 message.sendToPlayer(player);
 
             }
-
+            DeathUtils.sendDeathEffect(died);
         }
     }
 
@@ -172,7 +173,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.LOW)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -192,7 +193,7 @@ public class DamageListener implements Listener {
 
 
             if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD || ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_AXE) {
-                e.setDamage(e.getDamage() * 0.75);
+                e.setDamage(e.getDamage() * 0.5);
             }
         }
     }
@@ -211,8 +212,8 @@ public class DamageListener implements Listener {
             if (armorPiece.getType() == Material.AIR) continue;
             if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
                 int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
-                if (protLevel == 6) decrease += 7;
-                if (protLevel == 5) decrease += 4;
+                if (protLevel == 6) decrease += 10;
+                if (protLevel == 5) decrease += 5;
             }
         }
         return decrease;

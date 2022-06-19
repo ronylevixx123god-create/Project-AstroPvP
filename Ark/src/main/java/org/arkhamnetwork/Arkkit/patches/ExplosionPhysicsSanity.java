@@ -25,20 +25,6 @@ final class ExplosionPhysicsSanity
     ExplosionPhysicsSanity() {
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onEntityExplode(EntityExplodeEvent e) {
-        double srcY = e.getEntity().getLocation().getY();
-        if (srcY <= 2.0) {
-            ArrayList<Block> toRemove = new ArrayList<Block>();
-            for (Block b : e.blockList()) {
-                if (!(b.getLocation().getY() > 250.0)) continue;
-                Bukkit.getLogger().info("[ExplosionPhysicsSanity] Removing impossible heightBlock from blockList (" + b.getLocation().getWorld().getName() + "," + b.getLocation().getX() + "," + b.getLocation().getY() + "," + b.getLocation().getZ() + ")");
-                toRemove.add(b);
-            }
-            for (Block b : toRemove) {
-                e.blockList().remove(b);
-            }
-        }
-    }
+
 }
 

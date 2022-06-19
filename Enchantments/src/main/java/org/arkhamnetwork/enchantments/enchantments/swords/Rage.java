@@ -48,18 +48,16 @@ public class Rage extends CustomEnchantment {
                 hitCombo *= 0.75;
             }
 
-            if (hitCombo > 1.0 && !GeneralUtil.isEffectedByDevour(target)) {
-                this.playRageEffect(target.getEyeLocation(), enchantLevel);
+            this.playRageEffect(target.getEyeLocation(), enchantLevel);
 
-                event.setDamage(event.getDamage() * (1 + (hitCombo * mod)));
+            event.setDamage(event.getDamage() * (1 + (hitCombo * mod)));
 
-                target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+            target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
 
 
-                this.addPVPHitCombo((Player) user);
-            }
-
+            this.addPVPHitCombo((Player) user);
         }
+
 
     }
 
