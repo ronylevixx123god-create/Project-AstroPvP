@@ -32,7 +32,12 @@ public class ArmorSetApplyListener implements Listener {
     @EventHandler
     public void onArmorChange(ArmorEquipEvent e) {
 
-        ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(e.getPlayer()).getCache("armor_set");
+        AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+
+        Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
+            AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+        }, 10L);
+        /*ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(e.getPlayer()).getCache("armor_set");
 
         //Remove
         if (e.getOldArmorPiece() != null && e.getOldArmorPiece().getType() != Material.AIR) {
@@ -100,7 +105,7 @@ public class ArmorSetApplyListener implements Listener {
             if (AstroArmorSetsAPI.isOmniPiece(e.getNewArmorPiece())) {
                 cache.addOmniPiece(e.getNewArmorPiece());
             }
-        }
+        }*/
 
     }
 

@@ -84,7 +84,7 @@
 
     <dependency>
         <groupId>com.astropvp</groupId>
-        <artifactId>articleapi</artifactId>
+        <artifactId>articleafpi</artifactId>
         <version>1.0</version>
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/ParticleAPI_v2.1.1.jar</systemPath>

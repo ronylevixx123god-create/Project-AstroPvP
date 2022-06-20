@@ -192,6 +192,8 @@ public class DamageListener implements Listener {
             }
 
 
+
+
             if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD || ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_AXE) {
                 e.setDamage(e.getDamage() * 0.5);
             }
