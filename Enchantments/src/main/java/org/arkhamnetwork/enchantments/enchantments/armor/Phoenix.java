@@ -128,15 +128,14 @@ public class Phoenix
                 }
             }
 
-            if (damager instanceof Player) {
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
+                if (damager instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET))) {
                     damager.sendMessage(CC.translate("&e&l* &d&lMAD HAT &7Blocked &cPhoenix &d&l[&c" + player.getName() + "&d&l] &e&l*"));
                     player.sendMessage(CC.translate("&e&l* &d&lPHOENIX BLOCKED [&c" + damager.getName() + " Mad Hat&d&l] *"));
                     last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     return false;
                 }
 
-                if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
+                if (damager instanceof Player && MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
 
                     damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                     player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
@@ -154,7 +153,7 @@ public class Phoenix
                 }
 
 
-                if (Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT")) {
+                if (damager instanceof Player && Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT")) {
                     if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
 
                         player.sendMessage(CC.RedB + "* DEATH KNIGHT PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
@@ -173,7 +172,7 @@ public class Phoenix
                     }
                 }
 
-                if (MaskType.hasEquipped((Player) damager, "THANOS")) {
+                if (damager instanceof Player &&MaskType.hasEquipped((Player) damager, "THANOS")) {
                     if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
 
                         player.sendMessage(CC.RedB + "* THANOS MASK PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
@@ -218,7 +217,7 @@ public class Phoenix
                         return false;
                     }
                 }
-            }
+
             int soulCost = Phoenix.getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount(player, soulCost) && Phoenix.canUsePhoenix(player, level)) {
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);

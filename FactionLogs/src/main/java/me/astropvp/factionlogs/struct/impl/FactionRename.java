@@ -13,7 +13,7 @@ public class FactionRename extends FactionLog {
     private final FactionRenameEvent factionRenameEvent;
 
     public FactionRename(FactionRenameEvent factionRenameEvent) {
-        super(LogType.CLAIM_EDITS);
+        super(LogType.FACTION_RENAME);
         this.factionRenameEvent = factionRenameEvent;
 
     }

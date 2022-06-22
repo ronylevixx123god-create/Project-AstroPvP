@@ -1,7 +1,10 @@
 package me.astropvp.factionlogs;
 
 import lombok.Getter;
+import me.astropvp.factionlogs.commands.FactionLogsCommand;
+import me.astropvp.factionlogs.listeners.FactionListeners;
 import me.astropvp.factionlogs.struct.LogManager;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 
@@ -24,10 +27,11 @@ public class FactionLogs extends JavaPlugin {
 
 
     public void loadListeners() {
-
+        Bukkit.getPluginManager().registerEvents(new FactionListeners(), this);
     }
 
     public void loadCommands() {
+        Bukkit.getPluginManager().registerEvents(new FactionLogsCommand(), this);
 
     }
 

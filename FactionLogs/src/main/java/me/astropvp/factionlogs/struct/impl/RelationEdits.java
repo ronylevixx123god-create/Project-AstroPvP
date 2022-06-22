@@ -13,14 +13,12 @@ import java.util.UUID;
 @Getter
 public class RelationEdits extends FactionLog {
     private final FactionRelationEvent factionRelationEvent;
-    private final FactionRelationWishEvent factionRelationWishEvent;
 
 
 
-    public RelationEdits(FactionRelationEvent factionRelationEvent, FactionRelationWishEvent factionRelationWishEvent) {
+    public RelationEdits(FactionRelationEvent factionRelationEvent) {
         super(LogType.RELATION_EDITS);
         this.factionRelationEvent = factionRelationEvent;
-        this.factionRelationWishEvent = factionRelationWishEvent;
 
     }
 }

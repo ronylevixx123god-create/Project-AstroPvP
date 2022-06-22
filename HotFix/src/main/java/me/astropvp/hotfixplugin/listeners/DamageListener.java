@@ -312,6 +312,7 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onDurabilityLoss(PlayerItemDamageEvent event) {
+        event.getPlayer().updateInventory();
         event.setCancelled(true);
 
     }
