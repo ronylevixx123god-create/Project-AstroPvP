@@ -43,18 +43,18 @@ public class LunaArmorSet extends ArmorSet {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        double reductionPercent = 4 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease")  *  0.01));
+        double reductionPercent = 4 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("lunaSetDamageDecrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 - (reductionPercent  * amount * 0.01)));
     }
 
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        double reductionPercent = 15 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageDecrease")  *  0.01));
+        double reductionPercent = 15 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("lunaSetDamageDecrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 - (reductionPercent * 0.01)));
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 35* (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease")  *  0.01));
+        double increasePercent = 35* (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("lunaSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
         if (Math.random() < 0.02 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
@@ -65,7 +65,7 @@ public class LunaArmorSet extends ArmorSet {
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        double increasePercent = 6 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("customSetDamageIncrease")  *  0.01));
+        double increasePercent = 6 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("lunaSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
         if (Math.random() < 0.0185 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))

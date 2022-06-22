@@ -118,6 +118,7 @@ public class Phoenix
         if (player.getHealth() <= 0.0) {
             return false;
         }
+
         if (player.getHealth() - dmg <= 0.0) {
             boolean canUse = canUsePhoenix(player, level);
             if (!canUse) {
@@ -127,94 +128,95 @@ public class Phoenix
                 }
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
-                damager.sendMessage(CC.translate("&e&l* &d&lMAD HAT &7Blocked &cPhoenix &d&l[&c" + player.getName() + "&d&l] &e&l*"));
-                player.sendMessage(CC.translate("&e&l* &d&lPHOENIX BLOCKED [&c" + damager.getName() + " Mad Hat&d&l] *"));
-                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                return false;
-            }
-
-            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
-
-                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
-                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
-                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                return false;
-
-            }
-
-
-            if (player.hasMetadata("noPhoenixProcs")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-                    player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7The Crumble&c&l] *"));
-                    return false;
-                }
-            }
-
-
-            if (damager != null && Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.RedB + "* DEATH KNIGHT PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
-                    damager.sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
-                    return false;
-                }
-            }
-
-            if (((BoostedChainsaw) SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(player.getName())) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Chainsaw Silence Ability&c&l] *"));
-                    return false;
-                }
-            }
-
-            if (damager instanceof Player && MaskType.hasEquipped((Player) damager, "THANOS")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.RedB + "* THANOS MASK PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
-                    damager.sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
-                    return false;
-                }
-            }
-            if (damager instanceof Player && damager.hasMetadata("banshee_scrolls")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7BANSHEE RKO&c&l] *"));
-                    damager.sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
-                    return false;
-                }
-            }
-            if (player.hasMetadata("witchered")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-                    player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
+            if (damager instanceof Player) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
+                    damager.sendMessage(CC.translate("&e&l* &d&lMAD HAT &7Blocked &cPhoenix &d&l[&c" + player.getName() + "&d&l] &e&l*"));
+                    player.sendMessage(CC.translate("&e&l* &d&lPHOENIX BLOCKED [&c" + damager.getName() + " Mad Hat&d&l] *"));
                     last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     return false;
                 }
-            }
 
-            if (UndertowFieldTask.affected.contains(player)) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
 
-                    player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED &7Undertow Field&4&l *"));
-                    return false;
-                }
-            }
-
-
-
-            if (((BarrysBoltsSkin) SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.translate("&c&l** &7Enemy Garry's Bolt &c&lBLOCKED PHOENIX **"));
+                    damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
+                    player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
                     last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     return false;
+
+                }
+
+
+                if (player.hasMetadata("noPhoenixProcs")) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                        player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7The Crumble&c&l] *"));
+                        return false;
+                    }
+                }
+
+
+                if (Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT")) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                        player.sendMessage(CC.RedB + "* DEATH KNIGHT PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+                        damager.sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                        last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                        Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
+                        return false;
+                    }
+                }
+
+                if (((BoostedChainsaw) SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(player.getName())) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                        player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Chainsaw Silence Ability&c&l] *"));
+                        return false;
+                    }
+                }
+
+                if (MaskType.hasEquipped((Player) damager, "THANOS")) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                        player.sendMessage(CC.RedB + "* THANOS MASK PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+                        damager.sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                        last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                        Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
+                        return false;
+                    }
+                }
+                if (damager.hasMetadata("banshee_scrolls")) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                        player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7BANSHEE RKO&c&l] *"));
+                        damager.sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                        last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                        Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
+                        return false;
+                    }
+                }
+                if (player.hasMetadata("witchered")) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                        player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
+                        last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                        return false;
+                    }
+                }
+
+                if (UndertowFieldTask.affected.contains(player)) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                        player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED &7Undertow Field&4&l *"));
+                        return false;
+                    }
+                }
+
+
+                if (((BarrysBoltsSkin) SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
+                    if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                        player.sendMessage(CC.translate("&c&l** &7Enemy Garry's Bolt &c&lBLOCKED PHOENIX **"));
+                        last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                        return false;
+                    }
                 }
             }
             int soulCost = Phoenix.getPhoenixProcSoulCost(player);

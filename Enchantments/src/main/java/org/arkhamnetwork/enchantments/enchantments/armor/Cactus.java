@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.*;
+
 import java.util.concurrent.*;
 
 import org.arkhamnetwork.enchantments.enchantments.swords.Rage;
@@ -14,8 +15,7 @@ import org.bukkit.event.entity.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 import org.bukkit.*;
 
-public class Cactus extends CustomEnchantment
-{
+public class Cactus extends CustomEnchantment {
     protected static ConcurrentHashMap<String, Integer> cactus;
 
     public Cactus() {
@@ -24,7 +24,7 @@ public class Cactus extends CustomEnchantment
         this.base = 20.0;
         this.interval = 5.0;
         Cactus.cactus = new ConcurrentHashMap<String, Integer>();
-        Bukkit.getPluginManager().registerEvents(new CactusListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new CactusListener(), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
@@ -49,13 +49,10 @@ public class Cactus extends CustomEnchantment
                 //pAttacker.damage(0.5 * level);
 
 
-                if (Rage.getPVPHitCombo(pAttacker) != 0) {
-                    Rage.subtractPVPHitCombo(pAttacker);
-
-                    final Location l = p.getLocation();
-                    WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
-                }
+                final Location l = p.getLocation();
+                WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }
+
         }
     }
 }

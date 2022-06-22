@@ -1,8 +1,13 @@
-customSetDamageIncrease: 10
-customSetDamageDecrease: 10
+lunaSetDamageIncrease: 15
+lunaSetDamageDecrease: 15
+
+astroetDamageIncrease: 10
+astroSetDamageDecrease: 10
 
 ancientSetDamageIncrease: 6.5
 ancientSetDamageDecrease: 6.5
 
 omniSetDamageIncrease: 15
 omniSetDamageDecrease: 15
+
+heroicDamageDecrease: 15

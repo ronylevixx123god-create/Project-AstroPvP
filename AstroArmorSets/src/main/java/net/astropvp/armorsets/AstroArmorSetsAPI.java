@@ -96,12 +96,14 @@ public class AstroArmorSetsAPI {
         cache.getCurrentAntiMkitCrystals().clear();
         cache.setCurrentArmorSet(null);
         cache.getCurrentSetCrystals().clear();
+        cache.getCurrentArmorSets().clear();
 
         ItemStack[] armor = player.getInventory().getArmorContents();
 
         for (ItemStack item : armor) {
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
+
             if (hasSetTypeOnItem(item)) {
                 cache.addArmorSet(getSetTypeOnItem(item));
             }
@@ -129,6 +131,7 @@ public class AstroArmorSetsAPI {
                 }
             }
         }
+
 
     }
 

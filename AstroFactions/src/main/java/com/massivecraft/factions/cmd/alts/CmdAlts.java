@@ -19,6 +19,8 @@ public class CmdAlts extends FCommand {
 
         this.addSubCommand(new CmdAltClose());
 
+        this.addSubCommand(new CmdAltClear());
+
         this.requirements = new CommandRequirements.Builder(Permission.ALTS).build();
     }
 

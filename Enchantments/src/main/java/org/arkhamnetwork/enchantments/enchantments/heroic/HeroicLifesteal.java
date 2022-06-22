@@ -27,12 +27,19 @@ extends HeroicCustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         final double random = Math.random();
-        final double chance = enchantLevel * 0.065;
+        final double chance = enchantLevel * 0.015;
         if (random <= chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) ((Player) target), (String) "NECROMANCER")) {
                 return;
             }
             if (target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.SUMMER_2021_BELT)) {
+                return;
+            }
+
+            if (user.hasMetadata("neutralized")) {
+                return;
+            }
+            if (user.hasMetadata("noDefenseProcs")) {
                 return;
             }
 

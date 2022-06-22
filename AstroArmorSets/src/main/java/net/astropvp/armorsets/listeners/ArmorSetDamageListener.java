@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class ArmorSetDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.HIGHEST)
+            priority = EventPriority.HIGHEST , ignoreCancelled = true)
     public void onAttack(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -40,26 +40,21 @@ public class ArmorSetDamageListener implements Listener {
         ArmorSetCache cache;
         if (attacker instanceof Player) {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
-
-            //armor set damaged
             if (cache.getCurrentArmorSet() != null) {
                 if (((Player) attacker).getItemInHand() == null) return;
                 if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
                 cache.getCurrentArmorSet().getArmorSet().onAttack((Player) attacker, attacked, e);
             }
 
-            //crystals damaged
             if (!cache.getCurrentSetCrystals().isEmpty()) {
                 if (((Player) attacker).getItemInHand() == null) return;
                 if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
-                if (!((Player) attacker).getItemInHand().getType().name().endsWith("_SWORD") && !((Player) attacker).getItemInHand().getType().name().endsWith("_AXE"))
-                    return;
+
 
                 Map<ArmorSetType, Integer> crystals = cache.getCurrentSetCrystals();
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
-
                     armorSetType.getArmorSet().onAttackCrystal((Player) attacker, attacked, e, amount);
 
                 }
@@ -70,7 +65,7 @@ public class ArmorSetDamageListener implements Listener {
     }
 
     @EventHandler(
-            priority = EventPriority.HIGHEST)
+            priority = EventPriority.HIGHEST , ignoreCancelled = true)
     public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -98,12 +93,8 @@ public class ArmorSetDamageListener implements Listener {
                 Map<ArmorSetType, Integer> crystals = AstroArmorSetsAPI.getBonusCrystalsEquippedIncludingCorruption((Player) attacker, (Player) attacked);
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
-                    if (WetNoodleSword.isWetNoodled((Player) attacker)) {
-                        if (armorSetType.name().contains("MUTATED")) continue;
-                    }
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
-
 
                 }
             }

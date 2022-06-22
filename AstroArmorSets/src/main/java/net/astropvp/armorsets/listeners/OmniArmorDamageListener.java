@@ -14,7 +14,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class OmniArmorDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.HIGHEST)
+            priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (e.getDamager().getWorld().getName().equals("world_outpost_pluto")) {

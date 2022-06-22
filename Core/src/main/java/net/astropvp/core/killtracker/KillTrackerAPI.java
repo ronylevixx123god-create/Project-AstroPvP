@@ -125,7 +125,7 @@ public class KillTrackerAPI {
             if (id == -1L && is.getAmount() == 1) {
                 is = ItemID.assignItemID(null, is);
                 p.getInventory().setItem(slot, is);
-                p.updateInventory();
+                //p.updateInventory();
             }
             souls += KillTrackerAPI.getSouls(is);
         }

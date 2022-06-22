@@ -7,6 +7,7 @@ import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 
 import java.util.List;
+import java.util.Map;
 
 public class FactionsLogsAPI {
     public static void log(Faction faction, FactionLog factionLog) {
@@ -23,5 +24,9 @@ public class FactionsLogsAPI {
 
     public static List<FactionLog> getFactionLogs(Faction faction, LogType logType) {
         return FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()).getFactionLogs().get(logType);
+    }
+
+    public static Map<LogType, List<FactionLog>> getFactionLogs(Faction faction) {
+        return FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()).getFactionLogs();
     }
 }

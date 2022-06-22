@@ -18,7 +18,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class BansheeListener implements Listener {
 
-    @EventHandler(priority = EventPriority.NORMAL)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void onEntityDamage(EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation()))

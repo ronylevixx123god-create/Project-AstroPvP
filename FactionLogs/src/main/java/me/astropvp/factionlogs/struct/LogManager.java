@@ -16,7 +16,6 @@ public class LogManager {
     public void log(String id, FactionLog factionLog) {
         FactionLogManager factionLogManager = getFactionLogManager(id);
         factionLogManager.addFactionLogToFaction(factionLog.getLogtype(), factionLog);
-        //TODO: Check if this makes sense (I was tired)
     }
 
     public FactionLogManager getFactionLogManager(String id) {
@@ -28,5 +27,9 @@ public class LogManager {
 
     public void load() {
         //Load data here
+    }
+
+    public void save() {
+        //save data here
     }
 }
