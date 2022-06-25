@@ -1,9 +1,4 @@
-name: Tournaments
-main: me.astropvp.CosmicTournamentsPlugin
+name: AstroTournaments
+main: me.kingsavaqe.astrotournaments.AstroTournamentsPlugin
 version: 1.0
-depend: [Commons]
-commands:
-  tournament:
-    aliases: [tourney]
-  admintournament:
-    aliases: [atournament, admintourney, atourney]
+author: KingSavaqe

@@ -1,6 +1,7 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import net.astropvp.core.commands.ToggleKillTitleCommand;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -18,7 +19,9 @@ public class KillTitleSound implements Listener {
         Player killer = e.getEntity().getKiller();
         Player killed = (Player) e.getEntity();
 
-        killer.sendTitle(new Title("", CC.translate("&a&lKILLED &f") + killed.getName(), 20, 50, 20));
+        if (ToggleKillTitleCommand.hasEnabled(killer.getUniqueId())) {
+            killer.sendTitle(new Title("", CC.translate("&a&lKILLED &f") + killed.getName(), 20, 50, 20));
+        }
 
 
     }

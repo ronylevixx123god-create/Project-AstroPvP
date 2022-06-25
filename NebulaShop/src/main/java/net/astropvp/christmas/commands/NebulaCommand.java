@@ -37,7 +37,7 @@ public class NebulaCommand implements CommandExecutor {
             return true;
         }
         if(args[0].equalsIgnoreCase("setitem") && args.length == 2) {
-            NebulaShop.getInstance().getNebulaShopManager().setCurrentItem(player.getItemInHand());
+            NebulaShop.getInstance().getNebulaShopManager().setCurrentItem(player.getItemInHand().clone());
             NebulaShop.getInstance().getNebulaShopManager().setCurrentPrice(Double.parseDouble(args[1]));
             NebulaShop.getInstance().getNebulaShopManager().clearAlreadyBought();
             player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Success.").get());

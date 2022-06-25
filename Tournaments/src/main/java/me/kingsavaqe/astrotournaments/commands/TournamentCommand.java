@@ -1,0 +1,166 @@
+package me.kingsavaqe.astrotournaments.commands;
+
+import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
+import me.kingsavaqe.astrotournaments.inventory.TournamentGUI;
+import me.kingsavaqe.astrotournaments.managers.TournamentManager;
+import me.kingsavaqe.astrotournaments.tasks.TournamentStartTask;
+import me.kingsavaqe.astrotournaments.utils.Utils;
+import me.mattstudios.mf.annotations.*;
+import me.mattstudios.mf.base.CommandBase;
+import org.bukkit.Bukkit;
+import org.bukkit.Sound;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+
+@Command("tournament")
+@Alias({"tm", "astrotournament", "tournaments"})
+public class TournamentCommand extends CommandBase {
+
+    private final AstroTournamentsPlugin plugin;
+    private final TournamentManager tournamentManager;
+    public TournamentCommand(AstroTournamentsPlugin plugin)
+    {
+        this.plugin = plugin;
+        this.tournamentManager = plugin.getTournamentManager();
+    }
+
+    @Default
+    public void defaultCommand(CommandSender commandSender) {
+        Player player = (Player)commandSender;
+        TournamentGUI tournamentInventory = new TournamentGUI(plugin, player);
+        tournamentInventory.getUI().open(player);
+        player.playSound(player.getLocation(), Sound.CHEST_OPEN, 2.0F, 2.0F);
+    }
+
+    @SubCommand("help")
+    public void helpCommand(CommandSender commandSender) {
+        if(commandSender.hasPermission("tournament.*")) {
+            sendAdminHelp(commandSender);
+            return;
+        }
+        sendUserHelp(commandSender);
+    }
+
+    @SubCommand("join")
+    public void joinCommand(CommandSender commandSender) {
+        Player player = (Player)commandSender;
+        if(!plugin.getTournamentManager().isActive()) {
+            player.sendMessage(Utils.fixColor("&cThere is no tournament currently active"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        if(!plugin.getTournamentManager().isJoinable()) {
+            player.sendMessage(Utils.fixColor("&cYou can no longer join this tournament"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        if(plugin.getTournamentManager().getTournamentParticipants().contains(player)) {
+            player.sendMessage(Utils.fixColor("&cYou are already in the tournament"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        if(!Utils.isEmptyInventory(player)) {
+            player.sendMessage(Utils.fixColor("&cYou must have an empty inventory to join the tournament"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        plugin.getTournamentManager().getTournamentParticipants().add(tournamentManager.getActiveTournamentPlayer(player.getUniqueId()));
+        player.playSound(player.getLocation(), Sound.ORB_PICKUP, 2.0F, 2.0F);
+        player.teleport(plugin.getTournamentManager().getWaitingRoomLocation());
+        player.sendMessage(Utils.fixColor("&aYou have successfully joined the tournament"));
+    }
+
+    @SubCommand("leave")
+    public void leaveCommand(CommandSender commandSender) {
+        Player player = (Player) commandSender;
+        if(!plugin.getTournamentManager().isActive()) {
+            player.sendMessage(Utils.fixColor("&cThere is no tournament currently active"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        if(!plugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(player.getUniqueId()))) {
+            player.sendMessage(Utils.fixColor("&cYou are not in the tournament"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        plugin.getTournamentManager().getTournamentParticipants().remove(player);
+        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 2.0F, 2.0F);
+        player.teleport(Bukkit.getWorld("world").getSpawnLocation());
+        player.sendMessage(Utils.fixColor("&aYou have successfully left the tournament"));
+    }
+
+    @SubCommand("info")
+    public void infoCommand(CommandSender commandSender) {
+        Player player = (Player) commandSender;
+        if(!plugin.getTournamentManager().isActive()) {
+            player.sendMessage(Utils.fixColor("&cThere is no tournament currently active"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        player.sendMessage(Utils.fixColor("Players Remaining: " + plugin.getTournamentManager().getTournamentParticipants().size()));
+    }
+
+    @SubCommand("start")
+    @Permission("tournaments.*")
+    @NoPermission("&cAn internal error occurred when executing this command.")
+    public void startCommand(CommandSender commandSender) {
+        Player player = (Player) commandSender;
+        if(plugin.getTournamentManager().isActive()) {
+            player.sendMessage(Utils.fixColor("&cThere is already an active tournament event"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        player.sendMessage(Utils.fixColor("&aYou have successfully started a tournament"));
+        player.playSound(player.getLocation(), Sound.ORB_PICKUP, 2.0F, 2.0F);
+        plugin.getTournamentManager().setActive(true);
+        plugin.getTournamentManager().setJoinable(true);
+        new TournamentStartTask(plugin);
+    }
+
+    @SubCommand("end")
+    @Permission("tournaments.*")
+    @NoPermission("&cAn internal error occurred when executing this command.")
+    public void endCommand(CommandSender commandSender) {
+        Player player = (Player) commandSender;
+        if(!plugin.getTournamentManager().isActive()) {
+            player.sendMessage(Utils.fixColor("&cThere is not an active tournament event"));
+            player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+            return;
+        }
+        plugin.getTournamentManager().getTournamentParticipants().forEach(player1 -> {
+            player.teleport(Bukkit.getWorld("world").getSpawnLocation());
+        });
+        plugin.getTournamentManager().getTournamentParticipants().clear();
+        player.sendMessage(Utils.fixColor("&aYou have successfully ended a tournament"));
+        player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 2.0F, 2.0F);
+        plugin.getTournamentManager().setActive(false);
+        plugin.getTournamentManager().setJoinable(false);
+    }
+
+    private void sendUserHelp(CommandSender commandSender) {
+        commandSender.sendMessage(Utils.fixColor("&a-------[ &2Tournaments &a]-------"));
+        commandSender.sendMessage(Utils.fixColor("&a[] &8- &7Optional argument"));
+        commandSender.sendMessage(Utils.fixColor("&2<> &8- &7Required argument"));
+        commandSender.sendMessage("");
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament join"));
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament leave"));
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament info"));
+        commandSender.sendMessage(Utils.fixColor("&a-------[ &2Tournaments  &a]-------"));
+    }
+
+    private void sendAdminHelp(CommandSender commandSender) {
+        commandSender.sendMessage(Utils.fixColor("&a-------[ &2Tournaments &a]-------"));
+        commandSender.sendMessage(Utils.fixColor("&a[] &8- &7Optional argument"));
+        commandSender.sendMessage(Utils.fixColor("&2<> &8- &7Required argument"));
+        commandSender.sendMessage("");
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament join"));
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament leave"));
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament info"));
+        commandSender.sendMessage("");
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament start <time>"));
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament end"));
+        commandSender.sendMessage(Utils.fixColor(" &2* &a/tournament reload"));
+        commandSender.sendMessage(Utils.fixColor("&a-------[ &2Tournaments  &a]-------"));
+    }
+
+}

@@ -1,8 +1,6 @@
 package me.kingsavaqe.astroenvoy.utils;
 
-import net.minecraft.server.v1_8_R3.NBTCompressedStreamTools;
-import net.minecraft.server.v1_8_R3.NBTTagCompound;
-import net.minecraft.server.v1_8_R3.NBTTagList;
+import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.inventory.CraftItemStack;
 import org.bukkit.inventory.Inventory;
@@ -16,52 +14,20 @@ import java.io.*;
 import java.math.BigInteger;
 
 public class Base64Utils {
-    /**
-     * Item to Base 64
-     * @param item
-     * @return
-     */
-    public static String toBase64(ItemStack item)  {
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        DataOutputStream dataOutput = new DataOutputStream(outputStream);
-
-        NBTTagList nbtTagListItems = new NBTTagList();
-        NBTTagCompound nbtTagCompoundItem = new NBTTagCompound();
-
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-
-        nmsItem.save(nbtTagCompoundItem);
-
-        nbtTagListItems.add(nbtTagCompoundItem);
-
-        try {
-            NBTCompressedStreamTools.a(nbtTagCompoundItem, (DataOutput) dataOutput);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return new BigInteger(1, outputStream.toByteArray()).toString(32);
+    public static String serializeItemStack(ItemStack itemStack) {
+        net.minecraft.server.v1_8_R3.ItemStack netItemStack = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound tag = new NBTTagCompound();
+        netItemStack.save(tag);
+        return tag.toString();
     }
 
-    /**
-     * Item from Base64
-     * @param data
-     * @return
-     */
-    public static ItemStack fromBase64(String data) {
-        ByteArrayInputStream inputStream = new ByteArrayInputStream(new BigInteger(data, 32).toByteArray());
-
-        NBTTagCompound nbtTagCompoundRoot = null;
-        try {
-            nbtTagCompoundRoot = NBTCompressedStreamTools.a(new DataInputStream(inputStream));
-        } catch (IOException e) {
-            e.printStackTrace();
+    public static ItemStack deserializeItemStack(String rawItem) throws MojangsonParseException {
+        if (rawItem == null || rawItem.equals("empty")) {
+            return null;
         }
-
-        net.minecraft.server.v1_8_R3.ItemStack nmsItem = net.minecraft.server.v1_8_R3.ItemStack.createStack(nbtTagCompoundRoot);
-        ItemStack item = (ItemStack) CraftItemStack.asBukkitCopy(nmsItem);
-
-        return item;
+        NBTTagCompound compound = MojangsonParser.parse(rawItem);
+        net.minecraft.server.v1_8_R3.ItemStack netItemStack = net.minecraft.server.v1_8_R3.ItemStack.createStack(compound);
+        return CraftItemStack.asBukkitCopy(netItemStack);
     }
 }
 

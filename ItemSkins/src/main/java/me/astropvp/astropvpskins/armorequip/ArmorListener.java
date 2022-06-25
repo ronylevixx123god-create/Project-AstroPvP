@@ -136,7 +136,7 @@ public class ArmorListener implements Listener {
                     // e.getRawSlot() == The slot the item is going to.
                     // e.getSlot() == Armor slot, can't use e.getRawSlot() as that gives a hotbar slot ;-;
                     ItemStack hotbarItem = event.getClickedInventory().getItem(event.getHotbarButton());
-                    if (!isAirOrNull(hotbarItem)) {// Equipping
+                    if (!isAirOrNull(hotbarItem) && event.getAction() != InventoryAction.HOTBAR_MOVE_AND_READD){// Equipping
                         newArmorType = ArmorType.matchType(hotbarItem);
                         newArmorPiece = hotbarItem;
                         oldArmorPiece = event.getClickedInventory().getItem(event.getSlot());
@@ -154,6 +154,7 @@ public class ArmorListener implements Listener {
             }
             if (newArmorType != null && event.getRawSlot() == newArmorType.getSlot()) {
                 ArmorEquipEvent.EquipMethod method = ArmorEquipEvent.EquipMethod.PICK_DROP;
+
                 if (event.getAction() == InventoryAction.HOTBAR_SWAP || numberkey) {
                     method = ArmorEquipEvent.EquipMethod.HOTBAR_SWAP;
                 }

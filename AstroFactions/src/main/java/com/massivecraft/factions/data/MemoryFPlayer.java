@@ -21,6 +21,7 @@ import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.tag.Tag;
 import com.massivecraft.factions.util.*;
 import mkremins.fanciful.FancyMessage;
+import net.astropvp.core.commands.ToggleFactionLandTitle;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -752,7 +753,9 @@ public abstract class MemoryFPlayer implements FPlayer {
 
             // We send null instead of empty because Spigot won't touch the title if it's null, but clears if empty.
             // We're just trying to be as unintrusive as possible.
-            TitleAPI.getInstance().sendTitle(player, title, sub, in, stay, out);
+            if (ToggleFactionLandTitle.hasEnabled(player.getUniqueId())) {
+                TitleAPI.getInstance().sendTitle(player, title, sub, in, stay, out);
+            }
 
             showChat = FactionsPlugin.getInstance().conf().factions().enterTitles().isAlsoShowChat();
         }

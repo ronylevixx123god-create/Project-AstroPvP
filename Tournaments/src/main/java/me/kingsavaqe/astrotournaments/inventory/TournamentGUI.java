@@ -1,0 +1,56 @@
+package me.kingsavaqe.astrotournaments.inventory;
+
+import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
+import me.kingsavaqe.astrotournaments.objects.Arena;
+import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
+import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
+import me.kingsavaqe.astrotournaments.utils.Utils;
+import me.mattstudios.mfgui.gui.guis.Gui;
+import me.mattstudios.mfgui.gui.guis.GuiItem;
+import org.bukkit.DyeColor;
+import org.bukkit.Material;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+
+import java.util.Arrays;
+import java.util.Map;
+
+
+public class TournamentGUI {
+    private final Gui astroTournamentInventory;
+
+    public Gui getUI() {
+        return this.astroTournamentInventory;
+    }
+
+
+    public TournamentGUI(AstroTournamentsPlugin plugin, Player player) {
+        Map<String, Arena> arenaMap = plugin.getArenaRegister().getArenas();
+        this.astroTournamentInventory = new Gui(1, "Astro Tournaments");
+        this.astroTournamentInventory.setDefaultClickAction(event -> event.setCancelled(true));
+        this.astroTournamentInventory.setItem(1, 9, new GuiItem(createExitItem(), event -> {
+            player.closeInventory();
+        }));
+
+        arenaMap.values().forEach(arena -> {
+            ItemBuilder itemBuilder = new ItemBuilder(Material.WOOL, "&fArena: " + arena.getId());
+            itemBuilder.setColor(DyeColor.WHITE);
+            if(arena.isInUse()) {
+                TournamentPlayer player1 = arena.getCurrentlyFighting().getLeft();
+                TournamentPlayer player2 = arena.getCurrentlyFighting().getRight();
+                itemBuilder.setColor(DyeColor.RED);
+                itemBuilder.setLore(Arrays.asList(
+                        "&bPlayer One: &f" + player1.getPlayer().getName() + " &7&o(" + Utils.round(player1.getPlayer().getHealth(), 1) + ")",
+                        "&bPlayer Two: &f" + player2.getPlayer().getName() + " &7&o(" + Utils.round(player2.getPlayer().getHealth(), 1) + ")"
+
+                ));
+            }
+            this.astroTournamentInventory.addItem(new GuiItem(itemBuilder.colorize().build()));
+        });
+    }
+
+    private ItemStack createExitItem() {
+        return new ItemBuilder(Material.FENCE_GATE, "&cExit tournament menu", "&7You can execute /tournament leave", "&7to leave the tournament event").colorize().build();
+    }
+
+}

@@ -7,6 +7,8 @@
     <version>1.6.9.5-U0.5.18</version>
     <packaging>jar</packaging>
 
+
+
     <name>Factions</name>
 
     <properties>
@@ -486,22 +488,25 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>net.astropvp</groupId>
-            <artifactId>Core</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>core</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../../lib/AstroCore.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
+            <artifactId>spawners</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../../lib/AstroSpawners.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>AstroSpawnersMobcoins</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
+            <artifactId>utils</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../../lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

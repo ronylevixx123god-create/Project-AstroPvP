@@ -21,7 +21,12 @@ public class CmdAltOpen extends FCommand {
     public void perform(CommandContext context) {
         Faction faction = context.faction;
 
-        faction.geta
+        if(!faction.getAltJoinString().equals("-1")){
+            context.msg(TL.COMMAND_ALT_ALREADYOPEN, faction.describeTo(context.fPlayer), faction.getAltJoinString());
+            return;
+        }
+
+        String string = faction.setAltOpen();
 
         context.msg(TL.COMMAND_ALT_OPEN, faction.describeTo(context.fPlayer), string);
     }

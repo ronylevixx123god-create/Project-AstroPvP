@@ -162,6 +162,11 @@
       <option name="url" value="https://repo.mattstudios.me/artifactory/public/" />
     </remote-repository>
     <remote-repository>
+      <option name="id" value="sk89q-repo" />
+      <option name="name" value="sk89q-repo" />
+      <option name="url" value="https://maven.enginehub.org/repo/" />
+    </remote-repository>
+    <remote-repository>
       <option name="id" value="net.coreprotect" />
       <option name="name" value="net.coreprotect" />
       <option name="url" value="https://maven.playpro.com/" />

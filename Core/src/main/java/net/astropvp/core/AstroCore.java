@@ -13,7 +13,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
 import net.astropvp.core.giveaway.GiveAwayCommand;
 import net.astropvp.core.giveaway.GiveAwayManager;
-import net.astropvp.core.stats.StatsManager;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
 import net.astropvp.core.titles.listeners.PermissionListener;
@@ -76,7 +75,6 @@ import net.astropvp.core.utils.cache.CacheManager;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -138,7 +136,6 @@ public class AstroCore extends JavaPlugin {
     @Setter
     public static TitleManagerAPI titleManagerAPI;
     private Freeze freezeCommand;
-    private StatsManager statsManager;
 
     @Getter
     public GiveAwayManager giveAwayManager;
@@ -163,8 +160,9 @@ public class AstroCore extends JavaPlugin {
         this.claimsOnFrozen = new HashMap<>();
         this.filterManager = new FilterManager();
         this.filterManager.loadFilters();
-        this.statsManager = new StatsManager(this);
         this.giveAwayManager = new GiveAwayManager(this);
+
+
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkunload lava_sponge");
         WorldGuardPlugin.inst().getConfig().set("simulation.sponge.enable", false);
@@ -216,6 +214,9 @@ public class AstroCore extends JavaPlugin {
         registerTasks();
         protocolFix();
 
+        ToggleKillTitleCommand.load();
+        ToggleFactionLandTitle.load();
+
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
@@ -237,6 +238,12 @@ public class AstroCore extends JavaPlugin {
         }
         this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
+
+        ToggleKillTitleCommand.save();
+        ToggleFactionLandTitle.save();
+        Bukkit.getLogger().info("Saving all the toggle kill titles");
+        Bukkit.getLogger().info("Saving all the toggle faction land titles");
+
 
 
         for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
@@ -266,7 +273,7 @@ public class AstroCore extends JavaPlugin {
         this.toggleManager.saveToggles();
 
         this.enchantmentCoderManager.saveData();
-        this.enchantmentCoderManager.clearData();
+        //this.enchantmentCoderManager.clearData();
 
         Set infernalClaims = this.claimsOnInfernal.entrySet();
         for (Object infernalClaim : infernalClaims) {
@@ -390,6 +397,8 @@ public class AstroCore extends JavaPlugin {
         getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
         getCommand("randomtp").setExecutor(new RandomTpCommand());
         getCommand("giveaway").setExecutor(new GiveAwayCommand());
+        getCommand("togglekilltitle").setExecutor(new ToggleKillTitleCommand());
+        getCommand("togglefactionland").setExecutor(new ToggleFactionLandTitle());
 
         freezeCommand = new Freeze();
 
@@ -408,7 +417,8 @@ public class AstroCore extends JavaPlugin {
         }, 20L, 20L);
 
         Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), () -> {
-            for (Player p : Bukkit.getOnlinePlayers()) {
+            Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
+            for (Player p : allPlayers) {
                 if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient() && !p.isOp()) {
                     p.sendMessage("");
                     p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official Suported Astro Version of the &nCosmicClient&c."));

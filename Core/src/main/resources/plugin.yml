@@ -52,6 +52,10 @@ commands:
     description: Give soul gem with the given amount.
   helpenchants:
     description: Enchantment help.
+  togglekilltitle:
+    description: Toggle kill titles
+  togglefactionland:
+    description: Toggle land title
   wiki:
     description: Wiki
   spawnmenu:

@@ -23,6 +23,8 @@ package net.astropvp.core.cosmictoggles.toggles;
 
 import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
+import net.astropvp.core.commands.ToggleFactionLandTitle;
+import net.astropvp.core.commands.ToggleKillTitleCommand;
 import net.astropvp.core.itemfilter.Filter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
@@ -42,7 +44,8 @@ public enum CosmicToggle {
     JACKPOT("Jackpot Notifications", "/jackpot stfu"),
     AUCTION("Auction Bid Alerts", "/ah stfu"),
     DUELS("Duel Requests", "/duel toggle"),
-    GRINDING_NOTIFICATIONS("Grinding Notifications", "/grinding stfu"),
+    FACTION_LAND_TITLE("Faction Land Title", "/togglefactionland"),
+    KILL_LAND_TITLE("Kill Title", "/togglekilltitle"),
     CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
 
     private final String displayName;
@@ -83,9 +86,14 @@ public enum CosmicToggle {
         }
 
 
-        if (this == GRINDING_NOTIFICATIONS) {
-            return GrindingMessagesUtil.isPlayerIndicating(player);
+        if (this == FACTION_LAND_TITLE) {
+            return ToggleFactionLandTitle.hasEnabled(player.getUniqueId());
         }
+
+        if (this == KILL_LAND_TITLE) {
+            return ToggleKillTitleCommand.hasEnabled(player.getUniqueId());
+        }
+
         if (this == CLEAR_INVENTORY_CONFIRMATION) {
             try {
                 return !((ClearInventoryConfirm)ArkPlugins.CLEAR_INVENTORY_CONFIRM.getArkPlugin()).getClearInventoryToggled().contains(player.getUniqueId());

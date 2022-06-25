@@ -45,3 +45,4 @@ public class CmdAltClear extends FCommand {
     public TL getUsageTranslation() {
         return TL.COMMAND_ALT_OPENUSAGE;
     }
+}
