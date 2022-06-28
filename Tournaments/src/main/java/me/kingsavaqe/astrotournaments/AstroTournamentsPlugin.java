@@ -15,7 +15,10 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Map;
 import java.util.UUID;
 
+@Getter
 public class AstroTournamentsPlugin extends JavaPlugin {
+
+    public static AstroTournamentsPlugin instance;
 
     @Getter
     private TournamentManager tournamentManager;
@@ -26,6 +29,7 @@ public class AstroTournamentsPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
 
+        instance = this;
         saveDefaultConfig();
 
         CommandManager commandManager = new CommandManager(this);

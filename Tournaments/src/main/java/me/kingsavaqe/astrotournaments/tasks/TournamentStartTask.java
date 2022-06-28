@@ -9,16 +9,16 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 public class TournamentStartTask extends BukkitRunnable {
 
-    private final AstroTournamentsPlugin plugin;
+    private final AstroTournamentsPlugin astroTournamentsPlugin;
     private int seconds;
 
-    public TournamentStartTask(AstroTournamentsPlugin plugin) {
-        this.plugin = plugin;
-        if(!plugin.getTournamentManager().isActive()) {
+    public TournamentStartTask(AstroTournamentsPlugin astroTournamentsPlugin) {
+        this.astroTournamentsPlugin = astroTournamentsPlugin;
+        if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             return;
         }
         this.seconds = 31;
-        this.runTaskTimer(plugin, 20L * 2, 20L);
+        this.runTaskTimer(astroTournamentsPlugin, 20L * 2, 20L);
     }
 
     @Override
@@ -26,9 +26,9 @@ public class TournamentStartTask extends BukkitRunnable {
         this.seconds--;
         if(this.seconds == 0) {
 
-            plugin.getTournamentManager().setupQueue();
+            astroTournamentsPlugin.getTournamentManager().setupQueue();
 
-            plugin.getTournamentManager().setJoinable(false);
+            astroTournamentsPlugin.getTournamentManager().setJoinable(false);
 
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(Utils.fixColor("&6&lAstro Tournaments &f(1v1 Tournament)"));
@@ -38,7 +38,7 @@ public class TournamentStartTask extends BukkitRunnable {
             Bukkit.broadcastMessage(Utils.fixColor("&6Tournament entry has now &c&nCLOSED"));
             Bukkit.broadcastMessage("");
 
-            this.plugin.getTournamentManager().putNextPlayersInArenas();
+            this.astroTournamentsPlugin.getTournamentManager().putNextPlayersInArenas();
 
             return;
         }

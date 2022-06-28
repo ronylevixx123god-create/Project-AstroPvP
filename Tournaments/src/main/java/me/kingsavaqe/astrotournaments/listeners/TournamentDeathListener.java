@@ -13,12 +13,12 @@ import org.bukkit.potion.PotionEffectType;
 
 public class TournamentDeathListener implements Listener {
 
-    private final AstroTournamentsPlugin plugin;
+    private final AstroTournamentsPlugin astroTournamentsPlugin;
     private final TournamentManager tournamentManager;
 
-    public TournamentDeathListener(AstroTournamentsPlugin plugin) {
-        this.plugin = plugin;
-        this.tournamentManager = plugin.getTournamentManager();
+    public TournamentDeathListener(AstroTournamentsPlugin astroTournamentsPlugin) {
+        this.astroTournamentsPlugin = astroTournamentsPlugin;
+        this.tournamentManager = astroTournamentsPlugin.getTournamentManager();
     }
 
     @EventHandler
@@ -27,8 +27,8 @@ public class TournamentDeathListener implements Listener {
         TournamentPlayer victim = tournamentManager.getActiveTournamentPlayer(event.getEntity().getUniqueId());
         TournamentPlayer attacker;
 
-        if(plugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
-        for(TournamentMatch tournamentMatch : plugin.getTournamentManager().getTournamentMatchList()) {
+        if(astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
+        for(TournamentMatch tournamentMatch : astroTournamentsPlugin.getTournamentManager().getTournamentMatchList()) {
             if(tournamentMatch.getPlayerOne() == victim || tournamentMatch.getPlayerTwo() == victim) {
 
 
@@ -41,27 +41,27 @@ public class TournamentDeathListener implements Listener {
                     attacker = tournamentMatch.getPlayerOne();
                 }
 
-                for(TournamentPlayer player : plugin.getTournamentManager().getTournamentParticipants()) {
+                for(TournamentPlayer player : astroTournamentsPlugin.getTournamentManager().getTournamentParticipants()) {
                     player.getPlayer().sendMessage(Utils.fixColor("&6Tournaments &8| &7" + attacker.getPlayer().getName() + " &ehas beaten the player &7" + victim.getPlayer().getName() + " &ein a tournament match"));
                 };
 
 
                 tournamentMatch.getArena().reset();
-                plugin.getTournamentManager().getTournamentMatchList().remove(tournamentMatch);
+                astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().remove(tournamentMatch);
 
-                if(plugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(victim.getUuid())))
-                    plugin.getTournamentManager().getPlayerQueue().removeFromQueue(victim);
-                plugin.getTournamentManager().getTournamentParticipants().remove(victim);
+                if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(victim.getUuid())))
+                    astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(victim);
+                astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(victim);
 
-                attacker.getPlayer().teleport(plugin.getTournamentManager().getWaitingRoomLocation());
+                attacker.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation());
                 victim.getPlayer().sendMessage(Utils.fixColor("&cYou have been eliminated from the tournament"));
 
-                if(plugin.getTournamentManager().getPlayerQueue().contains(attacker))
-                    plugin.getTournamentManager().getPlayerQueue().removeFromQueue(attacker);
-                plugin.getTournamentManager().getPlayerQueue().enqueue(attacker);
+                if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(attacker))
+                    astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(attacker);
+                astroTournamentsPlugin.getTournamentManager().getPlayerQueue().enqueue(attacker);
 
-                plugin.getServer().getScheduler().runTaskLater(plugin, () -> {
-                    plugin.getTournamentManager().putNextPlayersInArenas();
+                astroTournamentsPlugin.getServer().getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
+                    astroTournamentsPlugin.getTournamentManager().putNextPlayersInArenas();
                 }, 20L);
 
                 emptyInventory(victim.getPlayer());

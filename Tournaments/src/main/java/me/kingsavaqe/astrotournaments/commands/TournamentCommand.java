@@ -2,6 +2,7 @@ package me.kingsavaqe.astrotournaments.commands;
 
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.inventory.TournamentGUI;
+import me.kingsavaqe.astrotournaments.inventory.TournamentPlayerSettingsGUI;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.tasks.TournamentStartTask;
 import me.kingsavaqe.astrotournaments.utils.Utils;
@@ -16,18 +17,18 @@ import org.bukkit.entity.Player;
 @Alias({"tm", "astrotournament", "tournaments"})
 public class TournamentCommand extends CommandBase {
 
-    private final AstroTournamentsPlugin plugin;
+    private final AstroTournamentsPlugin astroTournamentsPlugin;
     private final TournamentManager tournamentManager;
-    public TournamentCommand(AstroTournamentsPlugin plugin)
+    public TournamentCommand(AstroTournamentsPlugin astroTournamentsPlugin)
     {
-        this.plugin = plugin;
-        this.tournamentManager = plugin.getTournamentManager();
+        this.astroTournamentsPlugin = astroTournamentsPlugin;
+        this.tournamentManager = astroTournamentsPlugin.getTournamentManager();
     }
 
     @Default
     public void defaultCommand(CommandSender commandSender) {
         Player player = (Player)commandSender;
-        TournamentGUI tournamentInventory = new TournamentGUI(plugin, player);
+        TournamentGUI tournamentInventory = new TournamentGUI(astroTournamentsPlugin, player);
         tournamentInventory.getUI().open(player);
         player.playSound(player.getLocation(), Sound.CHEST_OPEN, 2.0F, 2.0F);
     }
@@ -41,20 +42,32 @@ public class TournamentCommand extends CommandBase {
         sendUserHelp(commandSender);
     }
 
+    @SubCommand("settings")
+    public void settingsCommand(CommandSender commandSender) {
+        new TournamentPlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
+    }
+
+    @SubCommand("edit")
+    public void settingv2sCommand(CommandSender commandSender) {
+        new TournamentPlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
+    }
+
+
+
     @SubCommand("join")
     public void joinCommand(CommandSender commandSender) {
         Player player = (Player)commandSender;
-        if(!plugin.getTournamentManager().isActive()) {
+        if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             player.sendMessage(Utils.fixColor("&cThere is no tournament currently active"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        if(!plugin.getTournamentManager().isJoinable()) {
+        if(!astroTournamentsPlugin.getTournamentManager().isJoinable()) {
             player.sendMessage(Utils.fixColor("&cYou can no longer join this tournament"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        if(plugin.getTournamentManager().getTournamentParticipants().contains(player)) {
+        if(astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().contains(player)) {
             player.sendMessage(Utils.fixColor("&cYou are already in the tournament"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
@@ -64,26 +77,26 @@ public class TournamentCommand extends CommandBase {
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        plugin.getTournamentManager().getTournamentParticipants().add(tournamentManager.getActiveTournamentPlayer(player.getUniqueId()));
+        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().add(tournamentManager.getTournamentPlayer(player.getUniqueId()));
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 2.0F, 2.0F);
-        player.teleport(plugin.getTournamentManager().getWaitingRoomLocation());
+        player.teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation());
         player.sendMessage(Utils.fixColor("&aYou have successfully joined the tournament"));
     }
 
     @SubCommand("leave")
     public void leaveCommand(CommandSender commandSender) {
         Player player = (Player) commandSender;
-        if(!plugin.getTournamentManager().isActive()) {
+        if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             player.sendMessage(Utils.fixColor("&cThere is no tournament currently active"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        if(!plugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(player.getUniqueId()))) {
+        if(!astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(player.getUniqueId()))) {
             player.sendMessage(Utils.fixColor("&cYou are not in the tournament"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        plugin.getTournamentManager().getTournamentParticipants().remove(player);
+        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(player);
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 2.0F, 2.0F);
         player.teleport(Bukkit.getWorld("world").getSpawnLocation());
         player.sendMessage(Utils.fixColor("&aYou have successfully left the tournament"));
@@ -92,12 +105,12 @@ public class TournamentCommand extends CommandBase {
     @SubCommand("info")
     public void infoCommand(CommandSender commandSender) {
         Player player = (Player) commandSender;
-        if(!plugin.getTournamentManager().isActive()) {
+        if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             player.sendMessage(Utils.fixColor("&cThere is no tournament currently active"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        player.sendMessage(Utils.fixColor("Players Remaining: " + plugin.getTournamentManager().getTournamentParticipants().size()));
+        player.sendMessage(Utils.fixColor("Players Remaining: " + astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size()));
     }
 
     @SubCommand("start")
@@ -105,16 +118,16 @@ public class TournamentCommand extends CommandBase {
     @NoPermission("&cAn internal error occurred when executing this command.")
     public void startCommand(CommandSender commandSender) {
         Player player = (Player) commandSender;
-        if(plugin.getTournamentManager().isActive()) {
+        if(astroTournamentsPlugin.getTournamentManager().isActive()) {
             player.sendMessage(Utils.fixColor("&cThere is already an active tournament event"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
         player.sendMessage(Utils.fixColor("&aYou have successfully started a tournament"));
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 2.0F, 2.0F);
-        plugin.getTournamentManager().setActive(true);
-        plugin.getTournamentManager().setJoinable(true);
-        new TournamentStartTask(plugin);
+        astroTournamentsPlugin.getTournamentManager().setActive(true);
+        astroTournamentsPlugin.getTournamentManager().setJoinable(true);
+        new TournamentStartTask(astroTournamentsPlugin);
     }
 
     @SubCommand("end")
@@ -122,19 +135,19 @@ public class TournamentCommand extends CommandBase {
     @NoPermission("&cAn internal error occurred when executing this command.")
     public void endCommand(CommandSender commandSender) {
         Player player = (Player) commandSender;
-        if(!plugin.getTournamentManager().isActive()) {
+        if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             player.sendMessage(Utils.fixColor("&cThere is not an active tournament event"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        plugin.getTournamentManager().getTournamentParticipants().forEach(player1 -> {
+        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().forEach(player1 -> {
             player.teleport(Bukkit.getWorld("world").getSpawnLocation());
         });
-        plugin.getTournamentManager().getTournamentParticipants().clear();
+        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
         player.sendMessage(Utils.fixColor("&aYou have successfully ended a tournament"));
         player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 2.0F, 2.0F);
-        plugin.getTournamentManager().setActive(false);
-        plugin.getTournamentManager().setJoinable(false);
+        astroTournamentsPlugin.getTournamentManager().setActive(false);
+        astroTournamentsPlugin.getTournamentManager().setJoinable(false);
     }
 
     private void sendUserHelp(CommandSender commandSender) {

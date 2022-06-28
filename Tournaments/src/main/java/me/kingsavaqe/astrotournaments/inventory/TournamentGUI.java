@@ -24,13 +24,19 @@ public class TournamentGUI {
     }
 
 
-    public TournamentGUI(AstroTournamentsPlugin plugin, Player player) {
-        Map<String, Arena> arenaMap = plugin.getArenaRegister().getArenas();
-        this.astroTournamentInventory = new Gui(1, "Astro Tournaments");
+    public TournamentGUI(AstroTournamentsPlugin astroTournamentsPlugin, Player player) {
+        Map<String, Arena> arenaMap = astroTournamentsPlugin.getArenaRegister().getArenas();
+        this.astroTournamentInventory = new Gui(3, "Astro Tournaments Menu");
         this.astroTournamentInventory.setDefaultClickAction(event -> event.setCancelled(true));
-        this.astroTournamentInventory.setItem(1, 9, new GuiItem(createExitItem(), event -> {
+        this.astroTournamentInventory.setItem(3, 9, new GuiItem(createExitItem(), event -> {
             player.closeInventory();
         }));
+
+        this.astroTournamentInventory.setItem(3, 8, new GuiItem(createSettingsItem(), event -> {
+            new TournamentPlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId())).getUI().open(player);
+        }));
+
+
 
         arenaMap.values().forEach(arena -> {
             ItemBuilder itemBuilder = new ItemBuilder(Material.WOOL, "&fArena: " + arena.getId());
@@ -51,6 +57,10 @@ public class TournamentGUI {
 
     private ItemStack createExitItem() {
         return new ItemBuilder(Material.FENCE_GATE, "&cExit tournament menu", "&7You can execute /tournament leave", "&7to leave the tournament event").colorize().build();
+    }
+
+    private ItemStack createSettingsItem() {
+        return new ItemBuilder(Material.ARMOR_STAND, "&aPlayer Settings", "&7Click here to change your tournament setup/settings").colorize().build();
     }
 
 }

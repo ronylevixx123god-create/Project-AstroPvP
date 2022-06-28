@@ -1,5 +1,61 @@
 package me.kingsavaqe.astrotournaments.inventory;
 
-public class TournamentPlayerSettingsGUI
-{
+import lombok.Getter;
+import me.astropvp.astropvpskins.enums.ItemSkinType;
+import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
+import me.kingsavaqe.astrotournaments.inventory.settingsGUI.SkinSettingsGUI;
+import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
+import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
+import me.mattstudios.mfgui.gui.guis.Gui;
+import me.mattstudios.mfgui.gui.guis.GuiItem;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+public class TournamentPlayerSettingsGUI {
+    private final Gui tournamentPlayerSettings;
+
+    public Gui getUI() {
+        return this.tournamentPlayerSettings;
+    }
+
+
+    public TournamentPlayerSettingsGUI(AstroTournamentsPlugin astroTournamentsPlugin, TournamentPlayer tournamentPlayer) {
+        this.tournamentPlayerSettings = new Gui(3, "Tournament Player Settings");
+        this.tournamentPlayerSettings.setDefaultClickAction(event -> event.setCancelled(true));
+
+
+
+        this.tournamentPlayerSettings.setItem(1, 1, new GuiItem(tournamentPlayer.getHelmet().clone(), event -> {
+            new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.HELMET).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+        }));
+        this.tournamentPlayerSettings.setItem(1, 2, new GuiItem(tournamentPlayer.getChestplate().clone(), event -> {
+            new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.AMULET).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+        }));
+        this.tournamentPlayerSettings.setItem(1, 3, new GuiItem(tournamentPlayer.getLeggings().clone(), event -> {
+            new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.BELT).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+        }));
+        this.tournamentPlayerSettings.setItem(1, 4, new GuiItem(tournamentPlayer.getBoots().clone(), event -> {
+            new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.BOOTS).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+        }));
+        this.tournamentPlayerSettings.setItem(1, 5, new GuiItem(tournamentPlayer.getSword().clone(), event -> {
+            new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.SWORD).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+        }));
+
+        this.tournamentPlayerSettings.setItem(3, 9, new GuiItem(createBackItem(), event -> {
+            new TournamentPlayerSettingsGUI(AstroTournamentsPlugin.instance,tournamentPlayer).getUI().open(tournamentPlayer.getPlayer());
+        }));
+        this.tournamentPlayerSettings.setItem(3, 9, new GuiItem(createExitItem(), event -> {
+            tournamentPlayer.getPlayer().closeInventory();
+        }));
+    }
+
+
+
+    private ItemStack createExitItem() {
+        return new ItemBuilder(Material.FENCE_GATE, "&cExit tournament menu", "&7You can execute /tournament leave", "&7to leave the tournament event").colorize().build();
+    }
+
+    private ItemStack createBackItem() {
+        return new ItemBuilder(Material.ARROW, "&cGo back", "&7Click to go back to the settings").colorize().build();
+    }
 }

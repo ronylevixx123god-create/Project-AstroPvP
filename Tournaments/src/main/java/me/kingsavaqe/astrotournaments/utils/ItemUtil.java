@@ -43,6 +43,7 @@ public class ItemUtil {
 
     public static ItemStack applyCustomEnchantments(ItemStack i, List<CustomEnchantment> enchants) {
         for (CustomEnchantment ce : enchants) {
+            if (ce == null) continue;
             if (ce.heroicEnchantment) {
                 ce.nonHeroicVersion.addToItem(i, ce.nonHeroicVersion.getMaxLevel());
                 ce.addToItem(i, ce.getMaxLevel());
