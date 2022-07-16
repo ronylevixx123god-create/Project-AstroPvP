@@ -7,10 +7,12 @@ import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.cmd.CommandContext;
 import com.massivecraft.factions.cmd.CommandRequirements;
 import com.massivecraft.factions.cmd.FCommand;
+import com.massivecraft.factions.event.LandClaimRadiusEvent;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.util.SpiralTask;
 import com.massivecraft.factions.util.TL;
 import com.massivecraft.factions.util.Triplet;
+import org.bukkit.Bukkit;
 
 import java.util.*;
 
@@ -122,6 +124,8 @@ public class CmdClaim extends FCommand {
                     super.finish();
                 }
             };
+            LandClaimRadiusEvent landClaimRadiusEvent = new LandClaimRadiusEvent(fLocation, radius, forFaction, context.fPlayer);
+            Bukkit.getServer().getPluginManager().callEvent(landClaimRadiusEvent);
         }
     }
 

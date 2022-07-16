@@ -5,7 +5,6 @@ import lombok.Getter;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
-import me.kingsavaqe.astrotournaments.inventory.TournamentPlayerSettingsGUI;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
@@ -91,7 +90,7 @@ public class SkinSettingsGUI {
         }));
 
         this.skinSettingsGUI.setItem(5, 8, new GuiItem(createBackItem(), event -> {
-            new TournamentPlayerSettingsGUI(AstroTournamentsPlugin.instance,tournamentPlayer).getUI().open(tournamentPlayer.getPlayer());
+            new PlayerSettingsGUI(AstroTournamentsPlugin.instance,tournamentPlayer).getUI().open(tournamentPlayer.getPlayer());
         }));
 
     }

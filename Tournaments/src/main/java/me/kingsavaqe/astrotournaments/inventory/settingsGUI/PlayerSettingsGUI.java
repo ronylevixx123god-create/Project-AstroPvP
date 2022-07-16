@@ -1,9 +1,8 @@
-package me.kingsavaqe.astrotournaments.inventory;
+package me.kingsavaqe.astrotournaments.inventory.settingsGUI;
 
-import lombok.Getter;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
-import me.kingsavaqe.astrotournaments.inventory.settingsGUI.SkinSettingsGUI;
+import me.kingsavaqe.astrotournaments.inventory.TournamentGUI;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
@@ -11,7 +10,7 @@ import me.mattstudios.mfgui.gui.guis.GuiItem;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class TournamentPlayerSettingsGUI {
+public class PlayerSettingsGUI {
     private final Gui tournamentPlayerSettings;
 
     public Gui getUI() {
@@ -19,7 +18,7 @@ public class TournamentPlayerSettingsGUI {
     }
 
 
-    public TournamentPlayerSettingsGUI(AstroTournamentsPlugin astroTournamentsPlugin, TournamentPlayer tournamentPlayer) {
+    public PlayerSettingsGUI(AstroTournamentsPlugin astroTournamentsPlugin, TournamentPlayer tournamentPlayer) {
         this.tournamentPlayerSettings = new Gui(3, "Tournament Player Settings");
         this.tournamentPlayerSettings.setDefaultClickAction(event -> event.setCancelled(true));
 
@@ -41,8 +40,8 @@ public class TournamentPlayerSettingsGUI {
             new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.SWORD).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
         }));
 
-        this.tournamentPlayerSettings.setItem(3, 9, new GuiItem(createBackItem(), event -> {
-            new TournamentPlayerSettingsGUI(AstroTournamentsPlugin.instance,tournamentPlayer).getUI().open(tournamentPlayer.getPlayer());
+        this.tournamentPlayerSettings.setItem(3, 8, new GuiItem(createBackItem(), event -> {
+            new TournamentGUI(AstroTournamentsPlugin.instance, tournamentPlayer.getPlayer()).getUI().open(tournamentPlayer.getPlayer());
         }));
         this.tournamentPlayerSettings.setItem(3, 9, new GuiItem(createExitItem(), event -> {
             tournamentPlayer.getPlayer().closeInventory();

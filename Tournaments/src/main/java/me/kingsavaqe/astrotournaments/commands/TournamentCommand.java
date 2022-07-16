@@ -2,7 +2,7 @@ package me.kingsavaqe.astrotournaments.commands;
 
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.inventory.TournamentGUI;
-import me.kingsavaqe.astrotournaments.inventory.TournamentPlayerSettingsGUI;
+import me.kingsavaqe.astrotournaments.inventory.settingsGUI.PlayerSettingsGUI;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.tasks.TournamentStartTask;
 import me.kingsavaqe.astrotournaments.utils.Utils;
@@ -44,12 +44,12 @@ public class TournamentCommand extends CommandBase {
 
     @SubCommand("settings")
     public void settingsCommand(CommandSender commandSender) {
-        new TournamentPlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
+        new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
     }
 
     @SubCommand("edit")
     public void settingv2sCommand(CommandSender commandSender) {
-        new TournamentPlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
+        new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
     }
 
 

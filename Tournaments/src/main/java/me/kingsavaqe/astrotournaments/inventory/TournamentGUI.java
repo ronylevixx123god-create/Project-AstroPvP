@@ -1,6 +1,7 @@
 package me.kingsavaqe.astrotournaments.inventory;
 
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
+import me.kingsavaqe.astrotournaments.inventory.settingsGUI.PlayerSettingsGUI;
 import me.kingsavaqe.astrotournaments.objects.Arena;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
@@ -33,7 +34,7 @@ public class TournamentGUI {
         }));
 
         this.astroTournamentInventory.setItem(3, 8, new GuiItem(createSettingsItem(), event -> {
-            new TournamentPlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId())).getUI().open(player);
+            new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId())).getUI().open(player);
         }));
 
 
