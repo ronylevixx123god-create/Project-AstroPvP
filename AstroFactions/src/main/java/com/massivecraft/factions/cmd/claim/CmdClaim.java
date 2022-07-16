@@ -95,7 +95,9 @@ public class CmdClaim extends FCommand {
 
             final Faction loopFac = forFaction;
 
-            new SpiralTask(fLocation, radius) {
+            int finalRadius = radius;
+            Faction finalForFaction = forFaction;
+            new SpiralTask(fLocation, finalRadius) {
                 private int failCount = 0;
                 private final int limit = FactionsPlugin.getInstance().conf().factions().claims().getRadiusClaimFailureLimit() - 1;
 
@@ -121,11 +123,12 @@ public class CmdClaim extends FCommand {
                     }
 
                     context.fPlayer.msg(TL.CLAIM_CLAIMEDAMOUNT, context.fPlayer.describeTo(context.fPlayer, true), claimed, loopFac.describeTo(context.fPlayer));
+                    LandClaimRadiusEvent landClaimRadiusEvent = new LandClaimRadiusEvent(fLocation, finalRadius, finalForFaction, context.fPlayer);
+                    Bukkit.getServer().getPluginManager().callEvent(landClaimRadiusEvent);
                     super.finish();
                 }
             };
-            LandClaimRadiusEvent landClaimRadiusEvent = new LandClaimRadiusEvent(fLocation, radius, forFaction, context.fPlayer);
-            Bukkit.getServer().getPluginManager().callEvent(landClaimRadiusEvent);
+
         }
     }
 
