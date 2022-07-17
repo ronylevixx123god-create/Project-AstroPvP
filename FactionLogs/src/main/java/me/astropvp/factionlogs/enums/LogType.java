@@ -17,6 +17,7 @@ public enum LogType {
     PLAYER_LEAVE("Player Leaves", Material.WOOD_DOOR, "&c&l"),
     PLAYER_JOIN("Player Joins", Material.IRON_DOOR, "&a&l"),
     CLAIM("Claim Logs", Material.GRASS, "&a&l"),
+    RADIUSCLAIM("Radius Claim Logs", Material.GRAVEL, "&e&l"),
     UNCLAIM("Unclaim Logs", Material.DIRT, "&c&l"),
     UNCLAIMALL("Unclaimall Logs", Material.REDSTONE_BLOCK, "&4&l"),
     CHUNKBUST("Chunkbust Logs", Material.ENDER_PORTAL_FRAME, "&3&l");

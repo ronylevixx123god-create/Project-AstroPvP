@@ -1,19 +1,30 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.rit.sucy.*;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.google.common.collect.Maps;
+import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.*;
-import org.arkhamnetwork.enchantments.util.RageUtils;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.objects.RageObject;
 import org.arkhamnetwork.enchantments.util.config.ConfigManager;
-import org.bukkit.plugin.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.bukkit.metadata.*;
-import org.bukkit.*;
-import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.Bukkit;
+import org.bukkit.Effect;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
+
+import java.util.Map;
+import java.util.UUID;
 
 public class Rage extends CustomEnchantment {
+    private static final Map<UUID, RageObject> comboMap = Maps.newHashMap();
+
     public Rage() {
         super("Rage", GeneralUtil.weapons, 2);
         this.max = 6;
@@ -23,100 +34,70 @@ public class Rage extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
-            Player pUser = (Player) user;
-            if (!(event.getDamager() instanceof LivingEntity)) {
-                return;
-            }
-
-            if (!(target instanceof Player)) return;
-
-            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
-                return;
-            }
-            if (user.hasMetadata("noRageUntil") && user.getMetadata("noRageUntil").get(0).asLong() > System.currentTimeMillis()) {
-                return;
-            }
-
-            double mod = Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
-            double hitCombo = getPVPHitCombo((Player) user);
-            if (hitCombo > 10.0D) {
-                hitCombo = 10.0D;
-            }
-
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
-                hitCombo *= 0.75;
-            }
-
-            this.playRageEffect(target.getEyeLocation(), enchantLevel);
-
-            event.setDamage(event.getDamage() * (1 + (hitCombo * mod)));
-
-            target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+        if (!(target instanceof Player)) return;
+        Player attacker = (Player) user;
 
 
-            this.addPVPHitCombo((Player) user);
-        }
+        procCombo((Player) target, attacker, enchantLevel, event);
 
 
     }
 
-/*    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!(target instanceof Player)) {
+    public static RageObject getCombo(Player p) {
+        return comboMap.get(p.getUniqueId());
+    }
+
+    public static RageObject getOrDefaultCombo(Player attacker, Player victim) {
+        if (!comboMap.containsKey(attacker.getUniqueId())) {
+            comboMap.put(attacker.getUniqueId(), new RageObject(0, System.currentTimeMillis(), victim));
+        }
+        return comboMap.get(attacker.getUniqueId());
+    }
+
+    public static void addCombo(Player player) {
+        getCombo(player).setCount(getCombo(player).getCount() + 1);
+    }
+
+    public static void resetCombo(Player player) {
+        RageObject rageObject = getCombo(player);
+        rageObject.setCount(0);
+        comboMap.put(player.getUniqueId(), rageObject);
+    }
+
+    public static void setLastHitTime(Player player) {
+        getCombo(player).setLastHitTime(System.currentTimeMillis());
+    }
+
+    public static void procCombo(Player victim, Player attacker, int level, EntityDamageByEntityEvent e) {
+        RageObject combo = getOrDefaultCombo(attacker, victim);
+        double comboCount = combo.getCount();
+
+        if (combo.getLastHitTime() + 20000 < System.currentTimeMillis()) {
+            setLastHitTime(attacker);
+            resetCombo(attacker);
             return;
         }
 
-        if (event.isCancelled()) return;
+        comboCount *= (1+Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
 
-        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
-
-            Player pUser = (Player) user;
-
-            double rageModifier = Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
-            Bukkit.broadcastMessage("[RageDebug] " + pUser + " : " + RageUtils.getComboOfPlayer(pUser, true));
-            double mod = enchantLevel * rageModifier * RageUtils.getComboOfPlayer(pUser, true);
-
-
-            playRageEffect(target.getEyeLocation(), enchantLevel);
-
-
-            if (mod > 10) {
-                mod = 10;
-            }
-
-            double damage = event.getDamage();
-
-
-
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
-                if (!(Math.random() < 0.35 && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS))) {
-                    mod *=1.33;
-                }
-            }
-
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2022_MUTATED_AMULET)) {
-                mod*=0.7;
-            }
-
-            event.setDamage(damage + mod);
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) victim, SkinType.VALENTINES_2021_AMULET)) {
+            comboCount *= 0.75;
         }
 
-    }*/
-
-    public static int getPVPHitCombo(final Player p) {
-        return p.hasMetadata("pvp_rageHitCombo") ? p.getMetadata("pvp_rageHitCombo").get(0).asInt() : 0;
-    }
-
-    public void addPVPHitCombo(final Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue((Plugin) Enchantments.getInstance(), getPVPHitCombo(p) + 1));
-    }
-
-    public static void subtractPVPHitCombo(final Player p) {
-        p.setMetadata("pvp_rageHitCombo", new FixedMetadataValue((Plugin) Enchantments.getInstance(), Math.max(0, getPVPHitCombo(p) - 1)));
-    }
+        if (comboCount > 10) {
+            comboCount = 10;
+        }
 
 
-    private void playRageEffect(final Location loc, final int level) {
-        WorldUtil.sendWorldEffect(loc.getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
+        Bukkit.broadcastMessage("Combo: " + comboCount);
+        System.out.println("Before Rage: " + e.getDamage());
+
+        e.setDamage(e.getDamage() * (1 + Math.min(comboCount, 10.0) / 10));
+        System.out.println("After Rage: " + e.getDamage());
+        WorldUtil.sendWorldEffect(victim.getLocation().getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
+
+
+        setLastHitTime(attacker);
+        addCombo(attacker);
     }
 }

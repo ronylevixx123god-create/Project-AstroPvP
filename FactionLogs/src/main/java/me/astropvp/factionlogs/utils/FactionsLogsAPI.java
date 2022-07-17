@@ -10,7 +10,12 @@ import java.util.*;
 
 public class FactionsLogsAPI {
     public static void log(Faction faction, FactionLog factionLog) {
-        FactionLogs.getInstance().getLogManager().log(faction.getId(), factionLog);
+        try {
+            FactionLogs.getInstance().getLogManager().log(faction.getId(), factionLog);
+        } catch (NullPointerException exception) {
+            System.out.println(faction.getId());
+            exception.printStackTrace();
+        }
     }
 
     public static void log(String id, FactionLog factionLog) {
@@ -34,6 +39,10 @@ public class FactionsLogsAPI {
 
     public static Map<LogType, List<FactionLog>> getFactionLogs(Faction faction) {
         return FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()).getFactionLogs();
+    }
+
+    public static boolean hasEmptyLog(Faction faction) {
+        return FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()) == null;
     }
 
 

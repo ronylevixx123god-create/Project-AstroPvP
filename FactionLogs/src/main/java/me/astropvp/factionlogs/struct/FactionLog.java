@@ -1,12 +1,18 @@
 package me.astropvp.factionlogs.struct;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import me.astropvp.factionlogs.enums.LogType;
 
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Getter
+
 public abstract class FactionLog {
     private final LogType logtype;
-    private final Long time = System.currentTimeMillis();
+    @Setter
+    private Long time = System.currentTimeMillis();
+
+    public abstract String serialize();
+
 }

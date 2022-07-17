@@ -1,16 +1,41 @@
 package me.astropvp.factionlogs.struct.impl;
 
-import com.massivecraft.factions.event.LandUnclaimEvent;
+import com.massivecraft.factions.FLocation;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
+import org.bukkit.Bukkit;
+
+import java.util.UUID;
 
 @Getter
 public class LandUnclaim extends FactionLog {
-    private final LandUnclaimEvent landUnclaimEvent;
+    private final UUID uuid;
+    private final FLocation fLocation;
 
-    public LandUnclaim(LandUnclaimEvent landUnclaimEvent) {
+    public LandUnclaim(UUID uuid, FLocation fLocation) {
         super(LogType.UNCLAIM);
-        this.landUnclaimEvent = landUnclaimEvent;
+        this.uuid = uuid;
+        this.fLocation = fLocation;
+    }
+
+    public LandUnclaim(UUID uuid, FLocation fLocation, long time) {
+        super(LogType.UNCLAIM);
+        this.uuid = uuid;
+        this.fLocation = fLocation;
+        super.setTime(time);
+    }
+
+    @Override
+    public String serialize() {
+        return (this.getTime() + ";-;" + uuid + ";-;" + fLocation.toString());
+    }
+
+    public static FactionLog deserialize(String string) {
+        String[] splitString = string.split(";-;");
+        UUID uuid = UUID.fromString(splitString[1]);
+        return new LandUnclaim(uuid, FLocation.fromString(splitString[1]), Long.parseLong(splitString[0]));
     }
 }

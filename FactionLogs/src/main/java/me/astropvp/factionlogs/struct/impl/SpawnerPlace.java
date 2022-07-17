@@ -3,10 +3,9 @@ package me.astropvp.factionlogs.struct.impl;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
+import me.astropvp.factionlogs.utils.LocationSerializer;
+import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
-
-import javax.xml.stream.Location;
 import java.util.UUID;
 
 @Getter
@@ -23,5 +22,28 @@ public class SpawnerPlace extends FactionLog {
         this.location = location;
         this.uuid = uuid;
         this.entityType = entityType;
+    }
+
+    public SpawnerPlace(int amount, Location location, EntityType entityType, UUID uuid, long time) {
+        super(LogType.SPAWNER_PLACE);
+        this.amount = amount;
+        this.location = location;
+        this.uuid = uuid;
+        this.entityType = entityType;
+        super.setTime(time);
+    }
+
+    @Override
+    public String serialize() {
+        return (this.getTime() + ";-;" + amount + ";-;" + LocationSerializer.serialize(location) + ";-;" + entityType.name() + ";-;" + uuid);
+    }
+
+    public static FactionLog deserialize(String string) {
+        String[] splitString = string.split(";-;");
+        int amount = Integer.parseInt(splitString[1]);
+        org.bukkit.Location location = LocationSerializer.deserialize(splitString[2]);
+        EntityType entityType = EntityType.fromName(splitString[3]);
+        UUID uuid = UUID.fromString(splitString[4]);
+        return new SpawnerPlace(amount, location, entityType, uuid, Long.parseLong(splitString[0]));
     }
 }

@@ -1,4 +1,5 @@
 name: FactionLogs
 main: me.astropvp.factionlogs.FactionLogs
 version: 1.0
-commands:
+depend:
+  - AstroKillCounters

@@ -22,6 +22,7 @@ public class FactionLogs extends JavaPlugin {
     }
 
     public void onDisable() {
+        this.logManager.save();
         instance = null;
     }
 

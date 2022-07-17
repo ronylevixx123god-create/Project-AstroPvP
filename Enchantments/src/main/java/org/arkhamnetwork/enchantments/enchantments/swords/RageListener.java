@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.bryside.astroattributes.DragonTitanAttributesAPI;
 import com.bryside.astroattributes.enums.RuneType;
 import com.bryside.astroattributes.objects.RuneCacher;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.entity.LivingEntity;
@@ -19,23 +20,16 @@ import org.bukkit.plugin.Plugin;
 import java.util.Objects;
 
 final class RageListener implements Listener {
-    @EventHandler(
-            priority = EventPriority.HIGH,
-            ignoreCancelled = true
-    )
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getEntity() instanceof Player && (e.getEntity().hasMetadata("pvp_rageHitCombo")) && ((Player) e.getEntity()).getItemInHand() != null) {
-            if (DragonTitanAttributesAPI.getRuneType(((Player)e.getEntity()).getItemInHand()) != null) {
-                RuneType titanAttribute = DragonTitanAttributesAPI.getRuneType(((Player)e.getEntity()).getItemInHand());
-                if (titanAttribute == RuneType.KRONOS && e.getEntity().hasMetadata("pvp_rageHitCombo")) {
-                    int newRageNum = (int)((double)((MetadataValue)e.getEntity().getMetadata("pvp_rageHitCombo").get(0)).asInt() * DragonTitanAttributesAPI.getLevelOfRune(((Player) e.getEntity()).getItemInHand()) * 0.05D);
-                    e.getEntity().setMetadata("pvp_rageHitCombo", new FixedMetadataValue(Enchantments.getInstance(), newRageNum));
-                    return;
-                }
+    @EventHandler
+    public void comboCounterResetEvent(EntityDamageByEntityEvent event) {
+        if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
+            Player victim = (Player) event.getEntity();
+            Player attacker = (Player) event.getDamager();
+            if (event.getDamage() <= 0) return;
+            if (event.isCancelled()) return;
+            if (Rage.getOrDefaultCombo(victim, attacker).getCount() >= 1) {
+                Rage.resetCombo(victim);
             }
-
-            e.getEntity().removeMetadata("pvp_rageHitCombo", Enchantments.getInstance());
         }
-
     }
 }
