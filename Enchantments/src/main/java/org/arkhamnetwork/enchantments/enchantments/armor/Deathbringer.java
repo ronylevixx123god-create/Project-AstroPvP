@@ -1,30 +1,36 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import com.rit.sucy.*;
-import org.bukkit.plugin.*;
-import java.util.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.player.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.Plugin;
 
-public class Deathbringer extends CustomEnchantment
-{
+import java.util.HashMap;
+import java.util.HashSet;
+
+public class Deathbringer extends CustomEnchantment {
     public Deathbringer() {
         super("Deathbringer", GeneralUtil.armor, 9);
         this.max = 3;
         this.base = 25.0;
         this.interval = 7.0;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
                 Deathbringer.this.heroicVersion = EnchantmentAPI.getEnchantment("Planetary Deathbringer");
             }
         }, 2L);
-        Bukkit.getPluginManager().registerEvents(new DeathbringEvents(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents((Listener) new DeathbringEvents(), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
@@ -37,19 +43,23 @@ public class Deathbringer extends CustomEnchantment
         DeathbringEvents.playerLevels.remove(player);
     }
 
-    private static class DeathbringEvents implements Listener
-    {
+    private static class DeathbringEvents implements Listener {
         private static HashSet<Player> doubleDamage;
         private static HashMap<Player, Integer> playerLevels;
+
+        static {
+            DeathbringEvents.doubleDamage = new HashSet<Player>();
+            DeathbringEvents.playerLevels = new HashMap<Player, Integer>();
+        }
 
         @EventHandler
         public void onEntityDamageByEntity(final EntityDamageByEntityEvent e) {
             final Entity damage = e.getDamager();
-            if ((damage instanceof Projectile && DeathbringEvents.doubleDamage.contains(((Projectile)damage).getShooter())) || DeathbringEvents.doubleDamage.contains(damage)) {
+            if ((damage instanceof Projectile && DeathbringEvents.doubleDamage.contains(((Projectile) damage).getShooter())) || DeathbringEvents.doubleDamage.contains(damage)) {
                 final double random = Math.random();
-                final double chance = 0.05 * (DeathbringEvents.playerLevels.containsKey((damage instanceof Projectile) ? ((Projectile)damage).getShooter() : damage) ? DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile)damage).getShooter() : damage) : 1);
+                final double chance = 0.1 * (DeathbringEvents.playerLevels.containsKey((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage) ? DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage) : 1);
                 if (random < chance) {
-                    e.setDamage(e.getDamage()*2);
+                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.2);
                 }
             }
         }
@@ -58,11 +68,6 @@ public class Deathbringer extends CustomEnchantment
         public void onPlayerQuit(final PlayerQuitEvent e) {
             DeathbringEvents.doubleDamage.remove(e.getPlayer());
             DeathbringEvents.playerLevels.remove(e.getPlayer());
-        }
-
-        static {
-            DeathbringEvents.doubleDamage = new HashSet<Player>();
-            DeathbringEvents.playerLevels = new HashMap<Player, Integer>();
         }
     }
 }

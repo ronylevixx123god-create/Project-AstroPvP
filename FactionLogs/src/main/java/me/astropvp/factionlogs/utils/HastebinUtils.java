@@ -2,6 +2,7 @@ package me.astropvp.factionlogs.utils;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.mysql.jdbc.TimeUtil;
 import me.astropvp.factionlogs.FactionLogs;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
@@ -17,14 +18,14 @@ import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 import javax.net.ssl.HttpsURLConnection;
 
 public class HastebinUtils {
 
     private static final DateTimeFormatter DATE_FORMATED = DateTimeFormatter.ofPattern("EEE, MMM dd | HH:mm");
+    private static Map<String, Long> clickCooldown = new HashMap<>();
 
 
     public static String post(String text, boolean raw) throws IOException {
@@ -63,6 +64,16 @@ public class HastebinUtils {
     }
 
     public static void sendLog(Player sender, String factionId, LogType logType, boolean raw) {
+        long msCooldown = 300000;
+        if (clickCooldown.containsKey(factionId) && !sender.isOp()) {
+            if (clickCooldown.get(factionId) + msCooldown > System.currentTimeMillis()) {
+                sender.sendMessage(CC.translate("&6&lFactions &8⎜ &cError&8: &eYour faction recently generated an f log URL, please wait another &7" + TimeDateUtils.fancy((clickCooldown.get(factionId) + msCooldown) - System.currentTimeMillis())));
+                return;
+            }
+        }
+        clickCooldown.put(factionId, System.currentTimeMillis());
+        sender.sendMessage(CC.translate("&6&lFactions &8⎜ &eGenerating " + logType.getDisplayName() + " faction logs..."));
+
         LocalDateTime localDateTime = LocalDateTime.now(ZoneId.of("America/New_York"));
         String date = localDateTime.format(DATE_FORMATED);
         StringBuilder text = new StringBuilder();
@@ -72,11 +83,10 @@ public class HastebinUtils {
             text.append(" ").append(factionLog.toString()).append("\n");
         }
 
-        ;
 
         try {
             String url = post(text.toString(), raw);
-            sender.sendMessage(CC.translate("&6&lFactions &8⎜ &e" + logType.getDisplayName() + ": &a&n" + url));
+            sender.sendMessage(CC.translate("&6&lFactions &8⎜ &e" + logType.getDisplayName() + " &7(Logs URL)&e: &a&n" + url));
         } catch (IOException e) {
             sender.sendMessage(CC.translate("&6&lFactions &8⎜ &cError&8: &eAn error occurred, please try again!"));
             e.printStackTrace();

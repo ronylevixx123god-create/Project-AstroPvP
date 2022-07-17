@@ -1,52 +1,43 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import com.rit.sucy.*;
-import org.bukkit.plugin.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.plugin.Plugin;
 
-public class HeroicAssassin extends CustomEnchantment
-{
+public class HeroicAssassin extends CustomEnchantment {
     public HeroicAssassin() {
         super("Shadow Assassin", GeneralUtil.swords, 5);
         this.max = 5;
-        this.base = 15.0;
-        this.interval = 6.0;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+        this.base = 15.0D;
+        this.interval = 6.0D;
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), () -> {
             this.heroicEnchantment = true;
             this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Assassin");
         }, 2L);
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (user.getWorld().equals(target.getWorld())) {
-            double distance = user.getLocation().distance(target.getLocation());
-            double dmgMod = 1.0D;
-
-            if (distance < 0.25D) {
-                dmgMod = 1.2;
-            }
-
-            if (distance < 0.5D) {
-                dmgMod = 1.15;
-            }
-
-            if (distance < 0.75D) {
-                dmgMod = 1.1;
-            }
-
-            if (distance < 1.0D) {
-                dmgMod = 1.08;
-            }
-
-            if (distance < 2.0D) {
-                dmgMod = 1.04;
-            }
-            event.setDamage(event.getDamage() * dmgMod);
-        }
-
+        if (!user.getWorld().equals(target.getWorld()))
+            return;
+        double distance = user.getLocation().distance(target.getLocation());
+        double dmgMod = 1.0D;
+        double heroicMult = 2.5D;
+        if (distance < 0.25D * heroicMult)
+            dmgMod += 0.015D * enchantLevel;
+        if (distance < 0.5D * heroicMult)
+            dmgMod += 0.015D * enchantLevel;
+        if (distance < 0.75D * heroicMult)
+            dmgMod += 0.015D * enchantLevel;
+        if (distance < 1.0D * heroicMult)
+            dmgMod += 0.015D * enchantLevel;
+        if (distance < 1.5D * heroicMult)
+            dmgMod += 0.015D * enchantLevel;
+        event.setDamage(event.getDamage() * dmgMod);
     }
 }

@@ -1,33 +1,9 @@
-/*
- * Decompiled with CFR 0.150.
- * 
- * Could not load the following classes:
- *  com.rit.sucy.CustomEnchantment
- *  net.minecraft.server.v1_7_R4.EntityPlayer
- *  net.minecraft.server.v1_7_R4.EntityTracker
- *  net.minecraft.server.v1_7_R4.EntityTrackerEntry
- *  net.minecraft.server.v1_7_R4.WorldServer
- *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
- *  org.bukkit.Bukkit
- *  org.bukkit.Location
- *  org.bukkit.Sound
- *  org.bukkit.World
- *  org.bukkit.craftbukkit.v1_7_R4.CraftWorld
- *  org.bukkit.craftbukkit.v1_7_R4.entity.CraftPlayer
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.event.entity.EntityDamageEvent$DamageCause
- *  org.bukkit.plugin.Plugin
- *  org.bukkit.potion.PotionEffect
- *  org.bukkit.potion.PotionEffectType
- */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.CustomEnchantment;
-import de.inventivegames.particle.ParticleEffect;
-import net.minecraft.server.v1_8_R3.EntityHuman;
+import lombok.SneakyThrows;
+import net.minecraft.server.v1_8_R3.EntityPlayer;
 import net.minecraft.server.v1_8_R3.EntityTracker;
 import net.minecraft.server.v1_8_R3.EntityTrackerEntry;
 import net.minecraft.server.v1_8_R3.WorldServer;
@@ -49,8 +25,7 @@ import org.bukkit.potion.PotionEffectType;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EnderWalker
-extends CustomEnchantment {
+public class EnderWalker extends CustomEnchantment {
     public EnderWalker() {
         super("Ender Walker", GeneralUtil.boots, 2);
         this.max = 5;
@@ -58,69 +33,69 @@ extends CustomEnchantment {
         this.interval = 10.0;
     }
 
-    public void applyEquipEffect(Player player, int level) {
+    public static void updateEntity(final Entity entity, final List<Player> observers) {
+        final World world = entity.getWorld();
+        final WorldServer worldServer = ((CraftWorld) world).getHandle();
+        final EntityTracker tracker = worldServer.tracker;
+        final EntityTrackerEntry entry = tracker.trackedEntities.get(entity.getEntityId());
+        final List<EntityPlayer> nmsPlayers = getNmsPlayers(observers);
+        if (entry != null) {
+            entry.trackedPlayers.removeAll(nmsPlayers);
+            entry.scanPlayers((List) nmsPlayers);
+        }
+    }
+
+    private static List<EntityPlayer> getNmsPlayers(final List<Player> players) {
+        final List<EntityPlayer> nsmPlayers = new ArrayList<EntityPlayer>();
+        for (final Player bukkitPlayer : players) {
+            final CraftPlayer craftPlayer = (CraftPlayer) bukkitPlayer;
+            nsmPlayers.add(craftPlayer.getHandle());
+        }
+        return nsmPlayers;
+    }
+
+    public void applyEquipEffect(final Player player, final int level) {
         player.playSound(player.getLocation(), Sound.WITHER_HURT, 1.0f, 0.6f);
     }
 
-    public void applyUnequipEffect(Player player, int level) {
+    public void applyUnequipEffect(final Player player, final int level) {
     }
 
-    public void applyDefenseEffect(final LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+    @SneakyThrows
+    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) {
-            boolean heal;
-            boolean bl = heal = Math.random() <= (double)level * 0.15;
-/*            if (heal &&GeneralUtil.healPlayer(player, e.getDamage())) {
+            e.setCancelled(true);
+            final boolean heal = Math.random() <= level * 0.15;
+            if (heal && GeneralUtil.healPlayer(player, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) {
                 try {
-                    //ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 40);
+                    de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,35);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-            }*/
-            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
-
+            }
+            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
                 @Override
                 public void run() {
                     if (!player.hasPotionEffect(PotionEffectType.BLINDNESS) && !player.hasMetadata("clarityEnchant")) {
                         player.addPotionEffect(new PotionEffect(PotionEffectType.BLINDNESS, 200, 0));
                     }
                 }
-            }, 2L);
+            }, 20L);
             try {
-                //ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation().add(0.0, 1.0, 0.0), 0.8f, 0.8f, 0.8f, 0.1f, 70);
+                de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,70);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
         }
     }
 
-    private List<Player> getNearbyPlayers(List<Entity> ents) {
-        ArrayList<Player> players = new ArrayList<Player>();
-        for (Entity e : ents) {
-            if (!(e instanceof Player)) continue;
-            players.add((Player)e);
+    private List<Player> getNearbyPlayers(final List<Entity> ents) {
+        final List<Player> players = new ArrayList<Player>();
+        for (final Entity e : ents) {
+            if (e instanceof Player) {
+                players.add((Player) e);
+            }
         }
         return players;
     }
-
-    public static void updateEntity(Entity entity, List<Player> observers) {
-        World world = entity.getWorld();
-        WorldServer worldServer = ((CraftWorld)world).getHandle();
-        EntityTracker tracker = worldServer.tracker;
-        EntityTrackerEntry entry = (EntityTrackerEntry)tracker.trackedEntities.get(entity.getEntityId());
-        List<EntityHuman> nmsPlayers = EnderWalker.getNmsPlayers(observers);
-        if (entry != null) {
-            entry.trackedPlayers.removeAll(nmsPlayers);
-            entry.scanPlayers(nmsPlayers);
-        }
-    }
-
-    private static List<EntityHuman> getNmsPlayers(List<Player> players) {
-        ArrayList<EntityHuman> nsmPlayers = new ArrayList<>();
-        for (Player bukkitPlayer : players) {
-            CraftPlayer craftPlayer = (CraftPlayer)bukkitPlayer;
-            nsmPlayers.add(craftPlayer.getHandle());
-        }
-        return nsmPlayers;
-    }
 }
-

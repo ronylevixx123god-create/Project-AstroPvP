@@ -1,17 +1,23 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import java.text.*;
-import org.arkhamnetwork.enchantments.util.*;
-import org.arkhamnetwork.enchantments.*;
-import com.rit.sucy.*;
-import org.bukkit.plugin.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.metadata.*;
-import org.bukkit.entity.*;
-import org.bukkit.*;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class Diminish extends CustomEnchantment
-{
+import java.text.DecimalFormat;
+
+public class Diminish extends CustomEnchantment {
     private DecimalFormat df;
 
     public Diminish() {
@@ -20,7 +26,7 @@ public class Diminish extends CustomEnchantment
         this.max = 6;
         this.base = 15.0;
         this.interval = 3.0;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
                 Diminish.this.heroicVersion = EnchantmentAPI.getEnchantment("Vengeful Diminish");
@@ -29,25 +35,25 @@ public class Diminish extends CustomEnchantment
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        if (player.hasMetadata("neutralized")) {
+
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_SWORD)) {
             return;
         }
-        if (player.hasMetadata("lastDiminsh") && System.currentTimeMillis() - player.getMetadata("lastDiminsh").get(0).asLong() <= 10000L) {
-            return;
-        }
-        player.setMetadata("lastDiminsh", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+
         if (player.hasMetadata("diminishEffect")) {
             final double maxDmg = player.getMetadata("diminishEffect").get(0).asDouble();
-            if (e.getFinalDamage() > maxDmg) {
-                player.removeMetadata("diminishEffect", (Plugin)Enchantments.getInstance());
+            if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
+                e.setDamage(maxDmg);
+                player.removeMetadata("diminishEffect", (Plugin) Enchantments.getInstance());
                 return;
             }
         }
         final double random = Math.random();
-        final double procChance = 0.005 * level;
-        if (random < procChance && e.getFinalDamage() > 0.0) {
-            player.setMetadata("diminishEffect", new FixedMetadataValue((Plugin)Enchantments.getInstance(), e.getFinalDamage()));
-            ((Player)player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "DMG: " + this.df.format(Math.max(0.0, e.getFinalDamage())) + ChatColor.BOLD + "] *");
+        final double procChance = 0.0015 * level;
+        if (random < procChance && e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0) {
+            player.setMetadata("diminishEffect", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getDamage(EntityDamageEvent.DamageModifier.BASE)));
+            ((Player) player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "DMG: " + this.df.format(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) + ChatColor.BOLD + "] *");
         }
     }
 }

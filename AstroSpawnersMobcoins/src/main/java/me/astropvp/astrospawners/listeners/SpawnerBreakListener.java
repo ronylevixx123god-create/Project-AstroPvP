@@ -3,12 +3,17 @@ package me.astropvp.astrospawners.listeners;
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.compilex.CosmicCustomCreepers.listeners.CreeperListener;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.configs.DeleteSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
 import me.astropvp.astrospawners.utils.EntityUtils;
+import me.astropvp.factionlogs.struct.impl.SpawnerBreak;
+import me.astropvp.factionlogs.struct.impl.SpawnerPlace;
+import me.astropvp.factionlogs.utils.FactionsLogsAPI;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import org.arkhamnetwork.CosmicCustomTNT.enums.TNTTypes;
@@ -117,6 +122,10 @@ public class SpawnerBreakListener implements Listener {
                     Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
                     collector.clearSpawners();
                     collector.scanSpawners(collector.getLocation());
+                }
+                FPlayer fPlayer = FPlayers.getInstance().getByPlayer(event.getPlayer());
+                if (!fPlayer.getFaction().isWilderness()) {
+                    FactionsLogsAPI.log(fPlayer.getFaction().getId(), new SpawnerBreak(amount, event.getBlock().getLocation(), type, fPlayer.getPlayer().getUniqueId()));
                 }
             }
         }

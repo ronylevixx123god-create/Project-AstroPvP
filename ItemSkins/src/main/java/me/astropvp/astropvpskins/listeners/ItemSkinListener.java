@@ -25,6 +25,7 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -67,7 +68,7 @@ public class ItemSkinListener implements Listener {
             if (typeList.get(0) == null || !AstroItemSkinsAPI.isCorrectType(typeList.get(0), clicked))
                 return;
             if (cooldownPlayers.containsKey((Player) event.getWhoClicked())) {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please slow down when applying skins!"));
                 return;
             }
 
@@ -108,7 +109,7 @@ public class ItemSkinListener implements Listener {
 
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
                 cooldownPlayers.remove((Player) event.getWhoClicked());
-            }, 20L);
+            }, 10L);
 
         } else if (event.getClick().
 
@@ -120,11 +121,9 @@ public class ItemSkinListener implements Listener {
             assert skinTypes != null;
 
             if (cooldownPlayers.containsKey((Player) event.getWhoClicked())) {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please do not spam apply skins!"));
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please slow down when applying skins!"));
                 return;
             }
-
-            //Bry just added this
 
             for (int i = 0; i < skinTypes.size(); i++) {
                 for (int j = 1; j < skinTypes.size(); j++) {
@@ -138,7 +137,6 @@ public class ItemSkinListener implements Listener {
 
 
                         if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR) {
-                            event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Clear your cursor before removing skins from items!"));
                             return;
                         }
 
@@ -161,7 +159,6 @@ public class ItemSkinListener implements Listener {
                 skinTypes.get(0).getItemSkin().onUnequip((Player) event.getWhoClicked());
 
             if (event.getCursor().getType() != null && event.getCursor().getType() != Material.AIR) {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Clear your cursor before removing skins from items!"));
                 return;
             }
 

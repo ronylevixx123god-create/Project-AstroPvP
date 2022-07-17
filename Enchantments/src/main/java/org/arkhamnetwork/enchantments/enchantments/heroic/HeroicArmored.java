@@ -9,8 +9,7 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import org.bukkit.inventory.*;
 import org.bukkit.*;
 
-public class HeroicArmored extends HeroicCustomEnchantment
-{
+public class HeroicArmored extends HeroicCustomEnchantment {
     public HeroicArmored() {
         super("Paladin Armored", "Armored");
     }
@@ -24,20 +23,21 @@ public class HeroicArmored extends HeroicCustomEnchantment
         }
         ItemStack i = null;
         if (attacker instanceof Player) {
-            final Player pAttacker = (Player)attacker;
+            final Player pAttacker = (Player) attacker;
             if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.VALENTINES_2021_BELT)) {
                 return;
             }
             i = pAttacker.getItemInHand();
             if (Math.random() < level * 0.01) {
-                Blessed.blessPlayer((Player)player, false);
-                Bukkit.getLogger().info("Blessing " + ((Player)player).getName() + " from level " + level + " heroic armored!");
+                Blessed.blessPlayer((Player) player, false);
             }
         }
-        final double damage_negation = level * 0.01;
-        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage() * (1.0D - damage_negation));
-            final Location l = player.getLocation();
+        double damage_negation = level * 0.025D;
+        if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0D - damage_negation) > 1.0D) {
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
+            Location l = player.getLocation();
+            WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
+
         }
     }
 }

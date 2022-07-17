@@ -38,10 +38,10 @@ public class Dodge extends CustomEnchantment
         if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
             return;
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.025;
+            double chance = 0.015 * level;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
-                chance += 0.05;
+                chance += 0.15;
             }
 
 
@@ -57,6 +57,13 @@ public class Dodge extends CustomEnchantment
                 if (attacker instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_2021_SWORD)) {
                     e.setDamage(0);
                     ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
+                    try {
+                        de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 10);
+                    } catch (Exception exception) {
+                        exception.printStackTrace();
+                    }
+
+
                     player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
                 }
             }

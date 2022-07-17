@@ -2,12 +2,17 @@ package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Role;
 
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.configs.DeleteSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
+import me.astropvp.factionlogs.struct.impl.ChunkBust;
+import me.astropvp.factionlogs.struct.impl.SpawnerBreak;
+import me.astropvp.factionlogs.utils.FactionsLogsAPI;
 import net.astropvp.core.utils.BlocksUtil;
 import net.astropvp.core.utils.ChunkBusterUtils;
 import org.bukkit.ChatColor;
@@ -82,6 +87,10 @@ public class ChunkBusterListener implements Listener {
                 }
             }
             event.getPlayer().sendMessage(CC.translate("&a&l(!)&a Finished chunkbusting the whole chunk."));
+            FPlayer fPlayer = FPlayers.getInstance().getByPlayer(event.getPlayer());
+            if (!fPlayer.getFaction().isWilderness()) {
+                FactionsLogsAPI.log(fPlayer.getFaction().getId(), new ChunkBust(event.getBlock().getLocation(), fPlayer.getPlayer().getUniqueId()));
+            }
         }
     }
 }

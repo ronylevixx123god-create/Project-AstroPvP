@@ -6,6 +6,7 @@ import com.massivecraft.factions.FPlayers;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
+import me.astropvp.factionlogs.utils.TimeDateUtils;
 import org.bukkit.Bukkit;
 
 import java.util.UUID;
@@ -36,14 +37,11 @@ public class LandUnclaim extends FactionLog {
     public static FactionLog deserialize(String string) {
         String[] splitString = string.split(";-;");
         UUID uuid = UUID.fromString(splitString[1]);
-        return new LandUnclaim(uuid, FLocation.fromString(splitString[1]), Long.parseLong(splitString[0]));
+        return new LandUnclaim(uuid, FLocation.fromString(splitString[2]), Long.parseLong(splitString[0]));
     }
 
     @Override
     public String toString() {
-        return "LandUnclaim{" +
-                "uuid=" + uuid +
-                ", fLocation=" + fLocation +
-                '}';
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(uuid).getName() + " unclaimed land at " + fLocation.toString();
     }
 }

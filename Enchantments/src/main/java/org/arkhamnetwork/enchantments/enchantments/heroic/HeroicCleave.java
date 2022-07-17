@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -8,14 +9,15 @@ import org.bukkit.entity.Horse;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class HeroicCleave extends HeroicCustomEnchantment
-{
+public class HeroicCleave extends HeroicCustomEnchantment {
     boolean mcmmo;
 
     public HeroicCleave() {
@@ -23,6 +25,7 @@ public class HeroicCleave extends HeroicCustomEnchantment
         this.mcmmo = false;
         this.max = 5;
         this.mcmmo = Bukkit.getPluginManager().isPluginEnabled("mcMMO");
+        Bukkit.getLogger().info("[Enchantments (Mighty Cleave)] mcMMO support = " + this.mcmmo);
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
@@ -31,13 +34,13 @@ public class HeroicCleave extends HeroicCustomEnchantment
         if (player.hasMetadata("previous_cleave_use") && System.currentTimeMillis() - player.getMetadata("previous_cleave_use").get(0).asLong() <= 1500L) {
             return;
         }
+
         if (player.hasMetadata("skullSplitterProc") && System.currentTimeMillis() - player.getMetadata("skullSplitterProc").get(0).asLong() <= 1000L) {
             return;
         }
-        player.setMetadata("previous_cleave_use", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
-
-        if (e.getDamage() > 0.0) {
-            final List<Entity> aoe = e.getEntity().getNearbyEntities(radius, radius, radius);
+        player.setMetadata("previous_cleave_use", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+        if (damage > 0.0 && e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0) {
+            final List<Entity> aoe = (List<Entity>) e.getEntity().getNearbyEntities(radius, radius, radius);
             for (final Entity aoe_ent : aoe) {
                 if (aoe_ent.equals(player)) {
                     continue;
@@ -48,14 +51,15 @@ public class HeroicCleave extends HeroicCustomEnchantment
                 if (!(aoe_ent instanceof LivingEntity)) {
                     continue;
                 }
-                if (aoe_ent instanceof Player && this.isAlly((Player)player, (Player)aoe_ent)) {
+                if (aoe_ent instanceof Player && this.isAlly((Player) player, (Player) aoe_ent)) {
                     continue;
                 }
-                final LivingEntity le_ent = (LivingEntity)aoe_ent;
+                final LivingEntity le_ent = (LivingEntity) aoe_ent;
                 if (le_ent.hasMetadata("lastCleaveDamage") && System.currentTimeMillis() - le_ent.getMetadata("lastCleaveDamage").get(0).asLong() < 1000L) {
                     continue;
                 }
-                le_ent.setMetadata("lastCleaveDamage", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
+                le_ent.setMetadata("lastCleaveDamage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                GeneralCooldown.enterCooldown((Player) player);
                 le_ent.damage(damage);
             }
         }

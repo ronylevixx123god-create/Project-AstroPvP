@@ -42,7 +42,7 @@ public class Execute extends CustomEnchantment
         if (!(target instanceof Player)) {
             return;
         }
-        double healThres = 6.0;
+        double healThres = 12.0;
         if (((Player)player).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_2021_BOOTS))
             healThres*=1.3;
 
@@ -50,9 +50,10 @@ public class Execute extends CustomEnchantment
             return;
         }
         final double random = Math.random();
-        final double chance = 0.03 * level;
+        final double chance = 0.1 * level;
+        final double mod = 4.2;
         if (random < chance) {
-            e.setDamage(e.getDamage() * (level/2.0));
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");

@@ -66,8 +66,10 @@ extends CustomEnchantment {
                 if (p.hasMetadata("SelfDestructing") && System.currentTimeMillis() - ((MetadataValue)p.getMetadata("SelfDestructing").get(0)).asLong() <= 10000L) {
                     return;
                 }
-                p.setMetadata("SelfDestructing", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
-                int radius = (int)((float)level * 2.5f);
+                p.setMetadata("SelfDestructing", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
+                    p.removeMetadata("SelfDestructing", Enchantments.getInstance());
+                }, 180*20);                int radius = (int)((float)level * 2.5f);
                 FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
                 ArrayList<LivingEntity> victims = new ArrayList<LivingEntity>();
                 for (Entity ent : player.getNearbyEntities((double)radius, (double)radius, (double)radius)) {

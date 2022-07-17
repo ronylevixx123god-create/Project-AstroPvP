@@ -1,20 +1,23 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import org.arkhamnetwork.enchantments.*;
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.rit.sucy.CustomEnchantment;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
-import java.util.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
+import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class AntiGank extends CustomEnchantment
-{
+import java.util.HashSet;
+import java.util.UUID;
+
+public class AntiGank extends CustomEnchantment {
     private static final String antiGankNextReset_MetadataKey = "antiGank_nextReset";
     private static final String antiGankUniqueEnemies_MetadataKey = "antiGank_uniqueEnemies";
     private static final int ticksToCheck = 120;
@@ -29,18 +32,17 @@ public class AntiGank extends CustomEnchantment
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         if (player.hasMetadata("antiGank_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("antiGank_nextReset").get(0).asLong()) {
-                player.removeMetadata("antiGank_uniqueEnemies", (Plugin)Enchantments.getInstance());
-                player.setMetadata("antiGank_nextReset", new FixedMetadataValue((Plugin)Enchantments.getInstance(), MinecraftServerUtils.getCurrentServerTick() + 120));
+                player.removeMetadata("antiGank_uniqueEnemies", (Plugin) Enchantments.getInstance());
+                player.setMetadata("antiGank_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
                 return;
             }
+        } else {
+            player.setMetadata("antiGank_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
         }
-        else {
-            player.setMetadata("antiGank_nextReset", new FixedMetadataValue((Plugin)Enchantments.getInstance(), MinecraftServerUtils.getCurrentServerTick() + 120));
-        }
-        final HashSet<UUID> enemies = (HashSet<UUID>)(player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
+        final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
         if (enemies.size() >= 6 - level) {
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * Math.min(1.5, 1.0 + 0.1 * enemies.size()));
             final Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
-            WorldUtil.sendWorldEffect(l.getBlock(), 86, 2001);
         }
     }
 
@@ -50,15 +52,14 @@ public class AntiGank extends CustomEnchantment
         }
         if (player.hasMetadata("antiGank_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("antiGank_nextReset").get(0).asLong()) {
-                player.removeMetadata("antiGank_uniqueEnemies", (Plugin)Enchantments.getInstance());
+                player.removeMetadata("antiGank_uniqueEnemies", (Plugin) Enchantments.getInstance());
             }
+        } else {
+            player.setMetadata("antiGank_nextReset", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (MinecraftServerUtils.getCurrentServerTick() + 120)));
         }
-        else {
-            player.setMetadata("antiGank_nextReset", new FixedMetadataValue((Plugin)Enchantments.getInstance(), MinecraftServerUtils.getCurrentServerTick() + 120));
-        }
-        final HashSet<UUID> enemies = (HashSet<UUID>)(player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
-        final Player pAttacker = (Player)attacker;
+        final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
+        final Player pAttacker = (Player) attacker;
         enemies.add(pAttacker.getUniqueId());
-        player.setMetadata("antiGank_uniqueEnemies", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enemies));
+        player.setMetadata("antiGank_uniqueEnemies", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) enemies));
     }
 }

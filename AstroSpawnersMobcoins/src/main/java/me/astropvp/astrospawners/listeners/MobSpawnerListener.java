@@ -1,11 +1,15 @@
 package me.astropvp.astrospawners.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.configs.MakeSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
+import me.astropvp.factionlogs.struct.impl.SpawnerPlace;
+import me.astropvp.factionlogs.utils.FactionsLogsAPI;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import org.bukkit.Bukkit;
@@ -114,6 +118,10 @@ public class MobSpawnerListener implements Listener {
         }, 1);
         event.setCancelled(true);
 
+        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(event.getPlayer());
+        if (!fPlayer.getFaction().isWilderness()) {
+            FactionsLogsAPI.log(fPlayer.getFaction().getId(), new SpawnerPlace(amount, location, type, fPlayer.getPlayer().getUniqueId()));
+        }
         event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.NOTE_PLING, 10f, 10f);
 
     }
@@ -191,6 +199,10 @@ public class MobSpawnerListener implements Listener {
                                             Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
                                             collector.clearSpawners();
                                             collector.scanSpawners(collector.getLocation());
+                                        }
+                                        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(event.getPlayer());
+                                        if (!fPlayer.getFaction().isWilderness()) {
+                                            FactionsLogsAPI.log(fPlayer.getFaction().getId(), new SpawnerPlace(amount, event.getBlockAgainst().getLocation(), type, fPlayer.getPlayer().getUniqueId()));
                                         }
                                         player.setItemInHand(
                                                 spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));

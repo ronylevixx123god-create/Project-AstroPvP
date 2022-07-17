@@ -21,6 +21,7 @@ import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.listeners.VanillaDamageListener;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
@@ -41,13 +42,12 @@ public class DoubleStrike
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        double chance;
         double random = Math.random();
-        if (random < (chance = 0.02 * (double) level)) {
-            double dmg = VanillaDamageListener.getLastFinalDamage((Entity) playerHit);
-            if (dmg == 0.0) {
-                dmg = e.getDamage();
-            }
+        double chance = 0.025D * level;
+        if (random < chance) {
+            double dmg = e.getFinalDamage();
+            if (dmg == 0.0D)
+                dmg = e.getFinalDamage();
             final double fdmg = dmg;
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
 
@@ -56,6 +56,8 @@ public class DoubleStrike
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0) {
                         playerHit.setMetadata("doubleStriked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
                         playerHit.damage(fdmg, player);
+                        GeneralCooldown.enterCooldown((Player) e.getDamager());
+
                         if (playerHit instanceof Player) {
                             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* DOUBLE STRIKE *", "DOUBLE_STRIKE");
                         }
@@ -64,7 +66,7 @@ public class DoubleStrike
                 }
             }, 2L);
             try {
-                ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5f, 20);
+                de.inventivegames.particle.ParticleEffect.RED_DUST.sendToPlayers(Bukkit.getOnlinePlayers(),playerHit.getLocation(), (float) Math.random(), (float) Math.random(), (float) Math.random(), 0.5F, 20);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

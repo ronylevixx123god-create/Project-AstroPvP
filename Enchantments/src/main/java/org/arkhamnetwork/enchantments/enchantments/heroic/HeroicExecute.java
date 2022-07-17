@@ -34,12 +34,14 @@ public class HeroicExecute extends HeroicCustomEnchantment{
         if (target.getHealth() > healThres) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.07 * level;
+        if (GeneralUtil.isEffectedByRage(target))
+            return;
+        double random = Math.random();
+        double chance = 0.06D * level;
+        double mod = 4.0D + (level/2D);
 
         if (random < chance) {
-            int mod = 50;
-            e.setDamage(e.getDamage() * (level));
+            e.setDamage(e.getDamage() * mod);
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.RedB + "* PERMANENT EXECUTE *", "EXECUTE");

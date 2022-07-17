@@ -8,17 +8,17 @@ import me.astropvp.factionlogs.FactionLogs;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.struct.impl.*;
-import me.astropvp.factionlogs.utils.EntityUtils;
-import me.astropvp.factionlogs.utils.FactionsLogsAPI;
-import me.astropvp.factionlogs.utils.HastebinUtils;
-import me.astropvp.factionlogs.utils.TimeDateUtils;
+import me.astropvp.factionlogs.utils.*;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FactionLogsGUI {
 
@@ -31,31 +31,25 @@ public class FactionLogsGUI {
 
         for (LogType logType : LogType.values()) {
             ItemBuilder item = new ItemBuilder(logType.getGuiMaterial(), CC.translate(logType.getGuiColorCode() + logType.getDisplayName()))
-                    .addLoreLine(CC.translate("&7Below you can find the latest logs:"))
+                    .addLoreLine(CC.translate("&7Below you can find the 10 latest logs:"))
                     .addLoreLine("")
-                    .addLoreLine(CC.translate("&f&l") + logType.getDisplayName());
+                    .addLoreLine(CC.translate("&f&l" + logType.getDisplayName() + " &7(" + FactionsLogsAPI.getFactionLogs(faction, logType).size() + " total)"));
             String prefix = logType.getGuiColorCode() + " * &e";
 
-            Map<LogType, Integer> amountLogged = new HashMap<>();
-            int maxLogs = 15;
-            for (FactionLog log : FactionsLogsAPI.getFactionLogs(faction, logType)) {
-
-                amountLogged.putIfAbsent(logType, 0);
-                if (amountLogged.get(logType) >= maxLogs) break;
-                amountLogged.put(logType, (amountLogged.get(logType) + 1));
-
+            FactionsLogsAPI.getFactionLogs(faction, logType).sort(Collections.reverseOrder());
+            for (FactionLog log : FactionsLogsAPI.getFactionLogs(faction, logType).stream().limit(10).collect(Collectors.toList())) {
                 switch (logType) {
                     case CLAIM:
                         LandClaim landClaim = (LandClaim) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landClaim.getUuid()).getName() + " &7claimed land at &d" + landClaim.getFLocation().getCoordString() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landClaim.getUuid()).getName() + " &7claimed land at &d" + landClaim.getFLocation().toString() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case RADIUSCLAIM:
                         RadiusLandClaim radiusLandClaim = (RadiusLandClaim) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(radiusLandClaim.getUuid()).getName() + " &7claimed land in a &d" + radiusLandClaim.getRadius()  +  " &7radius at &d" + radiusLandClaim.getFLocation().getCoordString() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(radiusLandClaim.getUuid()).getName() + " &7claimed land in a &d" + radiusLandClaim.getRadius()  +  " &7radius at &d" + radiusLandClaim.getFLocation().toString() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case UNCLAIM:
                         LandUnclaim landUnClaim = (LandUnclaim) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landUnClaim.getUuid()).getName() + " &7unclaimed land at &d" + landUnClaim.getFLocation().getCoordString() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landUnClaim.getUuid()).getName() + " &7unclaimed land at &d" + landUnClaim.getFLocation().toString() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case UNCLAIMALL:
                         LandUnclaimAll landUnclaimAll = (LandUnclaimAll) log;
@@ -71,15 +65,15 @@ public class FactionLogsGUI {
                         break;
                     case CHUNKBUST:
                         ChunkBust chunkBust = (ChunkBust) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(chunkBust.getUuid()).getName() + " &7placed a chunkbuster at &d" + chunkBust.getLocation() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(chunkBust.getUuid()).getName() + " &7placed a chunkbuster at &d" + LocationUtils.locToString(chunkBust.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case SPAWNER_BREAK:
                         SpawnerBreak spawnerBreak = (SpawnerBreak) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(spawnerBreak.getUuid()).getName() + " &7broke &ex" + spawnerBreak.getAmount() + " " + EntityUtils.getEntityName(spawnerBreak.getEntityType()) + "&7 at &d" + spawnerBreak.getLocation() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(spawnerBreak.getUuid()).getName() + " &7broke &ex" + spawnerBreak.getAmount() + " " + EntityUtils.getEntityName(spawnerBreak.getEntityType()) + "&7 at &d" + LocationUtils.locToString(spawnerBreak.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case SPAWNER_PLACE:
                         SpawnerPlace spawnerPlace = (SpawnerPlace) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(spawnerPlace.getUuid()).getName() + " &7placed &ex" + spawnerPlace.getAmount() + " " + EntityUtils.getEntityName(spawnerPlace.getEntityType()) + "&7 at &d" + spawnerPlace.getLocation() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(spawnerPlace.getUuid()).getName() + " &7placed &ex" + spawnerPlace.getAmount() + " " + EntityUtils.getEntityName(spawnerPlace.getEntityType()) + "&7 at &d" + LocationUtils.locToString(spawnerPlace.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case RELATION_EDITS:
                         RelationEdits relationEdits = (RelationEdits) log;
@@ -92,10 +86,13 @@ public class FactionLogsGUI {
                 }
             }
             item.addLoreLine("");
-            item.addLoreLine(CC.translate("&7&nClick&7 to view all the " + logType.getDisplayName()));
+            item.addLoreLine(CC.translate("&7&nClick&7 to view all the " + FactionsLogsAPI.getFactionLogs(faction, logType).size() + " " + logType.getDisplayName()));
             this.fLogGui.addItem(new GuiItem(item.build(), event -> {
-                //TODO: Check for cooldown per faction...
                 Bukkit.getScheduler().runTaskAsynchronously(FactionLogs.getInstance(), () -> {
+                    if (FactionsLogsAPI.getFactionLogs(faction, logType).isEmpty()) {
+                        player.sendMessage(CC.translate("&6&lFactions &8⎜ &cError&8: &eThere are no " + logType.getDisplayName() + " available!"));
+                        return;
+                    }
                     HastebinUtils.sendLog(player, faction.getId(), logType, false);
                 });
             }));

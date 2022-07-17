@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  org.arkhamnetwork.Arkkit.libs.ParticleEffect
  *  org.bukkit.ChatColor
@@ -36,23 +36,25 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class HeroicDodge
-extends HeroicCustomEnchantment {
+        extends HeroicCustomEnchantment {
     public HeroicDodge() {
         super("Ethereal Dodge", "Dodge", GeneralUtil.boots, 2);
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (player.hasMetadata("neutralized"))
-            return;
-        if (player.hasMetadata("noDefenseProcs"))
-            return;
-        if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
-            return;
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.005 * (double)level;
-            boolean sneaking = ((Player)player).isSneaking();
+
+            if (player.hasMetadata("neutralized"))
+                return;
+            if (player.hasMetadata("noDefenseProcs"))
+                return;
+            if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
+                return;
+
+            double chance = 0.02 * level;
+            final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
-                chance *= 1.2;
+                chance += 0.2;
             }
             if (Math.random() < chance) {
                 if (Math.random() < 0.03 && !player.hasMetadata("carver_damage")) {
@@ -60,22 +62,13 @@ extends HeroicCustomEnchantment {
                     player.sendMessage(CC.translate("&e&l* CARVER DODGE BUFF [&7+50% DMG&e&l] *"));
                     Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
                         player.removeMetadata("carver_damage", Enchantments.getInstance());
-                    }, 5*20);
+                    }, 5 * 20);
                 }
                 e.setDamage(0);
-                //e.setDamage(0.0);
-                ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*DODGE*");
+                ((Player) player).sendMessage((Object) ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
-                double chanceForSpeed = 5 + (level - 1) * 2;
-                if (Math.random() < chanceForSpeed * 0.01) {
-                    PlayerPotionEffects.trackPotionEffect((Player)player, new SpecificCustomEnchantment(this, level), new PotionEffect(PotionEffectType.SPEED, 60, Math.max(2, 2 + level / 2)));
-                }
             }
-        } else if (e != null && e.getCause() == EntityDamageEvent.DamageCause.FALL) {
-            if (player.getFallDistance() > 5.0f) {
-                ((Player)player).sendMessage((Object)ChatColor.YELLOW + "*FALL DODGED*");
-            }
-            e.setDamage(0);        }
+        }
     }
 }
 

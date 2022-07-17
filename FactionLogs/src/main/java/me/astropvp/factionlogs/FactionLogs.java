@@ -19,6 +19,11 @@ public class FactionLogs extends JavaPlugin {
         loadCommands();
         this.logManager = new LogManager();
         this.logManager.load();
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            System.out.println("[FactionLogs] Starting auto saving faction logs");
+            this.logManager.save();
+            System.out.println("[FactionLogs] Finished auto saving faction logs");
+        }, 100L, 20 * 60 * 15);
     }
 
     public void onDisable() {

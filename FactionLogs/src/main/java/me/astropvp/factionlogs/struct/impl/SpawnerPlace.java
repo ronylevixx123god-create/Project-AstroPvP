@@ -3,7 +3,11 @@ package me.astropvp.factionlogs.struct.impl;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
+import me.astropvp.factionlogs.utils.EntityUtils;
 import me.astropvp.factionlogs.utils.LocationSerializer;
+import me.astropvp.factionlogs.utils.LocationUtils;
+import me.astropvp.factionlogs.utils.TimeDateUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.EntityType;
 import java.util.UUID;
@@ -41,19 +45,15 @@ public class SpawnerPlace extends FactionLog {
     public static FactionLog deserialize(String string) {
         String[] splitString = string.split(";-;");
         int amount = Integer.parseInt(splitString[1]);
-        org.bukkit.Location location = LocationSerializer.deserialize(splitString[2]);
-        EntityType entityType = EntityType.fromName(splitString[3]);
+        Location location = LocationSerializer.deserialize(splitString[2]);
+        EntityType entityType = EntityType.valueOf(splitString[3]);
         UUID uuid = UUID.fromString(splitString[4]);
         return new SpawnerPlace(amount, location, entityType, uuid, Long.parseLong(splitString[0]));
     }
 
     @Override
     public String toString() {
-        return "SpawnerPlace{" +
-                "amount=" + amount +
-                ", location=" + location +
-                ", entityType=" + entityType +
-                ", uuid=" + uuid +
-                '}';
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(getUuid()).getName() + " placed x" + getAmount() + " " + EntityUtils.getEntityName(getEntityType()) + " at " + LocationUtils.locToString(getLocation()) + ".";
+
     }
 }

@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
@@ -25,7 +26,8 @@ public class HeroicDeepWounds extends HeroicCustomEnchantment
                 playerHit.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Heroic Deep Wounds&c&l] **"));
                 return;
             }
-            playerHit.setMetadata("deepWounds", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + level * 1500));
-        }
+            playerHit.setMetadata("deepWounds", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 1500)));
+            final double mod = Bleed.getBleedStack(playerHit) * 0.005 + level * 0.01 + 1.0;
+            e.setDamage(e.getDamage() * mod);        }
     }
 }

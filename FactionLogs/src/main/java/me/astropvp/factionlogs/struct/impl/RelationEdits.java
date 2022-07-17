@@ -1,11 +1,14 @@
 package me.astropvp.factionlogs.struct.impl;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.perms.Relation;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
+import me.astropvp.factionlogs.utils.TimeDateUtils;
+import org.bukkit.Bukkit;
 
 @Getter
 public class RelationEdits extends FactionLog {
@@ -39,7 +42,13 @@ public class RelationEdits extends FactionLog {
     public static FactionLog deserialize(String string) {
         String[] splitString = string.split(";-;");
         Faction sender = Factions.getInstance().getFactionById(splitString[1]);
+        if (sender == null) {
+            sender = Factions.getInstance().getNone();
+        }
         Faction target = Factions.getInstance().getFactionById(splitString[2]);
+        if (target == null) {
+            target = Factions.getInstance().getNone();
+        }
         Relation oldRel = Relation.fromString(splitString[3]);
         Relation newRel = Relation.fromString(splitString[4]);
         return new RelationEdits(sender, target, oldRel, newRel, Long.parseLong(splitString[0]));
@@ -47,11 +56,7 @@ public class RelationEdits extends FactionLog {
 
     @Override
     public String toString() {
-        return "RelationEdits{" +
-                "sender=" + sender +
-                ", target=" + target +
-                ", oldRelation=" + oldRelation +
-                ", newRelation=" + newRelation +
-                '}';
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + getSender().getTag() + " changed relation: " + getOldRelation().nicename + " -> " + getNewRelation().nicename + ".";
+
     }
 }

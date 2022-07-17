@@ -67,8 +67,11 @@ public class NebulaArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public List<String> getArmorCrystalLore() {
         List<String> message = new ArrayList<>();
-        message.add(CC.Aqua + "-2.5% Incoming Damage");
-        message.add(CC.Aqua + "+2.5% Outgoing Damage");
+        message.add(CC.DarkPurple + "+8% Outgoing Damage");
+        message.add(CC.DarkPurple + "-6% Incoming Damage");
+        message.add(CC.DarkPurple + "Instant Health Pots heal for more HP");
+        message.add(CC.DarkPurple + "15% Chance to bypass Heroic Armor");
+        message.add(CC.DarkPurple + "10% Nebula Ability chance");
         return message;
     }
 

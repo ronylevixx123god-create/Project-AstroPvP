@@ -34,6 +34,7 @@ public class FactionsLogsAPI {
         if (!FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()).getFactionLogs().containsKey(logType)) {
             FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()).getFactionLogs().put(logType, new ArrayList<>());
         }
+
         return FactionLogs.getInstance().getLogManager().getFactionLogManager(faction.getId()).getFactionLogs().get(logType);
     }
 

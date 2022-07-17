@@ -1,85 +1,89 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.util.*;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import com.rit.sucy.*;
-import org.bukkit.plugin.*;
-import java.util.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import org.bukkit.event.*;
-import org.bukkit.event.player.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.GeneralCooldown;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Projectile;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.plugin.Plugin;
 
-public class HeroicDeathbringer extends CustomEnchantment
-{
+import java.util.HashMap;
+import java.util.HashSet;
+
+public class HeroicDeathbringer extends CustomEnchantment {
     public HeroicDeathbringer() {
         super("Planetary Deathbringer", GeneralUtil.armor, 9);
         this.max = 3;
-        this.base = 25.0;
-        this.interval = 7.0;
-        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
-            @Override
+        this.base = 25.0D;
+        this.interval = 7.0D;
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
             public void run() {
                 HeroicDeathbringer.this.heroicEnchantment = true;
                 HeroicDeathbringer.this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Deathbringer");
             }
         }, 2L);
-        Bukkit.getPluginManager().registerEvents(new DeathbringEvents(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new DeathbringEvents(), (Plugin) Enchantments.getInstance());
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
+    public void applyEquipEffect(Player player, int enchantLevel) {
         DeathbringEvents.doubleDamage.add(player);
-        DeathbringEvents.playerLevels.put(player, enchantLevel);
+        DeathbringEvents.playerLevels.put(player, Integer.valueOf(enchantLevel));
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
+    public void applyUnequipEffect(Player player, int enchantLevel) {
         DeathbringEvents.doubleDamage.remove(player);
         DeathbringEvents.playerLevels.remove(player);
     }
 
-    private static class DeathbringEvents implements Listener
-    {
-        private static HashSet<Player> doubleDamage;
-        private static HashMap<Player, Integer> playerLevels;
+    private static class DeathbringEvents implements Listener {
+        private static HashSet<Player> doubleDamage = new HashSet<>();
+        private static HashMap<Player, Integer> playerLevels = new HashMap<>();
+
+        private DeathbringEvents() {
+        }
 
         @EventHandler
-        public void onEntityDamageByEntity(final EntityDamageByEntityEvent e) {
-            final Entity damage = e.getDamager();
+        public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
             if (!(e.getEntity() instanceof Player)) {
                 return;
             }
-            final Player player = (Player)e.getEntity();
-            if (DeathbringEvents.doubleDamage.contains(damage)) {
+            if (!(e.getDamager() instanceof Player)) {
+                return;
+            }
+            Player damage = (Player) e.getDamager();
 
-                final double random = Math.random();
-                double chance = 0.05 * DeathbringEvents.playerLevels.get((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage);
-                chance *= 1.6;
+            if (doubleDamage.contains(damage)) {
+                double random = Math.random();
+                double chance = 0.025D;
                 if (random < chance) {
-                    e.setDamage(e.getDamage()*1.15);
-                    if (damage instanceof Player)
-                        if (((Player) damage).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) damage).getPlayer(), SkinType.CHRISTMAS_2021_AMULET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) damage).getPlayer(), SkinType.CHRISTMAS_2021_MUTATED_AMULET))) {
+                    e.getEntity().sendMessage(CC.LightPurpleB + "** PLANETARY DEATHBRINGER " + CC.Gray + "[2x DMG] " + CC.LightPurpleB + "**");
+                    if(e.getFinalDamage() >= 35) {
+                        e.setDamage(35);
+                        GeneralCooldown.enterCooldown((Player) damage);
+                        return;
+                    }
+                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
+                    GeneralCooldown.enterCooldown((Player) damage);
 
-                            if (Math.random() < 0.03) {
-                                e.setDamage(e.getDamage()*1.15);
-                            }
-
-                        }
                 }
+
             }
         }
 
         @EventHandler
-        public void onPlayerQuit(final PlayerQuitEvent e) {
-            DeathbringEvents.doubleDamage.remove(e.getPlayer());
-            DeathbringEvents.playerLevels.remove(e.getPlayer());
-        }
-
-        static {
-            DeathbringEvents.doubleDamage = new HashSet<Player>();
-            DeathbringEvents.playerLevels = new HashMap<Player, Integer>();
+        public void onPlayerQuit(PlayerQuitEvent e) {
+            doubleDamage.remove(e.getPlayer());
+            playerLevels.remove(e.getPlayer());
         }
     }
 }

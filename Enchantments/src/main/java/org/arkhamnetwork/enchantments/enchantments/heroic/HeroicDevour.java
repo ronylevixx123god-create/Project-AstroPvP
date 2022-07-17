@@ -25,17 +25,18 @@ public class HeroicDevour extends CustomEnchantment
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player && Bleed.getBleedStack(target) > 0) {
+        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }
             if (SinkOrSwipFlippers.insanityDevourSilenced.contains(user)) {
                 return;
             }
-            double mod = (double)Bleed.getBleedStack(target) * 0.015D + ((double)enchantLevel * 0.1D + 1.0D)/2;
+            final double mod = Bleed.getBleedStack(target) * 0.015 + enchantLevel * 0.1 + 1.0;
             event.setDamage(event.getDamage() * mod);
-            target.setMetadata("effectedByDevour", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
-            Location l = target.getLocation();
+            target.setMetadata("effectedByDevour", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
+            final Location l = target.getLocation();
+            GeneralCooldown.enterCooldown((Player) user);
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);
         }
 

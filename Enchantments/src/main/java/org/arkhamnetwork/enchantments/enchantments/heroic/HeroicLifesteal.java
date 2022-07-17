@@ -19,15 +19,20 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class HeroicLifesteal
-extends HeroicCustomEnchantment {
+        extends HeroicCustomEnchantment {
     public HeroicLifesteal() {
         super("Demonic Lifesteal", "Lifesteal", GeneralUtil.swords, 2);
         this.max = 3;
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        final double random = Math.random();
-        final double chance = enchantLevel * 0.015;
+        double random = Math.random();
+        double chance = (enchantLevel == 1) ? 0.001D : ((enchantLevel == 2) ? 0.001D : ((enchantLevel == 3) ? 0.001D : 0.002D));
+        int toHeal = (enchantLevel == 1) ? 2 : ((enchantLevel == 2) ? 2 : ((enchantLevel == 3) ? 2 : 3));
+        int health = (int) user.getHealth() + toHeal;
+        if (health > user.getMaxHealth())
+            health = (int) user.getMaxHealth();
+
         if (random <= chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) ((Player) target), (String) "NECROMANCER")) {
                 return;
@@ -36,16 +41,10 @@ extends HeroicCustomEnchantment {
                 return;
             }
 
-            if (user.hasMetadata("neutralized")) {
+            if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT)))
                 return;
-            }
-            if (user.hasMetadata("noDefenseProcs")) {
-                return;
-            }
 
-            if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
-
-            GeneralUtil.healPlayer(user, 3);
+            GeneralUtil.setPlayerHealth(user, health);
         }
     }
 }

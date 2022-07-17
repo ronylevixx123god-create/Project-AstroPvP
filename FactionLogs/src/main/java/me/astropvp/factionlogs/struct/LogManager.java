@@ -34,9 +34,7 @@ public class LogManager {
     public FactionLogManager getFactionLogManager(String id) {
         if (!logs.containsKey(id)) {
             logs.put(id, new FactionLogManager());
-            System.out.println("[Debug] Putting in the logs");
         }
-        System.out.println("[Debug] Retreiving from the logs");
         return logs.get(id);
     }
 

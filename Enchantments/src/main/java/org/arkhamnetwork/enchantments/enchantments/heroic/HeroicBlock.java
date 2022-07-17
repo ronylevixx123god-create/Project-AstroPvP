@@ -32,8 +32,8 @@ public class HeroicBlock extends HeroicCustomEnchantment
                 return;
             }
             final Player player = (Player)damaged;
-            final double random = Math.random();
-            final double chance = (player.isBlocking() ? 0.075 : 0.03) * level;
+            double random = Math.random();
+            double chance = (player.isBlocking() ? 0.001D : 0.001D) * level;
             if (random < chance) {
                 final double reduceDamage = 0.5;
                 final double finalDamage = Math.max(0.0, e.getFinalDamage());

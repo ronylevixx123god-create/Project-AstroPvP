@@ -49,7 +49,7 @@ public class Rage extends CustomEnchantment {
 
     public static RageObject getOrDefaultCombo(Player attacker, Player victim) {
         if (!comboMap.containsKey(attacker.getUniqueId())) {
-            comboMap.put(attacker.getUniqueId(), new RageObject(0, System.currentTimeMillis(), victim));
+            comboMap.put(attacker.getUniqueId(), new RageObject(1, System.currentTimeMillis(), victim));
         }
         return comboMap.get(attacker.getUniqueId());
     }
@@ -60,7 +60,7 @@ public class Rage extends CustomEnchantment {
 
     public static void resetCombo(Player player) {
         RageObject rageObject = getCombo(player);
-        rageObject.setCount(0);
+        rageObject.setCount(1);
         comboMap.put(player.getUniqueId(), rageObject);
     }
 

@@ -8,7 +8,7 @@ import org.bukkit.entity.*;
 public class HeroicInsanity extends HeroicCustomEnchantment
 {
     public HeroicInsanity() {
-        super("Extreme Insanity", "Insanity", GeneralUtil.axe, 7);
+        super("Extreme Insanity", "Insanity", GeneralUtil.axe, 8);
         this.max = 8;
         this.base = 20.0;
         this.interval = 5.0;
@@ -16,20 +16,19 @@ public class HeroicInsanity extends HeroicCustomEnchantment
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
         final boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
-        final boolean playerHAsAxe = player.getEquipment().getItemInHand().getType().name().contains("_AXE");
 
         if (!enemyHasSword) {
             return;
         }
-        if (!playerHAsAxe) {
-            return;
-        }
+
         if (player instanceof Player) {
             if (SinkOrSwipFlippers.insanityDevourSilenced.contains(player)) {
                 return;
             }
-        }
-            e.setDamage(e.getDamage() * 1.25);
 
+            final double mod = 1.0 + 0.04 * level;
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
+            GeneralCooldown.enterCooldown((Player) player);
+        }
     }
 }

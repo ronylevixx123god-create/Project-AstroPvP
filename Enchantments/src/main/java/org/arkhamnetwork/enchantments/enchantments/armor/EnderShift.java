@@ -62,7 +62,7 @@ extends CustomEnchantment {
             if (player.hasMetadata("neutralized"))
                 return;
             double dmg = e.getFinalDamage();
-            double chance = 0.2;
+            double chance = 0.1;
             if (player.isOp() && ((Player) player).isSneaking()) {
                 chance = 1;
             }
