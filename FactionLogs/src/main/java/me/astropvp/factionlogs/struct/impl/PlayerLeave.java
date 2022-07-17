@@ -39,4 +39,12 @@ public class PlayerLeave extends FactionLog {
         UUID uuid = UUID.fromString(splitString[1]);
         return new PlayerLeave(uuid, FPlayerLeaveEvent.PlayerLeaveReason.valueOf(splitString[2]), Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "PlayerLeave{" +
+                "uuid=" + uuid +
+                ", playerLeaveReason=" + playerLeaveReason +
+                '}';
+    }
 }

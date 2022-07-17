@@ -51,7 +51,11 @@ public class LogManager {
         if(files == null) return;
         if(files.length <= 0) return;
         for(File file : files) {
-            loadDataForFaction(file);
+            try {
+                loadDataForFaction(file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 

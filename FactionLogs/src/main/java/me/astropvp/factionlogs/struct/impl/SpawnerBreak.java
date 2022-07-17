@@ -51,4 +51,14 @@ public class SpawnerBreak extends FactionLog {
         UUID uuid = UUID.fromString(splitString[4]);
         return new SpawnerBreak(amount, location, entityType, uuid, Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "SpawnerBreak{" +
+                "amount=" + amount +
+                ", location=" + location +
+                ", entityType=" + entityType +
+                ", uuid=" + uuid +
+                '}';
+    }
 }

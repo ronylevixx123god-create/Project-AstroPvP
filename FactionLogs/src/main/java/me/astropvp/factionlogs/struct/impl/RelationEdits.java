@@ -45,5 +45,13 @@ public class RelationEdits extends FactionLog {
         return new RelationEdits(sender, target, oldRel, newRel, Long.parseLong(splitString[0]));
     }
 
-
+    @Override
+    public String toString() {
+        return "RelationEdits{" +
+                "sender=" + sender +
+                ", target=" + target +
+                ", oldRelation=" + oldRelation +
+                ", newRelation=" + newRelation +
+                '}';
+    }
 }

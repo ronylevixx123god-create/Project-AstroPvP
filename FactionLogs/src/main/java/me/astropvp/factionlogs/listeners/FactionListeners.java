@@ -47,6 +47,7 @@ public class FactionListeners implements Listener {
     @EventHandler
     public void onRelationChange(FactionRelationEvent event) {
         FactionsLogsAPI.log(event.getFaction().getId(), new RelationEdits(event.getFaction(), event.getTargetFaction(), event.getOldRelation(), event.getRelation()));
+        FactionsLogsAPI.log(event.getTargetFaction().getId(), new RelationEdits(event.getFaction(), event.getTargetFaction(), event.getOldRelation(), event.getRelation()));
     }
 
     @EventHandler

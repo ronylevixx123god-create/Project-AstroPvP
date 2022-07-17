@@ -41,4 +41,13 @@ public class RadiusLandClaim extends FactionLog {
         UUID uuid = UUID.fromString(splitString[1]);
         return new RadiusLandClaim(uuid, FLocation.fromString(splitString[2]), Integer.parseInt(splitString[3]), Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "RadiusLandClaim{" +
+                "uuid=" + uuid +
+                ", fLocation=" + fLocation +
+                ", radius=" + radius +
+                '}';
+    }
 }

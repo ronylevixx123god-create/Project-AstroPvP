@@ -38,4 +38,12 @@ public class LandUnclaim extends FactionLog {
         UUID uuid = UUID.fromString(splitString[1]);
         return new LandUnclaim(uuid, FLocation.fromString(splitString[1]), Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "LandUnclaim{" +
+                "uuid=" + uuid +
+                ", fLocation=" + fLocation +
+                '}';
+    }
 }

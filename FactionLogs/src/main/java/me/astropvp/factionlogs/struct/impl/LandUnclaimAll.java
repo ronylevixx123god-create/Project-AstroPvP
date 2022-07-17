@@ -40,4 +40,10 @@ public class LandUnclaimAll extends FactionLog {
         return new LandUnclaimAll(uuid, Long.parseLong(splitString[0]));
     }
 
+    @Override
+    public String toString() {
+        return "LandUnclaimAll{" +
+                "uuid=" + uuid +
+                '}';
+    }
 }

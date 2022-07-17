@@ -42,4 +42,12 @@ public class PlayerJoin extends FactionLog {
         UUID uuid = UUID.fromString(splitString[1]);
         return new PlayerJoin(uuid, FPlayerJoinEvent.PlayerJoinReason.valueOf(splitString[2]), Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "PlayerJoin{" +
+                "uuid=" + uuid +
+                ", playerJoinReason=" + playerJoinReason +
+                '}';
+    }
 }

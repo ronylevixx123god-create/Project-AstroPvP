@@ -8,6 +8,7 @@ import com.mysql.jdbc.log.Log;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
+import me.astropvp.factionlogs.utils.TimeDateUtils;
 import org.bukkit.Bukkit;
 
 import java.util.UUID;
@@ -39,5 +40,10 @@ public class LandClaim extends FactionLog {
         String[] splitString = string.split(";-;");
         UUID uuid = UUID.fromString(splitString[1]);
         return new LandClaim(uuid, FLocation.fromString(splitString[2]), Long.parseLong(splitString[0]));
+    }
+
+    @Override
+    public String toString() {
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(uuid).getName() + " claimed land at " + fLocation.getCoordString();
     }
 }

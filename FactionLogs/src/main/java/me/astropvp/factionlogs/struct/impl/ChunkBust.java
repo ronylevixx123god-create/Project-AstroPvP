@@ -38,4 +38,11 @@ public class ChunkBust extends FactionLog {
         return new ChunkBust(LocationSerializer.deserialize(splitString[1]), UUID.fromString(splitString[2]), Long.parseLong(splitString[0]));
     }
 
+    @Override
+    public String toString() {
+        return "ChunkBust{" +
+                "location=" + location +
+                ", uuid=" + uuid +
+                '}';
+    }
 }

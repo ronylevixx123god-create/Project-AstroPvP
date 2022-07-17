@@ -40,4 +40,13 @@ public class FactionRename extends FactionLog {
         String[] splitString = string.split(";-;");
         return new FactionRename(UUID.fromString(splitString[1]), splitString[2], splitString[3], Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "FactionRename{" +
+                "player=" + player +
+                ", oldTag='" + oldTag + '\'' +
+                ", newTag='" + newTag + '\'' +
+                '}';
+    }
 }

@@ -46,4 +46,14 @@ public class SpawnerPlace extends FactionLog {
         UUID uuid = UUID.fromString(splitString[4]);
         return new SpawnerPlace(amount, location, entityType, uuid, Long.parseLong(splitString[0]));
     }
+
+    @Override
+    public String toString() {
+        return "SpawnerPlace{" +
+                "amount=" + amount +
+                ", location=" + location +
+                ", entityType=" + entityType +
+                ", uuid=" + uuid +
+                '}';
+    }
 }

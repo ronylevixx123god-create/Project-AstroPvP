@@ -4,11 +4,13 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.massivecraft.factions.Faction;
 import lombok.Getter;
+import me.astropvp.factionlogs.FactionLogs;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.struct.impl.*;
 import me.astropvp.factionlogs.utils.EntityUtils;
 import me.astropvp.factionlogs.utils.FactionsLogsAPI;
+import me.astropvp.factionlogs.utils.HastebinUtils;
 import me.astropvp.factionlogs.utils.TimeDateUtils;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
@@ -92,7 +94,10 @@ public class FactionLogsGUI {
             item.addLoreLine("");
             item.addLoreLine(CC.translate("&7&nClick&7 to view all the " + logType.getDisplayName()));
             this.fLogGui.addItem(new GuiItem(item.build(), event -> {
-                //TODO Make a pastebin link and send it to plaer
+                //TODO: Check for cooldown per faction...
+                Bukkit.getScheduler().runTaskAsynchronously(FactionLogs.getInstance(), () -> {
+                    HastebinUtils.sendLog(player, faction.getId(), logType, false);
+                });
             }));
 
         }

@@ -88,12 +88,7 @@ public class Rage extends CustomEnchantment {
             comboCount = 10;
         }
 
-
-        Bukkit.broadcastMessage("Combo: " + comboCount);
-        System.out.println("Before Rage: " + e.getDamage());
-
         e.setDamage(e.getDamage() * (1 + Math.min(comboCount, 10.0) / 10));
-        System.out.println("After Rage: " + e.getDamage());
         WorldUtil.sendWorldEffect(victim.getLocation().getBlock(), Material.REDSTONE_BLOCK.getId(), 2001);
 
 
