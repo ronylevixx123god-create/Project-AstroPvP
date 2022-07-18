@@ -214,8 +214,6 @@ public class AstroCore extends JavaPlugin {
         registerTasks();
         protocolFix();
 
-        ToggleKillTitleCommand.load();
-        ToggleFactionLandTitle.load();
 
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");

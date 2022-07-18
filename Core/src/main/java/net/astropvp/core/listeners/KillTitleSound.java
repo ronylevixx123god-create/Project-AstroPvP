@@ -1,8 +1,8 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import net.astropvp.core.commands.ToggleFactionLandTitle;
 import net.astropvp.core.commands.ToggleKillTitleCommand;
-import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

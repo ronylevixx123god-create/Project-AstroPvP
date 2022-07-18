@@ -84,7 +84,7 @@ public class CategoryInventory {
         }));
 
         categoryInventory.setItem(6, 4, new GuiItem(removeCategory, event -> {
-            CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player.getUniqueId()).remove(category);
+            CollectPlugin.getInstance().getCollectManager().removeCategoryFromCache(player.getUniqueId().toString(), category);
             new CollectInventory(player).getCollectUI().open(player);
             event.setCancelled(true);
             player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
@@ -123,7 +123,7 @@ public class CategoryInventory {
 
                 if (category.onlyContainsAir()) {
                     categoryInventory.close(player);
-                    CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player.getUniqueId()).remove(category);
+                    CollectPlugin.getInstance().getCollectManager().removeCategoryFromCache(player.getUniqueId().toString(), category);
                     player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
                     new CollectInventory(player).getCollectUI().open(player);
                 }

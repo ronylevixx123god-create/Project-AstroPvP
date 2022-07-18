@@ -1,32 +1,27 @@
 package net.astropvp.struct;
 
-import lombok.Getter;
-import net.astropvp.CollectPlugin;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import java.util.HashMap;
-import java.util.List;
+
+import com.google.gson.Gson;
+import net.astropvp.utils.SaveLoadManager;
+import org.bukkit.plugin.java.JavaPlugin;
+
 import java.util.UUID;
 
-public class CollectManager {
-    @Getter
-    private HashMap<UUID, PlayerCollect> collectList;
+public class CollectManager extends SaveLoadManager<PlayerCollect> {
 
-    public CollectManager() {
-        collectList = new HashMap<>();
+
+    public CollectManager(JavaPlugin plugin, Gson gson) {
+        super(plugin, gson, "data/", PlayerCollect.class);
     }
 
-    public PlayerCollect getPlayerCollect(UUID uuid) {
-        if(collectList.containsKey(uuid))
-            return collectList.get(uuid);
-        PlayerCollect collect = new PlayerCollect(uuid);
-        collectList.put(uuid, collect);
-        //Why load when it's new?
-        collect.load(false);
-        return collect;
+    public void removeCategoryFromCache(String key, CollectCategory category) {
+        getFromCache(key).getCategories().remove(category);
     }
 
-    public void remove(UUID uuid) {
-        collectList.remove(uuid);
+    public PlayerCollect getOrCreate(String key) {
+        if (getFromCache(key) == null) {
+            addToCache(new PlayerCollect(UUID.fromString(key)));
+        }
+        return getFromCache(key);
     }
 }

@@ -80,7 +80,7 @@
         <!-- System repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>MCMMgO</artifactId>
+            <artifactId>MCMMsgO</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
@@ -88,7 +88,7 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>me.astropvp.cratekeys.items</artifactId>
+            <artifactId>me.astropvp.cratekeys.igtems</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>

@@ -45,7 +45,7 @@ public class GiveAllManager {
     public static void doGiveAll() {
         for (Player p : Bukkit.getServer().getOnlinePlayers()) {
             if (!p.isOnline()) continue;
-            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(p.getUniqueId());
+            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getOrCreate(p.getUniqueId().toString());
             boolean b = false;
             CollectCategory giveall = null;
             for (CollectCategory cat : collect.getCategories()) {

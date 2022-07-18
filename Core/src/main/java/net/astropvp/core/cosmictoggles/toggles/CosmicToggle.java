@@ -28,7 +28,6 @@ import net.astropvp.core.commands.ToggleKillTitleCommand;
 import net.astropvp.core.itemfilter.Filter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.utils.GrindingMessagesUtil;
 import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;

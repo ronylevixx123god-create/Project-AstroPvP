@@ -59,12 +59,12 @@ public class CollectInventory {
             event.setCancelled(true);
         }));
 
-        PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player.getUniqueId());
+        PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getOrCreate(player.getUniqueId().toString());
         List<CollectCategory> categories = collect.getCategories();
         for (CollectCategory cat : categories) {
             collectUI.addItem(new GuiItem(getCategoryItem(player, cat), event -> {
                 if (event.getClick() == ClickType.SHIFT_RIGHT) {
-                    CollectPlugin.getInstance().getCollectManager().getPlayerCollect(player.getUniqueId()).remove(cat);
+                    CollectPlugin.getInstance().getCollectManager().removeCategoryFromCache(player.getUniqueId().toString(), cat);
                     player.playSound(player.getLocation(), Sound.ANVIL_BREAK, 1f, 1f);
                     CollectInventory collectInventory = new CollectInventory(player);
                     collectInventory.getCollectUI().open(player);
@@ -78,7 +78,7 @@ public class CollectInventory {
 
     private ItemStack getCategoryItem(Player player, CollectCategory cat) {
         return new ItemBuilder(cat.getType().getMaterial(), CC.translate(cat.getName()), CC.translate(""), CC.translate("&aLeft-Click&7 to open inventory"), CC.translate("&cSHIFT Right-Click&7 to remove inventory"), "", CC.translate("&6Expires in&7: &f") +
-                ((cat.getTimeCollected() + 86400000) - System.currentTimeMillis() <= 0 ? "Now" : TimeUtil.fancy( (cat.getTimeCollected() + 86400000) - System.currentTimeMillis()))).build();
+                ((cat.getTimeCollected() + 86400000) - System.currentTimeMillis() <= 0 ? "Now" : TimeUtil.fancy((cat.getTimeCollected() + 86400000) - System.currentTimeMillis()))).build();
     }
 
 

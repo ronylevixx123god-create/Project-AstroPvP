@@ -13,13 +13,11 @@ public class FactionsLogsAPI {
         try {
             FactionLogs.getInstance().getLogManager().log(faction.getId(), factionLog);
         } catch (NullPointerException exception) {
-            System.out.println(faction.getId());
-            exception.printStackTrace();
+
         }
     }
 
     public static void log(String id, FactionLog factionLog) {
-        System.out.println("[Debug] Logging for " + factionLog.getLogtype());
         FactionLogs.getInstance().getLogManager().log(id, factionLog);
     }
 
