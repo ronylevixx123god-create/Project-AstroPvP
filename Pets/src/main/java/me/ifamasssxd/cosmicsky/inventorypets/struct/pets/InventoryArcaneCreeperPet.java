@@ -30,8 +30,8 @@ public class InventoryArcaneCreeperPet extends InventoryPet {
       return InventoryPets.ARCANE_CREEPER;
    }
 
-   public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "A creeper imbued with extremely,", CC.Gray + "powerful, unstable arcane magic.", CC.WhiteB, CC.WhiteB + "Ability", CC.Gray + "Spawn an " + CC.Aqua + "Arcane Creeper", CC.Gray + "A speciality creeper that banishes all", CC.Gray + "Enchantment Tables in a 3x3 radius.", CC.WhiteB, CC.WhiteB + "Cooldown", CC.Gray + (10 - (level - 1)) + " Minutes"});
+   public List getPetDescription() {
+      return Lists.newArrayList(CC.Gray + "A creeper imbued with extremely,", CC.Gray + "powerful, unstable arcane magic.", CC.WhiteB, CC.WhiteB + "Ability", CC.Gray + "Spawn an " + CC.Aqua + "Arcane Creeper", CC.Gray + "A speciality creeper that banishes all", CC.Gray + "Enchantment Tables in a 3x3 radius.", CC.WhiteB, CC.WhiteB + "Cooldown", CC.Gray + (10 - (5 - 1)) + " Minutes");
    }
 
    public int getExpForLevel(int level) {
@@ -42,13 +42,13 @@ public class InventoryArcaneCreeperPet extends InventoryPet {
       return 10;
    }
 
-   public int getCooldown(int level) {
-      return (int)TimeUnit.MINUTES.toSeconds((long)(10 - (level - 1)));
+   public int getCooldown() {
+      return (int)TimeUnit.MINUTES.toSeconds((long)(10 - (5 - 1)));
    }
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
+      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
       if (item.getAmount() > 1) {
          player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));

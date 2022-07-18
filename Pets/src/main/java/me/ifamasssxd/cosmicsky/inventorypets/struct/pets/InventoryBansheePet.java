@@ -45,17 +45,15 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryBansheePet extends InventoryPet {
-    public int petLevel = 5;
 
-    private HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
 
     public InventoryPets getOwner() {
         return InventoryPets.BANSHEE;
     }
 
-    public List getPetDescription(int level) {
+    public List getPetDescription() {
         return Lists.newArrayList(CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players (8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (8s) ",
-                CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
+                CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
 
@@ -67,13 +65,13 @@ public class InventoryBansheePet extends InventoryPet {
         return 5;
     }
 
-    public int getCooldown(int var1) {
+    public int getCooldown() {
         return 360;
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
@@ -155,7 +153,6 @@ public class InventoryBansheePet extends InventoryPet {
 
         petItem.setLastUsed(System.currentTimeMillis());
 
-
         int duration;
 
 
@@ -191,6 +188,7 @@ public class InventoryBansheePet extends InventoryPet {
                 startBansheeEffect(player, enemy, finalDuration);
             }
         });
+        player.updateInventory();
         return true;
     }
 

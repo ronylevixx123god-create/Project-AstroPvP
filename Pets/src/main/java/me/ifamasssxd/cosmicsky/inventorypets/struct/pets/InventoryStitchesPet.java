@@ -26,13 +26,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class InventoryStitchesPet extends InventoryPet {
-    @Override
     public InventoryPets getOwner() {
         return InventoryPets.STITCHES;
     }
 
-    @Override
-    public List<String> getPetDescription(int p0) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "An abomination with a chilling",
                 CC.Gray + "presence, striking fear into all",
                 CC.Gray + "who witness its bloodthirsty gaze.",
@@ -40,25 +38,22 @@ public class InventoryStitchesPet extends InventoryPet {
                 CC.WhiteB + "Ability",
                 CC.Gray + "Silence nearby enemy pets, preventing",
                 CC.Gray + "any enemy player from using pets in a",
-                CC.Yellow + "14x14 radius " + CC.Gray + "for: " + CC.Yellow + (18 + p0) + "s",
+                CC.Yellow + "14x14 radius " + CC.Gray + "for: " + CC.Yellow + 23 + "s",
                 CC.Gray + "( Players can be pet-silenced 1x per 90s )",
                 "",
                 CC.WhiteB + "Cooldown",
                 CC.Gray + ("5 Minutes"));
     }
 
-    @Override
     public int getExpForLevel(final int level) {
         return 2000 * level;
     }
 
-    @Override
     public int getMaxLevel() {
         return 5;
     }
 
-    @Override
-    public int getCooldown(int p0) {
+    public int getCooldown() {
         return (int) TimeUnit.MINUTES.toSeconds(5);
     }
 
@@ -66,7 +61,7 @@ public class InventoryStitchesPet extends InventoryPet {
     @Override
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         final long lastUse = petItem.getLastUsed();
-        final long delay = TimeUnit.SECONDS.toMillis(this.getCooldown(petItem.getLevel()));
+        final long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
@@ -121,7 +116,7 @@ public class InventoryStitchesPet extends InventoryPet {
 
         });
 
-        PetUtils.addPetCooldown(player, petItem.getPetType(), getCooldown(5)*1000);
+        PetUtils.addPetCooldown(player, petItem.getPetType(), getCooldown()* 1000L);
 
 
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1f, 3.0f);

@@ -37,7 +37,7 @@ public class InventoryWitcherPet extends InventoryPet {
         return InventoryPets.ANTI_TELEBLOCK;
     }
 
-    public List<String> getPetDescription(int level) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "Call upon the deadly screaming Banshee.", "",
                 CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[Witcher]:",
                 CC.DarkRedB + "* " + CC.Gray + "Immune to almost all knockback (" + (5 * 2) + "s)",
@@ -46,7 +46,7 @@ public class InventoryWitcherPet extends InventoryPet {
                 CC.DarkRedB + "* " + CC.Gray + "Silences enemy soul enchantments in a 8x8 radius for (" + (5 * 2) + "s)",
                 CC.DarkRedB + "* " + CC.Gray + "Freezes enemies in a 8x8 radius for 1s", "",
                 CC.WhiteB + "Cooldown",
-                String.valueOf(CC.Gray) + (getCooldown(5) / 60) + " Minutes");
+                String.valueOf(CC.Gray) + (getCooldown() / 60) + " Minutes");
     }
 
 
@@ -58,7 +58,7 @@ public class InventoryWitcherPet extends InventoryPet {
         return 5;
     }
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return (int) TimeUnit.MINUTES.toSeconds((11 - 5));
     }
 
@@ -68,7 +68,7 @@ public class InventoryWitcherPet extends InventoryPet {
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
@@ -124,11 +124,6 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             }
 
-            /*if (WitcherCooldown.isOnWitcherCooldown(p)) {
-                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on Witcher Pet Cooldown! This lasts 60 seconds."));
-                continue;
-            }*/
-
             CrankedAmuletUtil.tryHatchAbility(p, player);
 
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));
@@ -143,17 +138,16 @@ public class InventoryWitcherPet extends InventoryPet {
             } else {
                 p.sendMessage(CC.translate("&c&lSNOWFLAKE SLIPPERS: &7Blocked &cTeleblock!"));
             }
-            //WitcherCooldown.enterWitcherCooldown(p);
             players.add(p);
         }
 
 
-        //ParticleEffect.playEffect(ParticleEffect.LARGE_EXPLODE, player.getLocation().add(0.0D, 1.0D, 0.0D), 1.0F, 3);
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
+        player.sendMessage(CC.translate("&4&l** WITCHER PET &7[Knockback Immunity 5s] &4&l**"));
         player.sendMessage("");
         player.setMetadata("witcher_effect", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
-        player.setMetadata("noknockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
+        player.setMetadata("no_knockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
 
         DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");
 
@@ -175,8 +169,8 @@ public class InventoryWitcherPet extends InventoryPet {
                     return;
                 if (player.hasMetadata("witcher_effect"))
                     player.removeMetadata("witcher_effect", CosmicSkyInventoryPets.get());
-                if (player.hasMetadata("noknockback"))
-                    player.removeMetadata("noknockback", CosmicSkyInventoryPets.get());
+                if (player.hasMetadata("no_knockback"))
+                    player.removeMetadata("no_knockback", CosmicSkyInventoryPets.get());
                 for (Player player : players) {
                     if (player == null || !player.isOnline())
                         continue;
@@ -186,69 +180,12 @@ public class InventoryWitcherPet extends InventoryPet {
                 }
                 player.sendMessage(CC.translate("&4&lPET:  Witcher Pet - WITCHER has worn off! "));
             }
-        }, (sum * 20));
+        }, (sum * 20L));
     }
 
-    public ArrayList<Player> getPlayersInRadius(Player player, int radius) {
-        ArrayList<Player> list = new ArrayList<>();
-        for (Entity entity : player.getNearbyEntities(radius, radius, radius)) {
-            if (!(entity instanceof Player))
-                continue;
-            Player p = (Player) entity;
-            list.add(p);
-        }
-        return list;
-    }
 
     public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
         return false;
     }
-
-    public void addPotionEffectReturn(final Player player, final PotionEffect returned, final PotionEffect add) {
-        player.removePotionEffect(returned.getType());
-        player.addPotionEffect(add);
-        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), new Runnable() {
-            public void run() {
-                if (player.hasPotionEffect(add.getType()))
-                    player.removePotionEffect(add.getType());
-                player.addPotionEffect(returned);
-            }
-        }, add.getDuration());
-    }
-
-    public LivingEntity getTargetEntity(Player player, int maxRangeInBlocks) {
-        Location observerPos = player.getEyeLocation();
-        Vector3D observerDir = new Vector3D(observerPos.getDirection());
-        Vector3D observerStart = new Vector3D(observerPos);
-        Vector3D observerEnd = observerStart.add(observerDir.multiply(maxRangeInBlocks));
-        LivingEntity target = null;
-        for (Entity possibleTarget : player.getNearbyEntities(maxRangeInBlocks, maxRangeInBlocks,
-                maxRangeInBlocks)) {
-            if (!(possibleTarget instanceof LivingEntity))
-                continue;
-            Vector3D targetPos = new Vector3D(possibleTarget.getLocation());
-            Vector3D minimum = targetPos.add(-0.5D, 0.0D, -0.5D);
-            Vector3D maximum = targetPos.add(0.5D, 1.67D, 0.5D);
-            if (!hasIntersection(observerStart, observerEnd, minimum, maximum) || (
-                    target != null && target.getLocation().distanceSquared(observerPos) <= possibleTarget
-                            .getLocation().distanceSquared(observerPos)))
-                continue;
-            target = (LivingEntity) possibleTarget;
-        }
-        return target;
-    }
-
-    private boolean hasIntersection(Vector3D p1, Vector3D p2, Vector3D min, Vector3D max) {
-        double epsilon = 9.999999747378752E-5D;
-        Vector3D d = p2.subtract(p1).multiply(0.5D);
-        Vector3D e = max.subtract(min).multiply(0.5D);
-        Vector3D c = p1.add(d).subtract(min.add(max).multiply(0.5D));
-        Vector3D ad = d.abs();
-        return (Math.abs(c.x) <= e.x + ad.x && Math.abs(c.y) <= e.y + ad.y && Math.abs(c.z) <= e.z + ad.z &&
-                Math.abs(d.y * c.z - d.z * c.y) <= e.y * ad.z + e.z * ad.y + 9.999999747378752E-5D &&
-                Math.abs(d.z * c.x - d.x * c.z) <= e.z * ad.x + e.x * ad.z + 9.999999747378752E-5D &&
-                Math.abs(d.x * c.y - d.y * c.x) <= e.x * ad.y + e.y * ad.x + 9.999999747378752E-5D);
-    }
-
 
 }

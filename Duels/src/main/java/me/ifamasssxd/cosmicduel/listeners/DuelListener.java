@@ -32,10 +32,7 @@ import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.tasks.DuelArenaTask;
 import me.ifamasssxd.cosmicduel.utils.DuelUtils;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
-import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
-import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.*;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -94,12 +91,11 @@ public class DuelListener
 
     @EventHandler
     public void onDeath(PlayerDeathEvent e) {
-        if (!e.getEntity().getLocation().getWorld().getName().contains("_duel")) return;
-        new BukkitRunnable(){
-            public void run(){
-                e.getDrops().clear();
-            }
-        }.runTaskLater(CosmicDuel.get(), 40L);
+        if (!e.getEntity().getLocation().getWorld().getName().endsWith("_duels")) return;
+        Bukkit.getScheduler().runTaskLater(CosmicDuel.get(),()-> {
+            e.getDrops().clear();
+            System.out.println("[Duels] Clearing drops");
+        }, 20L);
     }
 
     @EventHandler
@@ -128,18 +124,13 @@ public class DuelListener
         }
     }
 
-    @EventHandler(priority=EventPriority.LOWEST, ignoreCancelled=true)
-    public void onItemSpawn(ItemSpawnEvent e) {
-        if (e.getEntity() != null && e.getEntity().getWorld() != null && e.getEntity().getWorld().getName().equalsIgnoreCase(Arena.getDuelWorldName())) {
-            e.getEntity().setMetadata("mcMMO: Tracked Item", (MetadataValue)new FixedMetadataValue((Plugin) CosmicDuel.get(), (Object)""));
-        }
-    }
+
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerPreProcess(PlayerCommandPreprocessEvent e) {
         if (Arena.getDuelWorldName().equalsIgnoreCase(e.getPlayer().getWorld().getName()) && e.getMessage().startsWith("/f ") && !e.getPlayer().isOp() && !e.getPlayer().getGameMode().equals((Object)GameMode.CREATIVE)) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands in a duel.");
+            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
             e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
             e.setMessage("/null");
             return;
@@ -174,7 +165,7 @@ public class DuelListener
                 }
                 e.setMessage("/null");
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use net.astropvp.armorsets.commands in a duel.");
+                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
                 e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
             }
         }

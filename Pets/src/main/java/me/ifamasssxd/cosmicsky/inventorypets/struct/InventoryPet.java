@@ -18,7 +18,7 @@ public abstract class InventoryPet {
 
    public abstract InventoryPets getOwner();
 
-   public abstract List<String> getPetDescription(int level);
+   public abstract List<String> getPetDescription();
 
    public void onPlayerJoin(Player player, InventoryPetItem item) {
    }
@@ -37,15 +37,8 @@ public abstract class InventoryPet {
       return wrapper;
    }
 
-   public int getExpForLevel(int level) {
-      return level == 2 ? 500 : (level == 3 ? 1500 : 1500);
-   }
 
-   public int getMaxLevel() {
-      return 3;
-   }
-
-   public abstract int getCooldown(int var1);
+   public abstract int getCooldown();
 
    public abstract boolean onPetItemInteract(Player var1, ItemStack var2, InventoryPetItem var3, PlayerInteractEvent var4) throws Exception;
 

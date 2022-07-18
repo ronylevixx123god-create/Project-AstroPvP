@@ -40,31 +40,30 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryWorldDestroyerPet extends InventoryPet {
-    public static List<Block> blockList = new ArrayList<Block>();
     public static ArrayList<Location> locations = new ArrayList<>();
 
     public InventoryPets getOwner() {
         return InventoryPets.WORLD_DESTROYER;
     }
 
-    public List<String> getPetDescription(int level) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "A fragment of the legendary",
                 CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(),
                 CC.WhiteB + "Ability",
                 CC.Gray + "Summon the power of Yijki's",
                 CC.Gray + "[" + CC.DarkRed + "Dimensional Cage" + CC.Gray + "] ability (" + this.cageDuration + "s)",
                 (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown",
-                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
+                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
     private double cageDuration = 5.0;
 
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return 300;
     }
 
-    public int getExpForLevel(int level) {
+    public int getExpForLevel() {
         return 1700 * 5;
     }
 
@@ -75,7 +74,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 

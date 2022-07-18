@@ -32,7 +32,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
         return null;
     }
 
-    public List getPetDescription(int level) {
+    public List getPetDescription() {
         return Lists.newArrayList(CC.Gray + "A ghastly pet that can", CC.Gray + "control death itself.", "", CC.WhiteB + "Ability", CC.Gray + "Fake your own death.", CC.Gray + "[" + CC.DarkRed + "Feign Death" + CC.Gray + "]", "", CC.WhiteB + "Cooldown", CC.Gray + " 10 Minutes");
     }
 
@@ -44,7 +44,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
         return 5;
     }
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return (int) TimeUnit.MINUTES.toSeconds(10L);
     }
 
@@ -52,7 +52,7 @@ public class InventoryFeignDeathPet extends InventoryPet {
         if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
-        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
+        PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown() * 1000L));
         MasteryFeignDeath.vanishPlayer(player, 5);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);

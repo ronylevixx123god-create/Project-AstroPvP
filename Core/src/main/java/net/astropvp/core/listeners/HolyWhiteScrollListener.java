@@ -218,7 +218,6 @@ public class HolyWhiteScrollListener implements Listener {
         List<ItemStack> toReturn = this.savedItems.remove(e.getPlayer().getUniqueId().toString());
         if (toReturn != null) {
             for (ItemStack i : toReturn) {
-                Bukkit.getLogger().info("[CosmicDungeons (HolyWhiteScroll)] Player " + e.getPlayer().getName() + " (" + e.getPlayer().getUniqueId() + ") respawned with Holy White Scroll item: " + i);
                 e.getPlayer().getInventory().addItem(HolyWhiteScrollUtils.removeHolyWhitescroll(i));
             }
             Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(e.getPlayer(), "HOLY_WHITESCROLL_DEATH", new Object[]{toReturn}));

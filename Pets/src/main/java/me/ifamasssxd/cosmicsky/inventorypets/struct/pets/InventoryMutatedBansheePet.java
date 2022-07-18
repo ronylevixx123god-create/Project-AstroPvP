@@ -44,14 +44,12 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryMutatedBansheePet extends InventoryPet {
-    public int petLevel = 5;
-
 
     public InventoryPets getOwner() {
         return InventoryPets.MUTATED_BANSHEE;
     }
 
-    public List getPetDescription(int level) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "Call upon the deadly screeming Banshee.",
                 CC.Gray,
                 CC.DarkGreenB + "Ability",
@@ -64,7 +62,7 @@ public class InventoryMutatedBansheePet extends InventoryPet {
                 CC.Green + "* " + CC.Gray + "Negates enemy Phoenix (10s)",
                 CC.Green + "* " + CC.Gray + "Negates enemy Holy White Scrolls (10s)",
                 CC.Gray,
-                CC.DarkGreenB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
+                CC.DarkGreenB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
 
@@ -76,13 +74,13 @@ public class InventoryMutatedBansheePet extends InventoryPet {
         return 5;
     }
 
-    public int getCooldown(int var1) {
+    public int getCooldown() {
         return 900;
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 

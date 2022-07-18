@@ -64,11 +64,11 @@ public class InventoryBloodhoundPet extends InventoryPet {
       return InventoryPets.BLOODHOUND;
    }
 
-   public List getPetDescription(int level) {
-      return Lists.newArrayList(CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Affects target player with " + CC.DarkRedB + "[TAG]:", CC.DarkRed + "* " + CC.Gray + "Auto-/f focus target player ", CC.DarkRed + "* " + CC.Gray + "Anti-Bless Slowness I (10s) ", CC.DarkRed + "* " + CC.Gray + "Silence target player (10s) ", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to target players (10s) ", CC.DarkRed + "* " + CC.Gray + "Target is visable on /near for (30s) ", CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown(5)));
+   public List getPetDescription() {
+      return Lists.newArrayList(CC.Gray + "Mark your target for assured destruction.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Affects target player with " + CC.DarkRedB + "[TAG]:", CC.DarkRed + "* " + CC.Gray + "Auto-/f focus target player ", CC.DarkRed + "* " + CC.Gray + "Anti-Bless Slowness I (10s) ", CC.DarkRed + "* " + CC.Gray + "Silence target player (10s) ", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to target players (10s) ", CC.DarkRed + "* " + CC.Gray + "Target is visable on /near for (30s) ", CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown()));
    }
 
-   public int getCooldown(int level) {
+   public int getCooldown() {
 
       return 360;
    }
@@ -83,7 +83,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
 
    public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+      long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
@@ -105,7 +105,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
          }
       }
 
-      if (target == null || !(target instanceof Player))
+      if (target == null)
          throw new PrefixedPetException(String.valueOf(CC.Red + "No target found!"));
       final Player pTarget = (Player)target;
       FPlayer fPlayer = FactionUtils.getFPlayer(player);

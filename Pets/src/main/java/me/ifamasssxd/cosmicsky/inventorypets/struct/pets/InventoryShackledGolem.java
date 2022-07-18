@@ -5,8 +5,6 @@ import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
-import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -26,17 +24,17 @@ public class InventoryShackledGolem extends InventoryPet {
         return InventoryPets.SHACKLED_GOLEM;
     }
 
-    public List<String> getPetDescription(int level) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "An ancient, chained arcane golem", String.valueOf(CC.Gray) + "that keeps its master grounded.", "", String.valueOf(CC.WhiteB) + "Ability", String.valueOf(CC.Gray) + "Immune to (almost) all Knockback for: " + CC.White + "16s", "", String.valueOf(CC.WhiteB) + "Cooldown", String.valueOf(CC.Gray) + " 5 Minutes");
     }
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return (int)TimeUnit.MINUTES.toSeconds(5L);
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, final InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis(getCooldown(1));
+        long delay = TimeUnit.SECONDS.toMillis(getCooldown());
         long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
@@ -53,7 +51,7 @@ public class InventoryShackledGolem extends InventoryPet {
                 petItem.getPetType().sendMsg(player, CC.translate("Shackled Golem worn off!"));
             }
         }, abilitySeconds * 20L);
-        petItem.setLastUsed(System.currentTimeMillis() - (HCFOutpostAPI.isControllingOutpost(player, OutpostType.THE_GREAT_HALL) ? (getCooldown(1) / 2 * 1000) : 0L));
+        petItem.setLastUsed(System.currentTimeMillis());
         return true;
     }
 

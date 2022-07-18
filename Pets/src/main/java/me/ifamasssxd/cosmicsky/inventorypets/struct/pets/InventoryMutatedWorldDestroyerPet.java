@@ -39,32 +39,31 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
-    public static List<Block> blockList = new ArrayList<Block>();
     public static ArrayList<Location> locations = new ArrayList<>();
 
     public InventoryPets getOwner() {
         return InventoryPets.MUTATED_WORLD_DESTROYER;
     }
 
-    public List<String> getPetDescription(int level) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "A Mutated fragment of the",
                 CC.Gray + "legendary World Destroyer, Yijki.",
-                (new StringBuilder(String.valueOf(CC.Gray))).toString(),
+                String.valueOf(CC.Gray),
                 CC.DarkGreenB + "Ability",
                 CC.Gray + "Summon the power of Yijki's",
                 CC.Gray + "[" + CC.Green + "Mutated Dimensional Cage" + CC.Gray + "] ability (" + this.cageDuration + "s)",
                 CC.translate("&a* &7Bypass all ItemSkins"),
                 CC.translate("&a* &72x Cage duration"),
                 CC.translate("&a* &72x Tick damage"),
-                (new StringBuilder(String.valueOf(CC.Gray))).toString(),
+                String.valueOf(CC.Gray),
                 CC.DarkGreenB + "Cooldown",
-                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)));
+                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
     private double cageDuration = 10.0;
 
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return 900;
     }
 
@@ -79,7 +78,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 

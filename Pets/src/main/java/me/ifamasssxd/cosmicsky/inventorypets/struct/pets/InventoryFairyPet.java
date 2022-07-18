@@ -24,27 +24,25 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryFairyPet extends InventoryPet {
-    public int petLevel = 5;
-
-    private HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
 
     public InventoryPets getOwner() {
-        return InventoryPets.BANSHEE;
+        return InventoryPets.AETHER_FAIRY;
     }
 
-    public List getPetDescription(int level) {
-        return Lists.newArrayList(new String[] {
-                CC.Gray + "A tranquil pixie ready to protect the",
+
+
+    public List getPetDescription() {
+        return Lists.newArrayList(CC.Gray + "A tranquil pixie ready to protect the",
                 CC.Gray + "beholder from the comfort of the oasis",
                 CC.Gray, CC.WhiteB + "Ability",
                 CC.Gray + "Gives caster Aether Fairy buff for 30s,",
                 CC.Gray + "decreasing incoming damage by 5%.",
                 CC.Gray + "Does not stack.",
                 CC.Gray, CC.WhiteB + "Cooldown",
-                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)) });
+                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return 360;
     }
 
@@ -58,7 +56,7 @@ public class InventoryFairyPet extends InventoryPet {
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
         if (item.getAmount() > 1) {
             player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
@@ -74,7 +72,7 @@ public class InventoryFairyPet extends InventoryPet {
 
         int duration = 30;
 
-        player.setMetadata("fairy_pet", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        player.setMetadata("fairy_pet", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), Boolean.TRUE));
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
 
         player.sendMessage(CC.translate("&e&lPET: ** AETHER FAIRY PET [&6" + duration + "s&e&l] - Aether Fairy! **"));

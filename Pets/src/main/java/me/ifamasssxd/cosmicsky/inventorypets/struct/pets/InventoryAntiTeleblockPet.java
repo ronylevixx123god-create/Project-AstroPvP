@@ -23,12 +23,12 @@ public class InventoryAntiTeleblockPet extends InventoryPet {
       return InventoryPets.ANTI_TELEBLOCK;
    }
 
-   public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "An elusive creature that", CC.Gray + "has the power to negate", CC.Gray + "curses that prevent the use", CC.Gray + "of enderpearl teleportation.", "", CC.WhiteB + "Ability", CC.Gray + "Removes [" + CC.Red + "Teleblock" + CC.Gray + "]", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
+   public List getPetDescription() {
+      return Lists.newArrayList(CC.Gray + "An elusive creature that", CC.Gray + "has the power to negate", CC.Gray + "curses that prevent the use", CC.Gray + "of enderpearl teleportation.", "", CC.WhiteB + "Ability", CC.Gray + "Removes [" + CC.Red + "Teleblock" + CC.Gray + "]", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown()));
    }
 
-   public int getCooldown(int level) {
-      return Math.max(30, 120 - 6 * (level - 1));
+   public int getCooldown() {
+      return 100;
    }
 
    public int getExpForLevel(int level) {
@@ -41,7 +41,7 @@ public class InventoryAntiTeleblockPet extends InventoryPet {
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
+      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
       if (item.getAmount() > 1) {
          player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));

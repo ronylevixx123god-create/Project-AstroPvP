@@ -24,14 +24,14 @@ import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-public class    InventoryYijkiControllerPet extends InventoryPet {
+public class InventoryYijkiControllerPet extends InventoryPet {
     public int petLevel = 0;
 
     public InventoryPets getOwner() {
         return InventoryPets.BANSHEE;
     }
 
-    public List<String> getPetDescription(int level) {
+    public List<String> getPetDescription() {
         return Lists.newArrayList(String.valueOf(CC.Gray) + "A powerful demonic entity capable",
                 String.valueOf(CC.Gray) + "of forcing any nearby /dungeon Yijki",
                 String.valueOf(CC.Gray) + "to switch to a different combat state.", (new StringBuilder(
@@ -40,21 +40,11 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
                 String.valueOf(CC.Gray) + "Randomizes the current ability + weakness",
                 String.valueOf(CC.Gray) + "of any Yijki Boss in your dungeon.", (new StringBuilder(
                 String.valueOf(CC.Gray))).toString(), String.valueOf(CC.WhiteB) + "Cooldown",
-                String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown(level)));
+                String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
-    public int getCooldown(int level) {
-        if (level == 1)
-            return 1200;
-        if (level == 2)
-            return 1080;
-        if (level == 3)
-            return 960;
-        if (level == 4)
-            return 840;
-        if (level == 5)
-            return 720;
-        return 1200;
+    public int getCooldown() {
+        return 720;
     }
 
     public int getExpForLevel(int level) {
@@ -67,7 +57,7 @@ public class    InventoryYijkiControllerPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis(getCooldown(petItem.getLevel()));
+        long delay = TimeUnit.SECONDS.toMillis(getCooldown());
         long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
 
         if (item.getAmount() > 1) {

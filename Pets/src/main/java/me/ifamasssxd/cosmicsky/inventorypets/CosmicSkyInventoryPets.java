@@ -2,15 +2,14 @@ package me.ifamasssxd.cosmicsky.inventorypets;
 
 import lombok.Getter;
 import me.ifamasssxd.cosmicsky.inventorypets.commands.CommandPet;
-import me.ifamasssxd.cosmicsky.inventorypets.items.MysteryPetBoxItem;
 import me.ifamasssxd.cosmicsky.inventorypets.items.PetLeashItem;
-import me.ifamasssxd.cosmicsky.inventorypets.items.RareCandyItem;
 import me.ifamasssxd.cosmicsky.inventorypets.listeners.*;
 import me.ifamasssxd.cosmicsky.inventorypets.managers.BlockModifier;
 import me.ifamasssxd.cosmicsky.inventorypets.managers.InventoryPetManager;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.PetUpdateTask;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CooldownUtils;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
@@ -28,8 +27,6 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private static CosmicSkyInventoryPets instance;
    private InventoryPetManager petManager;
    private InventoryPetItem petItem;
-   private MysteryPetBoxItem mysteryPetBoxItem;
-   private RareCandyItem rareCandyItem;
    private PetLeashItem petLeashItem;
    @Getter
    private CooldownUtils cooldownUtils;
@@ -45,11 +42,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
 
       try {
          this.petItem = (InventoryPetItem)CosmicSkyCustomItems.get().getItemManager().registerPersistentItem("inventory_pet", InventoryPetItem.class);
-         this.mysteryPetBoxItem = new MysteryPetBoxItem();
-         this.rareCandyItem = new RareCandyItem();
          this.petLeashItem = new PetLeashItem();
-         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.mysteryPetBoxItem);
-         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(this.rareCandyItem);
          CosmicSkyCustomItems.get().getItemManager().registerCustomItem((CosmicItem)this.petLeashItem);
       } catch (InvocationTargetException | InstantiationException | NoSuchMethodException | IllegalAccessException var6) {
          var6.printStackTrace();
@@ -64,14 +57,13 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       this.skrrtCooldown = new HashMap<UUID, Player>();
       this.witcherCooldown = new HashMap<UUID, Player>();
 
-      for(int i = 0; i < length; ++i) {
-         InventoryPets pet = inventoryPets[i];
+      for (InventoryPets pet : inventoryPets) {
          pet.getInternalClass().onEnable(this);
       }
 
-      //this used to be sync
       this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new BleedTask(), 0L, 10L);
       this.cooldownUtils = new CooldownUtils("petsPlugin");
+      new PetUpdateTask().runTaskTimer(this, 60L, 30L);
    }
 
    public static Map<UUID, Player> getCageCooldownMap() {
@@ -88,7 +80,6 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private void registerListeners() {
       Bukkit.getPluginManager().registerEvents(new AbominalSnowmanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BansheeListener(), this);
-      Bukkit.getPluginManager().registerEvents(new PetCooldownListener(), this);
       Bukkit.getPluginManager().registerEvents(new TitanListener(), this);
       Bukkit.getPluginManager().registerEvents(new BloodhoundListener(), this);
       Bukkit.getPluginManager().registerEvents(new SkrrtListener(), this);
@@ -123,14 +114,6 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
 
    public InventoryPetItem getPetItem() {
       return this.petItem;
-   }
-
-   public MysteryPetBoxItem getMysteryPetBoxItem() {
-      return this.mysteryPetBoxItem;
-   }
-
-   public RareCandyItem getRareCandyItem() {
-      return this.rareCandyItem;
    }
 
 }

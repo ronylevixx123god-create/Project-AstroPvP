@@ -42,11 +42,11 @@ public class InventorySkrrtPet extends InventoryPet {
         return InventoryPets.SKRRT;
     }
 
-    public List getPetDescription(int level) {
-        return Lists.newArrayList(CC.Gray + "Yeeeeeeeeeeet.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[Skrrt]:", CC.DarkRed + "* " + CC.Gray + "Freezes enemy players within 16x16 for " + this.freezeDuration(this.petLevel) + "s", CC.DarkRed + "* " + CC.Gray + "Disables /fly, combat tags enemy player within 16x16 ", CC.DarkRed + "* " + CC.Gray + "Apply Gears V for (" + this.freezeDuration(this.petLevel) + "s)", CC.DarkRed + "* " + CC.Gray + "Invulnerable for (" + this.freezeDuration(this.petLevel) + "s)", CC.DarkRed + "* " + CC.Gray + "Cannot attack for (" + this.freezeDuration(this.petLevel) + "s)", CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown(level)));
+    public List getPetDescription() {
+        return Lists.newArrayList(CC.Gray + "Yeeeeeeeeeeet.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[Skrrt]:", CC.DarkRed + "* " + CC.Gray + "Freezes enemy players within 16x16 for " + this.freezeDuration(this.petLevel) + "s", CC.DarkRed + "* " + CC.Gray + "Disables /fly, combat tags enemy player within 16x16 ", CC.DarkRed + "* " + CC.Gray + "Apply Gears V for (" + this.freezeDuration(this.petLevel) + "s)", CC.DarkRed + "* " + CC.Gray + "Invulnerable for (" + this.freezeDuration(this.petLevel) + "s)", CC.DarkRed + "* " + CC.Gray + "Cannot attack for (" + this.freezeDuration(this.petLevel) + "s)", CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long) this.getCooldown()));
     }
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return 360;
     }
 
@@ -69,7 +69,7 @@ public class InventorySkrrtPet extends InventoryPet {
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))

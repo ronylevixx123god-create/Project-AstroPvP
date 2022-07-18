@@ -1,6 +1,7 @@
 package me.kingsavaqe.astroenvoy.envoy;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -64,9 +65,9 @@ public class EnvoyManager {
         if (configLoad.getString("Envoy.LootItem") != null)
             for (String index : configLoad.getConfigurationSection("Envoy.LootItem").getKeys(false)) {
                 try {
-                    this.envoy.addLootItem(new LootItem(Base64Utils.deserializeItemStack(configLoad.getString("Envoy.LootItem." + index + ".Item")), configLoad
+                    this.envoy.addLootItem(new LootItem(Base64Utils.deserialize(configLoad.getString("Envoy.LootItem." + index + ".Item")), configLoad
                             .getInt("Envoy.LootItem." + index + ".Chance")));
-                } catch (MojangsonParseException e) {
+                } catch (IOException | ClassNotFoundException e) {
                     e.printStackTrace();
                 }
             }
@@ -91,7 +92,11 @@ public class EnvoyManager {
             for (int i = 0; i < this.envoy.getLootItems().size(); i++) {
                 LootItem lootItem = this.envoy.getLootItems().get(i);
                 configLoad.set("Envoy.LootItem." + i + ".Chance", Integer.valueOf(lootItem.getChance()));
-                configLoad.set("Envoy.LootItem." + i + ".Item", Base64Utils.serializeItemStack(lootItem.getItemStack()));
+                try {
+                    configLoad.set("Envoy.LootItem." + i + ".Item", Base64Utils.serialize(lootItem.getItemStack()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         config.saveFile();
     }

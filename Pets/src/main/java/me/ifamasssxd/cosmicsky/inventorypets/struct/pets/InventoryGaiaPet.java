@@ -29,8 +29,8 @@ public class InventoryGaiaPet extends InventoryPet {
       return InventoryPets.GAIA;
    }
 
-   public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "A segment of the goddess", CC.Gray + "of the earth and nature itself.", "", CC.WhiteB + "Ability", CC.Gray + "Call upon the wrath of Nature.", CC.Gray + "[" + CC.Red + "Nature Wrath " + RomanNumber.toRoman(level) + CC.Gray + "] (50% duration)", "", CC.WhiteB + "Cooldown", CC.Gray + " 10 Minutes"});
+   public List getPetDescription() {
+      return Lists.newArrayList(CC.Gray + "A segment of the goddess", CC.Gray + "of the earth and nature itself.", "", CC.WhiteB + "Ability", CC.Gray + "Call upon the wrath of Nature.", CC.Gray + "[" + CC.Red + "Nature Wrath " + RomanNumber.toRoman(5) + CC.Gray + "] (50% duration)", "", CC.WhiteB + "Cooldown", CC.Gray + " 10 Minutes");
    }
 
    public int getExpForLevel(int level) {
@@ -41,13 +41,13 @@ public class InventoryGaiaPet extends InventoryPet {
       return 4;
    }
 
-   public int getCooldown(int level) {
+   public int getCooldown() {
       return (int)TimeUnit.MINUTES.toSeconds(10L);
    }
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
+      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
       if (item.getAmount() > 1) {
          player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));

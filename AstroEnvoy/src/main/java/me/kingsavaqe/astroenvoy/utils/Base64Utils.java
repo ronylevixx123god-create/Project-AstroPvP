@@ -14,20 +14,22 @@ import java.io.*;
 import java.math.BigInteger;
 
 public class Base64Utils {
-    public static String serializeItemStack(ItemStack itemStack) {
-        net.minecraft.server.v1_8_R3.ItemStack netItemStack = CraftItemStack.asNMSCopy(itemStack);
-        NBTTagCompound tag = new NBTTagCompound();
-        netItemStack.save(tag);
-        return tag.toString();
+    public static ItemStack deserialize(String base64) throws IOException, ClassNotFoundException {
+        byte[] data = Base64Coder.decodeLines(base64);
+        ByteArrayInputStream bytesIn = new ByteArrayInputStream(data);
+        BukkitObjectInputStream in = new BukkitObjectInputStream(bytesIn);
+        ItemStack itemStack = (ItemStack) in.readObject();
+        in.close();
+        return itemStack;
     }
 
-    public static ItemStack deserializeItemStack(String rawItem) throws MojangsonParseException {
-        if (rawItem == null || rawItem.equals("empty")) {
-            return null;
-        }
-        NBTTagCompound compound = MojangsonParser.parse(rawItem);
-        net.minecraft.server.v1_8_R3.ItemStack netItemStack = net.minecraft.server.v1_8_R3.ItemStack.createStack(compound);
-        return CraftItemStack.asBukkitCopy(netItemStack);
+    public static String serialize(ItemStack itemStack) throws IOException {
+        ByteArrayOutputStream bytesOut = new ByteArrayOutputStream();
+        BukkitObjectOutputStream out = new BukkitObjectOutputStream(bytesOut);
+        out.writeObject(itemStack);
+        out.flush();
+        out.close();
+        return Base64Coder.encodeLines(bytesOut.toByteArray());
     }
 }
 

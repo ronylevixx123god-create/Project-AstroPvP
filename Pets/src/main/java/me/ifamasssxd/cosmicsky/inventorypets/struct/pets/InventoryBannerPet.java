@@ -30,12 +30,12 @@ public class InventoryBannerPet extends InventoryPet {
       return InventoryPets.BANNER;
    }
 
-   public List getPetDescription(int level) {
-      return Lists.newArrayList(new String[]{CC.Gray + "A rallying entity that", CC.Gray + "has the magical power to", CC.Gray + "summon /f banners at its", CC.Gray + "owner's location at will.", "", CC.WhiteB + "Ability", CC.Gray + "Spawn, Place /f banner", CC.Gray + "at current location.", CC.Gray + "(no soul cost)", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown(level))});
+   public List getPetDescription() {
+      return Lists.newArrayList(CC.Gray + "A rallying entity that", CC.Gray + "has the magical power to", CC.Gray + "summon /f banners at its", CC.Gray + "owner's location at will.", "", CC.WhiteB + "Ability", CC.Gray + "Spawn, Place /f banner", CC.Gray + "at current location.", CC.Gray + "(no soul cost)", "", CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds((long)this.getCooldown()));
    }
 
-   public int getCooldown(int level) {
-      return Math.max(120, 720 - 60 * (level - 1));
+   public int getCooldown() {
+      return Math.max(120, 720 - 60 * (5 - 1));
    }
 
    public int getExpForLevel(int level) {
@@ -48,7 +48,7 @@ public class InventoryBannerPet extends InventoryPet {
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       long lastUse = petItem.getLastUsed();
-      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown(petItem.getLevel()));
+      long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
       if (item.getAmount() > 1) {
          player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));

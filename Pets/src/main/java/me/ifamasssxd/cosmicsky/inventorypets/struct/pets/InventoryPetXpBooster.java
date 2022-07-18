@@ -28,9 +28,9 @@ public class InventoryPetXpBooster extends InventoryPet {
    public void onEnable(CosmicSkyInventoryPets plugin) {
    }
 
-   public List getPetDescription(int level) {
-      double percent = this.getIncrease(level);
-      return Lists.newArrayList(CC.Gray + "A mystical sprite that has", CC.Gray + "the unique ability to increase", CC.Gray + "the rate at which cosmonauts gain", CC.Gray + "experience and knowledge from combat.", "", CC.WhiteB + "Ability", CC.Gray + "Gain a " + NumberUtils.formatMoney(percent) + "x Vanilla XP", CC.Gray + "increase for " + TimeUtils.formatSeconds(this.getDuration(level)) + "!", "", CC.WhiteB + "Cooldown", CC.Gray + " 1 hour");
+   public List getPetDescription() {
+      double percent = this.getIncrease(5);
+      return Lists.newArrayList(CC.Gray + "A mystical sprite that has", CC.Gray + "the unique ability to increase", CC.Gray + "the rate at which cosmonauts gain", CC.Gray + "experience and knowledge from combat.", "", CC.WhiteB + "Ability", CC.Gray + "Gain a " + NumberUtils.formatMoney(percent) + "x Vanilla XP", CC.Gray + "increase for " + TimeUtils.formatSeconds(this.getDuration(5)) + "!", "", CC.WhiteB + "Cooldown", CC.Gray + " 1 hour");
    }
 
    private double getIncrease(int level) {
@@ -45,7 +45,7 @@ public class InventoryPetXpBooster extends InventoryPet {
       return 10;
    }
 
-   public int getCooldown(int level) {
+   public int getCooldown() {
       return (int)TimeUnit.HOURS.toSeconds(1L);
    }
 
@@ -56,7 +56,7 @@ public class InventoryPetXpBooster extends InventoryPet {
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
       event.setCancelled(true);
       long lastUse = petItem.getLastUsed();
-      long cd = TimeUnit.SECONDS.toMillis(this.getCooldown(petItem.getLevel()));
+      long cd = TimeUnit.SECONDS.toMillis(this.getCooldown());
       long timeTillCanUse = cd - (System.currentTimeMillis() - lastUse);
 
       if (item.getAmount() > 1) {
@@ -71,7 +71,7 @@ public class InventoryPetXpBooster extends InventoryPet {
             double increase = this.getIncrease(petItem.getLevel());
             petItem.setLastUsed(System.currentTimeMillis());
             boolean xp = true;
-            int duration = this.getDuration(petItem.getLevel());
+            int duration = this.getDuration(5);
             CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().put(player.getUniqueId(), new XpPetBuff(increase, System.currentTimeMillis() + (long)(duration * 1000)));
             Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
                CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().remove(player.getUniqueId());

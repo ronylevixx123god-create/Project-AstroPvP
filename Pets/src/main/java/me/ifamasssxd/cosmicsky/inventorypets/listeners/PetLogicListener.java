@@ -12,8 +12,12 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.EntityExplodeEvent;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -23,35 +27,6 @@ public class PetLogicListener implements Listener {
    public PetLogicListener(InventoryPetManager manager) {
       this.manager = manager;
    }
-
-   @EventHandler(
-      priority = EventPriority.NORMAL
-   )
-   public void onEntityDeath(EntityDeathEvent e) {
-      if (e.getEntity().getKiller() != null) {
-         Player killer = e.getEntity().getKiller();
-         XpPetBuff buff = this.manager.getBuff(killer);
-         if (buff == null) {
-            return;
-         }
-
-         if (buff.isExpired()) {
-            this.manager.removeBuff(killer);
-            return;
-         }
-
-         int xp = e.getDroppedExp();
-         e.setDroppedExp((int)((double)e.getDroppedExp() * buff.getMultiplier()));
-         if (killer.isOp()) {
-            killer.sendMessage(CC.Red + "Bunny Buff: " + xp + " -> " + e.getDroppedExp());
-         }
-
-         CosmicSkyInventoryPets.get().getLogger().info("Increasing xp from " + buff.getMultiplier() + " buff!");
-      }
-
-   }
-
-
 
    @EventHandler
    public void blockBreak(final BlockBreakEvent e) {
@@ -72,6 +47,25 @@ public class PetLogicListener implements Listener {
             if (block.hasMetadata("cage")) {
                list.remove(i);
             }
+         }
+      }
+   }
+
+   @EventHandler(priority = EventPriority.HIGHEST)
+   public void onKnockback(final EntityDamageEvent event) {
+      if (event.isCancelled()) {
+         return;
+      }
+      if (event.getEntity() instanceof Player) {
+         final Player player = (Player)event.getEntity();
+         if (event.getEntity().hasMetadata("no_knockback")) {
+            final Vector vec = new Vector();
+            player.setVelocity(vec);
+            new BukkitRunnable() {
+               public void run() {
+                  player.setVelocity(vec);
+               }
+            }.runTaskLater((Plugin)CosmicSkyInventoryPets.get(), 1L);
          }
       }
    }

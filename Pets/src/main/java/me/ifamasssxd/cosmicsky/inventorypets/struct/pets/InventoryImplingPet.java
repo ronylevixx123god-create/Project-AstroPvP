@@ -24,17 +24,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryImplingPet extends InventoryPet {
-    public int petLevel = 5;
 
-    private HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
 
     public InventoryPets getOwner() {
-        return InventoryPets.BANSHEE;
+        return InventoryPets.DEMONIC_IMPLING;
     }
 
-    public List getPetDescription(int level) {
-        return Lists.newArrayList(new String[] {
-                CC.Gray + "An angry troll-like creature primed",
+    public List getPetDescription() {
+        return Lists.newArrayList(CC.Gray + "An angry troll-like creature primed",
                 CC.Gray + "to unleash fire and fury, the likes",
                 CC.Gray + "of which the world has never seen",
                 CC.Gray, CC.WhiteB + "Ability",
@@ -42,10 +39,10 @@ public class InventoryImplingPet extends InventoryPet {
                 CC.Gray + "increasing outgoing damage by 5%.",
                 CC.Gray + "Does not stack.",
                 CC.Gray, CC.WhiteB + "Cooldown",
-                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown(5)) });
+                CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
-    public int getCooldown(int level) {
+    public int getCooldown() {
         return 360;
     }
 
@@ -59,7 +56,7 @@ public class InventoryImplingPet extends InventoryPet {
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown(5));
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
         if (item.getAmount() > 1) {
             player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
