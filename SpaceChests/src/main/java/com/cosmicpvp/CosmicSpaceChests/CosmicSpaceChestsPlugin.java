@@ -40,7 +40,6 @@ extends JavaPlugin {
         plugin = this;
         this.saveDefaultConfig();
         wg = this.getWorldGuard();
-        RankItems.findDonorRanks();
         Bukkit.getScheduler().runTaskLater(this, () -> {
             LootGenerator.generateLootTables();
             CosmicSpaceChestsPlugin.this.registerListeners();

@@ -95,7 +95,7 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group add interstellar");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set interstellar");
         player.sendMessage("");
         player.sendMessage(CC.translate("&5&l(!)&5 Congratulations on redeeming the Nebula rank!"));
         player.sendMessage(CC.translate("&7You now have access to all the Nebula perks."));

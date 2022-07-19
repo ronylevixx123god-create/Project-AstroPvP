@@ -111,24 +111,24 @@ public class ChatListener implements Listener {
 
     private void checkPermissions(Player player) {
         if (player.hasPermission("essentials.kit.nitro") && !isNitroBooster(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " remove essentials.kit.nitro");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " remove essentials.kits.nitro");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kit.nitro false");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kits.nitro false");
 
         } else if (isNitroBooster(player) && !player.hasPermission("essentials.kit.nitro")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add essentials.kits.nitro");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add essentials.kit.nitro");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " set essentials.kits.nitro true");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " set essentials.kit.nitro true");
         }
         if (player.hasPermission("essentials.kit.faction") && !isFactionLeader(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player + " remove essentials.kit.faction");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player + " remove essentials.kits.faction");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kit.faction false");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kits.faction false");
         } else if (isFactionLeader(player) && !player.hasPermission("essentials.kit.faction")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add essentials.kits.faction");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " add essentials.kit.faction");                        }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " set essentials.kits.faction true");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " set essentials.kit.faction true");                        }
 
         if (player.hasPermission("essentials.kit.media") && !isYoutuber(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group remove media");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent remove media");
         } else if (isYoutuber(player) && !player.hasPermission("essentials.kit.media")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group add media");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set media");
         }
     }
 

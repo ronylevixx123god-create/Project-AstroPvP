@@ -24,7 +24,6 @@
  */
 package me.ifamasssxd.cosmicdisguises.managers;
 
-import com.compilex.CompilexPermissions.manager.CacheManager;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
@@ -34,6 +33,8 @@ import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
 import me.libraryaddict.disguise.disguisetypes.TargetedDisguise;
 import me.libraryaddict.disguise.utilities.DisguiseUtilities;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -110,7 +111,7 @@ public class DisguiseManager {
         return this.disguises.get(rankTier);
     }
 
-    public DisguiseType getDisguiseAvailable(List<String> permList) {
+    public DisguiseType getDisguiseAvailable(Set<String> permList) {
         int rankTier = this.getRankTier(permList);
         return this.disguises.get(rankTier);
     }
@@ -128,7 +129,8 @@ public class DisguiseManager {
             if (available != null) {
                 set.add(available);
             }
-            List perms = CacheManager.getCachedPlayerPermissions().get(uuid.toString());
+            User user = LuckPermsProvider.get().getUserManager().getUser(uuid);
+            Set<String> perms = user.getCachedData().getPermissionData().getPermissionMap().keySet();
             for (DisguiseType type : DisguiseType.values()) {
                 String perm;
                 if (this.isDisabledDisguise(type) || !player.hasPermission(perm = "libsdisguises.disguise." + type.name().toLowerCase()) && (perms == null || !perms.contains(perm))) continue;
@@ -159,7 +161,7 @@ public class DisguiseManager {
         return item != null && item.getType() == Material.BONE && item.hasItemMeta() && item.getItemMeta().hasDisplayName() && item.getItemMeta().hasLore() && item.getItemMeta().getDisplayName().startsWith(CC.GreenB + "Player Disguise ") && item.getItemMeta().getDisplayName().endsWith(CC.Gray + "(Right Click)") && item.getItemMeta().getLore().size() == 2;
     }
 
-    public Set<DisguiseType> getAvailableDisguises(UUID uuid, List<String> permissions, boolean force) {
+    public Set<DisguiseType> getAvailableDisguises(UUID uuid, Set<String> permissions, boolean force) {
         Set<DisguiseType> set = this.cachedAvailableTypes.get(uuid);
         if (set == null || force) {
             set = new HashSet<DisguiseType>();
@@ -176,7 +178,7 @@ public class DisguiseManager {
         return set;
     }
 
-    public int getRankTier(List<String> nodes) {
+    public int getRankTier(Set<String> nodes) {
         if (nodes.contains("cosmicpvp.heroic")) {
             return 6;
         }

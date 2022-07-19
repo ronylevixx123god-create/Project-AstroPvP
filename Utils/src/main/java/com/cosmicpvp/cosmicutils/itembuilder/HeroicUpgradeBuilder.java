@@ -7,8 +7,8 @@
  */
 package com.cosmicpvp.cosmicutils.itembuilder;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,12 +44,8 @@ public class HeroicUpgradeBuilder
 
     @Override
     public ItemStack build() {
-        ArmorSet set;
-        ArmorSet armorSet = set = this.random ? CosmicArmorSetsAPI.getRandomArmorSetFromUpgrade() : ArmorSet.fromName((String) this.armorSetName);
-        if (set == null) {
-            return null;
-        }
-        return CosmicArmorSetsAPI.createArmorSetUpgrade((ArmorSet) set, (double) (this.percent != 0.0 ? this.percent : ThreadLocalRandom.current().nextDouble(this.max - this.min + 1.0) + this.min));
+        ArmorSetType set =  ArmorSetType.valueOf((String) this.armorSetName);
+        return AstroArmorSetsAPI.createArmorSetUpgrade(set, (double) (this.percent != 0.0 ? this.percent : ThreadLocalRandom.current().nextDouble(this.max - this.min + 1.0) + this.min));
     }
 }
 

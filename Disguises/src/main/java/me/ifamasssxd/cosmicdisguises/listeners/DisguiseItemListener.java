@@ -22,6 +22,7 @@
 package me.ifamasssxd.cosmicdisguises.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.LuckPermUtils;
 import me.ifamasssxd.cosmicdisguises.CosmicDisguises;
 import me.ifamasssxd.cosmicdisguises.managers.DisguiseManager;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -31,6 +32,7 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -38,6 +40,8 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Set;
 
 public class DisguiseItemListener
 implements Listener {
@@ -66,21 +70,12 @@ implements Listener {
             }
             event.getPlayer().setItemInHand(null);
             event.getPlayer().updateInventory();
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                long id = ItemID.getItemID(item);
-                if (id != -1L && ItemID.blacklist_iid.contains(id)) {
-                    event.getPlayer().sendMessage(CC.Red + "It seems that item has already been claimed! Please contact an admin for more information!");
-                    Bukkit.getLogger().info("Removing blacklisted disguise: " + id + " from " + event.getPlayer().getName());
-                    return;
-                }
-                if (id != -1L) {
-                    ItemID.blacklistIID(id, "disguise" + type.name());
-                }
-            }
             event.getPlayer().sendMessage(CC.GreenB + "(!) " + CC.Green + "You have unlocked the " + CC.GreenU + StringUtils.capitaliseAllWords(type.name().toLowerCase().replace("_", " ")) + CC.Green + " disguise!");
             event.getPlayer().sendMessage(CC.Gray + "Use '/disguises' to view your new disguise!");
             event.getPlayer().playSound(event.getPlayer().getLocation(), Sound.LEVEL_UP, 1.0f, 1.14f);
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + event.getPlayer().getName() + " add " + permission);
+            LuckPermUtils.addPermissions(event.getPlayer(), permission);
+            Set<DisguiseType> set = CosmicDisguises.get().getDisguiseManager().getAvailableDisguises(event.getPlayer(), true);
+
             Bukkit.getLogger().info("Giving " + event.getPlayer().getName() + " Disguise Type: " + type + " from claiming item!");
         }
     }

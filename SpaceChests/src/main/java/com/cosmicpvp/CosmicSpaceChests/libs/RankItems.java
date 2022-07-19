@@ -12,13 +12,10 @@
  */
 package com.cosmicpvp.CosmicSpaceChests.libs;
 
-import com.compilex.CompilexPermissions.structure.PermissionGroup;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.lang.StringUtils;
-import org.arkhamnetwork.permissions.ArkhamPermissions;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -35,35 +32,6 @@ public class RankItems {
             return ChatColor.stripColor((String)i.getItemMeta().getDisplayName().split(" ")[1].replace("\"", "")).toLowerCase();
         }
         return null;
-    }
-
-    public static void findDonorRanks() {
-        for (Map.Entry entry : ArkhamPermissions.getInstance().getPermissionManager().getCachedLoadedGroups().entrySet()) {
-            String groupName = (String)entry.getKey();
-            PermissionGroup group = (PermissionGroup)entry.getValue();
-            if (groupName.equals("default") || groupName.equals("helper") || groupName.equals("mod") || groupName.contains("admin") || groupName.equals("developer") || groupName.contains("owner") || groupName.equals("parkourking") || groupName.equals("goodness") || groupName.equals("videographer") || groupName.contains("banteam") || group.getPermissions().contains("cosmicpvp.heroic")) continue;
-            if (group.getPermissions().contains("enchantments.max.20")) {
-                donorTiers.put(5, groupName);
-                continue;
-            }
-            if (group.getPermissions().contains("enchantments.max.12")) {
-                donorTiers.put(4, groupName);
-                continue;
-            }
-            if (group.getPermissions().contains("enchantments.max.9")) {
-                donorTiers.put(3, groupName);
-                continue;
-            }
-            if (group.getPermissions().contains("enchantments.max.6")) {
-                donorTiers.put(2, groupName);
-                continue;
-            }
-            if (!group.getPermissions().contains("enchantments.max.3")) continue;
-            donorTiers.put(1, groupName);
-        }
-        for (Map.Entry<Integer, String> entry : donorTiers.entrySet()) {
-            Bukkit.getLogger().info("[CosmicLootCrates] Set groupName " + entry.getValue() + " as ID " + entry.getKey());
-        }
     }
 
     public static String getRank(int donorTier) {

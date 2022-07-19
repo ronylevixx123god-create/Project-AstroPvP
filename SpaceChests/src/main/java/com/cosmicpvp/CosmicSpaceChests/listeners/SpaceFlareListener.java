@@ -90,7 +90,7 @@ implements Listener {
                 return;
             }
             FLocation fL = new FLocation(p.getLocation());
-            if (!Board.getFactionAt((FLocation)fL).isWarZone() || WorldGuardUtils.isPvPDisabled((Location)p.getLocation())) {
+            if (!Board.getInstance().getFactionAt((FLocation)fL).isWarZone() || WorldGuardUtils.isPvPDisabled((Location)p.getLocation())) {
                 p.sendMessage(ChatColor.RED.toString() + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You " + (Object)ChatColor.UNDERLINE + "cannot" + (Object)ChatColor.RED + " deploy a Space Flare outside the Warzone!");
                 return;
             }

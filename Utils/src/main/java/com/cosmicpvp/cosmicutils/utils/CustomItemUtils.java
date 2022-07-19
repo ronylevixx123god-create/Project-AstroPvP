@@ -65,7 +65,7 @@ public class CustomItemUtils {
         if (!CosmicUtils.get().isEvolutionKitEnabled()) {
             return null;
         }
-        return FallenHero.getFallenHeroItem((EvolutionKit) EvolutionKits.valueOf((String) name).getKit());
+        return null;
     }
 
     public static ItemStack createRandomGKitFallenHero() {
@@ -79,7 +79,7 @@ public class CustomItemUtils {
         if (!CosmicUtils.get().isEvolutionKitEnabled()) {
             return null;
         }
-        return FallenHero.getFallenHeroItem((EvolutionKit) EvolutionKits.values()[ThreadLocalRandom.current().nextInt(EvolutionKits.values().length)].getKit());
+        return null;
     }
 
     public static ItemStack createRandomEvolutionKitGem() {

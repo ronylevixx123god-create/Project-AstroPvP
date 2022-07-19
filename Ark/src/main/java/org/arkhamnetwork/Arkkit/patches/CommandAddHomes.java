@@ -68,12 +68,8 @@ final class CommandAddHomes
         }
         Player ply = player_name.contains("-") ? Bukkit.getPlayer(UUID.fromString(player_name)) : Bukkit.getPlayer(player_name);
         this.clearEssentialsHomeLimits(ply);
-        if (Bukkit.getPluginManager().isPluginEnabled("PermissionsEx") || Bukkit.getPluginManager().isPluginEnabled("CompilexPermissions")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + ply.getName() + " add essentials.sethome.multiple." + EssentialsAddHomes.getEssentialsGroup(new_limit));
-        } else {
-            ply.addAttachment(Arkkit.get(), "essentials.sethome.multiple." + EssentialsAddHomes.getEssentialsGroup(new_limit), true);
-            ply.recalculatePermissions();
-        }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + ply.getName() + " permission set essentials.sethome.multiple." + EssentialsAddHomes.getEssentialsGroup(new_limit) + " true");
+
         EssentialsAddHomes.getEssentials().reload();
         Bukkit.getLogger().info(ply.getName() + " now has a /sethome limit of " + new_limit + ", with permission essentials.sethome.multiple." + EssentialsAddHomes.getEssentialsGroup(new_limit));
         return true;
@@ -84,7 +80,7 @@ final class CommandAddHomes
             if (!pio.getPermission().startsWith("essentials.sethome.multiple.")) continue;
             Bukkit.getLogger().info("Removing permission " + pio.getPermission() + " from " + pl.getName() + "...");
             if (Bukkit.getPluginManager().isPluginEnabled("PermissionsEx") || Bukkit.getPluginManager().isPluginEnabled("CompilexPermissions")) {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + pl.getName() + " remove " + pio.getPermission());
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + pl.getName() + " permission set " + pio.getPermission() + " false");
                 continue;
             }
             pl.removeAttachment(pio.getAttachment());

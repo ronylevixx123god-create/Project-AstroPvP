@@ -92,7 +92,7 @@ public class ApolloRank extends CosmicItem
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         item = wrapper.build();
 
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "pex user " + player.getName() + " group add apollo");
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set apollo");
         player.sendMessage("");
         player.sendMessage(CC.translate("&b&l(!)&b Congratulations on redeeming the apollo rank!"));
         player.sendMessage(CC.translate("&7You now have access to all the apollo perks."));

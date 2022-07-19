@@ -67,7 +67,7 @@ public class PlayerTitleAPI {
         if (online != null) {
             ArrayList<String> at = new ArrayList<String>();
             //PermissionUser user = PermissionsAPI.getPermissionUser((UUID)uuid);
-            User user = LuckPermsProvider.get().getPlayerAdapter(UUID.class).getUser(uuid);
+            User user = LuckPermsProvider.get().getUserManager().getUser(uuid);
             for (String perm : user.getCachedData().getPermissionData().getPermissionMap().keySet()) {
                 if (!perm.toLowerCase().startsWith("titles.title.")) continue;
                 at.add(perm.replace("titles.title.", ""));
@@ -75,7 +75,7 @@ public class PlayerTitleAPI {
             AstroCore.getInstance().getDataManager().getUnlockedTitles().put(uuid, at);
             return at;
         }
-        User user = LuckPermsProvider.get().getPlayerAdapter(UUID.class).getUser(uuid);
+        User user = LuckPermsProvider.get().getUserManager().getUser(uuid);
         ArrayList<String> at = new ArrayList<String>();
         for (String perm : user.getCachedData().getPermissionData().getPermissionMap().keySet()) {
             if (!perm.toLowerCase().startsWith("titles.title.")) continue;

@@ -65,7 +65,7 @@ implements Listener {
                 return;
             }
             try {
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("pex user " + p.getName() + " group add " + rankName + " " + CosmicSpaceChestsPlugin.serverName));
+                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("lp user " + p.getName() + " parent set " + rankName));
                 p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + StringUtils.capitalise((String)rankName) + ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + " Rank!");
                 p.sendMessage((Object)ChatColor.GRAY + "Congratulations! Enjoy the perks on your new rank!");
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {

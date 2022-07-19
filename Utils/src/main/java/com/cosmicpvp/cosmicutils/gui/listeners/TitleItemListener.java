@@ -48,7 +48,7 @@ public class TitleItemListener
                 return;
             }
             try {
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("pex user " + p.getName() + " add " + titlePerm + " " + CosmicSpaceChestsPlugin.serverName));
+                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("lp user " + p.getName() + " permission set " + titlePerm + " true"));
                 p.sendMessage(ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + "(!) You've UNLOCKED the " + ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + title + ChatColor.AQUA.toString() + ChatColor.BOLD.toString() + " title!");
                 p.sendMessage((Object)ChatColor.GRAY + "Equip your new title in the /title menu!");
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
@@ -56,13 +56,7 @@ public class TitleItemListener
                 }
                 p.setItemInHand(null);
                 p.playSound(p.getLocation(), Sound.LEVEL_UP, 1.0f, 0.72f);
-                Bukkit.getScheduler().runTaskLater((Plugin)CosmicSpaceChestsPlugin.plugin, new Runnable(){
 
-                    @Override
-                    public void run() {
-                        ArkhamPermissions.getInstance().getPermissionManager().reloadPlayer(p);
-                    }
-                }, 15L);
             }
             catch (Exception err) {
                 err.printStackTrace();

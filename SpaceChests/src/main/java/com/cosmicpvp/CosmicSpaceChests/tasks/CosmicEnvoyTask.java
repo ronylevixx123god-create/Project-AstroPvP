@@ -87,7 +87,7 @@ implements Runnable {
         for (Player pl : Bukkit.getServer().getOnlinePlayers()) {
             String region;
             FLocation ploc;
-            if (factions && !Board.getFactionAt((FLocation)(ploc = new FLocation(pl.getLocation()))).isWarZone() || !pl.getWorld().equals(Bukkit.getWorlds().get(0)) || (region = MiscUtil.getRegionName(pl.getLocation())).startsWith("spawn_") || region.contains("frozen_") || region.contains("infernal_")) continue;
+            if (factions && !Board.getInstance().getFactionAt((FLocation)(ploc = new FLocation(pl.getLocation()))).isWarZone() || !pl.getWorld().equals(Bukkit.getWorlds().get(0)) || (region = MiscUtil.getRegionName(pl.getLocation())).startsWith("spawn_") || region.contains("frozen_") || region.contains("infernal_")) continue;
             boolean warpRegion = region.contains("warp");
             if (pl.hasPermission("cosmicpvp.vip")) {
                 availableRankedPlayers.add(pl);

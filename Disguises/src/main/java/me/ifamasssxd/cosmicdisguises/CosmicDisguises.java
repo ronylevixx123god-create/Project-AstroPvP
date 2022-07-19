@@ -17,7 +17,6 @@ package me.ifamasssxd.cosmicdisguises;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicdisguises.commands.CommandDisguises;
 import me.ifamasssxd.cosmicdisguises.listeners.DisguiseItemListener;
-import me.ifamasssxd.cosmicdisguises.listeners.PermissionListener;
 import me.ifamasssxd.cosmicdisguises.listeners.PlayerListener;
 import me.ifamasssxd.cosmicdisguises.managers.DisguiseManager;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -41,15 +40,11 @@ extends JavaPlugin {
         this.disguiseManager.onEnable(this);
         this.getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         this.getServer().getPluginManager().registerEvents(new DisguiseItemListener(), this);
+
         this.getCommand("disguises").setExecutor(new CommandDisguises());
-        if (this.getServer().getPluginManager().isPluginEnabled("CompilexPermissions")) {
-            this.getServer().getPluginManager().registerEvents(new PermissionListener(), this);
-            Bukkit.getLogger().info("Registering CompilexPermission hook to refresh available disguises.");
-        }
+
         ArrayList players = Lists.newArrayList();
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            players.add(player);
-        }
+        players.addAll(Bukkit.getOnlinePlayers());
         players.forEach(pl -> {
             Set<DisguiseType> set = this.disguiseManager.getAvailableDisguises((Player)pl, true);
         });

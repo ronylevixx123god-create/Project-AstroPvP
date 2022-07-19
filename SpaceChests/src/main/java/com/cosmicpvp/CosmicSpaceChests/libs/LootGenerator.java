@@ -1,7 +1,6 @@
 package com.cosmicpvp.CosmicSpaceChests.libs;
 
-import com.compilex.CosmicArmorSets.CosmicArmorSetsAPI;
-import com.compilex.CosmicArmorSets.enums.ArmorSet;
+
 import com.compilex.CosmicCustomCreepers.enums.CreeperTypes;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
@@ -125,7 +124,6 @@ public class LootGenerator {
         ultraRareExtras.put(ItemUtils.getMysterySoulEnchantmentBook(), 0.0025);
         ultraRareExtras.put(new ItemStack(Material.getMaterial(383), 2, (short) 50), 0.01);
         ultraRareExtras.put(new ItemStack(Material.HOPPER, 16), 0.01);
-        ultraRareExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 1), 0.01);
         ultraRareExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.ULTIMATE, 50), 5), 0.02);
         ultraRareExtras.put(ItemUtils.setAmount(RandomizationScroll.getRandomizationScroll(ItemRarity.ULTIMATE), 2), 0.01);
         ultraRareExtras.put(ShowcaseExpander.getShowcaseExpanderItem(), 0.01);
@@ -159,7 +157,6 @@ public class LootGenerator {
 
         legendaryExtras.put(new ItemStack(Material.getMaterial(383), 16, (short) 50), 0.02);
         legendaryExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
-        legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 8), 0.03);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 4), 0.015);
         legendaryExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 2), 0.015);
         legendaryExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.LEGENDARY, 50), 5), 0.02);
@@ -199,7 +196,6 @@ public class LootGenerator {
 
         godExtras.put(new ItemStack(Material.getMaterial(383), 48, (short) 50), 0.02);
         godExtras.put(new ItemStack(Material.HOPPER, 64), 0.02);
-        godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Tactical), 10), 0.03);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Huge), 8), 0.015);
         godExtras.put(ItemUtils.setAmount(ItemUtils.getCustomCreeperEgg(CreeperTypes.Lucky), 5), 0.015);
         godExtras.put(ItemUtils.setAmount(EnchantmentBook.getSecretDust(ItemRarity.SOUL, 50), 5), 0.02);
@@ -214,10 +210,7 @@ public class LootGenerator {
         godExtras.put(ItemUtils.setAmount(ShowcaseExpander.getShowcaseExpanderItem(), 2), 0.01);
         godExtras.put(ItemUtils.setAmount(EssentialsAddHomes.getAddHomeItem(), 5), 0.005);
         godExtras.put(CosmicConquestAPI.createFactionToken(50), 0.01);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[0], 0.0015);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[1], 0.0015);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[2], 0.0015);
-        godExtras.put(CosmicArmorSetsAPI.getArmorSet(ArmorSet.PHANTOM)[3], 0.0015);
+
         godExtras.put(CosmicConquestAPI.createHeroicToken(2 + ThreadLocalRandom.current().nextInt(6)), 0.0015);
         possibleCommonExtras = new ArrayList<ItemStack>(commonExtras.keySet());
         possibleUncommonExtras = new ArrayList<ItemStack>(uncommonExtras.keySet());
