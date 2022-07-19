@@ -35,6 +35,8 @@ public class AstroTournamentsPlugin extends JavaPlugin {
         this.tournamentManager.setPlayerQueue(new Queue<>());
         this.tournamentManager.setWaitingRoomLocation(Utils.getLocationFromString(this.getConfig().getString("Tournament.WaitingRoom.Location")));
         getTournamentManager().loadAll();
+        getTournamentManager().loadBannedSkinsFromConfig();
+        getTournamentManager().loadCurrentArmorCrystalFromConfig();
 
         this.arenaRegister = new ArenaRegister(this);
         this.arenaRegister.registerArenas();
