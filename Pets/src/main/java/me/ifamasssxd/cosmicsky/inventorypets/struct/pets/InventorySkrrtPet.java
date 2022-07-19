@@ -64,18 +64,13 @@ public class InventorySkrrtPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
 
-        /*if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
-                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
-
         long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
+
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
-
-        //PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
 
         petItem.setLastUsed(System.currentTimeMillis());
 
@@ -90,19 +85,22 @@ public class InventorySkrrtPet extends InventoryPet {
     private void givePlayerGearFive(final Player player) {
 
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
+        player.sendMessage(CC.translate("&4&l** SKRRT PET &7[Speed V] &4&l**"));
 
         (new BukkitRunnable() {
             public void run() {
                 EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
+                player.sendMessage(CC.translate("&4&l** SKRRT PET &7[Speed V] &4&lEXPIRED! &4&l**"));
+
             }
-        }).runTaskLater(CosmicSkyInventoryPets.get(), 1L * (long) this.freezeDuration(this.petLevel) * 20L);
+        }).runTaskLater(CosmicSkyInventoryPets.get(), (long) this.freezeDuration(this.petLevel) * 20L);
     }
 
     private void skrrtAbilities(final Player player) throws PrefixedPetException {
         Iterator var2 = player.getNearbyEntities(16.0D, 16.0D, 16.0D).iterator();
         if (player.getNearbyEntities(16.0D, 16.0D, 16.0D).isEmpty()) {
 
-            throw new PrefixedPetException("Could not find a valid target!");
+            player.sendMessage(CC.translate("&c&lPET: &cCould not find a valid target!"));
         }
 
         while (true) {
@@ -150,7 +148,7 @@ public class InventorySkrrtPet extends InventoryPet {
             }
 
             if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(p)) {
-                player.sendMessage(CC.translate("&c&l(!)&c You cannot skrrt pet " + p.getName() + " while he has cage match immunity!" ));
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot skrrt pet " + p.getName() + " while he has cage match immunity!"));
                 continue;
             }
 

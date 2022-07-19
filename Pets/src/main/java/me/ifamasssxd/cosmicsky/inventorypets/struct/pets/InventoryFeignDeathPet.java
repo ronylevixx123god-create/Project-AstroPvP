@@ -49,11 +49,20 @@ public class InventoryFeignDeathPet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
+        long lastUse = petItem.getLastUsed();
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
+        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
+
+        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+
         if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
         PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown() * 1000L));
         MasteryFeignDeath.vanishPlayer(player, 5);
+        petItem.setLastUsed(System.currentTimeMillis());
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         return true;

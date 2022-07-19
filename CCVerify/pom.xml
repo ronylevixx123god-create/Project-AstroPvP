@@ -72,6 +72,13 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>lp</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/LuckPerms-Bukkit-5.4.30.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>pet</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -93,7 +100,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>util</artifactId>
+            <artifactId>utils</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/CosmicPvPUtils.jar</systemPath>
