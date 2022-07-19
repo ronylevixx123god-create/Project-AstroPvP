@@ -18,20 +18,20 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class SkinSettingsGUI {
     @Getter
     private final Gui skinSettingsGUI;
-    private TournamentManager tournamentManager;
 
 
     public SkinSettingsGUI(TournamentPlayer tournamentPlayer, ItemSkinType itemSkinType) {
         this.skinSettingsGUI = new Gui(5, "Tournament " + itemSkinType.name() + " Skin Settings");
         this.skinSettingsGUI.setDefaultClickAction(event -> event.setCancelled(true));
-        this.tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
+        TournamentManager tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
 
         for (SkinType skinType : SkinType.values()) {
             if (skinType.getItemSkinType() != itemSkinType) continue;
-            if (tournamentManager.isBannedItemSkin(skinType)) continue;
             switch (itemSkinType) {
                 case HELMET:
-                    if (tournamentPlayer.getHelmetSkin() == skinType) {
+                    if (tournamentManager.isBannedItemSkin(skinType)) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));
+                    } else if (tournamentPlayer.getHelmetSkin() == skinType) {
                         this.skinSettingsGUI.addItem(new GuiItem(createActiveSkinItem(skinType)));
                     } else {
                         this.skinSettingsGUI.addItem(new GuiItem(skinType.getItem(), event -> {
@@ -42,7 +42,9 @@ public class SkinSettingsGUI {
                     }
                     break;
                 case AMULET:
-                    if (tournamentPlayer.getChestplateSkin() == skinType) {
+                    if (tournamentManager.isBannedItemSkin(skinType)) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));
+                    } else if (tournamentPlayer.getChestplateSkin() == skinType) {
                         this.skinSettingsGUI.addItem(new GuiItem(createActiveSkinItem(skinType)));
                     } else {
                         this.skinSettingsGUI.addItem(new GuiItem(skinType.getItem(), event -> {
@@ -53,7 +55,9 @@ public class SkinSettingsGUI {
                     }
                     break;
                 case BELT:
-                    if (tournamentPlayer.getLeggingsSkin() == skinType) {
+                    if (tournamentManager.isBannedItemSkin(skinType)) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));
+                    } else if (tournamentPlayer.getLeggingsSkin() == skinType) {
                         this.skinSettingsGUI.addItem(new GuiItem(createActiveSkinItem(skinType)));
                     } else {
                         this.skinSettingsGUI.addItem(new GuiItem(skinType.getItem(), event -> {
@@ -64,7 +68,9 @@ public class SkinSettingsGUI {
                     }
                     break;
                 case BOOTS:
-                    if (tournamentPlayer.getBootsSkin() == skinType) {
+                    if (tournamentManager.isBannedItemSkin(skinType)) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));
+                    } else if (tournamentPlayer.getBootsSkin() == skinType) {
                         this.skinSettingsGUI.addItem(new GuiItem(createActiveSkinItem(skinType)));
                     } else {
                         this.skinSettingsGUI.addItem(new GuiItem(skinType.getItem(), event -> {
@@ -75,7 +81,9 @@ public class SkinSettingsGUI {
                     }
                     break;
                 case SWORD:
-                    if (tournamentPlayer.getSwordSkin() == skinType) {
+                    if (tournamentManager.isBannedItemSkin(skinType)) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));
+                    } else if (tournamentPlayer.getSwordSkin() == skinType) {
                         this.skinSettingsGUI.addItem(new GuiItem(createActiveSkinItem(skinType)));
                     } else {
                         this.skinSettingsGUI.addItem(new GuiItem(skinType.getItem(), event -> {
@@ -110,6 +118,18 @@ public class SkinSettingsGUI {
 
     public ItemStack createActiveSkinItem(SkinType skinType) {
         ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
+        ItemMeta meta = skinType.getItem().getItemMeta().clone();
+        ItemMeta newMeta = item.getItemMeta();
+        newMeta.setDisplayName(meta.getDisplayName());
+        newMeta.setLore(meta.getLore());
+        item.setItemMeta(newMeta);
+        ItemBuilder itemBuilder = new ItemBuilder(item);
+        itemBuilder.setGlowing();
+        return itemBuilder.build();
+    }
+
+    public ItemStack createBannedSkinItem(SkinType skinType) {
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.RED.getData());
         ItemMeta meta = skinType.getItem().getItemMeta().clone();
         ItemMeta newMeta = item.getItemMeta();
         newMeta.setDisplayName(meta.getDisplayName());

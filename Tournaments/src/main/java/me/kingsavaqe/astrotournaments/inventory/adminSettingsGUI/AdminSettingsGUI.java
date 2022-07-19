@@ -69,6 +69,16 @@ public class AdminSettingsGUI {
             new BannedSkinsGUI(ItemSkinType.SWORD).getBannedSkinSettingsGUI().open(event.getWhoClicked());
         }));
 
+        this.adminSettingsGUI.setItem(2, 1, new GuiItem(new ItemBuilder(Material.NETHER_STAR)
+                .setGlowing()
+                .setName("&b&lCurrent Crystal")
+                .setLore("&7Click here to edit the current crystal")
+                .colorize()
+
+                .build(), event -> {
+            new ArmorCrystalsGUI().getArmorCrystalGUI().open(event.getWhoClicked());
+        }));
+
         this.adminSettingsGUI.setItem(3, 8, new GuiItem(createBackItem(), event -> {
             new TournamentGUI(AstroTournamentsPlugin.instance, (Player) event.getWhoClicked()).getUI().open(event.getWhoClicked());
         }));

@@ -57,6 +57,14 @@ public class Utils {
         player.playSound(player.getLocation(), sound, 2.0F, 2.0F);
     }
 
+    public static void emptyInventory(Player player) {
+        player.getInventory().clear();
+        player.getInventory().setHelmet(null);
+        player.getInventory().setChestplate(null);
+        player.getInventory().setLeggings(null);
+        player.getInventory().setBoots(null);
+    }
+
     public static double round (double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;

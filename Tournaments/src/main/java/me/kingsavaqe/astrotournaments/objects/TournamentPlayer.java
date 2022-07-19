@@ -79,7 +79,9 @@ public class TournamentPlayer implements KeyToSave {
             helmetSkin.apply(helmet);
         }
 
-
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,helmet);
+        }
         return helmet;
 
     }
@@ -98,6 +100,9 @@ public class TournamentPlayer implements KeyToSave {
             chestplateSkin.apply(chestplate);
         }
 
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,chestplate);
+        }
         return chestplate;
     }
 
@@ -114,6 +119,10 @@ public class TournamentPlayer implements KeyToSave {
                 return leggings;
             }
             leggingsSkin.apply(leggings);
+        }
+
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,leggings);
         }
         return leggings;
     }
@@ -132,6 +141,12 @@ public class TournamentPlayer implements KeyToSave {
             }
             bootsSkin.apply(boots);
         }
+
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,boots);
+        }
+
+
         return boots;
     }
 
@@ -150,6 +165,8 @@ public class TournamentPlayer implements KeyToSave {
             }
             swordSkin.apply(sword);
         }
+
+
         return sword;
     }
 
@@ -181,6 +198,10 @@ public class TournamentPlayer implements KeyToSave {
     @Override
     public void setKey(String s) {
         this.uuid = UUID.fromString(s);
+    }
+
+    public boolean inActiveTournament() {
+        return AstroTournamentsPlugin.instance.getTournamentManager().getActiveTournamentPlayer(getUuid()) != null;
     }
 }
 

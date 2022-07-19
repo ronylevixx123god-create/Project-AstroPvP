@@ -1,8 +1,10 @@
 package me.kingsavaqe.astrotournaments.inventory;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.inventory.adminSettingsGUI.AdminSettingsGUI;
 import me.kingsavaqe.astrotournaments.inventory.settingsGUI.PlayerSettingsGUI;
+import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.Arena;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
@@ -20,6 +22,7 @@ import java.util.Map;
 
 public class TournamentGUI {
     private final Gui astroTournamentInventory;
+    private final TournamentManager tournamentManager;
 
     public Gui getUI() {
         return this.astroTournamentInventory;
@@ -28,6 +31,7 @@ public class TournamentGUI {
 
     public TournamentGUI(AstroTournamentsPlugin astroTournamentsPlugin, Player player) {
         Map<String, Arena> arenaMap = astroTournamentsPlugin.getArenaRegister().getArenas();
+        this.tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
         this.astroTournamentInventory = new Gui(3, "Astro Tournaments Menu");
         this.astroTournamentInventory.setDefaultClickAction(event -> event.setCancelled(true));
         this.astroTournamentInventory.setItem(3, 9, new GuiItem(createExitItem(), event -> {
@@ -35,6 +39,10 @@ public class TournamentGUI {
         }));
 
         this.astroTournamentInventory.setItem(3, 8, new GuiItem(createSettingsItem(), event -> {
+            if (tournamentManager.getTournamentPlayer(player.getUniqueId()).inActiveTournament()) {
+                player.sendMessage(CC.translate("&c&l(!)&c You cannot open this menu when in a tournament!"));
+                return;
+            }
             new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId())).getUI().open(player);
         }));
 

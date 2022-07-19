@@ -9,6 +9,7 @@ import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.Queue;
 import me.kingsavaqe.astrotournaments.utils.Utils;
 import me.mattstudios.mf.base.CommandManager;
+import org.bukkit.Sound;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -41,15 +42,19 @@ public class AstroTournamentsPlugin extends JavaPlugin {
         CommandManager commandManager = new CommandManager(this);
         commandManager.register(new TournamentCommand(this));
 
-
-
         this.registerListeners();
 
     }
 
     public void onDisable() {
+        if(getTournamentManager().isActive()) {
+            getTournamentManager().end();
+            System.out.println("[Tournaments] Force ended an active tournament");
+        }
         getTournamentManager().saveAll();
         getTournamentManager().saveBannedSkinsToConfig();
+        getTournamentManager().saveCurrentArmorCrystalToConfig();
+
     }
 
 

@@ -42,18 +42,6 @@ public class TournamentCommand extends CommandBase {
         sendUserHelp(commandSender);
     }
 
-    @SubCommand("settings")
-    public void settingsCommand(CommandSender commandSender) {
-        new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
-    }
-
-    @SubCommand("edit")
-    public void settingv2sCommand(CommandSender commandSender) {
-        new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(((Player)commandSender).getUniqueId())).getUI().open((Player)commandSender);
-    }
-
-
-
     @SubCommand("join")
     public void joinCommand(CommandSender commandSender) {
         Player player = (Player)commandSender;
@@ -146,11 +134,10 @@ public class TournamentCommand extends CommandBase {
         astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().forEach(player1 -> {
             player.teleport(Bukkit.getWorld("world").getSpawnLocation());
         });
-        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
+        astroTournamentsPlugin.getTournamentManager().end();
         player.sendMessage(Utils.fixColor("&aYou have successfully ended a tournament"));
         player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 2.0F, 2.0F);
-        astroTournamentsPlugin.getTournamentManager().setActive(false);
-        astroTournamentsPlugin.getTournamentManager().setJoinable(false);
+
     }
 
     private void sendUserHelp(CommandSender commandSender) {

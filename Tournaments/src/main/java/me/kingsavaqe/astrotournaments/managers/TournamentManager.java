@@ -11,6 +11,7 @@ import me.kingsavaqe.astrotournaments.objects.TournamentMatch;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.*;
 import me.kingsavaqe.astrotournaments.utils.Queue;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.storage.StoragePlugin;
 import net.astropvp.storage.utils.SaveLoadManager;
@@ -37,6 +38,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
     private final List<TournamentPlayer> tournamentParticipants;
     private final List<TournamentMatch> tournamentMatchList;
     private final List<SkinType> bannedSkins;
+    private final List<ArmorSetType> currentArmorCrystal;
     private boolean active;
     private boolean joinable;
     public Queue<TournamentPlayer> playerQueue;
@@ -48,6 +50,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         this.tournamentMatchList = new ArrayList<>();
         this.tournamentParticipants = new ArrayList<>();
         this.bannedSkins = loadBannedSkinsFromConfig();
+        this.currentArmorCrystal = loadCurrentArmorCrystalFromConfig();
     }
 
 
@@ -58,12 +61,12 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
     }
 
     public TournamentPlayer getActiveTournamentPlayer(UUID uuid) {
-        for (TournamentPlayer tournamentPlayer : tournamentParticipants) {
-            if (tournamentPlayer.getPlayer().getUniqueId() == uuid) {
-                return tournamentPlayer;
-            }
+        TournamentPlayer tournamentPlayer = getTournamentPlayer(uuid);
+        if (getTournamentParticipants().contains(tournamentPlayer)) {
+            return tournamentPlayer;
+        } else {
+            return null;
         }
-        return null;
     }
 
     public TournamentPlayer getTournamentPlayer(UUID uuid) {
@@ -117,6 +120,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
     private void setupPlayer(TournamentPlayer tournamentPlayer, Location location) {
         Player player = tournamentPlayer.getPlayer();
+        player.closeInventory();
         player.teleport(location);
         player.setHealth(20);
         giveItems(tournamentPlayer);
@@ -171,13 +175,43 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
     public List<SkinType> loadBannedSkinsFromConfig() {
         List<SkinType> bannedSkins = new ArrayList<>();
         return bannedSkins;
-
         //Load the banned skins
     }
 
     public  void saveBannedSkinsToConfig() {
         //Save banned skins
+    }
 
+    public List<ArmorSetType> loadCurrentArmorCrystalFromConfig() {
+        List<ArmorSetType> currentCrystal = new ArrayList<>();
+        return currentCrystal;
+        //load the current crystal
+    }
+
+    public void saveCurrentArmorCrystalToConfig() {
+        //save the current crystal
+    }
+
+    public void addArmorCrystalToCurrentCrystal(ArmorSetType armorSetType, Player player) {
+        if (currentArmorCrystal.contains(armorSetType)) {
+            currentArmorCrystal.remove(armorSetType);
+            player.sendMessage(CC.translate("&c&l(!)&c Removed the " + armorSetType.getDisplay() + " &cCrystal from the current tournament crystal"));
+        } else {
+            currentArmorCrystal.add(armorSetType);
+            player.sendMessage(CC.translate("&a&l(!)&a Added the " + armorSetType.getDisplay() + " &aCrystal to the current tournament crystal"));
+
+        }
+    }
+
+    public void end() {
+        for (TournamentPlayer tournamentPlayer : getTournamentParticipants()) {
+            Utils.emptyInventory(tournamentPlayer.getPlayer());
+            tournamentPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+            tournamentPlayer.getPlayer().sendMessage(CC.translate("&c&l(!)&c The tournament has been force ended and you have been teleported to spawn!"));
+        }
+        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
+        astroTournamentsPlugin.getTournamentManager().setActive(false);
+        astroTournamentsPlugin.getTournamentManager().setJoinable(false);
     }
 
 

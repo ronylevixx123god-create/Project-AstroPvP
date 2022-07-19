@@ -63,8 +63,8 @@ public class PlayerQuitListener implements Listener {
                     astroTournamentsPlugin.getTournamentManager().putNextPlayersInArenas();
                 }, 20L);
 
-                emptyInventory(player1.getPlayer());
-                emptyInventory(player2.getPlayer());
+                Utils.emptyInventory(player1.getPlayer());
+                Utils.emptyInventory(player2.getPlayer());
 
                 return;
             }
@@ -79,13 +79,6 @@ public class PlayerQuitListener implements Listener {
         }
     }
 
-    private void emptyInventory(Player player) {
-        player.getInventory().clear();
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
-        player.removePotionEffect(PotionEffectType.SPEED);
-    }
+
 
 }

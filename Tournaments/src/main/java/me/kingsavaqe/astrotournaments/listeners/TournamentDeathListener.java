@@ -64,20 +64,13 @@ public class TournamentDeathListener implements Listener {
                     astroTournamentsPlugin.getTournamentManager().putNextPlayersInArenas();
                 }, 20L);
 
-                emptyInventory(victim.getPlayer());
-                emptyInventory(attacker.getPlayer());
+                Utils.emptyInventory(victim.getPlayer());
+                Utils.emptyInventory(attacker.getPlayer());
             }
         }
     }
 
 
-    private void emptyInventory(Player player) {
-        player.getInventory().clear();
-        player.getInventory().setHelmet(null);
-        player.getInventory().setChestplate(null);
-        player.getInventory().setLeggings(null);
-        player.getInventory().setBoots(null);
-        player.removePotionEffect(PotionEffectType.SPEED);
-    }
+
 
 }
