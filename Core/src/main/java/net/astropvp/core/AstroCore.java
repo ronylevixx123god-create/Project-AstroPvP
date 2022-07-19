@@ -27,7 +27,6 @@ import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
 import com.massivecraft.factions.Faction;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import io.puharesource.mc.titlemanager.api.v2.TitleManagerAPI;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -134,7 +133,6 @@ public class AstroCore extends JavaPlugin {
     private CooldownUtils cooldownUtils;
     @Getter
     @Setter
-    public static TitleManagerAPI titleManagerAPI;
     private Freeze freezeCommand;
 
     @Getter
@@ -490,7 +488,6 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new NebulaRank());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new AstroPlusRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new TrapBlockerItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());

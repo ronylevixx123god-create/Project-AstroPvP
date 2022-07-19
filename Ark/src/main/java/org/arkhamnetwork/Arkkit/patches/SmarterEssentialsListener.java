@@ -1,6 +1,5 @@
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.compat.ParamBuilder;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.earth2me.essentials.User;
@@ -147,16 +146,9 @@ final class SmarterEssentialsListener
             int onlinePlayers = Bukkit.getOnlinePlayers().size();
             int maxPlayers = Bukkit.getMaxPlayers();
             this.listCommandCache.add("");
-            this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "--- " + ChatColor.UNDERLINE + "CosmicPvP Player List" + ChatColor.AQUA + ChatColor.BOLD + " ---");
+            this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "--- " + ChatColor.UNDERLINE + "AstroPvP Player List" + ChatColor.AQUA + ChatColor.BOLD + " ---");
             this.listCommandCache.add("");
             this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Players: " + ChatColor.GREEN + ChatColor.BOLD + onlinePlayers + ChatColor.GRAY + ChatColor.BOLD + " / " + ChatColor.GRAY + ChatColor.BOLD + (maxPlayers - 50) + ChatColor.GRAY + " players on your planet!");
-            if (Bukkit.getPluginManager().isPluginEnabled("CosmicRankQuests")) {
-                double traineePlayers = this.getPlayersInRankTier(-1);
-                this.listCommandCache.add(ChatColor.GRAY + "" + ChatColor.BOLD + "* " + ChatColor.GRAY + "Trainee: " + ChatColor.AQUA + (int) traineePlayers + ChatColor.GRAY + " [" + (int) (traineePlayers / (double) Bukkit.getOnlinePlayers().size() * 100.0) + "%]");
-                for (int rankTier = 1; rankTier <= 6; ++rankTier) {
-                    double playersInRankTier = this.getPlayersInRankTier(rankTier);
-                }
-            }
             this.listCommandCache.add("");
             this.listCommandCache.add(ChatColor.AQUA + "" + ChatColor.BOLD + "Factions: " + ChatColor.AQUA + this.getOnlinePlayersInFactions() + ChatColor.GRAY + " players" + ChatColor.GRAY + " online in " + ChatColor.AQUA + this.getOnlineFactionCount() + " different factions.");
             this.listCommandCache.add("");
@@ -221,21 +213,7 @@ final class SmarterEssentialsListener
     private void clearTeleportRequests(Player p) {
     }
 
-    private int getPlayersInRankTier(int rankTier) {
-        int x = 0;
 
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (rankTier == 6) {
-                if (!p.hasPermission("cosmicpvp.heroic")) continue;
-                ++x;
-                continue;
-            }
-            if (PermissionsAPI.getHighestRankID(p.getUniqueId().toString()) != rankTier || rankTier == -1 && p.hasPermission("cosmicpvp.heroic"))
-                continue;
-            ++x;
-        }
-        return x;
-    }
 
     private boolean isNormalFaction(Player player) {
         Faction faction = FactionUtils.getFaction(player);

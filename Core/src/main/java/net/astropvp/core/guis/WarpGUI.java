@@ -1,6 +1,5 @@
 package net.astropvp.core.guis;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;

@@ -102,6 +102,10 @@ public class TrapBlockerItem extends CosmicItem
             throw new PrefixedException("You cannot use this item when you don't have a faction!");
         }
         int amountOfPlayers = 0;
+        if (player.getNearbyEntities(10, 10, 10).isEmpty()) {
+            throw new PrefixedException("There are no available nearby enemies.");
+
+        }
         for (Entity entity : player.getNearbyEntities(10, 10, 10)) {
             if (!(entity instanceof Player))
                 continue;
@@ -136,7 +140,7 @@ public class TrapBlockerItem extends CosmicItem
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                         trappedPlayers.remove(puuid);
                         p.sendMessage(CC.translate("&a&l* YOU ARE NO LONGER TRAP BLOCKED *"));
-                    }, 20 *15);
+                    }, 20 * 15);
 
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroCore.getInstance(), () -> {
                         trappedPlayersCooldown.remove(puuid);

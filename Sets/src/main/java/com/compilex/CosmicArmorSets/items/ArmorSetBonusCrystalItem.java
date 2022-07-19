@@ -196,13 +196,12 @@ public class ArmorSetBonusCrystalItem
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
                 ItemID.blacklistIID(cursorWrapper.getIID(), String.valueOf(player.getName()) + " bonus crystal");
             }
-            double d = chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
-            String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
+            chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
 
-            if (rank.equals("interstellar")) {
+            if (player.hasPermission("astrocore.nebula")) {
                 chanceToApply += 25;
                 player.sendMessage(CC.translate("&a&l+25% APPLY CHANCE &7(Nebula Perk)"));
-            } else if (rank.equals("apollo") || rank.equals("media")) {
+            } else if (player.hasPermission("astrocore.apollo")) {
                 chanceToApply += 10;
                 player.sendMessage(CC.translate("&a&l+10% APPLY CHANCE &7(Apollo Perk)"));
 

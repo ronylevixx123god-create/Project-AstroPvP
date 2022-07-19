@@ -40,6 +40,11 @@ public class CollectPlugin extends JavaPlugin {
 
         this.registerCommands();
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+            System.out.println("[Collect] Started auto saving all collects");
+            collectManager.saveAll();
+            System.out.println("[Collect] Finished auto saving all collects");
+        }, 60L, 5*20*60L);
     }
 
     public void onDisable() {

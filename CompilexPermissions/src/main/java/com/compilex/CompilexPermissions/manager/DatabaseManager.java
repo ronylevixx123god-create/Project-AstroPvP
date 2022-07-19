@@ -20,6 +20,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.UUID;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.plugin.Plugin;
 
 public class DatabaseManager
@@ -37,6 +38,9 @@ implements PermissionsManager {
     private final String INSERT_PERMISSION_IN_SERVER_STATEMENT = "INSERT IGNORE INTO `player_permissions` (`player_uuid`, `player_name`, `permission_node`, `server_name`) VALUES ('%s', '%s', '%s', '%s')";
     private final String DELETE_PERMISSION_STATEMENT = "DELETE FROM `player_permissions` WHERE player_uuid='%s' AND permission_node='%s' AND server_name='%s'";
     private final String DELETE_EXTRA_HOMES_PERMISSION_STATEMENT = "DELETE FROM `player_permissions` WHERE player_uuid='%s' AND permission_node like 'essentials.sethome.multiple.%s' AND server_name='%s'";
+
+    private final String SELECT_ALL_GROUPS_STATEMENT_BRY = "SELECT group_name FROM `player_groups` WHERE `player_uuid`=? && `server_name`='factions'";
+    private static final String SELECT_ALL_PERMISSIONS_ALL_SERVERS_STATEMENT_BRY = "SELECT permission_node FROM `player_permissions` WHERE `player_uuid`=? && `server_name`='factions'";
 
     @Override
     public boolean onEnable() {
@@ -285,9 +289,5 @@ implements PermissionsManager {
         }
     }
 
-    @Deprecated
-    public String getGlobalRank(UUID userUUID) {
-        return CompilexPermissions.get().getGlobalRanks().containsKey(userUUID) ? CompilexPermissions.get().getGlobalRanks().get(userUUID) : null;
-    }
 }
 

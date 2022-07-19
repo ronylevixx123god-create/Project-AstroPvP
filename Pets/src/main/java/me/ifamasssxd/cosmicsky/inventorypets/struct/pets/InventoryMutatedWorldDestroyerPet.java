@@ -1,7 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.avaje.ebean.validation.NotNull;
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
@@ -147,6 +146,9 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 
+        target.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        player.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+
         player.sendMessage("");
         player.sendMessage(CC.translate("&a&l*** &2&l&nMUTATED&a&l WORLD DESTROYER PET [&f" + target.getName() + "&a&l] - CAGED! **"));
         player.sendMessage("");
@@ -169,9 +171,9 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
         Player finalTarget1 = target;
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
             try {
-                PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-            } catch (Exception e) {
+                player.removeMetadata("caged", CosmicSkyInventoryPets.get());
+                finalTarget1.removeMetadata("caged", CosmicSkyInventoryPets.get());
+            } catch (Exception ignored) {
             }
 
         }, (long) this.cageDuration * 20L);

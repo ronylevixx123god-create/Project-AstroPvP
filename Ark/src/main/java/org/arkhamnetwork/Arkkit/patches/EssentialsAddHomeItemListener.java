@@ -20,7 +20,6 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
-import com.compilex.CompilexPermissions.event.PermissionGroupAddEvent;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -80,23 +79,6 @@ final class EssentialsAddHomeItemListener
         }
     }
 
-    @EventHandler
-    public void onPermissionGroupAdd(PermissionGroupAddEvent e) {
-        if (e.getUser() == null) {
-            return;
-        }
-        UUID playerUUID = e.getUser().getPlayerUUID();
-        String newGroup = e.getNewGroup();
-        int currentHomeBonus = 0;
-        for (String s : e.getUser().getPermissionNodes()) {
-            int i;
-            if (!s.startsWith("essentials.sethome.multiple.")) continue;
-            Bukkit.getLogger().info("[EssentialsAddHomes (debug)] Found permission " + s + " for player " + playerUUID);
-            if (!s.contains("addhome_") || (i = Integer.parseInt(s.split("_")[1])) <= currentHomeBonus) continue;
-            currentHomeBonus = i;
-        }
-        int current_limit = EssentialsAddHomes.getEssentials().getSettings().getHomeLimit(EssentialsAddHomes.getEssentials().getUser(playerUUID));
-        Bukkit.getLogger().info("[EssentialsAddHomes (debug)] current_limit for player (" + newGroup + ") " + playerUUID + " is " + current_limit);
-    }
+
 }
 

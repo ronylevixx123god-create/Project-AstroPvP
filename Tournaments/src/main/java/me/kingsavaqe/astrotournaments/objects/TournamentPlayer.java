@@ -39,13 +39,13 @@ public class TournamentPlayer {
     private final ItemStack sword;
 
 
-    public TournamentPlayer(UUID uuid, SkinType helmetSkin, SkinType chestplateSkin, SkinType leggingsSkin, SkinType bootsSkin, SkinType swordSkin) {
+    public TournamentPlayer(UUID uuid) {
         this.uuid = uuid;
-        this.helmetSkin = helmetSkin;
-        this.chestplateSkin = chestplateSkin;
-        this.leggingsSkin = leggingsSkin;
-        this.bootsSkin = bootsSkin;
-        this.swordSkin = swordSkin;
+        this.helmetSkin = null;
+        this.chestplateSkin = null;
+        this.leggingsSkin = null;
+        this.bootsSkin = null;
+        this.swordSkin = null;
         this.helmet = getHelmet();
         this.chestplate = getChestplate();
         this.leggings = getLeggings();

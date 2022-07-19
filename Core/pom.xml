@@ -82,7 +82,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/factionskore-main-0.4-SNAPSHOT.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>lp</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LuckPerms-Bukkit-5.4.30.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>syncc</artifactId>
@@ -262,13 +268,7 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>CompilexPermissions</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CompilexPermissions_2_1_1_1.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Duels</artifactId>

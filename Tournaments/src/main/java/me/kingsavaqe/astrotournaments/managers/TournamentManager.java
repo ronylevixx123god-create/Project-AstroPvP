@@ -22,33 +22,27 @@ import org.bukkit.potion.PotionType;
 
 import java.util.*;
 
+@Getter
+@Setter
 public class TournamentManager {
 
     private final AstroTournamentsPlugin astroTournamentsPlugin;
+    private final List<TournamentPlayer> tournamentParticipants;
+    private final List<TournamentMatch> tournamentMatchList;
+    private final Map<UUID, TournamentPlayer> tournamentPlayers;
+    private boolean active;
+    private boolean joinable;
+    public Queue<TournamentPlayer> playerQueue;
+    private Location waitingRoomLocation;
+
     public TournamentManager(AstroTournamentsPlugin astroTournamentsPlugin) {
         this.astroTournamentsPlugin = astroTournamentsPlugin;
+        this.tournamentPlayers = new HashMap<>();
+        this.tournamentMatchList = new ArrayList<>();
+        this.tournamentParticipants = new ArrayList<>();
     }
 
-    @Getter @Setter
-    private boolean active;
 
-    @Getter @Setter
-    private boolean joinable;
-
-    @Getter @Setter
-    public Queue<TournamentPlayer> playerQueue;
-
-    @Getter
-    private final List<TournamentPlayer> tournamentParticipants = new ArrayList<>();
-
-    @Getter
-    private final List<TournamentMatch> tournamentMatchList = new ArrayList<>();
-
-    @Getter
-    private final Map<UUID, TournamentPlayer> tournamentPlayers = new HashMap<>();
-
-    @Getter @Setter
-    private Location waitingRoomLocation;
 
     public void setupQueue() {
         tournamentParticipants.forEach(player -> {
@@ -67,9 +61,8 @@ public class TournamentManager {
 
     public TournamentPlayer getTournamentPlayer(UUID uuid) {
         if (!tournamentPlayers.containsKey(uuid)) {
-            TournamentPlayer tournamentPlayer = new TournamentPlayer(uuid, null, null, null, null, null);
+            TournamentPlayer tournamentPlayer = new TournamentPlayer(uuid);
             tournamentPlayers.put(uuid, tournamentPlayer);
-
         }
         return tournamentPlayers.get(uuid);
     }
@@ -119,7 +112,6 @@ public class TournamentManager {
     private void setupPlayer(TournamentPlayer tournamentPlayer, Location location) {
         Player player = tournamentPlayer.getPlayer();
         player.teleport(location);
-        player.setMaxHealth(20);
         player.setHealth(20);
         giveItems(tournamentPlayer);
         Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, ()-> {

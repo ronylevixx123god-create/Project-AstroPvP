@@ -15,7 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.util.Map;
 import java.util.UUID;
 
-@Getter
 public class AstroTournamentsPlugin extends JavaPlugin {
 
     public static AstroTournamentsPlugin instance;
@@ -26,27 +25,26 @@ public class AstroTournamentsPlugin extends JavaPlugin {
     @Getter
     private ArenaRegister arenaRegister;
 
-    @Override
     public void onEnable() {
 
         instance = this;
         saveDefaultConfig();
 
-        CommandManager commandManager = new CommandManager(this);
-        commandManager.register(new TournamentCommand(this));
-
         this.tournamentManager = new TournamentManager(this);
         this.tournamentManager.setPlayerQueue(new Queue<>());
         this.tournamentManager.setWaitingRoomLocation(Utils.getLocationFromString(this.getConfig().getString("Tournament.WaitingRoom.Location")));
         this.arenaRegister = new ArenaRegister(this);
-
         this.arenaRegister.registerArenas();
+
+        CommandManager commandManager = new CommandManager(this);
+        commandManager.register(new TournamentCommand(this));
+
+
 
         this.registerListeners();
 
     }
 
-    @Override
     public void onDisable() {
         for (Map.Entry<UUID, TournamentPlayer> entry : tournamentManager.getTournamentPlayers().entrySet()) {
             UUID uuid = entry.getKey();

@@ -1,7 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.avaje.ebean.validation.NotNull;
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
@@ -200,11 +199,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         Player finalTarget1 = target;
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
             try {
-                PermissionsAPI.getPermissionUser(finalTarget1.getUniqueId()).getPermissionNodes().remove("verus.bypass");
-                PermissionsAPI.getPermissionUser(player.getUniqueId()).getPermissionNodes().remove("verus.bypass");
                 player.removeMetadata("caged", CosmicSkyInventoryPets.get());
                 finalTarget1.removeMetadata("caged", CosmicSkyInventoryPets.get());
-            } catch (Exception e) {
+            } catch (Exception ignored) {
             }
 
         }, (long) this.cageDuration * 20L);

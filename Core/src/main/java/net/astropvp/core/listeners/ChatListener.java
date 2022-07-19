@@ -1,7 +1,6 @@
 package net.astropvp.core.listeners;
 
 import com.astropvp.cc.player.CosmicPlayers;
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.earth2me.essentials.utils.DateUtil;
@@ -19,6 +18,7 @@ import net.astropvp.core.conaxgames.staff.StaffUtil;
 import net.astropvp.core.titles.PlayerTitleAPI;
 import net.astropvp.core.titles.utils.Clickable;
 import net.astropvp.core.utils.CooldownUtils;
+import net.luckperms.api.LuckPermsProvider;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
@@ -152,7 +152,7 @@ public class ChatListener implements Listener {
             }
 
 
-            clickable.add(PermissionsAPI.getPermissionUser(player.getUniqueId()).getPrefix() + player.getName() + getTag(player),
+            clickable.add(Objects.requireNonNull(LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix() + " " +  player.getName() + getTag(player),
                     "&6&lUser: &f" + player.getName() + " \n" +
                             "&6* &eNick: &f" + player.getDisplayName() + " \n" +
                             "&6* &eFaction: &f" + FactionUtils.getFaction(player).getTag() + " \n" +
@@ -160,7 +160,7 @@ public class ChatListener implements Listener {
                             "&6* &eLogged in: &f" + DateUtil.formatDateDiff(EssentialsUtils.getEssentials().getUser(player).getLastLogin()) + " ago" + " \n" +
                             "&6* &eCosmic Client: &f" + ((CosmicPlayers.get().getCosmicPlayer(event.getPlayer()).isOnCosmicClient()) ? ChatColor.GREEN.toString() + ChatColor.BOLD + "✓" : ChatColor.RED.toString() + ChatColor.BOLD + "✗") + " \n\n" +
                             "&7&oClick to see when the player logged online",
-                    "/seen " + player.getName()
+                    "/stats " + player.getName()
             );
 
 

@@ -9,13 +9,13 @@
  */
 package net.astropvp.core.titles;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
-import com.compilex.CompilexPermissions.structure.PermissionUser;
 
 import java.util.ArrayList;
 import java.util.UUID;
 
 import net.astropvp.core.AstroCore;
+import net.luckperms.api.LuckPermsProvider;
+import net.luckperms.api.model.user.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -66,23 +66,18 @@ public class PlayerTitleAPI {
         Player online = Bukkit.getPlayer((UUID)uuid);
         if (online != null) {
             ArrayList<String> at = new ArrayList<String>();
-            PermissionUser user = PermissionsAPI.getPermissionUser((UUID)uuid);
-            if (user == null) {
-                return new ArrayList<String>();
-            }
-            for (String perm : user.getPermissionNodes()) {
+            //PermissionUser user = PermissionsAPI.getPermissionUser((UUID)uuid);
+            User user = LuckPermsProvider.get().getPlayerAdapter(UUID.class).getUser(uuid);
+            for (String perm : user.getCachedData().getPermissionData().getPermissionMap().keySet()) {
                 if (!perm.toLowerCase().startsWith("titles.title.")) continue;
                 at.add(perm.replace("titles.title.", ""));
             }
             AstroCore.getInstance().getDataManager().getUnlockedTitles().put(uuid, at);
             return at;
         }
-        PermissionUser user = PermissionsAPI.getPermissionUser((UUID)uuid);
-        if (user == null) {
-            return new ArrayList<String>();
-        }
+        User user = LuckPermsProvider.get().getPlayerAdapter(UUID.class).getUser(uuid);
         ArrayList<String> at = new ArrayList<String>();
-        for (String perm : user.getPermissionNodes()) {
+        for (String perm : user.getCachedData().getPermissionData().getPermissionMap().keySet()) {
             if (!perm.toLowerCase().startsWith("titles.title.")) continue;
             at.add(perm.replace("titles.title.", ""));
         }

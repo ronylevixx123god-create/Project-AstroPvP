@@ -1,6 +1,5 @@
 package net.astropvp.core.items;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
@@ -83,15 +82,14 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
             throw new PrefixedException("You cannot apply multiple ranks at once!");
         }
 
-        String rank = PermissionsAPI.getPermissionUser(player.getUniqueId()).getGroup();
 
-        if (!rank.equalsIgnoreCase("astro") && !rank.equalsIgnoreCase("astro+") && !rank.equalsIgnoreCase("media") && !rank.equalsIgnoreCase("apollo")) {
+        if (player.hasPermission("astrocore.nebula")) {
             throw new PrefixedException("You cannot redeem lower tier ranks.");
         }
 
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("conaxData");
 
-        cosmicData.setInt("nebulaRank", Integer.valueOf(1));
+        cosmicData.setInt("nebulaRank", 1);
         event.setCancelled(true);
         player.setItemInHand(null);
         wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
