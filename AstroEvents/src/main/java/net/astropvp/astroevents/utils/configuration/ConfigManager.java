@@ -40,6 +40,7 @@ public class ConfigManager {
     public enum ConfigFile {
         PARKOUR("events/parkour.yml"),
         SUMO("events/sumo.yml"),
+        SPLEEF("events/spleef.yml"),
         LANGUAGE("language.yml")
         ;
 

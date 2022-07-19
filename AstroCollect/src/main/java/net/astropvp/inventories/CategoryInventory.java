@@ -1,16 +1,11 @@
 package net.astropvp.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.google.common.collect.Lists;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
-import net.astropvp.struct.PlayerCollect;
-import org.apache.commons.lang3.ArrayUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -19,10 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class CategoryInventory {

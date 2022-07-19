@@ -9,7 +9,8 @@ import net.astropvp.astroevents.utils.configuration.ConfigManager;
 public enum MiniGameType {
 
     PARKOUR(ConfigManager.ConfigFile.PARKOUR),
-    SUMO(ConfigManager.ConfigFile.SUMO)
+    SUMO(ConfigManager.ConfigFile.SUMO),
+    SPLEEF(ConfigManager.ConfigFile.SPLEEF)
     ;
 
     private final ConfigManager.ConfigFile configFile;

@@ -1,24 +1,11 @@
 package net.astropvp.struct;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.Getter;
-import net.astropvp.CollectPlugin;
 import net.astropvp.utils.KeyToSave;
-import net.astropvp.utils.Serialization;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
-import java.io.IOException;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-
-import static net.astropvp.utils.Serialization.*;
 
 @Getter
 public class PlayerCollect implements KeyToSave {
