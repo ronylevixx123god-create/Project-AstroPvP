@@ -1,8 +1,8 @@
 package net.astropvp.struct;
 
 
-import com.google.gson.Gson;
-import net.astropvp.utils.SaveLoadManager;
+import net.astropvp.storage.gson.Gson;
+import net.astropvp.storage.utils.SaveLoadManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.UUID;

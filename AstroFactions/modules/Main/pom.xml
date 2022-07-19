@@ -97,7 +97,7 @@
                             <shadedPattern>moss.factions.shade.io.paperlib</shadedPattern>
                         </relocation>
                     </relocations>
-                </configuration>
+                </configuration>As
                 <executions>
                     <execution>
                         <phase>package</phase>

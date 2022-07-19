@@ -1,10 +1,8 @@
 package net.astropvp.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.CollectPlugin;
 import net.astropvp.inventories.CollectInventory;
-import net.astropvp.struct.PlayerCollect;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;

@@ -76,6 +76,7 @@
         <module>FactionLogs</module>
         <module>AstroDiscordSync</module>
         <module>AstroEnvoy</module>
+        <module>StorageUtil</module>
     </modules>
 
     <build>

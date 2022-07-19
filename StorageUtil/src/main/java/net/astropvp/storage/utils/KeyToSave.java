@@ -1,4 +1,4 @@
-package net.astropvp.utils;
+package net.astropvp.storage.utils;
 
 public interface KeyToSave {
 

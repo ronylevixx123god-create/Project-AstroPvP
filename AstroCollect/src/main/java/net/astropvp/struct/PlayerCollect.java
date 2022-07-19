@@ -1,7 +1,7 @@
 package net.astropvp.struct;
 
 import lombok.Getter;
-import net.astropvp.utils.KeyToSave;
+import net.astropvp.storage.utils.KeyToSave;
 
 import java.util.ArrayList;
 import java.util.List;

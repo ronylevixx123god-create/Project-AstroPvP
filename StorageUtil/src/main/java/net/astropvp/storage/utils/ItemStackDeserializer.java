@@ -1,4 +1,4 @@
-package net.astropvp.utils;
+package net.astropvp.storage.utils;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

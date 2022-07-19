@@ -1,15 +1,12 @@
-package net.astropvp.utils;
+package net.astropvp.storage.utils;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import org.apache.commons.lang.StringUtils;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +14,7 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
 
     private final File dataDirectory;
     private final Gson gson;
-    private Class<T> clazz;
+    private final Class<T> clazz;
     private final Map<String, T> cache;
 
     protected SaveLoadManager(JavaPlugin plugin, Gson gson, String dataDirectory, Class<T> clazz) {
@@ -29,13 +26,11 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
 
 
     public void loadAll() {
-        System.out.println("[Collect] Started loading...");
         if (!dataDirectory.exists()) {
             dataDirectory.mkdirs();
         }
 
         File[] validKitFiles = dataDirectory.listFiles((dir,name) -> name.endsWith(".json"));
-        System.out.println("[Collect] " + validKitFiles.length);
 
         if (validKitFiles == null) {
             return;
@@ -44,8 +39,6 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
         for (File file : validKitFiles) {
             this.load(file);
         }
-        System.out.println("[Collect] Finished loading...");
-
     }
 
     public void saveAll() {
@@ -63,14 +56,6 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
         String fileName = file.getName();
         int fileNameLength = fileName.length();
         String key = fileName.substring(0,fileNameLength-5);
-
-/*        if (!StringUtils.isAllLowerCase(key)) {
-            System.out.println("[Collect] Returning because lowercase");
-            return;
-        }*/
-
-        TypeToken<T> typeToke = new TypeToken<T>() {};
-        Type type = typeToke.getType();
 
         try (FileReader reader = new FileReader(file)) {
             T t = this.gson.fromJson(reader, clazz);
