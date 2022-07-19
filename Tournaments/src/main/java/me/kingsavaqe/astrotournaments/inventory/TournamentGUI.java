@@ -1,6 +1,7 @@
 package me.kingsavaqe.astrotournaments.inventory;
 
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
+import me.kingsavaqe.astrotournaments.inventory.adminSettingsGUI.AdminSettingsGUI;
 import me.kingsavaqe.astrotournaments.inventory.settingsGUI.PlayerSettingsGUI;
 import me.kingsavaqe.astrotournaments.objects.Arena;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
@@ -37,6 +38,12 @@ public class TournamentGUI {
             new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId())).getUI().open(player);
         }));
 
+        if (player.isOp()) {
+            this.astroTournamentInventory.setItem(3, 7, new GuiItem(createAdminMenu(), event -> {
+                new AdminSettingsGUI(astroTournamentsPlugin).getUI().open(player);
+            }));
+        }
+
 
 
         arenaMap.values().forEach(arena -> {
@@ -62,6 +69,10 @@ public class TournamentGUI {
 
     private ItemStack createSettingsItem() {
         return new ItemBuilder(Material.ARMOR_STAND, "&aPlayer Settings", "&7Click here to change your tournament setup/settings").colorize().build();
+    }
+
+    private ItemStack createAdminMenu() {
+        return new ItemBuilder(Material.SLIME_BALL, "&6Admin Settings &7(Admin Only)", "&7Click here to edit the tournament settings").colorize().build();
     }
 
 }

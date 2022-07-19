@@ -67,6 +67,7 @@
         <module name="AstroEnvoy" />
         <module name="FactionBanners" />
         <module name="AstroDiscordSync" />
+        <module name="StorageUtil" />
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="Pets" />

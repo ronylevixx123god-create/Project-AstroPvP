@@ -5,17 +5,21 @@ import com.rit.sucy.EnchantmentAPI;
 import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
 import me.kingsavaqe.astrotournaments.utils.ItemUtil;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
+import net.astropvp.storage.utils.KeyToSave;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -23,7 +27,7 @@ import java.util.UUID;
 
 @Getter
 @Setter
-public class TournamentPlayer {
+public class TournamentPlayer implements KeyToSave {
 
     private UUID uuid;
     private SkinType helmetSkin;
@@ -32,11 +36,12 @@ public class TournamentPlayer {
     private SkinType bootsSkin;
     private SkinType swordSkin;
 
-    private final ItemStack helmet;
-    private final ItemStack chestplate;
-    private final ItemStack leggings;
-    private final ItemStack boots;
-    private final ItemStack sword;
+    private transient final ItemStack helmet;
+    private transient final ItemStack chestplate;
+    private transient final ItemStack leggings;
+    private transient final ItemStack boots;
+    private transient final ItemStack sword;
+
 
 
     public TournamentPlayer(UUID uuid) {
@@ -63,12 +68,17 @@ public class TournamentPlayer {
     public ItemStack getHelmet() {
         ItemStack helmet = EnchantmentBook.applyTransmogScroll(ItemUtil.applyCustomEnchantments(AstroArmorSetsAPI.convertArmorToHeroic(new ItemBuilder(Material.DIAMOND_BOOTS, "&6&lTournament Helmet")
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
-                .setUnbreakable(true)
+                .addEnchantment(Enchantment.DURABILITY, 3)
                 .colorize()
                 .build(), HeroicArmor.HELMET), getHelmetEnchants()));
         if (helmetSkin != null) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(helmetSkin)) {
+                setHelmetSkin(null);
+                return helmet;
+            }
             helmetSkin.apply(helmet);
         }
+
 
         return helmet;
 
@@ -78,10 +88,13 @@ public class TournamentPlayer {
         ItemStack chestplate = EnchantmentBook.applyTransmogScroll(ItemUtil.applyCustomEnchantments(AstroArmorSetsAPI.convertArmorToHeroic(new ItemBuilder(Material.DIAMOND_BOOTS, "&6&lTournament Chestplate")
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
                 .addEnchantment(Enchantment.DURABILITY, 3)
-                .setUnbreakable(true)
                 .colorize()
                 .build(), HeroicArmor.CHESTPLATE), getChestplateEnchants()));
         if (chestplateSkin != null) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(chestplateSkin)) {
+                setChestplateSkin(null);
+                return chestplate;
+            }
             chestplateSkin.apply(chestplate);
         }
 
@@ -92,11 +105,14 @@ public class TournamentPlayer {
         ItemStack leggings = EnchantmentBook.applyTransmogScroll(ItemUtil.applyCustomEnchantments(AstroArmorSetsAPI.convertArmorToHeroic(new ItemBuilder(Material.DIAMOND_BOOTS, "&6&lTournament Leggings")
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
                 .addEnchantment(Enchantment.DURABILITY, 3)
-                .setUnbreakable(true)
                 .colorize()
                 .build(), HeroicArmor.LEGGINGS), getLeggingsEnchants()));
 
         if (leggingsSkin != null) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(leggingsSkin)) {
+                setLeggingsSkin(null);
+                return leggings;
+            }
             leggingsSkin.apply(leggings);
         }
         return leggings;
@@ -106,11 +122,14 @@ public class TournamentPlayer {
         ItemStack boots = EnchantmentBook.applyTransmogScroll(ItemUtil.applyCustomEnchantments(AstroArmorSetsAPI.convertArmorToHeroic(new ItemBuilder(Material.DIAMOND_BOOTS, "&6&lTournament Boots")
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 5)
                 .addEnchantment(Enchantment.DURABILITY, 3)
-                .setUnbreakable(true)
                 .colorize()
                 .build(), HeroicArmor.BOOTS), getBootsEnchants()));
 
         if (bootsSkin != null) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(bootsSkin)) {
+                setBootsSkin(null);
+                return boots;
+            }
             bootsSkin.apply(boots);
         }
         return boots;
@@ -121,11 +140,14 @@ public class TournamentPlayer {
                 .addEnchantment(Enchantment.DAMAGE_ALL, 5)
                 .addEnchantment(Enchantment.DURABILITY, 3)
                 .addEnchantment(Enchantment.FIRE_ASPECT, 2)
-                .setUnbreakable(true)
                 .colorize()
                 .build(), HeroicArmor.SWORD), getSwordEnchants()));
 
         if (swordSkin != null) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(swordSkin)) {
+                setSwordSkin(null);
+                return sword;
+            }
             swordSkin.apply(sword);
         }
         return sword;
@@ -144,12 +166,21 @@ public class TournamentPlayer {
     }
 
     public LinkedList<CustomEnchantment> getBootsEnchants() {
-        return new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Reinforced Tank"), EnchantmentAPI.getEnchantment("Infinite Luck"), EnchantmentAPI.getEnchantment("Martyr Valor"), EnchantmentAPI.getEnchantment("Guided Rocket Escape"), EnchantmentAPI.getEnchantment("Polymorphic Metaphysical"), EnchantmentAPI.getEnchantment("Ethereal Dodge"), EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Phoenix"), EnchantmentAPI.getEnchantment("Aegis"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Undead Ruse"), EnchantmentAPI.getEnchantment("Repair Guard"), EnchantmentAPI.getEnchantment("Frozen"), EnchantmentAPI.getEnchantment("Planetary Deathbringer")));
+        return new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Paladin Armored"), EnchantmentAPI.getEnchantment("Reinforced Tank"), EnchantmentAPI.getEnchantment("Infinite Luck"), EnchantmentAPI.getEnchantment("Martyr Valor"), EnchantmentAPI.getEnchantment("Guided Rocket Escape"), EnchantmentAPI.getEnchantment("Polymorphic Metaphysical"), EnchantmentAPI.getEnchantment("Ethereal Dodge"), EnchantmentAPI.getEnchantment("Divine Enlighted"), EnchantmentAPI.getEnchantment("Phoenix"), EnchantmentAPI.getEnchantment("Gears"), EnchantmentAPI.getEnchantment("Ender Walker"), EnchantmentAPI.getEnchantment("Angelic"), EnchantmentAPI.getEnchantment("Undead Ruse"), EnchantmentAPI.getEnchantment("Repair Guard"), EnchantmentAPI.getEnchantment("Frozen"), EnchantmentAPI.getEnchantment("Planetary Deathbringer")));
     }
 
     public LinkedList<CustomEnchantment> getSwordEnchants() {
-        return new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Neutralize"), EnchantmentAPI.getEnchantment("Blackout"), EnchantmentAPI.getEnchantment("Permanent Execute"), EnchantmentAPI.getEnchantment("Perfect Solitude"), EnchantmentAPI.getEnchantment("Reality Inversion"), EnchantmentAPI.getEnchantment("Unrestrained Enrage"), EnchantmentAPI.getEnchantment("Reflective Block"), EnchantmentAPI.getEnchantment("Deep Bleed"), EnchantmentAPI.getEnchantment("Bloody Deep Wounds"), EnchantmentAPI.getEnchantment("Shadow Assassin"), EnchantmentAPI.getEnchantment("Divine Immolation"), EnchantmentAPI.getEnchantment("Rage"), EnchantmentAPI.getEnchantment("Silence"), EnchantmentAPI.getEnchantment("Double Strike"), EnchantmentAPI.getEnchantment("Devour"),EnchantmentAPI.getEnchantment("Ice Aspect") ));
+        return new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Neutralize"), EnchantmentAPI.getEnchantment("Blackout"), EnchantmentAPI.getEnchantment("Permanent Execute"), EnchantmentAPI.getEnchantment("Perfect Solitude"), EnchantmentAPI.getEnchantment("Reality Inversion"), EnchantmentAPI.getEnchantment("Unrestrained Enrage"), EnchantmentAPI.getEnchantment("Reflective Block"), EnchantmentAPI.getEnchantment("Deep Bleed"), EnchantmentAPI.getEnchantment("Bloody Deep Wounds"), EnchantmentAPI.getEnchantment("Shadow Assassin"), EnchantmentAPI.getEnchantment("Divine Immolation"), EnchantmentAPI.getEnchantment("Rage"), EnchantmentAPI.getEnchantment("Silence"), EnchantmentAPI.getEnchantment("Double Strike"), EnchantmentAPI.getEnchantment("Devour"), EnchantmentAPI.getEnchantment("IceAspect")));
     }
 
+    @Override
+    public String getKey() {
+        return uuid.toString();
+    }
+
+    @Override
+    public void setKey(String s) {
+        this.uuid = UUID.fromString(s);
+    }
 }
 

@@ -62,17 +62,14 @@ public class ChatListener implements Listener {
                         Member member = this.getMemberById(user, g);
                         if (user != null && member != null) {
                             if (member.getRoles().stream().anyMatch((r) -> r.getId().equals(nitroBoosterRole))) {
-                                System.out.println("[DiscordSync] Added " + uuid + " to boosters.");
                                 toAdd.add(uuid);
                             }
 
                             if (member.getRoles().stream().anyMatch((r) -> r.getId().equals(factionLeaderRole))) {
-                                System.out.println("[DiscordSync] Added " + uuid + " to faction leaders.");
                                 toAddLeaders.add(uuid);
                             }
 
                             if (member.getRoles().stream().anyMatch((r) -> r.getId().equals(mediaRole))) {
-                                System.out.println("[DiscordSync] Added " + uuid + " to media.");
                                 toAddYoutubers.add(uuid);
                             }
 

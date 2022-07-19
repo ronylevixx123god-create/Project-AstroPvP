@@ -7,8 +7,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class SaveLoadManager<T extends KeyToSave> {
 
@@ -101,5 +100,15 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
 
     public T getFromCache(String key) {
         return this.cache.get(key);
+    }
+
+    public boolean contains(String key) {return this.cache.containsKey(key);}
+
+    public Collection<T> getCacheValues() {
+        return this.cache.values();
+    }
+
+    public Set<String> getCacheKeys() {
+        return this.cache.keySet();
     }
 }

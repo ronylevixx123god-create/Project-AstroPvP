@@ -33,6 +33,8 @@ public class AstroTournamentsPlugin extends JavaPlugin {
         this.tournamentManager = new TournamentManager(this);
         this.tournamentManager.setPlayerQueue(new Queue<>());
         this.tournamentManager.setWaitingRoomLocation(Utils.getLocationFromString(this.getConfig().getString("Tournament.WaitingRoom.Location")));
+        getTournamentManager().loadAll();
+
         this.arenaRegister = new ArenaRegister(this);
         this.arenaRegister.registerArenas();
 
@@ -46,13 +48,8 @@ public class AstroTournamentsPlugin extends JavaPlugin {
     }
 
     public void onDisable() {
-        for (Map.Entry<UUID, TournamentPlayer> entry : tournamentManager.getTournamentPlayers().entrySet()) {
-            UUID uuid = entry.getKey();
-            TournamentPlayer tournamentPlayer = entry.getValue();
-
-            //Save to file for each player
-
-        }
+        getTournamentManager().saveAll();
+        getTournamentManager().saveBannedSkinsToConfig();
     }
 
 

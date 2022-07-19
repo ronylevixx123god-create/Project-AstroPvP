@@ -5,6 +5,7 @@ import lombok.Getter;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
+import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
@@ -17,14 +18,17 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class SkinSettingsGUI {
     @Getter
     private final Gui skinSettingsGUI;
+    private TournamentManager tournamentManager;
 
 
     public SkinSettingsGUI(TournamentPlayer tournamentPlayer, ItemSkinType itemSkinType) {
         this.skinSettingsGUI = new Gui(5, "Tournament " + itemSkinType.name() + " Skin Settings");
         this.skinSettingsGUI.setDefaultClickAction(event -> event.setCancelled(true));
+        this.tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
 
         for (SkinType skinType : SkinType.values()) {
             if (skinType.getItemSkinType() != itemSkinType) continue;
+            if (tournamentManager.isBannedItemSkin(skinType)) continue;
             switch (itemSkinType) {
                 case HELMET:
                     if (tournamentPlayer.getHelmetSkin() == skinType) {

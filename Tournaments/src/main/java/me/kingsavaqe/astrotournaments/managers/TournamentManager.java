@@ -1,12 +1,19 @@
 package me.kingsavaqe.astrotournaments.managers;
 
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import lombok.Getter;
 import lombok.Setter;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.objects.TournamentMatch;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.*;
 import me.kingsavaqe.astrotournaments.utils.Queue;
+import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.storage.StoragePlugin;
+import net.astropvp.storage.utils.SaveLoadManager;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
 import org.bukkit.Bukkit;
@@ -24,24 +31,24 @@ import java.util.*;
 
 @Getter
 @Setter
-public class TournamentManager {
+public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
     private final AstroTournamentsPlugin astroTournamentsPlugin;
     private final List<TournamentPlayer> tournamentParticipants;
     private final List<TournamentMatch> tournamentMatchList;
-    private final Map<UUID, TournamentPlayer> tournamentPlayers;
+    private final List<SkinType> bannedSkins;
     private boolean active;
     private boolean joinable;
     public Queue<TournamentPlayer> playerQueue;
     private Location waitingRoomLocation;
 
     public TournamentManager(AstroTournamentsPlugin astroTournamentsPlugin) {
+        super(astroTournamentsPlugin, StoragePlugin.getInstance().getGson(), "data/", TournamentPlayer.class);
         this.astroTournamentsPlugin = astroTournamentsPlugin;
-        this.tournamentPlayers = new HashMap<>();
         this.tournamentMatchList = new ArrayList<>();
         this.tournamentParticipants = new ArrayList<>();
+        this.bannedSkins = loadBannedSkinsFromConfig();
     }
-
 
 
     public void setupQueue() {
@@ -60,13 +67,12 @@ public class TournamentManager {
     }
 
     public TournamentPlayer getTournamentPlayer(UUID uuid) {
-        if (!tournamentPlayers.containsKey(uuid)) {
+        if (!contains(uuid.toString())) {
             TournamentPlayer tournamentPlayer = new TournamentPlayer(uuid);
-            tournamentPlayers.put(uuid, tournamentPlayer);
+            addToCache(tournamentPlayer);
         }
-        return tournamentPlayers.get(uuid);
+        return getFromCache(uuid.toString());
     }
-
 
 
     public void putNextPlayersInArenas() {
@@ -75,7 +81,7 @@ public class TournamentManager {
 
         this.astroTournamentsPlugin.getArenaRegister().getArenas().values().forEach(arena -> {
 
-            if(astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size() == 1) {
+            if (astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size() == 1) {
                 Player winner = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(0).getPlayer();
                 Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage(Utils.fixColor("&6&lAstro&f&lPvP &6&lTournaments"));
@@ -92,7 +98,7 @@ public class TournamentManager {
                 return;
             }
 
-            if(!arena.isInUse() && playersInTournament.size() >= 2) {
+            if (!arena.isInUse() && playersInTournament.size() >= 2) {
 
                 TournamentPlayer player1 = playersInTournament.dequeue();
                 TournamentPlayer player2 = playersInTournament.dequeue();
@@ -114,29 +120,65 @@ public class TournamentManager {
         player.teleport(location);
         player.setHealth(20);
         giveItems(tournamentPlayer);
-        Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, ()-> {
+        Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
             Blessed.blessPlayer(tournamentPlayer.getPlayer());
         }, 40L);
     }
 
     private void giveItems(TournamentPlayer tournamentPlayer) {
         Player player = tournamentPlayer.getPlayer();
-
-        player.getInventory().setBoots(tournamentPlayer.getBoots());
-        player.getInventory().setChestplate(tournamentPlayer.getChestplate());
-        player.getInventory().setLeggings(tournamentPlayer.getLeggings());
-        player.getInventory().setHelmet(tournamentPlayer.getHelmet());
-        player.getInventory().setItem(0, tournamentPlayer.getSword());
-        player.getInventory().setItem(1, new ItemStack(Material.ENDER_PEARL, 16));
         Potion splash = new Potion(PotionType.INSTANT_HEAL, 2);
         splash.setSplash(true);
-        while(Utils.hasAvaliableSlot(player, 1)) {
-            player.getInventory().addItem(splash.toItemStack(1));
+
+        ItemStack stackedPot = splash.toItemStack(8);
+        stackedPot = new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
+
+        player.getInventory().setItem(8, tournamentPlayer.getBoots());
+        player.getInventory().setItem(7, tournamentPlayer.getChestplate());
+        player.getInventory().setItem(6, tournamentPlayer.getLeggings());
+        player.getInventory().setItem(5, tournamentPlayer.getHelmet());
+        player.getInventory().setItem(0, tournamentPlayer.getSword());
+        player.getInventory().setItem(1, new ItemStack(Material.ENDER_PEARL, 16));
+        player.getInventory().setItem(2, KillTrackerAPI.createSoulShard(250000));
+        player.getInventory().setItem(27, stackedPot);
+        player.getInventory().setItem(28, stackedPot);
+        player.getInventory().setItem(29, stackedPot);
+        player.getInventory().setItem(30, stackedPot);
+        player.getInventory().setItem(31,stackedPot);
+        player.getInventory().setItem(33, stackedPot);
+
+
+        while (Utils.hasAvaliableSlot(player, 1)) {
+            ItemStack splashPot = splash.toItemStack(1);
+            player.getInventory().addItem(splashPot);
         }
     }
 
+    public boolean isBannedItemSkin(SkinType skinType) {
+        return bannedSkins.contains(skinType);
+    }
 
+    public void banItemSkin(SkinType skinType, Player player) {
+        if (!bannedSkins.contains(skinType)) {
+            player.sendMessage(CC.translate("&c&l(!)&c Banned the " + skinType.getItem().getItemMeta().getDisplayName()));
+            bannedSkins.add(skinType);
+        } else {
+            player.sendMessage(CC.translate("&a&l(!)&a UnBanned the " + skinType.getItem().getItemMeta().getDisplayName()));
+            bannedSkins.remove(skinType);
+        }
+    }
 
+    public List<SkinType> loadBannedSkinsFromConfig() {
+        List<SkinType> bannedSkins = new ArrayList<>();
+        return bannedSkins;
+
+        //Load the banned skins
+    }
+
+    public  void saveBannedSkinsToConfig() {
+        //Save banned skins
+
+    }
 
 
 }

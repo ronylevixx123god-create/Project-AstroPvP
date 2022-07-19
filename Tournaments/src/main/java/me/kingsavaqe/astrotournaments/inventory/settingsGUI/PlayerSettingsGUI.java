@@ -55,6 +55,6 @@ public class PlayerSettingsGUI {
     }
 
     private ItemStack createBackItem() {
-        return new ItemBuilder(Material.ARROW, "&cGo back", "&7Click to go back to the settings").colorize().build();
+        return new ItemBuilder(Material.ARROW, "&cGo back", "&7Click to go back to the main menu").colorize().build();
     }
 }
