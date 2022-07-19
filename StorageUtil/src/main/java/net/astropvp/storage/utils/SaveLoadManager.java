@@ -15,7 +15,7 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
     private final File dataDirectory;
     private final Gson gson;
     private final Class<T> clazz;
-    private final Map<String, T> cache;
+    private final Map<Object, T> cache;
 
     protected SaveLoadManager(JavaPlugin plugin, Gson gson, String dataDirectory, Class<T> clazz) {
         this.gson = gson;
@@ -46,7 +46,7 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
             dataDirectory.mkdirs();
         }
 
-        for (Map.Entry<String, T> entry : cache.entrySet()) {
+        for (Map.Entry<Object, T> entry : cache.entrySet()) {
             this.save(entry.getKey(), entry.getValue());
         }
 
@@ -69,7 +69,7 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
         }
     }
 
-    private void save(String key, T t) {
+    private void save(Object key, T t) {
         File file = new File(dataDirectory,key + ".json");
         if (!file.exists()) {
             try {
@@ -95,11 +95,11 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
         this.cache.remove(t.getKey());
     }
 
-    public void removeFromCache(String key) {
+    public void removeFromCache(Object key) {
         this.cache.remove(key);
     }
 
-    public T getFromCache(String key) {
+    public T getFromCache(Object key) {
         return this.cache.get(key);
     }
 }

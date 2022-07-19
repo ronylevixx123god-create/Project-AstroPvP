@@ -2,7 +2,7 @@ package net.astropvp.storage.utils;
 
 public interface KeyToSave {
 
-    String getKey();
+    Object getKey();
 
-    void setKey(String key);
+    void setKey(Object key);
 }
