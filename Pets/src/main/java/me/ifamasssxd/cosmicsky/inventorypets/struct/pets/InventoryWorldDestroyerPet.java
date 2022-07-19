@@ -87,7 +87,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         Faction faction = FactionUtils.getFaction(player);
         Location locationClicked = player.getLocation();
         Player target = null;
-        for (Entity other : player.getNearbyEntities(4.0D, 4.0D, 4.0D)) {
+        for (Entity other : player.getNearbyEntities(6.0D, 6.0D, 6.0D)) {
             if (other instanceof Player) {
                 Player nearPlayer = (Player) other;
                 if (!WorldGuardUtils.isPvPEnabled(nearPlayer.getLocation()))

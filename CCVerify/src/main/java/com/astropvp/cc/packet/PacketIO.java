@@ -18,12 +18,15 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.LuckPermUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonSyntaxException;
 import io.netty.buffer.Unpooled;
 import me.astropvp.proxypach.ProxyPatch;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import net.luckperms.api.LuckPermsProvider;
 import net.minecraft.server.v1_8_R3.PacketDataSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayInCustomPayload;
 import net.minecraft.server.v1_8_R3.PacketPlayOutCustomPayload;
@@ -167,15 +170,16 @@ public class PacketIO {
     }
 
     public void addPlayerToHeader(Player player) {
-        Map<String, List<String>> map = Config.getInst().getHeaders().getAllHeaders();
-        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+       /*  Map<String, List<String>> map = Config.getInst().getHeaders().getAllHeaders();
+       for (Map.Entry<String, List<String>> entry : map.entrySet()) {
             if (player.hasPermission("ccverify." + entry.getKey().toLowerCase())) {
+
                 this.headers.put(player.getName(), entry.getValue());
                 break;
             }
-        }
-        if (!this.headers.containsKey(player.getName()))
-            this.headers.put(player.getName(), Lists.newArrayList());
+        }*/
+        if (!player.hasPermission("astrocore.apollo")) return;
+        this.headers.put(player.getName(), Arrays.asList(CC.translate(LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix())));
         PacketOutPlayerHeaders playerHeaders = new PacketOutPlayerHeaders(this.headers, false);
         for (CosmicPlayer cp : CosmicPlayers.get().getAll())
             queuePacket(cp.getPlayer(), (Packet) playerHeaders);
