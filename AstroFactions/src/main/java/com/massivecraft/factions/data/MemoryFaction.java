@@ -6,7 +6,6 @@ import com.massivecraft.factions.event.FactionAutoDisbandEvent;
 import com.massivecraft.factions.iface.EconomyParticipator;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.integration.Econ;
-import com.massivecraft.factions.integration.LWC;
 import com.massivecraft.factions.landraidcontrol.DTRControl;
 import com.massivecraft.factions.landraidcontrol.LandRaidControl;
 import com.massivecraft.factions.perms.Permissible;
@@ -1156,9 +1155,6 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
     }
 
     public void clearClaimOwnership(FLocation loc) {
-        if (LWC.getEnabled() && FactionsPlugin.getInstance().conf().lwc().isResetLocksOnUnclaim()) {
-            LWC.clearAllLocks(loc);
-        }
         claimOwnership.remove(loc);
     }
 
@@ -1179,9 +1175,6 @@ public abstract class MemoryFaction implements Faction, EconomyParticipator {
             ownerData.removeIf(s -> s.equals(player.getId()));
 
             if (ownerData.isEmpty()) {
-                if (LWC.getEnabled() && FactionsPlugin.getInstance().conf().lwc().isResetLocksOnUnclaim()) {
-                    LWC.clearAllLocks(entry.getKey());
-                }
                 claimOwnership.remove(entry.getKey());
             }
         }

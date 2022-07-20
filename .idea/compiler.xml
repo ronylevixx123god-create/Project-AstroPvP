@@ -41,6 +41,7 @@
         <module name="KoTHs" />
         <module name="Duels" />
         <module name="GiftcardShop" />
+        <module name="Factions-Legacy" />
         <module name="FactionShields" />
         <module name="CosmicCrate" />
         <module name="Ark" />
@@ -67,6 +68,7 @@
         <module name="AstroEnvoy" />
         <module name="FactionBanners" />
         <module name="AstroDiscordSync" />
+        <module name="StorageUtil" />
         <module name="Disguises" />
         <module name="CustomItems" />
         <module name="Pets" />
@@ -82,9 +84,10 @@
         <sourceOutputDir name="../../target/generated-sources/annotations" />
         <sourceTestOutputDir name="../../target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="Factions (1)" />
         <module name="Factions (2) (com.massivecraft)" />
+        <module name="Factions (1)" />
         <module name="Factions (2)" />
+        <module name="Factions" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -105,11 +108,9 @@
       <module name="Disguises (1)" target="8" />
       <module name="Faction" target="8" />
       <module name="FactionFights" target="8" />
-      <module name="Factions" target="8" />
       <module name="Factions (1) (com.massivecraft)" target="1.8" />
       <module name="Factions (3)" target="1.8" />
       <module name="Factions-aggregator" target="1.8" />
-      <module name="Factions-Legacy" target="1.8" />
       <module name="Factions-Legacy (2)" target="1.5" />
       <module name="GenBuckets" target="8" />
       <module name="GUIShop" target="8" />

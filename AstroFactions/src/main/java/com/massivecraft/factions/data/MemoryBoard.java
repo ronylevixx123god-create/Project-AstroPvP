@@ -2,14 +2,7 @@ package com.massivecraft.factions.data;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import com.massivecraft.factions.Board;
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.FactionsPlugin;
-import com.massivecraft.factions.integration.LWC;
+import com.massivecraft.factions.*;
 import com.massivecraft.factions.perms.Relation;
 import com.massivecraft.factions.util.AsciiCompass;
 import com.massivecraft.factions.util.TL;
@@ -18,19 +11,12 @@ import mkremins.fanciful.FancyMessage;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
-import org.bukkit.WorldBorder;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.Map;
+import java.util.*;
 import java.util.Map.Entry;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
 
@@ -206,14 +192,6 @@ public abstract class MemoryBoard extends Board {
     }
 
     public void clean(String factionId) {
-        if (LWC.getEnabled() && FactionsPlugin.getInstance().conf().lwc().isResetLocksOnUnclaim()) {
-            for (Entry<FLocation, String> entry : flocationIds.entrySet()) {
-                if (entry.getValue().equals(factionId)) {
-                    LWC.clearAllLocks(entry.getKey());
-                }
-            }
-        }
-
         flocationIds.removeFaction(factionId);
     }
 
@@ -274,9 +252,6 @@ public abstract class MemoryBoard extends Board {
         while (iter.hasNext()) {
             Entry<FLocation, String> entry = iter.next();
             if (!Factions.getInstance().isValidFactionId(entry.getValue())) {
-                if (LWC.getEnabled() && FactionsPlugin.getInstance().conf().lwc().isResetLocksOnUnclaim()) {
-                    LWC.clearAllLocks(entry.getKey());
-                }
                 FactionsPlugin.getInstance().log("Board cleaner removed " + entry.getValue() + " from " + entry.getKey());
                 iter.remove();
             }
