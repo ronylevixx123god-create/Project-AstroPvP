@@ -17,7 +17,7 @@ public class TournamentStartTask extends BukkitRunnable {
         if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             return;
         }
-        this.seconds = 31;
+        this.seconds = 121;
         this.runTaskTimer(astroTournamentsPlugin, 20L * 2, 20L);
     }
 
@@ -43,7 +43,7 @@ public class TournamentStartTask extends BukkitRunnable {
             return;
         }
 
-        if(this.seconds == 60 || this.seconds == 30 || this.seconds == 15 || this.seconds == 10 || (this.seconds <= 5 && this.seconds > 0)) {
+        if(this.seconds == 120 || this.seconds == 100 || this.seconds == 80 || this.seconds == 60 || this.seconds == 45 || this.seconds == 30 || this.seconds == 15 || this.seconds == 10 || (this.seconds <= 5 && this.seconds > 0)) {
 
             for(Player player : Bukkit.getOnlinePlayers()) {
                 sendJSONMessage(player);

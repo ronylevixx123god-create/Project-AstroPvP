@@ -4,8 +4,10 @@ import lombok.Getter;
 import me.kingsavaqe.astrotournaments.commands.TournamentCommand;
 import me.kingsavaqe.astrotournaments.listeners.PlayerQuitListener;
 import me.kingsavaqe.astrotournaments.listeners.TournamentDeathListener;
+import me.kingsavaqe.astrotournaments.listeners.TournamentListener;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
+import me.kingsavaqe.astrotournaments.tasks.NoFlightTask;
 import me.kingsavaqe.astrotournaments.utils.Queue;
 import me.kingsavaqe.astrotournaments.utils.Utils;
 import me.mattstudios.mf.base.CommandManager;
@@ -45,6 +47,7 @@ public class AstroTournamentsPlugin extends JavaPlugin {
         commandManager.register(new TournamentCommand(this));
 
         this.registerListeners();
+        this.registerTasks();
 
     }
 
@@ -59,10 +62,17 @@ public class AstroTournamentsPlugin extends JavaPlugin {
 
     }
 
+    public void registerTasks() {
+        new NoFlightTask().runTaskTimer(this, 20, 20);
+
+    }
+
 
     public void registerListeners() {
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new TournamentDeathListener(this), this);
         pluginManager.registerEvents(new PlayerQuitListener(this), this);
+        pluginManager.registerEvents(new TournamentListener(), this);
+
     }
 }

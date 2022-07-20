@@ -2,5 +2,6 @@ main: me.astropvp.astroscoreboard.AstroScoreboardPlugin
 name: AstroScoreboard
 depend:
   - CosmicPvPUtils
+  - TAB
 version: 1.0
 commands:

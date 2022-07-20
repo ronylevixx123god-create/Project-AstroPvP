@@ -3,8 +3,6 @@ package me.kingsavaqe.astrotournaments.inventory.adminSettingsGUI;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.inventory.TournamentGUI;
-import me.kingsavaqe.astrotournaments.inventory.adminSettingsGUI.BannedSkinsGUI;
-import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
 import me.mattstudios.mfgui.gui.guis.Gui;
 import me.mattstudios.mfgui.gui.guis.GuiItem;

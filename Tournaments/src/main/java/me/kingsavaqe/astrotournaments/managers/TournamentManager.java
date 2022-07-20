@@ -123,6 +123,8 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         player.closeInventory();
         player.teleport(location);
         player.setHealth(20);
+        player.setFlying(false);
+        player.setAllowFlight(false);
         giveItems(tournamentPlayer);
         Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
             Blessed.blessPlayer(tournamentPlayer.getPlayer());
