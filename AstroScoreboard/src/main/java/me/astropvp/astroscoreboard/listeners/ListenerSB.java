@@ -30,34 +30,17 @@ public class ListenerSB implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
-            AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().put(player.getUniqueId(), new Board(player, AstroScoreboardPlugin.getInstance().getBoardManager().getAdapter()));
+
+        if (player.getScoreboard().getObjective("showhealth") == null) {
+            Objective h = player.getScoreboard().registerNewObjective("showhealth", Criterias.HEALTH);
+
+            h.setDisplaySlot(DisplaySlot.BELOW_NAME);
+            h.setDisplayName(ChatColor.RED + "❤");
         }
-
-        Objective h = AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().get(player.getUniqueId()).getScoreboard().registerNewObjective("showhealth", Criterias.HEALTH);
-
-        h.setDisplaySlot(DisplaySlot.BELOW_NAME);
-        h.setDisplayName(ChatColor.RED + "❤");
 
         //Bukkit.getScheduler().runTaskLaterAsynchronously(AstroScoreboardPlugin.getInstance(), () -> refreshTagsAsyncForServer(event.getPlayer()), 40L);
     }
 
-
-    @EventHandler
-    public void onQuit(PlayerQuitEvent event) {
-        Player player = event.getPlayer();
-        if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
-            AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
-        }
-    }
-
-    @EventHandler
-    public void onKick(PlayerKickEvent event) {
-        Player player = event.getPlayer();
-        if (AstroScoreboardPlugin.getInstance().getBoardManager() != null) {
-            AstroScoreboardPlugin.getInstance().getBoardManager().getPlayerBoards().remove(player.getUniqueId());
-        }
-    }
 
     /*@EventHandler
     public void onFactionJoin(FPlayerJoinEvent event) {

@@ -78,7 +78,7 @@ public class Destruction extends CustomEnchantment {
                                             FPlayer fp = (FPlayer) FPlayers.getInstance().getByPlayer( p);
                                             if (fp.getFaction().getRelationTo((RelationParticipator) fplayer.getFaction()).isAtMost(Relation.NEUTRAL) && !WorldGuardUtils.isPvPDisabled(p.getLocation())) {
                                                 if (p.getHealth() > 0.0 && !p.isDead()) {
-                                                    p.damage((val$level == 5) ? 2.0 : 1.0);
+                                                    //p.damage((val$level == 5) ? 2.0 : 1.0);
                                                     try {
                                                         de.inventivegames.particle.ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.5f,20);
                                                     } catch (Exception e) {

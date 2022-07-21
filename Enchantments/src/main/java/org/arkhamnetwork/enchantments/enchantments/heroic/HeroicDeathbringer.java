@@ -25,65 +25,56 @@ public class HeroicDeathbringer extends CustomEnchantment {
         super("Planetary Deathbringer", GeneralUtil.armor, 9);
         this.max = 3;
         this.base = 25.0D;
-        this.interval = 7.0D;
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
+        this.interval = 10.0D;
+        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), new Runnable() {
             public void run() {
                 HeroicDeathbringer.this.heroicEnchantment = true;
                 HeroicDeathbringer.this.nonHeroicVersion = EnchantmentAPI.getEnchantment("Deathbringer");
             }
         }, 2L);
-        Bukkit.getPluginManager().registerEvents(new DeathbringEvents(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new HeroicDeathbringer.DeathbringEvents(), Enchantments.getInstance());
     }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
-        DeathbringEvents.doubleDamage.add(player);
-        DeathbringEvents.playerLevels.put(player, Integer.valueOf(enchantLevel));
+        HeroicDeathbringer.DeathbringEvents.doubleDamage.add(player);
+        HeroicDeathbringer.DeathbringEvents.playerLevels.put(player, enchantLevel);
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
-        DeathbringEvents.doubleDamage.remove(player);
-        DeathbringEvents.playerLevels.remove(player);
+        HeroicDeathbringer.DeathbringEvents.doubleDamage.remove(player);
+        HeroicDeathbringer.DeathbringEvents.playerLevels.remove(player);
     }
 
     private static class DeathbringEvents implements Listener {
-        private static HashSet<Player> doubleDamage = new HashSet<>();
-        private static HashMap<Player, Integer> playerLevels = new HashMap<>();
+        private static HashSet<Player> doubleDamage = new HashSet();
+        private static HashMap<Player, Integer> playerLevels = new HashMap();
 
         private DeathbringEvents() {
         }
 
         @EventHandler
         public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
-            if (!(e.getEntity() instanceof Player)) {
-                return;
-            }
-            if (!(e.getDamager() instanceof Player)) {
-                return;
-            }
-            Player damage = (Player) e.getDamager();
-
-            if (doubleDamage.contains(damage)) {
+            Entity damage = e.getDamager();
+            if (damage instanceof Projectile && doubleDamage.contains(((Projectile)damage).getShooter()) || doubleDamage.contains(damage)) {
                 double random = Math.random();
-                double chance = 0.025D;
+                double chance = 0.1D * (double)(playerLevels.containsKey(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage) ? (Integer)playerLevels.get(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage) : 1);
+                chance *= 1.8D;
                 if (random < chance) {
-                    e.getEntity().sendMessage(CC.LightPurpleB + "** PLANETARY DEATHBRINGER " + CC.Gray + "[2x DMG] " + CC.LightPurpleB + "**");
-                    if(e.getFinalDamage() >= 35) {
-                        e.setDamage(35);
-                        GeneralCooldown.enterCooldown((Player) damage);
-                        return;
-                    }
-                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
-                    GeneralCooldown.enterCooldown((Player) damage);
-
+                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.75D);
                 }
-
             }
+
         }
 
         @EventHandler
         public void onPlayerQuit(PlayerQuitEvent e) {
             doubleDamage.remove(e.getPlayer());
             playerLevels.remove(e.getPlayer());
+        }
+
+        // $FF: synthetic method
+        DeathbringEvents(Object x0) {
+            this();
         }
     }
 }

@@ -168,25 +168,6 @@ final class SmarterEssentialsListener
         }
     }
 
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerDamageLOWEST(EntityDamageEvent e) {
-        User u;
-        if (e.getEntity() instanceof Player && ((u = SmarterEssentials.ess3.getUser((Player) e.getEntity())).isVanished() || u.isGodModeEnabled())) {
-            Player p = (Player) e.getEntity();
-            e.setCancelled(true);
-            e.setDamage(0.0);
-        }
-    }
-
-    @EventHandler(priority = EventPriority.HIGHEST)
-    public void onPlayerDamageMONITOR(EntityDamageEvent e) {
-        User u;
-        if (e.getEntity() instanceof Player && ((u = SmarterEssentials.ess3.getUser((Player) e.getEntity())).isVanished() || u.isGodModeEnabled())) {
-            Player p = (Player) e.getEntity();
-            e.setCancelled(true);
-            e.setDamage(0.0);
-        }
-    }
 
     @EventHandler
     public void onPlayerChatTabCompleteEvent(PlayerChatTabCompleteEvent e) {

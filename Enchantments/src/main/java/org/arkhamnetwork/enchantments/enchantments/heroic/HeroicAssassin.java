@@ -23,21 +23,30 @@ public class HeroicAssassin extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!user.getWorld().equals(target.getWorld()))
-            return;
-        double distance = user.getLocation().distance(target.getLocation());
-        double dmgMod = 1.0D;
-        double heroicMult = 2.5D;
-        if (distance < 0.25D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
-        if (distance < 0.5D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
-        if (distance < 0.75D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
-        if (distance < 1.0D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
-        if (distance < 1.5D * heroicMult)
-            dmgMod += 0.015D * enchantLevel;
-        event.setDamage(event.getDamage() * dmgMod);
+        if (user.getWorld().equals(target.getWorld())) {
+            double distance = user.getLocation().distance(target.getLocation());
+            double dmgMod = 1.0D;
+            if (distance < 0.625D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 1.25D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 1.875D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 2.5D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            if (distance < 3.75D) {
+                dmgMod += 0.015D * (double)enchantLevel;
+            }
+
+            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * dmgMod);
+        }
     }
 }

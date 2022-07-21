@@ -34,7 +34,6 @@ extends CustomEnchantment {
                 return;
             }
             player.getWorld().strikeLightning(attacker.getLocation());
-            player.damage(2.0);
             GeneralUtil.pushAwayEntity(player, (Entity)attacker, 1.5);
         }
     }

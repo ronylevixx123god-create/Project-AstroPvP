@@ -25,6 +25,8 @@ public class Valor extends CustomEnchantment
         double damage_negation = level * 0.005D;
         double hp_threshold = (level * 2 +6);
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
+            Bukkit.broadcastMessage("Valor!");
+
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
             Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 41, 2001);

@@ -28,22 +28,5 @@ final class AntiGlitchSwordListener
     AntiGlitchSwordListener() {
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
-    public void onEntityDamage(EntityDamageEvent e) {
-        if (e.getCause() == EntityDamageEvent.DamageCause.CUSTOM) {
-            return;
-        }
-        if (e.getEntity() instanceof Player && e.getDamage() >= 30.0) {
-            Player p = (Player) e.getEntity();
-            e.setDamage(30);
-            if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK) {
-                Entity eAttacker = ((EntityDamageByEntityEvent) e).getDamager();
-                if (eAttacker instanceof Player) {
-                    Player pAttacker = (Player) eAttacker;
-                }
-            } else {
-            }
-        }
-    }
 }
 

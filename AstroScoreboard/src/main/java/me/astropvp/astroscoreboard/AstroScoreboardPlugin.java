@@ -7,6 +7,7 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
 import me.astropvp.astroscoreboard.board.Scoreboard;
+import me.astropvp.astroscoreboard.listeners.ListenerSB;
 import me.astropvp.astroscoreboard.manager.BoardManager;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
@@ -39,7 +40,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerDefaultAndFactionScoreboard();
         registerStrongHoldScoreboard();
         registerDuelScoreboard();
-
+        registerListener(new ListenerSB());
     }
 
 
@@ -90,7 +91,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         } else {
             kdr = (double) FactionUtils.getFPlayer((Player) player.getPlayer()).getKills() / FactionUtils.getFPlayer((Player) player.getPlayer()).getDeaths();
         }
-        return kdr;
+        return round(kdr,2);
     }
 
     public String getDoubleDamageString(NewDuel duel) {

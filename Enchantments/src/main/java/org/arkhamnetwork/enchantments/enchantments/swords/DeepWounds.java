@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.*;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
 import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
@@ -27,6 +28,8 @@ public class DeepWounds extends CustomEnchantment
                 return;
             }
             playerHit.setMetadata("deepWounds", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis() + level * 1500));
+            double mod = (double) Bleed.getBleedStack(playerHit) * 0.005D + (double)level * 0.01D + 1.0D;
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
         }
     }
 }

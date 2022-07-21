@@ -59,8 +59,7 @@ public class Paralyze
             }
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &5&l*"), "PARALYZE");
-            playerHit.damage((double) (1 + level/2));
-            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.YellowB + "* PARALYZE *" + CC.YellowB +  "*", "PARALYZE");
+            playerHit.damage((double)(1 + level));
             GeneralCooldown.enterCooldown((Player) player);
 
         }

@@ -82,6 +82,8 @@ public class DamageListener implements Listener {
             Player damaged = (Player) e.getEntity();
             if (((Player) e.getDamager()).getItemInHand() == null) return;
             if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
+            if (!((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD")) return;
+            if (!((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE")) return;
 
             double dmgBuff = 0;
 
@@ -95,6 +97,12 @@ public class DamageListener implements Listener {
         }
     }
 
+    @EventHandler(priority = EventPriority.MONITOR)
+    public void dmg(EntityDamageByEntityEvent e) {
+
+        Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
+    }
+
     @EventHandler(priority = EventPriority.HIGH)
     public void plutoPvP(EntityDamageByEntityEvent e) {
 
@@ -105,7 +113,6 @@ public class DamageListener implements Listener {
             Player damaged = (Player) e.getEntity();
             if (((Player) e.getDamager()).getItemInHand() == null) return;
             if (((Player) e.getDamager()).getItemInHand().getType() == Material.AIR) return;
-
 
             e.setDamage(e.getDamage() * 2);
 
@@ -173,7 +180,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.HIGH)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -183,6 +190,7 @@ public class DamageListener implements Listener {
             if (getProtectionReduction(phurt) != 0) {
                 double totalReduction = getProtectionReduction(phurt);
                 e.setDamage(e.getDamage() * (1 - (totalReduction * 0.01)));
+
             }
 
 
@@ -195,6 +203,7 @@ public class DamageListener implements Listener {
 
 
             if (((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_SWORD") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_SWORD || ((Player) e.getDamager()).getItemInHand().getType().name().endsWith("_AXE") && ((Player) e.getDamager()).getItemInHand().getType() != Material.GOLD_AXE) {
+
                 e.setDamage(e.getDamage() * 0.5);
             }
         }

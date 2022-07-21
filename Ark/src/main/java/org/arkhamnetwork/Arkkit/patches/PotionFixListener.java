@@ -84,19 +84,7 @@ final class PotionFixListener
         return potion;
     }
 
-    @EventHandler
-    public void onPlayerDamage(EntityDamageByEntityEvent event) {
-        Player player;
-        if (PotionFix.EnabledFixes[0] && event.getDamager() instanceof Player && (player = (Player) event.getDamager()).hasPotionEffect(PotionEffectType.INCREASE_DAMAGE)) {
-            for (PotionEffect Effect : player.getActivePotionEffects()) {
-                if (!Effect.getType().equals(PotionEffectType.INCREASE_DAMAGE)) continue;
-                double Division = (double) (Effect.getAmplifier() + 1) * 1.3 + 1.0;
-                int NewDamage = event.getDamage() / Division <= 1.0 ? (Effect.getAmplifier() + 1) * 3 + 1 : (int) (event.getDamage() / Division) + (int) ((double) (Effect.getAmplifier() + 1) * ((double) PotionFix.Amounts[0] * 0.5));
-                event.setDamage(NewDamage);
-                break;
-            }
-        }
-    }
+
 
     @EventHandler
     public void onRegen(EntityRegainHealthEvent event) {

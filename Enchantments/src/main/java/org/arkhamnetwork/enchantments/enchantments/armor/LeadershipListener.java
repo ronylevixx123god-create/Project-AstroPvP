@@ -19,7 +19,7 @@ final class LeadershipListener implements Listener {
         if (e.getDamager() instanceof Player && e.getDamager().hasMetadata("leadershipLevel")) {
             final int level = ((Player) e.getDamager()).getMetadata("leadershipLevel").get(0).asInt();
             final boolean koth = e.getDamager().getWorld().getName().equals("world_koth");
-            final boolean outpost = e.getDamager().getWorld().getName().startsWith("cosmic-station");
+            final boolean outpost = e.getDamager().getWorld().getName().startsWith("world_outpost");
             final double incre = Math.min(1.75, 1.0 + level * ((koth || outpost) ? 0.05 : 0.1));
             double damage = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
             e.setDamage(damage * incre);

@@ -278,15 +278,6 @@ public class SlotBotInventoryListener implements Listener {
     }
 
     @EventHandler
-    public void  reduceDMG(EntityDamageByEntityEvent e) {
-        if (!e.getDamager().getLocation().getWorld().getName().equals("world_the_end")) return;
-        if (!e.getEntity().getLocation().getWorld().getName().equals("world_the_end")) return;
-        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE)*0.20);
-        }
-    }
-
-    @EventHandler
     public void anticrash(ProjectileLaunchEvent e) {
         if (!(e.getEntity().getShooter() instanceof Player)) {
             if(e.getEntity().getWorld().getName().contains("dungeon"))

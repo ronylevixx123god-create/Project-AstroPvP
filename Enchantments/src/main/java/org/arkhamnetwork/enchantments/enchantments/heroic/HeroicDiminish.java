@@ -46,7 +46,7 @@ public class HeroicDiminish extends CustomEnchantment {
             double maxDmg = ((MetadataValue)player.getMetadata("diminishEffect").get(0)).asDouble();
             double dmgToDeal = maxDmg;
             if (dmgToDeal > 0.0D && attacker instanceof Player) {
-                attacker.damage(dmgToDeal);
+                //attacker.damage(dmgToDeal);
                 Player attackerPlayer = (Player)attacker;
             }
             if (e.getFinalDamage() > maxDmg) {

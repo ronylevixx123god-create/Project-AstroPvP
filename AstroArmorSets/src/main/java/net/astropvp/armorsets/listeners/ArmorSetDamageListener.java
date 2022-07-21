@@ -22,7 +22,7 @@ import java.util.Map;
 
 public class ArmorSetDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.HIGHEST , ignoreCancelled = true)
+            priority = EventPriority.LOWEST , ignoreCancelled = true)
     public void onAttack(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -65,7 +65,7 @@ public class ArmorSetDamageListener implements Listener {
     }
 
     @EventHandler(
-            priority = EventPriority.HIGHEST , ignoreCancelled = true)
+            priority = EventPriority.LOWEST , ignoreCancelled = true)
     public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();

@@ -43,6 +43,8 @@ public class Tank extends CustomEnchantment
         }
         final double damage_negation = level * 0.01875;
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
+            Bukkit.broadcastMessage("Tank!");
+
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);

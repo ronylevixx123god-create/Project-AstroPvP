@@ -64,6 +64,7 @@ public class HeroicDodge
                         player.removeMetadata("carver_damage", Enchantments.getInstance());
                     }, 5 * 20);
                 }
+
                 e.setDamage(0);
                 ((Player) player).sendMessage((Object) ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
