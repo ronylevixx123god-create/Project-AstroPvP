@@ -100,7 +100,7 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR)
     public void dmg(EntityDamageByEntityEvent e) {
 
-        Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
+        //Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
     }
 
     @EventHandler(priority = EventPriority.HIGH)

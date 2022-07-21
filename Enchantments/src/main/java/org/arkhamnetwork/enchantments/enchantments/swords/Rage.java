@@ -58,7 +58,7 @@ public class Rage extends CustomEnchantment {
 
 
             if (rageStacksCache.getRageStack() >= 1) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * 0.5);
+                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * 0.45);
                 this.playRageEffect(target.getLocation());
 
             }

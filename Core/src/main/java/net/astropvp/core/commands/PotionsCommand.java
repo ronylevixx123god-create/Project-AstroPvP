@@ -3,6 +3,7 @@ package net.astropvp.core.commands;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.cooldown.PotsCooldown;
+import net.astropvp.core.guis.PotsGUI;
 import net.astropvp.core.utils.Utils;
 import net.milkbowl.vault.economy.Economy;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -17,7 +18,6 @@ import org.bukkit.inventory.ItemStack;
 
 public class PotionsCommand implements CommandExecutor {
     private AstroCore plugin;
-    //private PotsCooldown cooldown = new PotsCooldown();
     private Utils utils = new Utils();
 
     public PotionsCommand(AstroCore plugin) {
@@ -25,7 +25,6 @@ public class PotionsCommand implements CommandExecutor {
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
-        Economy economy = AstroCore.getInstance().getEcon();
         if (!(sender instanceof Player)) {
             utils.console("&cCannot execute command from console.");
             return true;
@@ -37,35 +36,11 @@ public class PotionsCommand implements CommandExecutor {
             return false;
         }
 
-        //if (cooldown.getCooldown(p)) return false;
+        PotsGUI potsGUI = new PotsGUI(p);
+        potsGUI.getPotsGUI().open(p);
 
-        int amount = 0;
-        for (ItemStack itemStack : p.getInventory().getContents()) {
-            if (itemStack == null || itemStack.getType() == Material.AIR)
-                amount++;
-        }
+        return true;
 
-        if (amount == 0) {
-            p.sendMessage(ChatColor.RED + "Your inventory is full. Please try again.");
-            return true;
-        }
-
-        double cost = (amount * 55);
-        if (economy.has(p, cost)) {
-
-            economy.withdrawPlayer(p, cost);
-            for (int i = 0; i < amount; i++) {
-                p.getInventory().addItem(new ItemStack[]{new ItemStack(Material.POTION, 1, (short) 16421)});
-            }
-            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 10, 1);
-            utils.sendMessage(p, "&c&l- $" + utils.format(cost));
-            utils.sendMessage(p, "&a+" + amount + "&a Instant Health II Pots");
-            //cooldown.enterCooldown(p);
-            return true;
-        } else {
-            utils.sendMessage(p, "&cYou don't have enough money, requires $" + utils.format(cost) + "!");
-            return true;
-        }
     }
 
 }
