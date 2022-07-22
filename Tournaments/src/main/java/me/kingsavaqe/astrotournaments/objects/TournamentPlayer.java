@@ -4,6 +4,7 @@ import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.Getter;
 import lombok.Setter;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
@@ -35,13 +36,13 @@ public class TournamentPlayer implements KeyToSave {
     private SkinType leggingsSkin;
     private SkinType bootsSkin;
     private SkinType swordSkin;
+    private SkinType backpackSkin;
 
     private transient final ItemStack helmet;
     private transient final ItemStack chestplate;
     private transient final ItemStack leggings;
     private transient final ItemStack boots;
     private transient final ItemStack sword;
-
 
 
     public TournamentPlayer(UUID uuid) {
@@ -51,6 +52,8 @@ public class TournamentPlayer implements KeyToSave {
         this.leggingsSkin = null;
         this.bootsSkin = null;
         this.swordSkin = null;
+        this.backpackSkin = null;
+
         this.helmet = getHelmet();
         this.chestplate = getChestplate();
         this.leggings = getLeggings();
@@ -74,13 +77,13 @@ public class TournamentPlayer implements KeyToSave {
         if (helmetSkin != null) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(helmetSkin)) {
                 setHelmetSkin(null);
-                return helmet;
+            } else {
+                helmetSkin.apply(helmet);
             }
-            helmetSkin.apply(helmet);
         }
 
         if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
-            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,helmet);
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal(), helmet);
         }
         return helmet;
 
@@ -92,17 +95,33 @@ public class TournamentPlayer implements KeyToSave {
                 .addEnchantment(Enchantment.DURABILITY, 3)
                 .colorize()
                 .build(), HeroicArmor.CHESTPLATE), getChestplateEnchants()));
+
+
+        if (!AstroItemSkinsAPI.hasBackpackSocket(chestplate)) {
+           chestplate =  AstroItemSkinsAPI.applyBackpackSocket(chestplate);
+        }
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal(), chestplate);
+        }
+
         if (chestplateSkin != null) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(chestplateSkin)) {
                 setChestplateSkin(null);
-                return chestplate;
+            } else {
+                chestplateSkin.apply(chestplate);
             }
-            chestplateSkin.apply(chestplate);
         }
 
-        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
-            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,chestplate);
+        if (backpackSkin != null) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(backpackSkin)) {
+                setBackpackSkin(null);
+            } else {
+                AstroItemSkinsAPI.applyBackpackSkin(chestplate, backpackSkin);
+                backpackSkin.applyBackpack(chestplate);
+            }
         }
+
+
         return chestplate;
     }
 
@@ -113,17 +132,18 @@ public class TournamentPlayer implements KeyToSave {
                 .colorize()
                 .build(), HeroicArmor.LEGGINGS), getLeggingsEnchants()));
 
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal(), leggings);
+        }
         if (leggingsSkin != null) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(leggingsSkin)) {
                 setLeggingsSkin(null);
-                return leggings;
+            } else {
+                leggingsSkin.apply(leggings);
             }
-            leggingsSkin.apply(leggings);
         }
 
-        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
-            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,leggings);
-        }
+
         return leggings;
     }
 
@@ -134,16 +154,17 @@ public class TournamentPlayer implements KeyToSave {
                 .colorize()
                 .build(), HeroicArmor.BOOTS), getBootsEnchants()));
 
+        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
+            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal(), boots);
+        }
+
+
         if (bootsSkin != null) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(bootsSkin)) {
                 setBootsSkin(null);
-                return boots;
+            } else {
+                bootsSkin.apply(boots);
             }
-            bootsSkin.apply(boots);
-        }
-
-        if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
-            AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal() ,boots);
         }
 
 
@@ -161,9 +182,9 @@ public class TournamentPlayer implements KeyToSave {
         if (swordSkin != null) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(swordSkin)) {
                 setSwordSkin(null);
-                return sword;
+            } else {
+                swordSkin.apply(sword);
             }
-            swordSkin.apply(sword);
         }
 
 
@@ -203,5 +224,16 @@ public class TournamentPlayer implements KeyToSave {
     public boolean inActiveTournament() {
         return AstroTournamentsPlugin.instance.getTournamentManager().getActiveTournamentPlayer(getUuid()) != null;
     }
+
+    public void leaveTournament() {
+        if (inActiveTournament()) {
+            if (AstroTournamentsPlugin.instance.getTournamentManager().getPlayerQueue().contains(this)) {
+                AstroTournamentsPlugin.instance.getTournamentManager().getPlayerQueue().removeFromQueue(this);
+            }
+            AstroTournamentsPlugin.instance.getTournamentManager().getTournamentParticipants().remove(this);
+        }
+    }
+
+
 }
 

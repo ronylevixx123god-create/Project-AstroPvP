@@ -10,6 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class PlayerQuitListener implements Listener {
@@ -32,7 +33,7 @@ public class PlayerQuitListener implements Listener {
         for(TournamentMatch tournamentMatch : astroTournamentsPlugin.getTournamentManager().getTournamentMatchList()) {
             if(tournamentMatch.getPlayerOne() == player1 || tournamentMatch.getPlayerTwo() == player1) {
 
-                player1.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+                player1.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
 
                 if(tournamentMatch.getPlayerOne() == player1) {
                     player2 = tournamentMatch.getPlayerTwo();
@@ -52,7 +53,7 @@ public class PlayerQuitListener implements Listener {
                     astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(player1);
                 astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(player1);
 
-                player2.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation());
+                player2.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 player1.getPlayer().sendMessage(Utils.fixColor("&cYou have been eliminated from the tournament"));
 
                 if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(player2))
@@ -72,7 +73,7 @@ public class PlayerQuitListener implements Listener {
 
         if(astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().contains(player1)) {
 
-            player1.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+            player1.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(player1))
                 astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(player1);
             astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(player1);

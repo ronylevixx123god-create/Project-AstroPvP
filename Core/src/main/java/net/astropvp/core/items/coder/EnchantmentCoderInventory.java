@@ -1,4 +1,4 @@
-package net.astropvp.core.guis;
+package net.astropvp.core.items.coder;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
@@ -81,8 +81,8 @@ public class EnchantmentCoderInventory {
     private ItemStack getBackArrow() {
         ItemStack item = new ItemStack(Material.ARROW);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.translate("&a&lBack"));
-        meta.setLore(Collections.singletonList(CC.translate("&7Click to go back.")));
+        meta.setDisplayName(CC.translate("&c<- Previous Page"));
+        meta.setLore(Collections.singletonList(CC.translate("&7Right-Click to go to the previous page.")));
         item.setItemMeta(meta);
         return item;
     }

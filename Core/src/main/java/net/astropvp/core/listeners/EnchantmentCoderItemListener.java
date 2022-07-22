@@ -3,7 +3,7 @@ package net.astropvp.core.listeners;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import net.astropvp.core.guis.EnchantmentCoderInventory;
+import net.astropvp.core.items.coder.EnchantmentCoderInventory;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;

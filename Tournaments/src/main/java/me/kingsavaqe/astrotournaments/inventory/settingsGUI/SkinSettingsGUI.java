@@ -54,6 +54,19 @@ public class SkinSettingsGUI {
                         }));
                     }
                     break;
+                case BACKPACK:
+                    if (tournamentManager.isBannedItemSkin(skinType)) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));
+                    } else if (tournamentPlayer.getBackpackSkin() == skinType) {
+                        this.skinSettingsGUI.addItem(new GuiItem(createActiveSkinItem(skinType)));
+                    } else {
+                        this.skinSettingsGUI.addItem(new GuiItem(skinType.getItem(), event -> {
+                            tournamentPlayer.setBackpackSkin(skinType);
+                            tournamentPlayer.getPlayer().sendMessage(CC.translate("&a&l(!)&a Set your tournament backpack skin to: " + skinType.getItem().getItemMeta().getDisplayName()));
+                            new SkinSettingsGUI(tournamentPlayer, itemSkinType).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+                        }));
+                    }
+                    break;
                 case BELT:
                     if (tournamentManager.isBannedItemSkin(skinType)) {
                         this.skinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType)));

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.potion.PotionEffectType;
 
 public class TournamentDeathListener implements Listener {
@@ -53,7 +54,7 @@ public class TournamentDeathListener implements Listener {
                     astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(victim);
                 astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(victim);
 
-                attacker.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation());
+                attacker.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 victim.getPlayer().sendMessage(Utils.fixColor("&cYou have been eliminated from the tournament"));
 
                 if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(attacker))

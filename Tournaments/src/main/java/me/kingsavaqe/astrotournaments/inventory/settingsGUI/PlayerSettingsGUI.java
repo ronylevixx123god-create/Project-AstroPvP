@@ -30,6 +30,9 @@ public class PlayerSettingsGUI {
         this.tournamentPlayerSettings.setItem(1, 2, new GuiItem(tournamentPlayer.getChestplate().clone(), event -> {
             new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.AMULET).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
         }));
+        this.tournamentPlayerSettings.setItem(2, 2, new GuiItem(tournamentPlayer.getChestplate().clone(), event -> {
+            new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.BACKPACK).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
+        }));
         this.tournamentPlayerSettings.setItem(1, 3, new GuiItem(tournamentPlayer.getLeggings().clone(), event -> {
             new SkinSettingsGUI(astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(tournamentPlayer.getPlayer().getUniqueId()), ItemSkinType.BELT).getSkinSettingsGUI().open(tournamentPlayer.getPlayer());
         }));

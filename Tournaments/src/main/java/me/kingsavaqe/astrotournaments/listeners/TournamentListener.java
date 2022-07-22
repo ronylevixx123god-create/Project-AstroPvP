@@ -50,17 +50,6 @@ public class TournamentListener implements Listener {
     }
 
     @EventHandler
-    public void onTeleport(PlayerTeleportEvent e) {
-        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
-            if (e.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL && !e.getTo().getWorld().getName().equals("tournament_world")) {
-                e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot teleport in a tournament."));
-                e.setCancelled(true);
-            }
-        }
-
-    }
-
-    @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
         if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot break blocks while in a tournament."));
@@ -79,7 +68,6 @@ public class TournamentListener implements Listener {
     @EventHandler
     public void onFly(PlayerToggleFlightEvent e) {
         if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
-            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot toggle fly while in a tournament."));
             e.setCancelled(true);
         }
     }
@@ -87,7 +75,7 @@ public class TournamentListener implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
-        if (e.getInventory().getType() != InventoryType.PLAYER) {
+        if (e.getInventory().getType() != InventoryType.PLAYER && tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot open inventories while in a tournament."));
             e.setCancelled(true);
             e.getPlayer().closeInventory();

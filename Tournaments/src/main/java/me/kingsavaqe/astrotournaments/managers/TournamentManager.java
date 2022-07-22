@@ -6,6 +6,7 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.objects.TournamentMatch;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
@@ -22,6 +23,7 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffect;
@@ -90,14 +92,13 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
                 Bukkit.broadcastMessage(Utils.fixColor("&6&lAstro&f&lPvP &6&lTournaments"));
                 Bukkit.broadcastMessage(Utils.fixColor(" &f&l* &fTournament Winner: &e" + winner.getName()));
                 Bukkit.broadcastMessage("");
-                winner.getInventory().addItem(new ItemBuilder(Material.CHEST, "WINNER LOOT", "gg on winning", "the tourney")
-                        .addUnsafeEnchantment(Enchantment.DURABILITY, 10).colorize().build());
+                winner.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox").createClaimableItem(false));
                 astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().clear();
                 astroTournamentsPlugin.getTournamentManager().getPlayerQueue().clear();
                 astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
                 astroTournamentsPlugin.getTournamentManager().setJoinable(false);
                 astroTournamentsPlugin.getTournamentManager().setActive(false);
-                winner.teleport(Bukkit.getWorld("world").getSpawnLocation());
+                winner.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 return;
             }
 
@@ -121,7 +122,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
     private void setupPlayer(TournamentPlayer tournamentPlayer, Location location) {
         Player player = tournamentPlayer.getPlayer();
         player.closeInventory();
-        player.teleport(location);
+        player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         player.setHealth(20);
         player.setFlying(false);
         player.setAllowFlight(false);
@@ -208,7 +209,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
     public void end() {
         for (TournamentPlayer tournamentPlayer : getTournamentParticipants()) {
             Utils.emptyInventory(tournamentPlayer.getPlayer());
-            tournamentPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation());
+            tournamentPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             tournamentPlayer.getPlayer().sendMessage(CC.translate("&c&l(!)&c The tournament has been force ended and you have been teleported to spawn!"));
         }
         astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();

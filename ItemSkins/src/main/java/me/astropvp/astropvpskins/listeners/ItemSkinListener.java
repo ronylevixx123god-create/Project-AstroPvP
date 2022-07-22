@@ -40,18 +40,7 @@ public class ItemSkinListener implements Listener {
         this.cooldownPlayers = new HashMap<>();
     }
 
-    public ItemStack applyBackpackSkin(final ItemStack item, SkinType skinType) {
-        final ItemMeta meta = item.getItemMeta();
-        final List<String> lore = (meta.getLore() == null) ? new ArrayList<String>() : meta.getLore();
-        for (final String line : lore) {
-            if (line.equals(CC.translate("&3&l+ BACKPACK [&8N/A&3&l]"))) {
-                lore.set(lore.indexOf(line), CC.translate("&3&l+ BACKPACK [&b" + CC.strip(skinType.getDisplay()) + "&3&l]"));
-            }
-        }
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        return item;
-    }
+
 
     @EventHandler
     private void onClick(InventoryClickEvent event) {
@@ -89,7 +78,7 @@ public class ItemSkinListener implements Listener {
             if (typeList.size() == 1) {
                 if (typeList.get(0).getItemSkinType() == ItemSkinType.BACKPACK) {
                     event.setCurrentItem(((SkinType) typeList.get(0)).applyBackpack(clicked));
-                    event.setCurrentItem(applyBackpackSkin(event.getCurrentItem(), typeList.get(0)));
+                    event.setCurrentItem(AstroItemSkinsAPI.applyBackpackSkin(event.getCurrentItem(), typeList.get(0)));
                 } else {
 
                     event.setCurrentItem(((SkinType) typeList.get(0)).apply(clicked));

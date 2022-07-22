@@ -12,6 +12,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 @Command("tournament")
 @Alias({"tm", "astrotournament", "tournaments"})
@@ -70,7 +71,7 @@ public class TournamentCommand extends CommandBase {
 
         tournamentManager.getTournamentParticipants().add(tournamentManager.getTournamentPlayer(player.getUniqueId()));
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 2.0F, 2.0F);
-        player.teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation());
+        player.teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         player.sendMessage(Utils.fixColor("&aYou have successfully joined the tournament"));
     }
 
@@ -82,14 +83,14 @@ public class TournamentCommand extends CommandBase {
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        if(!astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(player.getUniqueId()))) {
-            player.sendMessage(Utils.fixColor("&cYou are not in the tournament"));
+        if(!astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId()).inActiveTournament()) {
+            player.sendMessage(Utils.fixColor("&cYou are not in a tournament"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(player);
+        AstroTournamentsPlugin.instance.getTournamentManager().getTournamentPlayer(player.getUniqueId()).leaveTournament();
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 2.0F, 2.0F);
-        player.teleport(Bukkit.getWorld("world").getSpawnLocation());
+        player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         player.sendMessage(Utils.fixColor("&aYou have successfully left the tournament"));
     }
 
@@ -132,7 +133,7 @@ public class TournamentCommand extends CommandBase {
             return;
         }
         astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().forEach(player1 -> {
-            player.teleport(Bukkit.getWorld("world").getSpawnLocation());
+            player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         });
         astroTournamentsPlugin.getTournamentManager().end();
         player.sendMessage(Utils.fixColor("&aYou have successfully ended a tournament"));

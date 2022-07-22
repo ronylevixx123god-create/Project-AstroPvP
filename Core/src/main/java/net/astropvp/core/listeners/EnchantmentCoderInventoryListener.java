@@ -1,8 +1,8 @@
 package net.astropvp.core.listeners;
 
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.guis.EnchantmentCoderInventory;
-import net.astropvp.core.struct.EnchantmentCoderManager;
+import net.astropvp.core.items.coder.EnchantmentCoderInventory;
+import net.astropvp.core.items.coder.EnchantmentCoderManager;
 import org.bukkit.event.Listener;
 
 import com.cosmicpvp.cosmicutils.utils.CC;

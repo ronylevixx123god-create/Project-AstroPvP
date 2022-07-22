@@ -1,9 +1,7 @@
 package net.astropvp.core.items.coder;
 
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
-import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ExpUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import java.util.Arrays;
 import java.util.List;
@@ -15,15 +13,9 @@ import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
 import net.astropvp.core.AstroCore;
-import net.astropvp.core.guis.EnchantmentCoderInventory;
-import net.astropvp.core.struct.EnchantmentCoderManager;
-import net.minecraft.server.v1_8_R3.NBTBase;
-import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -48,12 +40,6 @@ public class HeroicEnchantmentCoderItem extends CosmicItem implements InventoryI
                 CC.translate("&6&lXP Cost &750,000 &8(on apply) ")));
         meta.setDisplayName(CC.translate("&b&k;;&f&l&nHeroic&d&k;;&6&l Enchantment Coder"));
         item.setItemMeta(meta);
-/*        NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder tag = new NBTTagCompoundBuilder();
-        tag.setBoolean("enchantmentCoder", Boolean.TRUE);
-        tag.setString("uuid", UUID.randomUUID().toString());
-        wrapper.setNBTBase("cosmicData", (NBTBase)tag.get());
-        item = wrapper.build();*/
         return this.applyItemData(item).build();
     }
 

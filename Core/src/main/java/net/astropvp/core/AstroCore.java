@@ -13,6 +13,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
 import net.astropvp.core.giveaway.GiveAwayCommand;
 import net.astropvp.core.giveaway.GiveAwayManager;
+import net.astropvp.core.items.coder.EnchantmentCoderManager;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
 import net.astropvp.core.titles.listeners.PermissionListener;
@@ -62,10 +63,8 @@ import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModeListeners;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModulesRegister;
 import net.astropvp.core.items.*;
-import net.astropvp.core.items.coder.EnchantmentCoderItem;
 import net.astropvp.core.items.coder.HeroicEnchantmentCoderItem;
 import net.astropvp.core.listeners.*;
-import net.astropvp.core.struct.EnchantmentCoderManager;
 import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.utils.CleanseScroll;
 import net.astropvp.core.utils.CooldownUtils;
@@ -146,8 +145,7 @@ public class AstroCore extends JavaPlugin {
         setupEconomy();
         events();
         cachedColors = new HashMap<>();
-        this.enchantmentCoderManager = new EnchantmentCoderManager("plugins/AstroCore/enchantmentcoderdata.json");
-        this.enchantmentCoderManager.loadData();
+        this.enchantmentCoderManager = new EnchantmentCoderManager();
         this.staffModeManager = new StaffModeManager();
         this.staffModulesRegister = new StaffModulesRegister(this);
         this.staffModulesRegister.initialize();
@@ -217,6 +215,13 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
 
+        enchantmentCoderManager.loadAll();
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+            System.out.println("[EnchantmentCoder] Started auto saving coder data");
+            enchantmentCoderManager.saveAll();
+            System.out.println("[EnchantmentCoder] Finished auto saving coder data");
+
+        },60L, 15*20*60);
     }
 
     public HolyWhiteScrollListener getHolyWhiteScrollListener() {
@@ -268,9 +273,6 @@ public class AstroCore extends JavaPlugin {
 
         this.toggleManager.saveToggles();
 
-        this.enchantmentCoderManager.saveData();
-        //this.enchantmentCoderManager.clearData();
-
         Set infernalClaims = this.claimsOnInfernal.entrySet();
         for (Object infernalClaim : infernalClaims) {
             Map.Entry me = (Map.Entry) infernalClaim;
@@ -293,6 +295,7 @@ public class AstroCore extends JavaPlugin {
         }
 
         saveConfig();
+        enchantmentCoderManager.saveAll();
 
         instance = null;
     }
@@ -494,7 +497,6 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWhitescrollItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWaterItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new CleanseScroll());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new EnchantmentCoderItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HeroicEnchantmentCoderItem());
         this.holyWhitescrollItem = new HolyWhitescrollItem();
     }

@@ -6,6 +6,7 @@ import com.google.common.collect.Maps;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import net.astropvp.armorsets.AstroArmorSets;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.objects.RageObject;
 import org.arkhamnetwork.enchantments.util.CacheUtils;
@@ -58,7 +59,7 @@ public class Rage extends CustomEnchantment {
 
 
             if (rageStacksCache.getRageStack() >= 1) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * 0.45);
+                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
                 this.playRageEffect(target.getLocation());
 
             }

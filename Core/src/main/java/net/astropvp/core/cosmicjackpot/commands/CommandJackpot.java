@@ -50,8 +50,8 @@ implements CommandExecutor {
                     return true;
                 }
                 int tickets = Integer.parseInt(arg);
-                if (tickets < 1 || tickets > 100000) {
-                    sender.sendMessage(ChatColor.RED + "Please enter a ticket amount between 0 and 100,000!");
+                if (tickets < 1 || tickets > 1000000) {
+                    sender.sendMessage(ChatColor.RED + "Please enter a ticket amount between 0 and 1,000,000!");
                     return true;
                 }
                 double totalPrice = tickets * current.getTicketPrice();

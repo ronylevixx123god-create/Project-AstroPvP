@@ -12,17 +12,17 @@ public class Utils {
     }
 
     public static String locationToString(Location location) {
-        return location.getWorld().getName() + "," + location.getX() + "," + location.getY() + ","  + location.getZ();
+        return location.getWorld().getName() + "," + location.getX() + "," + location.getY() + ","  + location.getZ() + "," +  location.getYaw() + "," + location.getPitch();
     }
 
     public static Location getLocationFromString(String string) {
         String[] arg = string.split(",");
-        double[] parsed = new double[3];
-        for (int a = 0; a < 3; a++) {
+        double[] parsed = new double[5];
+        for (int a = 0; a < 5; a++) {
             parsed[a] = Double.parseDouble(arg[a+1]);
         }
 
-        return new Location(Bukkit.getWorld(arg[0]), parsed[0], parsed[1], parsed[2]);
+        return new Location(Bukkit.getWorld(arg[0]), parsed[0], parsed[1], parsed[2], (float)parsed[3], (float)parsed[4]);
     }
 
     public static String getProperCase(String text) {

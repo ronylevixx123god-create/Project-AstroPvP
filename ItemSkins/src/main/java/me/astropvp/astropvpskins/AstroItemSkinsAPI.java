@@ -46,6 +46,34 @@ public class AstroItemSkinsAPI {
         return wrapper.hasKey("cosmicData") && (!wrapper.hasKey("cosmicType") || !wrapper.getString("cosmicType").equals("item_skin")) && new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")).hasKey("backpackSkinType");
     }
 
+    public static ItemStack applyBackpackSkin(final ItemStack item, SkinType skinType) {
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = (meta.getLore() == null) ? new ArrayList<String>() : meta.getLore();
+        for (final String line : lore) {
+            if (line.equals(CC.translate("&3&l+ BACKPACK [&8N/A&3&l]"))) {
+                lore.set(lore.indexOf(line), CC.translate("&3&l+ BACKPACK [&b" + CC.strip(skinType.getDisplay()) + "&3&l]"));
+            }
+        }
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static ItemStack applyBackpackSocket(ItemStack item) {
+        final ItemMeta meta = item.getItemMeta();
+        final List<String> lore = meta.getLore();
+        lore.add(CC.translate("&3&l+ BACKPACK [&8N/A&3&l]"));
+        meta.setLore(lore);
+        item.setItemMeta(meta);
+
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder conaxData = wrapper.getCompoundOrCreate("conaxData");
+        conaxData.setBoolean("hasBackpackSocket", true);
+        wrapper.setNBTBase("conaxData", (NBTBase) conaxData.get());
+
+        return  wrapper.build();
+    }
+
     public static boolean hasBackpackSocket(final ItemStack item) {
         final NBTWrapper wrapper = new NBTWrapper(item);
         return wrapper.hasKey("conaxData") && new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")).hasKey("hasBackpackSocket");

@@ -35,16 +35,25 @@ public class AdminSettingsGUI {
         this.adminSettingsGUI.setItem(1, 2, new GuiItem(new ItemBuilder(Material.LEATHER_CHESTPLATE)
                 .setGlowing()
                 .setName("&6&lBanned Chestplate Skins")
-                .setLore("&7Click here to ban helmet skins")
+                .setLore("&7Click here to ban chestplate skins")
                 .colorize()
 
                 .build(), event -> {
             new BannedSkinsGUI(ItemSkinType.AMULET).getBannedSkinSettingsGUI().open(event.getWhoClicked());
         }));
+        this.adminSettingsGUI.setItem(2, 2, new GuiItem(new ItemBuilder(Material.GOLD_CHESTPLATE)
+                .setGlowing()
+                .setName("&6&lBanned Backpack Skins")
+                .setLore("&7Click here to ban backpack skins")
+                .colorize()
+
+                .build(), event -> {
+            new BannedSkinsGUI(ItemSkinType.BACKPACK).getBannedSkinSettingsGUI().open(event.getWhoClicked());
+        }));
         this.adminSettingsGUI.setItem(1, 3, new GuiItem(new ItemBuilder(Material.LEATHER_LEGGINGS)
                 .setGlowing()
                 .setName("&6&lBanned Leggings Skins")
-                .setLore("&7Click here to ban helmet skins")
+                .setLore("&7Click here to ban leggings skins")
                 .colorize()
                 .build(), event -> {
             new BannedSkinsGUI(ItemSkinType.BELT).getBannedSkinSettingsGUI().open(event.getWhoClicked());
@@ -52,7 +61,7 @@ public class AdminSettingsGUI {
         this.adminSettingsGUI.setItem(1, 4, new GuiItem(new ItemBuilder(Material.LEATHER_BOOTS)
                 .setGlowing()
                 .setName("&6&lBanned Boots Skins")
-                .setLore("&7Click here to ban helmet skins")
+                .setLore("&7Click here to ban boots skins")
                 .colorize()
 
                 .build(), event -> {
@@ -61,13 +70,13 @@ public class AdminSettingsGUI {
         this.adminSettingsGUI.setItem(1, 5, new GuiItem(new ItemBuilder(Material.GOLD_SWORD)
                 .setGlowing()
                 .setName("&6&lBanned Sword Skins")
-                .setLore("&7Click here to ban helmet skins")
+                .setLore("&7Click here to ban sword skins")
                 .colorize()
                 .build(), event -> {
             new BannedSkinsGUI(ItemSkinType.SWORD).getBannedSkinSettingsGUI().open(event.getWhoClicked());
         }));
 
-        this.adminSettingsGUI.setItem(2, 1, new GuiItem(new ItemBuilder(Material.NETHER_STAR)
+        this.adminSettingsGUI.setItem(3, 1, new GuiItem(new ItemBuilder(Material.NETHER_STAR)
                 .setGlowing()
                 .setName("&b&lCurrent Crystal")
                 .setLore("&7Click here to edit the current crystal")
