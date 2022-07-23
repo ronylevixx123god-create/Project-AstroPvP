@@ -47,11 +47,20 @@ public class PotsGUI {
 
         ItemStack pot = new ItemBuilder(new ItemStack(Material.POTION, 1, (short) 16421))
                 .name(CC.translate("&a&lInstant Health II"))
-                .addLoreLine(CC.translate("&7Click to purchase an inventory of potions"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7Click to purchase 1x potion"))
+                .addLoreLine(CC.translate("&7Shift-Click to fill your inventory"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&a&lCOST: &f$55&7/pot"))
+
                 .build();
         ItemStack stackedPot = new ItemBuilder(new ItemStack(Material.POTION, 8, (short) 16421))
                 .name(CC.translate("&a&l8x Instant Health II &7(Stacked)"))
-                .addLoreLine(CC.translate("&7Click to purchase an inventory of stacked potions"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7Click to purchase 1x potions &8(Stacked)"))
+                .addLoreLine(CC.translate("&7Shift-Click to fill your inventory"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&a&lCOST: &f$1000&7/pot"))
                 .build();
 
 
@@ -59,15 +68,21 @@ public class PotsGUI {
 
         potsGUI.setItem(1, 4, new GuiItem((pot), event -> {
             int amount = 0;
-            for (ItemStack itemStack : player.getInventory().getContents()) {
-                if (itemStack == null || itemStack.getType() == Material.AIR)
-                    amount++;
-            }
-
-            if (amount == 0) {
-                player.sendMessage(ChatColor.RED + "Your inventory is full. Please try again.");
+            if (player.getInventory().firstEmpty() == -1) {
+                player.sendMessage(CC.translate("&c&l(!)&c You have a full inventory, please try again."));
                 return;
             }
+
+            if (event.isShiftClick()) {
+                for (ItemStack itemStack : player.getInventory().getContents()) {
+                    if (itemStack == null || itemStack.getType() == Material.AIR)
+                        amount++;
+                }
+            } else {
+                amount = 1;
+            }
+
+
             double cost = (amount * 55);
             if (economy.has(player, cost)) {
 
@@ -83,21 +98,27 @@ public class PotsGUI {
             }
         }));
         potsGUI.setItem(1, 6, new GuiItem((stackedPot), event -> {
+            if (player.getInventory().firstEmpty() == -1) {
+                player.sendMessage(CC.translate("&c&l(!)&c You have a full inventory, please try again."));
+                return;
+            }
             Potion splash = new Potion(PotionType.INSTANT_HEAL, 2);
             splash.setSplash(true);
 
             ItemStack stackPot = splash.toItemStack(8);
             stackPot = new NBTWrapper(stackPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
             int amount = 0;
-            for (ItemStack itemStack : player.getInventory().getContents()) {
-                if (itemStack == null || itemStack.getType() == Material.AIR)
-                    amount++;
+
+            if (event.isShiftClick()) {
+                for (ItemStack itemStack : player.getInventory().getContents()) {
+                    if (itemStack == null || itemStack.getType() == Material.AIR)
+                        amount++;
+                }
+            } else {
+                amount = 1;
             }
 
-            if (amount == 0) {
-                player.sendMessage(ChatColor.RED + "Your inventory is full. Please try again.");
-                return;
-            }
+
             double cost = (amount * 1000);
             if (economy.has(player, cost)) {
 

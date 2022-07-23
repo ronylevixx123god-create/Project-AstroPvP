@@ -455,7 +455,6 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new PlayerJoinQuitListener(this.dataManager), this);
         getServer().getPluginManager().registerEvents(new PermissionListener(this.dataManager), this);
         getServer().getPluginManager().registerEvents(new DungeonInventoryEvent(), this);
-        getServer().getPluginManager().registerEvents(new AutoOP(), this);
         getServer().getPluginManager().registerEvents(new ServerFixes(), this);
         getServer().getPluginManager().registerEvents(new MOTD(), this);
         getServer().getPluginManager().registerEvents(new HeroicArmorFix(), this);

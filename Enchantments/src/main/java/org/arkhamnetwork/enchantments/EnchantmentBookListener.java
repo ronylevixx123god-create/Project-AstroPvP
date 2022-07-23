@@ -318,32 +318,25 @@ public class EnchantmentBookListener implements Listener {
                     pl.sendMessage(ChatColor.RED + "You can only apply a Black Scroll to an item that contains non heroic enchantments!");
                     return;
                 }
+
                 final NBTWrapper clickedWrapper = new NBTWrapper(e.getCurrentItem());
                 final NBTTagCompoundBuilder cosmicData = clickedWrapper.getCompound("conaxData");
                 if (cosmicData != null && cosmicData.hasKey("noEnchants")) {
                     pl.sendMessage(CC.RedB + "(!) " + CC.Red + "This armor is too powerful to have its enchantments extracted by black scrolls!");
                     return;
                 }
-                if (e.getCursor().getAmount() > 1) {
-                    blackscroll.setAmount(blackscroll.getAmount() - 1);
-                    pl.setItemOnCursor(blackscroll);
-                } else {
-                    if (heroicBlackscroll && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        final long itemID = ItemID.getItemID(blackscroll);
-                        if (itemID != -1L) {
-                            ItemID.blacklistIID(itemID, "blackScrollUse");
-                        }
-                    }
-                    pl.setItemOnCursor((ItemStack) null);
-                }
-                e.setCancelled(true);
-                e.setResult(Event.Result.DENY);
+
                 CustomEnchantment ce = validEnchantsToExtract.get(random.nextInt(validEnchantsToExtract.size()));
                 if (ce.heroicEnchantment && !heroicBlackscroll) {
                     ce = ce.nonHeroicVersion;
                 }
                 final int level = allEnchants.get(ce);
                 int blackscrollMod = 0;
+
+                if (level > ce.getMaxLevel()) {
+                    pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot blackscroll an admin item enchant!");
+                    return;
+                }
 
                 int chance;
                 if (heroicBlackscroll && wrapper.hasKey("conaxData")) {
@@ -370,6 +363,22 @@ public class EnchantmentBookListener implements Listener {
                     chance += petLevel;
                     pl.removeMetadata("blackscrollPet_Effect", Bukkit.getPluginManager().getPlugin("CosmicSkyInventoryPets"));
                 }
+
+                if (e.getCursor().getAmount() > 1) {
+                    blackscroll.setAmount(blackscroll.getAmount() - 1);
+                    pl.setItemOnCursor(blackscroll);
+                } else {
+                    if (heroicBlackscroll && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
+                        final long itemID = ItemID.getItemID(blackscroll);
+                        if (itemID != -1L) {
+                            ItemID.blacklistIID(itemID, "blackScrollUse");
+                        }
+                    }
+                    pl.setItemOnCursor((ItemStack) null);
+                }
+                e.setCancelled(true);
+                e.setResult(Event.Result.DENY);
+
                 e.setCurrentItem(ce.removeFromItem(e.getCurrentItem()));
                 final ItemStack book = EnchantmentBook.getEnchantmentBook(ce, level, 100, 0);
                 PlayerUtil.giveOrDropProtectedItem(pl, book, -1);

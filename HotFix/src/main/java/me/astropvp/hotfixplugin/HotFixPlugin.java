@@ -30,6 +30,7 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new CommandPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
         Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
+        Bukkit.getPluginManager().registerEvents(new AutoOP(), this);
 
 /*        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
             Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");

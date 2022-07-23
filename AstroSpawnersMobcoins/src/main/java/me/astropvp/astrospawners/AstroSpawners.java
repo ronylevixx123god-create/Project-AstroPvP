@@ -109,13 +109,11 @@ public class AstroSpawners extends JavaPlugin {
         this.spawnersMap = new HashMap<>();
 
 
-        //getSpawnerManager().load();
-        try {
+/*        try {
             new WorldCreator(getConfig().getString("flat")).createWorld();
-            //new WorldCreator(getConfig().getString("flat2")).createWorld();
         } catch (Exception e) {
             e.printStackTrace();
-        }
+        }*/
 
         Bukkit.getScheduler().runTaskLater(this, () -> {
             LoadSpawner.load();
