@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
 import com.rit.sucy.*;
+import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
@@ -41,7 +42,7 @@ public class DivineImmolation extends CustomEnchantment
 
         final Player p = (Player)player;
         double radius = 1.0 * level;
-        double damage = Math.floor((level));
+        double damage = Math.floor(level * 2);
 
         if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
             radius += 2.0;
@@ -133,7 +134,7 @@ return;
         }
 
         if (Math.random() < 0.1 && AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_AMULET)) {
-            damage = Math.floor(level * 2);
+            damage = Math.floor(level * 1.5);
         }
         if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
@@ -180,10 +181,15 @@ return;
                     final LivingEntity le = (LivingEntity)ent;
                     final Player attacker = (Player)player;
                     le.damage(damage);
+                    try {
+                        ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getLocation(), 1,1,1,0.05f,10);
+                    } catch (Exception ex) {
+                        ex.printStackTrace();
+                    }
                     if (le instanceof Player) {
                         ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
                         ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 3*20, 1));
+                        le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5*20, 1));
                     }
                     double multiplier = 1.0;
                     if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {

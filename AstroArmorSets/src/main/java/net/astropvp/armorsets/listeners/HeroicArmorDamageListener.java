@@ -4,6 +4,8 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.AstroArmorSets;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.core.AstroCore;
@@ -32,6 +34,14 @@ public class HeroicArmorDamageListener implements Listener {
                 if (Math.random() < 0.33 && AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.THANKSGIVING_2021_SWORD)) {
                     e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + ((Player) e.getEntity()).getKiller().getName() + "'s Carver &4&l] *"));
                     return;
+                }
+
+                if (cache.getCurrentSetCrystals().containsKey(ArmorSetType.NEBULA)) {
+                    double chance = 0.15 * cache.getCurrentSetCrystals().get(ArmorSetType.NEBULA);
+                    if (Math.random() < chance) {
+                        e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + ((Player) e.getEntity()).getKiller().getName() + "'s Nebula Crystal &4&l] *"));
+                        return;
+                    }
                 }
 
             }

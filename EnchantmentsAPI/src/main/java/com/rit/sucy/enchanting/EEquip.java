@@ -150,7 +150,7 @@ extends BukkitRunnable {
             int level = ENameParser.parseLevel(lore);
             if (name == null || level == 0 || !EnchantmentAPI.isRegistered(name)) continue;
             int tier = TieredEnchantments.getEnchantmentTier((String)name);
-            if (le.getWorld().getEnvironment() == World.Environment.THE_END && tier > 5) continue;
+            //if (le.getWorld().getEnvironment() == World.Environment.THE_END && tier > 5) continue;
             if (name.equals("Repair Guard")) {
                 EnchantmentAPI.getEnchantment(name).applyEquipEffect(this.player, level, item);
                 continue;

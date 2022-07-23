@@ -160,19 +160,19 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 }
             }
             if (player.hasMetadata("spectator")) {
-                throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You cannot use that ability while spectating!");
+                throw new PrefixedException(CC.Red + "You cannot use that ability while spectating!");
             }
 
 
             if (!WorldGuardUtils.isPvPEnabled(player.getLocation())) {
                 playerInteractEvent.setCancelled(true);
-                throw new PrefixedPetException(CC.RedB + "PET: " + CC.Red + "You cannot use that pet here (Safezone)!");
+                throw new PrefixedPetException(CC.Red + "You cannot use that pet here (Safezone)!");
             }
 
 
             if (player.getItemInHand().getAmount() > 1) {
                 playerInteractEvent.setCancelled(true);
-                throw new PrefixedPetException(CC.RedB + "PET: " + CC.Red + "You cannot use stacked pets!");
+                throw new PrefixedPetException(CC.Red + "You cannot use stacked pets!");
             }
 
             if (type.getInternalClass().onPetItemInteract(player, itemStack, item, playerInteractEvent)) {

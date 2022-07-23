@@ -16,7 +16,6 @@ import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.utils.Pair;
-import net.minecraft.server.v1_8_R3.NBTBase;
 import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;

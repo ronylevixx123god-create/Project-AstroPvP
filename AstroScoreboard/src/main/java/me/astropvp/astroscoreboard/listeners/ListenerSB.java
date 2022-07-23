@@ -31,6 +31,9 @@ public class ListenerSB implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        if (player.getScoreboard().getObjective("showhealth") == null) {
+            player.getScoreboard().registerNewObjective("showhealth", Criterias.HEALTH);
+        }
         Objective h = player.getScoreboard().getObjective("showhealth");
 
         h.setDisplaySlot(DisplaySlot.BELOW_NAME);

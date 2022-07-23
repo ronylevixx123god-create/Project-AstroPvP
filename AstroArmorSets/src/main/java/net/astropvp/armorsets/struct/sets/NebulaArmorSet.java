@@ -3,8 +3,10 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
+import net.astropvp.armorsets.utils.config.ConfigManager;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -16,7 +18,7 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NebulaArmorSet extends ArmorSet implements ArmorSetWeapon {
+public class NebulaArmorSet extends ArmorSet {
     public ItemStack getHelmet() {
         return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&5&lNebula Dome")).
                 addLoreLines(CC.translate("&5Astronomical Nebula Dome.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
@@ -40,28 +42,31 @@ public class NebulaArmorSet extends ArmorSet implements ArmorSetWeapon {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 10;
+        double increasePercent = 45*  (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("nebulaSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent  * 0.01)));    }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        double increasePercent = 2.5;
+        double increasePercent = 8* (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("nebulaSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));    }
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        double reductionPercent = 2.5;
+        double reductionPercent = 6 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("nebulaSetDamageDecrease")  *  0.01));
         event.setDamage(event.getDamage() * (1-(reductionPercent*amount*0.01)));    }
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        double reductionPercent = 10;
+        double reductionPercent = 20 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("nebulaSetDamageDecrease")  *  0.01));
         event.setDamage(event.getDamage() * (1-(reductionPercent*0.01)));
     }
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
-        lore.add(CC.translate("&b&lYETI SET BONUS"));
-        lore.add(CC.translate("&8● &bDeal +10% damage to all enemies."));
-        lore.add(CC.translate("&8● &bEnemies deal 10% less damage to you."));
-        lore.add(CC.translate("&7(&oRequires all 4 yeti items.&7)"));
+        lore.add(CC.translate("&5&lNEBULA SET BONUS"));
+        lore.add(CC.translate("&8● &5Enemies deal 20% less damage to you."));
+        lore.add(CC.translate("&8● &5Deal +45% damage to all enemies."));
+        lore.add(CC.translate("&8● &5Instant Health Pots heal for more HP"));
+        lore.add(CC.translate("&8● &530% Chance to bypass Heroic Armor"));
+        lore.add(CC.translate("&8● &515% Nebula Ability chance"));
+        lore.add(CC.translate("&7(&oRequires all 4 nebula items.&7)"));
         return lore;
     }
 
@@ -78,28 +83,16 @@ public class NebulaArmorSet extends ArmorSet implements ArmorSetWeapon {
     public List<String> getArmorEquipMessage() {
         List<String> message = new ArrayList<>();
         message.add("");
-        message.add(CC.translate("&b&lYETI SET BONUS"));
-        message.add(CC.translate("&8● &b+10% Outgoing DMG"));
-        message.add(CC.translate("&8● &b-10% Incoming DMG"));
+        message.add(CC.translate("&5&lNEBULA SET BONUS"));
+        message.add(CC.translate("&8● &5Enemies deal 20% less damage to you."));
+        message.add(CC.translate("&8● &5Deal +45% damage to all enemies."));
+        message.add(CC.translate("&8● &5Instant Health Pots heal for more HP"));
+        message.add(CC.translate("&8● &530% Chance to bypass Heroic Armor"));
+        message.add(CC.translate("&8● &515% Nebula Ability chance"));
         message.add("");
         return message;
     }
 
-    public List<ItemStack> getWeapons() {
-        List<ItemStack> weapons = new ArrayList<>();
-        ItemStack sword = new NBTWrapper(new ItemBuilder(Material.DIAMOND_AXE)
-                .setName(CC.RedB + "Yeti Maul")
-                .addLoreLines(CC.Gray + "A penetrating axe used by a Yeti."
-                        , ""
-                        , CC.AquaB + "YETI WEAPON BONUS"
-                        , CC.translate("&8● &bDeal +7.5% damage to all enemies")
-                        , CC.translate("&8● &bBypass 50% of Heroic Armor")
-                        , CC.Gray + "(" + CC.GrayI + "Requires all 4 yeti items." + CC.Gray + ")")
-                .addEnchantment(Enchantment.DAMAGE_ALL, 5).addEnchantment(Enchantment.DURABILITY, 3).build()).setString("cosmicType", "YETI_AXE").build();
-
-        weapons.add(sword);
-        return weapons;
-    }
 
 
 }

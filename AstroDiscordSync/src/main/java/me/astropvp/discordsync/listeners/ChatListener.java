@@ -58,7 +58,7 @@ public class ChatListener implements Listener {
                 for (UUID uuid : uuidUserMap.keySet()) {
                     Long discordId = uuidUserMap.get(uuid);
                     User user = this.plugin.getJda().getUserById(discordId);
-                    this.plugin.getJda().getGuilds().stream().filter((g) -> g.getName().equals("AstroPvP")).findFirst().ifPresent((g) -> {
+                    this.plugin.getJda().getGuilds().stream().filter((g) -> g.getName().equals("AstroPvP - Factions")).findFirst().ifPresent((g) -> {
                         Member member = this.getMemberById(user, g);
                         if (user != null && member != null) {
                             if (member.getRoles().stream().anyMatch((r) -> r.getId().equals(nitroBoosterRole))) {
@@ -108,24 +108,24 @@ public class ChatListener implements Listener {
 
     private void checkPermissions(Player player) {
         if (player.hasPermission("essentials.kit.nitro") && !isNitroBooster(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kit.nitro false");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kits.nitro false");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kit.nitro false");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kits.nitro false");
 
         } else if (isNitroBooster(player) && !player.hasPermission("essentials.kit.nitro")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kits.nitro true");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kit.nitro true");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kits.nitro true");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kit.nitro true");
         }
         if (player.hasPermission("essentials.kit.faction") && !isFactionLeader(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kit.faction false");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kits.faction false");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kit.faction false");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kits.faction false");
         } else if (isFactionLeader(player) && !player.hasPermission("essentials.kit.faction")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kits.faction true");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " permission set essentials.kit.faction true");                        }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kits.faction true");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kit.faction true");                        }
 
         if (player.hasPermission("essentials.kit.media") && !isYoutuber(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent remove media");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set apollo");
         } else if (isYoutuber(player) && !player.hasPermission("essentials.kit.media")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set media");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set media");
         }
     }
 

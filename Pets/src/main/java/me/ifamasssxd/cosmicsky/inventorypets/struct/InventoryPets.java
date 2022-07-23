@@ -46,7 +46,7 @@ public enum InventoryPets
       this.internalClass = instance;
       this.skinBlob = blob;
       this.redSkinBlob = redSkinBlob;
-      final GameProfile profile = new GameProfile(UUID.randomUUID(), this.name().toLowerCase());
+      GameProfile profile = new GameProfile(UUID.randomUUID(), this.name().toLowerCase());
       profile.getProperties().put("textures", new Property("textures", this.skinBlob));
       this.builder = new NBTTagCompoundBuilder();
       GameProfileSerializer.serialize(this.builder.get(), profile);
@@ -58,7 +58,7 @@ public enum InventoryPets
       this.internalClass = instance;
       this.skinBlob = blob;
       this.redSkinBlob = null;
-      final GameProfile profile = new GameProfile(UUID.randomUUID(), this.name().toLowerCase());
+      GameProfile profile = new GameProfile(UUID.randomUUID(), this.name().toLowerCase());
       profile.getProperties().put("textures", new Property("textures", this.skinBlob));
       this.builder = new NBTTagCompoundBuilder();
       GameProfileSerializer.serialize(this.builder.get(), profile);
@@ -82,14 +82,6 @@ public enum InventoryPets
 
    public static InventoryPets fromName(final String name) {
       return Arrays.stream(values()).filter(f -> f.name().equalsIgnoreCase(name)).findFirst().orElse(null);
-   }
-
-   private InventoryPets(final String s, final int n, final String itemName, final String petName, final InventoryPet internalClass, final String skinBlob, final NBTTagCompoundBuilder builder) {
-      this.itemName = itemName;
-      this.petName = petName;
-      this.internalClass = internalClass;
-      this.skinBlob = skinBlob;
-      this.builder = builder;
    }
 
    public String getRedSkinBlob() {

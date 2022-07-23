@@ -83,6 +83,10 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
 
         List<ItemStack> items = Lists.newArrayList();
         for (CustomEnchantment enchant : enchants.keySet()) {
+            final int level = enchants.get(enchant);
+            if (level > enchant.getMaxLevel()) {
+                continue;
+            }
             ItemStack enchantmentBook = EnchantmentBook.getEnchantmentBook(enchant, enchant.getMaxLevel(), 100, 0);
             NBTWrapper enchantmentBookWrapper = new NBTWrapper(enchantmentBook);
             NBTTagCompoundBuilder compound = enchantmentBookWrapper.getCompoundOrCreate("EnchantmentData");
@@ -114,7 +118,7 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
     }
 
     private void fillInventory(Inventory inventory) {
-        ItemStack pane = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) DyeColor.BLACK.getData());
+        ItemStack pane = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) DyeColor.BLACK.getData())).name("&7").build();
         for (int i = 0; i < inventory.getSize(); i++) {
             if (inventory.getItem(i) == null || inventory.getItem(i).getType() == Material.AIR)
                 inventory.setItem(i, pane);

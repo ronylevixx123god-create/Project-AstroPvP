@@ -42,6 +42,13 @@ public class OmniBlackScrollListener implements Listener {
             ItemStack item = data.getItem();
             String enchantmentName = OmniBlackscroll.getEnchantmentName(event.getCurrentItem());
             CustomEnchantment enchantment = EnchantmentAPI.getEnchantment(enchantmentName);
+            final int level = EnchantmentAPI.getEnchantments(item).get(enchantment);
+            if (level > enchantment.getMaxLevel()) {
+                player.sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot blackscroll an admin item enchant!");
+                event.setCancelled(true);
+                return;
+            }
+
             enchantment.removeFromItem(item);
             player.getInventory().setItem(data.getSlot(), item);
             player.sendMessage(CC.translate("&a&l(!) &aYou have removed the &f&l" + enchantment.name() + "&a enchantment from " + data.getItem().getItemMeta().getDisplayName() + "&a!"));

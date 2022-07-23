@@ -133,7 +133,13 @@
         <scope>provided</scope>
     </dependency>
 
-
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>server</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/WineSpigot-V1.1.6.jar</systemPath>
+    </dependency>
     <dependency>
         <groupId>net.astropvp</groupId>
         <artifactId>AstroDamageHandler</artifactId>

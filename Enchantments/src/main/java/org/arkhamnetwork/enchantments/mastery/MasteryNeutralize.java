@@ -33,11 +33,11 @@ public class MasteryNeutralize extends MasteryCustomEnchantment
             return;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.CORRUPT_SWORD)) {
-            if (Math.random() >= 0.0015 * level * 2.0) {
+            if (Math.random() >= 0.0035 * level * 2.0) {
                 return;
             }
         }
-        else if (Math.random() >= 0.0015 * level) {
+        else if (Math.random() >= 0.0035 * level) {
             return;
         }
         user.sendMessage(CC.translate("&5&l* NEUTRALIZED &7[" + pTarget.getName() + "&7]&5&l *"));

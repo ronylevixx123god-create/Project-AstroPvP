@@ -82,7 +82,13 @@
 
         <!-- https://mvnrepository.com/artifact/com.google.collect/com.google.collect -->
 
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>core</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>cc</artifactId>

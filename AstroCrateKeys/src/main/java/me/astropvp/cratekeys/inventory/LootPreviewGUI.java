@@ -30,7 +30,6 @@ public class LootPreviewGUI {
     private CrateType type;
 
 
-
     public PaginatedGui getLootGUI() {
         return this.expShopUI;
 
@@ -41,8 +40,6 @@ public class LootPreviewGUI {
         this.type = type;
 
         this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
-
-
 
 
         Map<ItemStack, Double> itemList = AstroCrateKeysPlugin.getCachedCrateLoot().get(type);
@@ -92,19 +89,23 @@ public class LootPreviewGUI {
             itemBuilder.addLoreLine("");
             itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
             itemBuilder.addLoreLine("");
-            //itemBuilder.addLoreLine(CC.translate("&f&l➥ &f&lFILTERED: " + (filter.isFiltered(item) ? "&aTrue" : "&cFalse")));
             this.expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
+                ItemStack found = null;
+                if (player.isOp() && event.isShiftClick() && event.isRightClick()) {
+                    for (ItemStack i : itemList.keySet()) {
+                        if (i.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) {
+                            found = i;
+                        }
+                    }
 
-/*                if (filter.isFiltered(item)) {
-                    filter.setFiltered(item, false);
-                } else {
-                    filter.setFiltered(item, true);
-                }*/
+                    itemList.remove(found);
+                    AstroCrateKeysAPI.setItems(type, itemList);
+                    AstroCrateKeysPlugin.cachedCrateLoot.put(type, AstroCrateKeysAPI.getItems(type));
+                    player.sendMessage(String.valueOf(CC.Green) + "Removed " + found.getItemMeta().getDisplayName() +   " from the crate '" + type.getPrefixedName() + "'!");
+                    LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, type);
+                    lootPreviewGUI.getLootGUI().open(player);
+                }
 
-
-
-                //LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, type);
-                //lootPreviewGUI.expShopUI.open(player);
             }));
         }
 
