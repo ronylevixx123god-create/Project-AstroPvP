@@ -32,7 +32,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
                 Blessed.blessPlayer((Player) player, false);
             }
         }
-        double damage_negation = (double)level * 0.035D;
+        double damage_negation = (double)level * 0.025D;
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0D - damage_negation));
             Location l = player.getLocation();

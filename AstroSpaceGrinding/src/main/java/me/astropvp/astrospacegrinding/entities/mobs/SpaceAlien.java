@@ -17,7 +17,6 @@ import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
-import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Location;
 import org.bukkit.Material;

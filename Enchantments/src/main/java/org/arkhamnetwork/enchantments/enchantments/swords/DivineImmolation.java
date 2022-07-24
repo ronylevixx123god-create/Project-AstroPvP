@@ -143,25 +143,22 @@ return;
             final List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
             ents.add(playerHit);
             for (final Entity ent : ents) {
-                if (ent instanceof LivingEntity) {
+                if (ent instanceof Player) {
                     Player pEnt = null;
-                    if (ent instanceof Player) {
-                        pEnt = (Player)ent;
-                    }
-                    if (pEnt != null && p.getName().equals(pEnt.getName())) {
+                    pEnt = (Player)ent;
+                    if (p.getName().equals(pEnt.getName())) {
                         continue;
                     }
-                    if (pEnt != null && GeneralUtil.isAtleastTruce(p, pEnt)) {
+                    if (GeneralUtil.isAtleastTruce(p, pEnt)) {
                         continue;
                     }
-                    if (pEnt != null && pEnt.getGameMode() != GameMode.SURVIVAL) {
+                    if (pEnt.getGameMode() != GameMode.SURVIVAL) {
                         continue;
                     }
-                    if (pEnt != null && !p.canSee(pEnt)) {
+                    if (!p.canSee(pEnt)) {
                         continue;
                     }
 
-                    if (pEnt == null) continue;
                     if (pEnt.getInventory() == null) continue;
                     if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)){
                     if ((AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
@@ -169,7 +166,7 @@ return;
                         continue;
                     }
                     }
-                    if (pEnt != null && pEnt.hasMetadata("NPC")) {
+                    if (pEnt.hasMetadata("NPC")) {
                         continue;
                     }
                     if (WorldGuardUtils.isPvPDisabled(ent.getLocation())) {
@@ -186,11 +183,9 @@ return;
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                    if (le instanceof Player) {
-                        ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
-                        ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
-                        le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5*20, 1));
-                    }
+                    ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
+                    ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 6*20, 1));
                     double multiplier = 1.0;
                     if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
                         multiplier += 0.25;

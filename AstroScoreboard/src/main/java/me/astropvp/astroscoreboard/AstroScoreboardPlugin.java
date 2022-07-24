@@ -4,11 +4,16 @@ package me.astropvp.astroscoreboard;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
 import me.astropvp.astroscoreboard.board.Scoreboard;
 import me.astropvp.astroscoreboard.listeners.ListenerSB;
 import me.astropvp.astroscoreboard.manager.BoardManager;
+import me.astropvp.astroscoreboard.utils.TimeUtils;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
+import me.astropvp.astrospacegrinding.data.SpacePlayerData;
+import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
@@ -40,7 +45,8 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerDefaultAndFactionScoreboard();
         registerStrongHoldScoreboard();
         registerDuelScoreboard();
-        registerListener(new ListenerSB());
+        registerSpaceScoreboard();
+        //registerListener(new ListenerSB());
     }
 
 
@@ -80,8 +86,45 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%duel-runtime%", getMS(1), player -> getDuelRunTime((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%duel-arena%", getMS(10), player -> CC.strip(DuelAPI.getDuel((Player) player.getPlayer()).getArena().getName()));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%duel-damage%", getMS(1), player -> getDoubleDamageString(DuelAPI.getDuel((Player) player.getPlayer())));
+    }
 
+    public void registerSpaceScoreboard() {
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-space%", getMS(5), player -> ((Player)player.getPlayer()).getWorld().getName().equals("space"));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-forcefield%", getMS(1), player -> getForceFieldString((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-mobs-killed%", getMS(5), player -> getSpaceMobsKilled((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-time-spent%", getMS(1), player -> getSpaceTimeSpentString((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-money-made%", getMS(5), player -> getSpaceMoneyMadePlayer((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-xp-earned%", getMS(5), player -> getSpaceXPEarned((Player) player.getPlayer()));
 
+    }
+
+    public String getForceFieldString(Player player) {
+        ForceFieldData fdata = ForceFieldData.findPlayer(player);
+        if (fdata.isActive()) {
+            return CC.translate("&aActive &7(" + fdata.getRemainingForceFieldTimeFormatted() + "&7)");
+        } else {
+            return CC.translate("&cInactive");
+        }
+    }
+
+    public int getSpaceMobsKilled(Player player) {
+        SpacePlayerData data = SpacePlayerData.findPlayer(player);
+        return data.getKills(MonsterType.SPACE_ALIEN);
+    }
+
+    public String getSpaceMoneyMadePlayer(Player player) {
+        SpacePlayerData data = SpacePlayerData.findPlayer(player);
+        return NumberUtils.formatMoney(data.getMoneyMade());
+    }
+
+    public String getSpaceXPEarned(Player player) {
+        SpacePlayerData data = SpacePlayerData.findPlayer(player);
+        return NumberUtils.formatMoney(data.getXpMade());
+    }
+
+    public String getSpaceTimeSpentString(Player player) {
+        SpacePlayerData data = SpacePlayerData.findPlayer(player);
+        return TimeUtils.format(data.getTimeInSpace());
     }
 
     public double getPlayerKDR(Player player) {

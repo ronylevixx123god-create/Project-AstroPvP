@@ -105,6 +105,7 @@ public class Phoenix
             double dmg = e.getFinalDamage();
             if (Phoenix.procPhoenix((Player) player, attacker, level, dmg)) {
                 e.setDamage(0.0);
+                e.setCancelled(true);
             }
         }
     }
@@ -219,7 +220,7 @@ public class Phoenix
             }
 
             int soulCost = Phoenix.getPhoenixProcSoulCost(player);
-            if (KillTrackerAPI.hasSoulAmount(player, soulCost) && Phoenix.canUsePhoenix(player, level)) {
+            if (KillTrackerAPI.hasSoulAmount(player, soulCost)) {
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);
                 last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 player.setMetadata("phoenixProcs", new FixedMetadataValue(Enchantments.getInstance(), player.hasMetadata("phoenixProcs") ? player.getMetadata("phoenixProcs").get(0).asInt() + 1 : 1));
