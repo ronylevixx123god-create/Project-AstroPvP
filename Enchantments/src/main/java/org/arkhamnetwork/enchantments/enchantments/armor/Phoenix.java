@@ -90,7 +90,7 @@ public class Phoenix extends CustomEnchantment {
             return false;
         }
 
-            final boolean utilityBelt = AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY);
+        final boolean utilityBelt = AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY);
         final boolean deathKnightBlockedPheonix = Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT");
         final boolean thanosBlockedPheonix = MaskType.hasEquipped((Player) damager, "THANOS");
 
@@ -119,7 +119,7 @@ public class Phoenix extends CustomEnchantment {
                     Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
                     return false;
                 }
-                if (player.hasMetadata("witcher_negate")) {
+                if (player.hasMetadata("witcher_ability")) {
                     player.sendMessage("");
                     player.sendMessage(CC.RedB + "* PHOENIX BLOCKED (WITCHER) [" + CC.Gray + damager.getName() + CC.RedB + "] *");
                     player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));

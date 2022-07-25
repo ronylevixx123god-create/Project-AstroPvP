@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.google.common.collect.Lists;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.core.AstroCore;
@@ -14,8 +15,12 @@ import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionType;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class PotsGUI {
     private PaginatedGui potsGUI;
@@ -106,7 +111,11 @@ public class PotsGUI {
             splash.setSplash(true);
 
             ItemStack stackPot = splash.toItemStack(8);
-            stackPot = new NBTWrapper(stackPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
+            ItemMeta im = stackPot.getItemMeta();
+            List<String> lore = Lists.newArrayList(CC.Gray + "Stackable (8)");
+            im.setLore(lore);
+            stackPot.setItemMeta(im);
+
             int amount = 0;
 
             if (event.isShiftClick()) {
@@ -124,6 +133,7 @@ public class PotsGUI {
 
                 economy.withdrawPlayer(player, cost);
                 for (int i = 0; i < amount; i++) {
+                    stackPot = new NBTWrapper(stackPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
                     player.getInventory().addItem(stackPot);
                 }
                 player.playSound(player.getLocation(), Sound.VILLAGER_YES, 10, 1);

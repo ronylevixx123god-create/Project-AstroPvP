@@ -37,13 +37,16 @@ import java.util.*;
 public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
     private final AstroTournamentsPlugin astroTournamentsPlugin;
+
     private final List<TournamentPlayer> tournamentParticipants;
     private final List<TournamentMatch> tournamentMatchList;
+    public Queue<TournamentPlayer> playerQueue;
+
+
     private final List<SkinType> bannedSkins;
     private final List<ArmorSetType> currentArmorCrystal;
     private boolean active;
     private boolean joinable;
-    public Queue<TournamentPlayer> playerQueue;
     private Location waitingRoomLocation;
 
     public TournamentManager(AstroTournamentsPlugin astroTournamentsPlugin) {
@@ -62,15 +65,6 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         });
     }
 
-    public TournamentPlayer getActiveTournamentPlayer(UUID uuid) {
-        TournamentPlayer tournamentPlayer = getTournamentPlayer(uuid);
-        if (getTournamentParticipants().contains(tournamentPlayer)) {
-            return tournamentPlayer;
-        } else {
-            return null;
-        }
-    }
-
     public TournamentPlayer getTournamentPlayer(UUID uuid) {
         if (!contains(uuid.toString())) {
             TournamentPlayer tournamentPlayer = new TournamentPlayer(uuid);
@@ -87,18 +81,20 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         this.astroTournamentsPlugin.getArenaRegister().getArenas().values().forEach(arena -> {
 
             if (astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size() == 1) {
-                Player winner = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(0).getPlayer();
+                TournamentPlayer winnerTournamentPlayer = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(0);
+                Player winner = winnerTournamentPlayer.getPlayer();
                 Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage(Utils.fixColor("&6&lAstro&f&lPvP &6&lTournaments"));
                 Bukkit.broadcastMessage(Utils.fixColor(" &f&l* &fTournament Winner: &e" + winner.getName()));
                 Bukkit.broadcastMessage("");
-                winner.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox").createClaimableItem(false));
                 astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().clear();
                 astroTournamentsPlugin.getTournamentManager().getPlayerQueue().clear();
                 astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
                 astroTournamentsPlugin.getTournamentManager().setJoinable(false);
                 astroTournamentsPlugin.getTournamentManager().setActive(false);
                 winner.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                winner.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox").createClaimableItem(false));
+                winnerTournamentPlayer.setInTournament(false);
                 return;
             }
 
@@ -138,7 +134,6 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         splash.setSplash(true);
 
         ItemStack stackedPot = splash.toItemStack(8);
-        stackedPot = new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build();
 
         player.getInventory().setItem(8, tournamentPlayer.getBoots());
         player.getInventory().setItem(7, tournamentPlayer.getChestplate());
@@ -147,12 +142,17 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         player.getInventory().setItem(0, tournamentPlayer.getSword());
         player.getInventory().setItem(1, new ItemStack(Material.ENDER_PEARL, 16));
         player.getInventory().setItem(2, KillTrackerAPI.createSoulShard(250000));
-        player.getInventory().setItem(27, stackedPot);
-        player.getInventory().setItem(28, stackedPot);
-        player.getInventory().setItem(29, stackedPot);
-        player.getInventory().setItem(30, stackedPot);
-        player.getInventory().setItem(31,stackedPot);
-        player.getInventory().setItem(33, stackedPot);
+        player.getInventory().setItem(27, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build());
+        player.getInventory().setItem(28, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
+        ;
+        player.getInventory().setItem(29, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
+        ;
+        player.getInventory().setItem(30, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
+        ;
+        player.getInventory().setItem(31, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
+        ;
+        player.getInventory().setItem(33, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
+        ;
 
 
         while (Utils.hasAvaliableSlot(player, 1)) {
@@ -181,7 +181,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         //Load the banned skins
     }
 
-    public  void saveBannedSkinsToConfig() {
+    public void saveBannedSkinsToConfig() {
         //Save banned skins
     }
 
@@ -209,10 +209,15 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
     public void end() {
         for (TournamentPlayer tournamentPlayer : getTournamentParticipants()) {
             Utils.emptyInventory(tournamentPlayer.getPlayer());
+            tournamentPlayer.setInTournament(false);
             tournamentPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             tournamentPlayer.getPlayer().sendMessage(CC.translate("&c&l(!)&c The tournament has been force ended and you have been teleported to spawn!"));
         }
         astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
+        astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().clear();
+        astroTournamentsPlugin.getTournamentManager().getPlayerQueue().clear();
+
+
         astroTournamentsPlugin.getTournamentManager().setActive(false);
         astroTournamentsPlugin.getTournamentManager().setJoinable(false);
     }

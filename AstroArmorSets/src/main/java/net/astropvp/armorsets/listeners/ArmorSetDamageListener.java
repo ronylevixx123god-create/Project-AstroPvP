@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.skins.swords.WetNoodleSword;
+import me.astropvp.astropvpskins.utils.ItemSkinUtils;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -36,6 +37,11 @@ public class ArmorSetDamageListener implements Listener {
         if (e.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(attacked.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacker.getLocation()))
             return;
+        if (attacker instanceof Player && attacked instanceof Player) {
+            if (!ItemSkinUtils.canPvP((Player)attacker, (Player)attacked, e)) {
+                return;
+            }
+        }
 
         ArmorSetCache cache;
         if (attacker instanceof Player) {

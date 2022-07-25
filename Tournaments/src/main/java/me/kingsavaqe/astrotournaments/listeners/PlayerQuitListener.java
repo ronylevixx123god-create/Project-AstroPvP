@@ -24,9 +24,9 @@ public class PlayerQuitListener implements Listener {
     }
 
     @EventHandler
-    public void playerQuit(PlayerQuitEvent event) {
+    public void playerQuitInTournament(PlayerQuitEvent event) {
         if(event.getPlayer() == null) return;
-        TournamentPlayer player1 = tournamentManager.getActiveTournamentPlayer(event.getPlayer().getUniqueId());
+        TournamentPlayer player1 = tournamentManager.getTournamentPlayer(event.getPlayer().getUniqueId());
         TournamentPlayer player2;
 
         if(astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
@@ -80,6 +80,13 @@ public class PlayerQuitListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void onQuitWaiting(PlayerQuitEvent event) {
+        TournamentPlayer player = AstroTournamentsPlugin.instance.getTournamentManager().getTournamentPlayer(event.getPlayer().getUniqueId());
+        if (player.isInTournament()) {
+            player.leaveTournament();
+        }
+    }
 
 
 }

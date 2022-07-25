@@ -25,13 +25,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class TournamentListener implements Listener {
+public class TournamentLogicListener implements Listener {
     public List<String> allowedCommands = Arrays.asList("/msg", "/r", "/message", "/reply", "/tournament", "/tm", "/tournaments", "/f c f", "/f c p", "/f c t", "/f c m");
     private TournamentManager tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onCommand(PlayerCommandPreprocessEvent e) {
-        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament() && !isAllowedCommand(e.getMessage())) {
+        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).isInTournament() && !isAllowedCommand(e.getMessage())) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot use this command in a tournament."));
             e.getPlayer().sendMessage(CC.translate("&7You can leave the tournament with /tournament leave."));
             e.setCancelled(true);
@@ -42,16 +42,15 @@ public class TournamentListener implements Listener {
 
     @EventHandler
     public void onItemDrop(PlayerDropItemEvent e) {
-        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
+        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).isInTournament()) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot drop items in a tournament."));
-
             e.setCancelled(true);
         }
     }
 
     @EventHandler
     public void onBlockBreak(BlockBreakEvent e) {
-        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
+        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).isInTournament()) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot break blocks while in a tournament."));
             e.setCancelled(true);
         }
@@ -59,7 +58,7 @@ public class TournamentListener implements Listener {
 
     @EventHandler
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
+        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).isInTournament()) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place blocks while in a tournament."));
             e.setCancelled(true);
         }
@@ -67,7 +66,7 @@ public class TournamentListener implements Listener {
 
     @EventHandler
     public void onFly(PlayerToggleFlightEvent e) {
-        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
+        if (tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).isInTournament()) {
             e.setCancelled(true);
         }
     }
@@ -75,12 +74,11 @@ public class TournamentListener implements Listener {
 
     @EventHandler
     public void onInventoryOpen(InventoryOpenEvent e) {
-        if (e.getInventory().getType() != InventoryType.PLAYER && tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).inActiveTournament()) {
+        if (e.getInventory().getType() != InventoryType.PLAYER && tournamentManager.getTournamentPlayer(e.getPlayer().getUniqueId()).isInTournament() && !CC.strip(e.getInventory().getTitle()).equals("Astro Tournaments Menu")) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot open inventories while in a tournament."));
             e.setCancelled(true);
             e.getPlayer().closeInventory();
         }
-
     }
 
     public boolean isAllowedCommand(String message) {
@@ -91,4 +89,6 @@ public class TournamentListener implements Listener {
         }
         return false;
     }
+
+
 }

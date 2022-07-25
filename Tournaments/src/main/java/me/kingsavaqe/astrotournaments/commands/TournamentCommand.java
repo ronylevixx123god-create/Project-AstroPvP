@@ -70,6 +70,7 @@ public class TournamentCommand extends CommandBase {
 
 
         tournamentManager.getTournamentParticipants().add(tournamentManager.getTournamentPlayer(player.getUniqueId()));
+        tournamentManager.getTournamentPlayer(player.getUniqueId()).setInTournament(true);
         player.playSound(player.getLocation(), Sound.ORB_PICKUP, 2.0F, 2.0F);
         player.teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         player.sendMessage(Utils.fixColor("&aYou have successfully joined the tournament"));
@@ -83,7 +84,7 @@ public class TournamentCommand extends CommandBase {
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
-        if(!astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId()).inActiveTournament()) {
+        if(!astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId()).isInTournament()) {
             player.sendMessage(Utils.fixColor("&cYou are not in a tournament"));
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;

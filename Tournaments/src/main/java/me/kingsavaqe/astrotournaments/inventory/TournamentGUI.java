@@ -39,7 +39,7 @@ public class TournamentGUI {
         }));
 
         this.astroTournamentInventory.setItem(3, 8, new GuiItem(createSettingsItem(), event -> {
-            if (tournamentManager.getTournamentPlayer(player.getUniqueId()).inActiveTournament()) {
+            if (tournamentManager.getTournamentPlayer(player.getUniqueId()).isInTournament()) {
                 player.sendMessage(CC.translate("&c&l(!)&c You cannot open this menu when in a tournament!"));
                 return;
             }

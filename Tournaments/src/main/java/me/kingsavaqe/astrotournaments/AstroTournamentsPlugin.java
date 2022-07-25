@@ -2,21 +2,18 @@ package me.kingsavaqe.astrotournaments;
 
 import lombok.Getter;
 import me.kingsavaqe.astrotournaments.commands.TournamentCommand;
+import me.kingsavaqe.astrotournaments.listeners.PlayerJoinListener;
 import me.kingsavaqe.astrotournaments.listeners.PlayerQuitListener;
 import me.kingsavaqe.astrotournaments.listeners.TournamentDeathListener;
-import me.kingsavaqe.astrotournaments.listeners.TournamentListener;
+import me.kingsavaqe.astrotournaments.listeners.TournamentLogicListener;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
-import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.tasks.NoFlightTask;
 import me.kingsavaqe.astrotournaments.utils.Queue;
 import me.kingsavaqe.astrotournaments.utils.Utils;
 import me.mattstudios.mf.base.CommandManager;
-import org.bukkit.Sound;
+import org.bukkit.Bukkit;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.Map;
-import java.util.UUID;
 
 public class AstroTournamentsPlugin extends JavaPlugin {
 
@@ -49,6 +46,14 @@ public class AstroTournamentsPlugin extends JavaPlugin {
         this.registerListeners();
         this.registerTasks();
 
+
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+            System.out.println("[Tournaments] Started auto saving tournament data");
+
+            getTournamentManager().saveAll();
+            System.out.println("[Tournaments] Finished auto saving tournament data");
+
+        },60L, 20L*10);
     }
 
     public void onDisable() {
@@ -72,7 +77,8 @@ public class AstroTournamentsPlugin extends JavaPlugin {
         PluginManager pluginManager = this.getServer().getPluginManager();
         pluginManager.registerEvents(new TournamentDeathListener(this), this);
         pluginManager.registerEvents(new PlayerQuitListener(this), this);
-        pluginManager.registerEvents(new TournamentListener(), this);
+        pluginManager.registerEvents(new TournamentLogicListener(), this);
+        pluginManager.registerEvents(new PlayerJoinListener(), this);
 
     }
 }

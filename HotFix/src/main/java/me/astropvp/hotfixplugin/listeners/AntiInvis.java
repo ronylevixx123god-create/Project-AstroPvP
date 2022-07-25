@@ -1,5 +1,7 @@
 package me.astropvp.hotfixplugin.listeners;
 
+import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.hotfixplugin.HotFixPlugin;
 import org.bukkit.event.Listener;
 
 import net.md_5.bungee.api.ChatColor;
@@ -12,9 +14,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockDispenseEvent;
 import org.bukkit.event.entity.PotionSplashEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerItemConsumeEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.Potion;
 import org.bukkit.potion.PotionEffectType;
@@ -103,8 +103,5 @@ public class AntiInvis implements Listener {
         p.sendMessage(ChatColor.YELLOW + "Invisibility Potions have been disabled on the server!");
     }
 
-    @EventHandler
-    public void onjoin(PlayerJoinEvent e) {
-            e.getPlayer().removePotionEffect(PotionEffectType.HEALTH_BOOST);
-    }
+
 }

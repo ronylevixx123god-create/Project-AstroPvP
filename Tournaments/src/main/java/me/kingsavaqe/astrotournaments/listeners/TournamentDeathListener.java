@@ -25,7 +25,7 @@ public class TournamentDeathListener implements Listener {
     @EventHandler
     public void tournamentDeathListener(PlayerDeathEvent event) {
         if(event.getEntity() == null || event.getEntity().getKiller() == null) return;
-        TournamentPlayer victim = tournamentManager.getActiveTournamentPlayer(event.getEntity().getUniqueId());
+        TournamentPlayer victim = tournamentManager.getTournamentPlayer(event.getEntity().getUniqueId());
         TournamentPlayer attacker;
 
         if(astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
@@ -50,15 +50,18 @@ public class TournamentDeathListener implements Listener {
                 tournamentMatch.getArena().reset();
                 astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().remove(tournamentMatch);
 
-                if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getActiveTournamentPlayer(victim.getUuid())))
+                if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(tournamentManager.getTournamentPlayer(victim.getUuid()))) {
                     astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(victim);
+                }
                 astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().remove(victim);
-
-                attacker.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+                victim.setInTournament(false);
                 victim.getPlayer().sendMessage(Utils.fixColor("&cYou have been eliminated from the tournament"));
 
-                if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(attacker))
+                attacker.getPlayer().teleport(astroTournamentsPlugin.getTournamentManager().getWaitingRoomLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+
+                if(astroTournamentsPlugin.getTournamentManager().getPlayerQueue().contains(attacker)) {
                     astroTournamentsPlugin.getTournamentManager().getPlayerQueue().removeFromQueue(attacker);
+                }
                 astroTournamentsPlugin.getTournamentManager().getPlayerQueue().enqueue(attacker);
 
                 astroTournamentsPlugin.getServer().getScheduler().runTaskLater(astroTournamentsPlugin, () -> {

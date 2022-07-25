@@ -38,6 +38,8 @@ public class TournamentPlayer implements KeyToSave {
     private SkinType swordSkin;
     private SkinType backpackSkin;
 
+    private boolean inTournament;
+
     private transient final ItemStack helmet;
     private transient final ItemStack chestplate;
     private transient final ItemStack leggings;
@@ -53,7 +55,7 @@ public class TournamentPlayer implements KeyToSave {
         this.bootsSkin = null;
         this.swordSkin = null;
         this.backpackSkin = null;
-
+        this.inTournament = false;
         this.helmet = getHelmet();
         this.chestplate = getChestplate();
         this.leggings = getLeggings();
@@ -221,18 +223,18 @@ public class TournamentPlayer implements KeyToSave {
         this.uuid = UUID.fromString(s);
     }
 
-    public boolean inActiveTournament() {
-        return AstroTournamentsPlugin.instance.getTournamentManager().getActiveTournamentPlayer(getUuid()) != null;
-    }
 
     public void leaveTournament() {
-        if (inActiveTournament()) {
+        if (inTournament) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().getPlayerQueue().contains(this)) {
                 AstroTournamentsPlugin.instance.getTournamentManager().getPlayerQueue().removeFromQueue(this);
             }
             AstroTournamentsPlugin.instance.getTournamentManager().getTournamentParticipants().remove(this);
+            this.inTournament = false;
         }
     }
+
+
 
 
 }
