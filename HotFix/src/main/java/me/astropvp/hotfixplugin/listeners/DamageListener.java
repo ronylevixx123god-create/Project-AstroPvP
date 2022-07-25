@@ -10,6 +10,7 @@ import net.astropvp.damagehandler.AstroDamageHandler;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -97,11 +98,14 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.HIGH)
     public void dmg(EntityDamageByEntityEvent e) {
-
+        if (e.getDamager().getWorld().getName().equals("space")) {
+            e.setDamage(e.getDamage() * 0.75);
+        }
         //Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
     }
+
 
     @EventHandler(priority = EventPriority.HIGH)
     public void plutoPvP(EntityDamageByEntityEvent e) {

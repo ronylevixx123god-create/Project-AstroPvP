@@ -1,34 +1,9 @@
-/*
- * Decompiled with CFR 0.150.
- *
- * Could not load the following classes:
- *  com.compilex.CosmicOutposts.CosmicOutpostsAPI
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.MaskUtils
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ParticleEffect
- *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.UpgradeUtils
- *  com.earth2me.essentials.Essentials
- *  com.rit.sucy.CustomEnchantment
- *  me.ifamasssxd.factionupgrades.FactionUpgradeAPI
- *  me.ifamasssxd.factionupgrades.net.astropvp.armorsets.struct.FactionUpgrade
- *  me.ifamasssxd.killtracker.KillTrackerAPI
- *  org.bukkit.Bukkit
- *  org.bukkit.ChatColor
- *  org.bukkit.Location
- *  org.bukkit.Sound
- *  org.bukkit.entity.Entity
- *  org.bukkit.entity.LivingEntity
- *  org.bukkit.entity.Player
- *  org.bukkit.event.Listener
- *  org.bukkit.event.entity.EntityDamageEvent
- *  org.bukkit.inventory.ItemStack
- *  org.bukkit.metadata.FixedMetadataValue
- *  org.bukkit.metadata.MetadataValue
- *  org.bukkit.plugin.Plugin
- */
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -36,6 +11,8 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.boots.BarrysBoltsSkin;
 import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -49,56 +26,41 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.github.paperspigot.Title;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-public class Phoenix
-        extends CustomEnchantment {
-    Essentials ess;
-    protected static boolean factionUpgrades;
-    protected static HashMap<String, Long> last_phoenix;
+public class Phoenix extends CustomEnchantment {
+    public static HashMap<String, Long> last_phoenix;
     public static Map<UUID, Integer> phoenixEquipped;
-
-    static {
-        last_phoenix = new HashMap();
-        phoenixEquipped = new HashMap<UUID, Integer>();
-    }
 
     public Phoenix() {
         super("Phoenix", GeneralUtil.boots, 2);
         this.max = 3;
         this.base = 15.0;
-        this.interval = 3.0;
+        this.interval = 20.0;
         Bukkit.getPluginManager().registerEvents(new PhoenixListener(this), Enchantments.getInstance());
-        Bukkit.getScheduler().runTaskTimer(Enchantments.getEssentials(), (Runnable) new reducePhoenixCount(), 12000L, 12000L);
+        Bukkit.getScheduler().runTaskTimer(Enchantments.getEssentials(), new reducePhoenixCount(), 12000L, 12000L);
     }
 
-    public static boolean hasPhoenixEquipped(Player player) {
-        return phoenixEquipped.containsKey(player.getUniqueId());
+    public static boolean hasPhoenixEquipped(final Player player) {
+        return Phoenix.phoenixEquipped.containsKey(player.getUniqueId());
     }
 
-    public void applyEquipEffect(Player player, int enchantLevel) {
-        phoenixEquipped.put(player.getUniqueId(), enchantLevel);
+    public void applyEquipEffect(final Player player, final int enchantLevel) {
+        Phoenix.phoenixEquipped.put(player.getUniqueId(), enchantLevel);
     }
 
-    public void applyUnequipEffect(Player player, int level, ItemStack item) {
-        phoenixEquipped.remove(player.getUniqueId());
+    public void applyUnequipEffect(final Player player, final int level, final ItemStack item) {
+        Phoenix.phoenixEquipped.remove(player.getUniqueId());
     }
-
-    public void applyUnequipEffect(Player player, int enchantLevel) {
-        this.applyUnequipEffect(player, enchantLevel, null);
-    }
-
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
@@ -110,155 +72,189 @@ public class Phoenix
         }
     }
 
-    public static boolean procPhoenix(Player player, LivingEntity damager, double dmg) {
-        Integer level = phoenixEquipped.get(player.getUniqueId());
-        return level != null && Phoenix.procPhoenix(player, damager, level, dmg);
+    public void applyUnequipEffect(final Player player, final int enchantLevel) {
+        this.applyUnequipEffect(player, enchantLevel, null);
     }
 
-    public static boolean procPhoenix(Player player, LivingEntity damager, int level, double dmg) {
-        if (player.getHealth() <= 0.0) {
+    public static boolean procPhoenix(final Player player, final LivingEntity damager, final double dmg) {
+        final Integer level = Phoenix.phoenixEquipped.get(player.getUniqueId());
+        return level != null && procPhoenix(player, damager, level, dmg);
+    }
+
+    public static boolean procPhoenix(final Player player, final LivingEntity damager, final int level, double dmg) {
+        if (!(damager instanceof Player)) {
             return false;
         }
 
-        if (player.getHealth() - dmg <= 0.0) {
-            boolean canUse = canUsePhoenix(player, level);
-            if (!canUse) {
-                if (120L - (System.currentTimeMillis() - last_phoenix.get(player.getUniqueId().toString())) / 1000L != 0L) {
-                    player.sendMessage(CC.translate("&c&l** PHOENIX ON COOLDOWN ** &7[" + TimeUtils.formatSeconds(120L - (System.currentTimeMillis() - last_phoenix.get(player.getUniqueId().toString())) / 1000L) + "]"));
-                    return false;
-                }
+        if (player.getHealth() - dmg > 0.0) {
+            return false;
+        }
+
+            final boolean utilityBelt = AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY);
+        final boolean deathKnightBlockedPheonix = Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT");
+        final boolean thanosBlockedPheonix = MaskType.hasEquipped((Player) damager, "THANOS");
+
+        final boolean canUse = canUsePhoenix(player);
+
+        if (!canUse) {
+            if (120L - (System.currentTimeMillis() - Phoenix.last_phoenix.get(player.getUniqueId().toString())) / 1000L != 0L) {
+                player.sendMessage("");
             }
-
-            if (damager instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET))) {
-                damager.sendMessage(CC.translate("&e&l* &d&lMAD HAT &7Blocked &cPhoenix &d&l[&c" + player.getName() + "&d&l] &e&l*"));
-                player.sendMessage(CC.translate("&e&l* &d&lPHOENIX BLOCKED [&c" + damager.getName() + " Mad Hat&d&l] *"));
-                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                return false;
-            }
-
-            if (damager instanceof Player && MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
-
-                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
-                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
-                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                return false;
-
-            }
-
-
-            if (player.hasMetadata("noPhoenixProcs")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-                    player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7The Crumble&c&l] *"));
-                    return false;
-                }
-            }
-
-
-            if (damager instanceof Player && Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.RedB + "* DEATH KNIGHT PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+            player.sendMessage(CC.translate("&c&l** PHOENIX ON COOLDOWN ** &7[" + TimeUtils.formatSeconds(120L - (System.currentTimeMillis() - Phoenix.last_phoenix.get(player.getUniqueId().toString())) / 1000L) + "]"));
+            player.sendMessage("");
+        }
+        if (canUse) {
+            if (!utilityBelt) {
+                if (deathKnightBlockedPheonix) {
+                    player.sendMessage("");
+                    player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+                    player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    player.sendMessage(CC.translate("&7&oUse /phoenixcooldown&7 to check your cooldown timer."));
+                    player.sendMessage("");
+                    damager.sendMessage(CC.translate(""));
                     damager.sendMessage(CC.RedB + "* DEATH KNIGHT MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                    damager.sendMessage(CC.translate("&7They are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    damager.sendMessage(CC.translate(""));
+                    Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
                     return false;
                 }
-            }
+                if (player.hasMetadata("witcher_negate")) {
+                    player.sendMessage("");
+                    player.sendMessage(CC.RedB + "* PHOENIX BLOCKED (WITCHER) [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+                    player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    player.sendMessage(CC.translate("&7&oUse /phoenixcooldown&7 to check your cooldown timer."));
+                    player.sendMessage("");
+                    damager.sendMessage(CC.translate(""));
+                    damager.sendMessage(CC.RedB + "* WITCHER PET [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                    damager.sendMessage(CC.translate("&7They are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    damager.sendMessage(CC.translate(""));
+                    Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                    return false;
+                }
 
-            if (((BoostedChainsaw) SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(player.getName())) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+                if (player.hasMetadata("neutralized")) {
+                    player.sendMessage(CC.translate("&5&l* PHOENIX BLOCKED &7[Neutralized] &5&l*"));
+                    return false;
+                }
 
+                if (thanosBlockedPheonix) {
+                    player.sendMessage("");
+                    player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+                    player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    player.sendMessage(CC.translate("&7&oUse /phoenixcooldown&7 to check your cooldown timer."));
+                    player.sendMessage("");
+                    damager.sendMessage(CC.translate(""));
+                    damager.sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                    damager.sendMessage(CC.translate("&7They are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    damager.sendMessage(CC.translate(""));
+                    Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                    return false;
+                }
+                if (damager.hasMetadata("bansheed")) {
+                    player.sendMessage("");
+                    player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
+                    player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    player.sendMessage(CC.translate("&7&oUse /phoenixcooldown&7 to check your cooldown timer."));
+                    player.sendMessage("");
+                    damager.sendMessage(CC.translate(""));
+                    damager.sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
+                    damager.sendMessage(CC.translate("&7They are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                    damager.sendMessage(CC.translate(""));
+                    Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                    return false;
+                }
+
+                if (((BoostedChainsaw) SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(player.getName())) {
                     player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Chainsaw Silence Ability&c&l] *"));
                     return false;
+
                 }
-            }
 
-            if (damager instanceof Player && MaskType.hasEquipped((Player) damager, "THANOS")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
-                    player.sendMessage(CC.RedB + "* THANOS MASK PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
-                    damager.sendMessage(CC.RedB + "* THANOS MASK [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
-                    return false;
-                }
-            }
-            if (damager instanceof Player && damager.hasMetadata("banshee_scrolls")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
+                if (player.hasMetadata("banshee_scrolls")) {
                     player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7BANSHEE RKO&c&l] *"));
                     damager.sendMessage(CC.RedB + "* BANSHEE RKO [" + CC.Gray + player.getName() + "'s Phoenix Blocked" + CC.RedB + "] *");
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                    Bukkit.getLogger().info("Phoenix blocked from proccing for " + player.getName() + " from damager " + damager.getName());
                     return false;
+
                 }
-            }
-            if (player.hasMetadata("witchered")) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
+
+                if (player.hasMetadata("witchered")) {
                     player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     return false;
                 }
-            }
 
-            if (UndertowFieldTask.affected.contains(player)) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
+                if (UndertowFieldTask.affected.contains(player)) {
                     player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED &7Undertow Field&4&l *"));
                     return false;
                 }
-            }
 
-
-            if (((BarrysBoltsSkin) SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
-                if (!AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
-
+                if (((BarrysBoltsSkin) SkinType.JULY_2021_BOOTS.getItemSkin()).getCurrentSilencedPlayers().contains(player)) {
                     player.sendMessage(CC.translate("&c&l** &7Enemy Garry's Bolt &c&lBLOCKED PHOENIX **"));
-                    last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     return false;
                 }
             }
 
-            int soulCost = Phoenix.getPhoenixProcSoulCost(player);
+            //==========================================
+            //if the player has gotten utility belt on:
+            //==========================================
+
+
+            if (MaskType.hasEquipped((Player) damager, "CRANKED") && Math.random() < 0.5) {
+                damager.sendMessage(CC.translate("&4&l* CRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " Cranked Mask&4&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
+                damager.sendMessage(CC.translate("&e&l* &d&lMAD HAT &7Blocked &cPhoenix &d&l[&c" + player.getName() + "&d&l] &e&l*"));
+                player.sendMessage(CC.translate("&e&l* &d&lPHOENIX BLOCKED [&c" + damager.getName() + " Mad Hat&d&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
+            final int soulCost = getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount(player, soulCost)) {
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);
-                last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
-                player.setMetadata("phoenixProcs", new FixedMetadataValue(Enchantments.getInstance(), player.hasMetadata("phoenixProcs") ? player.getMetadata("phoenixProcs").get(0).asInt() + 1 : 1));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                player.setMetadata("phoenixProcs", new FixedMetadataValue(Enchantments.getInstance(), player.hasMetadata("phoenixProcs") ? (player.getMetadata("phoenixProcs").get(0).asInt() + 1) : 1));
                 GeneralUtil.setPlayerHealth(player, player.getMaxHealth());
                 player.sendMessage("");
                 player.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "*** " + ChatColor.UNDERLINE + "PHOENIX SOUL" + ChatColor.GOLD + ChatColor.BOLD + " ***");
                 player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + soulCost + " Soul Gems");
                 player.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(player) + ChatColor.GRAY + " souls left.");
                 player.sendMessage("");
-                DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&c&l* PHOENIX *"), "PHOENIX");
-                Title title = new Title(CC.translate("&c&l** PHOENIX**"), CC.translate("&7You have &n" + KillTrackerAPI.getAllSouls(player) + "&7 souls left."), 3, 30, 3);
-                player.sendTitle(title);
-                player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
+                player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                player.sendMessage(CC.translate("&7&oUse /phoenixcooldown&7 to check your cooldown timer."));
+                player.sendMessage("");
+                new BukkitRunnable() {
+                    @Override
+                    public void run() {
+                        player.sendMessage(CC.translate(""));
+                        player.sendMessage(CC.translate("&a&l*** YOU ARE NO LONGER ON &a&l&nPHOENIX COOLDOWN&a&l ***"));
+                        player.sendMessage(CC.translate(""));
+                    }
+                }.runTaskLater(Enchantments.getInstance(), 2400L);
                 if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                     try {
-                        MasteryFeignDeath.vanishPlayer(player, 4);
+                        MasteryFeignDeath.vanishPlayer(player, 3);
                     } catch (NoSuchFieldException | IllegalAccessException e) {
                         e.printStackTrace();
                     }
                 }
-                if (damager instanceof Player) {
-                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.HALLOWEEN_2021_HELMET) && Math.random() < 0.25 && !damager.hasMetadata("muzzleCD") && !player.hasMetadata("muzzle")) {
-                        player.setMetadata("muzzle", new FixedMetadataValue(Enchantments.getInstance(), true));
-                        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
-                            player.removeMetadata("muzzle", Enchantments.getInstance());
-                        }, 10 * 20);
-                        damager.setMetadata("muzzleCD", new FixedMetadataValue(Enchantments.getInstance(), true));
-                        damager.sendMessage(CC.translate("&6&l* MINEMAN MUZZLE &7Cursed &c" + player.getName() + " &6&l*"));
-                        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
-                            damager.removeMetadata("muzzleCD", Enchantments.getInstance());
-                        }, 600 * 20);
+                player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
+                for (final Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
+                    if (ent instanceof Player) {
+                        ent.sendMessage(CC.translate(""));
+                        ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** PHOENIX SOUL (" + ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + ChatColor.RED + ChatColor.BOLD + ") ***");
+                        ent.sendMessage(CC.translate("&7They are now on &nPhoenix Cooldown&7 for 2 minutes."));
+                        ent.sendMessage(CC.translate(""));
+                        ((Player) ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
                     }
                 }
-                for (Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
-                    if (!(ent instanceof Player)) continue;
-                    ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** PHOENIX SOUL (" + ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + ChatColor.RED + ChatColor.BOLD + ") ***");
-                    ((Player) ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
-                }
+                DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&c&l* PHOENIX *"), "PHOENIX");
+                Title title = new Title(CC.translate("&c&l** PHOENIX**"), CC.translate("&7You have &n" + KillTrackerAPI.getAllSouls(player) + "&7 souls left."), 3, 30, 3);
+                player.sendTitle(title);
                 return true;
             }
             if (!player.hasMetadata("outOfSoulsMessage") || player.getMetadata("outOfSoulsMessage").get(0).asLong() < System.currentTimeMillis()) {
@@ -266,16 +262,15 @@ public class Phoenix
                 player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
                 player.setMetadata("outOfSoulsMessage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis() + 15000L));
             }
-            return false;
         }
         return false;
     }
 
-    public static boolean canUsePhoenix(Player pl, int enchantLevel) {
-        return !last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - last_phoenix.get(pl.getUniqueId().toString()) > (long) ((4 - 2) * 60000);
+    public static boolean canUsePhoenix(final Player pl) {
+        return !Phoenix.last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - Phoenix.last_phoenix.get(pl.getUniqueId().toString()) > 120000L;
     }
 
-    public static int getPhoenixProcSoulCost(Player player) {
+    public static int getPhoenixProcSoulCost(final Player player) {
         int soulCost = 500;
         int procsSinceOutOfCombat = player.hasMetadata("phoenixProcs") ? player.getMetadata("phoenixProcs").get(0).asInt() : 0;
         while (procsSinceOutOfCombat-- > 0) {
@@ -284,8 +279,10 @@ public class Phoenix
 
         soulCost = Math.min(soulCost, 8000);
         return soulCost;
-
     }
 
+    static {
+        Phoenix.last_phoenix = new HashMap<String, Long>();
+        Phoenix.phoenixEquipped = new HashMap<UUID, Integer>();
+    }
 }
-

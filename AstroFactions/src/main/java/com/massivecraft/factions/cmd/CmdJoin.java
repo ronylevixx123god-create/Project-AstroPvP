@@ -1,10 +1,12 @@
 package com.massivecraft.factions.cmd;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
+import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.util.TL;
 import com.massivecraft.factions.util.UpgradeType;
@@ -36,6 +38,11 @@ public class CmdJoin extends FCommand {
 
         if (!samePlayer && !Permission.JOIN_OTHERS.has(context.sender, false)) {
             context.msg(TL.COMMAND_JOIN_CANNOTFORCE);
+            return;
+        }
+
+        if (fplayer.getRole() == Role.ALT && !faction.isInvited(fplayer)) {
+            fplayer.getPlayer().sendMessage(CC.translate("&c&l(!)&c You are not invited to this faction!"));
             return;
         }
 

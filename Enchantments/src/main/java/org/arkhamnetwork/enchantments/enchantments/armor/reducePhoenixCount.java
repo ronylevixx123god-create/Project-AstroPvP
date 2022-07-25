@@ -20,16 +20,16 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 final class reducePhoenixCount
-extends BukkitRunnable {
+        extends BukkitRunnable {
     reducePhoenixCount() {
     }
 
+    @Override
     public void run() {
         Bukkit.getLogger().info("[Enchantments (Phoenix)] Reducing all phoenixProcs by 1.");
-        for (Player p : Bukkit.getOnlinePlayers()) {
-            if (!p.hasMetadata("phoenixProcs")) continue;
-            p.setMetadata("phoenixProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)Math.max(0, ((MetadataValue)p.getMetadata("phoenixProcs").get(0)).asInt() - 1)));
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            if (!player.hasMetadata("phoenixProcs")) continue;
+            player.setMetadata("phoenixProcs", new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), Math.max(0, player.getMetadata("phoenixProcs").get(0).asInt() - 1)));
         }
     }
 }
-

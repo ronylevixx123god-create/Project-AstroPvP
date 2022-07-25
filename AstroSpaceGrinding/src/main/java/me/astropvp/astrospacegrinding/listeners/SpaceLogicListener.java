@@ -71,9 +71,12 @@ public class SpaceLogicListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.LOW)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void enchantProc(CustomEnchantProcOnEntityEvent e) {
-        if (e.getEnchant().heroicEnchantment) e.setCancelled(true);
+        if (!e.getPlayer().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            return;
+        }
+        if (e.getEnchant().getTier() > 5) e.setCancelled(true);
     }
 
 

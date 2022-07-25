@@ -2,9 +2,11 @@ package me.astropvp.hotfixplugin.listeners;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.earth2me.essentials.utils.DateUtil;
+import com.massivecraft.factions.perms.Role;
 import me.astropvp.hotfixplugin.HotFixPlugin;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
 import org.bukkit.entity.Player;
@@ -48,4 +50,15 @@ public class CommandPingListener implements Listener {
             player.sendMessage("done");
         }
     }
+
+/*    @EventHandler(priority = EventPriority.LOWEST)
+    public void altFix(PlayerCommandPreprocessEvent e) {
+        if (FactionUtils.getFPlayer(e.getPlayer()).getRole() == Role.ALT) {
+            e.setMessage("/null");
+            e.setCancelled(true);
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot do this while being an alt"));
+        }
+    }*/
+
+
 }

@@ -1,5 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.tasks;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
@@ -18,6 +19,7 @@ public class PetUpdateTask
             final Inventory topInventory = p.getOpenInventory().getTopInventory();
             final Inventory bottomInventory = p.getOpenInventory().getBottomInventory();
             if (topInventory.getContents().length != 0) {
+                if (CC.strip(topInventory.getTitle()).contains("Death Inventory")) continue;
                 for (int i = 0; i < topInventory.getSize(); ++i) {
                     final ItemStack item = topInventory.getItem(i);
                     if (item != null && item.getType() == Material.SKULL_ITEM) {
@@ -40,6 +42,7 @@ public class PetUpdateTask
                 }
             }
             if (bottomInventory.getContents().length != 0) {
+                if (CC.strip(bottomInventory.getTitle()).contains("Death Inventory")) continue;
 
                 for (int i = 0; i < bottomInventory.getSize(); ++i) {
                     final ItemStack item = bottomInventory.getItem(i);

@@ -20,7 +20,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 final class PhoenixListener
-implements Listener {
+        implements Listener {
     Phoenix enchantment;
 
     protected PhoenixListener(Phoenix enchantment) {
@@ -35,4 +35,3 @@ implements Listener {
         }
     }
 }
-

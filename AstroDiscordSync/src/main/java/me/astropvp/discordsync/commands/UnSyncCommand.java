@@ -3,6 +3,9 @@ package me.astropvp.discordsync.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 
+import co.aikar.commands.annotation.Subcommand;
+import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import me.astropvp.discordsync.DiscordSyncPlugin;
 import me.astropvp.discordsync.managers.SyncManager;
 import me.astropvp.discordsync.utils.CC;
@@ -29,21 +32,25 @@ public class UnSyncCommand extends BaseCommand {
     }
 
     @CommandAlias("unsync|unsyncaccount|unsyncdiscord")
-    public void onCommand(Player player) {
+    public void onCommand(Player player, OnlinePlayer toUnsync) {
+        if (!player.isOp()) {
+            player.sendMessage(CC.translate("&c&l(!)&c Only administrators can unsync your account, open a #general-support ticket in the astropvp /discord!"));
+            return;
+        }
         if (!this.plugin.getDatabaseManager().isConnected()) {
             player.sendMessage(CC.translate("&c&l(!)&c Account Sync is currently unavailable right now, please try again in a few."));
-        } else if (!this.syncManager.isAccountLinked(player)) {
-            player.sendMessage((String) CC.translate("&c&l(!) &cYour account is not synced!"));
-            player.sendMessage((String) CC.translate("&7Sync using &f/sync&7!"));
+        } else if (!this.syncManager.isAccountLinked(toUnsync.player)) {
+            player.sendMessage((String) CC.translate("&c&l(!) &cTheir account is not synced!"));
         } else {
             Bukkit.getScheduler().runTaskAsynchronously(this.plugin, (Runnable) (() -> {
-                this.plugin.getDatabaseManager().remove(player.getUniqueId());
+                this.plugin.getDatabaseManager().remove(toUnsync.player.getUniqueId());
             }));
-            player.sendMessage((String) CC.translate("&a&l(!) &fYou have &asuccessfully &funsync'ed your account!"));
+            player.sendMessage((String) CC.translate("&a&l(!) &fYou have &asuccessfully &funsync'ed " + toUnsync.player.getName() + "'s account"));
+            toUnsync.player.sendMessage(CC.translate("&c&l(!)&c Your account has been &funsync'ed &cby an administrator!"));
 
 
-            if (syncManager.isAccountLinked(player)) {
-                this.plugin.getJda().getGuildById("470324147411615744").removeRoleFromMember(this.syncManager.getLinkedUser(player).getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("980116575736696853"))).queue();
+            if (syncManager.isAccountLinked(toUnsync.player)) {
+                this.plugin.getJda().getGuildById("470324147411615744").removeRoleFromMember(this.syncManager.getLinkedUser(toUnsync.player).getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("980116575736696853"))).queue();
             }
         }
     }

@@ -175,6 +175,8 @@ public class Enchantments extends EnchantPlugin {
         getCommand("apply").setExecutor(new CommandApply());
         getCommand("blackscroll").setExecutor(new CommandBlackscroll());
         getCommand("enchreload").setExecutor(new EnchReloadCommand());
+        getCommand("phoenix").setExecutor(new CommandPhoenixCooldown());
+
     }
 
     public IceAspect getIceAspectEnchant() {

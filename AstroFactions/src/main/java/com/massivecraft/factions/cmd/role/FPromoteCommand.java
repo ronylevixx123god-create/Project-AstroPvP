@@ -1,5 +1,6 @@
 package com.massivecraft.factions.cmd.role;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.cmd.CommandContext;
 import com.massivecraft.factions.cmd.CommandRequirements;
@@ -58,6 +59,11 @@ public class FPromoteCommand extends FCommand {
 
         if (context.fPlayer.getRole().value == target.getRole().value) {
             context.msg(TL.COMMAND_PROMOTE_NOT_ALLOWED);
+            return;
+        }
+
+        if (target.getRole() == Role.RECRUIT && promotion.value < target.getRole().value) {
+            context.sendMessage(CC.translate("&c&l(!)&c This player is already the lowest role"));
             return;
         }
 

@@ -21,3 +21,6 @@ commands:
     description: default command
   enchreload:
     description: reload the damage config
+  phoenix:
+    description: check phoenix cooldown
+    aliases: [phoenixcooldown, phoenixcd]

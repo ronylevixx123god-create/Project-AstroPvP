@@ -25,7 +25,7 @@ public final class SilenceListener implements Listener {
         if (e.getDamage(DamageModifier.BASE) > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs")) {
             int stacks = ((MetadataValue)e.getEntity().getMetadata("noDefenseProcs").get(0)).asInt();
             double extraStackDmg = 0.0625D * (double)stacks;
-            e.setDamage(e.getDamage(DamageModifier.BASE) * (1.15D + extraStackDmg));
+            e.setDamage(e.getDamage(DamageModifier.BASE) * (1.2D + extraStackDmg));
 
             for(int i = 0; i < stacks; ++i) {
 

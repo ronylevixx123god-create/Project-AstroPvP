@@ -16,8 +16,10 @@ final class RageListener implements Listener {
         if (event.getEntity() instanceof Player && event.getDamager() instanceof Player) {
             Player player = (Player) event.getEntity();
             RageStacksCache victimRageStack = CacheUtils.getRageStackCache(player);
-            if (victimRageStack.getRageStack() > 0) {
-                victimRageStack.resetRageStack();
+            if (victimRageStack.isSameVictim((Player) event.getDamager())) {
+                if (victimRageStack.getRageStack() > 0) {
+                    victimRageStack.resetRageStack();
+                }
             }
 
         }
