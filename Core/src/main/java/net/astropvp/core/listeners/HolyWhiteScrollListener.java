@@ -11,6 +11,8 @@ import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
+import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
 import net.astropvp.CollectPlugin;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -82,22 +84,29 @@ public class HolyWhiteScrollListener implements Listener {
         //if ((e.getEntity() != null && e.getEntity() == null) || (e.getEntity().getKiller() != null && e.getEntity().getKiller() == null))
         //return;
         Player killer = e.getEntity().getKiller();
+        Player killed = e.getEntity();
+
         boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
         boolean hasBeenSwimEffected = false;
         boolean hasBeenTailed = false;
         List<ItemStack> savedItems = new ArrayList<>();
         List<ItemStack> drops = e.getDrops();
+        List<ItemStack> toRemoveToDrops = new ArrayList<>();
+        List<ItemStack> toAddToDrops = new ArrayList<>();
+
         for (ItemStack i : drops) {
+
             if (HolyWhiteScrollUtils.itemHasHolyWhitescroll(i)) {
                 boolean mask = false;
                 HolyWhiteScrollUtils.removeHolyWhitescroll(i);
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
-                if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO)) monoChance += 0.05;
+                if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO))
+                    monoChance += 0.05;
                 if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
                     if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) == ArmorSetType.ASTRO) {
-                        monoChance+=0.15;
+                        monoChance += 0.15;
                     }
                 }
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
@@ -127,7 +136,7 @@ public class HolyWhiteScrollListener implements Listener {
                             isKilledHoldingTravAxe = true;
                     }
                 assert killer != null;
-                if (!isBansheed &&  !isMonopolied && !isTravAxe) {
+                if (!isBansheed && !isMonopolied && !isTravAxe) {
                     savedItems.add(i);
                     continue;
                 }
@@ -144,7 +153,7 @@ public class HolyWhiteScrollListener implements Listener {
                     //holies don't save in space lands
                     if (killer.getLocation().getWorld().getName().equals("space")) continue;
 
-                    if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(),SkinType.DOOMSDAY_BACKPACK_BUGOUT) && Math.random() < 0.2) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped(Objects.requireNonNull(e.getEntity()).getPlayer(), SkinType.DOOMSDAY_BACKPACK_BUGOUT) && Math.random() < 0.2) {
                         killer.sendMessage(CC.translate("&a&l* " + e.getEntity().getName() + " 's BUG OUT &7Blocked Monopoly Mask on an item &a&l* "));
                         e.getEntity().getPlayer().sendMessage(CC.translate("&a&l* BUG OUT &7Saved an item from getting monoed &a&l*"));
                         savedItems.add(i);
@@ -190,16 +199,41 @@ public class HolyWhiteScrollListener implements Listener {
                 e.getEntity().sendMessage(CC.RedB + "* TRAVELER AXE HOLY WHITE SCROLL NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                 killer.sendMessage(CC.GreenB + "* TRAVELER AXE HOLY WHITE SCROLL NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
             }
+            if (i.getType() == Material.SKULL_ITEM) {
+                NBTWrapper wrapper = new NBTWrapper(i);
+                InventoryPetItem petItem = (InventoryPetItem) CosmicPersistentItem.constructItem(i, wrapper, InventoryPetItem.class);
+                if (petItem != null && petItem.getPetType() != null) {
+                    if (petItem.isLeashed()) {
+                        petItem.setLeashed(false);
+                        if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null && MaskType.hasEquipped(e.getEntity().getKiller(), "ANIMAL_CONTROL") && Math.random() < 0.33D) {
+                            killed.sendMessage(CC.RedB + "* ANIMAL CONTROL MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                            killer.sendMessage(CC.GreenB + "* ANIMAL CONTROL MASK [" + CC.Gray + killed.getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                            toRemoveToDrops.add(i);
+                            toAddToDrops.add(petItem.build());
+                        } else {
+                            toRemoveToDrops.add(i);
+                            savedItems.add(petItem.build());
+                        }
+                    }
+                }
+            }
         }
         for (ItemStack i : savedItems)
             e.getDrops().remove(i);
+        for (ItemStack i : toRemoveToDrops)
+            e.getDrops().remove(i);
+        for (ItemStack i : toAddToDrops)
+            e.getDrops().add(i);
+
         if (savedItems.size() > 0)
             this.savedItems.put(e.getEntity().getUniqueId().toString(), savedItems);
 
-        Player killed = e.getEntity();
-        e.getDrops().add(ExpBottles.getXpBottle(killed.getTotalExperience(), killed.getName()));
+        if (killed.getTotalExperience() > 0) {
+            e.getDrops().add(ExpBottles.getXpBottle(killed.getTotalExperience(), killed.getName()));
+        }
         List<ItemStack> itemList = e.getDrops();
         itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
+
 
         CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory", System.currentTimeMillis()));
         e.getDrops().clear();

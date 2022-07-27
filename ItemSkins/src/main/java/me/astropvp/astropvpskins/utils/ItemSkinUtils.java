@@ -13,6 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 public class ItemSkinUtils {
     public static boolean canPvP(Player attacker, Player target, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return false;
+        if (target.getLocation().getWorld().getName().equals("tournament_world")) return true;
         if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(target.getLocation())) return false;
         if (attacker.hasMetadata("frozenSkrrt")) return false;
         if (target.hasMetadata("frozenSkrrt")) return false;
@@ -27,7 +28,6 @@ public class ItemSkinUtils {
         if (factionAtacker.getRelationTo(factionTarget) == Relation.TRUCE) return false;
 
         if (attacker.getLocation().getWorld().getName().equals("nebula")) return false;
-        if (target.getLocation().getWorld().getName().equals("nebula")) return false;
 
 
         return true;

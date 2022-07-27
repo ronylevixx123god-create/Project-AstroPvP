@@ -6,23 +6,25 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
+import java.util.stream.Stream;
+
 public class Utils {
     public static String fixColor(String string) {
         return ChatColor.translateAlternateColorCodes('&', string);
     }
 
     public static String locationToString(Location location) {
-        return location.getWorld().getName() + "," + location.getX() + "," + location.getY() + ","  + location.getZ() + "," +  location.getYaw() + "," + location.getPitch();
+        return location.getWorld().getName() + "," + location.getX() + "," + location.getY() + "," + location.getZ() + "," + location.getYaw() + "," + location.getPitch();
     }
 
     public static Location getLocationFromString(String string) {
         String[] arg = string.split(",");
         double[] parsed = new double[5];
         for (int a = 0; a < 5; a++) {
-            parsed[a] = Double.parseDouble(arg[a+1]);
+            parsed[a] = Double.parseDouble(arg[a + 1]);
         }
 
-        return new Location(Bukkit.getWorld(arg[0]), parsed[0], parsed[1], parsed[2], (float)parsed[3], (float)parsed[4]);
+        return new Location(Bukkit.getWorld(arg[0]), parsed[0], parsed[1], parsed[2], (float) parsed[3], (float) parsed[4]);
     }
 
     public static String getProperCase(String text) {
@@ -34,19 +36,16 @@ public class Utils {
     }
 
     public static boolean isEmptyInventory(Player player) {
-        PlayerInventory playerInventory = player.getInventory();
-        if(playerInventory.getHelmet() != null) return false;
-        if(playerInventory.getChestplate() != null) return false;
-        if(playerInventory.getLeggings() != null) return false;
-        if(playerInventory.getBoots() != null) return false;
-        return player.getInventory().firstEmpty() == 0;
+        return Stream.of(player.getInventory().getContents()).allMatch(itemStack -> itemStack == null || itemStack.getType() == Material.AIR) &&
+                Stream.of(player.getInventory().getArmorContents()).allMatch(itemStack -> itemStack == null || itemStack.getType() == Material.AIR);
     }
 
-    public static boolean hasAvaliableSlot(Player player, int amount){
+
+    public static boolean hasAvaliableSlot(Player player, int amount) {
         int amountOpen = 0;
         Inventory inv = player.getInventory();
         for (ItemStack item : inv.getContents()) {
-            if(item == null) {
+            if (item == null) {
                 amountOpen += 1;
             }
         }
@@ -65,7 +64,7 @@ public class Utils {
         player.getInventory().setBoots(null);
     }
 
-    public static double round (double value, int precision) {
+    public static double round(double value, int precision) {
         int scale = (int) Math.pow(10, precision);
         return (double) Math.round(value * scale) / scale;
     }

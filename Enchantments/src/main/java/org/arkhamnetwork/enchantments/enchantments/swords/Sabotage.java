@@ -56,7 +56,9 @@ extends CustomEnchantment {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue)p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems((Player)p, (int)8);
             }
-            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* SABOTAGE *" + CC.RedB +  "*", "SABOTAGE");
+            if (playerHit instanceof Player) {
+                DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* SABOTAGE *" + CC.RedB + "*", "SABOTAGE");
+            }
 
             playerHit.setMetadata("sabotage", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
             playerHit.setMetadata("sabotageLevel", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));

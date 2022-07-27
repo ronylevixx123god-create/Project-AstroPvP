@@ -125,7 +125,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         giveItems(tournamentPlayer);
         Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
             Blessed.blessPlayer(tournamentPlayer.getPlayer());
-        }, 40L);
+        }, 100L);
     }
 
     private void giveItems(TournamentPlayer tournamentPlayer) {

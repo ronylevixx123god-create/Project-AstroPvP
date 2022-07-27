@@ -185,7 +185,7 @@ return;
                     }
                     ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
                     ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2*20, 2));
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2*20, 1));
                     double multiplier = 1.0;
                     if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
                         multiplier += 0.25;

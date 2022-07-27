@@ -51,6 +51,8 @@ public class Move implements Listener {
          WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
          if (wildPvPManager.hasWildPvP(toLocation.getChunk())) {
             if (player.isOp()) return;
+            if (player.hasPermission("essentials.tp.others")) return;
+
             WildPvP wildPvP = wildPvPManager.getWildPvP(toLocation.getChunk());
             if (!wildPvP.isParticipant(player)) {
                Location location = player.getLocation().clone().add(fromLocation.toVector().subtract(toLocation.toVector()).normalize().multiply(2.0D));

@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
 import java.util.Objects;
@@ -32,17 +33,13 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
         Bukkit.getPluginManager().registerEvents(new AutoOP(), this);
 
-/*        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, () -> {
-            Bukkit.getServer().dispatchCommand( Bukkit.getConsoleSender(), "citizens reload");
-        }, 400L, 400);*/
-
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             Clickable spaceClickable = new Clickable("");
                 spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it by clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&k;&r &f&lLootbox: &6&lThe &nReturn&r &f&k;&r &6on the store.")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&k;&r &f&lLootbox: &8&lFalling &e&l&nStar&r &f&k;&r &6on the store.")));
 
                     spaceClickable.sendToPlayer(player);
                     player.sendMessage("");

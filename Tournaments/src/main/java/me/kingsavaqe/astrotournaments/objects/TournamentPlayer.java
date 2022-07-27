@@ -1,11 +1,14 @@
 package me.kingsavaqe.astrotournaments.objects;
 
+import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicmasks.MaskType;
+import me.ifamasssxd.cosmicmasks.utils.MaskApplyUtils;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
@@ -87,6 +90,9 @@ public class TournamentPlayer implements KeyToSave {
         if (!AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal().isEmpty()) {
             AstroArmorSetsAPI.applyCrystalToItem(AstroTournamentsPlugin.instance.getTournamentManager().getCurrentArmorCrystal(), helmet);
         }
+
+        helmet = MaskApplyUtils.applyMask(helmet, MaskType.THANOS);
+
         return helmet;
 
     }
@@ -188,6 +194,8 @@ public class TournamentPlayer implements KeyToSave {
                 swordSkin.apply(sword);
             }
         }
+
+
 
 
         return sword;
