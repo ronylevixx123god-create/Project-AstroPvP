@@ -5,6 +5,7 @@ import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.TournamentMatch;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.Utils;
+import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -70,6 +71,12 @@ public class TournamentDeathListener implements Listener {
 
                 Utils.emptyInventory(victim.getPlayer());
                 Utils.emptyInventory(attacker.getPlayer());
+                GeneralUtil.healPlayer(victim.getPlayer(), victim.getPlayer().getMaxHealth());
+                GeneralUtil.healPlayer(attacker.getPlayer(), attacker.getPlayer().getMaxHealth());
+                attacker.getPlayer().setFireTicks(0);
+                victim.getPlayer().setFireTicks(0);
+
+
             }
         }
     }

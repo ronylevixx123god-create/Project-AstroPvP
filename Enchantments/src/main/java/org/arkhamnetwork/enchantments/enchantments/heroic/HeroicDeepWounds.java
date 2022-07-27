@@ -27,7 +27,7 @@ public class HeroicDeepWounds extends HeroicCustomEnchantment
                 return;
             }
             playerHit.setMetadata("deepWounds", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) (System.currentTimeMillis() + level * 1500)));
-            final double mod = Bleed.getBleedStack(playerHit) * 0.005 + level * 0.01 + 1.0;
+            final double mod = Bleed.getBleedStack(playerHit) * 0.0075 + level * 0.01 + 1.0;
             e.setDamage(e.getDamage() * mod);        }
     }
 }

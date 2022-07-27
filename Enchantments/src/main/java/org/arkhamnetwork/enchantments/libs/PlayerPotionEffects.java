@@ -185,7 +185,6 @@ public class PlayerPotionEffects {
             return;
         if (p.getLocation().getWorld().getName().equals("events_world")) return;
         if (p.getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
-        if (p.getLocation().getWorld().getName().equals("space")) return;
 
         String regionName = WorldGuardUtils.getRegionName(p.getLocation());
         if (regionName.contains("parkour") && !regionName.contains("enchants"))
@@ -208,6 +207,10 @@ public class PlayerPotionEffects {
                         continue;
                     ape = new AbstractPotionEffect(PotionEffectType.HEALTH_BOOST, allowedHealthBoostLevel);
                 }
+
+                if (data.getKey().getEnchantment().getTier() > 6 &&      p.getLocation().getWorld().getName().equals("space")) continue;
+
+
                 if (!p.hasPotionEffect(ape.getEffectType())) {
                     if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS) && ape.getEffectType().getName().equals("SLOW"))
                         continue;

@@ -35,7 +35,7 @@ public class HeroicEnlighted extends CustomEnchantment
             level = 4;
         }
         double random = Math.random();
-        double chance = 0.05D * (double)level;
+        double chance = 0.01D * (double)level;
         if (random < chance) {
             double toGive = 3.0;
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) {

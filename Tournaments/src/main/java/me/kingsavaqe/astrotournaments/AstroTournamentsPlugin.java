@@ -68,7 +68,7 @@ public class AstroTournamentsPlugin extends JavaPlugin {
     }
 
     public void registerTasks() {
-        new NoFlightTask().runTaskTimer(this, 20, 20);
+        new NoFlightTask().runTaskTimer(this, 20, 10);
 
     }
 

@@ -26,7 +26,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class TournamentLogicListener implements Listener {
-    public List<String> allowedCommands = Arrays.asList("/msg", "/r", "/message", "/reply", "/tournament", "/tm", "/tournaments", "/f c f", "/f c p", "/f c t", "/f c m");
+    public List<String> allowedCommands = Arrays.asList("/msg", "/r", "/message", "/reply", "/tournament", "/tm", "/tournaments", "/f c f", "/f c p", "/f c t", "/f c m", "bless");
     private TournamentManager tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
 
     @EventHandler(priority = EventPriority.LOWEST)

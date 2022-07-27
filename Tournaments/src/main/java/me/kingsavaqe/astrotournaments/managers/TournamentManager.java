@@ -151,8 +151,6 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         ;
         player.getInventory().setItem(31, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
         ;
-        player.getInventory().setItem(33, new NBTWrapper(stackedPot).setString("cosmicType", "stackable").setNBTBase("conaxData", new NBTTagCompoundBuilder().setInt("maxStackSize", 8).setLong("uniquePots", Long.valueOf(System.nanoTime())).get()).build())
-        ;
 
 
         while (Utils.hasAvaliableSlot(player, 1)) {
