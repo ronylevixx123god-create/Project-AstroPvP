@@ -1,5 +1,7 @@
 package me.kingsavaqe.astrotournaments.objects;
 
+import com.bryside.astroattributes.enums.RuneType;
+import com.bryside.astroattributes.runes.KronosRune;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
@@ -7,6 +9,7 @@ import lombok.Getter;
 import lombok.Setter;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.bryside.weaponrunes.enums.WeaponBonusType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicmasks.utils.MaskApplyUtils;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
@@ -195,8 +198,11 @@ public class TournamentPlayer implements KeyToSave {
             }
         }
 
+        WeaponBonusType reforgedType = WeaponBonusType.REFORGED;
+        sword = reforgedType.getInstance().applyBonus(sword, reforgedType);
 
-
+        RuneType kronosRune = RuneType.KRONOS;
+        sword = kronosRune.apply(sword, kronosRune, 10);
 
         return sword;
     }

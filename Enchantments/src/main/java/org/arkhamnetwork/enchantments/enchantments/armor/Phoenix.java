@@ -47,7 +47,7 @@ public class Phoenix extends CustomEnchantment {
         this.base = 15.0;
         this.interval = 20.0;
         Bukkit.getPluginManager().registerEvents(new PhoenixListener(this), Enchantments.getInstance());
-        Bukkit.getScheduler().runTaskTimer(Enchantments.getEssentials(), new reducePhoenixCount(), 12000L, 12000L);
+        //Bukkit.getScheduler().runTaskTimer(Enchantments.getEssentials(), new reducePhoenixCount(), 12000L, 12000L);
     }
 
     public static boolean hasPhoenixEquipped(final Player player) {
