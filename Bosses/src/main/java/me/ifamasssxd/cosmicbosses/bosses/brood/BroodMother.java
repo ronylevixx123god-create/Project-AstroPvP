@@ -58,6 +58,8 @@ public class BroodMother extends Boss {
         OPKey.setAmount(1);
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
 
     }
 

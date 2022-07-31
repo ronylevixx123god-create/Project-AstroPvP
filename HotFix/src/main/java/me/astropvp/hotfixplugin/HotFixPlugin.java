@@ -39,7 +39,7 @@ public class HotFixPlugin extends JavaPlugin {
                 spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it by clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&k;&r &f&lLootbox: &8&lFalling &e&l&nStar&r &f&k;&r &6on the store.")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &3&lTemptation&r &6on the store.")));
 
                     spaceClickable.sendToPlayer(player);
                     player.sendMessage("");

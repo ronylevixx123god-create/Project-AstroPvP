@@ -25,10 +25,12 @@ public class ChatListener implements Listener {
     private static final Set<UUID> nitroBoosterList = new HashSet<>();
     private static final Set<UUID> factionLeaderList =  new HashSet<>();
     private static final Set<UUID> youtuberList =  new HashSet<>();
+    private static final Set<UUID> famousList =  new HashSet<>();
 
     private final String nitroBoosterRole;
     private final String factionLeaderRole;
     private final String mediaRole;
+    private final String famousRole;
 
 
     private final Guild astroDiscord;
@@ -40,6 +42,8 @@ public class ChatListener implements Listener {
         this.nitroBoosterRole = "646509833448587325";
         this.factionLeaderRole = "709442838592618608";
         this.mediaRole = "517312548136026112";
+        this.famousRole = "981939448755392512";
+
         (new BukkitRunnable() {
             public void run() {
                 ChatListener.this.updateNitroBoosters();
@@ -54,6 +58,7 @@ public class ChatListener implements Listener {
                 Set<UUID> toAdd =  new HashSet<>();
                 Set<UUID> toAddLeaders =  new HashSet<>();
                 Set<UUID> toAddYoutubers =  new HashSet<>();
+                Set<UUID> toAddFamous =  new HashSet<>();
 
                 for (UUID uuid : uuidUserMap.keySet()) {
                     Long discordId = uuidUserMap.get(uuid);
@@ -73,6 +78,9 @@ public class ChatListener implements Listener {
                                 toAddYoutubers.add(uuid);
                             }
 
+                            if (member.getRoles().stream().anyMatch((r) -> r.getId().equals(famousRole))) {
+                                toAddFamous.add(uuid);
+                            }
                         }
                     });
                 }
@@ -86,11 +94,14 @@ public class ChatListener implements Listener {
                 Bukkit.getScheduler().runTask(this.plugin, () -> {
                     youtuberList.addAll(toAddYoutubers);
                 });
+
+                Bukkit.getScheduler().runTask(this.plugin, () -> {
+                    famousList.addAll(toAddFamous);
+                });
                 Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         checkPermissions(player);
                     }
-
                 }, 20L);
 
             });
@@ -126,6 +137,12 @@ public class ChatListener implements Listener {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set apollo");
         } else if (isYoutuber(player) && !player.hasPermission("essentials.kit.media")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set media");
+        }
+
+        if (player.hasPermission("essentials.kit.famous") && !isFamous(player)) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set apollo");
+        } else if (isFamous(player) && !player.hasPermission("essentials.kit.famous")) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set famous");
         }
     }
 
@@ -168,6 +185,10 @@ public class ChatListener implements Listener {
 
     public static boolean isYoutuber(Player player) {
         return youtuberList.contains(player.getUniqueId());
+    }
+
+    public static boolean isFamous(Player player) {
+        return famousList.contains(player.getUniqueId());
     }
 
     public static boolean isFactionLeader(Player player) {

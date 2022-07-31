@@ -50,6 +50,10 @@ public class KingSlime extends Boss {
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+
     }
 
     @Override

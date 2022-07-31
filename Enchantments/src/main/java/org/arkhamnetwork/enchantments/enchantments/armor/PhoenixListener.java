@@ -27,7 +27,7 @@ final class PhoenixListener
         this.enchantment = enchantment;
     }
 
-    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    @EventHandler(priority=EventPriority.MONITOR, ignoreCancelled=true)
     public void onEntityDamage(EntityDamageEvent e) {
         Player p;
         if (e.getEntity() instanceof Player && e.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && Phoenix.hasPhoenixEquipped(p = (Player)e.getEntity())) {

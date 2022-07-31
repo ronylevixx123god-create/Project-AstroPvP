@@ -64,6 +64,10 @@ public class UndeadAssassin extends Boss {
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
+        this.getLootPool().add(OPKey);
     }
 
     @Override

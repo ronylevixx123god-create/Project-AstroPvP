@@ -137,8 +137,8 @@ public abstract class Boss extends Equipable implements Healable {
         Location loc = getEntity().getLocation();
         if (!loc.getWorld().getName().equals("world_private") && !loc.getWorld().getName().startsWith("cosmic-station") && loc.getY() < loc.getWorld().getHighestBlockYAt(loc))
             event.setDamage(event.getDamage() * 3.0D);
-        if (DungeonsAPI.hasDungeonDebuff(player, DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE))
-            event.setDamage(event.getDamage() * 2.5D);
+/*        if (DungeonsAPI.hasDungeonDebuff(player, DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE))
+            event.setDamage(event.getDamage() * 2.5D);*/
     }
 
     public void onDamageTaken(EntityDamageByEntityEvent event, Entity damager) {
@@ -147,10 +147,10 @@ public abstract class Boss extends Equipable implements Healable {
         if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE && event.getDamager() instanceof org.bukkit.entity.Arrow) {
             if (((Projectile)event.getDamager()).getShooter() instanceof Player) {
                 Player p = (Player)((Projectile)event.getDamager()).getShooter();
-                if (DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
+/*                if (DungeonsAPI.hasDungeonDebuff(p, DungeonDebuff.NO_BOW_DAMAGE_TO_BOSSES)) {
                     p.sendMessage(CC.translate("&c&l(!) &cYou cannot use bows to damage bosses in this heroic dungeon!"));
                     event.setCancelled(true);
-                }
+                }*/
             }
             return;
         }
@@ -158,16 +158,16 @@ public abstract class Boss extends Equipable implements Healable {
             double mult = 1.0D;
                 mult =  1.0D;
 
-            if (DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon().getBossSlayerTrinket())
-                mult += 0.5D;
+/*            if (DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon() != null && DungeonsAPI.get().getPlayerDungeonData((Player)damager).getCurrentDungeon().getBossSlayerTrinket())
+                mult += 0.5D;*/
             event.setDamage(event.getDamage() * mult);
         }
         if (event.getDamager() instanceof Player) {
-            if (DungeonsAPI.hasDungeonDebuff((Player)event.getDamager(), DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE))
+/*            if (DungeonsAPI.hasDungeonDebuff((Player)event.getDamager(), DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE))
                 event.setDamage(event.getDamage() * 0.25D);
             if (DungeonsAPI.hasDungeonDebuff((Player)event.getDamager(), DungeonDebuff.DEAL_30HP_MAX_PER_HIT) &&
                     event.getDamage() > 30.0D)
-                event.setDamage(30.0D);
+                event.setDamage(30.0D);*/
         }
         if (this instanceof GuardBoss)
             ((GuardBoss)this).onDamage(this, event);

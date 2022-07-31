@@ -50,7 +50,7 @@ public class Rage extends CustomEnchantment {
 
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);
 
-            if (rageStacksCache.getLastRageStackTime() + 15000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
+            if (rageStacksCache.getLastRageStackTime() + 10000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
                 rageStacksCache.updateLastRageStackTime();
                 rageStacksCache.resetRageStack();
                 rageStacksCache.updateVictim((Player) target);
