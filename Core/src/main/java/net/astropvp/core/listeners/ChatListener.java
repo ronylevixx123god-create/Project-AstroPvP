@@ -23,6 +23,7 @@ import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -164,9 +165,6 @@ public class ChatListener implements Listener {
             );
 
 
-            ChatColor chatcolor;
-            chatcolor = AstroCore.getInstance().getCachedColors().getOrDefault(event.getPlayer().getUniqueId(), ChatColor.WHITE);
-
 
             clickable.add("&8 » ");
 
@@ -191,7 +189,13 @@ public class ChatListener implements Listener {
                 message = message.replace("[brag]", "").replace("[BRAG]", "");
             }
 
-            clickable.add(chatcolor + message);
+            ChatColor chatcolor = AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId()).getChatColor();
+            String[] messageSplit = message.split(" ");
+            StringBuilder newMessage = new StringBuilder();
+            for (String s : messageSplit) {
+                newMessage.append(chatcolor + s).append(" ");
+            }
+            clickable.add(chatcolor + newMessage.toString());
             clickable.sendToPlayer(recipient);
             if (!player.isOp()) {
                 AstroCore.getInstance().getCooldownUtils().add(player, "chatCooldown", (long) (chatCooldown * 1000));

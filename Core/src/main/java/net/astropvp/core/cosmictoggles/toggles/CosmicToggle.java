@@ -23,8 +23,6 @@ package net.astropvp.core.cosmictoggles.toggles;
 
 import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
-import net.astropvp.core.commands.ToggleFactionLandTitle;
-import net.astropvp.core.commands.ToggleKillTitleCommand;
 import net.astropvp.core.itemfilter.Filter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
@@ -86,11 +84,11 @@ public enum CosmicToggle {
 
 
         if (this == FACTION_LAND_TITLE) {
-            return ToggleFactionLandTitle.hasEnabled(player.getUniqueId());
+            return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isFactionsLandTitleEnabled();
         }
 
         if (this == KILL_LAND_TITLE) {
-            return ToggleKillTitleCommand.hasEnabled(player.getUniqueId());
+            return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isKillTitleEnabled();
         }
 
         if (this == CLEAR_INVENTORY_CONFIRMATION) {

@@ -15,8 +15,6 @@ commands:
     aliases: ['discord']
   pots:
     aliases: ['pot']
-  invsee:
-    aliases: ['inventorysee']
   trailer:
     description: Claim trailer rewards
     aliases: ['trailerclaim', 'claimtrailer']

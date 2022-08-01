@@ -43,7 +43,7 @@ extends CustomEnchantment {
         Player playerAttacker = (Player)user;
         double random = Math.random();
         if (random < (chance = 0.08 * (double)enchantLevel) && (weapon = playerAttacker.getItemInHand()) != null && weapon.getDurability() != 0 && weapon.getMaxStackSize() == 1) {
-            playerAttacker.setItemInHand(ItemUtils.addDurability((ItemStack)weapon, (int)1));
+            //playerAttacker.setItemInHand(ItemUtils.addDurability((ItemStack)weapon, (int)1));
             playerAttacker.updateInventory();
         }
     }

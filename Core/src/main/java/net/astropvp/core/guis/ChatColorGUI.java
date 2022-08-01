@@ -132,7 +132,7 @@ public class ChatColorGUI extends GUIBuilder {
     }
 
     public void setColor(Player player, ChatColor color) {
-        AstroCore.getInstance().addCachedColor(player, color);
+        AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId()).setChatColor(color);
         player.sendMessage(CC.translate("&aYou changed your chat color..."));
     }
 

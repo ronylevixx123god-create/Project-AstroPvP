@@ -20,6 +20,7 @@ import com.massivecraft.factions.struct.Permission;
 import com.massivecraft.factions.tag.Tag;
 import com.massivecraft.factions.util.*;
 import mkremins.fanciful.FancyMessage;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.commands.ToggleFactionLandTitle;
 import org.bukkit.*;
 import org.bukkit.command.CommandSender;
@@ -751,7 +752,7 @@ public abstract class MemoryFPlayer implements FPlayer {
 
             // We send null instead of empty because Spigot won't touch the title if it's null, but clears if empty.
             // We're just trying to be as unintrusive as possible.
-            if (ToggleFactionLandTitle.hasEnabled(player.getUniqueId())) {
+            if (AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId()).isFactionsLandTitleEnabled()) {
                 TitleAPI.getInstance().sendTitle(player, title, sub, in, stay, out);
             }
 

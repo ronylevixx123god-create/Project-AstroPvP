@@ -1,5 +1,7 @@
 package net.astropvp.core;
 
+import co.aikar.commands.CommandManager;
+import co.aikar.commands.PaperCommandManager;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -14,6 +16,7 @@ import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
 import net.astropvp.core.giveaway.GiveAwayCommand;
 import net.astropvp.core.giveaway.GiveAwayManager;
 import net.astropvp.core.items.coder.EnchantmentCoderManager;
+import net.astropvp.core.managers.AstroPlayerManager;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
 import net.astropvp.core.titles.listeners.PermissionListener;
@@ -100,6 +103,7 @@ public class AstroCore extends JavaPlugin {
     public static AstroCore getInstance() {
         return instance;
     }
+    private CommandManager commandManager;
 
     private StaffModeManager staffModeManager;
     private StaffModulesRegister staffModulesRegister;
@@ -109,17 +113,11 @@ public class AstroCore extends JavaPlugin {
     private HolyWhitescrollItem holyWhitescrollItem;
     private JackpotManager jackpotManager;
     public static Economy economy;
+    private AstroPlayerManager astroPlayerManager;
     Essentials ess;
     private PayToggle payToggles;
     ProtocolManager protocolManager;
     public static Map<UUID, Player> grindingMessages;
-    private HashMap<UUID, ChatColor> cachedColors;
-    public HashMap<UUID, ChatColor> getCachedColors() {
-        return this.cachedColors;
-    }
-    public void addCachedColor(Player player, ChatColor color) {
-        cachedColors.put(player.getUniqueId(), color);
-    }
     private FilterManager filterManager;
     private ItemFilterListener itemListener;
     public TitleDatabaseManager dataManager;
@@ -144,8 +142,9 @@ public class AstroCore extends JavaPlugin {
         saveDefaultConfig();
         setupEconomy();
         events();
-        cachedColors = new HashMap<>();
         this.enchantmentCoderManager = new EnchantmentCoderManager();
+        this.astroPlayerManager = new AstroPlayerManager();
+
         this.staffModeManager = new StaffModeManager();
         this.staffModulesRegister = new StaffModulesRegister(this);
         this.staffModulesRegister.initialize();
@@ -214,12 +213,16 @@ public class AstroCore extends JavaPlugin {
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
         Bukkit.getConsoleSender().sendMessage(" ASTRO CORE PLUGIN SHOULD BE LOADED NOW");
         Bukkit.getConsoleSender().sendMessage(" ******************************************** ");
-
+        astroPlayerManager.loadAll();
         enchantmentCoderManager.loadAll();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             System.out.println("[EnchantmentCoder] Started auto saving coder data");
             enchantmentCoderManager.saveAll();
             System.out.println("[EnchantmentCoder] Finished auto saving coder data");
+
+            Bukkit.getLogger().info("[AstroCore] Started Saving astrocore playerdata");
+            astroPlayerManager.saveAll();
+            Bukkit.getLogger().info("[AstroCore] Finished Saving astrocore playerdata");
 
         },60L, 15*20*60);
     }
@@ -240,11 +243,7 @@ public class AstroCore extends JavaPlugin {
         this.dataManager.saveAllEquippedTitlesToSQL();
         this.filterManager.saveFilters();
 
-        ToggleKillTitleCommand.save();
-        ToggleFactionLandTitle.save();
-        Bukkit.getLogger().info("Saving all the toggle kill titles");
-        Bukkit.getLogger().info("Saving all the toggle faction land titles");
-
+        Bukkit.getLogger().info("[AstroCore] Saving astrocore playerdata");
 
 
         for (CoinFlipMatch active : this.coinFlipManager.getCoinFlipMatches()) {
@@ -296,6 +295,7 @@ public class AstroCore extends JavaPlugin {
 
         saveConfig();
         enchantmentCoderManager.saveAll();
+        astroPlayerManager.saveAll();
 
         instance = null;
     }
@@ -376,7 +376,6 @@ public class AstroCore extends JavaPlugin {
         getCommand("heal").setExecutor(new HealCommand());
         getCommand("discord").setExecutor(new DiscordCommand());
         getCommand("pots").setExecutor(new PotionsCommand(this));
-        getCommand("invsee").setExecutor(new Invsee());
         getCommand("giveall").setExecutor(new GiveallCommand());
         getCommand("givechunkbuster").setExecutor(new ChunkBuster(this));
         getCommand("trash").setExecutor(new TrashCommand());
@@ -402,6 +401,10 @@ public class AstroCore extends JavaPlugin {
         freezeCommand = new Freeze();
 
         Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new StaffModeCommand()).forEach(this::registerCommand);
+
+        this.commandManager = new PaperCommandManager(this);
+        this.commandManager.registerCommand(new Invsee());
+
     }
 
     public void registerTasks() {
