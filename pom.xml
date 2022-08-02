@@ -77,7 +77,8 @@
         <module>AstroDiscordSync</module>
         <module>AstroEnvoy</module>
         <module>StorageUtil</module>
-        <module>AstroLootboxes</module>
+        <module>LootFilter</module>
+
     </modules>
 
     <build>

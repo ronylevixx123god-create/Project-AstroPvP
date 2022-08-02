@@ -7,6 +7,8 @@ import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.lootfilter.struct.LootTable;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -66,16 +68,16 @@ public class CrateKeyInventoryListener implements Listener {
                     amountOfKeys--;
                 }
                 player.setItemInHand(null);
-                player.sendMessage(CC.translate("&a&l(!)&a You have opened &f" + amount + "&a " + type.getPrefixedName() + "s&a."));
+                //player.sendMessage(CC.translate("&a&l(!)&a You have opened &f" + amount + "&a " + type.getPrefixedName() + "s&a."));
 
 
             } else {
                 ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
-//                addItemToPlayer(player, data);
-                player.getInventory().addItem(itemStack);
-                if (itemStack.getItemMeta() != null) {
+                addItemToPlayer(player, data);
+                //player.getInventory().addItem(itemStack);
+/*                if (itemStack.getItemMeta() != null) {
                     player.sendMessage(CC.translate("&a&l(!)&a You have opened a " + type.getPrefixedName() + " &aand received " + itemStack.getItemMeta().getDisplayName() + "&a."));
-                }
+                }*/
 
                 if (player.getItemInHand().getAmount() > 1) {
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
@@ -110,17 +112,7 @@ public class CrateKeyInventoryListener implements Listener {
         CrateType type = data.getCrateType();
         ItemStack item = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
 
-        /*CrateKeyFilter filter = (CrateKeyFilter) FilterManager.getInstance().getFilterPlayer(player).getFilter("crate_key_" + type.name().toLowerCase());
-        if (filter != null && filter.isFiltered(item)) {
-            if (!item.hasItemMeta()) {
-                player.sendMessage(CC.translate(item.getType().name() + "&c has been skipped. &cLeft-Click the crate to edit this filter."));
-
-            } else {
-                player.sendMessage(CC.translate(item.getItemMeta().getDisplayName() + "&c has been skipped. &cLeft-Click the crate to edit this filter."));
-            }
-            return;
-        }*/
-        player.getInventory().addItem(item);
+        LootFilterAPI.giveItem(player, LootTable.valueOf(type.name()), item);
     }
 }
 

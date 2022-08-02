@@ -3,12 +3,14 @@ package me.ily2bb.slotbot;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ily2bb.slotbot.utils.Utils;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -33,6 +35,17 @@ public class CosmicSlotBotAPI {
         if (itemStack.getType() == Material.AIR) return false;
 
         return itemStack.getItemMeta().equals(CosmicSlotBotAPI.createSlotBotItem().getItemMeta());
+    }
+
+    public static List<ItemStack> getSlotBotItems() {
+        List<ItemStack> items = new ArrayList<>();
+        final List<String> list = (List<String>) SlotBotPlugin.getInstance().getConfig().getList("items");
+        for (int i = 0; i < list.size(); ++i) {
+            final String l = list.get(i);
+            final ItemStack x = Utils.getItem(l);
+            items.add(x);
+        }
+        return items;
     }
 
 

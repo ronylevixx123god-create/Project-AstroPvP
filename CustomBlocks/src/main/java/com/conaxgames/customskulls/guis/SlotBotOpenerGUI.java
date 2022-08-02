@@ -16,6 +16,8 @@ import me.astropvp.cratekeys.utils.ConfigUtils;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.lootfilter.struct.LootTable;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -89,7 +91,9 @@ public class SlotBotOpenerGUI {
                         }
                     }
                     final ItemStack itemStack = CosmicSlotBotAPI.getRandomSlotBotLootItem();
-                    chest.getInventory().addItem(itemStack);
+                    if (!LootFilterAPI.isFiltered(p, LootTable.SLOTBOT, itemStack)) {
+                        chest.getInventory().addItem(itemStack);
+                    }
                     a--;
                 }
 

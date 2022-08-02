@@ -7,6 +7,8 @@ import me.astropvp.astrospacegrinding.utils.Clickable;
 import me.astropvp.astrospacegrinding.utils.StringUtils;
 import me.astropvp.astrospacegrinding.utils.TimeUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.lootfilter.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -32,7 +34,8 @@ public class SpaceMobListener implements Listener {
             event.getDrops().clear();
             event.setDroppedExp(0);
             for (ItemStack item : type.getInstance().getRewards(event.getEntity().getKiller())) {
-                event.getDrops().add(item);
+                LootFilterAPI.giveItem(entity.getKiller(), LootTable.SPACE, item);
+                //event.getDrops().add(item);
             }
             if (event.getEntity().getKiller() != null && event.getEntity().getKiller() != null) {
                 Player damager = event.getEntity().getKiller();

@@ -5,9 +5,17 @@ import net.astropvp.commands.CollectCommand;
 import net.astropvp.commands.CollectSaveCommand;
 import net.astropvp.listeners.PlayerListener;
 import net.astropvp.storage.StoragePlugin;
+import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.CollectManager;
+import net.astropvp.struct.PlayerCollect;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.UUID;
 
 @Getter
 public class CollectPlugin extends JavaPlugin {
@@ -27,7 +35,20 @@ public class CollectPlugin extends JavaPlugin {
             System.out.println("[Collect] Started auto saving all collects");
             collectManager.saveAll();
             System.out.println("[Collect] Finished auto saving all collects");
-        }, 60L, 5*20*60L);
+            final Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
+            for (Player player : onlinePlayers) {
+                UUID uuid = player.getUniqueId();
+                PlayerCollect playerCollect = getCollectManager().getFromCache(uuid.toString());
+                if (playerCollect == null) continue;
+                for (CollectCategory category : playerCollect.getCategories()) {
+                    if (category.isExpired()) {
+                        getCollectManager().removeCategoryFromCache(uuid.toString(), category);
+                        System.out.println("[Collect] Removed category for " + uuid + " because it expired!");
+                    }
+                }
+            }
+        }, 60L, 20*60L);
+
     }
 
     public void onDisable() {

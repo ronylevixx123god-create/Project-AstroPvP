@@ -135,8 +135,9 @@ public class AstroSpaceGrindingAPI {
 		double total = 0.0D;
 		for (Map.Entry<ItemStack, Double> entry : items.entrySet()) {
 			double value = (Double) entry.getValue();
-			if (value + total >= find)
+			if (value + total >= find) {
 				return entry.getKey();
+			}
 			total += value;
 		}
 		return null;

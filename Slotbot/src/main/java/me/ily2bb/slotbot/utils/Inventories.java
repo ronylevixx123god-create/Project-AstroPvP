@@ -3,6 +3,7 @@ package me.ily2bb.slotbot.utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.objects.ItemListCacher;
+import net.astropvp.lootfilter.LootFilterAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -186,11 +187,9 @@ public class Inventories {
                         final ItemListCacher y2 = cacher;
                         Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), y2::broadcastMessage, 1L);
                     }
-                    if (!Utils.isInventoryFull(player)) {
-                        player.getInventory().addItem(this.previousItems[2]);
-                    } else {
-                        player.getWorld().dropItem(player.getLocation(), this.previousItems[2]);
-                    }
+                        LootFilterAPI.giveItem(player, net.astropvp.lootfilter.struct.LootTable.SLOTBOT, this.previousItems[2]);
+                        //player.getInventory().addItem(this.previousItems[2]);
+
                     this.cancel();
                 } else if (!player.hasMetadata("slot_rolling_" + column)) {
                     ItemListCacher cacher2 = ItemListCacher.getCache(player);
@@ -203,11 +202,8 @@ public class Inventories {
                         final ItemListCacher y3 = cacher2;
                         Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), y3::broadcastMessage, 1L);
                     }
-                    if (!Utils.isInventoryFull(player)) {
-                        player.getInventory().addItem(item);
-                    } else {
-                        player.getWorld().dropItem(player.getLocation(), item);
-                    }
+                    LootFilterAPI.giveItem(player, net.astropvp.lootfilter.struct.LootTable.SLOTBOT, item);
+
                     this.cancel();
                 }
             }

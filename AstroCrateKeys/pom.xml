@@ -135,7 +135,13 @@
             <systemPath>${project.basedir}/lib/CCVerify-1.0 (8).jar</systemPath>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>lootfilter</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LootFilter-0.1.jar</systemPath>
+        </dependency>
 
 
         <dependency>

@@ -15,6 +15,8 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 import me.mattstudios.mfgui.gui.guis.GuiItem;
 import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.lootfilter.struct.LootTable;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -94,7 +96,10 @@ public class CrateKeyOpenerGUI {
                             }
                         }
                         ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
-                        chest.getInventory().addItem(itemStack);
+                        if (!LootFilterAPI.isFiltered(player,LootTable.valueOf(type.name()), itemStack)) {
+
+                            chest.getInventory().addItem(itemStack);
+                        }
                         amount--;
                     }
                 }

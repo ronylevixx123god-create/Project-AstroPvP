@@ -118,7 +118,13 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Lootboxes-0.1.jar</systemPath>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>lootfilterapi</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LootFilter-0.1.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>kgeys</artifactId>

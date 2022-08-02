@@ -74,7 +74,13 @@
             <artifactId>Utils</artifactId>
             <version>0.1</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>lbfilt</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LootFilter-0.1.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>ParticleAPI</artifactId>
