@@ -35,9 +35,8 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
-import me.ifamasssxd.cosmicmysterychest.data.Filter;
+import me.ifamasssxd.cosmicmysterychest.data.LootboxFilterData;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import me.ifamasssxd.cosmicmysterychest.utils.FilterUtils;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.*;
@@ -162,16 +161,14 @@ public class MysteryChestGUI
             }
         }
         this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.1f, 0.9f);
+        LootboxFilterData filter = CosmicMysteryChest.get().getFilterManager().getLootFilterData(player.getUniqueId());
 
         for (CustomLoot loot : this.lastPrizesShown) {
-            if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
-                Filter filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
-
-                if (filter.isBlockedItem(loot.getItem())) {
+                if (filter.isFiltered(chest.getInternalName(),loot.getItem())) {
                     player.sendMessage(CC.translate(loot.getItem().getItemMeta().getDisplayName() + "&c has been skipped. &cType \"&7/lbfilter\" &cto edit this filter."));
                     continue;
                 }
-            }
+
             long id;
             ItemStack item3 = loot.getItem().clone();
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && ((id = ItemID.getItemID((ItemStack) item3)) > 0L || ItemID.needsItemID((ItemStack) item3))) {

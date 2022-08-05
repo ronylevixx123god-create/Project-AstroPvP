@@ -102,6 +102,7 @@ public class KothSanityListener implements Listener {
         if (faction == null) return;
 
         if (faction.getId().equals(CosmicKOTHPlugin.get_().getBuffFactionId())) {
+            if (player.getLocation().getWorld().getName().equals("tournament_world")) return;
             DamageUtils.setDamageIncrease(10, event);
         }
     }

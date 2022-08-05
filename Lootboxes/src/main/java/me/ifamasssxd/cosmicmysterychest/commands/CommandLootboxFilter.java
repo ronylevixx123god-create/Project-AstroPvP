@@ -5,8 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.guis.FilterGUI;
-import me.ifamasssxd.cosmicmysterychest.data.Filter;
-import me.ifamasssxd.cosmicmysterychest.managers.FilterManager;
+import me.ifamasssxd.cosmicmysterychest.data.LootboxFilterData;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.bukkit.Material;
 import org.bukkit.command.Command;
@@ -16,6 +15,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class CommandLootboxFilter implements CommandExecutor {
     @Override
@@ -42,15 +44,10 @@ public class CommandLootboxFilter implements CommandExecutor {
             }
         }
         if (builder != null && builder.hasKey("mysteryChest")) {
-            Filter filter;
             MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
-            if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.get().getFilters().get(player.getUniqueId()).containsKey(chest)) {
-                filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
-            } else {
-                filter = new Filter(chest, new ArrayList<>());
-                CosmicMysteryChest.get().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
-            }
-            new FilterGUI(player, filter.getMysteryChest()).getFilterGUI().open(player);
+            LootboxFilterData filter = CosmicMysteryChest.get().getFilterManager().getLootFilterData(player.getUniqueId());
+
+            new FilterGUI(player, chest).getFilterGUI().open(player);
         } else {
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must be holding a lootbox to do this!");
         }

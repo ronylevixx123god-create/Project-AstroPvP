@@ -31,12 +31,12 @@ public class CommandItemFlip
         final Player player = (Player) sender;
         if (args.length >= 1) {
             Player target = Bukkit.getPlayer(args[0]);
-            if (!target.getLocation().getWorld().getName().equals("world")) {
-                sender.sendMessage(CC.translate("&cYou cannot icf this person. This person is in a different world."));
-                return false;
-            }
             if (target == null || !target.isOnline()) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "That player is not online!");
+                return false;
+            }
+            if (!target.getLocation().getWorld().getName().equals("world")) {
+                sender.sendMessage(CC.translate("&cYou cannot icf this person. This person is in a different world."));
                 return false;
             }
             if (target == player) {
@@ -57,7 +57,7 @@ public class CommandItemFlip
                         public void run() {
                             if (!original_sender.isOnline() || !player.isOnline()) {
                                 return;
-                            }
+                            }g
                             ItemFlipPlayerData data_one = new ItemFlipPlayerData(player, Color.values()[0]);
                             ItemFlipPlayerData data_two = new ItemFlipPlayerData(original_sender, Color.values()[(Color.values()).length - 1]);
                             ItemFlipData data = new ItemFlipData(data_one, data_two);

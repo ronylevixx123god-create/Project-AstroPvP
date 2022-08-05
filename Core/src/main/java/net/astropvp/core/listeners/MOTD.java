@@ -93,9 +93,8 @@ public class MOTD implements Listener {
             if (CosmicPlayers.get().getCosmicPlayer(player) != null) {
                 if (CosmicPlayers.get().getCosmicPlayer(player).isOnCosmicClient()) {
                     player.sendMessage("");
-                    player.sendMessage(CC.translate("&aThank you &f" + player.getName() + " &afor using the Astro Client!"));
-                    player.sendMessage(CC.translate("&7With this client you will be able to see &fItemSkins&7, &fRoam&7, &fFaction Ping&7 and so much more..."));
-                    player.sendMessage(CC.translate("&eYou now have 1.5x EXP and 1.5x Grinding Lootboxes chance."));
+                    player.sendMessage(CC.translate("&e&l(!)&e Thank you for using the Cosmic Client, " + player.getName() + "!"));
+                    player.sendMessage(CC.translate("&e&l* &7Passive 1.5x XP/Key Chance multiplier activated!"));
                     player.sendMessage("");
                 }
             } else {
@@ -104,7 +103,7 @@ public class MOTD implements Listener {
                 player.sendMessage(CC.translate("&7Please join our discord at &f&ndiscord.astropvp.net&7 and follow the turtorial in &f#cc-features&7."));
                 player.sendMessage(CC.translate("&7You must be on a supported version of &fCosmicClient&7 to see skins, ping, roam etc..."));
                 player.sendMessage(CC.translate("&eYou will also get 1.5x EXP and 1.5x Grinding Lootboxes chance."));
-                player.sendTitle(new Title(CC.translate("&aPlease download the Astro Version of &fCC&a!"), CC.translate("&7You can find it in &f#cc-features&7 in &f/discord&7."), 20, 120, 20));
+                player.sendTitle(new Title(CC.translate("&aPlease download Official CosmicClient!"), CC.translate("&7You can find it in &f#cc-features&7 in &f/discord&7."), 20, 120, 20));
                 player.sendMessage("");
             }
         }, 80L);

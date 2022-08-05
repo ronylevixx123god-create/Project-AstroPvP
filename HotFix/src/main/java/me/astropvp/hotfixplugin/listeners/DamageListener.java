@@ -33,6 +33,7 @@ import org.bukkit.potion.PotionEffectType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.UUID;
 
 public class DamageListener implements Listener {
@@ -249,7 +250,7 @@ public class DamageListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
         if (WorldGuardUtils.getRegionsIn(e.getPlayer()) == null) return;
-        if ((e.getMessage().equalsIgnoreCase("/near") || e.getMessage().equalsIgnoreCase("/enear") || e.getMessage().equalsIgnoreCase("/nearby") || e.getMessage().equalsIgnoreCase("/enearby")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter")) || e.getPlayer().getLocation().getY() >= 255) {
+        if ((e.getMessage().toLowerCase().startsWith("/near") || e.getMessage().startsWith("/enear") || e.getMessage().toLowerCase().startsWith("/nearby") || e.getMessage().toLowerCase().startsWith("/enearby")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter")) || e.getPlayer().getLocation().getY() >= 255) {
             e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed here!"));
             e.setMessage("/null");
             e.setCancelled(true);

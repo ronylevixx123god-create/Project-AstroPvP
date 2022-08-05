@@ -69,6 +69,10 @@ public class TournamentDeathListener implements Listener {
                     astroTournamentsPlugin.getTournamentManager().putNextPlayersInArenas();
                 }, 20L);
 
+                attacker.increaseKills();
+                victim.increaseDeaths();
+                victim.increaseLosses();
+
                 Utils.emptyInventory(victim.getPlayer());
                 Utils.emptyInventory(attacker.getPlayer());
                 GeneralUtil.healPlayer(victim.getPlayer(), victim.getPlayer().getMaxHealth());

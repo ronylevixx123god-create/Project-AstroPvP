@@ -1,9 +1,8 @@
 name: CosmicMysteryChest
 version: 1.0-SNAPSHOT
 main: me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest
-depend: [ CosmicPvPUtils, Arkkit ]
+depend: [ CosmicPvPUtils, Arkkit, StorageUtil ]
 softdepend: [ CosmicSkyCustomItems ]
-loadbefore: [ ShardMisc ]
 commands:
   mysterychest:
     description: Mystery Chest command

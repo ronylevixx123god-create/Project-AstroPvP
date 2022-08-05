@@ -43,6 +43,11 @@ public class TournamentPlayer implements KeyToSave {
     private SkinType bootsSkin;
     private SkinType swordSkin;
     private SkinType backpackSkin;
+    private int kills;
+    private int deaths;
+    private int tournamenWins;
+    private int tournamenLosses;
+
 
     private boolean inTournament;
 
@@ -246,6 +251,41 @@ public class TournamentPlayer implements KeyToSave {
             AstroTournamentsPlugin.instance.getTournamentManager().getTournamentParticipants().remove(this);
             this.inTournament = false;
         }
+    }
+
+    public void increaseKills() {
+        this.kills +=1;
+    }
+
+    public void increaseDeaths() {
+        this.deaths +=1;
+    }
+
+    public void increaseWins() {
+        this.tournamenWins +=1;
+    }
+
+    public void increaseLosses() {
+        this.tournamenLosses +=1;
+    }
+    public String getKDR() {
+        double kdr;
+        if (deaths == 0) {
+            kdr = kills;
+        } else {
+            kdr = (double) kills / deaths;
+        }
+        return String.format("%.1f", kdr);
+    }
+
+    public String getWLRatio() {
+        double kdr;
+        if (tournamenWins == 0) {
+            kdr = tournamenWins;
+        } else {
+            kdr = (double) tournamenWins / tournamenLosses;
+        }
+        return String.format("%.1f", kdr);
     }
 
 

@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd%22%3E">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.conaxgames</groupId>
+    <groupId>net.astropvp</groupId>
     <artifactId>Lootboxes</artifactId>
     <version>0.1</version>
 
@@ -14,6 +14,7 @@
     </properties>
 
     <repositories>
+
         <repository>
             <id>ess-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
@@ -27,36 +28,10 @@
             <url>https://jitpack.io</url>
         </repository>
         <repository>
-            <id>repo</id>
-            <url>https://repo.mattstudios.me/artifactory/public/</url>
+            <id>puha-repo</id>
+            <url>https://repo.puha.io/repo/</url>
         </repository>
     </repositories>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.1.1</version>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>dev.triumphteam.net.astropvp.armorsets.gui</pattern>
-                            <shadedPattern>me.ifamasssxd.cosmicguishop.net.astropvp.armorsets.gui</shadedPattern> <!-- Replace package here here -->
-                        </relocation>
-                    </relocations>
-                </configuration>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
 
     <dependencies>
         <!-- ConaxGames repos -->
@@ -74,9 +49,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>StorageUtilsShaded</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../StorageUtil/target/StorageUtil-0.1-shaded.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.18</version>
+            <version>latest</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -84,11 +66,6 @@
             <artifactId>VaultAPI</artifactId>
             <version>1.7</version>
             <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>dev.triumphteam</groupId>
-            <artifactId>triumph-gui</artifactId>
-            <version>3.0.3</version> <!-- replace version here -->
         </dependency>
 
         <!-- New Cosmic Repos -->
@@ -119,7 +96,13 @@
             <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>shop</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicShop (1).jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>MysterryChest</artifactId>

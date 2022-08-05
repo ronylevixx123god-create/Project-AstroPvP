@@ -94,6 +94,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
                 astroTournamentsPlugin.getTournamentManager().setActive(false);
                 winner.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
                 winner.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox").createClaimableItem(false));
+                winnerTournamentPlayer.increaseWins();
                 winnerTournamentPlayer.setInTournament(false);
                 return;
             }

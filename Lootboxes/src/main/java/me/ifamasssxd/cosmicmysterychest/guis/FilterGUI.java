@@ -1,15 +1,12 @@
 package me.ifamasssxd.cosmicmysterychest.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import dev.triumphteam.gui.guis.GuiItem;
-import dev.triumphteam.gui.guis.PaginatedGui;
-import me.ifamasssxd.cosmiccoinflip.utils.SlotUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.data.Filter;
+import me.ifamasssxd.cosmicmysterychest.data.LootboxFilterData;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import me.ifamasssxd.cosmicmysterychest.utils.FilterUtils;
-import org.arkhamnetwork.Arkkit.patches.Balance;
-import org.bukkit.Bukkit;
+import me.mattstudios.mfgui.gui.guis.GuiItem;
+import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -18,14 +15,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class FilterGUI {
 
     private Player player;
 
-    private final Filter filter;
+    private final LootboxFilterData filter;
 
     private final PaginatedGui lootboxMenu;
 
@@ -36,16 +32,8 @@ public class FilterGUI {
 
     public FilterGUI(Player player, MysteryChest chest) {
         this.player = player;
-        if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.getFilters().get(player.getUniqueId()).containsKey(chest)) {
-            this.filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
+            this.filter = CosmicMysteryChest.get().getFilterManager().getLootFilterData(player.getUniqueId());
             this.lootboxMenu = new PaginatedGui(6, 45, "Loot Filter");
-
-        } else {
-            player.sendMessage(CC.translate("&cAn error appeared, please report this to an administrator!"));
-            this.lootboxMenu = new PaginatedGui(6, 45, "Loot Filter");
-            this.filter = null;
-            return;
-        }
 
         lootboxMenu.setDefaultClickAction(event -> {
             event.setCancelled(true);
@@ -79,9 +67,9 @@ public class FilterGUI {
             event.setCancelled(true);
         }));
 
-        for (ItemStack item : FilterUtils.getItems(filter.getMysteryChest())) {
+        for (ItemStack item : FilterUtils.getItems(chest)) {
             ItemStack copyItem = item.clone();
-            if (filter.isBlockedItem(item)) {
+            if (filter.isFiltered(chest.getInternalName(), item)) {
                 ItemMeta meta = copyItem.getItemMeta();
                 List<String> lore = meta.getLore();
                 if (lore.contains(CC.translate("&f&l➥ &f&lFILTERED"))) {
@@ -105,12 +93,7 @@ public class FilterGUI {
                 copyItem.setItemMeta(meta);
             }
             lootboxMenu.addItem(new GuiItem(copyItem, event -> {
-                if (filter.isBlockedItem(item)) {
-                    filter.removeBlockedLootItem(item);
-                } else {
-                    filter.addBlockedLootItem(item);
-
-                }
+                filter.filterItem(chest.getInternalName(),item);
                 FilterGUI filterGUI = new FilterGUI(player, chest);
                 filterGUI.getFilterGUI().open(player);
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);

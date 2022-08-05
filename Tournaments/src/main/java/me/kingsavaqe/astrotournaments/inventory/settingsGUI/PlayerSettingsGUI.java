@@ -49,6 +49,9 @@ public class PlayerSettingsGUI {
         this.tournamentPlayerSettings.setItem(3, 9, new GuiItem(createExitItem(), event -> {
             tournamentPlayer.getPlayer().closeInventory();
         }));
+
+        ItemStack glass = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).setName("&7").build();
+        this.tournamentPlayerSettings.getFiller().fill(new GuiItem(glass));
     }
 
 

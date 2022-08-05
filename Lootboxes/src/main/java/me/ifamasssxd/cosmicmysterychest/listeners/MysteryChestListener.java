@@ -26,23 +26,16 @@
  */
 package me.ifamasssxd.cosmicmysterychest.listeners;
 
-import com.conaxgames.customskulls.CoreSkulls;
-import com.conaxgames.customskulls.ability.AbilityData;
-import com.conaxgames.customskulls.blocks.CustomBlock;
-import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
-import me.ifamasssxd.cosmicmysterychest.data.Filter;
+import me.ifamasssxd.cosmicmysterychest.data.LootboxFilterData;
 import me.ifamasssxd.cosmicmysterychest.exceptions.MysteryChestException;
 import me.ifamasssxd.cosmicmysterychest.guis.ActiveMysteryChestGUI;
 import me.ifamasssxd.cosmicmysterychest.guis.FilterGUI;
 import me.ifamasssxd.cosmicmysterychest.guis.MysteryChestGUI;
-import me.ifamasssxd.cosmicmysterychest.guis.MysteryChestItemViewerGUI;
 import me.ifamasssxd.cosmicmysterychest.struct.GlobalMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
@@ -50,7 +43,6 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -61,11 +53,11 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class MysteryChestListener
         implements Listener {
@@ -139,18 +131,9 @@ public class MysteryChestListener
                     if (getEmptySlots(player) < bundleSize) {
                         throw new MysteryChestException(CC.translate("&c&l(!)&c Please clear some inventory slots before opening this lootbox!"));
                     }
-                    if (chest == null) {
-                        throw new MysteryChestException("Unable to determine Lootbox!");
-                    }
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                        Filter filter;
-                        if (CosmicMysteryChest.getFilters().containsKey(player.getUniqueId()) && CosmicMysteryChest.getFilters().get(player.getUniqueId()).containsKey(chest)) {
-                            filter = CosmicMysteryChest.getFilters().get(player.getUniqueId()).get(chest);
-                        } else {
-                            filter = new Filter(chest, new ArrayList<>());
-                            CosmicMysteryChest.get().getFilterManager().addFilterToUser(player.getUniqueId(), filter);
-                        }
-                        new FilterGUI(player, filter.getMysteryChest()).getFilterGUI().open(player);
+                        LootboxFilterData filter = CosmicMysteryChest.get().getFilterManager().getLootFilterData(player.getUniqueId());
+                        new FilterGUI(player, chest).getFilterGUI().open(player);
                         return;
                     }
                     int amt = event.getItem().getAmount();
@@ -171,18 +154,7 @@ public class MysteryChestListener
                             ItemID.blacklistIID((long) id, (String) ("lootboxOpen: " + player.getName() + " " + chest.getInternalName()));
                         }
                     }
-                    NBTWrapper nbtWrapper = new NBTWrapper(item);
-                    /*long expiration = 0L;
-                    NBTTagCompoundBuilder data = nbtWrapper.getconaxData();
-                    expiration = data.getLong("expiration");
-                    if (expiration > 0L && expiration < System.currentTimeMillis()) {
-                        String since = TimeUtil.formatTimeSincePastTime(expiration, true);
-                        player.sendMessage("");
-                        player.sendMessage(CC.RedB + "(!) " + CC.Red + "You attempted to claim a Lootbox that expired " + since + " ago!");
-                        player.sendMessage(CC.Gray + "It has been discarded as it is no longer valid!");
-                        player.sendMessage("");
-                        return;
-                    }*/
+
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
 
 

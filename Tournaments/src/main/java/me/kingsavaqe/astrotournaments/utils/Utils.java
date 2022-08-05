@@ -1,5 +1,6 @@
 package me.kingsavaqe.astrotournaments.utils;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.EnchantmentAPI;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
@@ -8,7 +9,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
+import org.bukkit.inventory.meta.SkullMeta;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Utils {
@@ -36,6 +42,20 @@ public class Utils {
         charArray[0] = Character.toUpperCase(charArray[0]);
         sb.append(new String(charArray));
         return sb.toString().trim();
+    }
+
+    public static ItemStack createPlayerSkull(String owner, String name, List<String> lore) {
+        ItemStack item = new ItemStack(Material.SKULL_ITEM, 1, (short)3);
+        SkullMeta meta = (SkullMeta)item.getItemMeta();
+        meta.setOwner(owner);
+        meta.setDisplayName(CC.translate(name));
+        meta.setLore(color(lore));
+        item.setItemMeta(meta);
+        return item;
+    }
+
+    public static List<String> color(List<String> messages) {
+        return messages.stream().map(CC::translate).collect(Collectors.toList());
     }
 
     public static boolean isEmptyInventory(Player player) {
