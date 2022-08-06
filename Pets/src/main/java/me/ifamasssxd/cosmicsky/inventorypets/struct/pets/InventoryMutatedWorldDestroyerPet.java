@@ -260,7 +260,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
                     this.cancel();
                 }
                 if (!affected.isDead() && WorldGuardUtils.isPvPEnabled(affected.getLocation())) {
-                    final int dmg = 4;
+                    final int dmg = 3;
 
 
                     AstroDamageHandler.getInstance().getDamageHandler().dealDamage(affected, dmg, "&e&lCage Ticks");

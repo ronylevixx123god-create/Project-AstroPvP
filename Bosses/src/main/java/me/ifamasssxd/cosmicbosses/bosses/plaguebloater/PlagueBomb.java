@@ -21,6 +21,8 @@ import java.util.concurrent.TimeUnit;
 
 public class PlagueBomb extends BossAbility implements EntityContainer {
     private Set<Entity> primedTNT;
+    public static List<UUID> tntList = new ArrayList<>();
+
     Random random;
 
     public PlagueBomb(final Boss boss) {
@@ -68,7 +70,7 @@ public class PlagueBomb extends BossAbility implements EntityContainer {
 
     @Override
     public void onAbility() {
-        this.primedTNT.forEach(tnt -> tnt.remove());
+        this.primedTNT.forEach(Entity::remove);
         this.primedTNT.clear();
         for (int i = 0; i < 3; ++i) {
             this.createPlagueBomb(BossUtils.getRandomLocationNearby(this.getBoss().getEntity().getLocation(), 15, 10), 100);
@@ -81,6 +83,7 @@ public class PlagueBomb extends BossAbility implements EntityContainer {
         final TNTPrimed primed = (TNTPrimed) l.getWorld().spawnEntity(l, EntityType.PRIMED_TNT);
         primed.setMetadata("do_not_clear", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
         primed.setMetadata("death_plague", (MetadataValue) new FixedMetadataValue((Plugin) CosmicBosses.getInstance(), (Object) ""));
+        tntList.add(primed.getUniqueId());
         primed.setFuseTicks(fuse);
         this.primedTNT.add((Entity) primed);
         return primed;

@@ -140,8 +140,9 @@ return;
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 20);
             }
-            final List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
-            ents.add(playerHit);
+            final List<Player> ents = getNearbyPlayers(playerHit.getNearbyEntities(radius, radius, radius));
+            assert playerHit instanceof Player;
+            ents.add((Player) playerHit);
             for (final Entity ent : ents) {
                 if (ent instanceof Player) {
                     Player pEnt = null;
@@ -196,5 +197,15 @@ return;
                 }
             }
         }
+    }
+
+    private List<Player> getNearbyPlayers(final List<Entity> ents) {
+        final List<Player> players = new ArrayList<Player>();
+        for (final Entity e : ents) {
+            if (e instanceof Player) {
+                players.add((Player) e);
+            }
+        }
+        return players;
     }
 }

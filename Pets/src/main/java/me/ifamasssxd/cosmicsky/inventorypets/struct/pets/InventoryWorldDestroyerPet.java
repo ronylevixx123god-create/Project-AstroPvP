@@ -288,7 +288,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     this.cancel();
                 }
                 if (!affected.isDead() && WorldGuardUtils.isPvPEnabled(affected.getLocation()) && !(AstroItemSkinsAPI.hasSkinEquipped(affected, SkinType.VALENTINES_2022_AMULET))) {
-                    final int dmg = 2;
+                    final int dmg = 1;
 
                     if (AstroItemSkinsAPI.hasSkinEquipped(affected, SkinType.VALENTINES_2022_MUTATED_AMULET)) {
                         AstroDamageHandler.getInstance().getDamageHandler().healPlayer(affected, dmg, "&e&lReverted Cage Ticks");

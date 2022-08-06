@@ -6,6 +6,7 @@ import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.intergalacticenforcer.Enforcer;
 import me.ifamasssxd.cosmicbosses.bosses.intergalacticenforcer.Marksman;
 import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater;
+import me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBomb;
 import me.ifamasssxd.cosmicbosses.bosses.yijki.Yijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.blockmanager.BlockChangeManager;
@@ -234,7 +235,7 @@ public class BossListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onTNTExplode(final EntityExplodeEvent e) {
         if (e.getEntity() instanceof TNTPrimed) {
-            final boolean deathPlague = e.getEntity().hasMetadata("death_plague");
+            final boolean deathPlague = PlagueBomb.tntList.contains(e.getEntity().getUniqueId());
             if (deathPlague || e.getEntity().hasMetadata("dragon_bomb")) {
                 for (Object b : Lists.newArrayList((Iterable) e.blockList())) {
                     Block block = (Block) b;
@@ -242,6 +243,7 @@ public class BossListener implements Listener {
                 }
                 if (deathPlague) {
                     e.setCancelled(true);
+                    PlagueBomb.tntList.remove(e.getEntity().getUniqueId());
                     for (final Boss boss : BossUtils.getAllBossesFromType(PlagueBloater.class)) {
                         final PlagueBloater bloater = (PlagueBloater) boss;
                         if (bloater.getPlagueBomb().getPrimedTNT().contains(e.getEntity())) {

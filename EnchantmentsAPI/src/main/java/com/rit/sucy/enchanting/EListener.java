@@ -50,19 +50,19 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.*;
 
-public class EListener implements Listener
-{
+public class EListener implements Listener {
     public static Material[] armor;
     EnchantmentAPI plugin;
     Hashtable<String, TableTask> tasks;
     public static boolean excuse;
     public static boolean cosmicOutposts;
+
     public EListener(final EnchantmentAPI plugin) {
         this.tasks = new Hashtable<String, TableTask>();
-        plugin.getServer().getPluginManager().registerEvents((Listener)this, (Plugin)plugin);
+        plugin.getServer().getPluginManager().registerEvents((Listener) this, (Plugin) plugin);
         this.plugin = plugin;
 
-        Bukkit.getScheduler().runTaskLater((Plugin)plugin, (Runnable)new Runnable() {
+        Bukkit.getScheduler().runTaskLater((Plugin) plugin, (Runnable) new Runnable() {
             @Override
             public void run() {
                 EListener.cosmicOutposts = true;
@@ -85,17 +85,17 @@ public class EListener implements Listener
         if (event.getDamager().hasMetadata("shootForce") && event.getDamager().getMetadata("shootForce").get(0).asFloat() < 0.75f) {
             offenseProcs = false;
         }
-        final LivingEntity damaged = (LivingEntity)event.getEntity();
-        if (event.getDamager() instanceof Projectile && !(((Projectile)event.getDamager()).getShooter() instanceof LivingEntity)) {
+        final LivingEntity damaged = (LivingEntity) event.getEntity();
+        if (event.getDamager() instanceof Projectile && !(((Projectile) event.getDamager()).getShooter() instanceof LivingEntity)) {
             return;
         }
-        final LivingEntity damager = (event.getDamager() instanceof LivingEntity) ? (LivingEntity) event.getDamager() : ((event.getDamager() instanceof Projectile && ((Projectile)event.getDamager()).getShooter() instanceof LivingEntity) ? (LivingEntity) ((Projectile)event.getDamager()).getShooter() : null);
+        final LivingEntity damager = (event.getDamager() instanceof LivingEntity) ? (LivingEntity) event.getDamager() : ((event.getDamager() instanceof Projectile && ((Projectile) event.getDamager()).getShooter() instanceof LivingEntity) ? (LivingEntity) ((Projectile) event.getDamager()).getShooter() : null);
         if (event.getCause() != EntityDamageEvent.DamageCause.ENTITY_ATTACK && event.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
         if (damager != null && offenseProcs) {
             if (damager instanceof Player) {
-                final Player pDamager = (Player)damager;
+                final Player pDamager = (Player) damager;
                 final int reflectLevel = this.getReflectLevel(damaged, "normal");
                 final int heroicLevel = this.getReflectLevel(damaged, "heroic");
                 final int mastery = this.getReflectLevel(damaged, "mastery");
@@ -106,11 +106,9 @@ public class EListener implements Listener
                     boolean reflect = false;
                     if (mastery > 0 && tier == 8 && mastery >= entry.getValue()) {
                         reflectUsing = mastery;
-                    }
-                    else if (heroicLevel > 0 && tier <= 7 && heroicLevel >= entry.getValue()) {
+                    } else if (heroicLevel > 0 && tier <= 7 && heroicLevel >= entry.getValue()) {
                         reflectUsing = heroicLevel;
-                    }
-                    else if (reflectLevel > 0 && tier <= 5 && reflectLevel >= entry.getValue()) {
+                    } else if (reflectLevel > 0 && tier <= 5 && reflectLevel >= entry.getValue()) {
                         reflectUsing = reflectLevel;
                     }
                     if (reflectUsing > 0 && 0.02 + 0.01 * (reflectUsing / 3) >= Math.random()) {
@@ -125,16 +123,14 @@ public class EListener implements Listener
                             continue;
                         }
                         enchant.applyEffect(damaged, damager, entry.getValue(), event);
-                    }
-                    else {
+                    } else {
                         if (damaged.hasMetadata("inInvisibleMaze") || damager.hasMetadata("inInvisibleMaze")) {
                             continue;
                         }
                         enchant.applyEffect(damager, damaged, entry.getValue(), event);
                     }
                 }
-            }
-            else {
+            } else {
                 for (final Map.Entry<CustomEnchantment, Integer> entry2 : getValidEnchantments(damager, this.getItems(damager)).entries()) {
                     if (!damager.hasMetadata("inInvisibleMaze") && !damaged.hasMetadata("inInvisibleMaze")) {
                         entry2.getKey().applyEffect(damager, damaged, entry2.getValue(), event);
@@ -146,7 +142,7 @@ public class EListener implements Listener
         boolean riftMask = false;
         int masteryReflect = 0;
         if (damager instanceof Player) {
-            riftMask = MaskType.hasEquipped((Player)damager, "RIFT");
+            riftMask = MaskType.hasEquipped((Player) damager, "RIFT");
             masteryReflect = Reflect.getReflectLevel(damager, "mastery");
         }
         for (final Map.Entry<CustomEnchantment, Integer> entry3 : getValidEnchantments(damaged, this.getItems(damaged)).entries()) {
@@ -164,12 +160,12 @@ public class EListener implements Listener
             if (damaged.hasMetadata("inInvisibleMaze")) {
                 continue;
             }
-            entry3.getKey().applyDefenseEffect(damaged, damager, entry3.getValue(), (EntityDamageEvent)event);
+            entry3.getKey().applyDefenseEffect(damaged, damager, entry3.getValue(), (EntityDamageEvent) event);
         }
     }
 
     public int getReflectLevel(final LivingEntity player, final String key) {
-        final List<MetadataValue> found = (List<MetadataValue>)player.getMetadata(key + "_reflect_enchant");
+        final List<MetadataValue> found = (List<MetadataValue>) player.getMetadata(key + "_reflect_enchant");
         if (found != null && !found.isEmpty()) {
             return found.get(0).asInt();
         }
@@ -181,8 +177,8 @@ public class EListener implements Listener
         if (!(event.getEntity() instanceof LivingEntity)) {
             return;
         }
-        final LivingEntity damaged = (LivingEntity)event.getEntity();
-        if (!(damaged instanceof Player) && ((CraftLivingEntity)damaged).getHandle().fromMobSpawner) {
+        final LivingEntity damaged = (LivingEntity) event.getEntity();
+        if (!(damaged instanceof Player) && ((CraftLivingEntity) damaged).getHandle().fromMobSpawner) {
             return;
         }
         final boolean silenced = damaged.hasMetadata("noDefenseProcs");
@@ -202,10 +198,10 @@ public class EListener implements Listener
         if (!(event.getEntity() instanceof LivingEntity)) {
             return;
         }
-        final LivingEntity damaged = (LivingEntity)event.getEntity();
+        final LivingEntity damaged = (LivingEntity) event.getEntity();
         for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments(damaged, this.getItems(damaged)).entries()) {
             if (!damaged.hasMetadata("inInvisibleMaze")) {
-                entry.getKey().applyDefenseEffect(damaged, null, entry.getValue(), (EntityDamageEvent)event);
+                entry.getKey().applyDefenseEffect(damaged, null, entry.getValue(), (EntityDamageEvent) event);
             }
         }
     }
@@ -215,18 +211,18 @@ public class EListener implements Listener
         if (event.getItemInHand().getType() != Material.DIAMOND_PICKAXE && event.getItemInHand().getType() != Material.IRON_PICKAXE) {
             return;
         }
-        for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity)event.getPlayer(), this.getItemInHand((LivingEntity)event.getPlayer())).entries()) {
+        for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItemInHand((LivingEntity) event.getPlayer())).entries()) {
             if (!event.getPlayer().hasMetadata("inInvisibleMaze")) {
-                entry.getKey().applyToolEffect(event.getPlayer(), event.getBlock(), entry.getValue(), (BlockEvent)event);
+                entry.getKey().applyToolEffect(event.getPlayer(), event.getBlock(), entry.getValue(), (BlockEvent) event);
             }
         }
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onBreakBlock(final BlockBreakEvent event) {
-        for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity)event.getPlayer(), this.getItemInHand((LivingEntity)event.getPlayer())).entries()) {
+        for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItemInHand((LivingEntity) event.getPlayer())).entries()) {
             if (!event.getPlayer().hasMetadata("inInvisibleMaze")) {
-                entry.getKey().applyToolEffect(event.getPlayer(), event.getBlock(), entry.getValue(), (BlockEvent)event);
+                entry.getKey().applyToolEffect(event.getPlayer(), event.getBlock(), entry.getValue(), (BlockEvent) event);
             }
         }
         if (event.getBlock().getType() == Material.ENCHANTMENT_TABLE) {
@@ -239,14 +235,14 @@ public class EListener implements Listener
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInteract(final PlayerInteractEvent event) {
         if (event.hasBlock() && event.hasItem() && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) && event.getClickedBlock().getType() == Material.OBSIDIAN) {
-            for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity)event.getPlayer(), this.getItemInHand((LivingEntity)event.getPlayer())).entries()) {
+            for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItemInHand((LivingEntity) event.getPlayer())).entries()) {
                 if (!event.getPlayer().hasMetadata("inInvisibleMaze")) {
                     entry.getKey().applyMiscEffect(event.getPlayer(), entry.getValue(), event);
                 }
             }
         }
         if (event.hasItem() && (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) && event.getItem().getMaxStackSize() == 1 && isArmor(event.getItem())) {
-            new EEquip(event.getPlayer()).runTaskLater((Plugin)this.plugin, 1L);
+            new EEquip(event.getPlayer()).runTaskLater((Plugin) this.plugin, 1L);
         }
     }
 
@@ -261,7 +257,7 @@ public class EListener implements Listener
 
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onInteract(final PlayerInteractEntityEvent event) {
-        for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity)event.getPlayer(), this.getItems((LivingEntity)event.getPlayer())).entries()) {
+        for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItems((LivingEntity) event.getPlayer())).entries()) {
             if (!event.getPlayer().hasMetadata("inInvisibleMaze")) {
                 entry.getKey().applyEntityEffect(event.getPlayer(), entry.getValue(), event);
             }
@@ -278,22 +274,21 @@ public class EListener implements Listener
                 if (event.getSlotType() != InventoryType.SlotType.ARMOR) {
                     return;
                 }
-            }
-            else if (event.getCursor() == null && event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR && event.getCurrentItem().getMaxStackSize() != 1) {
+            } else if (event.getCursor() == null && event.getCurrentItem() != null && event.getCurrentItem().getType() != Material.AIR && event.getCurrentItem().getMaxStackSize() != 1) {
                 return;
             }
-            new EEquip(this.plugin.getServer().getPlayer(event.getWhoClicked().getName())).runTaskLater((Plugin)this.plugin, 1L);
+            new EEquip(this.plugin.getServer().getPlayer(event.getWhoClicked().getName())).runTaskLater((Plugin) this.plugin, 1L);
         }
     }
 
     @EventHandler
     public void onPlayerRespawn(final PlayerRespawnEvent e) {
-        new EEquip(e.getPlayer()).runTaskLater((Plugin)this.plugin, 1L);
+        new EEquip(e.getPlayer()).runTaskLater((Plugin) this.plugin, 1L);
     }
 
     @EventHandler
     public void onBreak(final PlayerItemBreakEvent event) {
-        new EEquip(event.getPlayer()).runTaskLater((Plugin)this.plugin, 1L);
+        new EEquip(event.getPlayer()).runTaskLater((Plugin) this.plugin, 1L);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -319,17 +314,16 @@ public class EListener implements Listener
             return;
         }
         if (event.getEntity().getShooter() instanceof Player) {
-            final Player pShooter = (Player)event.getEntity().getShooter();
+            final Player pShooter = (Player) event.getEntity().getShooter();
             for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments(pShooter.getItemInHand(), pShooter).entries()) {
                 if (!pShooter.hasMetadata("inInvisibleMaze")) {
-                    entry.getKey().applyProjectileEffect((LivingEntity)pShooter, entry.getValue(), event);
+                    entry.getKey().applyProjectileEffect((LivingEntity) pShooter, entry.getValue(), event);
                 }
             }
-        }
-        else if (event.getEntity().getShooter() instanceof LivingEntity) {
-            for (final Map.Entry<CustomEnchantment, Integer> entry2 : getValidEnchantments((LivingEntity)event.getEntity().getShooter(), this.getItems((LivingEntity)event.getEntity().getShooter())).entries()) {
-                if (!((LivingEntity)event.getEntity().getShooter()).hasMetadata("inInvisibleMaze")) {
-                    entry2.getKey().applyProjectileEffect((LivingEntity)event.getEntity().getShooter(), entry2.getValue(), event);
+        } else if (event.getEntity().getShooter() instanceof LivingEntity) {
+            for (final Map.Entry<CustomEnchantment, Integer> entry2 : getValidEnchantments((LivingEntity) event.getEntity().getShooter(), this.getItems((LivingEntity) event.getEntity().getShooter())).entries()) {
+                if (!((LivingEntity) event.getEntity().getShooter()).hasMetadata("inInvisibleMaze")) {
+                    entry2.getKey().applyProjectileEffect((LivingEntity) event.getEntity().getShooter(), entry2.getValue(), event);
                 }
             }
         }
@@ -346,7 +340,7 @@ public class EListener implements Listener
     @EventHandler
     public void onOpen(final InventoryOpenEvent event) {
         if (event.getInventory().getType() == InventoryType.ENCHANTING && event.getPlayer().hasPermission(PermissionNode.TABLE.getNode())) {
-            this.tasks.put(event.getPlayer().getName(), new TableTask((Plugin)this.plugin, this.plugin.getServer().getPlayer(event.getPlayer().getName())));
+            this.tasks.put(event.getPlayer().getName(), new TableTask((Plugin) this.plugin, this.plugin.getServer().getPlayer(event.getPlayer().getName())));
         }
     }
 
@@ -374,7 +368,7 @@ public class EListener implements Listener
         final ItemStack storedItem = this.tasks.get(event.getEnchanter().getName()).stored;
         if (storedItem.getAmount() > 1) {
             storedItem.setAmount(storedItem.getAmount() - 1);
-            event.getEnchanter().getInventory().addItem(new ItemStack[] { storedItem.clone() });
+            event.getEnchanter().getInventory().addItem(new ItemStack[]{storedItem.clone()});
             storedItem.setAmount(1);
         }
         final int maxEnchants = this.plugin.getModuleForClass(RootConfig.class).getInt(RootNode.MAX_ENCHANTS);
@@ -388,7 +382,7 @@ public class EListener implements Listener
         final boolean randomName = this.plugin.getModuleForClass(RootConfig.class).getBoolean(RootNode.ITEM_LORE);
         if (randomName && event.getEnchanter().hasPermission(PermissionNode.NAMES.getNode())) {
             String name = "\ufffd";
-            int random = (int)(Math.random() * 14.0) + 49;
+            int random = (int) (Math.random() * 14.0) + 49;
             if (random > 57) {
                 random += 39;
             }
@@ -396,12 +390,12 @@ public class EListener implements Listener
             format = format.replace("{adjective}", this.plugin.getAdjective((result.getLevel() / 11 + 1 > 4) ? 4 : (result.getLevel() / 11 + 1)));
             format = format.replace("{weapon}", this.plugin.getWeapon(item.getType().name()));
             format = format.replace("{suffix}", this.plugin.getSuffix(result.getFirstEnchant()));
-            name = name + (char)random + format;
+            name = name + (char) random + format;
             final ItemMeta meta = item.hasItemMeta() ? item.getItemMeta() : this.plugin.getServer().getItemFactory().getItemMeta(item.getType());
             meta.setDisplayName(name);
             item.setItemMeta(meta);
         }
-        event.getInventory().addItem(new ItemStack[] { item });
+        event.getInventory().addItem(new ItemStack[]{item});
         if (event.getEnchanter().getGameMode() != GameMode.CREATIVE) {
             event.getEnchanter().setLevel(event.getEnchanter().getLevel() - event.getExpLevelCost());
         }
@@ -443,23 +437,14 @@ public class EListener implements Listener
                     }
                 }
                 if (validEnchantments.containsKey(ce) && !enchantmentStacks(ce)) {
-                    if ((int)validEnchantments.get(ce).toArray()[0] >= level) {
+                    if ((int) validEnchantments.get(ce).toArray()[0] >= level) {
                         continue;
                     }
                     validEnchantments.removeAll(ce);
                 }
-                if (level > ce.getMaxLevel()) {
-                    if (le instanceof Player && (((Player)le).isOp() || ce.name().toLowerCase().equals("devour"))) {
-                        validEnchantments.put(ce, level);
-                    }
-                    else {
-                        Bukkit.getLogger().info("[EnchantmentAPI (EListener/LE)] Impossible enchantment level: " + level + " (" + ce.name() + ") found on entity: " + le.getCustomName() + ", processing as level: " + ce.getMaxLevel());
-                        validEnchantments.put(ce, Math.min(ce.getMaxLevel(), level));
-                    }
-                }
-                else {
-                    validEnchantments.put(ce, level);
-                }
+
+                validEnchantments.put(ce, level);
+
             }
         }
         return validEnchantments;
@@ -490,7 +475,7 @@ public class EListener implements Listener
                 }
                 final CustomEnchantment ce = EnchantmentAPI.getEnchantment(name);
                 if (validEnchantments.containsKey(ce) && !enchantmentStacks(ce)) {
-                    if ((int)validEnchantments.get(ce).toArray()[0] >= level) {
+                    if ((int) validEnchantments.get(ce).toArray()[0] >= level) {
                         continue;
                     }
                     validEnchantments.removeAll(ce);
@@ -530,23 +515,14 @@ public class EListener implements Listener
                 }
                 final CustomEnchantment ce = EnchantmentAPI.getEnchantment(name);
                 if (validEnchantments.containsKey(ce) && !enchantmentStacks(ce)) {
-                    if ((int)validEnchantments.get(ce).toArray()[0] >= level) {
+                    if ((int) validEnchantments.get(ce).toArray()[0] >= level) {
                         continue;
                     }
                     validEnchantments.removeAll(ce);
                 }
-                if (level > ce.getMaxLevel()) {
-                    if (p != null && (p.isOp() || ce.name().equalsIgnoreCase("devour"))) {
-                        validEnchantments.put(ce, level);
-                    }
-                    else {
-                        Bukkit.getLogger().info("[EnchantmentAPI (EListener/PL)] Impossible enchantment level: " + level + " (" + ce.name() + ") found on player: " + p.getName() + ", processing as level: " + ce.getMaxLevel());
-                        validEnchantments.put(ce, Math.min(ce.getMaxLevel(), level));
-                    }
-                }
-                else {
-                    validEnchantments.put(ce, level);
-                }
+
+                validEnchantments.put(ce, level);
+
             }
         }
         if (!p.getWorld().getName().startsWith("world_duels") && validEnchantments.size() > maxEnchantments) {
@@ -584,7 +560,7 @@ public class EListener implements Listener
                 if (maxEnchantments < 15) {
                     p.sendMessage(ChatColor.GRAY + "** Purchase a Rank at " + ChatColor.RED + ChatColor.UNDERLINE + "buy.astropvp.net" + ChatColor.GRAY + " to increase the maximum custom enchantments you can use!");
                 }
-                p.setMetadata("lastWeaponAlert", (MetadataValue)new FixedMetadataValue((Plugin)EnchantmentAPI.get(), System.currentTimeMillis()));
+                p.setMetadata("lastWeaponAlert", (MetadataValue) new FixedMetadataValue((Plugin) EnchantmentAPI.get(), System.currentTimeMillis()));
             }
             return trimmedValidEnchantments;
         }
@@ -609,7 +585,7 @@ public class EListener implements Listener
     }
 
     static {
-        EListener.armor = new Material[] { Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, Material.GOLD_HELMET, Material.GOLD_CHESTPLATE, Material.GOLD_LEGGINGS, Material.GOLD_BOOTS, Material.CHAINMAIL_HELMET, Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_LEGGINGS, Material.CHAINMAIL_BOOTS, Material.IRON_HELMET, Material.IRON_CHESTPLATE, Material.IRON_LEGGINGS, Material.IRON_BOOTS, Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS };
+        EListener.armor = new Material[]{Material.LEATHER_HELMET, Material.LEATHER_CHESTPLATE, Material.LEATHER_LEGGINGS, Material.LEATHER_BOOTS, Material.GOLD_HELMET, Material.GOLD_CHESTPLATE, Material.GOLD_LEGGINGS, Material.GOLD_BOOTS, Material.CHAINMAIL_HELMET, Material.CHAINMAIL_CHESTPLATE, Material.CHAINMAIL_LEGGINGS, Material.CHAINMAIL_BOOTS, Material.IRON_HELMET, Material.IRON_CHESTPLATE, Material.IRON_LEGGINGS, Material.IRON_BOOTS, Material.DIAMOND_HELMET, Material.DIAMOND_CHESTPLATE, Material.DIAMOND_LEGGINGS, Material.DIAMOND_BOOTS};
         EListener.excuse = false;
         EListener.cosmicOutposts = false;
     }

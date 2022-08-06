@@ -2,6 +2,7 @@ package net.astropvp.lootfilter.struct;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
@@ -15,6 +16,7 @@ import java.util.List;
 
 @AllArgsConstructor
 @Getter
+
 public enum LootTable {
     SPACE("Space Loot", AstroSpaceGrindingAPI.getListItems(MonsterType.SPACE_ALIEN),Material.NETHER_STAR, "&d"),
     SLOTBOT("Slotbot Loot", CosmicSlotBotAPI.getSlotBotItems(),Material.PAPER, "&b"),
@@ -24,9 +26,12 @@ public enum LootTable {
     MUTATED("Mutated Key Loot", AstroCrateKeysAPI.getListItems(CrateType.MUTATED),Material.TRIPWIRE_HOOK, "&2"),
     SEASON("Summer Key Loot", AstroCrateKeysAPI.getListItems(CrateType.SEASON),Material.TRIPWIRE_HOOK, "&e"),
     ;
-
-    private final String fancyName;
-    private final List<ItemStack> loot;
-    private final Material guiItem;
-    private final String colorCode;
+    @Setter
+    public String fancyName;
+    @Setter
+    public  List<ItemStack> loot;
+    @Setter
+    public  Material guiItem;
+    @Setter
+    public  String colorCode;
 }
