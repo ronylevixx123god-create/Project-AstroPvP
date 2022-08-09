@@ -39,7 +39,7 @@ public class AntiDoorHit implements Listener {
     public boolean canHit(Player player) {
         if (doorHits.containsKey(player.getUniqueId())) {
             long lastOpened = doorHits.get(player.getUniqueId());
-            int timeBetweenDoorHit = 700;
+            int timeBetweenDoorHit = 850;
             return System.currentTimeMillis() >= lastOpened + timeBetweenDoorHit;
         }
         return true;

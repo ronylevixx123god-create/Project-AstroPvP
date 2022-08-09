@@ -23,6 +23,7 @@
 package me.ifamasssxd.cosmicduel.struct.newduel;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -41,9 +42,11 @@ import me.ifamasssxd.cosmicduel.struct.enums.CancelReason;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelCreateState;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.Setting;
-import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
+import net.astropvp.CollectPlugin;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -843,11 +846,7 @@ public class NewStakeInventory {
 
                 for(var6 = this.getStakes(pt).iterator(); var6.hasNext(); p.updateInventory()) {
                     is = (ItemStack)var6.next();
-                    if (p.getInventory().firstEmpty() == -1) {
-                        CollectionBin.addItem(p, is);
-                    } else {
-                        p.getInventory().addItem(is);
-                    }
+                    PlayerUtil.giveOrDropProtectedItem(p, is, 60);
                 }
 
                 p.closeInventory();
@@ -870,11 +869,7 @@ public class NewStakeInventory {
 
                 for(var6 = this.getTeamStakes(pt).iterator(); var6.hasNext(); p.updateInventory()) {
                     is = (ItemStack)var6.next();
-                    if (p.getInventory().firstEmpty() == -1) {
-                        CollectionBin.addItem(p, is);
-                    } else {
-                        p.getInventory().addItem(is);
-                    }
+                    PlayerUtil.giveOrDropProtectedItem(p, is, 60);
                 }
 
                 p.closeInventory();

@@ -35,8 +35,8 @@ public class CollectPlugin extends JavaPlugin {
             System.out.println("[Collect] Started auto saving all collects");
             collectManager.saveAll();
             System.out.println("[Collect] Finished auto saving all collects");
-            final Collection<? extends Player> onlinePlayers = Bukkit.getOnlinePlayers();
-            for (Player player : onlinePlayers) {
+            final OfflinePlayer[] onlinePlayers = Bukkit.getOfflinePlayers();
+            for (OfflinePlayer player : onlinePlayers) {
                 UUID uuid = player.getUniqueId();
                 PlayerCollect playerCollect = getCollectManager().getFromCache(uuid.toString());
                 if (playerCollect == null) continue;

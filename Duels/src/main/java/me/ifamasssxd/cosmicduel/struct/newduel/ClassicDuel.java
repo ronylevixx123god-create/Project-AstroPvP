@@ -43,9 +43,7 @@ package me.ifamasssxd.cosmicduel.struct.newduel;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.VanishUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
@@ -58,8 +56,14 @@ import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.utils.*;
+import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
+import me.ifamasssxd.cosmicduel.utils.JSONMessage;
+import me.ifamasssxd.cosmicduel.utils.RandomFireworks;
+import net.astropvp.CollectPlugin;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.core.utils.TitleUtil;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
@@ -109,12 +113,12 @@ public class ClassicDuel extends NewDuel {
 
     public void addPlayer(Player player, boolean checkStart) {
         this.players.add(player);
-        player.setMetadata("in_duel", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), ""));
+        player.setMetadata("in_duel", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), ""));
         if (checkStart && this.players.size() >= getPlayersToStart()) {
             setCreateState(DuelCreateState.STAKES);
             this.stakeInventory = new NewStakeInventory(this, getPlayers().get(0), player);
             for (Player p : getPlayers()) {
-                p.setMetadata("close_exempt", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), ""));
+                p.setMetadata("close_exempt", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), ""));
                 p.closeInventory();
                 if (p.getUniqueId().equals(this.stakeInventory.getP1().getUniqueId())) {
                     p.openInventory(this.stakeInventory.getPlayerOneInventory());
@@ -136,7 +140,7 @@ public class ClassicDuel extends NewDuel {
         CosmicDuel.logMessage("Preparing " + player.getName() + " for duel " + this.duelID);
         this.storedPlayers.put(player.getUniqueId(), new StoredPlayer(player));
         this.originalLocation.put(player.getUniqueId(), player.getLocation());
-        player.setMetadata("in_duel", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), ""));
+        player.setMetadata("in_duel", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), ""));
         Location spawn = checkIfSpawnLoaded(false);
         forceTeleport(player, spawn);
         System.out.println("[CosmicDuels] Teleporting " + player.getName() + " to " + spawn);
@@ -180,7 +184,7 @@ public class ClassicDuel extends NewDuel {
                     p.playNote(p.getLocation(), Instrument.PIANO, new Note(3));
                 }
             }
-        }).runTaskTimer((Plugin)CosmicDuel.get(), 20L, 20L);
+        }).runTaskTimer((Plugin) CosmicDuel.get(), 20L, 20L);
     }
 
     public void onDuelEnd(EndReason endReason, Player loser) {
@@ -190,7 +194,7 @@ public class ClassicDuel extends NewDuel {
         if (endReason == EndReason.WIN) {
             if (this.players.size() >= 1) {
                 Player winner = this.players.get(0);
-                String winningMsg = getColoredMessage("&e&l(!) &a&n%s&e has defeated %s!", new Object[] { winner.getName(), loser.getName() });
+                String winningMsg = getColoredMessage("&e&l(!) &a&n%s&e has defeated %s!", new Object[]{winner.getName(), loser.getName()});
                 JSONMessage jsonMessage = new JSONMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Inventories: ");
                 sendMessage("", true);
                 sendMessage(winningMsg, true);
@@ -203,7 +207,7 @@ public class ClassicDuel extends NewDuel {
                     boolean includeComma = true;
                     if (index++ == getEndingInventoryCache().size() - 1)
                         includeComma = false;
-                    jsonMessage.addRunCommand((String)invs.getKey() + (includeComma ? ", " : ""), winner.getName().equals(invs.getKey()) ? ChatColor.GREEN : ChatColor.RED, "/viewdeathinventory " + ((UUID)getEndingInventoryCache().get(invs.getKey())).toString(), ChatColor.GRAY + "Click to view duel inventory.");
+                    jsonMessage.addRunCommand((String) invs.getKey() + (includeComma ? ", " : ""), winner.getName().equals(invs.getKey()) ? ChatColor.GREEN : ChatColor.RED, "/viewdeathinventory " + ((UUID) getEndingInventoryCache().get(invs.getKey())).toString(), ChatColor.GRAY + "Click to view duel inventory.");
                 }
                 sendJsonMessage(jsonMessage, true);
                 sendMessage("", true);
@@ -214,27 +218,10 @@ public class ClassicDuel extends NewDuel {
                 removePlayer(winner, Reason.WIN, false);
                 winner.playSound(winner.getLocation(), Sound.LEVEL_UP, 1.0F, 1.4F);
                 RandomFireworks.getManager().launchRandomFirework(winner.getLocation());
-                awardStakes(winner);
+                awardStakes(winner, loser);
                 if (this.settings.hasSetting(Setting.DEATH_CERT))
                     giveWinnerPage(winner, loser);
-                if (this.settings.hasSetting(Setting.DROPITEMS) && this.kit.equals(Kit.BYOB)) {
-                    CosmicDuel.logMessage("Dropping all of " + loser.getName() + "'s Items to " + winner.getName());
-                    List<ItemStack> items = Lists.newArrayList();
-                    for (ItemStack armor : loser.getInventory().getArmorContents()) {
-                        if (armor != null && armor.getType() != Material.AIR)
-                            items.add(armor);
-                    }
-                    loser.getInventory().setArmorContents(null);
-                    removePotionEffects(loser);
-                    for (ItemStack is : loser.getInventory()) {
-                        if (is != null && is.getType() != Material.AIR)
-                            items.add(is);
-                    }
-                    loser.getInventory().clear();
-                    loser.updateInventory();
-                    CollectionBin.addItems(winner, items);
-                    winner.sendMessage(CC.translate("&a&l(!) &aUse &n/duel collect&a to collect your winnings!"));
-                }
+
                 Title titleWinner = new Title(CC.translate("&a&lWinner"), CC.translate("&7") + winner.getName(), 10, 40, 10);
                 winner.sendTitle(titleWinner);
                 Title titleLoser = new Title(CC.translate("&c&lYou Lost"), CC.translate("&7Winner: ") + winner.getName(), 10, 40, 10);
@@ -264,20 +251,20 @@ public class ClassicDuel extends NewDuel {
                     ClassicDuel.this.onEnd(true);
                     return;
                 }
-                ClassicDuel.this.sendMessage(ClassicDuel.this.getColoredMessage("&c&l(!) &cThe duel will end in %s.", new Object[] { Integer.valueOf(this.count) }), true);
+                ClassicDuel.this.sendMessage(ClassicDuel.this.getColoredMessage("&c&l(!) &cThe duel will end in %s.", new Object[]{Integer.valueOf(this.count)}), true);
             }
-        }).runTaskTimer((Plugin)CosmicDuel.get(), 20L, 20L);
+        }).runTaskTimer((Plugin) CosmicDuel.get(), 20L, 20L);
     }
 
     public Inventory getDroppedItemsInventory(Player loser) {
-        Inventory inv = Bukkit.createInventory((InventoryHolder)null, loser.getInventory().getSize() + 9, loser.getName() + "'s Death Loot");
+        Inventory inv = Bukkit.createInventory((InventoryHolder) null, loser.getInventory().getSize() + 9, loser.getName() + "'s Death Loot");
         int index = 0;
         for (ItemStack armor : loser.getInventory().getArmorContents()) {
             if (armor != null && armor.getType() != Material.AIR)
                 inv.setItem(index, armor);
             index++;
         }
-        loser.getInventory().setArmorContents((ItemStack[])null);
+        loser.getInventory().setArmorContents((ItemStack[]) null);
         removePotionEffects(loser);
         index = 9;
         for (ListIterator<ItemStack> listIterator = loser.getInventory().iterator(); listIterator.hasNext(); ) {
@@ -302,19 +289,15 @@ public class ClassicDuel extends NewDuel {
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
             String extraKitName = null;
 
-            ItemStack is = ItemBuilder.buildItem(Material.PAPER, ChatColor.WHITE + ChatColor.BOLD.toString() + loser.getName() + "'s Death Certificate", new String[] { ChatColor.WHITE + loser.getName() + ChatColor.GRAY + " was defeated in a " + ChatColor.WHITE + getName(), ChatColor.GRAY + "duel on " + ChatColor.WHITE + format.format(date) + " at " + timeFormat.format(date), ChatColor.GRAY + "in the " + ChatColor.WHITE + getArena().getName() + " Arena " + ChatColor.GRAY + "by " + ChatColor.WHITE + winner.getName(), (extraKitName != null) ? extraKitName : null });
-            if (winner.getInventory().firstEmpty() == -1) {
-                CollectionBin.addItem(winner, is);
-            } else {
-                winner.getInventory().addItem(new ItemStack[] { is });
-            }
+            ItemStack is = ItemBuilder.buildItem(Material.PAPER, ChatColor.WHITE + ChatColor.BOLD.toString() + loser.getName() + "'s Death Certificate", new String[]{ChatColor.WHITE + loser.getName() + ChatColor.GRAY + " was defeated in a " + ChatColor.WHITE + getName(), ChatColor.GRAY + "duel on " + ChatColor.WHITE + format.format(date) + " at " + timeFormat.format(date), ChatColor.GRAY + "in the " + ChatColor.WHITE + getArena().getName() + " Arena " + ChatColor.GRAY + "by " + ChatColor.WHITE + winner.getName(), (extraKitName != null) ? extraKitName : null});
+            PlayerUtil.giveOrDropProtectedItem(winner, is, 60);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void awardBounty(Player winner, Player loser) {}
-
+    private void awardBounty(Player winner, Player loser) {
+    }
 
 
     private void clearArena() {
@@ -359,7 +342,7 @@ public class ClassicDuel extends NewDuel {
     public void onEnd(boolean cancelDuel) {
         this.duelState = DuelState.ENDED;
         for (Object pl1 : Lists.newArrayList(getPlayers())) {
-            Player pl = (Player)pl1;
+            Player pl = (Player) pl1;
             removePlayer(pl, Reason.WIN, false);
         }
         clearSpectators();
@@ -372,8 +355,8 @@ public class ClassicDuel extends NewDuel {
             return;
         CosmicDuel.logMessage("Removing " + player.getName() + " from duel ID: " + this.duelID);
         this.players.remove(player);
-        player.setMetadata("lastDuelEnd", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), Integer.valueOf(MinecraftServerUtils.getCurrentServerTick())));
-        player.removeMetadata("in_duel", (Plugin)CosmicDuel.get());
+        player.setMetadata("lastDuelEnd", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), Integer.valueOf(MinecraftServerUtils.getCurrentServerTick())));
+        player.removeMetadata("in_duel", (Plugin) CosmicDuel.get());
         if (reason != Reason.WIN)
             sendMessage(reason.getReason(player), true);
         if (!getEndingInventoryCache().containsKey(player.getName())) {
@@ -424,11 +407,11 @@ public class ClassicDuel extends NewDuel {
 
     public void returnPlayerToStartLocation(Player p) {
         if (!DuelAPI.isRebooting() && MinecraftServerUtils.isRunning()) {
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDuel.get(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicDuel.get(), () -> {
                 CombatLog.unflagCombat(p);
                 if (p.hasMetadata("cl_combat"))
-                    p.removeMetadata("cl_combat", (Plugin)Arkkit.get());
-            },5L);
+                    p.removeMetadata("cl_combat", (Plugin) Arkkit.get());
+            }, 5L);
         } else {
             CombatLog.unflagCombat(p);
         }
@@ -437,7 +420,6 @@ public class ClassicDuel extends NewDuel {
         this.originalLocation.remove(p.getUniqueId());
         p.setFireTicks(0);
     }
-
 
 
     public List<Player> getPlayers() {
@@ -453,7 +435,7 @@ public class ClassicDuel extends NewDuel {
             return;
         if (this.spectators.contains(spectator))
             return;
-        spectator.setMetadata("spectator", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDuel.get(), ""));
+        spectator.setMetadata("spectator", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), ""));
         this.spectators.add(spectator);
         resetPlayerStats(spectator);
         for (Player pl : Bukkit.getOnlinePlayers())
@@ -473,7 +455,7 @@ public class ClassicDuel extends NewDuel {
     }
 
     public void removeSpectator(Player p) {
-        p.removeMetadata("spectator", (Plugin)CosmicDuel.get());
+        p.removeMetadata("spectator", (Plugin) CosmicDuel.get());
         if (!this.spectators.contains(p))
             return;
         this.spectators.remove(p);
@@ -528,7 +510,7 @@ public class ClassicDuel extends NewDuel {
                         break;
                     }
                 }
-                p.getInventory().setArmorContents((ItemStack[])null);
+                p.getInventory().setArmorContents((ItemStack[]) null);
                 p.updateInventory();
             }
             if (hadDisabledItems) {
@@ -536,17 +518,17 @@ public class ClassicDuel extends NewDuel {
                 p.sendMessage(ChatColor.GRAY + "They will be returned to you once the duel is over.");
             }
         }
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDuel.get(), () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicDuel.get(), () -> {
             if (p.isValid())
                 PlayerPotionEffectListener.rescanPlayerArmor(p);
-        },4L);
+        }, 4L);
     }
 
     public void applyKit(Player p) {
         List<ItemStack> list;
         DuelPlayer duelPlayer = DuelPlayer.getDuelPlayer(p);
 
-            list = getKit().getItems();
+        list = getKit().getItems();
 
         boolean hadDisabledItems = false;
         int potionsToAdd = 0;
@@ -564,14 +546,14 @@ public class ClassicDuel extends NewDuel {
                     ItemStack toAdd = is.clone();
                     toAdd.setAmount(1);
                     is.setAmount(is.getAmount() - 1);
-                    p.getInventory().addItem(new ItemStack[] { toAdd });
+                    p.getInventory().addItem(new ItemStack[]{toAdd});
                 }
                 continue;
             }
-            p.getInventory().addItem(new ItemStack[] { is });
+            p.getInventory().addItem(new ItemStack[]{is});
         }
         if (isRanked()) {
-            ItemStack potion = new ItemStack(Material.POTION, 1, (short)16421);
+            ItemStack potion = new ItemStack(Material.POTION, 1, (short) 16421);
             potion = KitUtils.addDuelWatermark(potion);
             for (int i = 0; i < p.getInventory().getSize(); i++) {
                 if (p.getInventory().getItem(i) == null || p.getInventory().getItem(i).getType() == Material.AIR)
@@ -579,7 +561,7 @@ public class ClassicDuel extends NewDuel {
             }
         }
         for (int j = 0; j < potionsToAdd; j++) {
-            p.getInventory().addItem(new ItemStack[] { new ItemStack(Material.POTION, 1, (short)16421) });
+            p.getInventory().addItem(new ItemStack[]{new ItemStack(Material.POTION, 1, (short) 16421)});
         }
         p.updateInventory();
         if (hadDisabledItems)
@@ -588,9 +570,9 @@ public class ClassicDuel extends NewDuel {
 
     public void wipePlayer(Player p) {
         p.getInventory().clear();
-        p.getInventory().setArmorContents((ItemStack[])null);
+        p.getInventory().setArmorContents((ItemStack[]) null);
         p.updateInventory();
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDuel.get(), () -> removePotionEffects(p), 7L);
+        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) CosmicDuel.get(), () -> removePotionEffects(p), 7L);
     }
 
     public void removePotionEffects(Player p) {
@@ -631,47 +613,61 @@ public class ClassicDuel extends NewDuel {
         return (DuelUtils.isArmor(is) || DuelUtils.isWeapon(is) || is.getType() == Material.POTION || is.getType() == Material.SKULL_ITEM || is.getType() == Material.GOLDEN_APPLE || is.getType() == Material.EMERALD || is.getType() == Material.MUSHROOM_SOUP || is.getType() == Material.ARROW || is.getType() == Material.ENDER_PEARL);
     }
 
-    public void awardStakes(Player winner) {
+    public void awardStakes(Player winner, Player loser) {
         if (winner == null) {
             returnStakes();
             return;
         }
-        boolean collectionBin = false;
-        for (List<ItemStack> stakeItems : (Iterable<List<ItemStack>>)this.stakes.values()) {
-            for (ItemStack stakeItem : stakeItems) {
-                if (winner.getInventory().firstEmpty() == -1) {
-                    CollectionBin.addItem(winner, stakeItem);
-                    collectionBin = true;
-                    continue;
-                }
-                winner.getInventory().addItem(new ItemStack[] { stakeItem });
-            }
+
+
+        List<ItemStack> rewards = new ArrayList<>();
+        for (List<ItemStack> stakeItems : this.stakes.values()) {
+            rewards.addAll(stakeItems);
         }
-        this.stakes.clear();
+
+
+        if (this.settings.hasSetting(Setting.DROPITEMS) && this.kit == Kit.BYOB) {
+            for (ItemStack armor : loser.getInventory().getArmorContents()) {
+                if (armor != null && armor.getType() != Material.AIR)
+                    rewards.add(armor);
+            }
+
+            for (ItemStack is : loser.getInventory()) {
+                if (is != null && is.getType() != Material.AIR)
+                    rewards.add(is);
+            }
+
+            loser.getInventory().setArmorContents(null);
+            removePotionEffects(loser);
+            loser.getInventory().clear();
+            loser.updateInventory();
+
+        }
+
+        if (!rewards.isEmpty()) {
+            CollectCategory category = new CollectCategory(CollectType.DUEL, rewards.toArray(new ItemStack[rewards.size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
+            CollectPlugin.getInstance().getCollectManager().getOrCreate(winner.getUniqueId().toString()).add(category);
+            winner.sendMessage("");
+            winner.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
+            winner.sendMessage("");
+            this.stakes.clear();
+        }
+
         winner.updateInventory();
-        if (collectionBin)
-            winner.sendMessage(getColoredMessage("&e&l(!) &eYour inventory was full and the stakes have been placed in your &a&n/duel collect&e bin."));
+
     }
 
     public void returnStakes() {
-        System.out.println("G");
-        for (Map.Entry<UUID, List<ItemStack>> item : (Iterable<Map.Entry<UUID, List<ItemStack>>>)this.stakes.entrySet()) {
-            System.out.println("H");
+        for (Map.Entry<UUID, List<ItemStack>> item : this.stakes.entrySet()) {
             Player p = Bukkit.getPlayer(item.getKey());
             if (p != null) {
-                System.out.println("I");
-                boolean collectionBinUsed = false;
-                for (ItemStack is : item.getValue()) {
-                    if (p.getInventory().firstEmpty() == -1) {
-                        CollectionBin.addItem(p, is);
-                        collectionBinUsed = true;
-                        continue;
-                    }
-                    p.getInventory().addItem(new ItemStack[] { is });
+                if (!item.getValue().isEmpty()) {
+                    CollectCategory category = new CollectCategory(CollectType.DUEL, item.getValue().toArray(new ItemStack[item.getValue().size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
+                    CollectPlugin.getInstance().getCollectManager().getOrCreate(p.getUniqueId().toString()).add(category);
+                    p.sendMessage("");
+                    p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
+                    p.sendMessage("");
                 }
-                if (!collectionBinUsed)
-                    continue;
-                p.sendMessage("&e&l(!) &eYour inventory was full and the stakes have been placed in your &e&n/duel collect&e bin.");
             }
         }
         this.stakes.clear();
@@ -679,8 +675,7 @@ public class ClassicDuel extends NewDuel {
 
     public void resetEnvoys() {
         for (Location l : this.envoys) {
-            if (CosmicSpaceChestsPlugin.chest_locations.containsKey(l))
-                CosmicSpaceChestsPlugin.chest_locations.remove(l);
+            CosmicSpaceChestsPlugin.chest_locations.remove(l);
             if (l.getBlock().getType() == Material.CHEST)
                 DuelListener.removeChest(l);
         }
@@ -691,7 +686,6 @@ public class ClassicDuel extends NewDuel {
         setCreateState(DuelCreateState.DONE);
         onStart();
     }
-
 
 
     private static int id = 1;

@@ -10,7 +10,6 @@ import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.enums.Setting;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
-import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
 import me.ifamasssxd.cosmicduel.utils.JSONMessage;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
@@ -382,11 +381,7 @@ public class DuelAPI {
             player.sendMessage(ChatColor.RED + "You are in a duel already.");
             return false;
         }
-        if (CollectionBin.getCollectionItems(player).size() > 0) {
-            player.sendMessage(red + ChatColor.RED + "You have items in your collection bin and cannot duel.");
-            player.sendMessage(ChatColor.GRAY + "Use " + ChatColor.RED + "/duel collect" + ChatColor.GRAY + " to collect your items.");
-            return false;
-        }
+
         if (PlayerUtils.inCombat(player)) {
             player.sendMessage(ChatColor.RED + "You are in combat and cannot duel at this time.");
             return false;
@@ -448,10 +443,7 @@ public class DuelAPI {
             player.sendMessage(ChatColor.RED + "That player is in combat and cannot duel at this time.");
             return false;
         }
-        if (CollectionBin.getCollectionItems(target).size() > 0) {
-            player.sendMessage(red + ChatColor.RED + "That player has items in their collection bin and cannot duel.");
-            return false;
-        }
+
 
         return true;
     }

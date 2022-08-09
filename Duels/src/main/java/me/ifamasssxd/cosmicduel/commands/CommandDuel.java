@@ -40,7 +40,6 @@ import me.ifamasssxd.cosmicduel.struct.enums.Reason;
 import me.ifamasssxd.cosmicduel.struct.newduel.ClassicDuel;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.struct.newduel.TeamDuel;
-import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import org.apache.commons.lang.StringUtils;
 import org.bukkit.Bukkit;
@@ -105,7 +104,7 @@ public class CommandDuel implements CommandExecutor {
                                     Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "apply " + pName);
                                 }
                             }
-                        }).runTaskLater(CosmicDuel.get(), 20L);
+                        }).runTaskLater(CosmicDuel.get(), 10L);
                         duel2.removePlayer(p, Reason.LEFT_DUEL, false);
                         if (duel2.getPlayers().size() <= 0 && duel2.getDuelState() == DuelState.IN_QUEUE && duel2.getCreateState() == DuelCreateState.PLAYER_SELECT)
                             DuelAPI.duels.remove(duel2);
@@ -133,10 +132,6 @@ public class CommandDuel implements CommandExecutor {
             }
             if (args[0].equalsIgnoreCase("toggle")) {
                 p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Duels have been toggled " + (CosmicDuel.get().getDuelToggles().togglePlayer(p) ? (ChatColor.RED + ChatColor.BOLD.toString() + "OFF") : (ChatColor.GREEN + ChatColor.BOLD.toString() + "ON")));
-                return true;
-            }
-            if (args[0].equalsIgnoreCase("collect")) {
-                CollectionBin.showCollectionBin(p);
                 return true;
             }
             if (args[0].equalsIgnoreCase("spectate")) {
@@ -169,39 +164,26 @@ public class CommandDuel implements CommandExecutor {
                 p.sendMessage(CC.translate("&7Please leave your team to duel them or tell them to create a team!"));
                 return true;
             }
-            if (team != null && oTeam != null && Bukkit.getPlayer(oTeam.getLeaderUUID()) != pl5) {
+            if (team != null && Bukkit.getPlayer(oTeam.getLeaderUUID()) != pl5) {
                 p.sendMessage(CC.translate("&c&l(!) &cThat player is not the leader of that team, please duel the leader, please duel &f" + Bukkit.getPlayer(oTeam.getLeaderUUID()).getName() + "&c."));
                 return true;
             }
-            if (team != null && oTeam != null && team.getTotalSize() != oTeam.getTotalSize()) {
+            if (team != null && team.getTotalSize() != oTeam.getTotalSize()) {
                 p.sendMessage(CC.translate("&c&l(!) &cMake sure you have the same amount of players on both teams."));
                 return true;
             }
-            if (team != null && oTeam != null && (team.getTotalSize() < 2 || oTeam.getTotalSize() < 2)) {
+            if (team != null && (team.getTotalSize() < 2 || oTeam.getTotalSize() < 2)) {
                 p.sendMessage(CC.translate("&c&l(!) &cBoth teams must have atleast 1 teammate to duel."));
                 return true;
             }
-            if (team != null && oTeam != null) {
-                List<Player> collectionBinPlayers = Lists.newArrayList();
+
+            if (team != null) {
                 for (Player player : getBothTeamPlayers(team, oTeam)) {
                     if (player == null || !player.isOnline()) {
                         sender.sendMessage(CC.translate("&cOne of the members of the opponent team isn't online."));
                         return false;
                     }
-                    if (CollectionBin.getCollectionItems(player.getPlayer()).size() > 0) {
-                        collectionBinPlayers.add(player);
-                    }
                 }
-                if (!collectionBinPlayers.isEmpty()) {
-                    p.sendMessage(CC.translate("&c&l(!) &cPlease tell these players to empty their /duel collect before you can send this duel request."));
-                    for (Player player : collectionBinPlayers) {
-                        if (player != null)
-                            p.sendMessage(CC.translate(" &c&l* &f" + player));
-                    }
-                    return true;
-                }
-            }
-            if (team != null && oTeam != null) {
                 int team1OnlineCount = 0;
                 for (UUID uuid : team.getTeamates()) {
                     Player player = Bukkit.getPlayer(uuid);
@@ -313,8 +295,6 @@ public class CommandDuel implements CommandExecutor {
         p.sendMessage(ChatColor.GRAY + "Invite a player to a settings specific duel.");
         p.sendMessage(ChatColor.YELLOW + "/duel toggle");
         p.sendMessage(ChatColor.GRAY + "Toggle duel invites from other players.");
-        p.sendMessage(ChatColor.YELLOW + "/duel collect");
-        p.sendMessage(ChatColor.GRAY + "Access your Stake Collection Bin.");
         p.sendMessage(ChatColor.YELLOW + "/duel spectate");
         p.sendMessage(ChatColor.GRAY + "Access the duel spectate menu.");
         p.sendMessage("");

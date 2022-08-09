@@ -26,7 +26,6 @@ import me.ifamasssxd.cosmicduel.struct.enums.EndReason;
 import me.ifamasssxd.cosmicduel.struct.newduel.DuelLogFormatter;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.tasks.*;
-import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.DuelToggles;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
 import org.arkhamnetwork.Arkkit.commands.CommandArkReboot;
@@ -85,7 +84,6 @@ extends JavaPlugin {
         catch (Exception e) {
             e.printStackTrace();
         }
-        CollectionBin.save();
         SpectateInventory.closeInventory();
         for (NewDuel duel : Lists.newArrayList(DuelAPI.duels)) {
             duel.onDuelEnd(EndReason.RELOAD, null);
@@ -113,7 +111,6 @@ extends JavaPlugin {
         if (!new File("plugins/Enchantments.jar").exists()) {
             enchantsEnabled = false;
         }
-        CollectionBin.loadCollectionBins();
         WorldGuardUtils.hook();
     }
 
@@ -165,7 +162,6 @@ extends JavaPlugin {
     }
 
     public void registerListeners() {
-        this.registerListener(new CollectionBin());
         this.registerListener(new SpectateInventory());
         this.registerListener(new SpectatorListener());
         this.registerListener(new DuelInventoryListener());

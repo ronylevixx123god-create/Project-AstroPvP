@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.cosmicpvp.cosmicutils.utils.VanishUtils;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -12,11 +13,7 @@ import com.rit.sucy.EnchantmentAPI;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.ListIterator;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import me.ifamasssxd.cosmicduel.CosmicDuel;
@@ -34,13 +31,15 @@ import me.ifamasssxd.cosmicduel.struct.enums.DuelType;
 import me.ifamasssxd.cosmicduel.struct.enums.EndReason;
 import me.ifamasssxd.cosmicduel.struct.enums.Reason;
 import me.ifamasssxd.cosmicduel.struct.enums.Setting;
-import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.DuelUtils;
 import me.ifamasssxd.cosmicduel.utils.JSONMessage;
 import me.ifamasssxd.cosmicduel.utils.KitUtils;
 import me.ifamasssxd.cosmicduel.utils.RandomFireworks;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
+import net.astropvp.CollectPlugin;
 import net.astropvp.core.killtracker.KillTrackerAPI;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.EnchantmentBook;
@@ -342,8 +341,12 @@ public class TeamDuel extends NewDuel {
                     TeamData loserData = CosmicDuel.get().getTeamDataManager().tryFindTeam(loser.getUniqueId());
                     List<ItemStack> items = getContentsToDrop(loserData);
                     if (items != null) {
-                        CollectionBin.addItems(winner, items);
-                        winner.sendMessage(CC.translate("&a&l(!) &aUse &n/duel collect&a to collect your winnings!"));
+                        //CollectionBin.addItems(winner, items);
+                        CollectCategory category = new CollectCategory(CollectType.DUEL, items.toArray(new ItemStack[items.size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
+                        CollectPlugin.getInstance().getCollectManager().getOrCreate(winner.getUniqueId().toString()).add(category);
+                        winner.sendMessage("");
+                        winner.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
+                        winner.sendMessage("");
                     }
                 }
 
@@ -409,11 +412,7 @@ public class TeamDuel extends NewDuel {
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
             String extraKitName = null;
             ItemStack is = getWinnerPage(winner, loser, date, format, timeFormat);
-            if (winner.getInventory().firstEmpty() == -1) {
-                CollectionBin.addItem(winner, is);
-            } else {
-                winner.getInventory().addItem(is);
-            }
+            PlayerUtil.giveOrDropProtectedItem(winner, is, 60);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -754,6 +753,11 @@ public class TeamDuel extends NewDuel {
             p.sendMessage(getColoredMessage("&e&l(!) &eYour kit contained some items that were &e&ndisabled&e in this duel."));
     }
 
+    @Override
+    public void awardStakes(Player var1, Player var2) {
+
+    }
+
     public void wipePlayer(Player p) {
         p.getInventory().clear();
         p.getInventory().setArmorContents(null);
@@ -804,39 +808,28 @@ public class TeamDuel extends NewDuel {
             returnStakes();
             return;
         }
-        boolean collectionBin = false;
-        for (List<ItemStack> stakeItems : this.stakes.values()) {
-            for (ItemStack stakeItem : stakeItems) {
-                if (collectionBin || winner.getInventory().firstEmpty() == -1) {
-                    CollectionBin.addItem(winner, stakeItem);
-                    collectionBin = true;
-                    continue;
-                }
-                winner.getInventory().addItem(stakeItem);
-            }
+        List<ItemStack> rewards = new ArrayList<>();
+        for (List<ItemStack> itemStackList : this.stakes.values()) {
+            rewards.addAll(itemStackList);
         }
+        CollectCategory category = new CollectCategory(CollectType.DUEL, rewards.toArray(new ItemStack[rewards.size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
+        CollectPlugin.getInstance().getCollectManager().getOrCreate(winner.getUniqueId().toString()).add(category);
+        winner.sendMessage("");
+        winner.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
+        winner.sendMessage("");
         this.stakes.clear();
         winner.updateInventory();
-        if (collectionBin)
-            winner.sendMessage(getColoredMessage("&e&l(!) &eYour inventory was full and the stakes have been placed in your &a&n/duel collect&e bin."));
     }
 
     public void returnStakes() {
         for (Map.Entry<UUID, List<ItemStack>> item : this.stakes.entrySet()) {
             Player p = Bukkit.getPlayer(item.getKey());
             if (p != null) {
-                boolean collectionBinUsed = false;
-                for (ItemStack is : item.getValue()) {
-                    if (p.getInventory().firstEmpty() == -1) {
-                        CollectionBin.addItem(p, is);
-                        collectionBinUsed = true;
-                        continue;
-                    }
-                    p.getInventory().addItem(is);
-                }
-                if (!collectionBinUsed)
-                    continue;
-                p.sendMessage("&e&l(!) &eYour inventory was full and the stakes have been placed in your &e&n/duel collect&e bin.");
+                CollectCategory category = new CollectCategory(CollectType.DUEL, item.getValue().toArray(new ItemStack[item.getValue().size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
+                CollectPlugin.getInstance().getCollectManager().getOrCreate(p.getUniqueId().toString()).add(category);
+                p.sendMessage("");
+                p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
+                p.sendMessage("");
             }
         }
         this.stakes.clear();

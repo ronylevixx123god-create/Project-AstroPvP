@@ -27,13 +27,16 @@ public class MinemanMuzzleSkin extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
         if (damaged.hasMetadata("frozenSkrrt")) return;
         if(Math.random() < 0.075) {
-            List<Entity> nearby = damaged.getNearbyEntities(3, 3, 3);
-            nearby.forEach(entity -> {
-                if(!(entity instanceof Player))
+            List<Entity> nearby = damaged.getNearbyEntities(6, 6, 6);
+            if (nearby == null) return;
+            if (nearby.isEmpty()) return;
+            for (Entity entity : nearby) {
+                if (entity == null) continue;
+                if(!(entity instanceof Player)) {
                     nearby.remove(entity);
-            });
-            if(nearby.isEmpty())
-                return;
+                }
+            }
+
             double dmg = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             nearby.forEach(player -> {
                 if (FactionUtils.isInEnemyFaction(damaged, (Player) player)) {

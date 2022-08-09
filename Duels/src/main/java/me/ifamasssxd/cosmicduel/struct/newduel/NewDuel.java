@@ -120,7 +120,7 @@ public abstract class NewDuel {
 
     public abstract void applyKit(Player var1);
 
-    public abstract void awardStakes(Player var1);
+    public abstract void awardStakes(Player var1, Player var2);
 
     public abstract void returnStakes();
 

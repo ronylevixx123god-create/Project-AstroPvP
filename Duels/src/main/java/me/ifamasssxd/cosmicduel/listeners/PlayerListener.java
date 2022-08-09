@@ -43,7 +43,6 @@ import me.ifamasssxd.cosmicduel.struct.*;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmicduel.tasks.DuelArenaTask;
-import me.ifamasssxd.cosmicduel.utils.CollectionBin;
 import me.ifamasssxd.cosmicduel.utils.PlayerUtils;
 import me.ifamasssxd.cosmicduel.utils.WorldGuardUtils;
 import net.minecraft.server.v1_8_R3.PacketPlayInClientCommand;
@@ -80,17 +79,7 @@ public class PlayerListener
             p.removeMetadata("ignore_combat_tag", (Plugin) CosmicDuel.get());
             p.sendMessage((Object) ChatColor.RED + "You were inside of a duel arena without a duel.");
         }
-        if (CollectionBin.getCollectionItems(e.getPlayer()).size() > 0) {
-            new BukkitRunnable() {
 
-                public void run() {
-                    if (e.getPlayer() != null && e.getPlayer().isOnline()) {
-                        e.getPlayer().playSound(e.getPlayer().getLocation(), Sound.LEVEL_UP, 1.0f, 0.4f);
-                        e.getPlayer().sendMessage((Object) ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GREEN + "You have items inside of your " + (Object) ChatColor.YELLOW + "/duel collect" + (Object) ChatColor.GREEN + " bin.");
-                    }
-                }
-            }.runTaskLater((Plugin) CosmicDuel.get(), 60L);
-        }
         new DuelPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName());
     }
 

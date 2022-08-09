@@ -8,6 +8,9 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
+import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
+import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
+import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.util.*;
@@ -23,16 +26,16 @@ import com.cosmicpvp.cosmicutils.utils.*;
 import org.bukkit.*;
 import org.bukkit.potion.*;
 import org.bukkit.metadata.*;
+
 import java.util.*;
 
-public class DivineImmolation extends CustomEnchantment
-{
+public class DivineImmolation extends CustomEnchantment {
     public DivineImmolation() {
         super("Divine Immolation", GeneralUtil.swords, 2);
         this.max = 4;
         this.base = 10.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
@@ -40,7 +43,7 @@ public class DivineImmolation extends CustomEnchantment
             return;
         }
 
-        final Player p = (Player)player;
+        final Player p = (Player) player;
         double radius = 1.0 * level;
         double damage = Math.floor(level * 2);
 
@@ -52,7 +55,7 @@ public class DivineImmolation extends CustomEnchantment
         }
 
         if (p.hasMetadata("noSoulProc")) {
-return;
+            return;
         }
 
         if (playerHit instanceof Player) {
@@ -62,7 +65,7 @@ return;
         }
 
 
-        if (((BoostedChainsaw)SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
+        if (((BoostedChainsaw) SkinType.BACK_TO_SCHOOL_2021_AXE.getItemSkin()).getChainSawedPlayers().contains(p.getName())) {
 
             return;
         }
@@ -73,33 +76,33 @@ return;
                 return;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD)) {
             damage *= 1.25;
         }
 
         if (OutpostUtil.hasMarsOutpost((Player) player)) {
-            damage *=1.15;
+            damage *= 1.15;
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
-            damage *=1.3;
-        }
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
             damage *= 1.3;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_AMULET)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
+            damage *= 1.3;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_AMULET)) {
             damage *= 1.25;
         }
 
         if (player.hasMetadata("carver_damage")) {
-            damage *=1.3;
+            damage *= 1.3;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_SWORD)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
             damage *= 1.15;
         }
 
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth()/2 &&  !player.hasMetadata("noCape")) {
-            damage *=1.15;
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
+            damage *= 1.15;
         }
 
         if (player.hasMetadata("soulEnchantMultiplier")) {
@@ -114,12 +117,12 @@ return;
                 return;
             }
 
-            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_HELMET)) && playerHit.getHealth() < playerHit.getMaxHealth()/4) {
-                damage*=0.85;
+            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_HELMET)) && playerHit.getHealth() < playerHit.getMaxHealth() / 4) {
+                damage *= 0.85;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
-                damage*=0.9;
+                damage *= 0.9;
             }
 
         }
@@ -133,21 +136,22 @@ return;
             return;
         }
 
-        if (Math.random() < 0.1 && AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.SUMMER_2021_AMULET)) {
+        if (Math.random() < 0.1 && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_AMULET)) {
             damage = Math.floor(level * 1.5);
         }
         if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 20);
             }
-            final List<Player> ents = getNearbyPlayers(playerHit.getNearbyEntities(radius, radius, radius));
-            assert playerHit instanceof Player;
-            ents.add((Player) playerHit);
+            final List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
+            if (playerHit instanceof Player) {
+                ents.add(playerHit);
+            }
             for (final Entity ent : ents) {
                 if (ent instanceof Player) {
-                    Player pEnt = null;
-                    pEnt = (Player)ent;
-                    if (p.getName().equals(pEnt.getName())) {
+                    Player pEnt;
+                    pEnt = (Player) ent;
+                    if (p.getUniqueId() == pEnt.getUniqueId()) {
                         continue;
                     }
                     if (GeneralUtil.isAtleastTruce(p, pEnt)) {
@@ -161,11 +165,11 @@ return;
                     }
 
                     if (pEnt.getInventory() == null) continue;
-                    if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)){
-                    if ((AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
+                    if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)) {
+                        if ((AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
 
-                        continue;
-                    }
+                            continue;
+                        }
                     }
                     if (pEnt.hasMetadata("NPC")) {
                         continue;
@@ -176,24 +180,25 @@ return;
                     if (ent.hasMetadata("spectator")) {
                         continue;
                     }
-                    final LivingEntity le = (LivingEntity)ent;
-                    final Player attacker = (Player)player;
+                    final LivingEntity le = (LivingEntity) ent;
+                    final Player attacker = (Player) player;
+                    if (le.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player)le).isActive()) continue;
                     le.damage(damage);
                     try {
-                        ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(),le.getLocation(), 1,1,1,0.05f,10);
+                        ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation(), 1, 1, 1, 0.05f, 10);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }
-                    ((Player)le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
-                    ((Player)le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2*20, 1));
+                    ((Player) le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
+                    ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2 * 20, 1));
                     double multiplier = 1.0;
-                    if (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
                         multiplier += 0.25;
                     }
 
-                    ent.setMetadata("divineFire", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
-                    ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin)Enchantments.getInstance(), multiplier * level));
+                    ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
+                    ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));
                 }
             }
         }

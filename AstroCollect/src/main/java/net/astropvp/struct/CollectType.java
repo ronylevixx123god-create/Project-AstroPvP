@@ -7,6 +7,7 @@ public enum CollectType {
     SLOTBOT(Material.PAPER),
     CRTAEKEY(Material.TRIPWIRE_HOOK),
     ITEMFLIP(Material.ENCHANTMENT_TABLE),
+    DUEL(Material.DIAMOND_CHESTPLATE),
     GIVEALL(Material.GOLD_NUGGET);
 
     Material material;

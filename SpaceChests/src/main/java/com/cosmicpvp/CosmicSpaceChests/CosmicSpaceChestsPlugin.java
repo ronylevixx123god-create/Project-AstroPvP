@@ -59,7 +59,7 @@ extends JavaPlugin {
         this.getServer().getPluginManager().registerEvents(new PlayerInteractChestListener(this), this);
         this.getServer().getPluginManager().registerEvents(new ChestLootSelectorListener(), this);
         this.getServer().getPluginManager().registerEvents(new EnvoySummonItemListener(), this);
-        this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
+        //this.getServer().getPluginManager().registerEvents(new TitleItemListener(), this);
         this.getServer().getPluginManager().registerEvents(new RankItemListener(), this);
 
         this.getServer().getPluginManager().registerEvents(new SpaceFlareListener(), this);
