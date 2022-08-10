@@ -100,6 +100,14 @@ public class DamageListener implements Listener {
     }
 
     @EventHandler(priority = EventPriority.HIGH)
+    public void dmgDuel(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getWorld().getName().equals("world_duels")) {
+            e.setDamage(e.getDamage() * 1.5);
+        }
+        //Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
+    }
+
+    @EventHandler(priority = EventPriority.HIGH)
     public void dmg(EntityDamageByEntityEvent e) {
         if (e.getDamager().getWorld().getName().equals("space")) {
             e.setDamage(e.getDamage() * 0.75);

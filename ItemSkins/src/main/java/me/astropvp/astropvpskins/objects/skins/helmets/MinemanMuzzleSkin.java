@@ -27,6 +27,7 @@ public class MinemanMuzzleSkin extends ItemSkin {
         if (damager.hasMetadata("frozenSkrrt")) return;
         if (damaged.hasMetadata("frozenSkrrt")) return;
         if(Math.random() < 0.075) {
+            if (damaged.getNearbyEntities(6, 6, 6) == null) return;
             List<Entity> nearby = damaged.getNearbyEntities(6, 6, 6);
             if (nearby == null) return;
             if (nearby.isEmpty()) return;

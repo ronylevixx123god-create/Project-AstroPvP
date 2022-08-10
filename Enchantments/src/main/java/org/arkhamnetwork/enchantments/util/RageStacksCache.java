@@ -40,6 +40,11 @@ public class RageStacksCache extends Cache {
         this.rageStack++;
     }
 
+    public void decrementRageStack() {
+        this.rageStack--;
+    }
+
+
     public void resetRageStack() {
         this.rageStack = 0;
     }

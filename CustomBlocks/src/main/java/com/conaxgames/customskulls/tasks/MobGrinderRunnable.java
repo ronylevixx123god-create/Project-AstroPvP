@@ -12,7 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 
 public class MobGrinderRunnable extends BukkitRunnable {
-    int amountOfExpPerBlaze = 35;
+    int amountOfExpPerBlaze = 40;
 
     @Override
     public void run() {
@@ -27,7 +27,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
                 continue;
             }
 
-            if (mobGrinder.getBlaze() == null) {
+/*            if (mobGrinder.getBlaze() == null) {
                 continue;
             }
             Entity blaze = mobGrinder.getBlaze();
@@ -45,7 +45,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
 
             if (CoreSkulls.mobStackerUtils.isStackedMob(blaze)) {
                 CoreSkulls.mobStackerUtils.setStackSize(blaze, CoreSkulls.mobStackerUtils.getStackSize(blaze) - 1);
-            }
+            }*/
 
             if (mobGrinder.getXp() + amountOfExpPerBlaze < Integer.MAX_VALUE) {
                 mobGrinder.setXp(mobGrinder.getXp() + amountOfExpPerBlaze);

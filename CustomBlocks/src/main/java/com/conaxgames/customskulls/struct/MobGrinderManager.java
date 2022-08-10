@@ -37,7 +37,7 @@ public class MobGrinderManager {
         boolean blazeFound = false;
 
         AbilityData data = AbilityData.getByUUID(uuid);
-        Chunk chunk = ChunkUtil.getIfLoaded(data.getLocation().getBlockX() >> 4, data.getLocation().getBlockZ() >> 4, data.getLocation().getWorld());
+/*        Chunk chunk = ChunkUtil.getIfLoaded(data.getLocation().getBlockX() >> 4, data.getLocation().getBlockZ() >> 4, data.getLocation().getWorld());
         if (chunk == null) return false;
         for (Entity entity : ChunkUtil.getEntities(chunk)) {
             if (entity instanceof Blaze) {
@@ -48,7 +48,7 @@ public class MobGrinderManager {
         if (!blazeFound) {
             player.sendMessage(CC.translate("&c&l(!)&c Could not activate auto mob grinder because there is no nearby blaze in this chunk"));
             return false;
-        }
+        }*/
 
         if (!EconomyUtils.hasBalance(player, data.getAbilityType().getPricePerAction())) {
             player.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to reactivate this custom block."));
@@ -63,7 +63,7 @@ public class MobGrinderManager {
         AbilityData data = AbilityData.getByUUID(uuid);
         EconomyUtils.withdrawBalance(player, data.getAbilityType().getPricePerAction());
         SaveCustomBlock.saveCustomBlock((Player) player, data.getAbilityType(), data.getLocation().getBlock());
-        player.sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock for 1 hour!"));
+        player.sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock for 2 hours!"));
         player.sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())));
         player.playSound(player.getLocation(), Sound.VILLAGER_YES, 20, 20);
         try {
@@ -72,7 +72,7 @@ public class MobGrinderManager {
             e.printStackTrace();
         }
         get(uuid).setLastActivated(System.currentTimeMillis());
-        rescanBlaze(uuid);
+        //rescanBlaze(uuid);
         activeMobGrinders.put(uuid, get(uuid));
     }
 

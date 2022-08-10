@@ -40,9 +40,9 @@ public class HotFixPlugin extends JavaPlugin {
                 for (Player player : Bukkit.getOnlinePlayers()) {
                     player.sendMessage("");
                     if (Math.random() < 0.5) {
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &4&lFerrari&r &6on the store.")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &5&lPrada&r &6on the store.")));
                     } else {
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &b&lRedbull &3&lBundle&r &6on the store.")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &b&lDiamond &f&lBundle&r &6on the store.")));
 
                     }
 
@@ -50,7 +50,7 @@ public class HotFixPlugin extends JavaPlugin {
                     player.sendMessage("");
 
                 }
-        }, 40L, 3*20*60);
+        }, 40L, 1*20*60);
     }
 
     @Override

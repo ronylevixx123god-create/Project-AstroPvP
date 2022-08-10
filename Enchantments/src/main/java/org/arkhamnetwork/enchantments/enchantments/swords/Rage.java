@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.google.common.collect.Maps;
@@ -50,7 +51,7 @@ public class Rage extends CustomEnchantment {
 
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);
 
-            if (rageStacksCache.getLastRageStackTime() + 10000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
+            if (rageStacksCache.getLastRageStackTime() + 5000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
                 rageStacksCache.updateLastRageStackTime();
                 rageStacksCache.resetRageStack();
                 rageStacksCache.updateVictim((Player) target);
@@ -59,7 +60,31 @@ public class Rage extends CustomEnchantment {
 
 
             if (rageStacksCache.getRageStack() >= 1) {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
+                //Rose Amulet
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.5);
+                    if (Math.random() < 0.25) {
+                        target.sendMessage(CC.translate("&c&l* ROSE AMULET &7[-50% Rage DMG] &c&l*"));
+                    }
+                    //Seasons Beating
+                } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 1.1);
+                    if (Math.random() < 0.25) {
+                        user.sendMessage(CC.translate("&4&l* SEASON'S BEATING &7[+10% Rage DMG] &4&l*"));
+                    }
+                    //Big Timbs
+                } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.35) {
+                    target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
+                    //Chesire Grind
+                } else if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.65);
+                    if (Math.random() < 0.25) {
+                        target.sendMessage(CC.translate("&e&l* CHESIRE GRIND &7[-35% Rage DMG] &e&l*"));
+                    }
+                } else {
+                    //Normal Rage damage
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
+                }
                 this.playRageEffect(target.getLocation());
 
             }

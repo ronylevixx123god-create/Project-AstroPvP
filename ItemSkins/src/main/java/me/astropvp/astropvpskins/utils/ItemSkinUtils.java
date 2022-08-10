@@ -28,6 +28,7 @@ public class ItemSkinUtils {
         if (factionAtacker.getRelationTo(factionTarget) == Relation.TRUCE) return false;
 
         if (attacker.getLocation().getWorld().getName().equals("nebula")) return false;
+        if (attacker.getLocation().getWorld().getName().equals("world_duels")) return false;
 
 
         return true;
