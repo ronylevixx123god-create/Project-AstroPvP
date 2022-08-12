@@ -1,5 +1,0 @@
-name: BlackAuctionHouse
-main: net.astropvp.BlackMarketAuction
-version: 1.0
-commands:
-  bah:

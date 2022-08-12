@@ -77,9 +77,10 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-            <scope>provided</scope>
+            <artifactId>CosmicPvPUtils</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -120,13 +121,7 @@
             <scope>provided</scope>
         </dependency>
 
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Utils</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>Arkkit</artifactId>

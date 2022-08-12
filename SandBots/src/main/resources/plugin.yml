@@ -1,6 +1,0 @@
-name: SandBots
-version: 1.0
-main: net.astropvp.SandBots
-depend: [CosmicPvPUtils]
-commands:
-  sandbot:

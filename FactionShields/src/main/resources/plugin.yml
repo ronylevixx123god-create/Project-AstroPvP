@@ -1,4 +1,0 @@
-name: AstroFactionShields
-main: net.astropvp.FactionShield
-version: 0.1.0
-depend: [Factions]

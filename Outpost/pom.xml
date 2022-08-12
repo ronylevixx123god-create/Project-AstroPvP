@@ -112,11 +112,11 @@
             <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>utils</artifactId>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CosmicPvPUtils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicPvPUtils.jar</systemPath>
+            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

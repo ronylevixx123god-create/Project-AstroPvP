@@ -41,11 +41,11 @@
             <systemPath>${project.basedir}/../StorageUtil/target/StorageUtil-0.1-shaded.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>utils</artifactId>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>CosmicPvPUtils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Utils-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.astropvp</groupId>

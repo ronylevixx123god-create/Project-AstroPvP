@@ -1,7 +1,0 @@
-name: AstroPearls
-main: me.astropvp.astropearls.AstroPearls
-author: Astropvp
-version: 1.2
-commands:
-  axpearl:
-    description: handles pearls
