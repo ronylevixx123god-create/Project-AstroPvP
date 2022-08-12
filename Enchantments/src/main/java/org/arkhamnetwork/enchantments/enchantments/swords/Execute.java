@@ -50,7 +50,7 @@ public class Execute extends CustomEnchantment
             return;
         }
         final double random = Math.random();
-        final double chance = 0.1 * level;
+        final double chance = 0.05 * level;
         final double mod = 4.2;
         if (random < chance) {
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);

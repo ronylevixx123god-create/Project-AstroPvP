@@ -114,6 +114,12 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_MUTATED_BOOTS)) {
+                p.sendMessage(CC.translate("&6&l* GOLDEN BOOTS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &6&l*"));
+                player.sendMessage(CC.translate("&6&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&6&lGolden Boots&7] &6&l*"));
+                continue;
+            }
+
             if (UndertowHelmet.undertowField.contains(p)) {
                 p.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Witcher Pet &7[&f" + player.getName() + "&7] &a&l*"));
                 player.sendMessage(CC.translate("&a&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&a&lUndertow Helmet&7] &a&l*"));

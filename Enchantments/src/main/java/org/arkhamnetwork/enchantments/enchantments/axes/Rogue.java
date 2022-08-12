@@ -69,7 +69,12 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
 
-            if (CannonballAmulet.affected.contains(playerHit)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_MUTATED_BELT)) {
+                p.sendMessage(CC.translate("&c&l* ROGUE &7Blocked [Bling Belt] &c&l*"));
+                return;
+            }
+
+                if (CannonballAmulet.affected.contains(playerHit)) {
                 return;
             }
 
@@ -86,8 +91,12 @@ public class Rogue extends CustomEnchantment {
                 if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master")) {
                     damage *= 1.1;
                 }
+                if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_MUTATED_BELT)) {
+                    damage *= 1.15;
 
-                if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
+                }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
                     multi *= 1.15;
                 }
 
@@ -95,7 +104,11 @@ public class Rogue extends CustomEnchantment {
                     multi *= 1.1;
                 }
 
-                if (player.hasMetadata("carver_damage")) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
+                    multi*=0.75;
+                }
+
+                    if (player.hasMetadata("carver_damage")) {
                     multi *= 1.1;
                 }
 

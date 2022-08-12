@@ -37,7 +37,7 @@ public class HeroicExecute extends HeroicCustomEnchantment{
         if (GeneralUtil.isEffectedByRage(target))
             return;
         double random = Math.random();
-        double chance = 0.06D * level;
+        double chance = 0.08D * level;
         double mod = 4.0D + (level/2D);
 
         if (random < chance) {

@@ -206,6 +206,13 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.VALENTINES_2022_MUTATED_SWORD) && Math.random() < 0.25) {
+                damager.sendMessage(CC.translate("&c&l* SKELETON KET BLOCKED PHOENIX [&c" + player.getName() + "&c&l] *"));
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&4" + damager.getName() + " Skeleton Key&c&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.EASTER_2022_MUTATED_HELMET)) {
                 damager.sendMessage(CC.translate("&e&l* &d&lMAD HAT &7Blocked &cPhoenix &d&l[&c" + player.getName() + "&d&l] &e&l*"));
                 player.sendMessage(CC.translate("&e&l* &d&lPHOENIX BLOCKED [&c" + damager.getName() + " Mad Hat&d&l] *"));

@@ -204,8 +204,12 @@ public class HolyWhiteScrollListener implements Listener {
                 InventoryPetItem petItem = (InventoryPetItem) CosmicPersistentItem.constructItem(i, wrapper, InventoryPetItem.class);
                 if (petItem != null && petItem.getPetType() != null) {
                     if (petItem.isLeashed()) {
+                        double chance = 0.33;
+                        if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.VALENTINES_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.VALENTINES_2022_MUTATED_BELT)) {
+                            chance *=1.15;
+                        }
                         petItem.setLeashed(false);
-                        if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null && MaskType.hasEquipped(e.getEntity().getKiller(), "ANIMAL_CONTROL") && Math.random() < 0.33D) {
+                        if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null && MaskType.hasEquipped(e.getEntity().getKiller(), "ANIMAL_CONTROL") && Math.random() < chance) {
                             killed.sendMessage(CC.RedB + "* ANIMAL CONTROL MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                             killer.sendMessage(CC.GreenB + "* ANIMAL CONTROL MASK [" + CC.Gray + killed.getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                             toRemoveToDrops.add(i);

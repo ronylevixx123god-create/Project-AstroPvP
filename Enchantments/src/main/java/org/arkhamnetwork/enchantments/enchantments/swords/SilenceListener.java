@@ -1,4 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.mastery.MasteryNeutralize;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,10 +24,15 @@ public final class SilenceListener implements Listener {
             e.setDamage(e.getDamage(DamageModifier.BASE) * 1.4D);
         }
 
-        if (e.getDamage(DamageModifier.BASE) > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs")) {
+        if (e.getDamage(DamageModifier.BASE) > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs") && ((Player) e.getEntity()).getKiller() != null) {
             int stacks = ((MetadataValue)e.getEntity().getMetadata("noDefenseProcs").get(0)).asInt();
-            double extraStackDmg = 0.0725D * (double)stacks;
-            e.setDamage(e.getDamage(DamageModifier.BASE) * (1.25D + extraStackDmg));
+            double extraStackDmg = 0.0425D * (double)stacks;
+            if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
+                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.175D + extraStackDmg));
+            } else {
+                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.15D + extraStackDmg));
+
+            }
 
             for(int i = 0; i < stacks; ++i) {
 

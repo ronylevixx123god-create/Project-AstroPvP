@@ -49,7 +49,16 @@ public class OpeningCombo extends MasteryCustomEnchantment {
 
         if (activePlayers.containsKey((Player)user)) {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_HELMET)) return;
-            event.setDamage(event.getDamage()*1.1);
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.VALENTINES_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
+                event.setDamage(event.getDamage()*1.25);
+
+            } else {
+                event.setDamage(event.getDamage()*1.1);
+            }
 
             target.sendMessage(CC.translate( "&4&l** OPENING COMBO &4- &7" + user.getName() + " &4Dealt &7" + 2 * enchantLevel + " &4% More Damage &4&l**"));
         }

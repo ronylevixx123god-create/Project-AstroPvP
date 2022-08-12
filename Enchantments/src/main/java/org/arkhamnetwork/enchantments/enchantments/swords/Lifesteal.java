@@ -37,7 +37,15 @@ public class Lifesteal extends CustomEnchantment {
                 return;
             }
 
-            if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
+            if ((target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.SPRING_BREAK_2022_MUTATED_BELT))) {
+                return;
+            }
+
+            if (target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
+                return;
+            }
+
+                if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
             GeneralUtil.healPlayer(user, 2);
         }
     }

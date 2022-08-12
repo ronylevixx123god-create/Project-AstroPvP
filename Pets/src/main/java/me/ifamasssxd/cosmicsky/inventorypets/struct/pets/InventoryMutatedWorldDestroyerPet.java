@@ -114,8 +114,12 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
             }
         }
 
+
         if (MaskType.hasEquipped(player, "ELF")) {
             cageDuration = 10;
+        } else if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.VALENTINES_2022_MUTATED_BOOTS)) {
+            cageDuration = 8.5;
+
         } else {
             cageDuration = 7.5;
         }

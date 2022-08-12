@@ -50,6 +50,10 @@ public class Rage extends CustomEnchantment {
 
 
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);
+            if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {
+                rageStacksCache.setMaxRageStack(rageStacksCache.getMaxRageStack() + 1);
+            }
+
 
             if (rageStacksCache.getLastRageStackTime() + 5000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
                 rageStacksCache.updateLastRageStackTime();
@@ -80,6 +84,11 @@ public class Rage extends CustomEnchantment {
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.65);
                     if (Math.random() < 0.25) {
                         target.sendMessage(CC.translate("&e&l* CHESIRE GRIND &7[-35% Rage DMG] &e&l*"));
+                    } else if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {
+                        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 1.1);
+                        if (Math.random() < 0.25) {
+                            target.sendMessage(CC.translate("&c&l* SKELETON KEY &7[+10% Rage DMG] &c&l*"));
+                        }
                     }
                 } else {
                     //Normal Rage damage

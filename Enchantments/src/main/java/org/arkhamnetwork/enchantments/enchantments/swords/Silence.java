@@ -80,8 +80,12 @@ public class Silence extends CustomEnchantment
                 durationTicks *=0.25;
             }
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_HELMET)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
             durationTicks *= 0.6;
+        }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SPRING_BREAK_2022_BELT)) {
+            durationTicks*=0.8;
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.EASTER_2022_MUTATED_BACKPACK)) {

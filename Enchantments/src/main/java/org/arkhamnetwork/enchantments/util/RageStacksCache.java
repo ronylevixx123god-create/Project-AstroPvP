@@ -1,18 +1,21 @@
 package org.arkhamnetwork.enchantments.util;
 
 import lombok.Getter;
+import lombok.Setter;
 import net.astropvp.core.utils.cache.Cache;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
 
+@Setter
+@Getter
 public class RageStacksCache extends Cache {
 
     @Getter
     private long lastRageStackTime;
     private int rageStack;
-    private final int maxRageStack;
+    private int maxRageStack;
     private UUID victim;
 
     public RageStacksCache() {
