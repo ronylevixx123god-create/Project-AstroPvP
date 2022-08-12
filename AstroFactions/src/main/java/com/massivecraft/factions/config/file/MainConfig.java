@@ -1827,7 +1827,8 @@ public class MainConfig {
 
             private boolean newFactionsDefaultOpen = false;
             private boolean newFactionsDefaultPeaceful = false;
-
+            @Comment("When faction membership hits this limit, players will no longer be able to join using /f join; default is 0, no limit")
+            private int factionMemberLimit = 0;
             private int maxAlts = 15;
 
             public int maxAlts(){
@@ -1893,6 +1894,10 @@ public class MainConfig {
 
             public String getDefaultRelation() {
                 return defaultRelation;
+            }
+
+            public int getFactionMemberLimit() {
+                return this.factionMemberLimit;
             }
 
             public transient Relation actualDefaultRelation = null;

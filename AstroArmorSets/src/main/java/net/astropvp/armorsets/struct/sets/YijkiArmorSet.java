@@ -50,7 +50,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) throws Exception {
         double reductionPercent = 5;
         event.setDamage(event.getDamage() * (1 - (reductionPercent * amount * 0.01)));
-        if (Math.random() < 0.07 && attacker instanceof Player) {
+        if (Math.random() < 0.0075 && attacker instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 
@@ -62,7 +62,7 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) throws Exception {
         double reductionPercent = 30;
         event.setDamage(event.getDamage() * (1-(reductionPercent*0.01)));
-        if (Math.random() < 0.07 && attacker instanceof Player) {
+        if (Math.random() < 0.0125 && attacker instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 

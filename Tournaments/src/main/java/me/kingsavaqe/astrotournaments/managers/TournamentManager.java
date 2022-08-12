@@ -103,14 +103,13 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
                 TournamentPlayer player1 = playersInTournament.dequeue();
                 TournamentPlayer player2 = playersInTournament.dequeue();
-
-                setupPlayer(player1, arena.getLocations().getLeft());
-                setupPlayer(player2, arena.getLocations().getRight());
-
                 arena.setCurrentlyFighting(new Pair<>(player1, player2));
                 arena.setInUse(true);
-
                 this.astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().add(new TournamentMatch(player1, player2, arena));
+                Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, ()-> {
+                    setupPlayer(player1, arena.getLocations().getLeft());
+                    setupPlayer(player2, arena.getLocations().getRight());
+                }, 20L);
             }
         });
 

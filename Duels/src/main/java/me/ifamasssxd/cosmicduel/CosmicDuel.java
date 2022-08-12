@@ -141,7 +141,7 @@ extends JavaPlugin {
     }
 
     public void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new DuelArenaTask(), 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new DuelArenaTask(), 20L, 5L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new DuelTask(), 20L, 20L);
 
         //Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)get(), (Runnable)new QueueUpdateTask(), 20L, 700L);
