@@ -83,7 +83,7 @@ public class Rage extends CustomEnchantment {
                 } else if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.65);
                     if (Math.random() < 0.25) {
-                        target.sendMessage(CC.translate("&e&l* CHESIRE GRIND &7[-35% Rage DMG] &e&l*"));
+                        target.sendMessage(CC.translate("&e&l* CHESIRE GRIN &7[-35% Rage DMG] &e&l*"));
                     } else if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {
                         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 1.1);
                         if (Math.random() < 0.25) {

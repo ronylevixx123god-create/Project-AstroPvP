@@ -1853,7 +1853,7 @@ public class MainConfig {
 
             @Comment("Should we delete player homes that they set via Essentials when they leave a Faction\n" +
                     "if they have homes set in that Faction's territory?")
-            private boolean deleteEssentialsHomes = true;
+            private boolean deleteEssentialsHomes = false;
 
             @Comment("Default Relation allows you to change the default relation for Factions.\n" +
                     "Example usage would be so people can't leave then make a new Faction while Raiding\n" +

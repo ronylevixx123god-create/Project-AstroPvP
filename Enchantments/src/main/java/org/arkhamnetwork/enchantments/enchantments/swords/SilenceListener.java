@@ -21,16 +21,16 @@ public final class SilenceListener implements Listener {
     public void onEntityDamage(EntityDamageEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (e.getEntity().hasMetadata("neutralized")) {
-            e.setDamage(e.getDamage(DamageModifier.BASE) * 1.4D);
+            e.setDamage(e.getDamage(DamageModifier.BASE) * 1.35D);
         }
 
         if (e.getDamage(DamageModifier.BASE) > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs") && ((Player) e.getEntity()).getKiller() != null) {
             int stacks = ((MetadataValue)e.getEntity().getMetadata("noDefenseProcs").get(0)).asInt();
-            double extraStackDmg = 0.0425D * (double)stacks;
+            double extraStackDmg = 0.0725D * (double)stacks;
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
-                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.175D + extraStackDmg));
+                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.25D + extraStackDmg));
             } else {
-                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.15D + extraStackDmg));
+                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.20D + extraStackDmg));
 
             }
 
