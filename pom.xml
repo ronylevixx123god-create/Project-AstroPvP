@@ -17,7 +17,6 @@
         <module>Bosses</module>
         <module>Slotbot</module>
         <module>Core</module>
-        <module>Sets</module>
         <module>Enchantments</module>
         <module>Attributes</module>
         <module>CustomItems</module>
@@ -46,14 +45,11 @@
         <module>FactionBanners</module>
         <module>AstroCollect</module>
         <module>CosmicShop</module>
-        <module>CosmicCrate</module>
         <module>AstroCrateKeys</module>
         <module>CCVerify</module>
-        <module>AstroGenBuckets</module>
         <module>NebulaShop</module>
         <module>AstroEvents</module>
         <module>AstroCollectors</module>
-        <module>AstroPearls</module>
         <module>AstroGamble</module>
         <module>GiftcardShop</module>
         <module>AstroArmorSets</module>
@@ -68,6 +64,8 @@
         <module>AstroEnvoy</module>
         <module>StorageUtil</module>
         <module>LootFilter</module>
+        <module>PlayerVaultsX</module>
+        <module>AstroMysteryChests</module>
 
     </modules>
 

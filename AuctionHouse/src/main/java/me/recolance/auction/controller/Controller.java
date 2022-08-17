@@ -145,9 +145,7 @@ public class Controller {
     }
 
     public static double getSellFee(Player player) {
-        if (CosmicUtils.get().isCosmicGalaxy() && HCFOutpostUtils.doesControlOutpost((Player) player, (String) "infernal")) {
-            return 0.0;
-        }
+
         if (player.hasPermission("enchantments.max.20")) {
             return 0.005;
         }

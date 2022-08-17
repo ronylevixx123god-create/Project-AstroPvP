@@ -1,4 +1,4 @@
-// Decompiled with: CFR 0.151
+// Decompiled with: FernFlower
 // Class Version: 8
 package me.recolance.auction.menu.categories;
 
@@ -12,13 +12,11 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
-public class AuctionCategory
-        implements Comparable<AuctionCategory>,
-        AuctionItem {
+public class AuctionCategory implements Comparable<AuctionCategory>, AuctionItem {
     private String displayName;
     private String strippedName;
     private ItemStack displayItem;
-    private List<Listing> categoryItems;
+    private List<Listing> categoryItems = Lists.newLinkedList();
     private Listing lowestPricedItem;
     private List<AuctionCategory> subCategories;
     private Integer rarityTier = 0;
@@ -26,16 +24,16 @@ public class AuctionCategory
     public double getLowestPricedItem() {
         if (this.lowestPricedItem == null || this.lowestPricedItem.isExpired() || !this.lowestPricedItem.isValid()) {
             this.lowestPricedItem = null;
-            this.lowestPricedItem = this.categoryItems.stream().min(Comparator.comparing(Listing::getPrice)).orElse(null);
+            this.lowestPricedItem = (Listing)this.categoryItems.stream().min(Comparator.comparing(Listing::getPrice)).orElse(null);
         }
-        if (this.lowestPricedItem != null) {
-            return this.lowestPricedItem.getPrice();
-        }
-        return 0.0;
+
+        return this.lowestPricedItem != null ? this.lowestPricedItem.getPrice() : 0.0D;
     }
 
     public List<Listing> getCategoryItems() {
-        this.categoryItems.removeIf(item -> !item.isValid() || item.isExpired());
+        this.categoryItems.removeIf((item) -> {
+            return !item.isValid() || item.isExpired();
+        });
         return this.categoryItems;
     }
 
@@ -53,22 +51,18 @@ public class AuctionCategory
             if (exp > 0) {
                 this.getCategoryItems().sort(Comparator.comparingDouble(Listing::getExpPerDollar));
             }
-            return;
+
+        } else {
+            this.getCategoryItems().sort((item1, item2) -> {
+                return item1.getPricePerItem() == item2.getPricePerItem() ? item1.compareTo(item2) : Double.compare(item1.getPricePerItem(), item2.getPricePerItem());
+            });
         }
-        this.getCategoryItems().sort((item1, item2) -> {
-            if (item1.getPricePerItem() == item2.getPricePerItem()) {
-                return item1.compareTo((Listing)item2);
-            }
-            return Double.compare(item1.getPricePerItem(), item2.getPricePerItem());
-        });
     }
 
-    @Override
     public int compareTo(AuctionCategory o) {
         return this.getDisplayItem().getType().compareTo(o.getDisplayItem().getType());
     }
 
-    @Override
     public ItemStack getDisplay() {
         return this.getDisplayItem();
     }
