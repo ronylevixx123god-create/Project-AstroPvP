@@ -8,15 +8,18 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import de.inventivegames.particle.ParticleEffect;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.utils.ConfigUtils;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTableType;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -95,7 +98,7 @@ public class CrateKeyOpenerGUI {
                                 chest = (Chest) newNearbyChest.getBlock().getState();
                             }
                         }
-                        ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
+                        ItemStack itemStack = LootTableAPI.getRandomLootItem(LootTableType.valueOf(type.name()));
                         if (!LootFilterAPI.isFiltered(player,LootTable.valueOf(type.name()), itemStack)) {
 
                             chest.getInventory().addItem(itemStack);

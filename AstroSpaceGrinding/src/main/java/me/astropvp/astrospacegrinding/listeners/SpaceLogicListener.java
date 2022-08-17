@@ -20,11 +20,8 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.event.player.PlayerToggleFlightEvent;
 import org.bukkit.inventory.ItemStack;
 
 import com.google.common.collect.Lists;
@@ -60,7 +57,6 @@ public class SpaceLogicListener implements Listener {
             if (CombatLog.inCombat(player)) {
                 return;
             }
-            SpacePlayerData.remove(player);
             player.sendMessage(CC.RedB + "(!) " + CC.Red + "As a result of leaving the Space Lands, "
                     + "you have lost your /space stats and your forcefield if you had one!");
             player.playSound(player.getLocation(), Sound.AMBIENCE_THUNDER, 0.75F, 2F);
@@ -68,6 +64,28 @@ public class SpaceLogicListener implements Listener {
             SpacePlayerData.remove(player);
 
         }
+    }
+
+    @EventHandler
+    public void onQuit(PlayerQuitEvent e) {
+        ForceFieldData.remove(e.getPlayer());
+        SpacePlayerData.remove(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onQuit(PlayerKickEvent  e) {
+        ForceFieldData.remove(e.getPlayer());
+        SpacePlayerData.remove(e.getPlayer());
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent e) {
+        SpacePlayerData.remove(e.getEntity());
+    }
+
+    @EventHandler
+    public void onJoin(PlayerJoinEvent e) {
+        SpacePlayerData.findPlayer(e.getPlayer());
     }
 
 

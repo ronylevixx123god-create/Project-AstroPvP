@@ -11,12 +11,12 @@ import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import de.inventivegames.particle.ParticleEffect;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
-import me.mattstudios.mfgui.gui.guis.Gui;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

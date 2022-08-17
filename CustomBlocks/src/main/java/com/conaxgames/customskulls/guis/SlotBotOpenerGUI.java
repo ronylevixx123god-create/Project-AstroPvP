@@ -8,14 +8,15 @@ import com.conaxgames.customskulls.util.CustomBlockUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import de.inventivegames.particle.ParticleEffect;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;

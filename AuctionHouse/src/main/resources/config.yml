@@ -23,7 +23,7 @@ menuText:
   itemsYoureSelling:
     name: '&e&lYour Auctions'
     lore:
-      - '&7Click here to view all of the me.astropvp.cratekeys.items you'
+      - '&7Click here to view all of the items you'
       - '&7are currently selling on the auction.'
       - ''
       - '&e&l%selling% Item(s)'
@@ -56,14 +56,14 @@ menuText:
     name: '&e&lGuide'
     lore:
       - '&7This is the auction house, here you can'
-      - '&7list me.astropvp.cratekeys.items for sale, and purchase me.astropvp.cratekeys.items'
+      - '&7list items for sale, and purchase items'
       - '&7that others have listed for sale.'
       - ''
       - '&7The auction is also a great way to make'
-      - '&7money by selling farmable me.astropvp.cratekeys.items other'
+      - '&7money by selling farmable items other'
       - '&7players may be interested in buying.'
       - ''
       - '&7All listings last for a max of &e15 minutes'
-      - '&7unsold me.astropvp.cratekeys.items are sent to your collection bin.'
+      - '&7unsold items are sent to your collection bin.'
       - ''
       - '&7For more help, use &e/ah help!'

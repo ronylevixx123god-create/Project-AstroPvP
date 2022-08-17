@@ -18,6 +18,8 @@ import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import net.astropvp.core.utils.OutpostUtil;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTableType;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -117,7 +119,6 @@ public class SpaceAlien extends SpaceMonster {
         }
 
 
-        Map<ItemStack, Double> loot = AstroSpaceGrindingPlugin.cachedCrateLoot.get(MonsterType.SPACE_ALIEN);
         double chance = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienRewardChance");
         if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SUMMER_2021_BELT)) {
             chance *= 1.30;
@@ -132,9 +133,9 @@ public class SpaceAlien extends SpaceMonster {
         }
 
         if (Math.random() < chance / 100) {
-            rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTableType.SPACE));
             if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET)) {
-                rewards.add(AstroSpaceGrindingAPI.getRandomReward(loot));
+                rewards.add(LootTableAPI.getRandomLootItem(LootTableType.SPACE));
             }
         }
         return rewards;

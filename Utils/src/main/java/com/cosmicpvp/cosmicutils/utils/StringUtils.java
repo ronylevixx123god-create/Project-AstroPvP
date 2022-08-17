@@ -26,6 +26,44 @@ public class StringUtils {
         return new Location(Bukkit.getWorld(splt[0]), Double.parseDouble(splt[1]), Double.parseDouble(splt[2]), Double.parseDouble(splt[3]));
     }
 
+    public static String toNiceString(String string) {
+        string = ChatColor.stripColor(string).replace('_', ' ').toLowerCase();
+        StringBuilder sb = new StringBuilder();
+
+        for(int i = 0; i < string.toCharArray().length; ++i) {
+            char c = string.toCharArray()[i];
+            if (i > 0) {
+                char prev = string.toCharArray()[i - 1];
+                if ((prev == ' ' || prev == '[' || prev == '(') && (i == string.toCharArray().length - 1 || c != 'x' || !Character.isDigit(string.toCharArray()[i + 1]))) {
+                    c = Character.toUpperCase(c);
+                }
+            } else if (c != 'x' || !Character.isDigit(string.toCharArray()[i + 1])) {
+                c = Character.toUpperCase(c);
+            }
+
+            sb.append(c);
+        }
+
+        return sb.toString();
+    }
+
+    public static String getProperCase(String text) {
+        StringBuilder sb = new StringBuilder(text.length());
+        char[] charArray = text.toLowerCase().toCharArray();
+        charArray[0] = Character.toUpperCase(charArray[0]);
+        sb.append(new String(charArray));
+        return sb.toString().trim();
+    }
+
+
+
+    public static String flipString(String string) {
+        StringBuilder input = new StringBuilder();
+        input.append(string);
+        input.reverse();
+        return input.toString();
+    }
+
     public static String getCenteredMessage(String message) {
         if (message == null || message.equals("")) {
             return "";
@@ -190,6 +228,12 @@ public class StringUtils {
             }
             return this.length + 1;
         }
+
+
+
+
+
+
     }
 }
 

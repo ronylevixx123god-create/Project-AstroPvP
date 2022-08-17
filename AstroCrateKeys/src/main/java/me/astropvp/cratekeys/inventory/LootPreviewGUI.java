@@ -3,17 +3,12 @@ package me.astropvp.cratekeys.inventory;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 
-
-import me.astropvp.cratekeys.filters.FilterManager;
-import me.astropvp.cratekeys.filters.FilterPlayer;
-import me.astropvp.cratekeys.filters.impl.CrateKeyFilter;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
-import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -42,7 +37,6 @@ public class LootPreviewGUI {
         this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
 
 
-        Map<ItemStack, Double> itemList = AstroCrateKeysPlugin.getCachedCrateLoot().get(type);
 
 
         expShopUI.setDefaultClickAction(event -> {
@@ -77,55 +71,20 @@ public class LootPreviewGUI {
             event.setCancelled(true);
         }));
 
-        expShopUI.setItem(6, 5, new GuiItem(createGUIItem(), event -> expShopUI.close(player)));
 
-        //FilterPlayer filterPlayer = FilterManager.getInstance().getFilterPlayer(player);
-        //CrateKeyFilter filter = filterPlayer.hasFilter("crate_key_" + type.name().toLowerCase()) ? (CrateKeyFilter) filterPlayer.getFilter("crate_key_" + type.name().toLowerCase()) : (CrateKeyFilter) filterPlayer.registerFilter(new CrateKeyFilter(type));
-        for (Map.Entry<ItemStack, Double> entry : itemList.entrySet()) {
-            ItemStack item = entry.getKey().clone();
-            double chance = entry.getValue();
+        for (ItemStack item : AstroCrateKeysAPI.getListItems(type)) {
 
             ItemBuilder itemBuilder = new ItemBuilder(item);
-            itemBuilder.addLoreLine("");
-            itemBuilder.addLoreLine(CC.translate("&6&lCHANCE: &f") + chance + "%");
-            itemBuilder.addLoreLine("");
-            this.expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
-                ItemStack found = null;
-                if (player.isOp() && event.isShiftClick() && event.isRightClick()) {
-                    for (ItemStack i : itemList.keySet()) {
-                        if (i.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) {
-                            found = i;
-                        }
-                    }
-
-                    itemList.remove(found);
-                    AstroCrateKeysAPI.setItems(type, itemList);
-                    AstroCrateKeysPlugin.cachedCrateLoot.put(type, AstroCrateKeysAPI.getItems(type));
-                    player.sendMessage(String.valueOf(CC.Green) + "Removed " + found.getItemMeta().getDisplayName() +   " from the crate '" + type.getPrefixedName() + "'!");
-                    LootPreviewGUI lootPreviewGUI = new LootPreviewGUI(player, type);
-                    lootPreviewGUI.getLootGUI().open(player);
-                }
-
-            }));
+            this.expShopUI.addItem(new GuiItem(itemBuilder.build()));
         }
 
-
     }
 
 
-    public ItemStack createGUIItem() {
-        ItemStack item = new ItemStack(Material.BARRIER);
-        ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.RedB + "Exit Preview");
-        List<String> lore = Lists.newArrayList();
-        lore.add(CC.Gray + "Click this to exit the loot preview");
-        meta.setLore(lore);
-        item.setItemMeta(meta);
-        return item;
-    }
+
 
     public ItemStack createFillerItem() {
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.GRAY.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);

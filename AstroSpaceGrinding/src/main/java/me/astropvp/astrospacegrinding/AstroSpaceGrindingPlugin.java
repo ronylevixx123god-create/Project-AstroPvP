@@ -27,7 +27,6 @@ public class AstroSpaceGrindingPlugin extends JavaPlugin {
 	private static AstroSpaceGrindingPlugin astroSpaceGrindingPlugin;
 	@Getter
 	private ConfigManager configManager;
-	public static HashMap<MonsterType, Map<ItemStack, Double>> cachedCrateLoot;
 	public static HashMap<UUID, MonsterType> activeMonsters;
 
 
@@ -44,13 +43,7 @@ public class AstroSpaceGrindingPlugin extends JavaPlugin {
 			if (entity instanceof Player) continue;
 			entity.remove();
 		}
-		cachedCrateLoot = new HashMap<>();
 		activeMonsters = new HashMap<>();
-		for (MonsterType monsterType : MonsterType.values()) {
-			cachedCrateLoot.put(monsterType, AstroSpaceGrindingAPI.getItems(monsterType));
-		}
-		Bukkit.getLogger().info("[AstroSpaceGrinding] - Cleared all entities in space world");
-		Bukkit.getLogger().info("[AstroSpaceGrinding] - Enabling Astro Space Grinding");
 	}
 	
 	@Override
@@ -74,7 +67,7 @@ public class AstroSpaceGrindingPlugin extends JavaPlugin {
 	
 	public void startTasks() {
 		new SpawnMobsRepeatingTask().runTaskTimer(this, 20, 20);
-		new NoFlyTask().runTaskTimer(this, 20, 20);
+		new NoFlyTask().runTaskTimer(this, 20, 5);
 	}
 	
 	public static void registerListener(Listener listener) {

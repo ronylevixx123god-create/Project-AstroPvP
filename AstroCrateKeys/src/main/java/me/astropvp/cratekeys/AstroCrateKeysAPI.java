@@ -9,6 +9,8 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.managers.CrateDataManager;
 import me.astropvp.cratekeys.utils.ConfigUtils;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTableType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -119,52 +121,9 @@ public class AstroCrateKeysAPI {
         return l;
     }
 
-    public static void setItems(CrateType type, Map<ItemStack, Double> items) {
-        String key = String.valueOf(type.name().toLowerCase()) + ".items";
-        List<String> list = Lists.newArrayList();
-        for (Map.Entry<ItemStack, Double> entry : items.entrySet()) {
-            list.add(String.valueOf(ConfigUtils.toBase64(new ItemStack[] { entry.getKey() }, 9)) + ":" + entry.getValue());
-        }
-        AstroCrateKeysPlugin.getInstance().getConfig().set(key, list);
-        AstroCrateKeysPlugin.getInstance().saveConfig();
-        AstroCrateKeysPlugin.getInstance().reloadConfig();
-    }
 
-    public static Map<ItemStack, Double> getItems(CrateType type) {
-        String key = String.valueOf(type.name().toLowerCase()) + ".items";
-        if (!AstroCrateKeysPlugin.getInstance().getConfig().contains(key))
-            return Maps.newLinkedHashMap();
-        Map<ItemStack, Double> map = Maps.newLinkedHashMap();
-        List<String> items = AstroCrateKeysPlugin.getInstance().getConfig().getStringList(key);
-        for (String item : items) {
-            String[] split = item.split(":");
-            map.put(ConfigUtils.fromBase64(split[0]).getItem(0), Double.valueOf(split[1]));
-        }
-        return map;
-    }
 
     public static List<ItemStack> getListItems(CrateType type) {
-        String key = String.valueOf(type.name().toLowerCase()) + ".items";
-        if (!AstroCrateKeysPlugin.getInstance().getConfig().contains(key))
-            return Lists.newArrayList();
-        List<ItemStack> items = Lists.newArrayList();
-        List<String> list = AstroCrateKeysPlugin.getInstance().getConfig().getStringList(key);
-        for (String item : list) {
-            String[] split = item.split(":");
-            ItemStack it = ConfigUtils.fromBase64(split[0]).getItem(0);
-            int pos = 0;
-            for (int i = 0; i < items.size(); i++) {
-                if (((ItemStack)items.get(i)).getType() == it.getType()) {
-                    pos = i + 1;
-                    break;
-                }
-            }
-            if (pos > 0) {
-                items.add(pos, it);
-                continue;
-            }
-            items.add(it);
-        }
-        return items;
+        return LootTableAPI.getAllLootFromLootTable(LootTableType.valueOf(type.name()));
     }
 }

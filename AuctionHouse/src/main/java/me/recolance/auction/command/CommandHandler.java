@@ -319,7 +319,7 @@ public class CommandHandler
                         return CommandHandler.handleSelling(player);
                     }
                     case "help":
-                    case "net.astropvp.armorsets.commands": {
+                    case "commands": {
                         if (length != 1) {
                             return CommandHandler.sendNonArg(player, Command.HELP);
                         }
@@ -364,7 +364,7 @@ public class CommandHandler
                         return true;
                     }
                 }
-                Util.message(player, "&cType /ah help to list auction net.astropvp.armorsets.commands.");
+                Util.message(player, "&cType /ah help to list auction commands.");
             }
             case "bid":
             case "bids":

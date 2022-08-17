@@ -65,7 +65,7 @@
         <module>StorageUtil</module>
         <module>LootFilter</module>
         <module>PlayerVaultsX</module>
-        <module>AstroMysteryChests</module>
+        <module>LootTable</module>
 
     </modules>
 

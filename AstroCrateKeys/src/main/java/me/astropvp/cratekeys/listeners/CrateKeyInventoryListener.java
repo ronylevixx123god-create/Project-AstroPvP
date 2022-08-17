@@ -9,6 +9,8 @@ import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTableType;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -56,28 +58,15 @@ public class CrateKeyInventoryListener implements Listener {
                 return;
             }
 
-            CrateType type = CrateKeyItem.getCrateType(player.getItemInHand());
             if (player.isSneaking()) {
                 int amountOfKeys = player.getItemInHand().getAmount();
-                int amount = player.getItemInHand().getAmount();
                 while (amountOfKeys != 0) {
-
-
                     addItemToPlayer(player, data);
-
                     amountOfKeys--;
                 }
                 player.setItemInHand(null);
-                //player.sendMessage(CC.translate("&a&l(!)&a You have opened &f" + amount + "&a " + type.getPrefixedName() + "s&a."));
-
-
             } else {
-                ItemStack itemStack = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
                 addItemToPlayer(player, data);
-                //player.getInventory().addItem(itemStack);
-/*                if (itemStack.getItemMeta() != null) {
-                    player.sendMessage(CC.translate("&a&l(!)&a You have opened a " + type.getPrefixedName() + " &aand received " + itemStack.getItemMeta().getDisplayName() + "&a."));
-                }*/
 
                 if (player.getItemInHand().getAmount() > 1) {
                     player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
@@ -110,8 +99,7 @@ public class CrateKeyInventoryListener implements Listener {
     public static void addItemToPlayer(Player player, CrateData data) {
 
         CrateType type = data.getCrateType();
-        ItemStack item = ConfigUtils.getRandomItem(AstroCrateKeysPlugin.getCachedCrateLoot().get(type));
-
+        ItemStack item = LootTableAPI.getRandomLootItem(LootTableType.valueOf(type.name()));
         LootFilterAPI.giveItem(player, LootTable.valueOf(type.name()), item);
     }
 }

@@ -56,17 +56,14 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>LootTable</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../LootTable/target/LootTable.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>Factions</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Sets</artifactId>
-            <version>0.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>CompilexPermissions</artifactId>
             <version>0.1</version>
         </dependency>
         <dependency>

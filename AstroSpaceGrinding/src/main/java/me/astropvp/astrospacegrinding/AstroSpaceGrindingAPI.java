@@ -10,6 +10,8 @@ import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
 import com.google.common.collect.Maps;
 import me.astropvp.astrospacegrinding.utils.ConfigUtils;
 import me.astropvp.astrospacegrinding.utils.LocationUtils;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTableType;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -67,55 +69,8 @@ public class AstroSpaceGrindingAPI {
 		return Bukkit.getWorld(WORLD_NAME);
 	}
 
-
-
-	public static void setItems(MonsterType type, Map<ItemStack, Double> items) {
-		String key = type.name().toLowerCase() + ".items";
-		List<String> list = Lists.newArrayList();
-		for (Map.Entry<ItemStack, Double> entry : items.entrySet()) {
-			list.add(ConfigUtils.toBase64(new ItemStack[]{entry.getKey()}, 9) + ":" + entry.getValue());
-		}
-		AstroSpaceGrindingPlugin.getInstance().getConfig().set(key, list);
-		AstroSpaceGrindingPlugin.getInstance().saveConfig();
-		AstroSpaceGrindingPlugin.getInstance().reloadConfig();
-	}
-
-	public static Map<ItemStack, Double> getItems(MonsterType type) {
-		String key = type.name().toLowerCase() + ".items";
-		if (!AstroSpaceGrindingPlugin.getInstance().getConfig().contains(key))
-			return Maps.newHashMap();
-		Map<ItemStack, Double> map = Maps.newHashMap();
-		List<String> items = AstroSpaceGrindingPlugin.getInstance().getConfig().getStringList(key);
-		for (String item : items) {
-			String[] split = item.split(":");
-			map.put(Objects.requireNonNull(ConfigUtils.fromBase64(split[0])).getItem(0), Double.valueOf(split[1]));
-		}
-		return map;
-	}
-
 	public static List<ItemStack> getListItems(MonsterType type) {
-		String key = type.name().toLowerCase() + ".items";
-		if (!AstroSpaceGrindingPlugin.getInstance().getConfig().contains(key))
-			return Lists.newArrayList();
-		List<ItemStack> items = Lists.newArrayList();
-		List<String> list = AstroSpaceGrindingPlugin.getInstance().getConfig().getStringList(key);
-		for (String item : list) {
-			String[] split = item.split(":");
-			ItemStack it = Objects.requireNonNull(ConfigUtils.fromBase64(split[0])).getItem(0);
-			int pos = 0;
-			for (int i = 0; i < items.size(); i++) {
-				if (items.get(i).getType() == it.getType()) {
-					pos = i + 1;
-					break;
-				}
-			}
-			if (pos > 0) {
-				items.add(pos, it);
-				continue;
-			}
-			items.add(it);
-		}
-		return items;
+		return LootTableAPI.getAllLootFromLootTable(LootTableType.SPACE);
 	}
 
 
@@ -129,24 +84,5 @@ public class AstroSpaceGrindingAPI {
 		return inventory;
 	}
 
-	public static ItemStack getRandomReward(Map<ItemStack, Double> items) {
-		double totalPercentage = getTotalPercentageOfItems(items);
-		double find = ThreadLocalRandom.current().nextDouble(0.0D, totalPercentage);
-		double total = 0.0D;
-		for (Map.Entry<ItemStack, Double> entry : items.entrySet()) {
-			double value = (Double) entry.getValue();
-			if (value + total >= find) {
-				return entry.getKey();
-			}
-			total += value;
-		}
-		return null;
-	}
 
-	public static Double getTotalPercentageOfItems(Map<ItemStack, Double> items) {
-		double totalPercentage = 0.0D;
-		for (Map.Entry<ItemStack, Double> entry : items.entrySet())
-			totalPercentage += (Double) entry.getValue();
-		return totalPercentage;
-	}
 }
