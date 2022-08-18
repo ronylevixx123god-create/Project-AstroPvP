@@ -31,10 +31,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 public abstract class NewDuel {
@@ -61,20 +58,41 @@ public abstract class NewDuel {
     protected int duelID;
     private int pvpTimer = 120;
     protected List<TeamData> teams;
+    protected Map<UUID, Integer> hitsMap;
+    protected Map<UUID, Integer> longestComboMap;
+    protected Map<UUID, Integer> currentComboMap;
+
+
+    public Map<UUID, Integer> getLongestComboMap() {
+        return longestComboMap;
+    }
+
+    public Map<UUID, Integer> getCurrentComboMap() {
+        return currentComboMap;
+    }
 
     public NewDuel(Player initiator, List<String> pendingInvites) {
         this.addPlayer(initiator, false);
         this.settings = new Settings(this);
         this.pendingInvites = pendingInvites;
+        this.hitsMap = new HashMap<>();
+        this.currentComboMap = new HashMap<>();
+        this.longestComboMap = new HashMap<>();
     }
 
-    public NewDuel(Player initiator, List<String> pendingInvites, boolean ranked) {
+    public NewDuel(Player initiator, List<String> pendingInvites, boolean isRanked) {
         this.addPlayer(initiator, false);
-        this.isRanked = ranked;
         this.settings = new Settings(this);
         this.pendingInvites = pendingInvites;
+        this.hitsMap = new HashMap<>();
+        this.currentComboMap = new HashMap<>();
+        this.longestComboMap = new HashMap<>();
+        this.isRanked = isRanked;
     }
 
+    public Map<UUID, Integer> getHitsMap() {
+        return hitsMap;
+    }
 
     public abstract String getName();
 

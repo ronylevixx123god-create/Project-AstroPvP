@@ -63,7 +63,6 @@ package me.ifamasssxd.cosmichcf.struct;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
 import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.google.common.collect.Lists;
@@ -521,9 +520,7 @@ public abstract class Outpost {
             List possibleKothLoot;
             org.bukkit.inventory.ItemStack points;
             block.setMetadata("strongholdChest", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
-            if ((points = FactionPointUtils.getFactionPointsItem(null, null, "hcf_outposts", block)) != null) {
-                chest.getInventory().addItem(points);
-            }
+
             if (CosmicKOTHPlugin.get_().isVanillaPlanet()) {
                 for (int i = 0; i < 4; ++i) {
                     double random = Math.random();

@@ -59,7 +59,6 @@ import com.cosmicpvp.cosmicutils.itembuilder.CustomTitleBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.EssentialsItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.itembuilder.KitGemBuilder;
-import com.cosmicpvp.cosmicutils.itembuilder.SpawnerItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CustomItemUtils;
 import com.google.common.collect.Lists;
 import java.io.File;
@@ -292,7 +291,6 @@ public class RewardUtils {
         if (vanillaKothRewardsTier1.isEmpty()) {
             vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 3)));
             vanillaKothRewardsTier1.add(RewardUtils.build(RewardUtils.setAmount(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Lucky), 3)));
-            vanillaKothRewardsTier1.add(new SpawnerItemBuilder(EntityType.BLAZE).setAmount(4));
             vanillaKothRewardsTier1.add(new ItemBuilder(CreeperTypes.getCCItem((CreeperTypes)CreeperTypes.Lucky)));
             vanillaKothRewardsTier1.add(RewardUtils.build(new ItemStack(Material.MONSTER_EGG, 32, EntityType.CREEPER.getTypeId())));
             vanillaKothRewardsTier1.add((ItemBuilder)new EssentialsItemBuilder("373:16425 16 effect:strength power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&4&lStrength_II_Ext. lore:&7Please_mom,_just_a_little_bit_longer!"));
@@ -306,7 +304,6 @@ public class RewardUtils {
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DURABILITY, 3)).setAmount(2));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 4)));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.LOOT_BONUS_MOBS, 5)));
-            vanillaKothRewardsTier2.add((ItemBuilder)new SpawnerItemBuilder(EntityType.MUSHROOM_COW));
             vanillaKothRewardsTier2.add((ItemBuilder)new CustomItemBuilder(CustomItemBuilder.CustomItemType.MYSTERY_MOBSPAWNER, 2));
             vanillaKothRewardsTier2.add(new ItemBuilder(RewardUtils.getVanillaEnchantmentBook(Enchantment.DEPTH_STRIDER, 3)).setAmount(2));
             vanillaKothRewardsTier2.add((ItemBuilder)new EssentialsItemBuilder("373:16448 16 effect:speed power:2 duration:134 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&b&l Speed_Ext. lore:&7What_a_&5&lmagical_&7splash!"));
@@ -319,8 +316,6 @@ public class RewardUtils {
             vanillaKothRewardsTier2.add((ItemBuilder)new CustomTitleBuilder("Oof"));
         }
         if (vanillaKothRewardsTier3.isEmpty()) {
-            vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.CREEPER).setAmount(3));
-            vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.ENDERMAN).setAmount(3));
             ItemStack rankQuest1 = CosmicRankQuestsAPI.getRankQuestItem((int)1);
             ItemStack rankQuest2 = CosmicRankQuestsAPI.getRankQuestItem((int)2);
             ItemStack rankQuest3 = CosmicRankQuestsAPI.getRankQuestItem((int)3);
@@ -333,9 +328,7 @@ public class RewardUtils {
             if (rankQuest3 != null) {
                 vanillaKothRewardsTier3.add(new ItemBuilder(rankQuest3));
             }
-            vanillaKothRewardsTier3.add((ItemBuilder)new SpawnerItemBuilder(EntityType.IRON_GOLEM));
-            vanillaKothRewardsTier3.add((ItemBuilder)new SpawnerItemBuilder(EntityType.GHAST));
-            vanillaKothRewardsTier3.add(new SpawnerItemBuilder(EntityType.IRON_GOLEM).setAmount(2));
+
             vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&e&lHealth_Boost_II_Ext."));
             vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&lAbsorption_II_Ext."));
             vanillaKothRewardsTier3.add((ItemBuilder)new EssentialsItemBuilder("373:5408 9 effect:healthboost power:2 duration:90 name:&f&k;_&c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH_&f&k;_&6&lAbsorption_II_Ext."));

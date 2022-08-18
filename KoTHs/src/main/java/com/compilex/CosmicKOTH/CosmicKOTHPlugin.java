@@ -160,6 +160,9 @@ public class CosmicKOTHPlugin
             CustomConfig.setup();
             CustomConfig.save();
         }
+        if (this.outpostManager != null) {
+            this.outpostManager.onDisable(this);
+        }
 
 
     }

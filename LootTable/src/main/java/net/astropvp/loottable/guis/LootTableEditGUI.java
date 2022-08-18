@@ -30,11 +30,11 @@ public class LootTableEditGUI {
                 if (event.getCurrentItem() == null) return;
                 if (event.getCurrentItem().getType() == Material.AIR) return;
                 event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Added " + ItemUtils.getDisplayName(event.getCurrentItem()) + "&c to the " + lootTable.getLootTableType().getFancy() + " - " + lootRarity.getFancy()));
-                lootEditGUI.addItem(new GuiItem(event.getCurrentItem().clone()));
-                lootEditGUI.update();
                 lootTable.addItem(lootRarity,event.getCurrentItem().clone());
             }
             event.setCancelled(true);
+            LootTableEditGUI editGUI = new LootTableEditGUI(lootTable, lootRarity);
+            editGUI.getLootEditGUI().open(event.getWhoClicked());
         });
         for (ItemStack item : LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTable.getLootTableType()).getLootRarityMap().get(lootRarity)) {
             if (item == null) continue;
@@ -44,6 +44,9 @@ public class LootTableEditGUI {
                     event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from the " + lootTable.getLootTableType().getFancy() + " - " + lootRarity.getFancy()));
                     lootEditGUI.removeItem(event.getSlot());
                     lootTable.removeItem(lootRarity, item);
+                    LootTableEditGUI editGUI = new LootTableEditGUI(lootTable, lootRarity);
+                    editGUI.getLootEditGUI().open(event.getWhoClicked());
+
                 }
             }));
         }

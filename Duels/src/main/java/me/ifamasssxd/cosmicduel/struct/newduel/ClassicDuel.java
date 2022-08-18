@@ -92,6 +92,10 @@ import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class ClassicDuel extends NewDuel {
+    private static int id = 1;
+    private boolean ending;
+    private final DecimalFormat format;
+
     public ClassicDuel(Player initiator, List<String> pendingInvites) {
         super(initiator, pendingInvites);
         this.ending = false;
@@ -194,10 +198,12 @@ public class ClassicDuel extends NewDuel {
         if (endReason == EndReason.WIN) {
             if (this.players.size() >= 1) {
                 Player winner = this.players.get(0);
-                String winningMsg = getColoredMessage("&e&l(!) &a&n%s&e has defeated %s!", new Object[]{winner.getName(), loser.getName()});
+                String winningMsg = getColoredMessage("&e&l(!) &a&n%s&e has defeated &c&n%s&e!", new Object[]{winner.getName(), loser.getName()});
+                sendMessage("", true);
                 JSONMessage jsonMessage = new JSONMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Inventories: ");
                 sendMessage("", true);
                 sendMessage(winningMsg, true);
+
                 if (!getEndingInventoryCache().containsKey(winner.getName())) {
                     UUID uuid = CosmicDuel.get().getDuelHistoryManager().storeInventorySnapshot(winner);
                     getEndingInventoryCache().put(winner.getName(), uuid);
@@ -210,11 +216,23 @@ public class ClassicDuel extends NewDuel {
                     jsonMessage.addRunCommand((String) invs.getKey() + (includeComma ? ", " : ""), winner.getName().equals(invs.getKey()) ? ChatColor.GREEN : ChatColor.RED, "/viewdeathinventory " + ((UUID) getEndingInventoryCache().get(invs.getKey())).toString(), ChatColor.GRAY + "Click to view duel inventory.");
                 }
                 sendJsonMessage(jsonMessage, true);
-                sendMessage("", true);
+
+
                 loser.sendMessage("");
                 loser.sendMessage(winningMsg);
                 jsonMessage.sendToPlayer(loser);
+                winner.sendMessage("");
+                winner.sendMessage(CC.translate("&e&lMatch Stats:"));
+                winner.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(winner.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(winner.getUniqueId(), 0) + "&e."));
+                winner.sendMessage(CC.translate("&c" + loser.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(loser.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(loser.getUniqueId(), 0) + "&e."));
+                winner.sendMessage("");
+
                 loser.sendMessage("");
+                loser.sendMessage(CC.translate("&e&lMatch Stats:"));
+                loser.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(winner.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(winner.getUniqueId(), 0) + "&e."));
+                loser.sendMessage(CC.translate("&c" + loser.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(loser.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(loser.getUniqueId(), 0) + "&e."));
+                loser.sendMessage("");
+
                 removePlayer(winner, Reason.WIN, false);
                 winner.playSound(winner.getLocation(), Sound.LEVEL_UP, 1.0F, 1.4F);
                 RandomFireworks.getManager().launchRandomFirework(winner.getLocation());
@@ -688,9 +706,5 @@ public class ClassicDuel extends NewDuel {
     }
 
 
-    private static int id = 1;
 
-    private boolean ending;
-
-    private final DecimalFormat format;
 }

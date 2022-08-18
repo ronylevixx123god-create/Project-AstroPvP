@@ -170,6 +170,7 @@ extends JavaPlugin {
         this.registerListener(new CustomInventoryListener());
         this.registerListener(new PotionListener());
         this.registerListener(new SettingsListener());
+        this.registerListener(new HitsListener());
         registerListener((Listener)new TeamDuelListener());
     }
 
