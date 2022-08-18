@@ -9,28 +9,82 @@ package net.astropvp.core.autobroadcast.tasks;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.autobroadcast.struct.BroadcastMessages;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.YamlConfiguration;
+import org.bukkit.scheduler.BukkitRunnable;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AutoBroadcastTask
-implements Runnable {
-    private final List<String> messagesList = Lists.newArrayList();
-    int i;
+        extends BukkitRunnable {
 
-    public AutoBroadcastTask() {
-        for (BroadcastMessages messages : BroadcastMessages.values()) {
-            this.messagesList.add(messages.getMessage());
+    private int currentMessage = 0;
+    private List<List<String>> messages = new ArrayList<>(new ArrayList<>());
+
+    private final AstroCore plugin;
+    public AutoBroadcastTask(AstroCore plugin) {
+        this.plugin = plugin;
+
+    }
+
+
+
+
+    private List<String> getNextMessage() {
+        currentMessage++;
+        if(currentMessage >= messages.size()) currentMessage = 0;
+        return this.messages.get(currentMessage);
+    }
+
+    public void setupMessages() {
+
+        File file = new File(this.plugin.getDataFolder(), "auto-messages.yml");
+
+        file = new File(plugin.getDataFolder(), "auto-messages.yml");
+        if (!file.exists()) {
+            file.getParentFile().mkdirs();
+            plugin.saveResource("auto-messages.yml", false);
+        }
+
+        YamlConfiguration yamlConfiguration = new YamlConfiguration();
+
+        try {
+            yamlConfiguration.load(file);
+        } catch (IOException |org.bukkit.configuration.InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        for(String test : yamlConfiguration.getConfigurationSection("Messages").getKeys(false)) {
+            messages.add(yamlConfiguration.getStringList("Messages." + test));
+        }
+    }
+
+    public void reload() {
+        messages.clear();
+        File file = new File(this.plugin.getDataFolder(), "auto-messages.yml");
+        YamlConfiguration yamlConfiguration = new YamlConfiguration();
+
+        try {
+            yamlConfiguration.load(file);
+        } catch (IOException |org.bukkit.configuration.InvalidConfigurationException e) {
+            e.printStackTrace();
+        }
+
+        for(String test : yamlConfiguration.getConfigurationSection("Messages").getKeys(false)) {
+            messages.add(yamlConfiguration.getStringList("Messages." + test));
         }
     }
 
     @Override
     public void run() {
-        Bukkit.broadcastMessage(CC.translate("&7&m----&f&m----&6&m----&e&l[ &6&lAstro&f&lPvP &e&l]&6&m----&f&m----&7&m----"));
-        Bukkit.broadcastMessage(CC.translate(this.messagesList.get(this.i)));
-        Bukkit.broadcastMessage(CC.translate("&7&m----&f&m----&6&m----&e&m-----------&6&m----&f&m----&7&m----"));
-        this.i = this.i == this.messagesList.size() - 1 ? 0 : ++this.i;
+        List<String> message = getNextMessage();
+        this.plugin.getServer().getOnlinePlayers().forEach(player -> {
+            message.forEach(line -> player.sendMessage(CC.translate(line)));
+        });
     }
 }
-

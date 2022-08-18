@@ -19,6 +19,8 @@ import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
+import org.arkhamnetwork.enchantments.listeners.AutoBlessListener;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -175,6 +177,16 @@ public class AncientArmorSet extends ArmorSet {
         Faction myFaction = fPlayer.getFaction();
         FPlayer targetPlayer = FPlayers.getInstance().getByPlayer(pTarget);
         //CmdFocus.focusPlayer(fPlayer, myFaction, targetPlayer, false);
+
+    }
+
+    public void onEquip(Player player) {
+        Blessed.blessPlayer(player);
+        AutoBlessListener.blessedPlayers.add(player.getUniqueId());
+    }
+
+    public void onUnequip(Player player) {
+        AutoBlessListener.blessedPlayers.remove(player.getUniqueId());
 
     }
 

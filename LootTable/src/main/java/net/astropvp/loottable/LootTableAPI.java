@@ -24,7 +24,9 @@ public class LootTableAPI {
                 return lootTable.getLootRarityMap().get(lootRarity).get(rand.nextInt(lootTable.getLootRarityMap().get(lootRarity).size()));
             }
         }
-        return lootTable.getLootRarityMap().get(LootRarity.COMMON).get(ThreadLocalRandom.current().nextInt(0, lootTable.getLootRarityMap().get(LootRarity.COMMON).size()));
+        Random rand = new Random();
+
+        return lootTable.getLootRarityMap().get(LootRarity.COMMON).get(rand.nextInt(lootTable.getLootRarityMap().get(LootRarity.COMMON).size()));
     }
 
     public static List<ItemStack> getAllLootFromLootTable(LootTableType type) {

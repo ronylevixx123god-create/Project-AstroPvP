@@ -10,6 +10,7 @@ import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
+import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
@@ -105,13 +106,18 @@ public class AstroArmorSetsAPI {
             if (item.getType() == Material.AIR) continue;
 
             if (hasSetTypeOnItem(item)) {
-                cache.addArmorSet(getSetTypeOnItem(item));
+                ArmorSetType set = getSetTypeOnItem(item);
+                set.getArmorSet().onUnequip(player);
+                cache.addArmorSet(set);
+                set.getArmorSet().onEquip(player);
             }
 
             if (hasCrystalsApplied(item)) {
                 List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(item);
                 for (ArmorSetType type : crystals) {
+                    type.getArmorSet().onUnequip(player);
                     cache.addArmorCrystal(type);
+                    type.getArmorSet().onEquip(player);
                 }
             }
 
@@ -151,6 +157,8 @@ public class AstroArmorSetsAPI {
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
         if (hasSetTypeOnItem(oldArmorPiece)) {
+            ArmorSetType set = getSetTypeOnItem(oldArmorPiece);
+            set.getArmorSet().onUnequip(player);
             cache.removeArmorSet(getSetTypeOnItem(oldArmorPiece));
         }
         if (hasSetTypeOnItem(newArmorPiece)) {
@@ -160,6 +168,7 @@ public class AstroArmorSetsAPI {
             List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(oldArmorPiece);
             for (ArmorSetType type : crystals) {
                 cache.removeArmorCrystal(type);
+                type.getArmorSet().onUnequip(player);
             }
         }
         if (hasCrystalsApplied(newArmorPiece)) {

@@ -2,20 +2,21 @@ package me.astropvp.astropvpskins.objects.skins.boots;
 
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
+import org.arkhamnetwork.enchantments.listeners.AutoBlessListener;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
 public class VirusBootsSkin extends ItemSkin {
 
     public void onEquip(Player player) {
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
+        Blessed.blessPlayer(player);
+        AutoBlessListener.blessedPlayers.add(player.getUniqueId());
     }
 
-    public void onUpdate(Player player) {
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW);
-        PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SLOW_DIGGING);
+    public void onUnEquip(Player player) {
+        AutoBlessListener.blessedPlayers.remove(player.getUniqueId());
     }
 
     //TODO: UPDATE;

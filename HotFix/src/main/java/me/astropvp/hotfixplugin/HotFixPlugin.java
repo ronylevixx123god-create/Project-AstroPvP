@@ -32,25 +32,6 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
         Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
         Bukkit.getPluginManager().registerEvents(new AutoOP(), this);
-
-
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
-            Clickable spaceClickable = new Clickable("");
-                spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7You can purchase it by clicking &f&nhere&7.")), CC.translate("&7/buy"), "/buy");
-                for (Player player : Bukkit.getOnlinePlayers()) {
-                    player.sendMessage("");
-                    if (Math.random() < 0.5) {
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &f&lLootbox: &5&lPrada&r &6on the store.")));
-                    } else {
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&6We released the new &b&lDiamond &f&lBundle&r &6on the store.")));
-
-                    }
-
-                    spaceClickable.sendToPlayer(player);
-                    player.sendMessage("");
-
-                }
-        }, 40L, 1*20*60);
     }
 
     @Override

@@ -59,7 +59,7 @@ public class CommandHelpEnchants
         }
         player.sendMessage("");
         player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Hover over an Enchantment to learn more about it.");
-        player.sendMessage(ChatColor.GRAY + "Use " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/help enchants <page>" + ChatColor.GRAY + " to browse other enchantments.");
+        player.sendMessage(ChatColor.GRAY + "Use " + ChatColor.GRAY + ChatColor.UNDERLINE.toString() + "/helpenchants <page>" + ChatColor.GRAY + " to browse other enchantments.");
         player.sendMessage("");
         return false;
     }

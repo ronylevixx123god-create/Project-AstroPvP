@@ -46,7 +46,7 @@ public class Broadcast extends Command {
             online.playSound(player.getLocation(), Sound.HORSE_SADDLE, 1.0F, 1.0F);
         }
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c "));
-        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&a&lAstro&e&lPvP &8| &b" + text.toString()));
+        Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&6&lAstro&f&lPvP &8| &6" + text.toString()));
         Bukkit.broadcastMessage(ChatColor.translateAlternateColorCodes('&', "&c "));
         return false;
     }

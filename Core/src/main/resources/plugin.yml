@@ -50,6 +50,7 @@ commands:
     description: Give soul gem with the given amount.
   helpenchants:
     description: Enchantment help.
+    aliases: [ 'enchants', 'ce' ]
   togglekilltitle:
     description: Toggle kill titles
   togglefactionland:

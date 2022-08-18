@@ -14,7 +14,7 @@ public class DiscordCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
         p.sendMessage("");
-        p.sendMessage(CC.translate("&a&lAstro&e&lPvP Discord"));
+        p.sendMessage(CC.translate("&6&lAstro&f&lPvP Discord"));
         p.sendMessage(CC.translate("&f&nhttps://discord.astropvp.net"));
         p.sendMessage(CC.translate("&7Click the link above to join the discord."));
         p.sendMessage("");

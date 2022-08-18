@@ -7,6 +7,8 @@ import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
+import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
+import org.arkhamnetwork.enchantments.listeners.AutoBlessListener;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
@@ -55,6 +57,16 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
             increasePercent = 12.5;
         }
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
+    }
+
+    public void onEquip(Player player) {
+        Blessed.blessPlayer(player);
+        AutoBlessListener.blessedPlayers.add(player.getUniqueId());
+    }
+
+    public void onUnequip(Player player) {
+        AutoBlessListener.blessedPlayers.remove(player.getUniqueId());
+
     }
 
 

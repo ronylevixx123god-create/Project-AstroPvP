@@ -131,6 +131,8 @@ public class AstroCore extends JavaPlugin {
     @Getter
     @Setter
     private Freeze freezeCommand;
+    private AutoBroadcastTask autoBroadcastTask;
+
 
     @Getter
     public GiveAwayManager giveAwayManager;
@@ -404,6 +406,7 @@ public class AstroCore extends JavaPlugin {
 
         this.commandManager = new PaperCommandManager(this);
         this.commandManager.registerCommand(new Invsee());
+        this.commandManager.registerCommand(new ReloadCommand());
 
     }
 
@@ -432,7 +435,9 @@ public class AstroCore extends JavaPlugin {
 
 
 
-        Bukkit.getScheduler().runTaskTimerAsynchronously(this, new AutoBroadcastTask(), 20L, 6000L);
+        autoBroadcastTask = new AutoBroadcastTask(this);
+        autoBroadcastTask.setupMessages();
+        autoBroadcastTask.runTaskTimerAsynchronously(this, 20L, 90*20);
 
         Bukkit.getScheduler().runTaskLater(this, () ->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload vault_gui"), 100L);
