@@ -60,9 +60,9 @@ public class WeaponBonusCommand extends BaseCommand {
             if (type.equals("champion")) {
                 name = "&6&k:&f&k:&7 &f&l&k✘&6&l Champion Admin Item &f&l✘ &f&k:&6&k:&7";
             } else if (type.equals("ultra")) {
-                name = "&c&k:&f&k:&7 &f&l&k✘&c&l Ultra Admin Item &f&l✘ &f&k:&c&k:&7";
+                name = "&8&k:&f&k:&7 &f&l&k✘&7&l Ultra Admin Item &f&l✘ &f&k:&8&k:&7";
             } else {
-                name = "&4&k:&f&k:&7 &f&l&k✘&4&l Superior Admin Item &f&l✘ &f&k:&4&k:&7";
+                name = "&5&k:&f&k:&7 &f&l&k✘&5&l Superior Admin Item &f&l✘ &f&k:&5&k:&7";
             }
 
             String color;

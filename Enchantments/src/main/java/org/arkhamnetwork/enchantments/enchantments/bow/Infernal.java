@@ -34,6 +34,8 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.util.Random;
+
 public class Infernal
 extends CustomEnchantment {
     protected static String infernalEncahntmentMetadata = "infernal_enchantment";
@@ -50,7 +52,7 @@ extends CustomEnchantment {
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         playerHit.setFireTicks(level * 20);
         try {
-            ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getEyeLocation(), (float) Math.random(), (float) Math.random(), (float)Math.random(), 0.25f, 10);
+            ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), playerHit.getLocation().add(0.0, 1.0, 0.0), new Random().nextFloat(), new Random().nextFloat(), new Random().nextFloat(), 0.8f, 85);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

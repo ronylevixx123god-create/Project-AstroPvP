@@ -14,8 +14,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
@@ -135,13 +134,6 @@ public class InventoryBansheePet extends InventoryPet {
                 if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
                     player.sendMessage(CC.translate("&c&lPET: &c" + nearPlayer.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(nearPlayer, "bansheeCooldown") + "&c."));
                     continue;
-                }
-                if (nearPlayer.getItemInHand() != null && WeaponBonusUtils.hasWeaponBonus(nearPlayer.getItemInHand())) {
-                    if (WeaponBonusUtils.getWeaponBonusByItem(nearPlayer.getItemInHand()) == WeaponBonusType.DEMON && Math.random() < 0.35) {
-                        nearPlayer.sendMessage(CC.translate("&4&l* DEMON WEAPON BONUS &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &4&l*"));
-                        player.sendMessage(CC.translate("&4&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&4&lDemon Weapon Bonus&7] &4&l*"));
-                        continue;
-                    }
                 }
                 nearbyEnemies.add(nearPlayer);
             }

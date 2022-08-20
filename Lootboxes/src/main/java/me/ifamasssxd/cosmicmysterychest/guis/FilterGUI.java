@@ -84,6 +84,7 @@ public class FilterGUI {
             } else {
                 ItemMeta meta = copyItem.getItemMeta();
                 List<String> lore = meta.getLore();
+                if (lore == null) continue;
                 if (lore.contains(CC.translate("&f&l➥ &f&lFILTERED"))) {
                     lore.remove(lore.size() - 1);
                     lore.remove(lore.size() - 1);

@@ -63,7 +63,7 @@ public class MobGrinderManager {
         AbilityData data = AbilityData.getByUUID(uuid);
         EconomyUtils.withdrawBalance(player, data.getAbilityType().getPricePerAction());
         SaveCustomBlock.saveCustomBlock((Player) player, data.getAbilityType(), data.getLocation().getBlock());
-        player.sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock for 2 hours!"));
+        player.sendMessage(CC.translate("&a&l(!)&a Reactivated the CustomBlock"));
         player.sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(data.getAbilityType().getPricePerAction())));
         player.playSound(player.getLocation(), Sound.VILLAGER_YES, 20, 20);
         try {

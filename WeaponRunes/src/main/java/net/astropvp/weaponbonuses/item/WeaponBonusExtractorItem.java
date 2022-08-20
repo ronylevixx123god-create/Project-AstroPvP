@@ -41,8 +41,6 @@ public class WeaponBonusExtractorItem extends CosmicItem implements InventoryInt
         lore.add(CC.translate("&7Drag n Drop this item on a weapon"));
         lore.add(CC.translate("&7that has a &eWeapon Bonus Crystal"));
         lore.add(CC.translate("&7attached onto it."));
-        lore.add("");
-        lore.add(CC.translate("&6&l(!) &6This item will extract &eWeapon Bonus Crystals&6."));
         ItemStack item = this.addGlow(CommonsUtil.createItem(Material.GOLD_NUGGET, "&6&lWeapon Bonus Crystal Extractor", lore));
         return this.applyItemData(item).build();
     }
@@ -72,7 +70,7 @@ public class WeaponBonusExtractorItem extends CosmicItem implements InventoryInt
                 stringBonuses.stream().forEach((string) -> {
                     objects.add(string.replace(" ", "_").toUpperCase());
                 });
-                ItemStack weaponBonusCrystal = CosmicSkyCustomItems.get().getItemManager().getCustomItem("weapon_bonus_crystal").createItem((Player)null, objects.toArray());
+                ItemStack weaponBonusCrystal = CosmicSkyCustomItems.get().getItemManager().getCustomItem("weapon_bonus").createItem((Player)null, objects.toArray());
                 player.getInventory().addItem(new ItemStack[]{weaponBonusCrystal});
                 List<String> lore = clicked.getItemMeta().getLore();
                 this.applyVisuals(clicked, lore, objects);

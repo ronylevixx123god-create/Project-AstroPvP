@@ -54,7 +54,6 @@ implements Listener {
                 ((LivingEntity)ent).addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * level, 1));
             }
             try {
-                ParticleEffect.LARGE_EXPLODE.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float)Math.random(), (float)Math.random(), (float)Math.random(), 0.5f, 8);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }

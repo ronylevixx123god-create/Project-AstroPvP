@@ -1,6 +1,7 @@
 package net.astropvp.loottable;
 
 
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import net.astropvp.loottable.data.LootTable;
 import net.astropvp.loottable.data.LootTableManager;
 import net.astropvp.loottable.struct.LootRarity;
@@ -8,6 +9,7 @@ import net.astropvp.loottable.struct.LootTableType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
@@ -35,6 +37,7 @@ public class LootTableAPI {
         for (List<ItemStack> itemStackList : lootTableManager.getLootTable(type).getLootRarityMap().values()) {
             items.addAll(itemStackList);
         }
+        items.sort(Comparator.comparing(s -> ItemUtils.getDisplayName(s)));
         return items;
 
     }

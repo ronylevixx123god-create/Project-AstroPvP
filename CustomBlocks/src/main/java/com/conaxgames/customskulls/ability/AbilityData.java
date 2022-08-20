@@ -53,14 +53,14 @@ public class AbilityData {
 
 
     public boolean isActive() {
-        int time = 7200000;
-/*        if (level == 1) {
-            time = 4500000;
+        int time = 4500000;
+        if (level == 1) {
+            time = 5000000;
         } else if (level == 2) {
             time = 5850000;
         } else if (level == 3) {
             time = 7200000;
-        }*/
+        }
         return System.currentTimeMillis() < lastActivated + time;
     }
 

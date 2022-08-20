@@ -8,6 +8,8 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.AstroArmorSets;
+import net.astropvp.weaponbonuses.api.WeaponBonusesAPI;
+import net.astropvp.weaponbonuses.bonus.BonusType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.objects.RageObject;
 import org.arkhamnetwork.enchantments.util.CacheUtils;
@@ -85,6 +87,8 @@ public class Rage extends CustomEnchantment {
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.35) {
                     target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
                     //Chesire Grind
+                } else if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
+                    event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * ( 1+ (BonusType.BONUS_RAGE_STACK_DMG.getLevelToValue().get(WeaponBonusesAPI.getBonusLevel(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG))/100)));
                 } else if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.65);
                     if (Math.random() < 0.25) {

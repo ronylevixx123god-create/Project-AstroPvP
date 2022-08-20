@@ -2,15 +2,13 @@ package net.astropvp.weaponbonuses.item;
 
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.CommonsUtil;
-import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.*;
 
 import com.google.common.collect.Lists;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
@@ -18,6 +16,7 @@ import net.astropvp.weaponbonuses.api.WeaponBonusesAPI;
 import net.astropvp.weaponbonuses.bonus.BonusType;
 import net.astropvp.weaponbonuses.bonus.BonusWeapon;
 import org.apache.commons.lang3.StringUtils;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -59,7 +58,6 @@ public class WeaponBonusItem extends CosmicItem implements InventoryInteractable
         bonuses.stream().forEach((bonus) -> {
             lore.add(CC.translate(" &6&l* &7" + bonus.getCrystalName()));
         });
-        lore.addAll(Arrays.asList("", "&c&lWARNING: &cOnce applied, you cannot remove", "&cthe bonuses from the weapon."));
         List<String> stringBonus = Lists.newArrayList();
         bonuses.stream().forEach((bonus) -> {
             stringBonus.add(bonus.getCrystalName());
@@ -89,8 +87,9 @@ public class WeaponBonusItem extends CosmicItem implements InventoryInteractable
                 if (Math.random() < (double)cursorWrapper.getCompound("cosmicData").getInt("weaponBonusApplyChance") / 100.0D) {
                     NBTTagCompoundBuilder comp = clickedWrapper.getCompoundOrCreate("weaponBonusData").setInt("weaponBonusLevel", 1).setInt("weaponBonusExperience", 0).setString("weaponBonuses", cursorWrapper.getCompound("cosmicData").getString("weaponBonusBonuses"));
                     clickedWrapper.setNBTBase("weaponBonusData", comp.get());
-                    event.setCurrentItem(clickedWrapper.build());
-                    (new BonusWeapon(event.getCurrentItem())).applyVisualChanges("3");
+                    ItemStack i = clickedWrapper.build();
+                    GlintUtils.addGlint(i,  -218112214);
+                    (new BonusWeapon(i)).applyVisualChanges("6");
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
                     player.sendMessage("§a§l(!) §aYour Weapon Bonus Crystal has successfully applied!");
                 } else {

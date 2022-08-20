@@ -73,11 +73,13 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     }
 
     public void registerDefaultAndFactionScoreboard() {
-        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%has-faction%", getMS(10), player -> !FactionUtils.getFPlayer((Player) player.getPlayer()).getFaction().isWilderness());
-        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%kills%", getMS(10), player -> FactionUtils.getFPlayer((Player) player.getPlayer()).getKills());
-        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%deaths%", getMS(10), player -> FactionUtils.getFPlayer((Player) player.getPlayer()).getDeaths());
-        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%kdr%", getMS(10), player -> getPlayerKDR((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%has-faction%", getMS(1), player -> !FactionUtils.getFPlayer((Player) player.getPlayer()).getFaction().isWilderness());
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%kills%", getMS(5), player -> FactionUtils.getFPlayer((Player) player.getPlayer()).getKills());
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%deaths%", getMS(5), player -> FactionUtils.getFPlayer((Player) player.getPlayer()).getDeaths());
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%kdr%", getMS(5), player -> getPlayerKDR((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%date%", getMS(86400), Scoreboard::getDateSuffix);
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%exp_format%", getMS(1), player -> NumberUtils.formatMoney(((Player)player.getPlayer()).getTotalExperience()));
+
     }
 
     public void registerDuelScoreboard() {

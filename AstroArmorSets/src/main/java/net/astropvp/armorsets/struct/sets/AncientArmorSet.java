@@ -10,9 +10,7 @@ import com.massivecraft.factions.Faction;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
-import me.astropvp.astropvpskins.utils.ItemSkinUtils;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
+
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
@@ -136,11 +134,6 @@ public class AncientArmorSet extends ArmorSet {
     private void startAncientEffect(final Player player, final Player pTarget) {
 
         if (pTarget.hasMetadata("banshee_scrolls") || pTarget.hasMetadata("bloodHoundNoBless") || player.hasMetadata("banshee_active")) {
-            return;
-        }
-
-        if (pTarget.getItemInHand() != null && WeaponBonusUtils.hasWeaponBonus(((Player) pTarget).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) pTarget).getItemInHand()) == WeaponBonusType.HERO && Math.random() < 0.5) {
-            pTarget.sendMessage(CC.translate("&3&l* BLOCKED ENEMY ANCIENT ABILITY &7(Hero Weapon Bonus) &3&l*"));
             return;
         }
 

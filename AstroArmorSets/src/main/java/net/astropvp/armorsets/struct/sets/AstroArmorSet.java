@@ -8,8 +8,6 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
@@ -74,13 +72,6 @@ public class AstroArmorSet extends ArmorSet {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 
-            if (Math.random() <= 0.35) {
-                if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
-                    attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
-                    return;
-                }
-            }
-
             if (attacked.hasMetadata("caged")) return;
             if (attacker.hasMetadata("caged")) return;
 
@@ -121,13 +112,6 @@ public class AstroArmorSet extends ArmorSet {
 
                 if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                     return;
-
-                if (Math.random() <= 0.35) {
-                    if (((Player) attacked).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacked).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacked).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacked).getItemInHand()) == WeaponBonusType.DEMON) {
-                        attacked.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked Astro Cage Ability &7from " + attacked.getName() + "  &6&l**"));
-                        return;
-                    }
-                }
 
                 if (attacked.hasMetadata("caged")) return;
                 if (attacker.hasMetadata("caged")) return;

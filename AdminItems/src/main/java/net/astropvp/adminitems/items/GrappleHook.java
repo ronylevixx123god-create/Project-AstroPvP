@@ -57,7 +57,7 @@ public class GrappleHook extends AdminItem implements Interactable {
         return Arrays.asList(
                 "&7&oEscape from all your problems with",
                 "&7&othe grappler hook. Escape from reality.",
-                "&7&oand start a new adventure on cranked."
+                "&7&oand start a new adventure on astro."
         );
     }
 

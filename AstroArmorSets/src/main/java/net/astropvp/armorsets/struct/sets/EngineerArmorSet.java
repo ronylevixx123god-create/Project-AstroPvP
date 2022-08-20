@@ -8,8 +8,6 @@ import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
-import me.bryside.weaponrunes.enums.WeaponBonusType;
-import me.bryside.weaponrunes.utils.WeaponBonusUtils;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -58,14 +56,6 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
 
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        if (attacker instanceof Player) {
-            if (Math.random() <= 0.15) {
-                if (((Player) attacker).getItemInHand() != null && GeneralUtil.isWeapon(((Player) attacker).getItemInHand()) && WeaponBonusUtils.hasWeaponBonus(((Player) attacker).getItemInHand()) && WeaponBonusUtils.getWeaponBonusByItem(((Player) attacker).getItemInHand()) == WeaponBonusType.DEMON) {
-                    amount--;
-                    attacker.sendMessage(CC.translate("&6&l** &4Demon Weapon Bonus &7Blocked an &6Engineer Crystal &7of " + attacked.getName() + "'s Set &6&l**"));
-                }
-            }
-        }
         double reductionPercent = 9;
         event.setDamage(event.getDamage() * (1-(reductionPercent*amount*0.01)));
 

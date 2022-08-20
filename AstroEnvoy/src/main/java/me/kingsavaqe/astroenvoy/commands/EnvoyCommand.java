@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.kingsavaqe.astroenvoy.AstroEnvoyPlugin;
 import me.kingsavaqe.astroenvoy.envoy.Envoy;
 import me.kingsavaqe.astroenvoy.envoy.EnvoyManager;
@@ -52,7 +53,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 if (targetPlayer == null) {
                     sender.sendMessage(
                             ChatColor.translateAlternateColorCodes('&', configLoad
-                                            .getString("Commands.Envoy.Admin.GiveSummoner.Connected.Message"))
+                                    .getString("Commands.Envoy.Admin.GiveSummoner.Connected.Message"))
                                     .replace("%player", args[2]));
                     return true;
                 }
@@ -65,7 +66,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 if (configLoad.getString("Envoy.Summoner.Item.Data") == null) {
                     is = new ItemStack(Material.valueOf(configLoad.getString("Envoy.Summoner.Item.Material")), itemAmount);
                 } else {
-                    is = new ItemStack(Material.valueOf(configLoad.getString("Envoy.Summoner.Item.Material")), itemAmount, (short)configLoad.getInt("Envoy.Summoner.Item.Data"));
+                    is = new ItemStack(Material.valueOf(configLoad.getString("Envoy.Summoner.Item.Material")), itemAmount, (short) configLoad.getInt("Envoy.Summoner.Item.Data"));
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', configLoad
@@ -102,7 +103,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                     this.instance.getDescription().getName() + " | Error: You must be a player to perform that command.");
             return true;
         }
-        Player player = (Player)sender;
+        Player player = (Player) sender;
         PlayerDataManager playerDataManager = this.instance.getPlayerDataManager();
         EnvoyManager envoyManager = this.instance.getEnvoyManager();
         StatsManager statsManager = this.instance.getStatsManager();
@@ -152,7 +153,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 }
             int index = pageNumber * 8 - 8;
             int endIndex = (index >= statsManager.getStats().size()) ? (statsManager.getStats().size() - 1) : (index + 8);
-            int nextEndIndex = (int)Math.round((statsManager.getStats().size() / 8) + 0.5D);
+            int nextEndIndex = (int) Math.round((statsManager.getStats().size() / 8) + 0.5D);
             if (pageNumber > nextEndIndex) {
                 player.sendMessage(ChatColor.translateAlternateColorCodes('&', configLoad
                         .getString("Commands.Envoy.Top.Pages.Message")));
@@ -188,7 +189,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                     if (stats == null) {
                         player.sendMessage(
                                 ChatColor.translateAlternateColorCodes('&', configLoad
-                                                .getString("Commands.Envoy.Stats.Fetch.Message"))
+                                        .getString("Commands.Envoy.Stats.Fetch.Message"))
                                         .replace("%player", args[1]));
                         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.0F);
                         return true;
@@ -280,9 +281,16 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 envoyManager.saveEnvoy();
                 player.sendMessage(
                         ChatColor.translateAlternateColorCodes('&', configLoad
-                                        .getString("Commands.Envoy.Admin.AddLootItem.Added.Message"))
+                                .getString("Commands.Envoy.Admin.AddLootItem.Added.Message"))
                                 .replace("%chance", String.valueOf(chance)));
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
+            } else if (args[1].equalsIgnoreCase("clearitems")) {
+                envoy.getLootItems().clear();
+                envoyManager.saveEnvoy();
+                player.sendMessage(CC.Red + "Reset the loot");
+                player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.0F);
+                return true;
+
             } else if (args[1].equalsIgnoreCase("addcrate")) {
                 if (args.length != 2) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', configLoad
@@ -324,7 +332,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 envoyManager.saveEnvoy();
                 player.sendMessage(
                         ChatColor.translateAlternateColorCodes('&', configLoad
-                                        .getString("Commands.Envoy.Admin.SetDuration.Set.Message"))
+                                .getString("Commands.Envoy.Admin.SetDuration.Set.Message"))
                                 .replace("%seconds", args[2]));
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
             } else if (args[1].equalsIgnoreCase("setstarttime")) {
@@ -345,7 +353,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 envoyManager.saveEnvoy();
                 player.sendMessage(
                         ChatColor.translateAlternateColorCodes('&', configLoad
-                                        .getString("Commands.Envoy.Admin.SetStartTime.Set.Message"))
+                                .getString("Commands.Envoy.Admin.SetStartTime.Set.Message"))
                                 .replace("%seconds", args[2]));
                 player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0F, 1.0F);
             } else if (args[1].equalsIgnoreCase("givesummoner")) {
@@ -359,7 +367,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 if (targetPlayer == null) {
                     player.sendMessage(
                             ChatColor.translateAlternateColorCodes('&', configLoad
-                                            .getString("Commands.Envoy.Admin.GiveSummoner.Connected.Message"))
+                                    .getString("Commands.Envoy.Admin.GiveSummoner.Connected.Message"))
                                     .replace("%player", args[2]));
                     player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0F, 1.0F);
                     return true;
@@ -374,7 +382,7 @@ public class EnvoyCommand implements CommandExecutor, TabCompleter {
                 if (configLoad.getString("Envoy.Summoner.Item.Data") == null) {
                     is = new ItemStack(Material.valueOf(configLoad.getString("Envoy.Summoner.Item.Material")), itemAmount);
                 } else {
-                    is = new ItemStack(Material.valueOf(configLoad.getString("Envoy.Summoner.Item.Material")), itemAmount, (short)configLoad.getInt("Envoy.Summoner.Item.Data"));
+                    is = new ItemStack(Material.valueOf(configLoad.getString("Envoy.Summoner.Item.Material")), itemAmount, (short) configLoad.getInt("Envoy.Summoner.Item.Data"));
                 }
                 ItemMeta im = is.getItemMeta();
                 im.setDisplayName(ChatColor.translateAlternateColorCodes('&', configLoad

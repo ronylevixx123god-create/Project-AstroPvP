@@ -11,6 +11,12 @@ public class GlintUtils {
         cosmicData.setString("tintColor", String.valueOf(0xff000000 |getIntFromColor(color.getRed(), color.getGreen(), color.getBlue())));
     }
 
+    public static void addGlint(ItemStack item, int colorInt) {
+        NBTWrapper wrapper = new NBTWrapper(item);
+        com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        cosmicData.setString("tintColor", String.valueOf(colorInt));
+    }
+
     public static void removeGlint(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
         com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
