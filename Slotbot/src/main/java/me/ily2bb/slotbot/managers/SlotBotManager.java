@@ -3,7 +3,7 @@ package me.ily2bb.slotbot.managers;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.objects.Glow;
 import me.ily2bb.slotbot.utils.Inventories;
-import me.ily2bb.slotbot.utils.LootTable;
+import me.ily2bb.slotbot.utils.GuiItems;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -19,7 +19,7 @@ import org.bukkit.scheduler.BukkitScheduler;
 public class SlotBotManager {
     public static int getSlotBotTickets(final Inventory inventory) {
         int total = 0;
-        final ItemStack item = LootTable.createRoller(0);
+        final ItemStack item = GuiItems.createRoller(0);
         for (int i = 0; i < inventory.getSize(); ++i) {
             final ItemStack x = inventory.getItem(i);
             if (x != null && x.equals((Object) item)) {
@@ -62,10 +62,10 @@ public class SlotBotManager {
                     }
                 }
                 if (slots <= 4) {
-                    inventory.setItem(51, LootTable.createPane(7));
+                    inventory.setItem(51, GuiItems.createPane(7));
                 }
                 if (slots <= 2) {
-                    inventory.setItem(49, LootTable.createPane(7));
+                    inventory.setItem(49, GuiItems.createPane(7));
                 }
                 player.playSound(player.getLocation(), Sound.ORB_PICKUP, 100.0f, 100.0f);
                 player.updateInventory();

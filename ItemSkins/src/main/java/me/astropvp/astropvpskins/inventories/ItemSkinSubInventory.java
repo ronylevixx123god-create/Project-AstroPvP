@@ -18,16 +18,11 @@ import org.bukkit.inventory.meta.ItemMeta;
 public class ItemSkinSubInventory {
     public static void openInventory(Player player, ItemSkinType type) {
         String display = (type == ItemSkinType.HELMET) ? "Helmets" : ((type == ItemSkinType.BACKPACK) ? "Backpacks" : ((type == ItemSkinType.LEGGINGS) ? "Leggings" : ((type == ItemSkinType.BOOTS) ? "Boots" : ((type == ItemSkinType.SWORD) ? "Swords" : ((type == ItemSkinType.AXE) ? "Axes" : ((type == ItemSkinType.BOW) ? "Bows" : ((type == ItemSkinType.AMULET) ? "Amulets" : ((type == ItemSkinType.BELT) ? "Belts" : ((type == ItemSkinType.PICKAXE) ? "Pickaxes" : null)))))))));
-        int len = 0;
         byte b1;
         int j;
         SkinType[] arrayOfSkinType1;
-        for (SkinType skinType : SkinType.values()) {
-            if (ItemSkinType.isSimilarItemSkin(type, skinType.getItemSkinType()))
-                len++;
-        }
-        len = (len <= 9) ? 9 : ((len <= 18) ? 18 : ((len <= 27) ? 27 : ((len <= 36) ? 36 : 45)));
-        Inventory inventory = Bukkit.createInventory(null, len, CC.translate("&8Item Skins: ") + display);
+
+        Inventory inventory = Bukkit.createInventory(null, 54, CC.translate("&8Item Skins: ") + display);
         int pos = 0;
         byte b2 = 0;
         SkinType[] arrayOfSkinType2;
@@ -47,10 +42,10 @@ public class ItemSkinSubInventory {
     }
 
     public static ItemStack createBackButton() {
-        ItemStack item = new ItemStack(Material.NETHER_STAR);
+        ItemStack item = new ItemStack(Material.ARROW);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(String.valueOf(CC.RedB) + "Back");
-        meta.setLore(Arrays.asList(new String[] { String.valueOf(CC.Gray) + "Click to return to", String.valueOf(CC.Gray) + "the main menu." }));
+        meta.setDisplayName(String.valueOf(CC.RedB) + "<- Go Back");
+        meta.setLore(Arrays.asList(new String[] { String.valueOf(CC.Gray) + "Click to return to", String.valueOf(CC.Gray) + "the main skins menu." }));
         item.setItemMeta(meta);
         return item;
     }

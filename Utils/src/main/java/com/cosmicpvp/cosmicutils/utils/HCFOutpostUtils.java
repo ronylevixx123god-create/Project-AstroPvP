@@ -18,9 +18,7 @@ import java.io.File;
 public class HCFOutpostUtils {
     private static boolean hcfOutpostsEnabled = false;
 
-    static {
-        hcfOutpostsEnabled = new File("plugins/CosmicHCFOutposts.jar").exists();
-    }
+
 
     public static boolean doesControlOutpost(Player player, String outpostName) {
         if (!hcfOutpostsEnabled) {

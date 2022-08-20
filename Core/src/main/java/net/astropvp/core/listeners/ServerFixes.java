@@ -174,7 +174,7 @@ public class ServerFixes implements Listener {
     public void onPlayerInteractSnowball(PlayerInteractEvent e) {
         Player player = e.getPlayer();
         if (e.getAction().equals(Action.RIGHT_CLICK_AIR) || e.getAction().equals(Action.RIGHT_CLICK_BLOCK)) {
-            if (player.getItemInHand().getType().equals(Material.SNOW_BALL) && player.getItemInHand().getItemMeta().hasLore()) {
+            if (player.getItemInHand().getType().equals(Material.SNOW_BALL) && player.getItemInHand().getItemMeta().hasLore() && player.getItemInHand().getItemMeta().getLore().contains(CC.translate("&3EX: &71 Omni item, 3 Phantom items equipped"))) {
                 player.sendMessage(CC.translate("&cYou can't throw omni crystals!"));
                 e.setCancelled(true);
             }

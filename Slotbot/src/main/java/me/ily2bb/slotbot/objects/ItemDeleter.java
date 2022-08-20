@@ -3,7 +3,7 @@ package me.ily2bb.slotbot.objects;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.utils.Inventories;
-import me.ily2bb.slotbot.utils.LootTable;
+import me.ily2bb.slotbot.utils.GuiItems;
 import me.ily2bb.slotbot.utils.Utils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -75,7 +75,7 @@ public class ItemDeleter {
     }
 
     public ItemStack getDeletionPane() {
-        ItemStack item = LootTable.createPane(14);
+        ItemStack item = GuiItems.createPane(14);
         item = Utils.addGlow(item);
         final ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(String.valueOf(CC.RedB) + "Confirm Item Deletion:");

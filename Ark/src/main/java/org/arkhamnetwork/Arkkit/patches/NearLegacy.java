@@ -26,11 +26,7 @@ public class NearLegacy
 
     @Override
     public void enable() {
-        if (!Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-            Bukkit.getLogger().info("[Arkkit (Near)] Disabling Near patch due to no Essentials.jar loaded.");
-            this.kill();
-            return;
-        }
+
         ess3 = (IEssentials) Bukkit.getPluginManager().getPlugin("Essentials");
         this.registerCommand(new CommandNear("near", "/<command> [playername] [radius]", "Lists the players near by or around a player.", new ArrayList<String>(Arrays.asList("cnear", "enear", "nearby", "enearby"))));
     }

@@ -55,9 +55,7 @@ public class GiveAllManager {
                     break;
                 }
             }
-            p.sendMessage("");
-            p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Auto Giveall Loot has been put into your &f/collect&b."));
-            p.sendMessage("");
+            p.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c The Auto Giveall Loot has been put into your &n/collect&c."));
             if (b) {
                 ItemStack[] items = giveall.getItems();
                 ItemStack[] newarray = new ItemStack[items.length + 1];

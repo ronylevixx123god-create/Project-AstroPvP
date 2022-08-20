@@ -16,19 +16,15 @@ import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
 import me.ily2bb.slotbot.objects.ItemDeleter;
 import me.ily2bb.slotbot.utils.Inventories;
-import me.ily2bb.slotbot.utils.LootTable;
+import me.ily2bb.slotbot.utils.GuiItems;
 import me.ily2bb.slotbot.utils.Utils;
 import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.Sound;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Fireball;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.ClickType;
@@ -67,39 +63,39 @@ public class SlotBotInventoryListener implements Listener {
             if (item == null)
                 return;
             int tickets = SlotBotManager.getSlotBotTickets(inventory);
-            if (item.equals(LootTable.createLootTable())) {
+            if (item.getType() == GuiItems.createLootTable().getType()) {
                 player.closeInventory();
-                player.playSound(player.getLocation(), Sound.CHEST_OPEN, 3.0F, 3.0F);
+                player.playSound(player.getLocation(), Sound.CHEST_OPEN, 3.0F, 1F);
                 Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createLootboxInventory(player.isOp())), 1L);
-            } else if (item.equals(LootTable.createRoller(0))) {
+            } else if (item.equals(GuiItems.createRoller(0))) {
                 if (tickets > 0)
                     returnTickets(1, player);
                 player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 3.0F);
                 inventory.setContents(Inventories.createInventory(tickets - 1).getContents());
                 player.updateInventory();
-            } else if (item.equals(LootTable.createSpinTicket(false))) {
+            } else if (item.equals(GuiItems.createSpinTicket(false))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
-            } else if (item.equals(LootTable.createRoller(5))) {
+            } else if (item.equals(GuiItems.createRoller(5))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
                 player.sendMessage(CC.translate("&c&l(!)&c This slot requires 5 more ticket in the bot to roll!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
-            } else if (item.equals(LootTable.createRoller(4))) {
+            } else if (item.equals(GuiItems.createRoller(4))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
                 player.sendMessage(CC.translate("&c&l(!)&c This slot requires 4 more ticket in the bot to roll!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
-            } else if (item.equals(LootTable.createRoller(3))) {
+            } else if (item.equals(GuiItems.createRoller(3))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
                 player.sendMessage(CC.translate("&c&l(!)&c This slot requires 3 more ticket in the bot to roll!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
-            } else if (item.equals(LootTable.createRoller(2))) {
+            } else if (item.equals(GuiItems.createRoller(2))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
                 player.sendMessage(CC.translate("&c&l(!)&c This slot requires 2 more ticket in the bot to roll!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
-            } else if (item.equals(LootTable.createRoller(1))) {
+            } else if (item.equals(GuiItems.createRoller(1))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
                 player.sendMessage(CC.translate("&c&l(!)&c This slot requires 1 more ticket in the bot to roll!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
-            } else if (item.hasItemMeta() && item.getItemMeta().equals(CosmicSlotBotAPI.createSlotBotItem().getItemMeta())) {
+            } else if (CosmicSlotBotAPI.isSlotbotTicket(item)) {
                 if (tickets >= 5)
                     return;
                 for (int i = 2; i <= 6; i++) {
@@ -114,11 +110,11 @@ public class SlotBotInventoryListener implements Listener {
                 }
                 player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0F, 50.0F);
                 player.updateInventory();
-            } else if (tickets > 0 && item.equals(LootTable.createReturnSlotBotsButton(tickets))) {
+            } else if (tickets > 0 && item.equals(GuiItems.createReturnSlotBotsButton(tickets))) {
                 returnTickets(tickets, player);
                 inventory.setContents(Inventories.createInventory(0).getContents());
                 player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 3.0F);
-            } else if (tickets > 0 && item.equals(LootTable.createSpinTicket(true))) {
+            } else if (tickets > 0 && item.equals(GuiItems.createSpinTicket(true))) {
                 ItemStack[] contents = Inventories.createRollingInventory(player, 5 - tickets).getContents();
                 inventory.setContents(contents);
                 SlotBotManager.startRolling(player, inventory, tickets);
@@ -169,9 +165,9 @@ public class SlotBotInventoryListener implements Listener {
             if (!inventory.equals(e.getInventory()))
                 return;
             inventory = e.getInventory();
-            if (item.equals(LootTable.createBackButton())) {
+            if (item.equals(GuiItems.createBackButton())) {
                 player.closeInventory();
-                player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 3.0F, 3.0F);
+                player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 3.0F, 1F);
                 Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createInventory(0)), 1L);
             } else {
                 if (!player.hasPermission("slotbot.item.delete"))
@@ -187,9 +183,9 @@ public class SlotBotInventoryListener implements Listener {
                         meta.setLore(lore);
                         copy.setItemMeta(meta);
                     }
-                    ItemStack[] lootTableItems;
-                    for (int length = (lootTableItems = LootTable.getLootTableItems()).length, j = 0; j < length; j++) {
-                        ItemStack x = lootTableItems[j];
+                    List<ItemStack> lootTableItems;
+                    for (int length = (lootTableItems = GuiItems.getLootTableItems()).size(), j = 0; j < length; j++) {
+                        ItemStack x = lootTableItems.get(j);
                         if (x.equals(copy))
                             count++;
                     }

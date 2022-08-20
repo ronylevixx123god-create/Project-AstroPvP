@@ -66,6 +66,8 @@
         <module>LootFilter</module>
         <module>PlayerVaultsX</module>
         <module>LootTable</module>
+        <module>MysteryChests</module>
+        <module>AdminItems</module>
 
     </modules>
 

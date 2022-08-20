@@ -137,6 +137,12 @@ public class InventorySkrrtPet extends InventoryPet {
                 continue;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.SUMMER_2021_BOOTS)) {
+                p.sendMessage(CC.translate("&6&l* ROLLER SKATES &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &6&l*"));
+                player.sendMessage(CC.translate("&6&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[Rolles Skates] &6&l*"));
+                continue;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_MUTATED_AMULET)) {
                 p.sendMessage(CC.translate("&5&l* Cheshire Grin &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &5&l*"));
                 player.sendMessage(CC.translate("&5&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&5&lCheshire Grin&7] &5&l*"));

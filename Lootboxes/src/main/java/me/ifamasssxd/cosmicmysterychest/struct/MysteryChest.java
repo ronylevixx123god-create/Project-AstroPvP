@@ -114,20 +114,20 @@ public class MysteryChest {
         lore.add("");
         lore.add(CC.WhiteB + "Random Loot (" + CC.Gray + this.getItemBundleSize() + " item" + (this.getItemBundleSize() > 1 ? "s" : "") + CC.WhiteB + ")");
         for (CustomLoot item : lootItems) {
-            lore.add(" " + CC.GoldB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
+            lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
         }
         if (jackpotItems.size() > 0) {
             lore.add("");
             lore.add(CC.WhiteB + "Jackpot Loot");
             for (CustomLoot item : jackpotItems) {
-                lore.add(" " + CC.GoldB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
+                lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
             }
         }
         if (this.garunteedItems != null && !this.garunteedItems.isEmpty()) {
             lore.add("");
             lore.add(CC.WhiteB + "Bonus Loot (" + CC.Gray + this.garunteedItems.size() + " item" + (this.garunteedItems.size() == 1 ? "" : "s") + CC.WhiteB + ")");
             for (ItemStack is : this.garunteedItems) {
-                lore.add(" " + CC.GoldB + "* " + CC.White + is.getAmount() + "x " + ItemUtils.getDisplayName(is));
+                lore.add(" " + CC.WhiteB + "* " + CC.White + is.getAmount() + "x " + ItemUtils.getDisplayName(is));
             }
         }
         if (expiration != null && expiration > 0L) {
@@ -158,6 +158,11 @@ public class MysteryChest {
             this.lootItems.forEach(is -> this.lootTable.addItem(is, is.getChance()));
         }
         return this.lootTable;
+    }
+
+    public void removeItem(ItemStack item) {
+        getGarunteedItems().remove(item);
+        getLootItems().removeIf(customLoot -> customLoot.getItem() == item);
     }
 
     public CustomLoot getRandomPrize() {

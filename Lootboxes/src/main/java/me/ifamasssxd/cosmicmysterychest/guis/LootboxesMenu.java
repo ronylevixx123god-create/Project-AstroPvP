@@ -27,7 +27,7 @@ public class LootboxesMenu {
     }
 
 
-    Map<String, MysteryChest> chests = CosmicMysteryChest.get().getChestManager().getMysteryChestMap();
+    Map<String, MysteryChest> chests = CosmicMysteryChest.get().getChestManager().getMysteryChestMapSorted();
 
 
     public LootboxesMenu(Player player) {
@@ -70,6 +70,15 @@ public class LootboxesMenu {
             ItemStack item = chest.createClaimableItem(false);
 
             lootboxMenu.addItem(new GuiItem(item, event -> {
+                if (event.isRightClick() && event.isShiftClick()) {
+                    player.sendMessage(CC.translate("&c&l(!)&c Deleted &c" + chest.getInternalName() + "&c."));
+                    player.getInventory().addItem(item.clone());
+                    CosmicMysteryChest.getInstance().getChestManager().removeMysteryChest(chest);
+                    LootboxesMenu lootboxesMenu = new LootboxesMenu(player);
+                    lootboxesMenu.getExpShopUI().open(player, this.getExpShopUI().getCurrentPageNum());
+                    return;
+
+                }
                 player.getInventory().addItem(item);
                 player.sendMessage(CC.translate("&a&l(!)&a Given you &a" + chest.getInternalName() + "&a."));
                 }
@@ -83,7 +92,7 @@ public class LootboxesMenu {
 
 
     public ItemStack createFillerItem() {
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.GRAY.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);

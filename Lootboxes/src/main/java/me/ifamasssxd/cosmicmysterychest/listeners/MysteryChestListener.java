@@ -124,6 +124,7 @@ public class MysteryChestListener
                 Player player = event.getPlayer();
                 try {
                     MysteryChest chest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get(builder.getString("mysteryChest"));
+                    if (chest == null) return;
                     int bundleSize = chest.getItemBundleSize();
                     if (bundleSize == 0) {
                         bundleSize = chest.getGarunteedItems().size();

@@ -255,13 +255,10 @@ public class DamageListener implements Listener {
         }
     }*/
 
-    @EventHandler(priority = EventPriority.LOWEST)
+    @EventHandler(priority = EventPriority.HIGHEST)
     public void antiNearCrash(PlayerCommandPreprocessEvent e) {
-        if (WorldGuardUtils.getRegionsIn(e.getPlayer()) == null) return;
-        if ((e.getMessage().toLowerCase().startsWith("/near") || e.getMessage().startsWith("/enear") || e.getMessage().toLowerCase().startsWith("/nearby") || e.getMessage().toLowerCase().startsWith("/enearby")) && (WorldGuardUtils.getRegionsIn(e.getPlayer()) != null && WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawn_region") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzone") || WorldGuardUtils.getRegionsIn(e.getPlayer()).contains("spawnwarzoneclaimlimiter")) || e.getPlayer().getLocation().getY() >= 255) {
-            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c This command is not allowed here!"));
-            e.setMessage("/null");
-            e.setCancelled(true);
+        if ((e.getMessage().toLowerCase().startsWith("/near") || e.getMessage().startsWith("/enear") || e.getMessage().toLowerCase().startsWith("/nearby") || e.getMessage().toLowerCase().startsWith("/enearby"))) {
+            e.setMessage("/cnear");
         }
 
     }

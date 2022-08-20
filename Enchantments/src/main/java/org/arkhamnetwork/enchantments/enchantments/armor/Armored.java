@@ -26,12 +26,16 @@ public class Armored extends CustomEnchantment
         }
 
 
+
+
         if (player.hasMetadata("neutralized")) {
             return;
         }
 
         if (attacker instanceof Player) {
-
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT) && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.PRISONS_DARKSTAR_PICKAXE_BLUE)) {
+                return;
+            }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_MUTATED_SWORD)) return;
 
         }

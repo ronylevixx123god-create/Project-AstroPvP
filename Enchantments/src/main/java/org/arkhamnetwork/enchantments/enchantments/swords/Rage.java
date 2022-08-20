@@ -54,6 +54,11 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.setMaxRageStack(rageStacksCache.getMaxRageStack() + 1);
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(((Player) target).getPlayer(), SkinType.VALENTINES_2022_SWORD) && Math.random() < 0.15) {
+                target.sendMessage(CC.translate("&a&l** PRICKLE PEAR &7Reset Rage Stacks &a&l**"));
+                rageStacksCache.resetRageStack();
+            }
+
 
             if (rageStacksCache.getLastRageStackTime() + 5000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
                 rageStacksCache.updateLastRageStackTime();

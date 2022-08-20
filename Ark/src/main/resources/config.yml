@@ -12,6 +12,7 @@ patches:
   # Monitors and corrects memory leaks and catches crash issues, also automatically reboots servers with unstoppable crashes.
   anti_crash: true
 
+  near_legacy: true
   # Automatically reboots servers with >9H uptime and <17TPS
   anti_lag: true
 

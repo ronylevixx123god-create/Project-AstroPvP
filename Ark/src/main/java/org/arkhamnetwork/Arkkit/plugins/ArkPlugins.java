@@ -66,6 +66,8 @@ public enum ArkPlugins {
     HOME_GUI(new HomeGUI(Arkkit.get()), "Pretty looking net.astropvp.armorsets.gui for /home that adds customizable icons."),
     VAULT_GUI(new PlayerVaultGUI(Arkkit.get()), "GUI for /pv"),
     ANTI_BLOCK_GLITCH(new AntiBlockGlitch(Arkkit.get()), "Fixes block glitching and jumping."),
+    NEAR_LEGACY(new NearLegacy(Arkkit.get()), "Custom near command."),
+
     VAULT_DISABLE(new VaultDisable(Arkkit.get()), "Disable adding items into PlayerVaults, (Only withdrawls allowed)"),
     GAMBLE(new Gamble(Arkkit.get()), "Enables players gambling net.astropvp.armorsets.commands such as /roll."),
     //HIDE_LORE(new HideLore(Arkkit.get()), "Hides specific lore and item attributes via ProtocolLib."),

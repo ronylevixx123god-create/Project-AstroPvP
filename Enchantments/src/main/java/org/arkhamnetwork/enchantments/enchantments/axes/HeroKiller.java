@@ -90,6 +90,11 @@ public class HeroKiller
             return;
         }
 
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY4TH_2022_HELMET)) {
+            return;
+        }
+
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BACKPACK)) return;
 
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {

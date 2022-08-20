@@ -15,6 +15,8 @@ public enum LootTableType {
     GODLY(Material.TRIPWIRE_HOOK,  ChatColor.DARK_RED),
     SEASON(Material.TRIPWIRE_HOOK,  ChatColor.YELLOW),
     MUTATED(Material.TRIPWIRE_HOOK,  ChatColor.DARK_GREEN),
+    SLOTS(Material.PAPER,  ChatColor.YELLOW),
+
     ;
 
     public String getFancy() {

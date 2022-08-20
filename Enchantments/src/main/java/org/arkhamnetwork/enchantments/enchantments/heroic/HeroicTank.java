@@ -26,6 +26,10 @@ public class HeroicTank extends HeroicCustomEnchantment
             return;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
+            return;
+        }
+
         ItemStack i;
         final Player pAttacker = (Player)attacker;
         i = pAttacker.getItemInHand();

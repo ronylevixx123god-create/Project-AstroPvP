@@ -83,17 +83,6 @@ public class JackpotManager {
                     pl.sendMessage(StringUtils.getCenteredMessage(CC.translate("&fTotal Value&7: &a$" + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()))));
                     pl.sendMessage(StringUtils.getCenteredMessage(CC.translate("&7&o(( &f&o/jackpot buy (amount)&7&o to purchase tickets ))")));
                     pl.sendMessage("");
-
-
-
-
-
-                    ///////
-
-                    //pl.sendMessage(CC.translate("&a✪ &e&lJACKPOT &7⎜ &eThe Jackpot &7(&a$" + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + "&7)&e will be rolled in &f" + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + "&7."));
-                    //pl.sendMessage(CC.translate("&7Type &f/jackpot buy (amount)&7 to purchase tickets!"));
-                    //pl.sendMessage(ChatColor.AQUA + ChatColor.BOLD.toString() + "(!) " + ChatColor.AQUA + "Astro Jackpot (" + ChatColor.AQUA + ChatColor.BOLD + "$" + ChatColor.AQUA + this.getMoneyFormat().format(this.currentJackpot.getPlayerWinnings()) + ") drawing in " + ChatColor.AQUA + ChatColor.BOLD.toString() + (secondsLeft == 60 ? "60s" : TimeUtils.formatDifference(secondsLeft).trim()) + ChatColor.AQUA + "!");
-                    if (secondsLeft < 60) continue;
                 }
             }
             this.currentJackpot.setSecondsLeft(secondsLeft - 1);

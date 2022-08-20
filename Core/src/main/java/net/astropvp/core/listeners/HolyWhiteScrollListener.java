@@ -81,8 +81,6 @@ public class HolyWhiteScrollListener implements Listener {
             return;
         if (!e.getEntity().getKiller().getLocation().getWorld().getName().equals("world") && !e.getEntity().getKiller().getLocation().getWorld().getName().equals("flat"))
             return;
-        //if ((e.getEntity() != null && e.getEntity() == null) || (e.getEntity().getKiller() != null && e.getEntity().getKiller() == null))
-        //return;
         Player killer = e.getEntity().getKiller();
         Player killed = e.getEntity();
 
@@ -103,11 +101,14 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO))
-                    monoChance += 0.05;
+                    monoChance *= 1.05;
                 if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
                     if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) == ArmorSetType.ASTRO) {
-                        monoChance += 0.15;
+                        monoChance *= 1.15;
                     }
+                }
+                if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SUMMER_2021_BOOTS)) {
+                    monoChance*=1.15;
                 }
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
 
@@ -204,14 +205,26 @@ public class HolyWhiteScrollListener implements Listener {
                 InventoryPetItem petItem = (InventoryPetItem) CosmicPersistentItem.constructItem(i, wrapper, InventoryPetItem.class);
                 if (petItem != null && petItem.getPetType() != null) {
                     if (petItem.isLeashed()) {
-                        double chance = 0.33;
-                        if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.VALENTINES_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.VALENTINES_2022_MUTATED_BELT)) {
-                            chance *=1.15;
+                        double chance = 0;
+                        if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null && MaskType.hasEquipped(e.getEntity().getKiller(), "ANIMAL_CONTROL")) {
+                            chance *= 1.33;
+                            if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.VALENTINES_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.VALENTINES_2022_MUTATED_BELT)) {
+                                chance *= 1.15;
+                            }
                         }
+                        if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.JULY4TH_2022_HELMET)) {
+                            chance *= 1.15;
+                        }
+
                         petItem.setLeashed(false);
-                        if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null && MaskType.hasEquipped(e.getEntity().getKiller(), "ANIMAL_CONTROL") && Math.random() < chance) {
-                            killed.sendMessage(CC.RedB + "* ANIMAL CONTROL MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                            killer.sendMessage(CC.GreenB + "* ANIMAL CONTROL MASK [" + CC.Gray + killed.getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                        if (Math.random() < chance) {
+                            if (e.getEntity().getKiller() != null && e.getEntity().getKiller() != null && MaskType.hasEquipped(e.getEntity().getKiller(), "ANIMAL_CONTROL")) {
+                                killed.sendMessage(CC.RedB + "* ANIMAL CONTROL MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                                killer.sendMessage(CC.GreenB + "* ANIMAL CONTROL MASK [" + CC.Gray + killed.getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                            } else if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.JULY4TH_2022_HELMET)) {
+                                killed.sendMessage(CC.RedB + "* COWBOY HAT [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                                killer.sendMessage(CC.GreenB + "* COWBOY HAT [" + CC.Gray + killed.getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                            }
                             toRemoveToDrops.add(i);
                             toAddToDrops.add(petItem.build());
                         } else {
@@ -244,9 +257,8 @@ public class HolyWhiteScrollListener implements Listener {
         }
         e.getDrops().clear();
         itemList.clear();
-        killer.sendMessage("");
-        killer.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Death Loot from &f" + killed.getName() + "&b has been put into your &f/collect&b."));
-        killer.sendMessage("");
+        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed + "'s Death Loot has been put into your &n/collect&c."));
+
     }
 
     @EventHandler(priority = EventPriority.MONITOR)

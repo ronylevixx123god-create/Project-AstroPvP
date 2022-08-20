@@ -44,6 +44,10 @@ public class HeroicLifesteal
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.JULY4TH_2022_HELMET)) {
+                return;
+            }
+
             if (target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
                 return;
             }

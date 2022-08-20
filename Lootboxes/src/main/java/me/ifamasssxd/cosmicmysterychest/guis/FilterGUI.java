@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicmysterychest.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.data.LootboxFilterData;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
@@ -93,6 +94,13 @@ public class FilterGUI {
                 copyItem.setItemMeta(meta);
             }
             lootboxMenu.addItem(new GuiItem(copyItem, event -> {
+                if (event.isRightClick() && event.isShiftClick() && event.getWhoClicked().isOp()) {
+                    chest.removeItem(item);
+                    FilterGUI filterGUI = new FilterGUI(player, chest);
+                    filterGUI.getFilterGUI().open(player);
+                    player.sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from " + chest.getDisplayName()));
+                    return;
+                }
                 filter.filterItem(chest.getInternalName(),item);
                 FilterGUI filterGUI = new FilterGUI(player, chest);
                 filterGUI.getFilterGUI().open(player);
@@ -102,7 +110,7 @@ public class FilterGUI {
     }
 
     public ItemStack createFillerItem() {
-        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.LIME.getData());
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.GRAY.getData());
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);

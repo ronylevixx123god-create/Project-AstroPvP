@@ -44,6 +44,7 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsPlugin;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
 import com.rit.sucy.EnchantmentAPI;
@@ -56,7 +57,6 @@ import me.ifamasssxd.cosmicduel.struct.DuelPlayer;
 import me.ifamasssxd.cosmicduel.struct.Kit;
 import me.ifamasssxd.cosmicduel.struct.enums.*;
 import me.ifamasssxd.cosmicduel.utils.*;
-import me.ifamasssxd.cosmicduel.utils.ItemBuilder;
 import me.ifamasssxd.cosmicduel.utils.JSONMessage;
 import me.ifamasssxd.cosmicduel.utils.RandomFireworks;
 import net.astropvp.CollectPlugin;
@@ -224,13 +224,17 @@ public class ClassicDuel extends NewDuel {
                 winner.sendMessage("");
                 winner.sendMessage(CC.translate("&e&lMatch Stats:"));
                 winner.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(winner.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(winner.getUniqueId(), 0) + "&e."));
+                winner.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Damage: &f" + this.getDf().format(this.damageMap.getOrDefault(winner.getUniqueId(), 0.0)) + " &7(~" + this.getAverageDamage(winner.getUniqueId()) + " DMG/hit)"));
                 winner.sendMessage(CC.translate("&c" + loser.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(loser.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(loser.getUniqueId(), 0) + "&e."));
+                winner.sendMessage(CC.translate("&c" + loser.getName() + " &eTotal Damage: &f" + this.getDf().format(this.damageMap.getOrDefault(loser.getUniqueId(), 0.0)) + " &7(~" + this.getAverageDamage(loser.getUniqueId()) + " DMG/hit)"));
                 winner.sendMessage("");
 
                 loser.sendMessage("");
                 loser.sendMessage(CC.translate("&e&lMatch Stats:"));
-                loser.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(winner.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(winner.getUniqueId(), 0) + "&e."));
                 loser.sendMessage(CC.translate("&c" + loser.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(loser.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(loser.getUniqueId(), 0) + "&e."));
+                loser.sendMessage(CC.translate("&c" + loser.getName() + " &eTotal Damage: &f" + this.getDf().format(this.damageMap.getOrDefault(loser.getUniqueId(), 0.0)) + " &7(~" + this.getAverageDamage(loser.getUniqueId()) + " DMG/hit)"));
+                loser.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(winner.getUniqueId(), 0) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(winner.getUniqueId(), 0) + "&e."));
+                loser.sendMessage(CC.translate("&a" + winner.getName() + " &eTotal Damage: &f" +  this.getDf().format(this.damageMap.getOrDefault(winner.getUniqueId(), 0.0)) + " &7(~" + this.getAverageDamage(winner.getUniqueId()) + " DMG/hit)"));
                 loser.sendMessage("");
 
                 removePlayer(winner, Reason.WIN, false);
@@ -307,8 +311,19 @@ public class ClassicDuel extends NewDuel {
             SimpleDateFormat timeFormat = new SimpleDateFormat("hh:mm");
             String extraKitName = null;
 
-            ItemStack is = ItemBuilder.buildItem(Material.PAPER, ChatColor.WHITE + ChatColor.BOLD.toString() + loser.getName() + "'s Death Certificate", new String[]{ChatColor.WHITE + loser.getName() + ChatColor.GRAY + " was defeated in a " + ChatColor.WHITE + getName(), ChatColor.GRAY + "duel on " + ChatColor.WHITE + format.format(date) + " at " + timeFormat.format(date), ChatColor.GRAY + "in the " + ChatColor.WHITE + getArena().getName() + " Arena " + ChatColor.GRAY + "by " + ChatColor.WHITE + winner.getName(), (extraKitName != null) ? extraKitName : null});
-            PlayerUtil.giveOrDropProtectedItem(winner, is, 60);
+            ItemStack item = new ItemBuilder(Material.PAPER)
+                    .name(ChatColor.WHITE + ChatColor.BOLD.toString() + loser.getName() + "'s Death Certificate")
+                    .addLoreLine(ChatColor.WHITE + loser.getName() + ChatColor.GRAY + " was defeated in a " + ChatColor.WHITE + getName())
+                    .addLoreLine(ChatColor.GRAY + "duel on " + ChatColor.WHITE + format.format(date) + " at " + timeFormat.format(date))
+                    .addLoreLine(ChatColor.GRAY + "in the " + ChatColor.WHITE + getArena().getName() + " Arena " + ChatColor.GRAY + "by " + ChatColor.WHITE + winner.getName())
+                    .addLoreLine("")
+                    .addLoreLine(CC.translate("&e&lMatch Stats:"))
+                    .addLoreLine(CC.translate("&a" + winner.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(winner.getUniqueId(), 1) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(winner.getUniqueId(), 1)))
+                    .addLoreLine(CC.translate("&a" + winner.getName() + " &eTotal Damage: &f" + this.getDf().format(this.hitsMap.getOrDefault(winner.getUniqueId(), 1)) + " &7(~" + getAverageDamage(winner.getUniqueId()) + " DMG/hit)"))
+                    .addLoreLine(CC.translate("&c" + loser.getName() + " &eTotal Hits: &f" + this.hitsMap.getOrDefault(loser.getUniqueId(), 1) + "&e, Longest Combo: &f" + this.longestComboMap.getOrDefault(loser.getUniqueId(), 1)))
+                    .addLoreLine(CC.translate("&c" + loser.getName() + " &eTotal Damage: &f" + this.getDf().format(this.hitsMap.getOrDefault(loser.getUniqueId(), 1)) + " &7(~" + getAverageDamage(loser.getUniqueId()) + " DMG/hit)"))
+                    .build();
+            PlayerUtil.giveOrDropProtectedItem(winner, item, 60);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -665,9 +680,8 @@ public class ClassicDuel extends NewDuel {
         if (!rewards.isEmpty()) {
             CollectCategory category = new CollectCategory(CollectType.DUEL, rewards.toArray(new ItemStack[rewards.size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
             CollectPlugin.getInstance().getCollectManager().getOrCreate(winner.getUniqueId().toString()).add(category);
-            winner.sendMessage("");
-            winner.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
-            winner.sendMessage("");
+            winner.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + loser + "'s Death Loot has been put into your &n/collect&c."));
+
             this.stakes.clear();
         }
 
@@ -682,9 +696,8 @@ public class ClassicDuel extends NewDuel {
                 if (!item.getValue().isEmpty()) {
                     CollectCategory category = new CollectCategory(CollectType.DUEL, item.getValue().toArray(new ItemStack[item.getValue().size() - 1]), CC.GoldB + "Duel Collect", System.currentTimeMillis());
                     CollectPlugin.getInstance().getCollectManager().getOrCreate(p.getUniqueId().toString()).add(category);
-                    p.sendMessage("");
                     p.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Duel Loot has been put into your &f/collect&b."));
-                    p.sendMessage("");
+
                 }
             }
         }

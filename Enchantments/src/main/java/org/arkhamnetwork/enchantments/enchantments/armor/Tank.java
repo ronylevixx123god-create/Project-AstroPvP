@@ -33,6 +33,11 @@ public class Tank extends CustomEnchantment
         if ( AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
             return;
         }
+
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.THANKSGIVING_SWORD_HARVESTER)) {
+            return;
+        }
+
         if (player.hasMetadata("neutralized")) {
             return;
         }

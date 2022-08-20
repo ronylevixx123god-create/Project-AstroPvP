@@ -35,6 +35,7 @@ import com.earth2me.essentials.utils.FormatUtil;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
+import me.astropvp.proxypach.ProxyPatch;
 import org.arkhamnetwork.Arkkit.libs.AbstractCommand;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -105,6 +106,7 @@ final class CommandNear
                 }
             }
         }
+
         if ((radius = Math.abs(radius)) > maxRadius && !user.isAuthorized("essentials.near.maxexempt")) {
             NearLegacy.ess3.getI18n();
             user.sendMessage(I18n.tl("radiusTooBig", maxRadius));
@@ -156,13 +158,14 @@ final class CommandNear
                     continue;
                 }
             }
+            if (ProxyPatch.playerNames.contains(p.getName())) continue;
             if (output.length() > 0) {
                 output.append(", ");
                 counter++;
             }
             output.append(player.getName()).append("\u00a7f(\u00a74").append((long) Math.sqrt(delta)).append("m\u00a7f)");
         }
-        if (counter >= 16) {
+        if (counter >= 32) {
             string = CC.translate("&c&l(!)&c There are too many players nearby!");
         } else if (output.length() > 1) {
             string = output.toString();

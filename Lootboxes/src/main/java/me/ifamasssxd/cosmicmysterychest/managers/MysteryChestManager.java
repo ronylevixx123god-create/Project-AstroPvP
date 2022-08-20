@@ -35,7 +35,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.TimeUnit;
 
@@ -159,8 +159,24 @@ public class MysteryChestManager
         return this.mysteryChestMap;
     }
 
+    public Map<String, MysteryChest> getMysteryChestMapSorted() {
+        return sort(mysteryChestMap);
+    }
+
     public GlobalMysteryChest getActiveMysteryChest() {
         return this.activeMysteryChest;
+    }
+
+    public Map<String, MysteryChest> sort(Map<String, MysteryChest> map) {
+        List<Map.Entry<String, MysteryChest>> list = new ArrayList<>(map.entrySet());
+        list.sort(Map.Entry.comparingByKey());
+        Collections.reverse(list);
+        Map<String, MysteryChest> result = new LinkedHashMap<>();
+        for (int i = list.size() - 1; i >= 0; i--) {
+            Map.Entry<String, MysteryChest> entry = list.get(i);
+            result.put(entry.getKey(), entry.getValue());
+        }
+        return result;
     }
 }
 

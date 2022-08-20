@@ -1,16 +1,19 @@
 package com.cosmicpvp.cosmicutils;
 
+import com.cosmicpvp.cosmicutils.cache.CacheManager;
 import com.cosmicpvp.cosmicutils.commands.CommandCosmicDebug;
 import com.cosmicpvp.cosmicutils.gui.CosmicGUI;
 import com.cosmicpvp.cosmicutils.gui.listeners.GUIListener;
 import com.cosmicpvp.cosmicutils.gui.listeners.PlayerListener;
 import com.cosmicpvp.cosmicutils.gui.listeners.TitleItemListener;
+import com.cosmicpvp.cosmicutils.inventory.InventoryManager;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.cosmicpvp.cosmicutils.utils.databases.SeenDatabase;
 import com.google.common.collect.MapMaker;
+import lombok.Getter;
 import lombok.SneakyThrows;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -27,6 +30,7 @@ public final class CosmicUtils extends JavaPlugin {
     private Map<String, Player> asyncPlayerMap = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
     private Map<UUID, Player> asyncPlayerMapUUID = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
     private Map<String, Location> playerLocations = new ConcurrentHashMap<String, Location>();
+    private InventoryManager inventoryManager;
     private boolean arkkitEnabled = false;
     private boolean vanishNoPacketEnabled = false;
     private boolean evolutionKitEnabled = false;
@@ -42,6 +46,8 @@ public final class CosmicUtils extends JavaPlugin {
     private boolean lootboxesEnabled;
     private String serverName;
     private boolean vanillaGalaxy;
+    @Getter
+    private CacheManager cacheManager;
     private boolean cosmicGalaxy;
     private boolean hcfGalaxy;
     private boolean seasonalGalaxy;
@@ -97,6 +103,10 @@ public final class CosmicUtils extends JavaPlugin {
         this.dungeonsEnabled = true;
         this.masksEnabled = true;
         this.lootboxesEnabled = true;
+        this.inventoryManager = new InventoryManager(this);
+        this.cacheManager = new CacheManager();
+
+        this.inventoryManager.init();
         this.initStaticClasses();
     }
 
@@ -105,6 +115,10 @@ public final class CosmicUtils extends JavaPlugin {
         instance = null;
         CosmicGUI.activeGUIs.values().forEach(CosmicGUI::close);
         FactionUtils.destroy();
+    }
+
+    public InventoryManager getInventoryManager() {
+        return this.inventoryManager;
     }
 
     private boolean doesPluginExist(String name) {

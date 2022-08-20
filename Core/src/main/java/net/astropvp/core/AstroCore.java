@@ -453,7 +453,6 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
         getServer().getPluginManager().registerEvents(new DamageFixes(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
-        getServer().getPluginManager().registerEvents(new TrapBlockListener(), this);
         getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
         getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
         getServer().getPluginManager().registerEvents(new StaffListeners(), this);
@@ -498,7 +497,6 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new NebulaRank());
-        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new TrapBlockerItem());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWhitescrollItem());

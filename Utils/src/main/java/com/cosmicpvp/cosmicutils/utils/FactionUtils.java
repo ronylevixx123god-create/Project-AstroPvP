@@ -17,6 +17,7 @@ import com.cosmicpvp.cosmicutils.struct.factions.HCFactionHandler;
 
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
@@ -62,6 +63,24 @@ public class FactionUtils {
                 Bukkit.getLogger().info("Unable to hook Faction Handler.. disabling faction support: " + e.getMessage());
             }
         }
+    }
+
+    public static boolean canPvP(Player victim, Player attacker) {
+        FPlayer VictimPlayer = FPlayers.getInstance().getByPlayer(victim);
+        Faction VictimFac = VictimPlayer.getFaction();
+        FPlayer AttackerPlayer = FPlayers.getInstance().getByPlayer(attacker);
+        Faction AttackerFac = AttackerPlayer.getFaction();
+        Relation relationBetween = VictimFac.getRelationTo(AttackerFac);
+        return relationBetween == Relation.ENEMY || relationBetween == Relation.NEUTRAL;
+    }
+
+    public static boolean cantPvPFaction(Player victim, Player attacker) {
+        FPlayer VictimPlayer = FPlayers.getInstance().getByPlayer(victim);
+        Faction VictimFac = VictimPlayer.getFaction();
+        FPlayer AttackerPlayer = FPlayers.getInstance().getByPlayer(attacker);
+        Faction AttackerFac = AttackerPlayer.getFaction();
+        Relation relationBetween = VictimFac.getRelationTo(AttackerFac);
+        return relationBetween != Relation.ENEMY && relationBetween != Relation.NEUTRAL;
     }
 
     public static boolean isHCF() {

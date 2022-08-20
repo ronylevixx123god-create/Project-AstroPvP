@@ -14,6 +14,7 @@
  */
 package me.ifamasssxd.cosmicduel.struct.newduel;
 
+import lombok.Getter;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
 import me.ifamasssxd.cosmicduel.struct.Arena;
 import me.ifamasssxd.cosmicduel.struct.Kit;
@@ -31,6 +32,7 @@ import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -61,7 +63,18 @@ public abstract class NewDuel {
     protected Map<UUID, Integer> hitsMap;
     protected Map<UUID, Integer> longestComboMap;
     protected Map<UUID, Integer> currentComboMap;
+    protected Map<UUID, Double> damageMap;
 
+    public DecimalFormat getDf() {
+        return df;
+    }
+
+    private DecimalFormat df = new DecimalFormat("##.#");
+
+
+    public Map<UUID, Double> getDamageMap() {
+        return damageMap;
+    }
 
     public Map<UUID, Integer> getLongestComboMap() {
         return longestComboMap;
@@ -78,6 +91,7 @@ public abstract class NewDuel {
         this.hitsMap = new HashMap<>();
         this.currentComboMap = new HashMap<>();
         this.longestComboMap = new HashMap<>();
+        this.damageMap = new HashMap<>();
     }
 
     public NewDuel(Player initiator, List<String> pendingInvites, boolean isRanked) {
@@ -88,6 +102,11 @@ public abstract class NewDuel {
         this.currentComboMap = new HashMap<>();
         this.longestComboMap = new HashMap<>();
         this.isRanked = isRanked;
+        this.damageMap = new HashMap<>();
+    }
+
+    public double getAverageDamage(UUID uuid) {
+        return Double.parseDouble(df.format(damageMap.getOrDefault(uuid, 0.0)/hitsMap.getOrDefault(uuid, 1)));
     }
 
     public Map<UUID, Integer> getHitsMap() {

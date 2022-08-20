@@ -1,21 +1,23 @@
 package me.astropvp.hotfixplugin.listeners;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.earth2me.essentials.utils.DateUtil;
 import com.massivecraft.factions.perms.Role;
 import me.astropvp.hotfixplugin.HotFixPlugin;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.Color;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 
+import java.awt.*;
 import java.lang.management.ManagementFactory;
+import java.util.Arrays;
+import java.util.List;
 
 public class CommandPingListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
@@ -41,15 +43,15 @@ public class CommandPingListener implements Listener {
     public void addmutated(PlayerCommandPreprocessEvent e) {
         Player player = e.getPlayer();
         if (!player.isOp()) return;
-        if (e.getMessage().equalsIgnoreCase("/addmutated")) {
+        if (e.getMessage().startsWith("/addmutated")) {
+            List<String> args = Arrays.asList(e.getMessage().split(" "));
             e.setMessage("/null");
             e.setCancelled(true);
-            NBTWrapper wrapper = new NBTWrapper(e.getPlayer().getItemInHand());
-            NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
-            cosmicData.setString("tintColor", "-153102204"); //-10237440
-            player.sendMessage("done");
+            GlintUtils.addGlint(player.getItemInHand(), Color.GREEN);
+            player.updateInventory();
         }
     }
+
 
 /*    @EventHandler(priority = EventPriority.LOWEST)
     public void altFix(PlayerCommandPreprocessEvent e) {

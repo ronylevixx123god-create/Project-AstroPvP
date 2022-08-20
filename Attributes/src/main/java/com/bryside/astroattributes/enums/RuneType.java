@@ -106,10 +106,10 @@ public enum RuneType {
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("type", type.name()).setInt("durability", 3).setDouble("dmgIncr", 3.0).setInt("maxDurability", 3).get().setInt("heroic_weapon", 1);
-        item = wrapper.setNBTBase("conaxData", (NBTBase) compoundBuilder.get()).build();
-        item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", 0).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
+        item = wrapper.setNBTBase("cosmicData", (NBTBase) compoundBuilder.get()).build();
+        item = wrapper.setNBTBase("cosmicData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).setInt("titanAttributeXp", 0).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
         return item;
     }
 
@@ -121,10 +121,10 @@ public enum RuneType {
         itemMeta.setLore(lore);
         item.setItemMeta(itemMeta);
         NBTWrapper wrapper = new NBTWrapper(item);
-        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("conaxData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder compoundBuilder = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         compoundBuilder.setString("type", type.name()).setInt("durability", Integer.valueOf(3)).setDouble("dmgIncr", Double.valueOf(3)).setInt("maxDurability", Integer.valueOf(3)).setInt("heroic_weapon", 1).get();
-        item = wrapper.setNBTBase("conaxData", (NBTBase) compoundBuilder.get()).build();
-        item = wrapper.setNBTBase("conaxData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("conaxData"))).setInt("titanAttributeXp", Integer.valueOf(0)).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
+        item = wrapper.setNBTBase("cosmicData", (NBTBase) compoundBuilder.get()).build();
+        item = wrapper.setNBTBase("cosmicData", (NBTBase) (new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData"))).setInt("titanAttributeXp", Integer.valueOf(0)).setString("titanAttributeType", type.name()).setLong("titanAttributeLastLevelup", Long.valueOf(0L)).get()).build();
         return item;
     }
 }

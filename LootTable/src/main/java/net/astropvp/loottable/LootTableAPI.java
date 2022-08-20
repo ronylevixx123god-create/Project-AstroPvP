@@ -21,6 +21,7 @@ public class LootTableAPI {
         for(LootRarity lootRarity : LootRarity.getReversed()) {
             if(chance <= lootRarity.getChance()) {
                 Random rand = new Random();
+                if (lootTable.getLootRarityMap().get(lootRarity).isEmpty()) continue;
                 return lootTable.getLootRarityMap().get(lootRarity).get(rand.nextInt(lootTable.getLootRarityMap().get(lootRarity).size()));
             }
         }

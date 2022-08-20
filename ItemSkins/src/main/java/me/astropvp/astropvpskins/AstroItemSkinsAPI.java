@@ -17,6 +17,7 @@ import me.astropvp.astropvpskins.utils.StringUtils;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -199,7 +200,9 @@ public class AstroItemSkinsAPI {
 
 
         cosmicData.remove("itemSkinType");
-        cosmicData.remove("tintColor");
+        if (cosmicData.getString("tintColor").equals("-10237440")) {
+            cosmicData.remove("tintColor");
+        }
 
 
         for (String skinType : skins) {
@@ -239,7 +242,10 @@ public class AstroItemSkinsAPI {
         String[] stringArray;
         List<String> skins = new ArrayList<>(Arrays.asList(stringArray = skinList.split(",")));
         cosmicData.remove("itemSkinType");
-        cosmicData.remove("tintColor");
+        if (cosmicData.getString("tintColor").equals("-10237440")) {
+
+            cosmicData.remove("tintColor");
+        }
 
         SkinType type = SkinType.valueOf(stringArray[0]);
         skins.remove(stringArray[0]);
@@ -333,7 +339,10 @@ public class AstroItemSkinsAPI {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         cosmicData.remove("itemSkinType");
-        cosmicData.remove("tintColor");
+        if (cosmicData.getString("tintColor").equals("-10237440")) {
+
+            cosmicData.remove("tintColor");
+        }
 
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();

@@ -115,9 +115,7 @@ public class AstroArmorSetsAPI {
             if (hasCrystalsApplied(item)) {
                 List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(item);
                 for (ArmorSetType type : crystals) {
-                    type.getArmorSet().onUnequip(player);
                     cache.addArmorCrystal(type);
-                    type.getArmorSet().onEquip(player);
                 }
             }
 
@@ -168,7 +166,6 @@ public class AstroArmorSetsAPI {
             List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(oldArmorPiece);
             for (ArmorSetType type : crystals) {
                 cache.removeArmorCrystal(type);
-                type.getArmorSet().onUnequip(player);
             }
         }
         if (hasCrystalsApplied(newArmorPiece)) {

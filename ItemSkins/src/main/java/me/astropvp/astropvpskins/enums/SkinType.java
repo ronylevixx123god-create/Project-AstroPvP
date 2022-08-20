@@ -138,6 +138,12 @@ public enum SkinType {
             CC.translate("&cImmune to Lifesteal"),
             CC.translate("&c+30% more chance to get loot in /warp space")
     )),
+    SUMMER_2021_BOOTS(CC.translate("&6&lRoller Skates"), ItemSkinType.BOOTS, new RollerSkates(), Arrays.asList(
+            CC.translate("&cGears IV"),
+            CC.translate("&cAuto Bless"),
+            CC.translate("&cImmune to Skrrt Pet"),
+            CC.translate("&c+10% Monopoly Chance")
+    )),
     /*INFINITY_BELT(CC.translate("&9&lInfinity Belt"), ItemSkinType.BELT, new InfinityBelt(), Arrays.asList(
             CC.translate("&cEquipped armor will regain to 10% durability"),
             CC.translate("&cinstead of breaking (10m cooldown)"),
@@ -265,7 +271,7 @@ public enum SkinType {
             CC.translate("&c-25% Incoming Damage from Rogue"),
             CC.translate("&c+10% (Divine) Enlighted Chance")
 
-            )),
+    )),
 
     VALENTINES_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &d&lBank Roll Backpack"), ItemSkinType.BACKPACK, new MutatedValentinesBackpack(), Arrays.asList(
             CC.translate("&c+50% Opening Combo Damage"),
@@ -479,7 +485,46 @@ public enum SkinType {
             CC.translate("&cImmune to Divine Light Enchant"),
             CC.translate("&c-5% Incoming damage"),
             CC.translate("&2Immune to Stitches & Skrrt Pet")
-    ));
+    )),
+
+
+    JULY4TH_2022_SWORD(CC.translate("&a&lPrickle Pear"), ItemSkinType.SWORD, new PricklePear(), Arrays.asList(
+            CC.translate("&c15% Chance to break enemy Rage Stacks"),
+            CC.translate("&c+4% Outgoing Damage"),
+            CC.translate("&cSilence V"),
+            CC.translate("&cPrickle Chaos"),
+            CC.translate("&7 Chance to struck enemy with a"),
+            CC.translate("&7 prickle and make them bleed for 5s.")
+    )),
+
+    JULY4TH_2022_BELT(CC.translate("&6&lCowboy Chaps"), ItemSkinType.BELT, new CowboyChaps(), Arrays.asList(
+            CC.translate("&cImmune to Stitches Pet Ability"),
+            CC.translate("&c+6% Outgoing Damage"),
+            CC.translate("&cGodly Overload IV"),
+            CC.translate("&cAuto Bless")
+    )),
+
+    JULY4TH_2022_HELMET(CC.translate("&6&lCowboy Hat"), ItemSkinType.HELMET, new CowboyHat(), Arrays.asList(
+            CC.translate("&c+15% Outgoing Crystal Damage"),
+            CC.translate("&cImmune to Hero Killer"),
+            CC.translate("&cImmune to (Heroic) Lifesteal"),
+            CC.translate("&c-20% Damage from enemy (Bloody) Deep Wounds"),
+            CC.translate("&c15% Pet Leash Negation")
+    )),
+
+    PRISONS_DARKSTAR_PICKAXE_BLUE(CC.translate("&3&lDarkstar Chaser"), ItemSkinType.AXE, new DarkstarAxe(), Arrays.asList(
+            CC.translate("&cBypass enemy Cupids Heart"),
+            CC.translate("&cOpening Combo VI"),
+            CC.translate("&cPerfect Solitude IV"),
+            CC.translate("&c+15% Outgoing Damage to players wielding Swords"),
+            CC.translate("&cBypass enemy (Heroic) Tank"),
+            CC.translate("&c15% Chance to block Divine Immolation")
+
+    ))
+
+
+
+    ;
 
 
     private final String display;

@@ -2,6 +2,8 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
@@ -88,6 +90,12 @@ public class InventoryStitchesPet extends InventoryPet {
                 casted.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &eStitches Pet &7[&f" + player.getName() + "&7] &a&l*"));
                 player.sendMessage(CC.translate("&a&l* &f" + casted.getName() + " &7Blocked &eStitches Pet &7[&a&lUndertow Helmet&7] &a&l*"));
                 return false;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(casted, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+                casted.sendMessage(CC.translate("&60l* COWBOY CHAPS &7Blocked &eStitches Pet &7[" + player.getName() + "&7] &6&l*"));
+                player.sendMessage(CC.translate("&6&l* &f" + casted.getName() + " &7Blocked &eStitches Pet &7[&6&lCowboy Chaps&7] &6&l*"));
+                return  false;
             }
 
             if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(casted) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(casted)) {

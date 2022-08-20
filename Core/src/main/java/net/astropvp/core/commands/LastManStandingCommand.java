@@ -25,7 +25,7 @@ public class LastManStandingCommand implements CommandExecutor {
             player.sendMessage(String.valueOf(CC.YellowB) + "*** AstroPvP: " + CC.GoldB + "LAST MAN STANDING " + CC.YellowB + "***");
             player.sendMessage("");
             capper = LastManStandingCacher.getLongestPlayerAlive(CapType.DESERT);
-            player.sendMessage(String.valueOf(CC.YellowB) + "Current DESERT LMS: " + CC.Gold + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
+            player.sendMessage(String.valueOf(CC.YellowB) + "Current Spawn LMS: " + CC.Gold + ((capper == null) ? "N/A" : (String.valueOf(FactionUtils.getFPlayer(capper.getPlayer()).getRole().getPrefix()) + ChatColor.stripColor(FactionUtils.getFPlayer(capper.getPlayer()).getFaction().getTag()) + " " + capper.getPlayerName() + " " + CC.Gray + "[" + capper.formatTimeCapped(capper.getLMSTime()) + "]")));
             if (capper != null) {
                 player.sendMessage(String.valueOf(CC.YellowB) + "Total Earned: " + CC.Gold + "$" + StringUtils.formatWithCommas(capper.getMoneyEarned()) + CC.YellowB + " + " + CC.Gold + StringUtils.formatWithCommas(capper.getExperienceEarned()) + "XP");
                 player.sendMessage(String.valueOf(CC.YellowB) + "Last Location: " + CC.Gold + (int) capper.getPlayer().getLocation().getX() + CC.Bold + "x " + CC.Gold + (int) capper.getPlayer().getLocation().getY() + CC.Bold + "y " + CC.Gold + (int) capper.getPlayer().getLocation().getZ() + CC.Bold + "z");

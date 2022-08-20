@@ -178,6 +178,22 @@ public class DivineImmolation extends CustomEnchantment {
                     if (ent.hasMetadata("spectator")) {
                         continue;
                     }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
+                        pEnt.sendMessage(CC.translate("&e&l** SOUL HARVESTER [&7Blocked Divine Immolation&e&l] **"));
+                        return;
+                    }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.PRISONS_DARKSTAR_PICKAXE_BLUE) && Math.random() < 0.15) {
+                        pEnt.sendMessage(CC.translate("&3&l** DARKSTAR CHASER [&7Blocked Divine Immolation&3&l] **"));
+                        return;
+                    }
+
+
+                    if (playerHit instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
+                        return;
+                    }
+
                     final LivingEntity le = (LivingEntity) ent;
                     final Player attacker = (Player) player;
                     if (le.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player) le).isActive())
@@ -192,15 +208,13 @@ public class DivineImmolation extends CustomEnchantment {
                     ((Player) le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
                     ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
 
-                    if (playerHit instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
-                        return;
-                    }
+
 
                     double multiplier = 1.0;
                     if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
                         multiplier += 0.25;
                     }
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2 * 20, 1));
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 1 * 20, 1));
 
                     ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                     ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));

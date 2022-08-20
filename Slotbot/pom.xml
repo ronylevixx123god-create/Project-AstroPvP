@@ -66,6 +66,13 @@
         <!-- System repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>lottable</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LootTable.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>dungeons</artifactId>
             <version>0.1</version>
             <scope>system</scope>
