@@ -11,7 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class BloodhoundListener implements Listener {
-   @EventHandler(priority = EventPriority.HIGHEST)
+   @EventHandler
    public void onEntityDamage(EntityDamageByEntityEvent event) {
       if (event.getEntity().getType().equals(EntityType.PLAYER) && event.getDamager().getType().equals(EntityType.PLAYER)) {
          Player damager = (Player)event.getDamager();

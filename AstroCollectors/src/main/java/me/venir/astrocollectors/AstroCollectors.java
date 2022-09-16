@@ -52,6 +52,12 @@ public class AstroCollectors extends JavaPlugin {
             }
             System.out.println("[Collectors] Rescanned spawners for all chunk collectors!");
         }, 140L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
+            CollectorManager.DELEGATE.saveToFile(collectorsFile);
+            System.out.println("[Collectors] Saved collectors!");
+
+        },60L, 60*20);
+
 
     }
 

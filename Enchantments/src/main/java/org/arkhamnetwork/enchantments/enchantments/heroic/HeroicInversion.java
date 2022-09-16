@@ -41,7 +41,7 @@ public class HeroicInversion extends HeroicCustomEnchantment {
                     playerHit.sendMessage(ChatColor.DARK_PURPLE + "* CORRUPTED [" + ChatColor.RED + heal + ChatColor.DARK_PURPLE + " DMG] *");
                     return;
                 }
-                GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
+                //GeneralUtil.healPlayer((LivingEntity) playerHit, heal);
                 try {
                     de.inventivegames.particle.ParticleEffect.SPELL.sendToPlayer(playerHit,playerHit.getLocation(), 0,1, 0,1.0f,4);
                 } catch (Exception exception) {

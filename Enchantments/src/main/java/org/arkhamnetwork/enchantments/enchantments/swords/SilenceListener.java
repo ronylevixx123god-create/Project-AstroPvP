@@ -7,6 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
 import org.bukkit.metadata.MetadataValue;
@@ -18,8 +19,10 @@ public final class SilenceListener implements Listener {
             priority = EventPriority.HIGH,
             ignoreCancelled = true
     )
-    public void onEntityDamage(EntityDamageEvent e) {
+    public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
+        if (e.getDamager().hasMetadata("banshee_active")) return;
+        if (e.getDamager().hasMetadata("mutated_banshee")) return;
         if (e.getEntity().hasMetadata("neutralized")) {
             e.setDamage(e.getDamage(DamageModifier.BASE) * 1.35D);
         }
@@ -30,14 +33,15 @@ public final class SilenceListener implements Listener {
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
                 e.setDamage(e.getDamage(DamageModifier.BASE) * (1.225D + extraStackDmg));
             } else {
-                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.175D + extraStackDmg));
+                e.setDamage(e.getDamage(DamageModifier.BASE) * (1.2 + extraStackDmg));
 
             }
 
             for(int i = 0; i < stacks; ++i) {
 
                 try {
-                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation().clone().add(0.0D, 1.0D, 0.0D), 1.0f, 1.0f, 1.0f, 0.1f, 5);
+                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation().clone().add(0.0D, 1.0D, 0.0D), 1.0f, 1.0f, 1.0f, 0.1f, 15);
+
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }

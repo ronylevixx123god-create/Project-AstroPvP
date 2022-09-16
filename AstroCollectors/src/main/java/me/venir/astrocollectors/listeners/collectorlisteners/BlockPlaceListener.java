@@ -24,7 +24,7 @@ public class BlockPlaceListener implements Listener {
             Language.CAN_NOT_PLACE_HERE.send(event.getPlayer());
             event.getPlayer().sendMessage(ChatColor.RED + "The collector is located at: " + CollectorManager.DELEGATE.getCollector(location.getChunk()).getLocation().getBlockX() + " "
             + CollectorManager.DELEGATE.getCollector(location.getChunk()).getLocation().getBlockY() + " " + CollectorManager.DELEGATE.getCollector(location.getChunk()).getLocation().getBlockZ());
-            event.getPlayer().sendMessage(ChatColor.YELLOW + "You can remove this chunk collector by typing: /removecollector");
+            event.getPlayer().sendMessage(ChatColor.RED + "You can remove this chunk collector by typing: /removecollector");
             event.setCancelled(true);
             return;
         }

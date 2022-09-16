@@ -12,6 +12,7 @@ package me.ifamasssxd.cosmicguishop.listeners;
 
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
 import org.bukkit.*;
@@ -94,7 +95,6 @@ public class PlayerListener implements Listener {
     @EventHandler(priority=EventPriority.LOW)
     public void onPlayerInteract(PlayerInteractEvent e) {
         if (e.hasItem() && ArkhamMoneyNotesAPI.isMoneyNote(e.getItem())) {
-            long itemID;
             e.setUseItemInHand(Event.Result.DENY);
             e.setCancelled(true);
             Player pl = e.getPlayer();
@@ -105,30 +105,24 @@ public class PlayerListener implements Listener {
                 pl.updateInventory();
                 return;
             }
-            if (pl.getWorld().getEnvironment() == World.Environment.THE_END && !pl.getWorld().getName().equalsIgnoreCase("nebbula")) {
-                pl.sendMessage((Object)ChatColor.RED + "You cannot deposit money notes in The End dimension.");
+            if (pl.getWorld().getEnvironment() == World.Environment.THE_END && !pl.getWorld().getName().equalsIgnoreCase("nebula")) {
+                pl.sendMessage((Object)ChatColor.RED + "You cannot deposit money notes in The Space dimension.");
                 pl.sendMessage((Object)ChatColor.GRAY + "You can still combine them by stacking them in your inventory!");
                 return;
             }
-            long note_val = ArkhamMoneyNotesAPI.getMoneyNoteVal(e.getItem());
+
+
+            long note_val = ArkhamMoneyNotesAPI.getMoneyNoteVal(e.getItem()) * e.getItem().getAmount();
+
             if (bal + (double)note_val > 1.0E15) {
                 pl.sendMessage((Object)ChatColor.RED + "You do not have enough space in your /balance to deposit $" + note_val + "!");
                 pl.updateInventory();
                 return;
             }
-            if (e.getItem().getAmount() > 1) {
-                ItemStack is = e.getItem();
-                is.setAmount(is.getAmount() - 1);
-                pl.setItemInHand(is);
-            } else {
-                pl.setItemInHand(null);
-            }
+            pl.setItemInHand(null);
             pl.updateInventory();
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && (itemID = ItemID.getItemID((ItemStack)e.getItem())) != -1L) {
-                ItemID.blacklistIID((long)itemID, (String)"moneyNoteDeposit");
-            }
             double old_bal = CosmicGUIShop.getEconomy().getBalance((OfflinePlayer)pl);
-            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, Double.valueOf(note_val).doubleValue());
+            CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, Double.valueOf(note_val));
             if (CosmicGUIShop.getEconomy().getBalance((OfflinePlayer)pl) == old_bal && old_bal + (double)note_val >= 9.99999999999999E14) {
                 CosmicGUIShop.getEconomy().withdrawPlayer((OfflinePlayer)pl, old_bal);
                 CosmicGUIShop.getEconomy().depositPlayer((OfflinePlayer)pl, 1.0E15);

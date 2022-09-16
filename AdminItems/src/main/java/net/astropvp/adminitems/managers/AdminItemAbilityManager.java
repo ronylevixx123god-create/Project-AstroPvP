@@ -7,21 +7,21 @@ import java.util.*;
 
 @Getter
 public class AdminItemAbilityManager {
-    private List<UUID> trapBlockered;
+    private Map<UUID, Long> trapBlockered;
     private Map<UUID, BukkitRunnable> timeTravellers;
     public AdminItemAbilityManager() {
-        this.trapBlockered = new ArrayList<>();
+        this.trapBlockered = new HashMap<>();
         this.timeTravellers = new HashMap<>();
     }
 
 
 
     public boolean isTrapBlockered(UUID uuid) {
-        return trapBlockered.contains(uuid);
+        return trapBlockered.containsKey(uuid);
     }
 
     public void trapBlock(UUID uuid) {
-        trapBlockered.add(uuid);
+        trapBlockered.put(uuid, System.currentTimeMillis());
 
     }
 

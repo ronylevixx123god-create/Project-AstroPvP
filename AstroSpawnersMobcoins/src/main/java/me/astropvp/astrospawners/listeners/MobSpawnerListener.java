@@ -59,11 +59,11 @@ public class MobSpawnerListener implements Listener {
 
         EntityType type = ItemSpawner.getEntityTypeFromItem(item);
 
-        if (event.getBlock().getY() <= 200 && type != EntityType.BLAZE) {
-            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You are not allowed to place &n" + EntityUtils.getEntityName(type) + " Spawners&c above Y 200."));
+/*        if (event.getBlock().getY() <= 200 && type != EntityType.BLAZE) {
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You are not allowed to place &n" + EntityUtils.getEntityName(type) + " Spawners&c under Y 200."));
             event.setCancelled(true);
             return;
-        }
+        }*/
 
         if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlock().getChunk(), type)) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));

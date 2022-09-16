@@ -163,7 +163,7 @@ final class CommandNear
                 output.append(", ");
                 counter++;
             }
-            output.append(player.getName()).append("\u00a7f(\u00a74").append((long) Math.sqrt(delta)).append("m\u00a7f)");
+            output.append(player.getDisplayName()).append("\u00a7f(\u00a74").append((long) Math.sqrt(delta)).append("m\u00a7f)");
         }
         if (counter >= 32) {
             string = CC.translate("&c&l(!)&c There are too many players nearby!");
@@ -238,7 +238,7 @@ final class CommandNear
             for (Player p : Bukkit.getOnlinePlayers()) {
                 String displayName;
                 User userMatch = NearLegacy.ess3.getUser(p);
-                if (!getHidden && !CommandNear.canInteractWith(sourceUser, userMatch) || !(displayName = FormatUtil.stripFormat(userMatch.getName()).toLowerCase(Locale.ENGLISH)).contains(matchText))
+                if (!getHidden && !CommandNear.canInteractWith(sourceUser, userMatch) || !FormatUtil.stripFormat(userMatch.getName()).toLowerCase(Locale.ENGLISH).contains(matchText))
                     continue;
                 return userMatch;
             }

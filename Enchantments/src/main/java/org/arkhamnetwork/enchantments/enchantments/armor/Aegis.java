@@ -43,7 +43,7 @@ public class Aegis extends CustomEnchantment {
         Player pAttacker = (Player)attacker;
         if (enemies.size() > 8 - level &&
                 !enemies.contains(pAttacker.getUniqueId())) {
-            e.setDamage(e.getDamage() * 0.9D);
+            //e.setDamage(e.getDamage() * 0.9D);
             return;
         }
         enemies.add(pAttacker.getUniqueId());

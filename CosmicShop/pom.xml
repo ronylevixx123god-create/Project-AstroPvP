@@ -26,10 +26,7 @@
             <id>ess-repo</id>
             <url>https://ci.ender.zone/plugin/repository/everything/</url>
         </repository>
-        <repository>
-            <id>repo</id>
-            <url>https://repo.mattstudios.me/artifactory/public/</url>
-        </repository>
+
         <repository>
             <id>paper-repo</id>
             <url>https://papermc.io/repo/repository/maven-public/</url>

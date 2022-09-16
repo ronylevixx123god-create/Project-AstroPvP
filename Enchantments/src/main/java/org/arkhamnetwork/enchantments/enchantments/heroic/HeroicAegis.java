@@ -36,7 +36,7 @@ public class HeroicAegis extends HeroicCustomEnchantment {
         HashSet<UUID> enemies = player.hasMetadata("aegis_uniqueEnemies") ? (HashSet<UUID>) player.getMetadata("aegis_uniqueEnemies").get(0).value() : new HashSet<>();
         Player pAttacker = (Player)attacker;
         if (enemies.size() > 8 - level && !enemies.contains(pAttacker.getUniqueId())) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE));
+            //e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE));
             return;
         }
         enemies.add(pAttacker.getUniqueId());

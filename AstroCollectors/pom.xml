@@ -72,6 +72,20 @@
         </dependency>
         <dependency>
             <groupId>com.astropvp</groupId>
+            <artifactId>Holo</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HolographicDisplays.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.astropvp</groupId>
+            <artifactId>Holo</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/HolographicDisplays.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.astropvp</groupId>
             <artifactId>core</artifactId>
             <version>1.0</version>
             <scope>system</scope>

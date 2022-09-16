@@ -193,7 +193,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    @EventHandler
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;

@@ -1,7 +1,12 @@
 package me.venir.astrocollectors.collector;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.gmail.filoghost.holographicdisplays.api.Hologram;
+import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
+import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
 import com.google.common.collect.ImmutableList;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -50,6 +55,8 @@ public final class Collector {
     private final Reference<World> reference;
     private final double x, y, z;
     private final Queue<CollectorSellLog> sellLogs;
+    @Getter
+    private Hologram hologram;
 
 
     public Collector(World world, JSONObject data) {
@@ -64,6 +71,7 @@ public final class Collector {
         this.y = Double.parseDouble(String.valueOf(uncastedLocationArray.get(1)));
         this.z = Double.parseDouble(String.valueOf(uncastedLocationArray.get(2)));
         this.sellLogs = new LinkedBlockingQueue<>(10);
+
 
         this.lastUpdated = (long) data.get("lastUpdated");
 
@@ -81,16 +89,23 @@ public final class Collector {
         }
 
         this.worth = (double) data.get("worth");
-        ;
+
         this.tnt = (long) data.get("tnt");
-        ;
+        Location holoLoc = this.getLocation().clone();
+        holoLoc.add(0.5, 2, 0.5);
+
+        this.hologram = HologramsAPI.createHologram(AstroCollectors.INSTANCE, holoLoc);
+        hologram.appendTextLine(CC.translate("&a&lChunk Collector"));
+        hologram.appendTextLine(CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
+        hologram.appendTextLine(CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
     }
 
     public Collector(Location location) {
         this.reference = new WeakReference<>(location.getWorld());
-        this.x = location.getBlockX();
-        this.y = location.getBlockY();
-        this.z = location.getBlockZ();
+        this.x = location.getX();
+        this.y = location.getY();
+        this.z = location.getZ();
+
         this.sellLogs = new LinkedBlockingQueue<>(10);
         this.lastUpdated = System.currentTimeMillis();
 
@@ -99,6 +114,13 @@ public final class Collector {
 
         this.worth = 0.0;
         this.tnt = 0L;
+        Location holoLoc = this.getLocation().clone();
+        holoLoc.add(0.5, 2, 0.5);
+
+        this.hologram = HologramsAPI.createHologram(AstroCollectors.INSTANCE, holoLoc);
+        hologram.appendTextLine(CC.translate("&a&lChunk Collector"));
+        hologram.appendTextLine(CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
+        hologram.appendTextLine(CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
     }
 
     public void scanSpawners(Location location) {
@@ -182,7 +204,12 @@ public final class Collector {
     public void update() {
         this.updateWorth();
         this.updateTnt();
+        this.updateHologram();
         this.setLastUpdated(System.currentTimeMillis());
+    }
+
+    public void deleteHologram() {
+        this.hologram.delete();
     }
 
     private void updateWorth() {
@@ -217,6 +244,11 @@ public final class Collector {
             this.sellLogs.poll();
             this.sellLogs.offer(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.MOB_DROPS, worth));
         }
+    }
+
+    public void updateHologram() {
+        updateHologramLine(1, CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
+        updateHologramLine(2, CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
     }
 
     public List<CollectorSellLog> getSellLogs() {
@@ -263,5 +295,10 @@ public final class Collector {
         jsonObject.put("worth", this.worth);
         jsonObject.put("tnt", this.tnt);
         return jsonObject;
+    }
+
+    private void updateHologramLine( int line, String newText) {
+        final TextLine textLine = (TextLine)this.hologram.getLine(line);
+        textLine.setText(newText);
     }
 }

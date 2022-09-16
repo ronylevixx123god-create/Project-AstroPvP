@@ -247,6 +247,7 @@ public class HolyWhiteScrollListener implements Listener {
 
         if (killed.getTotalExperience() > 0) {
             e.getDrops().add(ExpBottles.getXpBottle(killed.getTotalExperience(), killed.getName()));
+            killed.setTotalExperience(0);
         }
         List<ItemStack> itemList = e.getDrops();
         itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
@@ -257,7 +258,7 @@ public class HolyWhiteScrollListener implements Listener {
         }
         e.getDrops().clear();
         itemList.clear();
-        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed + "'s Death Loot has been put into your &n/collect&c."));
+        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed.getName() + "'s Death Loot has been put into your &n/collect&c."));
 
     }
 

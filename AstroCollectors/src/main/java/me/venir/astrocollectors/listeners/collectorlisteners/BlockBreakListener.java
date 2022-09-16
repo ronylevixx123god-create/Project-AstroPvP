@@ -57,6 +57,7 @@ public class BlockBreakListener implements Listener {
         if (!CollectorManager.DELEGATE.isCollectorContained(location)) return;
         Location collectorLocation = CollectorManager.DELEGATE.getCollector(location).getLocation();
         assert collectorLocation != null;
+        CollectorManager.DELEGATE.getCollector(location).deleteHologram();
         if (!collectorLocation.equals(location)) return;
         CollectorManager.DELEGATE.removeCollector(location);
         block.setType(Material.AIR,true);

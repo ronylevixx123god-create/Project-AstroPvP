@@ -13,6 +13,7 @@ import net.astropvp.adminitems.managers.AdminItemAbilityManager;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import xyz.xenondevs.particle.ParticleBuilder;
 import xyz.xenondevs.particle.ParticleEffect;
@@ -55,7 +56,7 @@ public class TimeTravelerTask extends BukkitRunnable {
         }
         if (duration == 0) {
             Language.TIME_TRAVEL_ENDED.send(player);
-            player.teleport(spawnLocation);
+            player.teleport(spawnLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
             player.playSound(player.getLocation(), Sound.PORTAL_TRIGGER, 10f, 1.4f);
             hologram.delete();
             abilityManager.getTimeTravellers().remove(player.getUniqueId());

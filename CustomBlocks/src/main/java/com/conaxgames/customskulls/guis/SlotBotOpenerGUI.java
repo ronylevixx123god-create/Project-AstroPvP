@@ -45,7 +45,6 @@ public class SlotBotOpenerGUI {
 
         int tickets = CosmicSlotBotAPI.getSlotsInInventory(p);
 
-        double price = tickets * 10000;
 
 
         ItemStack confirmButton = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
@@ -53,8 +52,6 @@ public class SlotBotOpenerGUI {
         meta.setDisplayName(CC.translate("&a&lConfirm Button"));
         List<String> lore = new ArrayList<>();
         lore.add(CC.translate("&7&nRight-Click&7 to open &f" + tickets + "&7 Slotbot Tickets"));
-        lore.add("");
-        lore.add(CC.translate("&a&lPrice: &f$" + NumberUtils.formatMoney(price) + " &7($10,000 x &n" + tickets + "&7)"));
         meta.setLore(lore);
         confirmButton.setItemMeta(meta);
 
@@ -69,10 +66,7 @@ public class SlotBotOpenerGUI {
                 p.sendMessage(CC.translate("&c&l(!)&c You have no slots in your inventory!"));
                 return;
             }
-            if (BalanceTop.getEconomy().getBalance(p) < price) {
-                p.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to use the Slotbot Machine!"));
-                return;
-            }
+
             int a = tickets;
 
             Location nearbyChest = CustomBlockUtil.getClosestChestLocation(data.getLocation());
@@ -113,8 +107,6 @@ public class SlotBotOpenerGUI {
                 }
             }
             p.getInventory().setContents(inventory.getContents());
-            BalanceTop.getEconomy().withdrawPlayer(p, price);
-            p.sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(price)));
             p.closeInventory();
             p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
 

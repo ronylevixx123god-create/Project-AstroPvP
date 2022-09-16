@@ -1,5 +1,6 @@
 package net.astropvp.adminitems.items;
 
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.astropvp.adminitems.AstroAdminItemsAPI;
 import net.astropvp.adminitems.cooldowns.AbilityCooldown;
 import net.astropvp.adminitems.language.Language;
@@ -11,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.util.Vector;
 
 import java.util.*;
@@ -124,10 +126,12 @@ public class SwitcherBall extends AdminItem implements Throwable {
             return;
         }
 
+        if (!WorldGuardUtils.isPvPEnabled(shooter.getLocation()) || !WorldGuardUtils.isPvPEnabled(hit.getLocation())) return;
+
         this.snowballPlayers.remove(snowball.getUniqueId());
         final Location loc = shooter.getLocation();
-        shooter.teleport(hit);
-        hit.teleport(loc);
+        shooter.teleport(hit, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        hit.teleport(loc, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         shooter.sendMessage(CC.translate(Language.SWITCHERED.getMessage().replace("%shot%", hit.getName())));
         hit.sendMessage(CC.translate(Language.SWITCHERED_BY_PLAYER.getMessage().replace("%player%", shooter.getName())));
         CooldownUtils.registerCooldown(shooter, new AbilityCooldown(getCooldownID(), cooldown));

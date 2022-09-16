@@ -22,9 +22,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class BonusListener implements Listener {
-    @EventHandler(
-            ignoreCancelled = true
-    )
+    @EventHandler
     public void onEntityDamageByEntityEvent(EntityDamageByEntityEvent event) {
         if (WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation())) {
             if (event.getDamager() instanceof Player) {

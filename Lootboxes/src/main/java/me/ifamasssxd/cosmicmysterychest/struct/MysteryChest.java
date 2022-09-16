@@ -30,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -163,6 +164,11 @@ public class MysteryChest {
     public void removeItem(ItemStack item) {
         getGarunteedItems().remove(item);
         getLootItems().removeIf(customLoot -> customLoot.getItem() == item);
+        try {
+            CosmicMysteryChest.get().getChestManager().saveMysteryChest(this);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public CustomLoot getRandomPrize() {

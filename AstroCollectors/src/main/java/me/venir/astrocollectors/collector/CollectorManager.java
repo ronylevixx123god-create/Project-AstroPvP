@@ -1,5 +1,6 @@
 package me.venir.astrocollectors.collector;
 
+import me.venir.astrocollectors.utils.ChunkUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;

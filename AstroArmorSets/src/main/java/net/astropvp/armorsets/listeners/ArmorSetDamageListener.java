@@ -64,9 +64,6 @@ public class ArmorSetDamageListener implements Listener {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onAttackCrystal((Player) attacker, attacked, e, amount);
-                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY4TH_2022_HELMET)) {
-                        e.setDamage(e.getDamage()*1.15);
-                    }
                 }
             }
 

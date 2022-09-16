@@ -51,7 +51,6 @@ public class CrateKeyOpenerGUI {
         for (Integer amount : keys.values()) {
             tickets += amount;
         }
-        double price = tickets * 1000;
 
 
         ItemStack confirmButton = new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 5);
@@ -59,8 +58,6 @@ public class CrateKeyOpenerGUI {
         meta.setDisplayName(CC.translate("&a&lConfirm Button"));
         List<String> lore = new ArrayList<>();
         lore.add(CC.translate("&7&nRight-Click&7 to open &f" + tickets + "&7 Cratekeys"));
-        lore.add("");
-        lore.add(CC.translate("&a&lPrice: &f$" + NumberUtils.formatMoney(price) + " &7($1,000 x &n" + tickets + "&7)"));
         meta.setLore(lore);
         confirmButton.setItemMeta(meta);
 
@@ -75,10 +72,7 @@ public class CrateKeyOpenerGUI {
                 player.sendMessage(CC.translate("&c&l(!)&c You have no cratekeys in your inventory!"));
                 return;
             }
-            if (BalanceTop.getEconomy().getBalance(player) < price) {
-                player.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to use the CrateKey Opener!"));
-                return;
-            }
+
 
 
             Location nearbyChest = CustomBlockUtil.getClosestChestLocation(data.getLocation());
@@ -121,8 +115,6 @@ public class CrateKeyOpenerGUI {
                 }
             }
             player.getInventory().setContents(inventory.getContents());
-            BalanceTop.getEconomy().withdrawPlayer(player, price);
-            player.sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(price)));
             player.closeInventory();
             player.playSound(player.getLocation(), Sound.VILLAGER_YES, 5, 5);
 

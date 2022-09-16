@@ -18,7 +18,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.event.player.PlayerKickEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
 
 import java.util.*;
 
@@ -106,7 +109,8 @@ public class TrapBlocker extends AdminItem implements Interactable {
         StringBuilder listFormatted = new StringBuilder(new StringBuilder());
         for (UUID uuid : trapBlockedPossibleList) {
             Player enemy = Bukkit.getPlayer(uuid);
-            abilityManager.trapBlock(enemy.getUniqueId());
+            if (enemy == null) continue;
+            abilityManager.trapBlock(uuid);
             Bukkit.getScheduler().runTaskLaterAsynchronously(AdminItemsPlugin.getInstance(), ()-> {
                 Language.TRAP_BLOCKER_ENDED.send(Bukkit.getPlayer(uuid));
                 abilityManager.getTrapBlockered().remove(uuid);
@@ -141,6 +145,27 @@ public class TrapBlocker extends AdminItem implements Interactable {
         if (abilityManager.isTrapBlockered(event.getPlayer().getUniqueId())) {
             Language.TRAP_BLOCKER_CANNOT_INTERACT.send(event.getPlayer());
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onLogout(PlayerQuitEvent event) {
+        if (abilityManager.isTrapBlockered(event.getPlayer().getUniqueId())) {
+            abilityManager.getTrapBlockered().remove(event.getPlayer().getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onKick(PlayerKickEvent event) {
+        if (abilityManager.isTrapBlockered(event.getPlayer().getUniqueId())) {
+            abilityManager.getTrapBlockered().remove(event.getPlayer().getUniqueId());
+        }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        if (abilityManager.isTrapBlockered(event.getEntity().getUniqueId())) {
+            abilityManager.getTrapBlockered().remove(event.getEntity().getUniqueId());
         }
     }
 

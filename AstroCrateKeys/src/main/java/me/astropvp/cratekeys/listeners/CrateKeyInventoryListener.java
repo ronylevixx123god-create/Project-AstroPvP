@@ -1,16 +1,19 @@
 package me.astropvp.cratekeys.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.utils.ConfigUtils;
+import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTableType;
+import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
@@ -100,7 +103,14 @@ public class CrateKeyInventoryListener implements Listener {
 
         CrateType type = data.getCrateType();
         ItemStack item = LootTableAPI.getRandomLootItem(LootTableType.valueOf(type.name()));
-        LootFilterAPI.giveItem(player, LootTable.valueOf(type.name()), item);
+        if (ArkhamMoneyNotesAPI.isMoneyNote(item)) {
+            double amount = ArkhamMoneyNotesAPI.getMoneyNoteVal(item);
+            EconomyUtils.depositBalance(player, amount);
+            player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+            player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ $" + amount);
+        } else {
+            LootFilterAPI.giveItem(player, LootTable.valueOf(type.name()), item);
+        }
     }
 }
 

