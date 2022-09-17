@@ -16,11 +16,13 @@ public class AstroPlayer implements KeyToSave {
     private boolean factionsLandTitleEnabled;
     private boolean killTitleEnabled;
     private ChatColor chatColor;
+    private boolean lootTableMessageEnabled;
 
     public AstroPlayer(UUID uuid) {
         this.uuid = uuid;
         this.factionsLandTitleEnabled = true;
         this.killTitleEnabled = true;
+        this.lootTableMessageEnabled = true;
         this.chatColor = ChatColor.WHITE;
     }
 

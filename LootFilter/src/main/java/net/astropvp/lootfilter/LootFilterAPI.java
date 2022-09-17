@@ -3,6 +3,8 @@ package net.astropvp.lootfilter;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import net.astropvp.core.AstroCore;
+import net.astropvp.core.struct.AstroPlayer;
 import net.astropvp.lootfilter.data.LootFilterData;
 import net.astropvp.lootfilter.struct.LootTable;
 import org.bukkit.entity.Player;
@@ -15,7 +17,11 @@ public class LootFilterAPI {
             player.sendMessage(CC.translate("&c&l(!)&c " + ItemUtils.getDisplayName(item) + " &chas been filtered out, type &7\"/lootfilter\"&c to edit your &l" + lootTable.getFancyName() + " Filter&c."));
             return;
         }
-        player.sendMessage(CC.translate("&a&l(!)&a You have received " + ItemUtils.getDisplayName(item) + " &afrom the &l" + lootTable.getFancyName() + "&a. Type &7\"/lootfilter\"&a to edit your &l" + lootTable.getFancyName() + " Filter&a."));
+        AstroPlayer astroPlayer = AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId());
+        if (astroPlayer.isLootTableMessageEnabled()) {
+            player.sendMessage(CC.translate("&a&l(!)&a You have received " + ItemUtils.getDisplayName(item) + " &afrom the &l" + lootTable.getFancyName() + "&a. Type &7\"/lootfilter\"&a to edit your &l" + lootTable.getFancyName() + " Filter&a."));
+            player.sendMessage(CC.translate( "&7You can toggle this message with &f\"/lootfilter togglemessage\"&7."));
+        }
         PlayerUtil.giveOrDropProtectedItem(player, item, 60);
     }
 

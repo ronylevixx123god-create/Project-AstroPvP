@@ -2,6 +2,7 @@ package me.astropvp.cratekeys.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.ExpUtils;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
@@ -13,6 +14,7 @@ import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTableType;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
@@ -108,6 +110,15 @@ public class CrateKeyInventoryListener implements Listener {
             EconomyUtils.depositBalance(player, amount);
             player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
             player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ $" + amount);
+        } else if (ExpBottles.isXpBottle(item)) {
+            int xpValue = ExpBottles.getXpAmount(item);
+            int exp = (player.getTotalExperience() +xpValue);
+            player.setTotalExperience(0);
+            player.setExp(0);
+            player.setLevel(0);
+            player.giveExp(exp);
+            player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+            player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ " + xpValue + " xp");
         } else {
             LootFilterAPI.giveItem(player, LootTable.valueOf(type.name()), item);
         }

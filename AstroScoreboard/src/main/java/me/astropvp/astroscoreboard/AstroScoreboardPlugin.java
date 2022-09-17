@@ -20,6 +20,7 @@ import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import me.ifamasssxd.cosmichcf.struct.Outpost;
 import me.neznamy.tab.api.TabAPI;
+import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
@@ -97,6 +98,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-time-spent%", getMS(1), player -> getSpaceTimeSpentString((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-money-made%", getMS(5), player -> getSpaceMoneyMadePlayer((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-xp-earned%", getMS(5), player -> getSpaceXPEarned((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%mobcoins%", getMS(1), player -> getMobCoins((Player) player.getPlayer()));
 
     }
 
@@ -122,6 +124,10 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     public String getSpaceXPEarned(Player player) {
         SpacePlayerData data = SpacePlayerData.findPlayer(player);
         return NumberUtils.formatMoney(data.getXpMade());
+    }
+
+    public String getMobCoins(Player player) {
+        return NumberUtils.formatMoney(MobcoinAPI.getBalance(player));
     }
 
     public String getSpaceTimeSpentString(Player player) {

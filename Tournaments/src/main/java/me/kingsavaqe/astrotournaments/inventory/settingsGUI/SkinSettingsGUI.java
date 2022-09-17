@@ -118,7 +118,7 @@ public class SkinSettingsGUI {
             new PlayerSettingsGUI(AstroTournamentsPlugin.instance,tournamentPlayer).getUI().open(tournamentPlayer.getPlayer());
         }));
 
-        ItemStack glass = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).setName("&7").build();
+        ItemStack glass = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).setName("&7").colorize().build();
         this.skinSettingsGUI.getFiller().fill(new GuiItem(glass));
 
     }

@@ -5,6 +5,7 @@ import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.util.CC;
 import com.conaxgames.customskulls.util.CrateKeyAPI;
 import com.conaxgames.customskulls.util.CustomBlockUtil;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import de.inventivegames.particle.ParticleEffect;
@@ -16,15 +17,14 @@ import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.utils.ConfigUtils;
 
+import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTableType;
+import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
@@ -94,8 +94,23 @@ public class CrateKeyOpenerGUI {
                         }
                         ItemStack itemStack = LootTableAPI.getRandomLootItem(LootTableType.valueOf(type.name()));
                         if (!LootFilterAPI.isFiltered(player,LootTable.valueOf(type.name()), itemStack)) {
-
-                            chest.getInventory().addItem(itemStack);
+                            if (ArkhamMoneyNotesAPI.isMoneyNote(itemStack)) {
+                                double moneyNoteVal = ArkhamMoneyNotesAPI.getMoneyNoteVal(itemStack);
+                                EconomyUtils.depositBalance(player, moneyNoteVal);
+                                player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                                player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ $" + moneyNoteVal);
+                            } else if (ExpBottles.isXpBottle(itemStack)) {
+                                int xpValue = ExpBottles.getXpAmount(itemStack);
+                                int exp = (player.getTotalExperience() + xpValue);
+                                player.setTotalExperience(0);
+                                player.setExp(0);
+                                player.setLevel(0);
+                                player.giveExp(exp);
+                                player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                                player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ " + xpValue + " xp");
+                            } else {
+                                chest.getInventory().addItem(itemStack);
+                            }
                         }
                         amount--;
                     }

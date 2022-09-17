@@ -9,6 +9,8 @@ import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
+import net.astropvp.core.AstroCore;
+import net.astropvp.core.struct.AstroPlayer;
 import net.astropvp.lootfilter.AstroLootFilterPlugin;
 import net.astropvp.lootfilter.guis.LootFilterMainGUI;
 import net.astropvp.lootfilter.struct.LootTable;
@@ -23,7 +25,18 @@ public class LootFilterCommand extends BaseCommand {
         LootFilterMainGUI lootFilterMainGUI = new LootFilterMainGUI(player.getUniqueId());
         lootFilterMainGUI.getLootFilterMainGUI().open(player.getPlayer());
     }
+    @Subcommand("togglemessage|message|togglemessages|stfu")
+    public void toggleMessage(Player player) {
+        AstroPlayer astroPlayer = AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId());
+        if (astroPlayer.isLootTableMessageEnabled()) {
+            astroPlayer.setLootTableMessageEnabled(false);
+            player.sendMessage(CC.translate("&e&l(!)&e LootFilter messages have been &c&lDISABLED&e."));
+        } else {
+            astroPlayer.setLootTableMessageEnabled(true);
+            player.sendMessage(CC.translate("&e&l(!)&e LootFilter messages have been &a&lENABLED&e."));
+        }
 
+    }
     @CommandPermission("admin")
     @Subcommand("update|refresh")
     public void updateCommand(Player player) {

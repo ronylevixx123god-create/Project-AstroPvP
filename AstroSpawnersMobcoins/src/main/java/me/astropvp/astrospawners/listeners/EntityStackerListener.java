@@ -23,6 +23,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.OutpostUtil;
+import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creature;
@@ -120,6 +121,8 @@ public class EntityStackerListener implements Listener {
             }
 
 
+
+
             int amount = mobStackerUtils.getStackSize(entity);
             if (amount <= 1) {
                 mobStackerUtils.removeStackedMob(entity);
@@ -133,6 +136,15 @@ public class EntityStackerListener implements Listener {
             if (remove > 1) {
                 p.sendMessage(CC.translate("&6&l* KILL AURA [&7-" + remove + "x&6&l] *"));
             }
+
+
+            int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
+            if (Math.random() < AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
+                MobcoinAPI.addMobcoins(p, mcAmount);
+                p.playSound(p.getLocation(), Sound.LEVEL_UP, 2, 1);
+                p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
+            }
+
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
 
 

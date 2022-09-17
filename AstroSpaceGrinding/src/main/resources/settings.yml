@@ -6,3 +6,5 @@ spaceAlienMinXP: 5000
 messagePerKills: 25
 spaceAlienRewardChance: 25
 forceFieldPrice: 1000000 #per 30 minutes
+mobcoinChance: 25
+mobcoinAmount: 100

@@ -17,9 +17,11 @@ import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
+import me.astropvp.astrospawners.utils.MobCoinUtils;
 import net.astropvp.core.utils.OutpostUtil;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTableType;
+import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -125,12 +127,13 @@ public class SpaceAlien extends SpaceMonster {
         }
 
         if (OutpostUtil.hasMarsOutpost(player)) {
-            chance *=2;
+            chance *= 2;
         }
 
         if (ForceFieldData.findPlayer(player).isActive()) {
             chance *= 0.70;
         }
+
 
         if (Math.random() < chance / 100) {
             rewards.add(LootTableAPI.getRandomLootItem(LootTableType.SPACE));
@@ -138,6 +141,14 @@ public class SpaceAlien extends SpaceMonster {
                 rewards.add(LootTableAPI.getRandomLootItem(LootTableType.SPACE));
             }
         }
+
+        int amount = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
+        if (Math.random() < AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
+            MobcoinAPI.addMobcoins(player, amount);
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 2, 1);
+            player.sendMessage(CC.translate("&6&l+ &6⛃&e" + amount));
+        }
+
         return rewards;
     }
 

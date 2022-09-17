@@ -42,6 +42,7 @@ public enum CosmicToggle {
     AUCTION("Auction Bid Alerts", "/ah stfu"),
     DUELS("Duel Requests", "/duel toggle"),
     FACTION_LAND_TITLE("Faction Land Title", "/togglefactionland"),
+    LOOTTABLE_MESSAGE("LootFilter Message", "/lootfilter togglemessage"),
     KILL_LAND_TITLE("Kill Title", "/togglekilltitle"),
     CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
 
@@ -89,6 +90,10 @@ public enum CosmicToggle {
 
         if (this == KILL_LAND_TITLE) {
             return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isKillTitleEnabled();
+        }
+
+        if (this == LOOTTABLE_MESSAGE) {
+            return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isLootTableMessageEnabled();
         }
 
         if (this == CLEAR_INVENTORY_CONFIRMATION) {

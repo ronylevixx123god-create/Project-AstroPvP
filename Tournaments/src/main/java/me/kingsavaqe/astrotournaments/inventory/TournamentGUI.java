@@ -37,7 +37,7 @@ public class TournamentGUI {
         this.tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
         this.astroTournamentInventory = new Gui(3, "Astro Tournaments Menu");
         this.astroTournamentInventory.setDefaultClickAction(event -> event.setCancelled(true));
-        ItemStack glass = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).setName("&7").build();
+        ItemStack glass = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).setName("&7").colorize().build();
         this.astroTournamentInventory.getFiller().fill(new GuiItem(glass));
         this.astroTournamentInventory.setItem(1, 1, new GuiItem(createProfile(tournamentManager.getTournamentPlayer(player.getUniqueId()))));
         this.astroTournamentInventory.setItem(1, 9, new GuiItem(createInfoItem()));
