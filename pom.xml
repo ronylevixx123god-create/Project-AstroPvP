@@ -68,6 +68,7 @@
         <module>LootTable</module>
         <module>MysteryChests</module>
         <module>AdminItems</module>
+        <module>ItemFilter</module>
 
     </modules>
 
