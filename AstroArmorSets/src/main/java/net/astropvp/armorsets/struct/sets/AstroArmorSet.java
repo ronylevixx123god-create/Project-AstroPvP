@@ -68,7 +68,7 @@ public class AstroArmorSet extends ArmorSet {
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 30 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent  * 0.01)));
-        if (Math.random() < 0.02) {
+        if (Math.random() < 0.04) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
                 return;
 
@@ -107,7 +107,7 @@ public class AstroArmorSet extends ArmorSet {
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 7 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
-        if (Math.random() < 0.01) {
+        if (Math.random() < 0.025) {
             if (!CannonballAmulet.active.contains(event.getEntity().getUniqueId())) {
 
                 if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))

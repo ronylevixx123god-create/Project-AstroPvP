@@ -13,7 +13,7 @@ import java.util.UUID;
 @Setter
 public class MobcoinTransaction implements Serializable {
     private UUID buyer;
-    private double price;
+    private int price;
     private long time;
     private ItemStack item;
 }

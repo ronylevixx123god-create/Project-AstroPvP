@@ -74,7 +74,7 @@ public class AncientArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageIncrease")  *  0.01));
+        double increasePercent = 30 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
         if (Math.random() < 0.01 && attacked instanceof Player) {
             if (!WorldGuardUtils.isPvPEnabled(attacker.getLocation()) || !WorldGuardUtils.isPvPEnabled(attacked.getLocation()))
@@ -122,7 +122,7 @@ public class AncientArmorSet extends ArmorSet {
         message.add("");
         message.add(CC.translate("&3&lANCIENT SET BONUS"));
         message.add(CC.translate("&8● &3Enemies deal 15% less damage to you."));
-        message.add(CC.translate("&8● &3Deal +35% damage to all enemies."));
+        message.add(CC.translate("&8● &3Deal +30% damage to all enemies."));
         message.add(CC.translate("&8● &3+10% Damage from Outgoing Soul Enchants."));
         message.add(CC.translate("&8● &3-50% Knockback."));
         message.add(CC.translate("&8● &3Auto Bless."));

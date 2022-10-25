@@ -52,7 +52,7 @@ public class MobcoinManager extends SaveLoadManager<MobcoinsUser> {
         }
     }
 
-    public void purchaseItem(UUID uuid, ItemStack item, double price) {
+    public void purchaseItem(UUID uuid, ItemStack item, int price) {
         MobcoinsUser shardsUser = getShardsUser(uuid);
         if (shardsUser.canAfford(price)) {
             MobcoinTransaction shardTransaction = new MobcoinTransaction(shardsUser.getUuid(),price, System.currentTimeMillis(), item);

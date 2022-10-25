@@ -34,6 +34,15 @@ public class Queue<E> {
         return list.contains(item);
     }
 
+    public int getPosition(E item) {
+        for (int i = 0; i < this.size(); i++) {
+            if (list.get(i) == item) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
     public void clear() {
         list.clear();
     }

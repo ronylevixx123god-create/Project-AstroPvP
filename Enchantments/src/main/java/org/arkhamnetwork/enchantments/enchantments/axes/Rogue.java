@@ -47,7 +47,7 @@ public class Rogue extends CustomEnchantment {
             return;
         }
         if (this.isPlayerBehind(p, playerHit)) {
-            double multi = 1.0D + 0.166666666666666D * (double) level + Math.random() / 2.0D;
+            double multi = 1.0D + (0.166666666666666D * (double) level * 0.5) + (Math.random() / 2.0D);
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;
@@ -69,12 +69,12 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_MUTATED_BELT)) {
+            if ((AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_BELT) && Math.random() < 0.1) || (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_MUTATED_BELT) && Math.random() < 0.1)) {
                 p.sendMessage(CC.translate("&c&l* ROGUE &7Blocked [Bling Belt] &c&l*"));
                 return;
             }
 
-                if (CannonballAmulet.affected.contains(playerHit)) {
+            if (CannonballAmulet.affected.contains(playerHit)) {
                 return;
             }
 
@@ -96,7 +96,7 @@ public class Rogue extends CustomEnchantment {
 
                 }
 
-                    if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
                     multi *= 1.15;
                 }
 
@@ -105,10 +105,10 @@ public class Rogue extends CustomEnchantment {
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
-                    multi*=0.75;
+                    multi *= 0.75;
                 }
 
-                    if (player.hasMetadata("carver_damage")) {
+                if (player.hasMetadata("carver_damage")) {
                     multi *= 1.1;
                 }
 
@@ -124,6 +124,10 @@ public class Rogue extends CustomEnchantment {
                     multi *= 0.67;
                 }
 
+                if (multi <= 1) {
+                    multi = 1.15;
+                }
+
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&e&lSoul Harvester&c&l)"));
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
@@ -135,7 +139,7 @@ public class Rogue extends CustomEnchantment {
                 }
 
 
-                e.setDamage( damage + multi * 0.1);
+                e.setDamage(damage + multi * 0.1);
 
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);

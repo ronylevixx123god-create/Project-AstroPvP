@@ -6,7 +6,6 @@ import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.struct.factions.points.FactionPointUtils;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import java.text.DecimalFormat;
@@ -35,6 +34,7 @@ import me.ifamasssxd.cosmicbosses.utils.NumberUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
 import net.astropvp.core.utils.InventoryUtils;
+import net.crankedpvp.shards.MobcoinAPI;
 import net.minecraft.server.v1_8_R3.*;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -486,11 +486,15 @@ public abstract class Boss extends Equipable implements Healable {
                 Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(most, "BOSS_TOP_DAMAGE", new Object[] { this.bossType.name(), getEntity() }));
             }
         }
+        Random random = new Random();
         int placement = 1;
         for (Player player : topDamage) {
             boolean noRoom = false;
             if (title != null && this.random.nextInt(100) == 0 && !addItem(player, title))
                 noRoom = true;
+            int coinsAmount = random.nextInt(250 - 100) + 100;
+            MobcoinAPI.addMobcoins(player, coinsAmount);
+            player.sendMessage(CC.translate("&6&l+ &6⛃&e" + coinsAmount));
             System.out.println("Top Damage: " + player.getName() + " Amount Per: " + amountPerPerson);
             List<ItemStack> itemsReceived = Lists.newArrayList();
             for (int i = 0; i < amountPerPerson && !getLootPool().isEmpty(); i++) {

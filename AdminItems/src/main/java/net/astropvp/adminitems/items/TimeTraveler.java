@@ -95,9 +95,11 @@ public class TimeTraveler extends AdminItem implements Interactable {
 
     public void procOnClickAbility(Player player) {
 
-        final Location spawnLocation = player.getEyeLocation();
+        final Location spawnLocation = player.getLocation();
         CooldownUtils.registerCooldown(player, new AbilityCooldown(getCooldownID(), cooldown));
-        Hologram hologram = HologramsAPI.createHologram(AdminItemsPlugin.getInstance(), spawnLocation.clone());
+        Location holoLoc = spawnLocation.clone();
+        holoLoc.add(0, 1.5, 0);
+        Hologram hologram = HologramsAPI.createHologram(AdminItemsPlugin.getInstance(), holoLoc);
         hologram.appendTextLine(CC.translate("&d&l✰ &5&lTime Travelling &d&l✰"));
         hologram.appendTextLine(CC.translate("&d&l * &fTime: &d" + 0 + "s &fleft"));
         hologram.appendTextLine(CC.translate("&d&l * &fTraveler: &d" + player.getName()));

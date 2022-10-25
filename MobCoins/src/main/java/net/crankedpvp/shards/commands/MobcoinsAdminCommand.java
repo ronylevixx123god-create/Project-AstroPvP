@@ -35,7 +35,7 @@ public class MobcoinsAdminCommand extends CommandBase {
 
     @SubCommand("additem")
     @Permission("cranked.admin")
-    public void onAddItem(CommandSender sender, Double price) {
+    public void onAddItem(CommandSender sender, Integer price) {
         Player player = ((Player)sender);
         ItemStack item = player.getItemInHand().clone();
         if (item == null || player.getItemInHand().getType() == Material.AIR) {
@@ -51,7 +51,7 @@ public class MobcoinsAdminCommand extends CommandBase {
 
     @SubCommand("give")
     @Permission("cranked.admin")
-    public void onGiveShards(CommandSender sender, OfflinePlayer toPlayer, Double amount) {
+    public void onGiveShards(CommandSender sender, OfflinePlayer toPlayer, Integer amount) {
         Player player = ((Player)sender);
         MobcoinPlugin.getInstance().getShardsManager().getShardsUser(toPlayer.getUniqueId()).addShards(amount);
         if (toPlayer.isOnline()) {

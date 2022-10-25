@@ -16,7 +16,7 @@ import java.util.Map;
 @Getter
 @Setter
 public class MobcoinShopManager {
-    private Map<ItemStack, Double> shopItems;
+    private Map<ItemStack, Integer> shopItems;
     public MobcoinShopManager(MobcoinPlugin plugin) {
         this.shopItems = new HashMap<>();
         load(plugin);
@@ -24,7 +24,7 @@ public class MobcoinShopManager {
     }
     public int getPurchaseAbleItemsAmount(long balance) {
         int amount = 0;
-        for (Double price : shopItems.values()) {
+        for (Integer price : shopItems.values()) {
             if (balance >= price) {
                 amount++;
             }
@@ -41,7 +41,7 @@ public class MobcoinShopManager {
         FileConfiguration config = configmanager.getConfig(ConfigManager.ConfigFile.SHOP);
         ConfigurationSection configurationSection = config.getConfigurationSection("shop.items");
         for (String key : configurationSection.getKeys(false)) {
-            double price = configurationSection.getDouble(key);
+            int price = configurationSection.getInt(key);
             ItemStack item = ItemStackSerializer.deserialize(key);
             this.shopItems.put(item, price);
         }
@@ -50,8 +50,8 @@ public class MobcoinShopManager {
         ConfigManager configmanager = plugin.getConfigManager();
         FileConfiguration config = configmanager.getConfig(ConfigManager.ConfigFile.SHOP);
         ConfigurationSection configurationSection = config.getConfigurationSection("shop.items");
-        for (Map.Entry<ItemStack, Double> entry : this.shopItems.entrySet()) {
-            double price = entry.getValue();
+        for (Map.Entry<ItemStack, Integer> entry : this.shopItems.entrySet()) {
+            int price = entry.getValue();
             ItemStack item = entry.getKey();
             configurationSection.set(ItemStackSerializer.serialize(item), price);
         }
@@ -67,7 +67,7 @@ public class MobcoinShopManager {
         MobcoinPlugin.getInstance().getConfigManager().getAbstractConfig(ConfigManager.ConfigFile.SHOP).saveConfig();
     }
 
-    public void addItemStack(ItemStack item, double price) {
+    public void addItemStack(ItemStack item, int price) {
         ConfigManager configmanager = MobcoinPlugin.getInstance().getConfigManager();
         FileConfiguration config = configmanager.getConfig(ConfigManager.ConfigFile.SHOP);
         ConfigurationSection configurationSection = config.getConfigurationSection("shop.items");

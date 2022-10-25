@@ -41,9 +41,9 @@ public class MobcoinShopGUI {
         }));
             this.shardsGUI.updateItem(6, 5, new GuiItem(createUserInfoItem(shardsUser)));
 
-        Map<ItemStack, Double> map = sort(MobcoinPlugin.getInstance().getShardsShopManager().getShopItems());
-        for (Map.Entry<ItemStack, Double> entry : map.entrySet()) {
-            double price = entry.getValue();
+        Map<ItemStack, Integer> map = sort(MobcoinPlugin.getInstance().getShardsShopManager().getShopItems());
+        for (Map.Entry<ItemStack, Integer> entry : map.entrySet()) {
+            int price = entry.getValue();
             ItemStack item = entry.getKey();
             this.shardsGUI.addItem(new GuiItem(new ItemBuilder(item.clone()).addLore("").addLore("&e&l* &fPrice: &6⛃&e" + price).colorize().build(), event -> {
                 MobcoinPlugin.getInstance().getShardsManager().purchaseItem(player.getUniqueId(), item, price);
@@ -53,7 +53,7 @@ public class MobcoinShopGUI {
         }
 
     }
-
+i
     public ItemStack createUserInfoItem(MobcoinsUser shardsUser) {
         return new ItemBuilder(SkullUtils.getSkullFromPlayer(Bukkit.getPlayer(shardsUser.getOfflinePlayer().getUniqueId())))
                 .setName("&e&l"+shardsUser.getOfflinePlayer().getName() + "'s Mobcoins Info")

@@ -104,7 +104,7 @@ public class EntityStackerListener implements Listener {
                     cachedWeaponEnchants.put(uuid, enchants);
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
                         cachedWeaponEnchants.remove(uuid);
-                    }, 60*20L);
+                    }, 60 * 20L);
                 }
 
                 if (enchants.containsKey(EnchantmentAPI.getEnchantment("Master Inquisitive"))) {
@@ -114,13 +114,11 @@ public class EntityStackerListener implements Listener {
 
                 }
 
-                if (enchants.containsKey(EnchantmentAPI.getEnchantment("Kill Aura")) && Math.random() < 0.15) {
+                if (enchants.containsKey(EnchantmentAPI.getEnchantment("Kill Aura")) && Math.random() < 0.1) {
                     remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
                 }
 
             }
-
-
 
 
             int amount = mobStackerUtils.getStackSize(entity);
@@ -137,13 +135,6 @@ public class EntityStackerListener implements Listener {
                 p.sendMessage(CC.translate("&6&l* KILL AURA [&7-" + remove + "x&6&l] *"));
             }
 
-
-            int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
-            if (Math.random() < AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
-                MobcoinAPI.addMobcoins(p, mcAmount);
-                p.playSound(p.getLocation(), Sound.LEVEL_UP, 2, 1);
-                p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
-            }
 
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
 
@@ -191,7 +182,6 @@ public class EntityStackerListener implements Listener {
                 exp *= 2;
             }
 
-            attemptGiveMoney(p);
             p.giveExp((int) exp);
 
             plugin.addPlayerToAfkGrinding(p);
@@ -247,7 +237,14 @@ public class EntityStackerListener implements Listener {
         double legKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("legKeyChancePercent") * 0.01; //0.01
         double astroKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroKeyChancePercent") * 0.01; //0.125
         double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.001
+        attemptGiveMoney(p);
 
+        int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
+        if (Math.random() < AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
+            MobcoinAPI.addMobcoins(p, mcAmount);
+            p.playSound(p.getLocation(), Sound.LEVEL_UP, 2, 1);
+            p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
+        }
         if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
             legKeyChance *= 1.1;
             astroKeyChance *= 1.1;
@@ -255,18 +252,16 @@ public class EntityStackerListener implements Listener {
 
         }
 
-            if (p != null) {
-            double num = Math.random();
-            try {
-                if (num >= 0 && num <= godlyKeyChance) {
-                    p.getInventory().addItem(godlyKey);
-                } else if (num >= 0 && num <= legKeyChance) {
-                    p.getInventory().addItem(legKey);
-                } else if (num >= 0 && num <= astroKeyChance) {
-                    p.getInventory().addItem(astroKey);
-                }
-            } catch (IllegalArgumentException ignored) {
+        double num = Math.random();
+        try {
+            if (num >= 0 && num <= godlyKeyChance) {
+                p.getInventory().addItem(godlyKey);
+            } else if (num >= 0 && num <= legKeyChance) {
+                p.getInventory().addItem(legKey);
+            } else if (num >= 0 && num <= astroKeyChance) {
+                p.getInventory().addItem(astroKey);
             }
+        } catch (IllegalArgumentException ignored) {
         }
     }
 
