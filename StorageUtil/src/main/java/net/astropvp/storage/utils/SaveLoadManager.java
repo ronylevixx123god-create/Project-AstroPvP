@@ -40,6 +40,8 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
         }
     }
 
+
+
     public void saveAll() {
         if (!dataDirectory.exists()) {
             dataDirectory.mkdirs();
@@ -49,6 +51,19 @@ public abstract class SaveLoadManager<T extends KeyToSave> {
             this.save(entry.getKey(), entry.getValue());
         }
 
+    }
+
+    public void purge() {
+        if (!dataDirectory.exists()) {
+            dataDirectory.mkdirs();
+        }
+
+        for (File file : Objects.requireNonNull(dataDirectory.listFiles())) {
+            String deserialize = (file.getName().substring(0,file.getName().length()-5));
+            if (!this.contains(deserialize)) {
+                file.deleteOnExit();
+            }
+        }
     }
 
     private void load(File file) {

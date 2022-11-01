@@ -36,7 +36,8 @@ import java.util.concurrent.TimeUnit;
 public class InventoryMutatedBansheePet extends InventoryPet {
 
     public InventoryPets getOwner() {
-        return InventoryPets.MUTATED_BANSHEE;
+        //return InventoryPets.MUTATED_BANSHEE;
+        return null;
     }
 
     public List<String> getPetDescription() {

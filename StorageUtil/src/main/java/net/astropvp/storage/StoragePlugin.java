@@ -7,6 +7,7 @@ import com.google.gson.reflect.TypeToken;
 import lombok.Getter;
 import net.astropvp.storage.utils.*;
 import net.minecraft.server.v1_8_R3.Item;
+import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -29,6 +30,8 @@ public class StoragePlugin extends JavaPlugin {
             .registerTypeAdapter(ItemStack.class, new ItemStackDeserializer()).setLenient()
             .registerTypeAdapter(ItemStack[].class, new ItemStackArraySerializer()).setLenient()
             .registerTypeAdapter(ItemStack[].class, new ItemStackArrayDeserializer()).setLenient()
+            .registerTypeAdapter(Location.class, new LocationSerializer()).setLenient()
+            .registerTypeAdapter(Location.class, new LocationDeserializer()).setLenient()
             .registerTypeAdapter(listType, new ItemStackArrayListSerializer()).setLenient()
             .registerTypeAdapter(listType, new ItemStackArrayListDeserializer()).setLenient()
             .setFieldNamingPolicy(FieldNamingPolicy.IDENTITY)

@@ -127,8 +127,8 @@ public final class Collector {
 
         for (BlockState blockState : location.getChunk().getTileEntities()) {
             if (blockState instanceof CreatureSpawner) {
-                if (AstroSpawners.getInstance().getSpawnersMap().containsKey(blockState.getLocation())) {
-                    SpawnerData data = AstroSpawners.getInstance().getSpawnersMap().get(blockState.getLocation());
+                if (AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(blockState.getLocation()) != null) {
+                    SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(blockState.getLocation());
                     if (data.getEntityType() == EntityType.BLAZE) continue;
                     this.spawnersInChunk.put(data.getEntityType(), data.getSpawnerAmount());
                 }

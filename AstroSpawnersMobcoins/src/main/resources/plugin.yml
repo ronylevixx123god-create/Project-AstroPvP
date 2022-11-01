@@ -1,7 +1,7 @@
 main: me.astropvp.astrospawners.AstroSpawners
 name: AstroSpawners
 version: 1.0
-depend: [Multiverse-Core]
+depend: [Multiverse-Core, StorageUtil]
 
 commands:
   splitspawners:
@@ -29,6 +29,7 @@ commands:
   clearafk:
     description: /clearafk
     aliases: [ clearafkgrinders ]
+  savespawners:
   stackspawners:
     aliases: [stacks, stackspawner, fixspawners, spawnerstack, spawnerstacks]
   aspawner:

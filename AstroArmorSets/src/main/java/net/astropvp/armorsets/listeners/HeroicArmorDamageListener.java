@@ -35,15 +35,6 @@ public class HeroicArmorDamageListener implements Listener {
                     e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + ((Player) e.getEntity()).getKiller().getName() + "'s Carver &4&l] *"));
                     return;
                 }
-
-                if (cache.getCurrentSetCrystals().containsKey(ArmorSetType.NEBULA)) {
-                    double chance = 0.15 * cache.getCurrentSetCrystals().get(ArmorSetType.NEBULA);
-                    if (Math.random() < chance) {
-                        e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + ((Player) e.getEntity()).getKiller().getName() + "'s Nebula Crystal &4&l] *"));
-                        return;
-                    }
-                }
-
             }
             e.setDamage( e.getDamage() * 1 - (totalReduction * 0.01));
         }

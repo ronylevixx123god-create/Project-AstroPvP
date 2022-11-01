@@ -69,9 +69,6 @@ commands:
     description: Jackpot command.
   togglepay:
     description: Toggle payments.
-  filter:
-    description: Filter items.
-    aliases: [itemfilter, filters]
   title:
     description: Open title selection UI. If used from console, all titles are listed.
     aliases: [titles, playertitle, playertitles]

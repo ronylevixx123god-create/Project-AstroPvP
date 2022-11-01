@@ -1,39 +1,33 @@
 package me.astropvp.astrospawners.data;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.*;
-
 import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.configs.MakeSpawner;
-import org.bukkit.*;
+import net.astropvp.storage.StoragePlugin;
+import net.astropvp.storage.utils.SaveLoadManager;
+import org.bukkit.Chunk;
+import org.bukkit.Location;
 import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 
-import me.astropvp.astrospawners.utils.LocationUtils;
-
-public class SpawnerManager {
-    private boolean loading = false;
+public class SpawnerManager extends SaveLoadManager<SpawnerData> {
 
 
-    private Map<Location, SpawnerData> spawnersMap;
-
-    public SpawnerManager() {
-        this.spawnersMap = new HashMap<>();
+    public SpawnerManager(AstroSpawners plugin) {
+        super(plugin, StoragePlugin.getInstance().getGson(), "/data", SpawnerData.class);
     }
 
-    public void add(Location location, SpawnerData spawnerData) {
-        this.spawnersMap.put(location, spawnerData);
+    public SpawnerData getSpawnerData(Location location, EntityType type, int amount) {
+        if (!contains(SpawnerData.locationToString(location))) {
+            SpawnerData spawnerData = new SpawnerData(type, amount, location);
+            addToCache(spawnerData);
+        }
+        return getFromCache(SpawnerData.locationToString(location));
+
     }
 
-    public Map<Location, SpawnerData> getSpawnersMap() {
-        return this.spawnersMap;
-    }
+    public SpawnerData getSpawnerData(Location location) {
+        return getFromCache(SpawnerData.locationToString(location));
 
-    public void remove(Location location) {
-        this.spawnersMap.remove(location);
     }
 
 
@@ -49,9 +43,5 @@ public class SpawnerManager {
         return true;
     }
 
-
-    public SpawnerData findSpawnerData(Location location) {
-        return this.spawnersMap.get(location);
-    }
 }
 

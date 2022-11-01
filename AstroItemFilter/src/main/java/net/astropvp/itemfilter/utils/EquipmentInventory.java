@@ -93,7 +93,7 @@ public class EquipmentInventory {
             this.itemStackList.add(new ItemFactory("262").display("Arrow").build());
             this.itemStackList.add(new ItemFactory("368").display("Ender Pearl").build());
             this.itemStackList.add(new ItemFactory("373").display("Potions").build());
-            this.itemStackList.add(new ItemFactory("397:3").display("Player Skulls").build());
+            this.itemStackList.add(new ItemFactory("397:3").display("Skulls/Pets").build());
         }
         return this.itemStackList;
     }

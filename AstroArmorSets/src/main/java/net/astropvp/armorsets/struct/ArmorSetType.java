@@ -21,19 +21,20 @@ import java.util.List;
 @Getter
 public enum ArmorSetType {
     PHANTOM(CC.translate("&c&lPhantom"), new PhantomArmorSet(), CC.Red, 14294340, Material.COAL),
-    ANCIENT(CC.translate("&3&lAncient"), new AncientArmorSet(), CC.DarkAqua, 3650995, Material.QUARTZ),
-    ASTRO(CC.translate("&a&lAstro"), new AstroArmorSet(), CC.Green, 5765888, Material.FIREBALL),
     DRAGON(CC.translate("&e&lDragon"), new DragonArmorSet(), CC.Yellow, 0xFFEE00, Material.BLAZE_POWDER),
     ENGINEER(CC.translate("&6&lEngineer"), new EngineerArmorSet(), CC.Gold, 15176967, Material.LEVER),
     GRINDER(CC.translate("&8&lGrinder"), new GrinderArmorSet(), CC.DarkGray, 0x404040, Material.EXP_BOTTLE),
-    LUNA(CC.translate("&7&lLuna"), new LunaArmorSet(), CC.Gray, 0xA0A0A0, Material.TORCH),
     SUPREME(CC.translate("&4&lSupreme"), new SupremeArmorSet(), CC.DarkRed, 8264475, Material.DIAMOND_CHESTPLATE),
     DIMENSIONAL_TRAVELER(CC.translate("&5&lDimensional Traveler"), new TravelerArmorSet(), CC.DarkPurple,12001978, Material.COMPASS),
     YETI(CC.translate("&b&lYeti"), new YetiArmorSet(), CC.Aqua, 518113, Material.SNOW_BALL),
-    NEBULA(CC.translate("&5&lNebula"), new NebulaArmorSet(), CC.DarkPurple, 0x9900FF, Material.NETHER_STAR),
-
-    MOTHER_OF_YIJKI(CC.translate("&f&lMother of Yijki"), new YijkiArmorSet(), CC.White,0xFFFFFF, Material.STICK),
-    KOTH(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r"), new KothArmorSet(), CC.Aqua,31999, Material.GOLD_INGOT);
+    MOTHER_OF_YIJKI(CC.translate("&f&lMother of Yijki"), new YijkiArmorSet(), CC.White,0xFFFFFF, Material.NETHER_STALK),
+    KOTH(CC.translate("&f&l&k;&r &c&lK&6&l.&e&lO&a&l.&b&lT&5&l.&d&lH &f&l&k;&r"), new KothArmorSet(), CC.Aqua,31999, Material.STICK),
+    ASTRO(CC.translate("&a&lAstro"), new AstroArmorSet(), CC.Green, 5765888, Material.FIREBALL),
+    ANCIENT(CC.translate("&3&lAncient"), new AncientArmorSet(), CC.DarkAqua, 3650995, Material.QUARTZ),
+    CHAMPION(CC.translate("&6&lChampion"), new ChampionArmorSet(), CC.Gold, 15176967, Material.GOLD_NUGGET),
+    ULTRA(CC.translate("&7&lUltra"), new UltraArmorSet(), CC.Gray, 0xA0A0A0, Material.TORCH),
+    APOLLO(CC.translate("&f&lApollo"), new ApolloArmorSet(), CC.White, 0xFFFFFF, Material.NETHER_STAR),
+    ;
 
     //OMNI Rbg -> 0x0027FF
 

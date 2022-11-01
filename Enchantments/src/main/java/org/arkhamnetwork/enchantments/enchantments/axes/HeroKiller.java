@@ -123,9 +123,9 @@ public class HeroKiller
                 KillTrackerAPI.removeSoulsFromGems((Player) p, (int) 4);
             }
             double increase = 0.1D * (double) level;
-            if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {
+/*            if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {
                 increase += 0.1;
-            }
+            }*/
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
                 increase += 0.3;

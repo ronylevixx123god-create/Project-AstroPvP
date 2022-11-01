@@ -19,6 +19,8 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.kingsavaqe.cagepvp.AstroCagePvP;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import net.astropvp.damagehandler.AstroDamageHandlerAPI;
 import org.bukkit.*;
@@ -114,6 +116,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             cageDuration = 7.5;
         } else if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.VALENTINES_2022_MUTATED_BOOTS)) {
             cageDuration = 6.5;
+        } else if (AstroArmorSetsAPI.getCurrentArmorSet((Player) player) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) player) == ArmorSetType.APOLLO) {
+            cageDuration = 7.5;
 
         } else {
             cageDuration = 5.0;
@@ -140,18 +144,18 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             player.sendMessage(CC.translate("&a&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&a&lUndertow Helmet&7] &a&l*"));
             return true;
         }
-        if (((Player)target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
+        if (((Player) target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
             petItem.setLastUsed(System.currentTimeMillis());
             player.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&c" + target.getName() + "&7] &8&l*"));
             target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
             return true;
         }
 
-        if (((Player)target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
+        if (((Player) target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
 
             if ((AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_BELT)) && Math.random() < 0.5) {
                 target.sendMessage(CC.translate("&e&l* " + player.getName() + "'s Mischievous Tail Bypassed &7Bloodstained Galoshes &e&l*"));
-            } else{
+            } else {
 
                 petItem.setLastUsed(System.currentTimeMillis());
                 player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
@@ -193,7 +197,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
         int cageCooldown = 30;
-        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown*1000);
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
 
         petItem.setLastUsed(System.currentTimeMillis());
         cagePlayer(player, target);
@@ -282,7 +286,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         list.addAll(setOutside(baseLocation.clone().add(0.0, 2.0, 0.0), Material.IRON_FENCE));
         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.4f);
         InventoryWorldDestroyerPet.locations.addAll(list);
-        scheduler.scheduleSyncDelayedTask((Plugin)CosmicSkyInventoryPets.get(), (Runnable)new BukkitRunnable() {
+        scheduler.scheduleSyncDelayedTask((Plugin) CosmicSkyInventoryPets.get(), (Runnable) new BukkitRunnable() {
             int count = 0;
 
             public void run() {
@@ -307,7 +311,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
                 ++this.count;
             }
-        }.runTaskTimer((Plugin)CosmicSkyInventoryPets.get(), 20L, 20L));
+        }.runTaskTimer((Plugin) CosmicSkyInventoryPets.get(), 20L, 20L));
     }
 
     public static String stringLocation(Location loc) {

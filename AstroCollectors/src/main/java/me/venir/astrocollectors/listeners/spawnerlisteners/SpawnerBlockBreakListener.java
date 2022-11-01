@@ -16,7 +16,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 public class SpawnerBlockBreakListener implements Listener {
     @EventHandler(priority = EventPriority.NORMAL)
     public void onBreak(BlockBreakEvent e) {
-            if (AstroSpawners.getInstance().getSpawnersMap().containsKey(e.getBlock().getLocation())) {
+            if (AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(e.getBlock().getLocation()) != null) {
                 if (CollectorManager.DELEGATE.isCollectorContained(e.getBlock().getLocation())) {
                     Collector collector = CollectorManager.DELEGATE.getCollector(e.getBlock().getLocation());
                     CreatureSpawner spawner = (CreatureSpawner) e.getBlock().getState();

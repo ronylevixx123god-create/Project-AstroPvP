@@ -25,6 +25,8 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.kingsavaqe.cagepvp.AstroCagePvP;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -156,6 +158,11 @@ public class InventoryBansheePet extends InventoryPet {
 
         if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_HELMET)) {
             duration*=1.25;
+        }
+
+
+        if (AstroArmorSetsAPI.getCurrentArmorSet((Player) player) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) player) == ArmorSetType.APOLLO) {
+            duration *= 1.5;
         }
 
         int finalDuration = duration;

@@ -2,4 +2,4 @@ name: AstroItemFilter
 main: net.astropvp.itemfilter.ItemFilterPlugin
 version: 1.0
 depend:
-  - AstroKillCounters
+  - CosmicPvPUtils

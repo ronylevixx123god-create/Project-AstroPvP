@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.configs.MakeSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
@@ -84,7 +83,6 @@ public class MobSpawnerListener implements Listener {
         }
 
 
-
         int amount = ItemSpawner.getSpawnerAmount(item);
         if (amount <= 0) {
             event.setCancelled(true);
@@ -99,16 +97,12 @@ public class MobSpawnerListener implements Listener {
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             AstroSpawners.coolDownSpawnerPlace.remove(event.getPlayer());
         }, 20L);
-        Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
-                (Runnable) new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        SpawnerData spawnerData = new SpawnerData(type, math);
-                        MakeSpawner.newFileItem(event.getBlock().getLocation(), spawnerData.getEntityType(), spawnerData.getSpawnerAmount());
-                    }
-                });
-        event.getPlayer().setItemInHand(spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
         Location location = event.getBlockPlaced().getLocation();
+
+        SpawnerData spawnerData = new SpawnerData(type, math, location);
+        AstroSpawners.getInstance().getSpawnerManager().addToCache(spawnerData);
+
+        event.getPlayer().setItemInHand(spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
         Bukkit.getScheduler().runTaskLater(AstroSpawners.getInstance(), (Runnable) new BukkitRunnable() {
             @Override
             public void run() {
@@ -154,8 +148,6 @@ public class MobSpawnerListener implements Listener {
                     }
 
 
-
-
                     //CHANGED
                     event.setCancelled(true);
                     Player player = event.getPlayer();
@@ -163,63 +155,58 @@ public class MobSpawnerListener implements Listener {
                     Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
                         AstroSpawners.coolDownSpawnerPlace.remove(event.getPlayer());
                     }, 20L);
-                    Bukkit.getScheduler().runTask(AstroSpawners.getInstance(),
-                            (Runnable) new BukkitRunnable() {
-                                @Override
-                                public void run() {
-                                    SpawnerData found = AstroSpawners.getInstance().getSpawnersMap().get(event.getBlockAgainst().getLocation());
-                                    if (found != null) {
-                                        if (found.getSpawnerAmount() >= ItemSpawner.getSpawnerLimit()) {
-                                            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not have more than "
-                                                    + ItemSpawner.getSpawnerLimit() + " spawners stacked together!");
-                                            event.setCancelled(true);
-                                            return;
-                                        }
 
-                                        boolean allowSpawners = AstroSpawners.getInstance().getConfig().getBoolean("allow-spawner-placement");
+                    SpawnerData found = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(event.getBlockAgainst().getLocation());
+                    if (found != null) {
+                        if (found.getSpawnerAmount() >= ItemSpawner.getSpawnerLimit()) {
+                            player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can not have more than "
+                                    + ItemSpawner.getSpawnerLimit() + " spawners stacked together!");
+                            event.setCancelled(true);
+                            return;
+                        }
+
+                        boolean allowSpawners = AstroSpawners.getInstance().getConfig().getBoolean("allow-spawner-placement");
 
 
-                                        if (!allowSpawners) {
-                                            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Spawner placement has been disabled!"));
-                                            event.getPlayer().sendMessage(CC.translate("&7You can no longer place FTOP value."));
-                                            event.setCancelled(true);
-                                            return;
-                                        }
+                        if (!allowSpawners) {
+                            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c Spawner placement has been disabled!"));
+                            event.getPlayer().sendMessage(CC.translate("&7You can no longer place FTOP value."));
+                            event.setCancelled(true);
+                            return;
+                        }
 
-                                        if (event.getItemInHand().getAmount() > 1) {
-                                            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place stacked spawners!"));
-                                            event.getPlayer().sendMessage(CC.translate("&7Combine them by drag and dropping them together"));
-                                            event.setCancelled(true);
-                                            return;
-                                        }
+                        if (event.getItemInHand().getAmount() > 1) {
+                            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place stacked spawners!"));
+                            event.getPlayer().sendMessage(CC.translate("&7Combine them by drag and dropping them together"));
+                            event.setCancelled(true);
+                            return;
+                        }
 
-                                        int math = found.getSpawnerAmount() + amount >= ItemSpawner.getSpawnerLimit()
-                                                ? ItemSpawner.getSpawnerLimit() - found.getSpawnerAmount()
-                                                : amount;
-                                        int spawnersLeft = amount - math;
-                                        found.setSpawnerAmount(found.getSpawnerAmount() + math);
-                                        MakeSpawner.newFileItem(event.getBlockAgainst().getLocation(), found.getEntityType(), found.getSpawnerAmount());
-                                        player.sendMessage(CC.translate("&a&l+ &a&n" + amount + "&a " + EntityUtils.getEntityName(type) + " Spawner(s) &7[" + found.getSpawnerAmount() + " Total]"));
-                                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
-                                        if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
-                                            Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
-                                            collector.clearSpawners();
-                                            collector.scanSpawners(collector.getLocation());
-                                        }
-                                        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(event.getPlayer());
-                                        if (!fPlayer.getFaction().isWilderness()) {
-                                            FactionsLogsAPI.log(fPlayer.getFaction().getId(), new SpawnerPlace(amount, event.getBlockAgainst().getLocation(), type, fPlayer.getPlayer().getUniqueId()));
-                                        }
-                                        player.setItemInHand(
-                                                spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
-                                    } else {
-                                        player.sendMessage(CC.translate("&c&l(!)&c This is not a valid stacked spawner. Contact an administrator if you think this is an issue."));
-                                        event.setCancelled(true);
-                                        return;
-                                    }
-                                    player.updateInventory();
-                                }
-                            });
+                        int math = found.getSpawnerAmount() + amount >= ItemSpawner.getSpawnerLimit()
+                                ? ItemSpawner.getSpawnerLimit() - found.getSpawnerAmount()
+                                : amount;
+                        int spawnersLeft = amount - math;
+                        found.setSpawnerAmount(found.getSpawnerAmount() + math);
+                        player.sendMessage(CC.translate("&a&l+ &a&n" + amount + "&a " + EntityUtils.getEntityName(type) + " Spawner(s) &7[" + found.getSpawnerAmount() + " Total]"));
+                        player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
+                        if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {
+                            Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
+                            collector.clearSpawners();
+                            collector.scanSpawners(collector.getLocation());
+                        }
+                        FPlayer fPlayer = FPlayers.getInstance().getByPlayer(event.getPlayer());
+                        if (!fPlayer.getFaction().isWilderness()) {
+                            FactionsLogsAPI.log(fPlayer.getFaction().getId(), new SpawnerPlace(amount, event.getBlockAgainst().getLocation(), type, fPlayer.getPlayer().getUniqueId()));
+                        }
+                        player.setItemInHand(
+                                spawnersLeft <= 0 ? null : ItemSpawner.getItem(type, spawnersLeft));
+                    } else {
+                        player.sendMessage(CC.translate("&c&l(!)&c This is not a valid stacked spawner. Contact an administrator if you think this is an issue."));
+                        event.setCancelled(true);
+                        return;
+                    }
+                    player.updateInventory();
+
                 }
             }
         }
@@ -233,23 +220,19 @@ public class MobSpawnerListener implements Listener {
             if (block.getType() == Material.MOB_SPAWNER) {
                 event.setCancelled(true);
                 EntityType type = ((CreatureSpawner) block.getState()).getSpawnedType();
-                Bukkit.getScheduler().runTaskAsynchronously(AstroSpawners.getInstance(),
-                        (Runnable) new BukkitRunnable() {
-                            @Override
-                            public void run() {
-                                SpawnerData found = AstroSpawners.getInstance().getSpawnersMap().get(block.getLocation());
-                                Player player = event.getPlayer();
-                                player.sendMessage("");
-                                player.sendMessage(CC.GreenB + "Spawner Information");
-                                player.sendMessage(CC.GreenB + " * " + CC.White + "Type: " +
-                                        CC.Green + EntityUtils.getEntityName(type));
-                                player.sendMessage(CC.GreenB + " * " + CC.White + "Amount: " + CC.Green
-                                        + (found != null ? found.getSpawnerAmount() : 1) + "x");
-                                player.sendMessage("");
-                                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
-                            }
-                        });
+
+                SpawnerData found = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(event.getClickedBlock().getLocation());
+                Player player = event.getPlayer();
+                player.sendMessage("");
+                player.sendMessage(CC.GreenB + "Spawner Info");
+                player.sendMessage(CC.GreenB + " * " + CC.White + "Type: " +
+                        CC.Green + EntityUtils.getEntityName(type));
+                player.sendMessage(CC.GreenB + " * " + CC.White + "Amount: " + CC.Green
+                        + (found != null ? found.getSpawnerAmount() : 1) + "x");
+                player.sendMessage("");
+                player.playSound(player.getLocation(), Sound.NOTE_PLING, 10f, 10f);
             }
+
         }
     }
 }

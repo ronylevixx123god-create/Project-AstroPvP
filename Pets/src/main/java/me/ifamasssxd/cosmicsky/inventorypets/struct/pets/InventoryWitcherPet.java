@@ -16,6 +16,8 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.kingsavaqe.cagepvp.AstroCagePvP;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -87,6 +89,10 @@ public class InventoryWitcherPet extends InventoryPet {
             sum*=1.5;
         }
 
+        if (AstroArmorSetsAPI.getCurrentArmorSet((Player) player) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) player) == ArmorSetType.APOLLO) {
+            sum *= 1.5;
+        }
+
         procAbility(player, sum, 5);
 
 
@@ -111,6 +117,18 @@ public class InventoryWitcherPet extends InventoryPet {
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&8&lBig Timbs&7] &8&l*"));
+                continue;
+            }
+
+            if (AstroArmorSetsAPI.getCurrentArmorSet((Player) p) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) p) == ArmorSetType.APOLLO) {
+                p.sendMessage(CC.translate("&f&l* APOLLO SET &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &f&l*"));
+                player.sendMessage(CC.translate("&f&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&f&lApollo Set&7] &f&l*"));
+                continue;
+            }
+
+            if (AstroArmorSetsAPI.getBonusCrystalsEquipped(p).containsKey(ArmorSetType.APOLLO) && Math.random() < 0.2) {
+                p.sendMessage(CC.translate("&f&l* APOLLO CRYSTAL &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &f&l*"));
+                player.sendMessage(CC.translate("&f&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&f&lApollo Crystal&7] &f&l*"));
                 continue;
             }
 

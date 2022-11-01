@@ -49,9 +49,6 @@ import net.astropvp.core.cosmicjackpot.struct.JackpotManager;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import net.astropvp.core.cosmictoggles.commands.CommandToggles;
 import net.astropvp.core.cosmictoggles.manager.TogglesManager;
-import net.astropvp.core.itemfilter.FilterManager;
-import net.astropvp.core.itemfilter.commands.CommandFilter;
-import net.astropvp.core.itemfilter.listeners.ItemFilterListener;
 import net.astropvp.core.killtracker.commands.CommandGiveSoulGem;
 import net.astropvp.core.killtracker.commands.CommandWithdrawSouls;
 import net.astropvp.core.killtracker.listeners.SoulGemListener;
@@ -118,8 +115,6 @@ public class AstroCore extends JavaPlugin {
     private PayToggle payToggles;
     ProtocolManager protocolManager;
     public static Map<UUID, Player> grindingMessages;
-    private FilterManager filterManager;
-    private ItemFilterListener itemListener;
     public TitleDatabaseManager dataManager;
     public static boolean hcf;
     private SoulItemListener soulItemListener;
@@ -155,8 +150,6 @@ public class AstroCore extends JavaPlugin {
         this.claimsOnInfernal = new HashMap<>();
         this.claimsOnDesert = new HashMap<>();
         this.claimsOnFrozen = new HashMap<>();
-        this.filterManager = new FilterManager();
-        this.filterManager.loadFilters();
         this.giveAwayManager = new GiveAwayManager(this);
 
 
@@ -243,7 +236,6 @@ public class AstroCore extends JavaPlugin {
             e.printStackTrace();
         }
         this.dataManager.saveAllEquippedTitlesToSQL();
-        this.filterManager.saveFilters();
 
         Bukkit.getLogger().info("[AstroCore] Saving astrocore playerdata");
 
@@ -348,9 +340,6 @@ public class AstroCore extends JavaPlugin {
         return toggleManager;
     }
 
-    public FilterManager getFilterManager() {
-        return filterManager;
-    }
 
     public CoinFlipManager getCoinFlipManager() {
         return coinFlipManager;
@@ -365,7 +354,6 @@ public class AstroCore extends JavaPlugin {
     }
 
     public void registerCommands() {
-        getCommand("filter").setExecutor(new CommandFilter());
         getCommand("withdrawsouls").setExecutor(new CommandWithdrawSouls());
         getCommand("givesoulgem").setExecutor(new CommandGiveSoulGem());
         getCommand("title").setExecutor(new CommandTitle());
@@ -487,9 +475,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
-        getServer().getPluginManager().registerEvents( new ItemFilterListener(), this);
         getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
-        this.itemListener = new ItemFilterListener();
     }
 
     public void registerCustomItems() {

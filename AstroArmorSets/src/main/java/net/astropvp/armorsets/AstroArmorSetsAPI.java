@@ -382,7 +382,7 @@ public class AstroArmorSetsAPI {
             case ASTRO:
             case ENGINEER:
             case MOTHER_OF_YIJKI:
-            case LUNA:
+            case APOLLO:
                 return true;
             default:
                 return false;

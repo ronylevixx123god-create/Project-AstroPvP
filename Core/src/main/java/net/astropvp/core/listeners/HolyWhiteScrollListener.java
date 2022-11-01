@@ -99,6 +99,7 @@ public class HolyWhiteScrollListener implements Listener {
                 HolyWhiteScrollUtils.removeHolyWhitescroll(i);
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
+                boolean isUltraad = false;
                 double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO))
                     monoChance *= 1.05;
@@ -115,6 +116,10 @@ public class HolyWhiteScrollListener implements Listener {
                 if (MutatedSinkOrSwipFlippers.sinked.contains(e.getEntity()) && AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS) && !hasBeenSwimEffected) {
                     isMonopolied = true;
                     hasBeenSwimEffected = true;
+                }
+
+                if (AstroArmorSetsAPI.getCurrentArmorSet(killer) != null && AstroArmorSetsAPI.getCurrentArmorSet(killer) == ArmorSetType.ULTRA && Math.random() < 0.4) {
+                    isUltraad = true;
                 }
 
                 if ((AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_BELT)) && !hasBeenTailed) {
@@ -137,7 +142,7 @@ public class HolyWhiteScrollListener implements Listener {
                             isKilledHoldingTravAxe = true;
                     }
                 assert killer != null;
-                if (!isBansheed && !isMonopolied && !isTravAxe) {
+                if (!isBansheed && !isMonopolied && !isTravAxe && !isUltraad) {
                     savedItems.add(i);
                     continue;
                 }
@@ -186,6 +191,13 @@ public class HolyWhiteScrollListener implements Listener {
                         e.getEntity().sendMessage(CC.RedB + "* MONOPOLY MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* MONOPOLY MASK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                     }
+                    continue;
+                }
+
+                if (isUltraad) {
+                    e.getEntity().sendMessage(CC.AquaB + "* ULTRA HOLY NEGATION [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                    killer.sendMessage(CC.AquaB + "* ULTRA HOLY NEGATION [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.AquaB + "] *");
+                    Bukkit.getLogger().info("Dropping " + i + " due to " + killer.getName() + "'s Ultra procing.");
                     continue;
                 }
 

@@ -49,14 +49,12 @@ public class FactionData {
         this.richestMember[0] = richest;
         this.richestMember[1] = Long.valueOf((long)cash);
         String tag = this.faction.getTag();
-        for (Map.Entry<Location, SpawnerData> entry : AstroSpawners.getInstance().getSpawnersMap().entrySet()) {
-            Location location = entry.getKey();
-            SpawnerData spawnerData = entry.getValue();
-            if (spawnerData == null) continue;
+        for (SpawnerData data : AstroSpawners.getInstance().getSpawnerManager().getCacheValues()) {
+            Location location = SpawnerData.locationFromString(data.getKey());
             if (FactionUtils.getFactionAt(location).getTag().contentEquals(tag)) {
                 this.stackedSpawners++;
-                this.spawners += spawnerData.getSpawnerAmount();
-                this.spawnerValue += FactionsTopAPI.getValueOfSpawner(spawnerData.getEntityType()) * spawnerData.getSpawnerAmount();
+                this.spawners += data.getSpawnerAmount();
+                this.spawnerValue += FactionsTopAPI.getValueOfSpawner(data.getEntityType()) * data.getSpawnerAmount();
             }
         }
     }

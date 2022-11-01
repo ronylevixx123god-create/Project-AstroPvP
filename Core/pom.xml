@@ -67,6 +67,14 @@
 
 
         <!-- System repos -->
+
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>ft</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroItemFilter.jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>MCMMOss</artifactId>

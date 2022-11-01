@@ -14,6 +14,8 @@ import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
+import net.astropvp.armorsets.AstroArmorSetsAPI;
+import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.mastery.MasteryFeignDeath;
@@ -220,6 +222,21 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
+            if (AstroArmorSetsAPI.getCurrentArmorSet((Player) damager) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) damager) == ArmorSetType.ULTRA && Math.random() < 0.4) {
+                damager.sendMessage(CC.translate("&b&l* &7&lULTRA PHOENIX NEGATION &7Blocked &cPhoenix &b&l[&c" + player.getName() + "&b&l] &b&l*"));
+                player.sendMessage(CC.translate("&b&l* &7&lPHOENIX BLOCKED [&c" + damager.getName() + " Ultra Set&b&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
+            if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) damager).containsKey(ArmorSetType.ULTRA) && Math.random() < 0.10) {
+                damager.sendMessage(CC.translate("&b&l* &7&lULTRA PHOENIX NEGATION &7Blocked &cPhoenix &b&l[&c" + player.getName() + "&b&l] &b&l*"));
+                player.sendMessage(CC.translate("&b&l* &7&lPHOENIX BLOCKED [&c" + damager.getName() + " Ultra Set&b&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
+
             final int soulCost = getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount(player, soulCost)) {
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);
@@ -234,14 +251,13 @@ public class Phoenix extends CustomEnchantment {
                 player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
                 player.sendMessage(CC.translate("&7&oUse /phoenixcooldown&7 to check your cooldown timer."));
                 player.sendMessage("");
-                new BukkitRunnable() {
-                    @Override
-                    public void run() {
-                        player.sendMessage(CC.translate(""));
-                        player.sendMessage(CC.translate("&a&l*** YOU ARE NO LONGER ON &a&l&nPHOENIX COOLDOWN&a&l ***"));
-                        player.sendMessage(CC.translate(""));
-                    }
-                }.runTaskLater(Enchantments.getInstance(), 2400L);
+                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+                    player.sendMessage(CC.translate(""));
+                    player.sendMessage(CC.translate("&a&l*** YOU ARE NO LONGER ON &a&l&nPHOENIX COOLDOWN&a&l ***"));
+                    player.sendMessage(CC.translate(""));
+                }, 2400L);
+
+
                 if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY)) {
                     try {
                         MasteryFeignDeath.vanishPlayer(player, 3);

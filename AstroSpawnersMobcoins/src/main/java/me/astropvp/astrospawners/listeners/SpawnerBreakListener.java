@@ -6,7 +6,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.configs.DeleteSpawner;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.items.ItemSpawner;
@@ -76,7 +75,7 @@ public class SpawnerBreakListener implements Listener {
         for (int i = blocks.size() - 1; i >= 0; i--) {
             Block block = blocks.get(i);
             if (block.getType() == Material.MOB_SPAWNER) {
-                SpawnerData data = AstroSpawners.getInstance().getSpawnersMap().get(block.getLocation());
+                SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(block.getLocation());
                 if (data != null) {
                     EntityType type = data.getEntityType();
                     int amount = data.getSpawnerAmount();
@@ -92,7 +91,7 @@ public class SpawnerBreakListener implements Listener {
                         world.dropItem(location, ItemSpawner.getItem(type, spawnerAmount));
                     }
                     data.setSpawnerAmount(0);
-                    DeleteSpawner.delete(location);
+                    AstroSpawners.getInstance().getSpawnerManager().removeFromCache(data);
                     if (CollectorManager.DELEGATE.isCollectorContained(block.getLocation())) {
                         Collector collector = CollectorManager.DELEGATE.getCollector(block.getLocation());
                         collector.clearSpawners();
@@ -107,15 +106,14 @@ public class SpawnerBreakListener implements Listener {
     public void onMine(BlockBreakEvent event) {
         if (event.getBlock().getType() == Material.MOB_SPAWNER) {
             Block block = event.getBlock();
-            SpawnerData data = AstroSpawners.getInstance().getSpawnersMap().get(block.getLocation());
+            SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(block.getLocation());
             if (data != null) {
                 EntityType type = data.getEntityType();
                 int amount = data.getSpawnerAmount();
                 data.setSpawnerAmount(0);
                 block.getWorld().dropItem(block.getLocation(), ItemSpawner.getItem(type, amount));
                 event.getPlayer().sendMessage(CC.translate("&c&l- &c&n" + amount + "&c " + EntityUtils.getEntityName(type) + " Spawner(s)"));
-                AstroSpawners.getInstance().getSpawnersMap().remove(block.getLocation());
-                DeleteSpawner.delete(block.getLocation());
+                AstroSpawners.getInstance().getSpawnerManager().removeFromCache(data);
                 block.setType(Material.AIR);
                 event.setCancelled(true);
                 if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation())) {

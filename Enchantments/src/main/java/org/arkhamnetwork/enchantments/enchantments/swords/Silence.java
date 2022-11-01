@@ -14,15 +14,16 @@ import org.arkhamnetwork.enchantments.*;
 import org.bukkit.scheduler.*;
 import com.google.common.collect.*;
 import org.bukkit.entity.*;
+
 import java.util.*;
+
 import org.bukkit.plugin.*;
 import org.arkhamnetwork.enchantments.events.*;
 import org.bukkit.metadata.*;
 import org.bukkit.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 
-public class Silence extends CustomEnchantment
-{
+public class Silence extends CustomEnchantment {
     public Silence() {
         super("Silence", GeneralUtil.weapons, 2);
         this.max = 4;
@@ -43,11 +44,11 @@ public class Silence extends CustomEnchantment
         }
         final double chance = (enchantLevel + solitudeLevel) * 0.03;
         if (Math.random() < chance) {
-            final Player pTarget = (Player)target;
+            final Player pTarget = (Player) target;
             final long durationTicks = (enchantLevel + solitudeLevel) * 20L;
 
 
-            this.silencePlayer((Player)user, pTarget, enchantLevel, (double)durationTicks, event);
+            this.silencePlayer((Player) user, pTarget, enchantLevel, (double) durationTicks, event);
         }
     }
 
@@ -55,20 +56,32 @@ public class Silence extends CustomEnchantment
         if (target.hasMetadata("silenceTargetCooldown") && target.getMetadata("silenceTargetCooldown").get(0).asLong() > System.currentTimeMillis()) {
             return false;
         }
+
+        boolean enemyHasApolloSet = false;
+        boolean enemyHasApolloCrystal = false;
+
+        if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) silencer).containsKey(ArmorSetType.APOLLO)) {
+            enemyHasApolloCrystal = true;
+        }
+
+        if (AstroArmorSetsAPI.getCurrentArmorSet((Player) silencer) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) silencer) == ArmorSetType.APOLLO) {
+            enemyHasApolloSet = true;
+        }
+
         if (event != null && !new CustomEnchantProcOnEntityEvent(silencer, target, event, this, level).callEvent()) {
             return false;
         }
 
-        if (target.hasMetadata("immune_silence") && Math.random() < 0.1) {
+        if (target.hasMetadata("immune_silence") && Math.random() < 0.1 && !(enemyHasApolloSet) && !(enemyHasApolloCrystal && Math.random() < 0.25)) {
             silencer.sendMessage(CC.RedB + "* SILENCE BLOCKED [" + CC.Gray + target.getName() + CC.RedB + "] *");
             return false;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SUMMER_2021_HELMET) && Math.random() < 0.25) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SUMMER_2021_HELMET) && Math.random() < 0.25  && !(enemyHasApolloSet) && !(enemyHasApolloCrystal && Math.random() < 0.25)) {
             silencer.sendMessage(CC.translate("&C&l* SILENCE BLOCKED [&7" + target.getName() + "&C&l] *"));
             target.sendMessage(CC.translate("&6&l* SILENCE BLOCKED [&7Tiki Mask&6&l] *"));
             return false;
         }
-        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.CORRUPT_HELMET)) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.CORRUPT_HELMET) ) {
             durationTicks /= 2.0;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SUMMER_2021_HELMET)) {
@@ -77,7 +90,7 @@ public class Silence extends CustomEnchantment
 
         if (AstroArmorSetsAPI.getCurrentArmorSet(target) != null) {
             if (AstroArmorSetsAPI.getCurrentArmorSet(target) == ArmorSetType.DRAGON) {
-                durationTicks *=0.25;
+                durationTicks *= 0.25;
             }
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
@@ -85,11 +98,11 @@ public class Silence extends CustomEnchantment
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SPRING_BREAK_2022_BELT)) {
-            durationTicks*=0.8;
+            durationTicks *= 0.8;
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.EASTER_2022_MUTATED_BACKPACK)) {
-            durationTicks *=0.65;
+            durationTicks *= 0.65;
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
@@ -104,17 +117,17 @@ public class Silence extends CustomEnchantment
                 durationTicks -= durationTicks * 0.75;
             }
         }
-        target.setMetadata("noDefenseProcs", new FixedMetadataValue((Plugin)Enchantments.getInstance(), true));
+        target.setMetadata("noDefenseProcs", new FixedMetadataValue((Plugin) Enchantments.getInstance(), true));
         target.playSound(target.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
-        target.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + "[" + (int)(durationTicks / 20.0) + "s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
-        DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.DarkPurpleB + "* SILENCE " + CC.Gray + "[" + (int)durationTicks/20 + "s] " + CC.DarkPurpleB +  "*", "SILENCE");
-        target.setMetadata("silenceTargetCooldown", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + 2500L));
-        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), new Runnable() {
+        target.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + "[" + (int) (durationTicks / 20.0) + "s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
+        DamageIndicatorUtils.sendDamageIndicator((Player) target, CC.DarkPurpleB + "* SILENCE " + CC.Gray + "[" + (int) durationTicks / 20 + "s] " + CC.DarkPurpleB + "*", "SILENCE");
+        target.setMetadata("silenceTargetCooldown", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis() + 2500L));
+        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) Enchantments.getInstance(), new Runnable() {
             @Override
             public void run() {
-                target.removeMetadata("noDefenseProcs", (Plugin)Enchantments.getInstance());
+                target.removeMetadata("noDefenseProcs", (Plugin) Enchantments.getInstance());
             }
-        }, (long)durationTicks);
+        }, (long) durationTicks);
         return true;
     }
 }

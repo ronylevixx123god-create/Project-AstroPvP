@@ -281,6 +281,9 @@ public class MaskListener implements Listener {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You can only un-attach a Mask in the main world!");
                 return;
             }
+
+            if (event.getClickedInventory() != event.getWhoClicked().getInventory()) return;
+
             event.setCancelled(true);
             if (type2 == MaskType.MULTI_MASK) {
                 String[] masks = MultiMaskItem.listToString(MultiMaskItem.getMasks(clickedWrapper)).split(",");

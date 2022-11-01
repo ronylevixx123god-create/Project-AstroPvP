@@ -2,9 +2,9 @@ package me.astropvp.astrospawners;
 
 import lombok.Getter;
 import me.astropvp.astrospawners.commands.*;
-import me.astropvp.astrospawners.configs.LoadSpawner;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
 import me.astropvp.astrospawners.data.SpawnerData;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.ftop.CommandAdminFactionsTop;
 import me.astropvp.astrospawners.ftop.CommandFactionsTop;
 import me.astropvp.astrospawners.ftop.FactionsTopAPI;
@@ -40,10 +40,9 @@ public class AstroSpawners extends JavaPlugin {
     @Getter
     private ConfigManager configManager;
 
-
-
     @Getter
-    private Map<Location, SpawnerData> spawnersMap;
+    private SpawnerManager spawnerManager;
+
 
     @Getter
     public static List<Player> coolDownSpawnerPlace = new ArrayList<>();
@@ -56,23 +55,24 @@ public class AstroSpawners extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        astroSpawners = this;
         System.out.println("=======================");
         System.out.println("AstroSpawner Loaded!");
         System.out.println("=======================");
         manager = new PlayerDataManager(this);
-
+        this.spawnerManager = new SpawnerManager(this);
+        spawnerManager.loadAll();
         mobStackerUtils = new MobStackerUtils();
-
-        astroSpawners = this;
         this.loadConfig();
         registerListeners();
         registerCommands();
 
-        File file = new File(this.getDataFolder() + File.separator + "data");
-        if(!file.exists()) {
-            file.mkdir();
-        }
 
+        Bukkit.getConsoleSender().sendMessage("Finished loading spawners!");
+
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+            spawnerManager.saveAll();
+        }, 60L, 5*20*60);
 
 
 
@@ -86,49 +86,9 @@ public class AstroSpawners extends JavaPlugin {
 
         EntityUtils.onEnable();
         new SpawnerCustomItem("spawner", "<amount> <entity>");
-        //manager2 = new PlayerDataManager(this);
-
-
-/*
-        this.sqlDatabase = new Database(this);
-        if(this.sqlDatabase.isConnected())
-            Bukkit.getConsoleSender().sendMessage("SQL Database for AstroSpawners Connected");
-        if (!this.sqlDatabase.isConnected()) {
-            Bukkit.getLogger().severe("Unable to connect to sql database! Please ensure the sql credentials are correct");
-            Bukkit.getPluginManager().disablePlugin(this);
-        } else {
-            this.sqlDatabase.executeUpdate("CREATE TABLE IF NOT EXISTS spawner_data(location varchar(256), type varchar(64), amount int);", false);
-            this.sqlQueryCustomThread = new SQLQueryCustomThread();
-            this.sqlQueryCustomThread.start();
-        }
-*/
-
-        Bukkit.getConsoleSender().sendMessage("Started Loading Spawner Data");
-
-
-        this.spawnersMap = new HashMap<>();
-
-
-/*        try {
-            new WorldCreator(getConfig().getString("flat")).createWorld();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
-
-        Bukkit.getScheduler().runTaskLater(this, () -> {
-            LoadSpawner.load();
-            Bukkit.getConsoleSender().sendMessage("Finished loading spawners!");
-        }, 2 * 20L);
-
-
-
-
-
 
         runTasks();
         Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);
-
-        long minutes = 10;
 
         this.afkGrinders = new HashMap<>();
         this.waitingForAfkGrindingVerification = new ArrayList<>();
@@ -145,16 +105,10 @@ public class AstroSpawners extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        Bukkit.getConsoleSender().sendMessage("Purging Spawner Data");
+        spawnerManager.purge();
         Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
-
-        //getSpawnerManager().save();
-
-
-
-        /*for (Player p : Bukkit.getOnlinePlayers()) {
-            PlayerData data = AstroSpawners.getInstance().getManager().getPlayerData(p);
-            AstroSpawners.getInstance().getManager().savePlayerData(data);
-        }*/
+        spawnerManager.saveAll();
         MobStackerUtils.onDisable();
         EntityUtils.clearAllEntities();
 
@@ -172,10 +126,8 @@ public class AstroSpawners extends JavaPlugin {
         registerListener(new CombineSpawnersInventoryListener());
         registerListener(new EntityStackerListener(this));
         registerListener(new MobSpawnerListener());
-        //registerListener(new MobCoinShopListener());
         registerListener(new FtopCommandListener());
         registerListener(new PlayerDataOnJoin());
-        //registerListener(new ClickMobcoinsNoteListener());
         registerListener(new GrindingGuiClose());
     }
 
@@ -184,8 +136,7 @@ public class AstroSpawners extends JavaPlugin {
         getCommand("givespawner").setExecutor(new CommandGiveSpawner());
         getCommand("clearmobs").setExecutor(new CommandClearHashMap());
         getCommand("checkmobs").setExecutor(new CommandCheckHashMap());
-        //getCommand("savemobcoins").setExecutor(new SaveMobCoinsCommand());
-        //getCommand("addmobcoins").setExecutor(new CommandAddMobcoins());
+        getCommand("savespawners").setExecutor(new SaveSpawnersCommand());
 
         getCommand("stopspawnersplace").setExecutor(new CommandStopSpawnersPlace());
         getCommand("stackspawners").setExecutor(new CommandStackSpawners());

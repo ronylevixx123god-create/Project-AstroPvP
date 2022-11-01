@@ -23,9 +23,10 @@ package net.astropvp.core.cosmictoggles.toggles;
 
 import com.massivecraft.factions.FPlayer;
 import me.ifamasssxd.cosmicduel.CosmicDuel;
-import net.astropvp.core.itemfilter.Filter;
 import me.recolance.auction.Auction;
 import net.astropvp.core.AstroCore;
+import net.astropvp.itemfilter.ItemFilterPlugin;
+import net.astropvp.itemfilter.data.FilterUser;
 import org.arkhamnetwork.Arkkit.patches.ClearInventoryConfirm;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
@@ -60,8 +61,8 @@ public enum CosmicToggle {
         }
 
         if (this == ITEM_FILTER) {
-            Filter filter = AstroCore.getInstance().getFilterManager().getItemFilters().get(player.getUniqueId());
-            return filter != null && filter.isEnabled();
+            FilterUser filterUser = ItemFilterPlugin.getInstance().getFilterManager().getFilterUser(player.getUniqueId());
+            return filterUser.isEnabled();
         }
 
         if (this == COINFLIP) {

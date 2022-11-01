@@ -20,7 +20,7 @@ public class SpawnerExplodeListener implements Listener {
         List<Block> broken = e.blockList();
             for (Block block : broken) {
                 if (block.getType() != Material.MOB_SPAWNER) continue;
-                if (AstroSpawners.getInstance().getSpawnersMap().containsKey(block.getLocation())) {
+                if (AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(block.getLocation()) != null) {
                     if (CollectorManager.DELEGATE.isCollectorContained(block.getLocation())) {
                         Collector collector = CollectorManager.DELEGATE.getCollector(block.getLocation());
                         CreatureSpawner spawner = (CreatureSpawner) block.getState();

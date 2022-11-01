@@ -41,7 +41,8 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
     public static ArrayList<Location> locations = new ArrayList<>();
 
     public InventoryPets getOwner() {
-        return InventoryPets.MUTATED_WORLD_DESTROYER;
+        //return InventoryPets.MUTATED_WORLD_DESTROYER;
+        return null;
     }
 
     public List<String> getPetDescription() {
