@@ -45,7 +45,8 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.event.player.PlayerPickupItemEvent;
 import org.bukkit.event.player.PlayerToggleFlightEvent;
 
-public class SettingsListener
+public class
+SettingsListener
         implements Listener {
     @EventHandler
     public void onPlayerRegen(EntityRegainHealthEvent e) {

@@ -31,18 +31,18 @@ implements CommandExecutor {
             String arenaname = args[0];
             Arena arena = Arena.getArena(arenaname);
             if (arena == null) {
-                p.sendMessage((Object)ChatColor.RED + "Invalid arena. Valid arenas:");
+                p.sendMessage(ChatColor.RED + "Invalid arena. Valid arenas:");
                 for (Arena ar : Arena.arenas) {
-                    p.sendMessage((Object)ChatColor.YELLOW + ar.getName());
+                    p.sendMessage(ChatColor.YELLOW + ar.getName());
                 }
                 return true;
             }
             arena.spawnLocations.add(p.getLocation());
             arena.saveSpawns();
-            p.sendMessage((Object)ChatColor.RED + "Spawn saved! There are now " + arena.spawnLocations.size() + " Spawns.");
-            p.sendMessage((Object)ChatColor.GRAY + "You can remove a spawn with /removeduelspawn");
+            p.sendMessage(ChatColor.RED + "Spawn saved! There are now " + arena.spawnLocations.size() + " Spawns.");
+            p.sendMessage(ChatColor.GRAY + "You can remove a spawn with /removeduelspawn");
         } else {
-            p.sendMessage((Object)ChatColor.RED + "Correct usage: /setduelspawn <arenaName>");
+            p.sendMessage(ChatColor.RED + "Correct usage: /setduelspawn <arenaName>");
         }
         return false;
     }

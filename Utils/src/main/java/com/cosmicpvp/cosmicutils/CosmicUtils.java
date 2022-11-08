@@ -29,7 +29,7 @@ public final class CosmicUtils extends JavaPlugin {
     private static CosmicUtils instance;
     private Map<String, Player> asyncPlayerMap = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
     private Map<UUID, Player> asyncPlayerMapUUID = new MapMaker().concurrencyLevel(32).weakValues().makeMap();
-    private Map<String, Location> playerLocations = new ConcurrentHashMap<String, Location>();
+    private Map<String, Location> playerLocations = new ConcurrentHashMap<>();
     private InventoryManager inventoryManager;
     private boolean arkkitEnabled = false;
     private boolean vanishNoPacketEnabled = false;

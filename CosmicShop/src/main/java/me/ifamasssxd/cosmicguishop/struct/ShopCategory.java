@@ -13,25 +13,25 @@ import org.bukkit.DyeColor;
 import org.bukkit.Material;
 
 public enum ShopCategory {
-    POTION((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Potion Shop", new ShopMaterialData(Material.POTION)),
-    REDSTONE((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Raid Shop", new ShopMaterialData(Material.REDSTONE)),
-    SPAWNERS((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Spawners", new ShopMaterialData(Material.MOB_SPAWNER)),
-    BUILDING_BLOCKS((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Building Blocks", new ShopMaterialData(Material.SMOOTH_BRICK)),
-    ORES((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Ores and Gems", new ShopMaterialData(Material.EMERALD)),
-    FOOD_AND_FARMING((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Food and Farming", new ShopMaterialData(Material.COOKED_BEEF)),
-    MOB_DROPS((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Mob Drops", new ShopMaterialData(Material.BLAZE_ROD)),
-    SPECIALTY((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Speciality", new ShopMaterialData(Material.EYE_OF_ENDER)),
-    BREWING((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Brewing", new ShopMaterialData(Material.BREWING_STAND_ITEM)),
-    COLORED_WOOL((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Wool", new ShopMaterialData(Material.WOOL)),
-    COLORED_GLASS((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Glass", new ShopMaterialData(Material.STAINED_GLASS, DyeColor.GREEN.getWoolData())),
-    BASE_GRIND((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Base Grind", new ShopMaterialData(Material.OBSIDIAN)),
-    CLAY((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Clay", new ShopMaterialData(Material.STAINED_CLAY)),
-    FLOWERS((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "Flowers", new ShopMaterialData(Material.RED_ROSE));
+    POTION(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Potion Shop", new ShopMaterialData(Material.POTION)),
+    REDSTONE(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Raid Shop", new ShopMaterialData(Material.REDSTONE)),
+    SPAWNERS(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Spawners", new ShopMaterialData(Material.MOB_SPAWNER)),
+    BUILDING_BLOCKS(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Building Blocks", new ShopMaterialData(Material.SMOOTH_BRICK)),
+    ORES(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Ores and Gems", new ShopMaterialData(Material.EMERALD)),
+    FOOD_AND_FARMING(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Food and Farming", new ShopMaterialData(Material.COOKED_BEEF)),
+    MOB_DROPS(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Mob Drops", new ShopMaterialData(Material.BLAZE_ROD)),
+    SPECIALTY(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Speciality", new ShopMaterialData(Material.EYE_OF_ENDER)),
+    BREWING(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Brewing", new ShopMaterialData(Material.BREWING_STAND_ITEM)),
+    COLORED_WOOL(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Wool", new ShopMaterialData(Material.WOOL)),
+    COLORED_GLASS(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Glass", new ShopMaterialData(Material.STAINED_GLASS, DyeColor.GREEN.getWoolData())),
+    BASE_GRIND(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Base Grind", new ShopMaterialData(Material.OBSIDIAN)),
+    CLAY(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Clay", new ShopMaterialData(Material.STAINED_CLAY)),
+    FLOWERS(ChatColor.YELLOW + ChatColor.BOLD.toString() + "Flowers", new ShopMaterialData(Material.RED_ROSE));
 
-    private String displayName;
-    private ShopMaterialData displayData;
+    private final String displayName;
+    private final ShopMaterialData displayData;
 
-    private ShopCategory(String displayName, ShopMaterialData displayData) {
+    ShopCategory(String displayName, ShopMaterialData displayData) {
         this.displayName = displayName;
         this.displayData = displayData;
     }

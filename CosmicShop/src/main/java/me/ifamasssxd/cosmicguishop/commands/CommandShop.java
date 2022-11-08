@@ -37,13 +37,13 @@ public class CommandShop
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
-                    sender.sendMessage((Object) ChatColor.RED + "Shop reloaded");
+                    sender.sendMessage(ChatColor.RED + "Shop reloaded");
                     return true;
                 }
                 if (args[0].equalsIgnoreCase("setprice")) {
-                    sender.sendMessage((Object) ChatColor.RED + "Usage: /setprice <CATEGORY> <ITEM> <PRICE> <sellPrice>");
-                    sender.sendMessage((Object) ChatColor.RED + "EXAMPLE: /setprice BUILDING_BLOCKS SMOOTH_BRICK@4 1.50 0");
-                    sender.sendMessage((Object) ChatColor.RED + "Use: '/setprice BUILDING_BLOCKS SMOOTH_BRICK@4 -1' to remove the item from the shop.");
+                    sender.sendMessage(ChatColor.RED + "Usage: /setprice <CATEGORY> <ITEM> <PRICE> <sellPrice>");
+                    sender.sendMessage(ChatColor.RED + "EXAMPLE: /setprice BUILDING_BLOCKS SMOOTH_BRICK@4 1.50 0");
+                    sender.sendMessage(ChatColor.RED + "Use: '/setprice BUILDING_BLOCKS SMOOTH_BRICK@4 -1' to remove the item from the shop.");
                     return true;
                 }
             } else if ((args.length == 4 || args.length == 5) && args[0].equalsIgnoreCase("setprice")) {
@@ -58,45 +58,45 @@ public class CommandShop
                     Validate.isTrue((price >= -1.0 && price < 1.0E9 ? 1 : 0) != 0);
                     Validate.isTrue((sellPrice >= 0.0 && sellPrice < 1.0E9 ? 1 : 0) != 0);
                 } catch (Exception e) {
-                    sender.sendMessage((Object) ChatColor.RED + "Please enter a valid price!");
+                    sender.sendMessage(ChatColor.RED + "Please enter a valid price!");
                     return true;
                 }
                 ShopMaterialData data = manager.getShopMaterialFromString(itemString.replace(":", "@"));
                 if (data == null) {
-                    sender.sendMessage((Object) ChatColor.RED + "Unable to load item from " + itemString);
+                    sender.sendMessage(ChatColor.RED + "Unable to load item from " + itemString);
                     return true;
                 }
                 ShopCategory cat = ShopCategory.getFromName(catName);
                 if (cat == null) {
-                    sender.sendMessage((Object) ChatColor.RED + "Invalid category. Valid Categories:");
-                    Arrays.stream(ShopCategory.values()).forEach(real -> sender.sendMessage((Object) ChatColor.RED + real.name()));
+                    sender.sendMessage(ChatColor.RED + "Invalid category. Valid Categories:");
+                    Arrays.stream(ShopCategory.values()).forEach(real -> sender.sendMessage(ChatColor.RED + real.name()));
                     return true;
                 }
                 ShopItemMap shopItems = manager.getShopItems().computeIfAbsent(cat, map -> new ShopItemMap());
-                ItemPrice currentPrice = (ItemPrice) shopItems.get(data);
+                ItemPrice currentPrice = shopItems.get(data);
                 if (currentPrice != null) {
-                    sender.sendMessage((Object) ChatColor.RED + "Overriding prices, BUY: " + currentPrice.getBuyPrice() + " /ea SELL: " + currentPrice.getSellPrice() + " /ea");
+                    sender.sendMessage(ChatColor.RED + "Overriding prices, BUY: " + currentPrice.getBuyPrice() + " /ea SELL: " + currentPrice.getSellPrice() + " /ea");
                     if (price == -1.0) {
                         shopItems.remove(data);
-                        sender.sendMessage((Object) ChatColor.RED + "Item removed from shop.");
+                        sender.sendMessage(ChatColor.RED + "Item removed from shop.");
                     }
                     shopItems.remove(data);
                 } else if (price == -1.0) {
                     shopItems.remove(data);
-                    sender.sendMessage((Object) ChatColor.RED + "Item not registered.");
+                    sender.sendMessage(ChatColor.RED + "Item not registered.");
                     Bukkit.getLogger().info("Keys: " + shopItems.keySet());
                     return true;
                 }
                 if (price != -1.0) {
                     shopItems.put(data, new ItemPrice(price, sellPrice));
-                    sender.sendMessage((Object) ChatColor.RED + "Added to prices config!");
+                    sender.sendMessage(ChatColor.RED + "Added to prices config!");
                 }
                 itemString = data.toString();
                 if (price == -1.0 && sellPrice <= 0.0) {
                     manager.getPriceConfig().set("prices." + cat.name() + "." + itemString, null);
                 } else {
-                    manager.getPriceConfig().set("prices." + cat.name() + "." + itemString + ".buy", (Object) price);
-                    manager.getPriceConfig().set("prices." + cat.name() + "." + itemString + ".sell", (Object) sellPrice);
+                    manager.getPriceConfig().set("prices." + cat.name() + "." + itemString + ".buy", price);
+                    manager.getPriceConfig().set("prices." + cat.name() + "." + itemString + ".sell", sellPrice);
                 }
                 try {
                     manager.saveFile();

@@ -209,11 +209,7 @@ public abstract class MiniGame<T extends MiniGamePlayer> implements Listener {
             } else {
                player.sendMessage(CC.translate("&c&l(!)&c Unfortunately you didn't get a 5$ Buycraft Giftcard, better luck next time!"));
             }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (UnirestException e) {
-            e.printStackTrace();
-        } catch (ParseException e) {
+        } catch (IOException | UnirestException | ParseException e) {
             e.printStackTrace();
         }
     }

@@ -45,7 +45,7 @@ implements Listener {
     private static Inventory spectateInventory;
 
     public SpectateInventory() {
-        spectateInventory = Bukkit.createInventory((InventoryHolder)null, 18, (String)"Select an Arena");
+        spectateInventory = Bukkit.createInventory(null, 18, "Select an Arena");
         SpectateInventory.updateInventory();
     }
 
@@ -56,12 +56,12 @@ implements Listener {
             NewDuel d = DuelAPI.getCurrentlyActiveDuel(arena);
             ArrayList<String> lore = new ArrayList<String>();
             if (d != null) {
-                lore.add((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + d.getName() + " Duel:");
+                lore.add(ChatColor.YELLOW + ChatColor.BOLD.toString() + d.getName() + " Duel:");
                 lore.add(SpectateInventory.getDuelString(d));
             } else {
                 lore.add(CC.translate("&c&lNO DUEL"));
             }
-            ItemStack is = ItemBuilder.buildItem(arena.getIcon(), 1, (short)0, arena.getName() + " Arena " + (Object)ChatColor.GRAY + "(Click to Spectate)", lore);
+            ItemStack is = ItemBuilder.buildItem(arena.getIcon(), 1, (short)0, arena.getName() + " Arena " + ChatColor.GRAY + "(Click to Spectate)", lore);
             spectateInventory.setItem(index++, is);
         }
     }
@@ -75,17 +75,17 @@ implements Listener {
         int index = 0;
         for (Player p : d.getPlayers()) {
             DuelPlayer dp;
-            p_names = p_names + (Object)ChatColor.YELLOW + p.getName();
+            p_names = p_names + ChatColor.YELLOW + p.getName();
 
             if (index != d.getPlayers().size() - 1) {
-                p_names = p_names + (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + " vs ";
+                p_names = p_names + ChatColor.YELLOW + ChatColor.BOLD + " vs ";
             }
             ++index;
         }
         if (p_names.endsWith(" vs ")) {
             p_names = p_names.substring(0, p_names.length() - 4);
         }
-        return ChatColor.GREEN.toString() + (Object)ChatColor.BOLD + p_names;
+        return ChatColor.GREEN.toString() + ChatColor.BOLD + p_names;
     }
 
     private static String getDuelString(NewDuel d) {
@@ -93,22 +93,22 @@ implements Listener {
         int index = 0;
         for (Player p : d.getPlayers()) {
             DuelPlayer dp;
-            p_names = p_names + (Object)ChatColor.YELLOW + ChatColor.UNDERLINE.toString() + p.getName();
+            p_names = p_names + ChatColor.YELLOW + ChatColor.UNDERLINE + p.getName();
 
             if (index != d.getPlayers().size() - 1) {
-                p_names = p_names + (Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + " vs ";
+                p_names = p_names + ChatColor.YELLOW + ChatColor.BOLD + " vs ";
             }
             ++index;
         }
         if (p_names.endsWith(" vs ")) {
             p_names = p_names.substring(0, p_names.length() - 4);
         }
-        return ChatColor.GREEN.toString() + (Object)ChatColor.BOLD + p_names;
+        return ChatColor.GREEN.toString() + ChatColor.BOLD + p_names;
     }
 
     @EventHandler
     public void onInventoryclick(InventoryClickEvent e) {
-        if (e.getInventory().equals((Object)spectateInventory)) {
+        if (e.getInventory().equals(spectateInventory)) {
             Player p = (Player)e.getWhoClicked();
             e.setCancelled(true);
             if (e.getCurrentItem() == null || e.getCurrentItem().getType() == Material.AIR) {
@@ -126,10 +126,10 @@ implements Listener {
                         p.closeInventory();
                         d.prepareSpectator(p);
                     } else {
-                        p.sendMessage((Object)ChatColor.RED + "This duel is not ready yet.");
+                        p.sendMessage(ChatColor.RED + "This duel is not ready yet.");
                     }
                 } else {
-                    p.sendMessage((Object)ChatColor.RED + "This arena does not have an active duel.");
+                    p.sendMessage(ChatColor.RED + "This arena does not have an active duel.");
                 }
             }
         }

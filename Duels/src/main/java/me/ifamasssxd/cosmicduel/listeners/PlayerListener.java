@@ -74,10 +74,10 @@ public class PlayerListener
     public void onPlayerJoin(final PlayerJoinEvent e) {
         Player p = e.getPlayer();
         if (p.getWorld().getName().startsWith("world_duel") && DuelArenaTask.arena_regions.contains(WorldGuardUtils.getRegionName(p.getLocation()))) {
-            p.setMetadata("ignore_combat_tag", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), (Object) ""));
-            p.teleport(((World) Bukkit.getWorlds().get(0)).getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-            p.removeMetadata("ignore_combat_tag", (Plugin) CosmicDuel.get());
-            p.sendMessage((Object) ChatColor.RED + "You were inside of a duel arena without a duel.");
+            p.setMetadata("ignore_combat_tag", new FixedMetadataValue(CosmicDuel.get(), ""));
+            p.teleport(Bukkit.getWorlds().get(0).getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            p.removeMetadata("ignore_combat_tag", CosmicDuel.get());
+            p.sendMessage(ChatColor.RED + "You were inside of a duel arena without a duel.");
         }
 
         new DuelPlayer(e.getPlayer().getUniqueId(), e.getPlayer().getName());
@@ -175,7 +175,7 @@ public class PlayerListener
                 public void run() {
                     ((CraftPlayer) p).getHandle().playerConnection.a(new PacketPlayInClientCommand(PacketPlayInClientCommand.EnumClientCommand.PERFORM_RESPAWN));
                 }
-            }.runTaskLater((Plugin) CosmicDuel.get(), 2L);
+            }.runTaskLater(CosmicDuel.get(), 2L);
         }
     }
 
@@ -186,7 +186,7 @@ public class PlayerListener
             NewDuel d = DuelAPI.getDuel(p);
             if (!d.getSettings().hasSetting(Setting.HEALING)) {
                 e.setCancelled(true);
-                p.sendMessage((Object) ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.YELLOW + "Your duel has Healing " + (Object) ChatColor.RED + (Object) ChatColor.UNDERLINE + "disabled.");
+                p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Your duel has Healing " + ChatColor.RED + ChatColor.UNDERLINE + "disabled.");
                 return;
             }
             ItemStack is = e.getItem();
@@ -273,7 +273,7 @@ public class PlayerListener
                     return;
                 }
                 if (!e.isCancelled()) {
-                    p.setMetadata("last_damage", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDuel.get(), (Object) (System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2L))));
+                    p.setMetadata("last_damage", new FixedMetadataValue(CosmicDuel.get(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2L)));
                 }
                 if (d.getGameTimer() >= 300 && !e.isCancelled()) {
                     e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
@@ -289,11 +289,11 @@ public class PlayerListener
             if (d.getDuelState() == DuelState.IN_QUEUE) {
                 if (e.getTo() != null && e.getTo().getWorld().getName().equals(Arena.getDuelWorldName())) {
                     e.setCancelled(true);
-                    e.getPlayer().sendMessage((Object) ChatColor.RED + "You cannot teleport to the duel world while in queue.");
+                    e.getPlayer().sendMessage(ChatColor.RED + "You cannot teleport to the duel world while in queue.");
                 }
             } else if (d.getDuelState() != DuelState.ENDED && d.getDuelState() != DuelState.ENDING && !e.getPlayer().isOp() && e.getTo().getWorld() != e.getFrom().getWorld() && e.getFrom().getWorld().getName().equals(Arena.getDuelWorldName())) {
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object) ChatColor.RED + "You cannot leave the duel world while in a duel!");
+                e.getPlayer().sendMessage(ChatColor.RED + "You cannot leave the duel world while in a duel!");
             }
         } else if (!DuelAPI.isSpectator(e.getPlayer()) && !e.getPlayer().isOp() && !DuelAPI.hasDuel(e.getPlayer()) && e.getFrom() != null && e.getFrom().getWorld() != e.getTo().getWorld() && e.getTo() != null && e.getTo().getWorld() != null && e.getTo().getWorld().getName().equals(Arena.getDuelWorldName())) {
             e.setCancelled(true);

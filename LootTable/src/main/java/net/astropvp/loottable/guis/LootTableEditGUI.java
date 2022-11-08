@@ -9,7 +9,7 @@ import lombok.Getter;
 
 import net.astropvp.loottable.LootTablePlugin;
 import net.astropvp.loottable.data.LootTable;
-import net.astropvp.loottable.struct.LootRarity;
+import net.astropvp.loottable.commands.struct.LootRarity;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

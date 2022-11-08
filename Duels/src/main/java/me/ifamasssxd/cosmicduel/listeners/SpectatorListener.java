@@ -94,8 +94,8 @@ implements Listener {
             }
             e.setMessage("/null");
             e.setCancelled(true);
-            p.sendMessage((Object)ChatColor.RED + "You cannot use commands while spectating.");
-            p.sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
+            p.sendMessage(String.format("%sYou cannot use commands while spectating.", ChatColor.RED));
+            p.sendMessage(String.format("%sYou can leave the duel with /duel leave.", ChatColor.GRAY));
         }
     }
 
@@ -168,16 +168,16 @@ implements Listener {
                         if (is == null || is.getType() == Material.AIR) continue;
                         armor[i] = new ItemStack(Material.AIR);
                         p.getInventory().setArmorContents(armor);
-                        p.getInventory().addItem(new ItemStack[]{is});
+                        p.getInventory().addItem(is);
                         p.updateInventory();
-                        p.sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Your duel has Armor " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "disabled.");
+                        p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Your duel has Armor " + ChatColor.RED + ChatColor.UNDERLINE + "disabled.");
                         for (PotionEffect pe : p.getActivePotionEffects()) {
                             p.removePotionEffect(pe.getType());
                         }
                         p.playSound(p.getLocation(), Sound.ITEM_BREAK, 1.0f, 1.0f);
                     }
                 }
-            }.runTaskLater((Plugin)CosmicDuel.get(), 2L);
+            }.runTaskLater(CosmicDuel.get(), 2L);
         }
     }
 

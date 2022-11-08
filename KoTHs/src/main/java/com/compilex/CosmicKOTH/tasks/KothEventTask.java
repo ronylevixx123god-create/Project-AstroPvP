@@ -2,11 +2,11 @@ package com.compilex.CosmicKOTH.tasks;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.customfiles.CustomConfig;
-import com.cosmicpvp.cosmicutils.utils.*;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicbosses.utils.StringUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.astropvp.giftcardshop.GiftcardAPI;
 import net.minecraft.server.v1_8_R3.EntityFireworks;
@@ -16,10 +16,12 @@ import org.arkhamnetwork.Arkkit.utils.RandomFireworks;
 import org.arkhamnetwork.Arkkit.utils.WorldGuardUtils;
 import org.bukkit.*;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftFirework;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Firework;
+import org.bukkit.entity.Item;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.meta.FireworkMeta;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
@@ -30,9 +32,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class KothEventTask
 implements Runnable {
@@ -59,13 +59,13 @@ implements Runnable {
 
             @Override
             public void run() {
-                Bukkit.broadcastMessage((String)"");
+                Bukkit.broadcastMessage("");
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is starting!")));
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
-                Bukkit.broadcastMessage((String)"");
+                Bukkit.broadcastMessage("");
                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                    p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1.2f, 1.6f);
+                    p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1.2f, 1.6f);
                 }
             }
         });
@@ -92,11 +92,11 @@ implements Runnable {
 
     private void advertHandler() {
         if (this.runtime % 300 == 0) {
-            Bukkit.broadcastMessage((String)"");
+            Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is currently running!")));
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
-            Bukkit.broadcastMessage((String)"");
+            Bukkit.broadcastMessage("");
         }
     }
 
@@ -124,7 +124,7 @@ implements Runnable {
             if (playerCapping.hasMetadata("KOTH_CAPPING_START")) {
                 String regionName = WorldGuardUtils.getRegionName(this.playerCapping.getLocation());
                 if (!regionName.equals("koth_center")) {
-                    this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.RED + " is no longer capping KOTH!");
+                    this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD + "(!) " + ChatColor.RED + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.RED + " is no longer capping KOTH!");
                     de.inventivegames.particle.ParticleEffect.MAGIC_CRIT.sendToPlayers(Bukkit.getOnlinePlayers(),this.playerCapping.getLocation(), 0,1,0,0.6f,30);
                     this.playerCapping.playSound(this.playerCapping.getLocation(), Sound.ANVIL_BREAK, 1.0f, 0.7f);
                     this.playerCapping = null;
@@ -132,13 +132,13 @@ implements Runnable {
                 }
                 int secondsLeft = this.getSecondsUntilCap();
                 if (secondsLeft >= 300 && secondsLeft % 300 == 0) {
-                    this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[" + secondsLeft / 60 + "m 0s left]");
+                    this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[" + secondsLeft / 60 + "m 0s left]");
                 }
                 if (secondsLeft < 300 && secondsLeft > 30 && secondsLeft % 60 == 0) {
-                    this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[" + secondsLeft / 60 + "m 0s left]");
+                    this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[" + secondsLeft / 60 + "m 0s left]");
                 }
                 if (secondsLeft == 30 || secondsLeft <= 10) {
-                    this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[0m " + secondsLeft + "s left]");
+                    this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[0m " + secondsLeft + "s left]");
                 }
                 if (secondsLeft <= 0) {
                     this.captureKOTH(this.playerCapping);
@@ -165,14 +165,14 @@ implements Runnable {
     public void captureKOTH(Player player) throws ParseException, UnirestException, IOException {
         FPlayer fplayer;
         this.capped = true;
-        this.running = false;
-        Bukkit.broadcastMessage((String)"");
+        running = false;
+        Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe &6Desert koth&f has been Captured!")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe winner received a &6Koth Lootbag &fand &610$ Buycraft&f.")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lWinner&7: &f" + this.getNameOfFlagCapper())));
-        Bukkit.broadcastMessage((String)"");
+        Bukkit.broadcastMessage("");
 
         this.logWinner(player);
         this.logFactionWin(player);
@@ -187,7 +187,7 @@ implements Runnable {
             player.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("KothBag").createClaimableItem(false));
         } else {
             this.kothBroadcast("");
-            this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + this.playerCapped.getName() + " did not have any inventory space, so the Astro Koth Lootbag has been DROPPED!");
+            this.kothBroadcast(ChatColor.RED.toString() + ChatColor.BOLD + "(!) " + ChatColor.RED + this.playerCapped.getName() + " did not have any inventory space, so the Astro Koth Lootbag has been DROPPED!");
             this.kothBroadcast("");
             Item j = this.playerCapped.getWorld().dropItem(player.getLocation(), CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("KothBag").createClaimableItem(false));
             j.setMetadata("kothLootbag", new FixedMetadataValue(CosmicKOTHPlugin.get_(), true));
@@ -210,14 +210,14 @@ implements Runnable {
             String faction;
             SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
             Date date = new Date();
-            FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer(p);
+            FPlayer fp = FPlayers.getInstance().getByPlayer(p);
             String facId = fp.getFaction().isNormal() ? "id=" + fp.getFactionId() : "";
             String string = faction = fp.getFaction().isNormal() ? fp.getFaction().getTag() : "N/A";
             if (!new File("plugins/CosmicKOTH/koth.log").exists()) {
                 new File("plugins/CosmicKOTH").mkdir();
                 new File("plugins/CosmicKOTH/koth.log").createNewFile();
             }
-            Files.write(Paths.get("plugins/CosmicKOTH/koth.log", new String[0]), ("\n[" + dateFormat.format(date) + "] <" + faction + "> " + p.getName() + " (" + p.getUniqueId().toString() + ") at " + CosmicKOTHPlugin.get_().getKoth().getRuntime() + facId).getBytes(), StandardOpenOption.APPEND);
+            Files.write(Paths.get("plugins/CosmicKOTH/koth.log"), ("\n[" + dateFormat.format(date) + "] <" + faction + "> " + p.getName() + " (" + p.getUniqueId().toString() + ") at " + CosmicKOTHPlugin.get_().getKoth().getRuntime() + facId).getBytes(), StandardOpenOption.APPEND);
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -276,7 +276,7 @@ implements Runnable {
         Player playerCapping = this.playerCapping = p;
         this.getClass();
         playerCapping.setMetadata("KOTH_CAPPING_START", new FixedMetadataValue(CosmicKOTHPlugin.get_(), System.currentTimeMillis()));
-        this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[5m 0s left]");
+        this.kothBroadcast(ChatColor.GREEN.toString() + ChatColor.BOLD + "(!) " + ChatColor.GREEN + ChatColor.BOLD + this.getNameOfFlagCapper() + ChatColor.GREEN + " is capping KOTH! " + ChatColor.GRAY + "[5m 0s left]");
     }
 
     public void kothBroadcast(String msg) {

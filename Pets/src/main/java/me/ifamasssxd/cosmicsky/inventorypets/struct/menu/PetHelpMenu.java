@@ -19,7 +19,7 @@ public class PetHelpMenu extends CosmicGUI {
 
       for(int i = 0; i < length; ++i) {
          InventoryPets pet = array[i];
-         this.setItem(index++, new InventoryItem(CosmicSkyInventoryPets.get().getPetItem().createItem((Player)null, pet)));
+         this.setItem(index++, new InventoryItem(CosmicSkyInventoryPets.get().getPetItem().createItem(null, pet)));
       }
 
    }

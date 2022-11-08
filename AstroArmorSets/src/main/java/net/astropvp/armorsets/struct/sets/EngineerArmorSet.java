@@ -137,7 +137,7 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
 
     public void onEngineerAbility(Player player) {
 
-            List<Entity> affected = (List<Entity>)player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> {
+            List<Entity> affected = player.getNearbyEntities(25.0D, 25.0D, 25.0D).stream().filter(ent -> {
             if (!(ent instanceof Player))
                 return false;
             Player p = (Player)ent;

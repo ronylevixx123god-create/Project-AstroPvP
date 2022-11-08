@@ -4,8 +4,8 @@ package net.astropvp.loottable;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import net.astropvp.loottable.data.LootTable;
 import net.astropvp.loottable.data.LootTableManager;
-import net.astropvp.loottable.struct.LootRarity;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.commands.struct.LootRarity;
+import net.astropvp.loottable.commands.struct.LootTableType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;

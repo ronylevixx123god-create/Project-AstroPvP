@@ -77,7 +77,7 @@ public class DuelListener
 
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onDuelMasterClicked(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked() instanceof Player && ((Player)event.getRightClicked()).getName().equalsIgnoreCase("Duel Master") && event.getRightClicked().hasMetadata("NPC")) {
+        if (event.getRightClicked() instanceof Player && event.getRightClicked().getName().equalsIgnoreCase("Duel Master") && event.getRightClicked().hasMetadata("NPC")) {
             event.getPlayer().chat("/duel");
         }
     }
@@ -128,10 +128,10 @@ public class DuelListener
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onPlayerPreProcess(PlayerCommandPreprocessEvent e) {
-        if (Arena.getDuelWorldName().equalsIgnoreCase(e.getPlayer().getWorld().getName()) && e.getMessage().startsWith("/f ") && !e.getPlayer().isOp() && !e.getPlayer().getGameMode().equals((Object)GameMode.CREATIVE)) {
+        if (Arena.getDuelWorldName().equalsIgnoreCase(e.getPlayer().getWorld().getName()) && e.getMessage().startsWith("/f ") && !e.getPlayer().isOp() && !e.getPlayer().getGameMode().equals(GameMode.CREATIVE)) {
             e.setCancelled(true);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
-            e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
+            e.getPlayer().sendMessage(ChatColor.RED + "You cannot use commands in a duel.");
+            e.getPlayer().sendMessage(ChatColor.GRAY + "You can leave the duel with /duel leave.");
             e.setMessage("/null");
             return;
         }
@@ -151,7 +151,7 @@ public class DuelListener
                     }
                     e.setCancelled(true);
                     e.setMessage("/null");
-                    e.getPlayer().sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Your duel has /fix " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "disabled.");
+                    e.getPlayer().sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Your duel has /fix " + ChatColor.RED + ChatColor.UNDERLINE + "disabled.");
                     return;
                 }
                 if (e.getMessage().endsWith("/fly") || e.getMessage().endsWith("/efly")) {
@@ -160,13 +160,13 @@ public class DuelListener
                     }
                     e.setCancelled(true);
                     e.setMessage("/null");
-                    e.getPlayer().sendMessage((Object)ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.YELLOW + "Your duel has /fly " + (Object)ChatColor.RED + (Object)ChatColor.UNDERLINE + "disabled.");
+                    e.getPlayer().sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Your duel has /fly " + ChatColor.RED + ChatColor.UNDERLINE + "disabled.");
                     return;
                 }
                 e.setMessage("/null");
                 e.setCancelled(true);
-                e.getPlayer().sendMessage((Object)ChatColor.RED + "You cannot use commands in a duel.");
-                e.getPlayer().sendMessage((Object)ChatColor.GRAY + "You can leave the duel with /duel leave.");
+                e.getPlayer().sendMessage(ChatColor.RED + "You cannot use commands in a duel.");
+                e.getPlayer().sendMessage(ChatColor.GRAY + "You can leave the duel with /duel leave.");
             }
         }
         if (e.getMessage().equalsIgnoreCase("/elo top")) {

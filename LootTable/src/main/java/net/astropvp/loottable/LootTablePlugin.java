@@ -6,7 +6,7 @@ import me.mattstudios.mf.base.components.TypeResult;
 
 import net.astropvp.loottable.commands.LootTableCommand;
 import net.astropvp.loottable.data.LootTableManager;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.commands.struct.LootTableType;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
