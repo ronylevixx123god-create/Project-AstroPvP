@@ -45,7 +45,7 @@ extends CustomEnchantment {
         this.max = 3;
         this.base = 10.0;
         this.interval = 5.0;
-        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)Enchantments.getInstance(), () -> this.claritiedPlayers.forEach((player, maxBlindLevelToRemove) -> {
+/*        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)Enchantments.getInstance(), () -> this.claritiedPlayers.forEach((player, maxBlindLevelToRemove) -> {
             if (!player.isValid()) {
                 return;
             }
@@ -62,7 +62,7 @@ extends CustomEnchantment {
                 }
                 return;
             }
-        }), 3L, 3L);
+        }), 3L, 3L);*/
     }
 
     public void applyEquipEffect(Player player, int level) {

@@ -77,10 +77,10 @@ public class HolyWhiteScrollListener implements Listener {
             return;
         if (e.getKeepInventory())
             return;
-        if (!e.getEntity().getLocation().getWorld().getName().equals("world") && !e.getEntity().getLocation().getWorld().getName().equals("flat"))
+/*        if (!e.getEntity().getLocation().getWorld().getName().equals("world") && !e.getEntity().getLocation().getWorld().getName().equals("flat"))
             return;
         if (!e.getEntity().getKiller().getLocation().getWorld().getName().equals("world") && !e.getEntity().getKiller().getLocation().getWorld().getName().equals("flat"))
-            return;
+            return;*/
         Player killer = e.getEntity().getKiller();
         Player killed = e.getEntity();
 
@@ -109,7 +109,7 @@ public class HolyWhiteScrollListener implements Listener {
                     }
                 }
                 if (AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.SUMMER_2021_BOOTS)) {
-                    monoChance*=1.15;
+                    monoChance *= 1.15;
                 }
                 boolean isMonopolied = (wearingMonopolyMask && Math.random() <= monoChance);
 
@@ -262,15 +262,17 @@ public class HolyWhiteScrollListener implements Listener {
             killed.setTotalExperience(0);
         }
         List<ItemStack> itemList = e.getDrops();
-        itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
+        if (!AstroCore.getInstance().getAstroPlayerManager().getFromCache(killer.getUniqueId().toString()).isPotsDropEnabled()) {
+            itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
+        }
 
 
-        if (itemList.size() > 0) {
+        /*if (itemList.size() > 0) {
             CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory", System.currentTimeMillis()));
         }
         e.getDrops().clear();
         itemList.clear();
-        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed.getName() + "'s Death Loot has been put into your &n/collect&c."));
+        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed.getName() + "'s Death Loot has been put into your &n/collect&c."));*/
 
     }
 

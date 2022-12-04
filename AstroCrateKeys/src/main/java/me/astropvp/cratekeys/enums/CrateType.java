@@ -7,7 +7,7 @@ public enum CrateType {
     LEGENDARY("Legendary", "&6", ""),
     GODLY("Godly", "&4", ""),
     MUTATED("Mutated", "&2", ""),
-    SEASON("Summer", "&e", "&6");
+    SEASON("Winter", "&b", "&3");
     private final String name;
 
     private final String prefix;

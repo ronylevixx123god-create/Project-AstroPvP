@@ -73,50 +73,39 @@ public class Rage extends CustomEnchantment {
             if (rageStacksCache.getRageStack() >= 1) {
                 double baseRageMath = rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier");
                 double rageMath;
-                //Rose Amulet
+
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
                     rageMath = 1 + (baseRageMath * 0.5);
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageMath);
-                    //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.5);
                     if (Math.random() < 0.25) {
                         target.sendMessage(CC.translate("&c&l* ROSE AMULET &7[-50% Rage DMG] &c&l*"));
                     }
-                    //Seasons Beating
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
                     rageMath = 1 + (baseRageMath * 1.1);
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageMath);
-                    //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 1.1);
                     if (Math.random() < 0.25) {
                         user.sendMessage(CC.translate("&4&l* SEASON'S BEATING &7[+10% Rage DMG] &4&l*"));
                     }
-                    //Big Timbs
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.35) {
                     target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
-                    //shouldnt there be a return?
-                    //Chesire Grin
                 } else if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
                     rageMath = 1 + (baseRageMath * 1.1);
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageMath);
-                    //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * ( 1+ (BonusType.BONUS_RAGE_STACK_DMG.getLevelToValue().get(WeaponBonusesAPI.getBonusLevel(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG))/100)));
                 } else if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {
                     rageMath = 1 + (baseRageMath * 0.65);
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageMath);
-                    //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 0.65);
                     if (Math.random() < 0.25) {
                         target.sendMessage(CC.translate("&e&l* CHESHIRE GRIN &7[-35% Rage DMG] &e&l*"));
                     } else if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {
                         rageMath = 1 + (baseRageMath * 1.1);
                         event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageMath);
-                        //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier") * 1.1);
                         if (Math.random() < 0.25) {
                             target.sendMessage(CC.translate("&c&l* SKELETON KEY &7[+10% Rage DMG] &c&l*"));
                         }
                     }
                 } else {
-                    //Normal Rage damage
                     rageMath = 1 + (baseRageMath);
                     event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageMath);
-                    //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
                 }
                 this.playRageEffect(target.getLocation());
 

@@ -387,6 +387,7 @@ public class AstroCore extends JavaPlugin {
         getCommand("giveaway").setExecutor(new GiveAwayCommand());
         getCommand("togglekilltitle").setExecutor(new ToggleKillTitleCommand());
         getCommand("togglefactionland").setExecutor(new ToggleFactionLandTitle());
+        getCommand("togglepotsdrop").setExecutor(new TogglePotsDropCommand());
 
         freezeCommand = new Freeze();
 
@@ -476,6 +477,8 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
         getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
+        getServer().getPluginManager().registerEvents(new SpawnerShopListener(), this);
+
     }
 
     public void registerCustomItems() {

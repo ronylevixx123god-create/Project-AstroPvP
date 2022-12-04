@@ -1,6 +1,6 @@
 /*
  * Decompiled with CFR 0.150.
- * 
+ *
  * Could not load the following classes:
  *  com.rit.sucy.CustomEnchantment
  *  org.bukkit.World$Environment
@@ -27,7 +27,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.util.Vector;
 
 public class Ragdoll
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public Ragdoll() {
         super("Ragdoll", GeneralUtil.armor, 3);
         this.max = 4;
@@ -40,21 +40,23 @@ extends CustomEnchantment {
             if (attacker instanceof IronGolem) {
                 return;
             }
-            if (player.getWorld().getEnvironment() == World.Environment.THE_END || GeneralUtil.isKOTHWorld(player.getWorld())) {
-                return;
-            }
 
-            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) && Math.random() < 0.75) {
-                return;
-            }
 
-            if (UndertowHelmet.undertowField.contains(player)) {
-                return;
-            }
+            Player p = (Player) player;
+            if (Math.random() < (double) level * 0.125) {
+                if (attacker.hasMetadata("no_knockback")) return;
+                if (player.getWorld().getEnvironment() == World.Environment.THE_END || GeneralUtil.isKOTHWorld(player.getWorld())) {
+                    return;
+                }
 
-                Player p = (Player)player;
-            if (Math.random() < (double)level * 0.125) {
-                GeneralUtil.pushAwayEntity(attacker, (Entity)p, 1.5 + 0.5 * (double)level);
+                if ((AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) && Math.random() < 0.75) {
+                    return;
+                }
+
+                if (UndertowHelmet.undertowField.contains(player)) {
+                    return;
+                }
+                GeneralUtil.pushAwayEntity(attacker, (Entity) p, 1.5 + 0.5 * (double) level);
             }
         }
     }

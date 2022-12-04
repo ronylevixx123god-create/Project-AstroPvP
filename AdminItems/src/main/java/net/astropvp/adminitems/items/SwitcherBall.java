@@ -100,6 +100,8 @@ public class SwitcherBall extends AdminItem implements Throwable {
         }
 
         this.snowballPlayers.put(e.getEntity().getUniqueId(), ((Player) e.getEntity().getShooter()).getPlayer());
+        CooldownUtils.registerCooldown(shooter, new AbilityCooldown(getCooldownID(), cooldown));
+
     }
 
 
@@ -134,7 +136,6 @@ public class SwitcherBall extends AdminItem implements Throwable {
         hit.teleport(loc, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         shooter.sendMessage(CC.translate(Language.SWITCHERED.getMessage().replace("%shot%", hit.getName())));
         hit.sendMessage(CC.translate(Language.SWITCHERED_BY_PLAYER.getMessage().replace("%player%", shooter.getName())));
-        CooldownUtils.registerCooldown(shooter, new AbilityCooldown(getCooldownID(), cooldown));
 
     }
 

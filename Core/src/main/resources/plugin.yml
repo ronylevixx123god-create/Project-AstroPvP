@@ -106,3 +106,4 @@ commands:
   givepearl:
   chatcolor:
     aliases: [ color ]
+  togglepotsdrop:

@@ -57,8 +57,7 @@ public class HeroicDeathbringer extends CustomEnchantment {
             Entity damage = e.getDamager();
             if (damage instanceof Projectile && doubleDamage.contains(((Projectile)damage).getShooter()) || doubleDamage.contains(damage)) {
                 double random = Math.random();
-                double chance = 0.1D * (double)(playerLevels.containsKey(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage) ? (Integer)playerLevels.get(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage) : 1);
-                chance *= 1.8D;
+                double chance = 0.025;
                 if (random < chance) {
                     e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.75D);
                 }

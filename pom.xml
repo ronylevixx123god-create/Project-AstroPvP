@@ -68,8 +68,9 @@
         <module>LootTable</module>
         <module>MysteryChests</module>
         <module>AdminItems</module>
-        <module>ItemFilter</module>
         <module>AstroItemFilter</module>
+        <module>Christmas</module>
+        <module>AstroChristmas</module>
 
     </modules>
 

@@ -14,7 +14,7 @@ final class LeadershipListener implements Listener {
         Leadership.Leaderships.remove(e.getPlayer().getName());
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler()
     public void onEntityDamage(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getDamager().hasMetadata("leadershipLevel")) {
             final int level = ((Player) e.getDamager()).getMetadata("leadershipLevel").get(0).asInt();

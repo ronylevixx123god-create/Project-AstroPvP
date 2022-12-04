@@ -3,6 +3,7 @@ package org.arkhamnetwork.enchantments.items;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
@@ -58,11 +59,11 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
         if (clicked == null || clicked.getType() == Material.AIR || clickedWrapper == null) {
             return;
         }
-        Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(clicked);
-        if (enchants.keySet() == null) {
-            player.sendMessage(CC.translate("&c&l(!) &cThis item does not have any enchantments on it!"));
+        if (!GeneralUtil.isArmor(clicked) && !GeneralUtil.isWeapon(clicked)) {
+            player.sendMessage(CC.translate("&c&l(!) &cYou can only apply omni blackscrolls to armor or weapons!"));
             return;
         }
+        Map<CustomEnchantment, Integer> enchants = EnchantmentAPI.getEnchantments(clicked);
         if (enchants.keySet().isEmpty()) {
             player.sendMessage(CC.translate("&c&l(!) &cThis item does not have any enchantments on it!"));
             return;

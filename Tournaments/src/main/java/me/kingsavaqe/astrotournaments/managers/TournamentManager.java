@@ -109,7 +109,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
                 Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, ()-> {
                     setupPlayer(player1, arena.getLocations().getLeft());
                     setupPlayer(player2, arena.getLocations().getRight());
-                }, 20L);
+                }, 40L);
             }
         });
 

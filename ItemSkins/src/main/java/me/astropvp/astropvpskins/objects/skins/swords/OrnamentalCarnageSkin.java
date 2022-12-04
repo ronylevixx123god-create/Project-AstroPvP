@@ -22,7 +22,7 @@ public class OrnamentalCarnageSkin extends ItemSkin {
             return;
         if (damaged.hasMetadata("titantrap"))
             event.setDamage(event.getDamage()*1.1);
-        if (Math.random() > 0.02) {
+        if (Math.random() < 0.02) {
             event.setDamage(event.getDamage()*1.2);
         }
 

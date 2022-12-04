@@ -112,7 +112,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
 
     public void registerTournamentScoreboard() {
         TournamentManager tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
-        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-tournament%", getMS(5), player -> ((Player) player.getPlayer()).getWorld().getName().equals("tournament_world") && tournamentManager.isActive());
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-tournament%", getMS(5), player -> ((Player) player.getPlayer()).getWorld().getName().equals("tournament_world") && tournamentManager.getTournamentPlayer(player.getUniqueId()).isInTournament());
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%match-string%", getMS(1), player -> getMatchString((Player) player.getPlayer(), tournamentManager));
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%participants%", getMS(5), () -> tournamentManager.getTournamentParticipants().size());
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%position-queue%", getMS(1), player -> tournamentManager.getPlayerQueue().getPosition(tournamentManager.getTournamentPlayer(player.getUniqueId())));

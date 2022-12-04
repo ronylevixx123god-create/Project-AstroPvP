@@ -37,12 +37,12 @@ public class SyncManager {
         return (Integer)this.activeSyncMap.keySet().stream().filter((code) -> ((UUID)this.activeSyncMap.get(code)).equals(player.getUniqueId())).findFirst().orElse(-1);
     }
 
-    public User getLinkedUser(Player player) {
-        if (!this.plugin.getDatabaseManager().contains(player.getUniqueId())) {
+    public User getLinkedUser(UUID uuid) {
+        if (!this.plugin.getDatabaseManager().contains(uuid)) {
             return null;
         } else {
             try {
-                return this.plugin.getJda().getUserById(this.plugin.getDatabaseManager().get(player.getUniqueId()));
+                return this.plugin.getJda().getUserById(this.plugin.getDatabaseManager().get(uuid));
             } catch (Exception var3) {
                 var3.printStackTrace();
                 return null;
@@ -54,8 +54,8 @@ public class SyncManager {
         return this.activeSyncMap.containsValue(player.getUniqueId());
     }
 
-    public boolean isAccountLinked(Player player) {
-        return this.getLinkedUser(player) != null;
+    public boolean isAccountLinked(UUID uuid) {
+        return this.getLinkedUser(uuid) != null;
     }
 
     public boolean isActiveCode(int code) {

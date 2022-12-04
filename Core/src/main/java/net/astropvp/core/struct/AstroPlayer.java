@@ -15,6 +15,8 @@ public class AstroPlayer implements KeyToSave {
     private UUID uuid;
     private boolean factionsLandTitleEnabled;
     private boolean killTitleEnabled;
+    private boolean potsDropEnabled;
+
     private ChatColor chatColor;
     private boolean lootTableMessageEnabled;
 
@@ -23,6 +25,7 @@ public class AstroPlayer implements KeyToSave {
         this.factionsLandTitleEnabled = true;
         this.killTitleEnabled = true;
         this.lootTableMessageEnabled = true;
+        this.potsDropEnabled = true;
         this.chatColor = ChatColor.WHITE;
     }
 

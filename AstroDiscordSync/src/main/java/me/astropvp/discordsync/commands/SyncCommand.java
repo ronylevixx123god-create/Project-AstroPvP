@@ -30,8 +30,8 @@ public class SyncCommand  extends BaseCommand {
     public void onCommand(Player player) {
         if (!this.plugin.getDatabaseManager().isConnected()) {
             player.sendMessage(CC.translate("&c&l(!)&c Account Sync is currently unavailable right now, please try again in a few."));
-        } else if (this.syncManager.isAccountLinked(player)) {
-            player.sendMessage(CC.translate("&c&l(!) &cYour account is already linked to &f&n" + this.syncManager.getLinkedUser(player).getAsTag() + "&c. Type &f/unsync&c to unsync your account."));
+        } else if (this.syncManager.isAccountLinked(player.getUniqueId())) {
+            player.sendMessage(CC.translate("&c&l(!) &cYour account is already linked to &f&n" + this.syncManager.getLinkedUser(player.getUniqueId()).getAsTag() + "&c. Type &f/unsync&c to unsync your account."));
         } else {
             int newCode;
             if (this.syncManager.isCurrentlySyncing(player)) {
@@ -70,10 +70,10 @@ public class SyncCommand  extends BaseCommand {
     public void onCheck(CommandSender sender, OnlinePlayer target) {
         if (!this.plugin.getDatabaseManager().isConnected()) {
             sender.sendMessage(CC.translate("The DB isn't connected. You may use &7/forcerecon&c to force a re-connection."));
-        } else if (!this.syncManager.isAccountLinked(target.getPlayer())) {
+        } else if (!this.syncManager.isAccountLinked(target.getPlayer().getUniqueId())) {
             sender.sendMessage(CC.translate( "&cThat player isn't synced."));
         } else {
-            User user = this.syncManager.getLinkedUser(target.getPlayer());
+            User user = this.syncManager.getLinkedUser(target.getPlayer().getUniqueId());
             sender.sendMessage(CC.translate("&a" + target.getPlayer().getName() + "&f is synced with &a" + user.getAsTag() + "&f."));
         }
     }

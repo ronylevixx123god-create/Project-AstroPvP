@@ -27,6 +27,18 @@ public class AutoBlessListener implements Listener {
         }
     }
 
+    @EventHandler
+    public void clarityEnchant(PotionEffectAddEvent event) {
+        if (!(event.getEntity() instanceof Player)) return;
+        Player player = ((Player) event.getEntity());
+        if (player.hasMetadata("clarityEnchant")) {
+            if (event.getEffect().getType() == PotionEffectType.BLINDNESS) {
+                event.setCancelled(true);
+            }
+        }
+
+    }
+
     @Getter
     private static final Set<PotionEffectType> debuffsList = new HashSet<>(Arrays.asList(
             PotionEffectType.BLINDNESS,

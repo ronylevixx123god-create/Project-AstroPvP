@@ -45,7 +45,10 @@ public enum CosmicToggle {
     FACTION_LAND_TITLE("Faction Land Title", "/togglefactionland"),
     LOOTTABLE_MESSAGE("LootFilter Message", "/lootfilter togglemessage"),
     KILL_LAND_TITLE("Kill Title", "/togglekilltitle"),
-    CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm");
+
+    CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm"),
+    POTS_DROP("Pots Dropping from Kills", "/togglepotsdrop")
+            ;
 
     private final String displayName;
     private final String command;
@@ -93,6 +96,8 @@ public enum CosmicToggle {
             return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isKillTitleEnabled();
         }
 
+
+
         if (this == LOOTTABLE_MESSAGE) {
             return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isLootTableMessageEnabled();
         }
@@ -104,6 +109,10 @@ public enum CosmicToggle {
             catch (Exception exception) {
                 // empty catch block
             }
+        }
+
+        if (this == POTS_DROP) {
+            return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isPotsDropEnabled();
         }
         return false;
     }

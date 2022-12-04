@@ -1,7 +1,16 @@
+ultraSetDamageIncrease: 15
+ultraSetDamageDecrease: 15
+
+championSetDamageIncrease: 10
+championSetDamageDecrease: 10
+
+appoloSetDamageIncrease: 15
+appoloSetDamageDecrease: 15
+
 lunaSetDamageIncrease: 15
 lunaSetDamageDecrease: 15
 
-astroetDamageIncrease: 10
+astroSetDamageIncrease: 10
 astroSetDamageDecrease: 10
 
 ancientSetDamageIncrease: 6.5

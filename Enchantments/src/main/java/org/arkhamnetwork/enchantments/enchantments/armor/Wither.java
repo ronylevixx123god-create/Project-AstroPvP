@@ -36,7 +36,6 @@ extends CustomEnchantment {
         double chance = 0.005;
         if (random < chance && attacker != null) {
             DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.YellowB + "* WITHER " + CC.Gray + "[" + level + "s]" + CC.YellowB + " *" + CC.YellowB +  "*", "WITHER");
-
             attacker.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 20 * level, level - 1));
         }
     }

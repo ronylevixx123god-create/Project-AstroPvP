@@ -9,6 +9,7 @@ import me.astropvp.hotfixplugin.utils.DeathUtils;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.bukkit.Bukkit;
@@ -49,6 +50,15 @@ public class DamageListener implements Listener {
     @EventHandler
     public void onChat(AsyncPlayerChatEvent event) {
         if (event.getMessage().toLowerCase().contains("jndi")) {
+            event.setMessage("/null");
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onChatCombat(AsyncPlayerChatEvent event) {
+        if (event.getMessage().equalsIgnoreCase("/eendersee") && CombatLog.inCombat(event.getPlayer())) {
+            event.getPlayer().sendMessage(CC.Red + "Disabled in combat");
             event.setMessage("/null");
             event.setCancelled(true);
         }
@@ -109,9 +119,9 @@ public class DamageListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void dmg(EntityDamageByEntityEvent e) {
-        if (e.getDamager().getWorld().getName().equals("space")) {
-            e.setDamage(e.getDamage() * 0.75);
-        }
+        //if (e.getDamager().getWorld().getName().equals("space")) {
+            //e.setDamage(e.getDamage() * 0.75);
+        //}
         //Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
     }
 

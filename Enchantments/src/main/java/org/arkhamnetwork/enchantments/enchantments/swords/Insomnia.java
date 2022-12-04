@@ -37,7 +37,7 @@ extends CustomEnchantment {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Math.max(time * 10, 40), 1));
             }
 
-            double multi = 1.0D + (double)level * 0.05D;
+            double multi = 1.0D + ((double)level * 0.020D);
             e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
         }
 

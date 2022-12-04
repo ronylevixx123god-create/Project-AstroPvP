@@ -32,16 +32,11 @@ public class Armored extends CustomEnchantment
             return;
         }
 
-        if (attacker instanceof Player) {
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2021_BELT) && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.PRISONS_DARKSTAR_PICKAXE_BLUE)) {
-                return;
-            }
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.EASTER_2022_MUTATED_SWORD)) return;
-
-        }
         ItemStack i = null;
         if (attacker instanceof Player) {
             final Player pAttacker = (Player)attacker;
+            if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.VALENTINES_2021_BELT) && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.PRISONS_DARKSTAR_PICKAXE_BLUE)) return;
+            if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.EASTER_2022_MUTATED_SWORD)) return;
             i = pAttacker.getItemInHand();
         }
         double damage_negation = level * 0.01875D;

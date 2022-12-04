@@ -59,6 +59,7 @@ extends CustomEnchantment {
             FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer((Player) player);
             boolean KOTH = player.getWorld().getName().equals("world_koth");
             for (Entity ent : player.getNearbyEntities((double)level, (double)level, (double)level)) {
+                if (ent.hasMetadata("no_knockback")) continue;
                 FPlayer fpEnt;
                 if (!(ent instanceof LivingEntity) || ent instanceof Player && (Enchantments.getEssentials().getUser((Player)ent).isVanished() || FPlayers.getInstance().getByPlayer((Player) ent).getRelationTo((RelationParticipator)fp).isAtLeast(Relation.ALLY)) || WorldGuardUtils.isPvPDisabled(ent.getLocation())) continue;
                 if (KOTH) {

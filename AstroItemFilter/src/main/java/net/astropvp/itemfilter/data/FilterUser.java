@@ -44,7 +44,7 @@ public class FilterUser implements KeyToSave {
     }
 
     public boolean canPickup(Material material) {
-        return !this.filter.contains(material.name());
+        return this.filter.contains(material.name());
     }
 
 }
