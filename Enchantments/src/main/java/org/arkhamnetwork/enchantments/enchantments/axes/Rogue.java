@@ -139,7 +139,8 @@ public class Rogue extends CustomEnchantment {
                 }
 
 
-                e.setDamage(damage + multi * 0.1);
+                //e.setDamage(damage + multi * 0.1);
+                e.setDamage(damage * multi * 0.9);
 
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);

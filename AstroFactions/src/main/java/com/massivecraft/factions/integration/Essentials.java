@@ -74,7 +74,8 @@ public class Essentials {
                     Faction facAtHome = Board.getInstance().getFactionAt(new FLocation(homeLoc));
 
                     Relation relationTo = fPlayer.getRelationTo(facAtHome);
-                    if((relationTo.isNeutral() || relationTo.isEnemy()) && !(facAtHome.isWarZone() && facAtHome.isSafeZone() && facAtHome.isWilderness())){
+                    if (facAtHome == null || facAtHome.isWarZone()  || facAtHome.isSafeZone() || facAtHome.isWilderness() || facAtHome.isNone()) continue;
+                    if((relationTo.isNeutral() || relationTo.isEnemy())){
                         user.delHome(home);
 
                         player.sendMessage(ChatColor.RED + "One of your homes was removed due to it being in an enemy or neutral claim!");

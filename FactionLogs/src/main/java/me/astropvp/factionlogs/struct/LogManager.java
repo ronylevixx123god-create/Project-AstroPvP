@@ -67,6 +67,9 @@ public class LogManager {
         yamlConfiguration.getConfigurationSection("Logs").getKeys(false).forEach(log -> {
             yamlConfiguration.getStringList("Logs."+log).forEach(serializedString -> {
                 LogType logType = LogType.valueOf(log);
+                try {
+
+
                 switch (logType) {
                     case CLAIM:
                         FactionsLogsAPI.log(faction, LandClaim.deserialize(serializedString));
@@ -101,6 +104,9 @@ public class LogManager {
                     case FACTION_RENAME:
                         FactionsLogsAPI.log(faction, FactionRename.deserialize(serializedString));
                         break;
+                        }
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             });
         });
@@ -128,7 +134,11 @@ public class LogManager {
 
                 List<String> stringsToLog = new ArrayList<>();
                 for(FactionLog log : FactionsLogsAPI.getFactionLogs(faction, logType)) {
-                    stringsToLog.add(log.serialize());
+                    try {
+                        stringsToLog.add(log.serialize());
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
 
                 yamlConfiguration.set("Logs."+logType.name(), stringsToLog);

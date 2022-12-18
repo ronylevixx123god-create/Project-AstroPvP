@@ -9,6 +9,7 @@ import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.utils.TimeDateUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.EntityType;
 
 @Getter
 public class RelationEdits extends FactionLog {
@@ -51,7 +52,14 @@ public class RelationEdits extends FactionLog {
         }
         Relation oldRel = Relation.fromString(splitString[3]);
         Relation newRel = Relation.fromString(splitString[4]);
-        return new RelationEdits(sender, target, oldRel, newRel, Long.parseLong(splitString[0]));
+        try {
+
+
+            return new RelationEdits(sender, target, oldRel, newRel, Long.parseLong(splitString[0]));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
     @Override

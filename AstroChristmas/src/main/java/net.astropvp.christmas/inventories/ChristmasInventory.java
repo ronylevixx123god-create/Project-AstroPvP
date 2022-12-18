@@ -31,7 +31,7 @@ public class ChristmasInventory {
         ItemStack item = new ItemBuilder(shopItem).build();
         return new GuiItem(item.clone(), event -> {
             Player player = (Player) event.getWhoClicked();
-            if (ChristmasPlugin.getInstance().getChristmasManager().hasAlreadyBought(player)) {
+            if (!ChristmasPlugin.getInstance().getChristmasManager().canBuy(player)) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You may only get this item once per restock.");
                 return;
             }

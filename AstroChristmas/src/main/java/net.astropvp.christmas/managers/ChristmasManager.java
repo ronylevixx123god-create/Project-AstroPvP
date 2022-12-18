@@ -13,15 +13,14 @@ import java.util.UUID;
 public class ChristmasManager extends SaveLoadManager<ChristmasPlayer> {
     public ChristmasManager() {
 
-        super(ChristmasPlugin.getInstance(), StoragePlugin.getInstance().getGson(), "data/", ChristmasPlayer.class);
+        super(ChristmasPlugin.getInstance(), StoragePlugin.getInstance().getGson(), "santa-data/", ChristmasPlayer.class);
     }
 
     public ChristmasPlayer getChristmasPlayer(Player player) {
-        String ip = player.getAddress().getAddress().toString();
-        if (getFromCache(ip) == null) {
-            addToCache(new ChristmasPlayer(player.getUniqueId(), ip));
+        if (getFromCache(player.getUniqueId().toString()) == null) {
+            addToCache(new ChristmasPlayer(player.getUniqueId(), player.getAddress().getAddress().toString()));
         }
-        return getFromCache(ip);
+        return getFromCache(player.getUniqueId().toString());
     }
 
     private ItemStack currentItem = ConfigUtils.getItem(ChristmasPlugin.getInstance().getConfig().getString("current-item"));
@@ -35,8 +34,19 @@ public class ChristmasManager extends SaveLoadManager<ChristmasPlayer> {
     }
 
 
-    public boolean hasAlreadyBought(Player player) {
-        return getChristmasPlayer(player).isHasPurchased() && getCacheKeys().contains(player.getAddress().getAddress().toString());
+    public boolean canBuy(Player player) {
+        ChristmasPlayer christmasPlayer = getChristmasPlayer(player);
+        return !christmasPlayer.isHasPurchased() && !isUniqueIPAndHasntPurchased(player);
+    }
+
+    public boolean isUniqueIPAndHasntPurchased(Player player) {
+        ChristmasPlayer christmasPlayer = getChristmasPlayer(player);
+        for (ChristmasPlayer other : getCacheValues()) {
+            if (other.getIp().equals(christmasPlayer.getIp()) && other.isHasPurchased()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void setAlreadyBought(Player player) {

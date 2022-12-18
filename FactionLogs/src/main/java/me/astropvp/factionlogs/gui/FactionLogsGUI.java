@@ -3,14 +3,14 @@ package me.astropvp.factionlogs.gui;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.massivecraft.factions.Faction;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.astropvp.factionlogs.FactionLogs;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.struct.impl.*;
 import me.astropvp.factionlogs.utils.*;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

@@ -28,11 +28,11 @@ public class ChristmasPlayer implements KeyToSave {
 
     @Override
     public String getKey() {
-        return ip;
+        return uuid.toString();
     }
 
     @Override
     public void setKey(String s) {
-        this.ip = s;
+        this.uuid = UUID.fromString(s);
     }
 }

@@ -204,8 +204,12 @@ public final class Collector {
     public void update() {
         this.updateWorth();
         this.updateTnt();
-        this.updateHologram();
         this.setLastUpdated(System.currentTimeMillis());
+        try {
+            this.updateHologram();
+        } catch (Exception e) {
+
+        }
     }
 
     public void deleteHologram() {
@@ -298,7 +302,9 @@ public final class Collector {
     }
 
     private void updateHologramLine( int line, String newText) {
+        if (this.hologram.size() == 0) return;
         final TextLine textLine = (TextLine)this.hologram.getLine(line);
+        if (textLine == null) return;
         textLine.setText(newText);
     }
 }

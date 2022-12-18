@@ -107,7 +107,7 @@ public class MobStackerUtils {
     /*public static void setEntityAmount(LivingEntity entity, int amount, boolean deathEffect) {
         if (amount <= 0) {
             return;
-        }
+        }s
         if (deathEffect) {
             entity = (LivingEntity) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
         }

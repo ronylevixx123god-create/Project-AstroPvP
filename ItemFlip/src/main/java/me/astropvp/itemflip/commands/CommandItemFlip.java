@@ -7,6 +7,7 @@ import me.astropvp.itemflip.data.ItemFlipPlayerData;
 import me.astropvp.itemflip.enums.Color;
 import me.astropvp.itemflip.inventory.ItemFlipTradeInventory;
 import me.astropvp.itemflip.struct.ItemFlipRequest;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.command.Command;
@@ -24,11 +25,17 @@ public class CommandItemFlip
             return false;
         }
 
+
+
         if (!((Player) sender).getLocation().getWorld().getName().equals("world") && !((Player) sender).getLocation().getWorld().getName().equals("nebula")) {
             sender.sendMessage(CC.translate("&cYou cannot icf in this world."));
             return false;
         }
         final Player player = (Player) sender;
+        if (CombatLog.inCombat((Player) player)) {
+            sender.sendMessage(CC.translate("&cDisabled in combat."));
+            return false;
+        }
         if (args.length >= 1) {
             Player target = Bukkit.getPlayer(args[0]);
             if (target == null || !target.isOnline()) {
@@ -57,7 +64,7 @@ public class CommandItemFlip
                         public void run() {
                             if (!original_sender.isOnline() || !player.isOnline()) {
                                 return;
-                            }g
+                            }
                             ItemFlipPlayerData data_one = new ItemFlipPlayerData(player, Color.values()[0]);
                             ItemFlipPlayerData data_two = new ItemFlipPlayerData(original_sender, Color.values()[(Color.values()).length - 1]);
                             ItemFlipData data = new ItemFlipData(data_one, data_two);

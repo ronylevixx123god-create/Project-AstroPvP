@@ -42,7 +42,7 @@ import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class InventoryAbominableSnowmanPet extends InventoryPet {
-    int effectDuration = 5;
+    int effectDuration = 10;
 
     @Override
     public InventoryPets getOwner() {
@@ -54,7 +54,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
 
     @Override
     public List<String> getPetDescription() {
-        return Lists.newArrayList(String.valueOf(CC.Gray) + "An enormous, monstrous spirit", String.valueOf(CC.Gray) + "well trained in illusionist magic.", String.valueOf(CC.Gray), CC.White + "Ability [" + CC.DarkRed + "Polymorph" + CC.White + "] " + CC.Gray + "target player, transforming", String.valueOf(CC.Gray) + "them into harmless, immoble snowman for: " + this.freezeDuration(this.effectDuration) + "s", String.valueOf(CC.Gray) + "Any dammage dealt to them will break the spell", String.valueOf(CC.Gray), String.valueOf(CC.WhiteB) + "Cooldown", String.valueOf(CC.Gray) + " " + TimeUtils.formatSeconds((long)this.getCooldown()));
+        return Lists.newArrayList(CC.Gray + "An enormous, monstrous spirit", CC.Gray + "well trained in illusionist magic.", String.valueOf(CC.Gray), CC.WhiteB + "Ability", CC.White + "[" + CC.DarkRed + "Polymorph" + CC.White + "] " + CC.Gray + "target player, transforming", CC.Gray + "them into harmless, immoble snowman for: " + this.freezeDuration() + "s", CC.Gray + "Any dammage dealt to them will break the spell", String.valueOf(CC.Gray), CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(this.getCooldown()));
     }
 
     @Override
@@ -70,8 +70,9 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         FPlayer surroundingPlayer;
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
-        long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
+        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
+        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
@@ -82,12 +83,12 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
         if (player.hasMetadata("in_duel")) {
             return true;
         }
-        Faction faction = FactionUtils.getFaction((Player)player);
+        Faction faction = FactionUtils.getFaction(player);
         if (faction == null || faction.isNone()) {
             throw new PrefixedPetException("You must be in a faction to use this pet!");
         }
         Location locationClicked = player.getLocation();
-        if (!WorldGuardUtils.isPvPEnabled((Location)locationClicked)) {
+        if (!WorldGuardUtils.isPvPEnabled(locationClicked)) {
             player.sendMessage(ChatColor.RED + "Combat is disabled in this region.");
             return true;
         }
@@ -96,9 +97,9 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
         Entity closestp = null;
         for (Entity i : player.getNearbyEntities(3.0, 3.0, 3.0)) {
             Player p;
-            if (!(i instanceof Player) || (p = (Player)i).getGameMode().equals((Object)GameMode.CREATIVE) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.SEXY_HELMET) || p.hasMetadata("NPC")) continue;
+            if (!(i instanceof Player) || (p = (Player)i).getGameMode().equals(GameMode.CREATIVE) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.SEXY_HELMET) || p.hasMetadata("NPC")) continue;
             if (p.hasMetadata("in_duel")) {
-                return true;
+                 continue;
             }
             double dist = i.getLocation().distance(event.getPlayer().getLocation());
             if (closest != Double.MAX_VALUE && dist >= closest) continue;
@@ -106,16 +107,16 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
             closestp = i;
         }
         if (closestp == null) {
-            player.sendMessage(String.valueOf(CC.Red) + "PET: No targets found.");
+            player.sendMessage(CC.Red + "PET: No targets found.");
             return true;
         }
         Player p2 = (Player)closestp;
         if (p2.hasMetadata("frozenSnowman")) {
-            p2.sendMessage(String.valueOf(CC.Red) + "Player is already a Snowman! ");
+            p2.sendMessage(CC.Red + "Player is already a Snowman! ");
             return true;
         }
-        FPlayer castingPlayer = (FPlayer)FPlayers.getInstance().getByPlayer(player);
-        if (castingPlayer.getRelationTo(FPlayers.getInstance().getByPlayer((p2))) == Relation.ENEMY || castingPlayer.getRelationTo(FPlayers.getInstance().getByPlayer((p2))) == Relation.NEUTRAL) {
+        FPlayer castingPlayer = FPlayers.getInstance().getByPlayer(player);
+        if (FactionUtils.canPvP(player, p2)) {
             petItem.setLastUsed(System.currentTimeMillis());
             this.freezeThePlayer(p2, player);
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1f, 3.0f);
@@ -129,50 +130,41 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
         p.setFlying(false);
         MobDisguise snowman = new MobDisguise(DisguiseType.SNOWMAN);
         p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0f, 1.4f);
-        DisguiseAPI.disguiseEntity((Entity)p, (Disguise)snowman);
+        DisguiseAPI.disguiseEntity(p, snowman);
         p.setWalkSpeed(0.0f);
         p.removePotionEffect(PotionEffectType.JUMP);
         p.removePotionEffect(PotionEffectType.SLOW);
-        p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int)((long) this.freezeDuration(this.effectDuration) * 20L), 128));
-        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)((long) this.freezeDuration(this.effectDuration) * 20L), 128));
-        p.setMetadata("frozenSnowman", (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), (Object)System.currentTimeMillis()));
-        WorldUtil.sendWorldEffect((Block)p.getLocation().getBlock(), (int)57, (int)2001);
-        p.sendMessage(String.valueOf(CC.YellowB) + "POLYMORPH'D [" + CC.Gray + this.freezeDuration(this.effectDuration) + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + caster.getName() + CC.YellowB + "]");
-        caster.sendMessage(CC.YellowB + "POLYMORPH'D [" + CC.Gray + this.freezeDuration(this.effectDuration) + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + p.getName() + CC.YellowB + "]");
+        p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int)((long) this.freezeDuration() * 20L), 128));
+        p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)((long) this.freezeDuration() * 20L), 128));
+        p.setMetadata("frozenSnowman", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
+        WorldUtil.sendWorldEffect(p.getLocation().getBlock(), 57, 2001);
+        p.sendMessage(CC.YellowB + "** POLYMORPH'D [" + CC.Gray + this.freezeDuration() + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + caster.getName() + CC.YellowB + "] **");
+        caster.sendMessage(CC.YellowB + "** POLYMORPH'D [" + CC.Gray + this.freezeDuration() + "s" + CC.YellowB + "] " + CC.YellowB + "[" + CC.Gray + p.getName() + CC.YellowB + "] **");
         new BukkitRunnable(){
 
             public void run() {
                 if (p.hasMetadata("cancelrunnable")) {
-                    p.removeMetadata("cancelrunnable", (Plugin)CosmicSkyInventoryPets.get());
+                    p.removeMetadata("cancelrunnable", CosmicSkyInventoryPets.get());
                 } else {
                     InventoryAbominableSnowmanPet.this.removeDisguise(p);
                 }
             }
-        }.runTaskLater((Plugin)CosmicSkyInventoryPets.get(), (long) this.freezeDuration(this.effectDuration) * 20L);
+        }.runTaskLater(CosmicSkyInventoryPets.get(), (long) this.freezeDuration() * 20L);
     }
 
-    private int freezeDuration(int level) {
-        if (level == 1) {
-            return 10;
-        }
-        if (level == 2) {
-            return 15;
-        }
-        if (level == 3) {
-            return 20;
-        }
-        return 10;
+    private int freezeDuration() {
+        return effectDuration;
     }
 
     private void removeDisguise(Player player) {
-        player.removeMetadata("frozenSnowman", (Plugin)CosmicSkyInventoryPets.get());
-        player.removeMetadata("cancelrunnable", (Plugin)CosmicSkyInventoryPets.get());
+        player.removeMetadata("frozenSnowman", CosmicSkyInventoryPets.get());
+        player.removeMetadata("cancelrunnable", CosmicSkyInventoryPets.get());
         player.removePotionEffect(PotionEffectType.SLOW);
         player.removePotionEffect(PotionEffectType.JUMP);
         player.setWalkSpeed(0.2f);
-        DisguiseAPI.undisguiseToAll((Entity)player);
+        DisguiseAPI.undisguiseToAll(player);
         player.setFlying(true);
-        player.sendMessage(String.valueOf(CC.Red) + "You are no longer a frozen Snowman!");
+        player.sendMessage(CC.Red + "You are no longer a frozen Snowman!");
     }
 
     @Override
