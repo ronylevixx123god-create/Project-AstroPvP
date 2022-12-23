@@ -6,6 +6,7 @@ import com.massivecraft.factions.util.Clickable;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.hotfixplugin.listeners.*;
 
+import me.astropvp.hotfixplugin.tasks.NoFly;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
@@ -32,6 +33,7 @@ public class HotFixPlugin extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
         Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
         Bukkit.getPluginManager().registerEvents(new AutoOP(), this);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new NoFly(), 20L, 1L);
     }
 
     @Override
