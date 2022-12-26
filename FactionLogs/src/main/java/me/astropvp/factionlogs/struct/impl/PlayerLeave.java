@@ -1,8 +1,5 @@
 package me.astropvp.factionlogs.struct.impl;
 
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.event.FPlayerJoinEvent;
 import com.massivecraft.factions.event.FPlayerLeaveEvent;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;

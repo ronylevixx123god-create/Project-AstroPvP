@@ -3,11 +3,8 @@ package me.astropvp.factionlogs.struct.impl;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
-import me.astropvp.factionlogs.utils.LocationSerializer;
 import me.astropvp.factionlogs.utils.TimeDateUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
 
 import java.util.UUID;
 

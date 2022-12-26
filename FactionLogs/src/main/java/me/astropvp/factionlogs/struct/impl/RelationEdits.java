@@ -1,6 +1,5 @@
 package me.astropvp.factionlogs.struct.impl;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
 import com.massivecraft.factions.perms.Relation;
@@ -8,8 +7,6 @@ import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.utils.TimeDateUtils;
-import org.bukkit.Bukkit;
-import org.bukkit.entity.EntityType;
 
 @Getter
 public class RelationEdits extends FactionLog {

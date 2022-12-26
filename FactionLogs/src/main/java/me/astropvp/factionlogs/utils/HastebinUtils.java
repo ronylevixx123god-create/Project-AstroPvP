@@ -2,11 +2,8 @@ package me.astropvp.factionlogs.utils;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.mysql.jdbc.TimeUtil;
-import me.astropvp.factionlogs.FactionLogs;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import java.io.BufferedReader;

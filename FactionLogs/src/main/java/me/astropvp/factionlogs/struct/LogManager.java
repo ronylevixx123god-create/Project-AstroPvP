@@ -2,7 +2,6 @@ package me.astropvp.factionlogs.struct;
 
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.config.file.DefaultPermissionsConfig;
 import lombok.Getter;
 import lombok.SneakyThrows;
 import me.astropvp.factionlogs.FactionLogs;

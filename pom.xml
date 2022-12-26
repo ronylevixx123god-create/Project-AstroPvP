@@ -71,6 +71,7 @@
         <module>AstroItemFilter</module>
         <module>Christmas</module>
         <module>AstroChristmas</module>
+        <module>AstroFactionLogs</module>
 
     </modules>
 

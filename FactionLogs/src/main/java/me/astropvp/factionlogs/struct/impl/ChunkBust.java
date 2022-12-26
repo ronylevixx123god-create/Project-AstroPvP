@@ -3,7 +3,6 @@ package me.astropvp.factionlogs.struct.impl;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
-import me.astropvp.factionlogs.utils.EntityUtils;
 import me.astropvp.factionlogs.utils.LocationSerializer;
 import me.astropvp.factionlogs.utils.LocationUtils;
 import me.astropvp.factionlogs.utils.TimeDateUtils;

@@ -1,14 +1,8 @@
 package me.astropvp.factionlogs.struct.impl;
 
-import com.massivecraft.factions.FLocation;
-import com.massivecraft.factions.FPlayer;
-import com.massivecraft.factions.FPlayers;
-import com.massivecraft.factions.event.LandUnclaimAllEvent;
-import com.massivecraft.factions.event.LandUnclaimEvent;
 import lombok.Getter;
 import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
-import me.astropvp.factionlogs.utils.LocationSerializer;
 import me.astropvp.factionlogs.utils.TimeDateUtils;
 import org.bukkit.Bukkit;
 

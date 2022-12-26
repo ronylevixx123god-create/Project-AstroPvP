@@ -32,9 +32,11 @@ import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
 public class InventoryWitcherPet extends InventoryPet {
+    public static List<UUID> no_kb = new ArrayList<>();
     public InventoryPets getOwner() {
         return InventoryPets.ANTI_TELEBLOCK;
     }
@@ -100,6 +102,7 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public static void procAbility(final Player player, int sum, int level) {
+        UUID uuid = player.getUniqueId();
         final List<Player> players = Lists.newArrayList();
         for (Entity entity : player.getNearbyEntities(8.0D, 8.0D, 8.0D)) {
             if (!(entity instanceof Player))
@@ -170,40 +173,21 @@ public class InventoryWitcherPet extends InventoryPet {
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
         player.sendMessage(CC.translate("&4&l** WITCHER PET &7[Knockback Immunity 5s] &4&l**"));
         player.sendMessage("");
-        player.setMetadata("witcher_effect", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
-        player.setMetadata("no_knockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
+        no_kb.add(player.getUniqueId());
+        //player.setMetadata("no_knockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
 
         DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");
 
-
-
-        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), new Runnable() {
-            public void run() {
-                for (Player player : players) {
-                    if (player == null || !player.isOnline())
-                        continue;
-                    player.setWalkSpeed(0.2F);
-                }
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), ()-> {
+            no_kb.remove(uuid);
+            for (Player pp : players) {
+                if (pp == null || !player.isOnline())
+                    continue;
+                if (pp.hasMetadata("witcher_ability"))
+                    pp.removeMetadata("witcher_ability", CosmicSkyInventoryPets.get());
+                pp.setWalkSpeed(0.2F);
             }
-        }, 100L);
-
-        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), new Runnable() {
-            public void run() {
-                if (!player.isOnline())
-                    return;
-                if (player.hasMetadata("witcher_effect"))
-                    player.removeMetadata("witcher_effect", CosmicSkyInventoryPets.get());
-                if (player.hasMetadata("no_knockback"))
-                    player.removeMetadata("no_knockback", CosmicSkyInventoryPets.get());
-                for (Player player : players) {
-                    if (player == null || !player.isOnline())
-                        continue;
-                    if (player.hasMetadata("witcher_ability"))
-                        player.removeMetadata("witcher_ability", Enchantments.getInstance());
-                    player.setWalkSpeed(0.2F);
-                }
-                player.sendMessage(CC.translate("&4&lPET:  Witcher Pet - WITCHER has worn off! "));
-            }
+            player.sendMessage(CC.translate("&4&lPET:  Witcher Pet - WITCHER has worn off! "));
         }, (sum * 20L));
     }
 
