@@ -2,19 +2,18 @@ package me.astropvp.factionlogs.data;
 
 import lombok.Getter;
 import me.astropvp.factionlogs.FactionLogs;
-import me.astropvp.factionlogs.enums.LogType;
-import me.astropvp.factionlogs.struct.FactionLog;
-import net.astropvp.storage.StoragePlugin;
 import net.astropvp.storage.utils.SaveLoadManager;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 @Getter
 public class FactionLogsManager extends SaveLoadManager<FactionLogsData> {
+
     private final Map<String, FactionLogsManager> logs;
 
     public FactionLogsManager() {
-        super(FactionLogs.getInstance(), StoragePlugin.getInstance().getGson(), "data/", FactionLogsData.class);
+        super(FactionLogs.getInstance(), FactionLogs.getInstance().getGson(), "data/", FactionLogsData.class);
         this.logs = new HashMap<>();
     }
 
@@ -25,7 +24,4 @@ public class FactionLogsManager extends SaveLoadManager<FactionLogsData> {
         }
         return getFromCache(factionId);
     }
-
-
-
 }
