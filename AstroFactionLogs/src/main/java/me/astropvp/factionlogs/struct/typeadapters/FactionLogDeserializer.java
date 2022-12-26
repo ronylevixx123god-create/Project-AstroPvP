@@ -19,7 +19,7 @@ public class FactionLogDeserializer implements JsonDeserializer<FactionLogsData>
 
         for (String key : logs.keySet()) {
             System.out.println("key: " + key);
-            JsonArray jsonArray = jsonObject.getAsJsonArray(key);
+            JsonArray jsonArray = logs.getAsJsonArray(key);
             System.out.println("array: " + jsonArray);
             LogType logType = LogType.valueOf(key);
 
