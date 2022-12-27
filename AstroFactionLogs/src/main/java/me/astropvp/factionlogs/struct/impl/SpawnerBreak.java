@@ -24,7 +24,7 @@ public class SpawnerBreak extends FactionLog {
         super(LogType.SPAWNER_BREAK);
         this.amount = amount;
         this.location = location;
-        this.entityType = entityType.getName();
+        this.entityType = entityType.name();
         this.uuid = uuid.toString();
 
     }
@@ -33,7 +33,7 @@ public class SpawnerBreak extends FactionLog {
         super(LogType.SPAWNER_BREAK);
         this.amount = amount;
         this.location = location;
-        this.entityType = entityType.getName();
+        this.entityType = entityType.name();
         this.uuid = uuid.toString();
         super.setTime(time);
 
@@ -41,7 +41,7 @@ public class SpawnerBreak extends FactionLog {
 
     @Override
     public String toString() {
-        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(getUuid()).getName() + " broke x" + getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(getEntityType())) + " at " + LocationUtils.locToString(getLocation()) + ".";
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(UUID.fromString(getUuid())).getName() + " broke x" + getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(getEntityType())) + " at " + LocationUtils.locToString(getLocation()) + ".";
 
 
     }

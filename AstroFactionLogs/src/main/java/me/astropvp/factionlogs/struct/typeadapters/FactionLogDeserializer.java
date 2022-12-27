@@ -14,17 +14,11 @@ public class FactionLogDeserializer implements JsonDeserializer<FactionLogsData>
         FactionLogsData factionLogsData = new FactionLogsData(jsonObject.get("factionId").getAsString());
 
         JsonObject logs = jsonObject.getAsJsonObject("logs");
-
-        System.out.println("logs: " + logs);
-
         for (String key : logs.keySet()) {
-            System.out.println("key: " + key);
             JsonArray jsonArray = logs.getAsJsonArray(key);
-            System.out.println("array: " + jsonArray);
             LogType logType = LogType.valueOf(key);
 
             for (JsonElement element : jsonArray) {
-                System.out.println("element: " + element);
                 factionLogsData.addFactionLog(context.deserialize(element, logType.getLogClass()));
             }
         }

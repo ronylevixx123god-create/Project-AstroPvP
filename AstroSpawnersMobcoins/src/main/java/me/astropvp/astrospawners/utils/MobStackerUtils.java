@@ -20,10 +20,23 @@ import org.bukkit.event.entity.SpawnerSpawnEvent;
 
 public class MobStackerUtils {
 
-    HashMap<UUID, Integer> mobMap = new HashMap<>();
+    HashMap<UUID, Integer> mobMap;
 
     public MobStackerUtils() {
+        this.mobMap = new HashMap<>();
+        int delayS = 15;
 
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(AstroSpawners.getInstance(), () -> {
+            for (int i = 0; i < mobMap.keySet().size(); i++) {
+                Entity entity  = (Entity) mobMap.keySet().toArray()[i];
+                if (!entity.isValid() || entity.isDead()) {
+                    mobMap.remove(entity.getUniqueId());
+                    continue;
+                }
+                stackMobs(entity);
+            }
+            System.out.println("[Spawner] Attempting to stack nearby entities!");
+        }, 40L, delayS * 20L);
     }
 
 
@@ -61,7 +74,7 @@ public class MobStackerUtils {
 
     public void stackMobs(SpawnerSpawnEvent event) {
 
-        Chunk chunk = event.getLocation().getChunk();
+        Chunk chunk = event.getLocation().getChunk();hex
         Entity[] entities = chunk.getEntities();
 
 
@@ -101,6 +114,25 @@ public class MobStackerUtils {
             setStackSize(highestStackedEntity, stackSize + size);
             removeStackedMob(entity);
             event.setCancelled(true);
+        }
+    }
+
+    public void stackMobs(Entity entity) {
+        int stack = getStackSize(entity);
+        Entity highestStackEntity = entity;
+
+        for (Entity nearbyEntity : entity.getNearbyEntities(10, 4, 10)) {
+            if (nearbyEntity.getType() != entity.getType()) continue;
+            if (!isStackedMob(nearbyEntity)) continue;
+            int nearbyStack = getStackSize(nearbyEntity);
+            if (nearbyStack >= stack) {
+                highestStackEntity = nearbyEntity;
+            }
+
+        }
+        if (highestStackEntity.getUniqueId() != entity.getUniqueId()) {
+            setStackSize(highestStackEntity, stack + getStackSize(highestStackEntity));
+            removeStackedMob(entity);
         }
     }
 

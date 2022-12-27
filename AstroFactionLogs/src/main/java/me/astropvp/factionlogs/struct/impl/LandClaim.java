@@ -32,6 +32,6 @@ public class LandClaim extends FactionLog {
 
     @Override
     public String toString() {
-        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(uuid).getName() + " claimed land at " + LocationUtils.locToString(fLocation);
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() + " claimed land at " + LocationUtils.locToString(fLocation);
     }
 }

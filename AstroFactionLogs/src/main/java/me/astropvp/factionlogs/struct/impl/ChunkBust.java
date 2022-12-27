@@ -33,7 +33,7 @@ public class ChunkBust extends FactionLog {
 
     @Override
     public String toString() {
-        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(getUuid()).getName() + " chunkbusted at " + LocationUtils.locToString(getLocation()) + "&7.";
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(UUID.fromString(getUuid())).getName() + " chunkbusted at " + LocationUtils.locToString(getLocation()) + "&7.";
 
     }
 }

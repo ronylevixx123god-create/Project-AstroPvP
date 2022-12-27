@@ -25,7 +25,7 @@ public class SpawnerPlace extends FactionLog {
         this.amount = amount;
         this.location = location;
         this.uuid = uuid.toString();
-        this.entityType = entityType.getName();
+        this.entityType = entityType.name();
     }
 
     public SpawnerPlace(int amount, Location location, EntityType entityType, UUID uuid, long time) {
@@ -39,7 +39,7 @@ public class SpawnerPlace extends FactionLog {
 
     @Override
     public String toString() {
-        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(getUuid()).getName() + " placed x" + getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(getEntityType())) + " at " + LocationUtils.locToString(getLocation()) + ".";
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(UUID.fromString(getUuid())).getName() + " placed x" + getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(getEntityType())) + " at " + LocationUtils.locToString(getLocation()) + ".";
 
     }
 }

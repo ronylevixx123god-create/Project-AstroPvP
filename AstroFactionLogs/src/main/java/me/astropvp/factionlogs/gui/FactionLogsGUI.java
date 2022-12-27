@@ -16,6 +16,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
 import java.util.Collections;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FactionLogsGUI {
@@ -39,39 +40,39 @@ public class FactionLogsGUI {
                 switch (logType) {
                     case CLAIM:
                         LandClaim landClaim = (LandClaim) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landClaim.getUuid()).getName() + " &7claimed land at &d" + LocationUtils.locToString(landClaim.getFLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(landClaim.getUuid())).getName() + " &7claimed land at &d" + LocationUtils.locToString(landClaim.getFLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case RADIUSCLAIM:
                         RadiusLandClaim radiusLandClaim = (RadiusLandClaim) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(radiusLandClaim.getUuid()).getName() + " &7claimed land in a &d" + radiusLandClaim.getRadius()  +  " &7radius at &d" + LocationUtils.locToString(radiusLandClaim.getFLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(radiusLandClaim.getUuid())).getName() + " &7claimed land in a &d" + radiusLandClaim.getRadius()  +  " &7radius at &d" + LocationUtils.locToString(radiusLandClaim.getFLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case UNCLAIM:
                         LandUnclaim landUnClaim = (LandUnclaim) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landUnClaim.getUuid()).getName() + " &7unclaimed land at &d" + LocationUtils.locToString(landUnClaim.getFLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(landUnClaim.getUuid())).getName() + " &7unclaimed land at &d" + LocationUtils.locToString(landUnClaim.getFLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case UNCLAIMALL:
                         LandUnclaimAll landUnclaimAll = (LandUnclaimAll) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(landUnclaimAll.getUuid()).getName() + " &7unclaimed ALL land. " + "&8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(landUnclaimAll.getUuid())).getName() + " &7unclaimed ALL land. " + "&8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case PLAYER_JOIN:
                         PlayerJoin playerJoin = (PlayerJoin) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(playerJoin.getUuid()).getName() + " &7join the faction due to &e" + playerJoin.getPlayerJoinReason().name().toLowerCase() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(playerJoin.getUuid())).getName() + " &7join the faction due to &e" + playerJoin.getPlayerJoinReason().name().toLowerCase() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case PLAYER_LEAVE:
                         PlayerLeave playerLeave = (PlayerLeave) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(playerLeave.getUuid()).getName() + " &7left the faction due to &e" + playerLeave.getPlayerLeaveReason().name().toLowerCase() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(playerLeave.getUuid())).getName() + " &7left the faction due to &e" + playerLeave.getPlayerLeaveReason().name().toLowerCase() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case CHUNKBUST:
                         ChunkBust chunkBust = (ChunkBust) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(chunkBust.getUuid()).getName() + " &7placed a chunkbuster at &d" + LocationUtils.locToString(chunkBust.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(chunkBust.getUuid())).getName() + " &7placed a chunkbuster at &d" + LocationUtils.locToString(chunkBust.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case SPAWNER_BREAK:
                         SpawnerBreak spawnerBreak = (SpawnerBreak) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(spawnerBreak.getUuid()).getName() + " &7broke &ex" + spawnerBreak.getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(spawnerBreak.getEntityType())) + "&7 at &d" + LocationUtils.locToString(spawnerBreak.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(spawnerBreak.getUuid())).getName() + " &7broke &ex" + spawnerBreak.getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(spawnerBreak.getEntityType())) + "&7 at &d" + LocationUtils.locToString(spawnerBreak.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case SPAWNER_PLACE:
                         SpawnerPlace spawnerPlace = (SpawnerPlace) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(spawnerPlace.getUuid()).getName() + " &7placed &ex" + spawnerPlace.getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(spawnerPlace.getEntityType())) + "&7 at &d" + LocationUtils.locToString(spawnerPlace.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(spawnerPlace.getUuid())).getName() + " &7placed &ex" + spawnerPlace.getAmount() + " " + EntityUtils.getEntityName(EntityType.valueOf(spawnerPlace.getEntityType())) + "&7 at &d" + LocationUtils.locToString(spawnerPlace.getLocation()) + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                     case RELATION_EDITS:
                         RelationEdits relationEdits = (RelationEdits) log;
@@ -79,7 +80,7 @@ public class FactionLogsGUI {
                         break;
                     case FACTION_RENAME:
                         FactionRename factionRename = (FactionRename) log;
-                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(factionRename.getPlayer()).getName() + " &7renamed the faction tag &d" + factionRename.getOldTag() + " &7-> &d" + factionRename.getNewTag() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                        item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(factionRename.getPlayer())).getName() + " &7renamed the faction tag &d" + factionRename.getOldTag() + " &7-> &d" + factionRename.getNewTag() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
                         break;
                 }
             }

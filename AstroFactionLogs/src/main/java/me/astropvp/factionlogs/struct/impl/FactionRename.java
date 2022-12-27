@@ -32,7 +32,7 @@ public class FactionRename extends FactionLog {
 
     @Override
     public String toString() {
-        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(player).getName() + " renamed the faction tag " + getOldTag() + " -> " + getNewTag() + ".";
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(UUID.fromString(player)).getName() + " renamed the faction tag " + getOldTag() + " -> " + getNewTag() + ".";
 
     }
 }

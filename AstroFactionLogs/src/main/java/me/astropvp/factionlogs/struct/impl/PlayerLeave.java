@@ -6,6 +6,7 @@ import me.astropvp.factionlogs.enums.LogType;
 import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.utils.TimeDateUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.UUID;
 
@@ -30,7 +31,9 @@ public class PlayerLeave extends FactionLog {
 
     @Override
     public String toString() {
-        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(uuid).getName() + " left the faction because of: " + playerLeaveReason;
+        return "(" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - getTime()) / 1000) + "ago) " + Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName() + " left the faction because of: " + playerLeaveReason;
 
     }
+
+
 }
