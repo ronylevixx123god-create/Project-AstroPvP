@@ -520,10 +520,126 @@ public enum SkinType {
             CC.translate("&cBypass enemy (Heroic) Tank"),
             CC.translate("&c15% Chance to block Divine Immolation")
 
-    ))
+    )),
+
+
+    //=================
+    //NEW
+    //=================
+
+    BACK_TO_SCHOOL_2022_HELMET(CC.translate("&2&lLamp Shade"), ItemSkinType.HELMET, new LampShadeSkin(), Arrays.asList(
+            CC.translate("&cImmune to Amulet of Corruption"),
+            CC.translate("&cImmune to World Destroyer Cage"),
+            CC.translate("&c3% chance when taking damage to make you"),
+            CC.translate("&cand all allies within a 7 block radius"),
+            CC.translate("&cImmune to Soul Enchant Damage for 10s")
+    )),
+
+    BACK_TO_SCHOOL_2022_BOOTS(CC.translate("&2&lCrocs \"Gators\""), ItemSkinType.BOOTS, new CrocsGatorsSkin(), Arrays.asList(
+            CC.translate("&c33% chance to reflect cage back at the enemy"),
+            CC.translate("&cImmune to Slownesses/Freezes"),
+            CC.translate("&c2% chance when Cactus procs to deal +10% Outgoing"),
+            CC.translate("&cDamage and receive -3% Incoming Damage for 5s"))),
+
+    BACK_TO_SCHOOL_2022_BACKPACK(CC.translate("&8&lKeg"), ItemSkinType.BACKPACK, new CowboyChaps(), Arrays.asList(
+            CC.translate("&c-75% Silence Duration"),
+            CC.translate("&cBlocks all enemy Ragdoll and Rocket Escape"),
+            CC.translate("&c-15% Incoming Soul Enchant Damage")
+    )),
+
+    BACK_TO_SCHOOL_2022_AXE(CC.translate("&8&lCalculator"), ItemSkinType.AXE, new CalculatorSkin(), Arrays.asList(
+            CC.translate("&cOpening Combo V"),
+            CC.translate("&cSoul Master IV"),
+            CC.translate("&c50% chance to block Divine Immolation"),
+            CC.translate("&c3% chance when dealing damage to silence"),
+            CC.translate("&cyour enemy's Heroic Weapon Enchants for 5s"),
+            CC.translate("&c2.5% chance when dealing damage to make your"),
+            CC.translate("&cenemy Soul Enchants cost 10x more for 5s")
+    )),
 
 
 
+    HALLOWEEN_2022_HELMET(CC.translate("&4&lGrim Hood"), ItemSkinType.HELMET, new GrimHoodSkin(), Arrays.asList(
+            CC.translate("&cAlien Implants III"),
+            CC.translate("&cImmune to (Titan) Trap"),
+            CC.translate("&c+10% Outgoing Damage to players wearing:"),
+            CC.translate("&7* Grim Hood /skin"),
+            CC.translate("&7* Grim Cloak /skin"),
+            CC.translate("&c7* Momento Mori /skin")
+    )),
+    HALLOWEEN_2022_AMULET(CC.translate("&4&lMomento Mori"), ItemSkinType.AMULET, new MomentoMoriSkin(), Arrays.asList(
+            CC.translate("&cNature Wrath V"),
+            CC.translate("&7(Cannot be blocked by:"),
+            CC.translate("&7* Amulet of Angels /skin"),
+            CC.translate("&7* Preserved Snowflake /skin)"),
+            CC.translate("&c+5% Outgoing Damage to players wielding Diamond Weapons")
+    )),
+    HALLOWEEN_2022_BACKPACK(CC.translate("&4&lGrim Cloak"), ItemSkinType.BACKPACK, new CowboyChaps(), Arrays.asList(
+            CC.translate("&c-50% Incoming Rogue Damage"),
+            CC.translate("&cIncrease Combat Tag on players by 3s"),
+            CC.translate("&c1% chance to /fix all when taking damage")
+    )),
+    HALLOWEEN_2022_AXE(CC.translate("&4&lGrim Axe"), ItemSkinType.AXE, new GrimAxeSkin(), Arrays.asList(
+            CC.translate("&cOpening Combo V"),
+            CC.translate("&cSoul Master VI"),
+            CC.translate("&c1% chance to silence enemy Soul Harvester for 3s"),
+            CC.translate("&c+2% Outgoing Damage to enemies with Soul Mode active")
+    )),
+
+
+
+    THANKSGIVING_2022_HELMET(CC.translate("&6&lDaft Helmet"), ItemSkinType.HELMET, new DaftHelmetSkin(), Arrays.asList(
+            CC.translate("&cImmune to enemy Amulet of Corruption"),
+            CC.translate("&c2% chance to silence enemy Soul Enchants for 5s"),
+            CC.translate("&c2% chance when taking damage to invert"),
+            CC.translate("&cDivine Immolation tick damage for 5s"),
+            CC.translate("&ccausing it to heal instead of hurt you."))),
+
+    THANKSGIVING_2022_BELT(CC.translate("&e&lMatrix Master Belt"), ItemSkinType.BELT, new MatrixMasterSkin(), Arrays.asList(
+            CC.translate("&cLimits enemy stackable enchant level by 50%"),
+            CC.translate("&cImmune to World Destroyer Pet"),
+            CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
+            CC.translate("&c25% chance to not proc pet cooldown"))),
+
+    THANKSGIVING_2022_BOOTS(CC.translate("&6&lMainframe Boots"), ItemSkinType.BOOTS, new MainframeSkin(), Arrays.asList(
+            CC.translate("&cGears IV"),
+            CC.translate("&c5% chance to silence enemy Heroic Enchant Reflect for 5s"),
+            CC.translate("&cImmune to Deep Bleed slowness and Soul Trap"),
+            CC.translate("&c5% chance to negate enemy Rogue for 5s when their health is below 20 HP"))),
+
+    THANKSGIVING_2022_SWORD_GREEN(CC.translate("&e&lRay Sabre"), ItemSkinType.SWORD, new RaySabreSkin(), Arrays.asList(
+            CC.translate("&cSoul Master VI"),
+            CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.25x"),
+            CC.translate("&c33% chance to block Divine Immolation"),
+            CC.translate("&c3% chance to block enemy Defensive Crystals for 7s"))),
+
+
+    CHRISTMAS_2022_HELMET_ACTIVE(CC.translate("&9&lFrost Monster Trophy"), ItemSkinType.HELMET, new FrostMonsterSkin(), Arrays.asList(
+            CC.translate("&cImmune to Banshee Pet"),
+            CC.translate("&c50% chance to block Divine Immolation"),
+            CC.translate("&c-15% Incoming Damage from enemies wielding Axes"),
+            CC.translate("&c+5% Outgoing Damage to enemies wielding Swords"),
+            CC.translate("&c50% chance to dodge offensive Titan Attributes"))),
+
+    CHRISTMAS_2022_AMULET_ACTIVE(CC.translate("&b&lIcicle Amulet"), ItemSkinType.AMULET, new IcicleSkin(), Arrays.asList(
+            CC.translate("&cImmune to enemy Amulet of Corruption"),
+            CC.translate("&cImmune to Divine Immolation"),
+            CC.translate("&cImmune to Hero Killer"),
+            CC.translate("&c+15% Outgoing Soul Enchant Damage"),
+            CC.translate("&c-25% damage from enemy Rage"))),
+
+    CHRISTMAS_2022_SWORD_ACTIVE(CC.translate("&b&lFrostbound Sword"), ItemSkinType.SWORD, new FrostBoundSkin(), Arrays.asList(
+            CC.translate("&cOpening Combo VI"),
+            CC.translate("&c2.5% chance to silence enemy (Demonic) Lifesteal for 3s"),
+            CC.translate("&c1% chance to silence enemy Titan Attributes for 3s"),
+            CC.translate("&c+5% Outgoing Damage"),
+            CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.25x"))),
+
+    CHRISTMAS_2022_BACKPACK(CC.translate("&9&lArctic Excursion Pack"), ItemSkinType.BACKPACK, new ArcticExcursionSkin(), Arrays.asList(
+            CC.translate("&c5% chance to silence enemy Ragdoll for 5s"),
+            CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
+            CC.translate("&c+5% Outgoing PvP Damage when using a sword"),
+            CC.translate("&cImmune to enemy Rogue when below 10 HP"))),
     ;
 
 

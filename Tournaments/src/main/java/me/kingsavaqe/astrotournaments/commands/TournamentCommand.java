@@ -89,6 +89,7 @@ public class TournamentCommand extends CommandBase {
             player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
             return;
         }
+        Utils.emptyInventory(player);
         AstroTournamentsPlugin.instance.getTournamentManager().getTournamentPlayer(player.getUniqueId()).leaveTournament();
         player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 2.0F, 2.0F);
         player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);

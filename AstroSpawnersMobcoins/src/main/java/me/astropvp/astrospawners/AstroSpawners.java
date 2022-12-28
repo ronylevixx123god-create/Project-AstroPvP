@@ -109,7 +109,7 @@ public class AstroSpawners extends JavaPlugin {
         spawnerManager.purge();
         Bukkit.getConsoleSender().sendMessage("Started Saving Spawner Data");
         spawnerManager.saveAll();
-        MobStackerUtils.onDisable();
+        MobStackerUtils.onEnable();
         EntityUtils.clearAllEntities();
 
         astroSpawners = null;

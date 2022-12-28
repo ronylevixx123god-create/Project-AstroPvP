@@ -31,23 +31,24 @@ public class CollectPlugin extends JavaPlugin {
 
         this.registerCommands();
         Bukkit.getPluginManager().registerEvents(new PlayerListener(), this);
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             System.out.println("[Collect] Started auto saving all collects");
             collectManager.saveAll();
             System.out.println("[Collect] Finished auto saving all collects");
-            final OfflinePlayer[] onlinePlayers = Bukkit.getOfflinePlayers();
-            for (OfflinePlayer player : onlinePlayers) {
+            final OfflinePlayer[] offlinePlayers = Bukkit.getOfflinePlayers();
+            for (OfflinePlayer player : offlinePlayers) {
                 UUID uuid = player.getUniqueId();
                 PlayerCollect playerCollect = getCollectManager().getFromCache(uuid.toString());
                 if (playerCollect == null) continue;
-                for (CollectCategory category : playerCollect.getCategories()) {
+                for (int j = 0; j < playerCollect.getCategories().size(); j++) {
+                    CollectCategory category = playerCollect.getCategories().get(j);
                     if (category.isExpired()) {
                         getCollectManager().removeCategoryFromCache(uuid.toString(), category);
                         System.out.println("[Collect] Removed category for " + uuid + " because it expired!");
                     }
                 }
             }
-        }, 60L, 20*60L);
+        }, 60L, 20 * 60L);
 
     }
 

@@ -25,7 +25,7 @@ public class SpawnerPlace extends FactionLog {
         this.amount = amount;
         this.location = location;
         this.uuid = uuid.toString();
-        this.entityType = entityType.name();
+        this.entityType = entityType.toString();
     }
 
     public SpawnerPlace(int amount, Location location, EntityType entityType, UUID uuid, long time) {
@@ -33,7 +33,7 @@ public class SpawnerPlace extends FactionLog {
         this.amount = amount;
         this.location = location;
         this.uuid = uuid.toString();
-        this.entityType = entityType.name();
+        this.entityType = entityType.toString();
         super.setTime(time);
     }
 

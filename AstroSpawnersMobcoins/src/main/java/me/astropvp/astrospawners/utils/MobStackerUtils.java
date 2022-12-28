@@ -1,6 +1,7 @@
 package me.astropvp.astrospawners.utils;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.UUID;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -14,13 +15,14 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.SpawnerSpawnEvent;
 
 
 public class MobStackerUtils {
 
-    HashMap<UUID, Integer> mobMap;
+    private final HashMap<Entity, Integer> mobMap;
 
     public MobStackerUtils() {
         this.mobMap = new HashMap<>();
@@ -30,7 +32,7 @@ public class MobStackerUtils {
             for (int i = 0; i < mobMap.keySet().size(); i++) {
                 Entity entity  = (Entity) mobMap.keySet().toArray()[i];
                 if (!entity.isValid() || entity.isDead()) {
-                    mobMap.remove(entity.getUniqueId());
+                    mobMap.remove(entity);
                     continue;
                 }
                 stackMobs(entity);
@@ -39,8 +41,7 @@ public class MobStackerUtils {
         }, 40L, delayS * 20L);
     }
 
-
-    public static void onDisable() {
+    public static void onEnable() {
         for (World world : Bukkit.getWorlds()) {
             for (Entity entity : world.getEntities()) {
                 if (!(entity instanceof Player) && !(entity instanceof ArmorStand)) {
@@ -50,52 +51,52 @@ public class MobStackerUtils {
         }
     }
 
-    public HashMap<UUID, Integer> getMobMap() {
+    public HashMap<Entity, Integer> getMobMap() {
         return mobMap;
     }
 
     public int getStackSize(Entity entity) {
-        return mobMap.getOrDefault(entity.getUniqueId(), 1);
+        return mobMap.getOrDefault(entity, 1);
     }
 
     public void setStackSize(Entity entity, int size) {
-        entity.setCustomName(CC.GoldB + EntityUtils.getEntityName(entity.getType()) + " " + CC.Gray + "[" + CC.White + "x " + CC.Underline + size + CC.Gray + "]");
-        mobMap.put(entity.getUniqueId(), size);
+        entity.setCustomName(CC.RedB + EntityUtils.getEntityName(entity.getType()) + " " + CC.Gray + "[" + CC.White + "x " + CC.Underline + size + CC.Gray + "]");
+        mobMap.put(entity, size);
     }
 
     public boolean isStackedMob(Entity entity) {
-        return mobMap.containsKey(entity.getUniqueId());
+        return mobMap.containsKey(entity);
     }
 
     public void removeStackedMob(Entity entity) {
         if (!entity.isDead()) entity.remove();
-        mobMap.remove(entity.getUniqueId());
+        mobMap.remove(entity);
     }
 
     public void stackMobs(SpawnerSpawnEvent event) {
+        Chunk chunk = ChunkUtils.getChunkIfLoaded((int) Math.floor(event.getEntity().getLocation().getChunk().getX()), (int) Math.floor(event.getEntity().getLocation().getChunk().getZ()), event.getLocation().getWorld());
+        //Chunk chunk = event.getLocation().getChunk();
 
-        Chunk chunk = event.getLocation().getChunk();hex
-        Entity[] entities = chunk.getEntities();
-
-
+        if (chunk == null) {
+            System.out.println("[Spawners] Skipping because chunk is null");
+            event.setCancelled(true);
+            return;
+        }
+        List<CraftEntity> entities = ChunkUtils.getEntitiesInChunk(chunk);
         int entityStack = 0;
         Entity entity = event.getEntity();
         Location location = event.getSpawner().getLocation();
         SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(location);
 
-        int size = 0;
+        int size;
 
         if (entity.getType() == EntityType.BLAZE) {
-            size = entityStack + (data != null ? (data.getSpawnerAmount()*10)+100 : 100);
+            size = entityStack + (data != null ? (data.getSpawnerAmount() * 10) + 100 : 100);
 
 
         } else {
             size = entityStack + (data != null ? data.getSpawnerAmount() : 100);
         }
-        if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(event.getLocation()), OutpostType.THE_GREAT_HALL)) {
-            size += size*1.5;
-        }
-
 
         int stackSize = 0;
         Entity highestStackedEntity = null;
@@ -136,26 +137,45 @@ public class MobStackerUtils {
         }
     }
 
-    /*public static void setEntityAmount(LivingEntity entity, int amount, boolean deathEffect) {
-        if (amount <= 0) {
-            return;
-        }s
-        if (deathEffect) {
-            entity = (LivingEntity) entity.getWorld().spawnEntity(entity.getLocation(), entity.getType());
-        }
-        entity.setMetadata("stacked_mob", new FixedMetadataValue(AstroSpawners.getInstance(), amount));
-        //entity.setMetadata("fromMobSpawner", new FixedMetadataValue(AstroSpawners.getInstance(), null));
-        //entity.setMetadata("no_attack", new FixedMetadataValue(AstroSpawners.getInstance(), null));
-        entity.setCustomName(CC.Green + EntityUtils.getEntityName(entity.getType()) + " " + CC.Gray + "[" + CC.White + "x " + CC.Underline+ amount+ CC.Gray + "]");
-    }
+    /*public void stackMobs(SpawnerSpawnEvent event) {
 
-    public static int getEntityAmount(LivingEntity entity) {
-        if (!entity.hasMetadata("stacked_mob")) {
-            return 1;
+        Chunk chunk = event.getLocation().getChunk();
+        Entity[] entities = chunk.getEntities();
+
+
+        int entityStack = 0;
+        Entity entity = event.getEntity();
+        Location location = event.getSpawner().getLocation();
+        SpawnerData data = SpawnerPlugin.getInstance().getSpawnerManager().getSpawnerData(location);
+
+        int size = 0;
+
+        if (entity.getType() == EntityType.BLAZE) {
+            size = entityStack + (data != null ? (data.getSpawnerAmount()*10)+100 : 100);
+        } else {
+            size = entityStack + (data != null ? data.getSpawnerAmount() : 100);
         }
-        if (entity.getMetadata("stacked_mob").isEmpty()) {
-            return 0;
+
+
+
+        int stackSize = 0;
+        Entity highestStackedEntity = null;
+
+
+        for (Entity nearbyEntity : entities) {
+            if (nearbyEntity.getType() != entity.getType()) continue;
+            if (!isStackedMob(nearbyEntity)) continue;
+            if (getStackSize(nearbyEntity) <= stackSize) continue;
+            highestStackedEntity = nearbyEntity;
+            stackSize = getStackSize(nearbyEntity);
         }
-        return entity.getMetadata("stacked_mob").get(0).asInt();
+        if (highestStackedEntity == null) {
+            setStackSize(entity, size);
+        } else {
+            setStackSize(highestStackedEntity, stackSize + size);
+            removeStackedMob(entity);
+            event.setCancelled(true);
+        }
     }*/
+
 }

@@ -24,7 +24,7 @@ public class SpawnerBreak extends FactionLog {
         super(LogType.SPAWNER_BREAK);
         this.amount = amount;
         this.location = location;
-        this.entityType = entityType.name();
+        this.entityType = entityType.toString();
         this.uuid = uuid.toString();
 
     }
@@ -33,7 +33,7 @@ public class SpawnerBreak extends FactionLog {
         super(LogType.SPAWNER_BREAK);
         this.amount = amount;
         this.location = location;
-        this.entityType = entityType.name();
+        this.entityType = entityType.toString();
         this.uuid = uuid.toString();
         super.setTime(time);
 
