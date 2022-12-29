@@ -23,9 +23,8 @@ public class CustomBlockPlaceListener implements Listener {
     public void onPlace(BlockPlaceEvent event) {
         ItemStack item = event.getItemInHand();
         if (CustomBlocksAPI.isCustomBlockItem(item)) {
-            CustomBlock customBlock = CustomBlocksAPI.getCustomBlockFromItem(item);
             //check if chunk alrdy has the cblock
-            customBlockManager.addToCache(new CustomBlockData(event.getBlock().getLocation(), customBlock.getLevel(), customBlock.getCustomBlockType().name()));
+            customBlockManager.addToCache(new CustomBlockData(event.getBlock().getLocation(), CustomBlocksAPI.getLevelFromItem(item), CustomBlocksAPI.getTypeFromItem(item).name()));
         }
     }
 }

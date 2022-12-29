@@ -29,7 +29,7 @@ public class CustomBlockBreakListener implements Listener {
             //check if chunk alrdy has the cblock
             event.setCancelled(true);
             event.getBlock().setType(Material.AIR);
-            event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), new CustomBlock(customBlockData.getLevel(), CustomBlockType.valueOf( customBlockData.getType())).getCustomBlockItem());
+            event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), CustomBlockType.valueOf(customBlockData.getType()).getCustomBlock().getCustomBlockItem(customBlockData));
             customBlockManager.removeFromCache(customBlockData);
         }
     }

@@ -7,6 +7,7 @@ import me.mattstudios.mf.base.CommandManager;
 import net.astropvp.customblocks.commands.CustomBlockAdminCommand;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.listeners.CustomBlockBreakListener;
+import net.astropvp.customblocks.listeners.CustomBlockListener;
 import net.astropvp.customblocks.listeners.CustomBlockPacketListener;
 import net.astropvp.customblocks.listeners.CustomBlockPlaceListener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -29,11 +30,13 @@ public class CustomBlocks extends JavaPlugin {
     }
 
     public void onDisable() {
+        customBlockManager.purge();
         customBlockManager.saveAll();
         instance = null;
     }
 
     public void registerListeners() {
+        getServer().getPluginManager().registerEvents(new CustomBlockListener(this), this);
         getServer().getPluginManager().registerEvents(new CustomBlockBreakListener(this), this);
         getServer().getPluginManager().registerEvents(new CustomBlockPlaceListener(this), this);
     }

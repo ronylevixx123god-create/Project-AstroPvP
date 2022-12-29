@@ -20,14 +20,22 @@ public class CustomBlocksAPI {
         return nbtItem.hasKey("cosmicType") && nbtItem.getString("cosmicType").equals("custom_block");
     }
 
-    public static CustomBlock getCustomBlockFromItem(ItemStack itemStack) {
+    public static int getLevelFromItem(ItemStack itemStack) {
         if (isCustomBlockItem(itemStack)) {
             NBTWrapper nbtItem = new NBTWrapper(itemStack);
             NBTTagCompoundBuilder cosmicData = nbtItem.hasKey("cosmicData") ? new NBTTagCompoundBuilder(nbtItem.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
             NBTTagCompoundBuilder customBlockData = cosmicData.hasKey("customBlockData") ? new NBTTagCompoundBuilder(cosmicData.getNBTBase("customBlockData")) : new NBTTagCompoundBuilder();
-            CustomBlockType type = CustomBlockType.valueOf(customBlockData.getString("type"));
-            int level = customBlockData.getInt("level");
-            return new CustomBlock(level, type);
+            return customBlockData.getInt("level");
+        }
+        return 1;
+    }
+
+    public static CustomBlockType getTypeFromItem(ItemStack itemStack) {
+        if (isCustomBlockItem(itemStack)) {
+            NBTWrapper nbtItem = new NBTWrapper(itemStack);
+            NBTTagCompoundBuilder cosmicData = nbtItem.hasKey("cosmicData") ? new NBTTagCompoundBuilder(nbtItem.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+            NBTTagCompoundBuilder customBlockData = cosmicData.hasKey("customBlockData") ? new NBTTagCompoundBuilder(cosmicData.getNBTBase("customBlockData")) : new NBTTagCompoundBuilder();
+            return CustomBlockType.valueOf(customBlockData.getString("type"));
         }
         return null;
     }

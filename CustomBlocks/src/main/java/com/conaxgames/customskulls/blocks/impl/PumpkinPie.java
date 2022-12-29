@@ -1,6 +1,5 @@
 package com.conaxgames.customskulls.blocks.impl;
 
-import com.conaxgames.customskulls.CoreSkulls;
 import com.conaxgames.customskulls.ability.AbilityData;
 import com.conaxgames.customskulls.blocks.CustomBlock;
 import com.conaxgames.customskulls.data.DeleteCustomBlocks;
@@ -69,7 +68,7 @@ public class PumpkinPie extends CustomBlock {
     public void rightClickBlockAction(Player p0, PlayerInteractEvent p1, Block p2, ItemStack p3) {
         p0.sendMessage(CC.translate("&e&l(!)&e You will get the Pumpkin pie Buffs when standing in this chunk."));
         try {
-            ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p1.getClickedBlock().getLocation(), 2,2,2,0.05f,40);
+            ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(), p1.getClickedBlock().getLocation(), 2, 2, 2, 0.05f, 40);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -147,7 +146,7 @@ public class PumpkinPie extends CustomBlock {
 
     @Override
     public void damageGivenEvent(Player p0, EntityDamageByEntityEvent p1, Chunk p2, AbilityData data) {
-        if  (data.getOwner() == null) return;
+        if (data.getOwner() == null) return;
         if (Bukkit.getPlayer(data.getOwner()) == null) return;
         if (FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner())) == null) return;
         FPlayer blockowner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
@@ -161,7 +160,7 @@ public class PumpkinPie extends CustomBlock {
         FPlayer pvper = FactionUtils.getFPlayer((Player) p1.getDamager());
         if (blockowner.getFaction() != pvper.getFaction()) return;
 
-        p1.setDamage(p1.getDamage()*1.05); //sets the event damage. BOWP hits Kipes for this damage
+        p1.setDamage(p1.getDamage() * 1.05); //sets the event damage. BOWP hits Kipes for this damage
     }
 
 
