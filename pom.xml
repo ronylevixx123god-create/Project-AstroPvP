@@ -73,6 +73,7 @@
         <module>AstroFactionLogs</module>
         <module>Showcase</module>
         <module>ShowcaseGUI</module>
+        <module>AstroCustomBlocks</module>
 
     </modules>
 

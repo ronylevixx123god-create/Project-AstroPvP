@@ -1,0 +1,47 @@
+package net.astropvp.customblocks.struct;
+
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import net.astropvp.customblocks.data.CustomBlockData;
+import net.astropvp.customblocks.utils.ItemBuilder;
+import org.bukkit.Material;
+import org.bukkit.inventory.ItemStack;
+
+
+@Getter
+@AllArgsConstructor
+public class CustomBlock{
+    private final Integer level;
+    private final CustomBlockType customBlockType;
+
+    public ItemStack getCustomBlockItem() {
+        ItemStack block = new ItemBuilder(Material.NOTE_BLOCK)
+                .setName(customBlockType.getColor() + customBlockType.getDisplayName() + " &7(&fLVL " + level + "&7)")
+                .addLoreLine(customBlockType.getColor() + "Price to Place: &f" + customBlockType.getPlacePrice())
+                .addLoreLine(customBlockType.getColor() + "Price to Mine: &f" + customBlockType.getMinePrice())
+                .addLoreLine("")
+                .addLoreLines(customBlockType.getLore())
+                .addLoreLine("")
+                .addLoreLine("&7Place custom block to use!")
+                .colorize()
+                .build();
+
+        NBTWrapper nbtItem = new NBTWrapper(block);
+        NBTTagCompoundBuilder cosmicData = nbtItem.hasKey("cosmicData") ? new NBTTagCompoundBuilder(nbtItem.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        NBTTagCompoundBuilder cosmicData2 = cosmicData.hasKey("customBlockData") ? new NBTTagCompoundBuilder(cosmicData.getNBTBase("customBlockData")) : new NBTTagCompoundBuilder();
+        nbtItem.setString("cosmicType", "custom_block");
+        cosmicData2.setInt("level", level);
+        cosmicData2.setString("type", customBlockType.name());
+        cosmicData.setNBTBase("customBlockData", cosmicData2.get());
+        nbtItem.setNBTBase("cosmicData", cosmicData.get());
+        return nbtItem.build();
+    }
+
+    public CustomBlock(CustomBlockData customBlockData) {
+        this.customBlockType = CustomBlockType.valueOf(customBlockData.getType());
+        this.level = customBlockData.getLevel();
+    }
+
+}

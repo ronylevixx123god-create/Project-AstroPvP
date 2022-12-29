@@ -143,6 +143,10 @@ public class ItemUtils {
         return retr;
     }
 
+    public static boolean isAirOrNull(ItemStack item){
+        return item == null || item.getType().equals(Material.AIR);
+    }
+
     public static ItemStack createEnchantBook(Enchantment enchantment, int level) {
         ItemStack book = new ItemStack(Material.ENCHANTED_BOOK, 1);
         EnchantmentStorageMeta storageMeta = (EnchantmentStorageMeta) book.getItemMeta();
