@@ -41,7 +41,7 @@ public class AstroEvents extends JavaPlugin {
         this.commandManager.enableUnstableAPI("help");
 
         this.miniGameManager = new MiniGameManager(this);
-        this.miniGameManager.startAutoMiniGameTask();
+        //this.miniGameManager.startAutoMiniGameTask();
 
         this.registerCommands();
     }

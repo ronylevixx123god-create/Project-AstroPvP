@@ -145,49 +145,26 @@ public class MysteryChestGUI
         if (this.lastPrizesShown == null) {
             this.fillRandomPrizes();
         }
-        if (announce) {
-            boolean hasUltraRare = false;
-            for (CustomLoot given : this.lastPrizesShown) {
-                double chance;
-                if (given.getChance() == -1.0 && !given.isJackpotItem() || !((chance = given.getChance() / this.chest.getLootTable().getTotalWeight()) <= 0.05) && !given.isJackpotItem())
-                    continue;
-                hasUltraRare = true;
-                break;
-            }
-            for (Player pl : Bukkit.getOnlinePlayers()) {
-                boolean self = pl.getUniqueId().equals(this.player.getUniqueId());
-                if ((self || !WorldGuardUtils.isPvPEnabled((Location) pl.getLocation()) || pl.getWorld().getName().equals(this.player.getWorld().getName()) && pl.getLocation().distanceSquared(this.player.getLocation()) <= 4096.0) && !self && !hasUltraRare)
-                    continue;
-            }
-        }
         this.player.playSound(this.player.getLocation(), Sound.LEVEL_UP, 1.1f, 0.9f);
         LootboxFilterData filter = CosmicMysteryChest.get().getFilterManager().getLootFilterData(player.getUniqueId());
-
+        if (chest.isStoreLootbox()) {
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(CC.translate("&6&l(!) &6" + player.getName() + " opened a " + chest.getDisplayName() + "&6 and"));
+            Bukkit.broadcastMessage(CC.translate("&6received:"));
+        }
         for (CustomLoot loot : this.lastPrizesShown) {
-                if (filter.isFiltered(chest.getInternalName(),loot.getItem())) {
-                    player.sendMessage(CC.translate(loot.getItem().getItemMeta().getDisplayName() + "&c has been skipped. &cType \"&7/lbfilter\" &cto edit this filter."));
-                    continue;
-                }
-
-            long id;
-            ItemStack item3 = loot.getItem().clone();
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning() && ((id = ItemID.getItemID((ItemStack) item3)) > 0L || ItemID.needsItemID((ItemStack) item3))) {
-                if (id > 0L) {
-                    item3 = ItemID.removeItemID((ItemStack) item3);
-                }
-                if (item3.getAmount() > 1) {
-                    for (int i = 0; i < item3.getAmount(); ++i) {
-                        ItemStack clone = ItemID.assignItemID(null, (ItemStack) item3.clone());
-                        clone.setAmount(1);
-                        PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) clone, (int) -1);
-                        //Bukkit.getLogger().info("[CosmicMysteryChest] Giving: " + ItemUtils.getDisplayName((ItemStack) clone) + " to " + this.player.getName() + ", chance: " + loot.getChance() + " / " + this.chest.getLootTable().getTotalWeight() + ", total chance: " + loot.getChance() / this.chest.getLootTable().getTotalWeight() * 100.0 + "!");
-                    }
-                    continue;
-                }
-                item3 = ItemID.assignItemID(null, (ItemStack) item3);
+            if (chest.isStoreLootbox()) {
+                Bukkit.broadcastMessage(CC.translate("&6&l * &6" + loot.getItem().getItemMeta().getDisplayName()));
             }
+            if (filter.isFiltered(chest.getInternalName(), loot.getItem())) {
+                player.sendMessage(CC.translate(loot.getItem().getItemMeta().getDisplayName() + "&c has been skipped. &cType \"&7/lbfilter\" &cto edit this filter."));
+                continue;
+            }
+            ItemStack item3 = loot.getItem().clone();
             PlayerUtil.giveOrDropProtectedItem((Player) this.player, (ItemStack) item3, (int) -1);
-            //Bukkit.getLogger().info("[CosmicMysteryChest] Giving: " + ItemUtils.getDisplayName((ItemStack) item3) + " to " + this.player.getName() + ", chance: " + loot.getChance() + " / " + this.chest.getLootTable().getTotalWeight() + ", total chance: " + loot.getChance() / this.chest.getLootTable().getTotalWeight() * 100.0 + "!");
+        }
+        if (chest.isStoreLootbox()) {
+            Bukkit.broadcastMessage("");
         }
         this.player.updateInventory();
         Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(this.player, "MYSTERY_CHEST_OPEN", new Object[]{Lists.newArrayList(this.lastPrizesShown), this.chest.getInternalName()}));

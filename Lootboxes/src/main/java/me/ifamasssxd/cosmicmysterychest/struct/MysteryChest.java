@@ -22,6 +22,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+import lombok.Getter;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.utils.TimeUtil;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class MysteryChest {
     private final String internalName;
     private ItemStack handDisplay;
@@ -43,14 +45,17 @@ public class MysteryChest {
     private final List<CustomLoot> lootItems;
     private transient LootTable<CustomLoot> lootTable;
     public transient File file;
+    @Getter
+    private final boolean isStoreLootbox;
 
-    public MysteryChest(String internalName, int itemBundleSize, ItemStack hand) {
+    public MysteryChest(String internalName, int itemBundleSize, ItemStack hand, boolean isStoreLootbox) {
         this.internalName = internalName;
         this.lootTable = new LootTable();
         this.lootItems = Lists.newArrayList();
         this.itemBundleSize = itemBundleSize;
         this.garunteedItems = Lists.newArrayList();
         this.handDisplay = hand;
+        this.isStoreLootbox = isStoreLootbox;
     }
 
     public String getDisplayName() {

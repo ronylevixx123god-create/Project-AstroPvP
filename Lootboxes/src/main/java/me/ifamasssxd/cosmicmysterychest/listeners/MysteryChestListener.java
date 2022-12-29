@@ -133,7 +133,6 @@ public class MysteryChestListener
                         throw new MysteryChestException(CC.translate("&c&l(!)&c Please clear some inventory slots before opening this lootbox!"));
                     }
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
-                        LootboxFilterData filter = CosmicMysteryChest.get().getFilterManager().getLootFilterData(player.getUniqueId());
                         new FilterGUI(player, chest).getFilterGUI().open(player);
                         return;
                     }
@@ -145,20 +144,8 @@ public class MysteryChestListener
                         i.setAmount(i.getAmount() - 1);
                         player.setItemInHand(i);
                     }
-                    if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                        if (ItemID.isItemBlacklisted((ItemStack) item)) {
-                            Bukkit.getLogger().info("[CosmicMysteryChest] Removing duped lootbox: " + (Object) item + " from " + player.getName() + "!");
-                            throw new MysteryChestException("Lootbox has already been opened!");
-                        }
-                        long id = ItemID.getItemID((ItemStack) item);
-                        if (id > 0L) {
-                            ItemID.blacklistIID((long) id, (String) ("lootboxOpen: " + player.getName() + " " + chest.getInternalName()));
-                        }
-                    }
 
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
-
-
                     new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
 
 

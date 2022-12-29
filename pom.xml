@@ -69,9 +69,10 @@
         <module>MysteryChests</module>
         <module>AdminItems</module>
         <module>AstroItemFilter</module>
-        <module>Christmas</module>
         <module>AstroChristmas</module>
         <module>AstroFactionLogs</module>
+        <module>Showcase</module>
+        <module>ShowcaseGUI</module>
 
     </modules>
 

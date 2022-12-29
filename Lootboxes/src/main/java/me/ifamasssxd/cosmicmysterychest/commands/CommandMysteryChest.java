@@ -2,18 +2,18 @@
  * Decompiled with CFR 0.150.
  *
  * Could not load the following classes:
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.CC
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.ItemUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.NumberUtils
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.PlayerUtil
- *  com.cosmicpvp.cosmicutils.me.astropvp.cratekeys.net.astropvp.armorsets.utils.TimeUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.CC
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.ItemUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.NumberUtils
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.PlayerUtil
+ *  com.cosmicpvp.cosmicutils.net.astropvp.armorsets.utils.TimeUtils
  *  org.bukkit.Bukkit
  *  org.bukkit.Material
  *  org.bukkit.command.Command
  *  org.bukkit.command.CommandExecutor
  *  org.bukkit.command.CommandSender
  *  org.bukkit.entity.Player
- *  org.bukkit.me.astropvp.cratekeys.inventory.ItemStack
+ *  org.bukkit.inventory.ItemStack
  */
 package me.ifamasssxd.cosmicmysterychest.commands;
 
@@ -67,14 +67,16 @@ public class CommandMysteryChest
                     sender.sendMessage(CC.Red + "Reloaded!");
                     return true;
                 }
-                if (operation.equalsIgnoreCase("create") && args.length == 3 && sender instanceof Player) {
+                if (operation.equalsIgnoreCase("create") && args.length == 4 && sender instanceof Player) {
                     String name = args[1];
                     if (this.plugin.getChestManager().getMysteryChestMap().containsKey(name)) {
                         throw new MysteryChestException("Mystery Chest already exists!");
                     }
                     ItemStack handItem = this.getHandItem(sender);
                     double amount = this.getNumber(args[2]);
-                    MysteryChest chest = new MysteryChest(name, (int) amount, handItem.clone());
+                    boolean isStoreLootbox = Boolean.parseBoolean(args[3]);
+
+                    MysteryChest chest = new MysteryChest(name, (int) amount, handItem.clone(), isStoreLootbox);
                     this.plugin.getChestManager().getMysteryChestMap().put(name, chest);
                     this.plugin.getChestManager().saveMysteryChest(chest);
                     Bukkit.getLogger().info("Registering MysteryChest: " + chest + " Display: " + (Object) handItem + " ToGive: " + amount);
@@ -157,11 +159,11 @@ public class CommandMysteryChest
         }
         sender.sendMessage(CC.AquaB + "AstroPvP Lootbox System");
         sender.sendMessage("");
-        sender.sendMessage(CC.DarkAqua + "/lootbox create <internalName> <amount>");
-        sender.sendMessage(CC.DarkAqua + "/lootbox setlootboxitem <internalName>" + CC.Gray + " Sets the display me.astropvp.cratekeys.items to your held item.");
+        sender.sendMessage(CC.DarkAqua + "/lootbox create <internalName> <amount> <isStoreLootbox>");
+        sender.sendMessage(CC.DarkAqua + "/lootbox setlootboxitem <internalName>" + CC.Gray + " Sets the display items to your held item.");
         sender.sendMessage(CC.DarkAqua + "/lootbox addloot <internalName> <chance> [jackpotItem]" + CC.Gray + " Add the item in your hand to the loot table.");
         sender.sendMessage(CC.DarkAqua + "/lootbox addpermloot <internalName>" + CC.Gray + " Adds the item in your hand to the loot table.");
-        sender.sendMessage(CC.DarkAqua + "/lootbox clear <internalName>" + CC.Gray + " Clear the Lootbox of all its loot me.astropvp.cratekeys.items.");
+        sender.sendMessage(CC.DarkAqua + "/lootbox clear <internalName>" + CC.Gray + " Clear the Lootbox of all its loot items.");
         sender.sendMessage(CC.DarkAqua + "/lootbox delete <internalName>" + CC.Gray + " Delete the Lootbox FOREVER, and its file");
         sender.sendMessage(CC.DarkAqua + "/lootbox list" + CC.Gray + " List all the created Lootboxes");
         sender.sendMessage(CC.DarkAqua + "/lootbox give <player> <internalName> [amount] [expiration]");

@@ -1,11 +1,11 @@
 package net.astropvp.astroevents.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+
 import net.astropvp.astroevents.AstroEvents;
 import net.astropvp.astroevents.game.MiniGame;
 import net.astropvp.astroevents.utils.Utils;
