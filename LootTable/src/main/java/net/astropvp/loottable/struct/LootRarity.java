@@ -14,10 +14,10 @@ import java.util.List;
 @Getter
 public enum LootRarity {
     COMMON(30, DyeColor.GRAY, ChatColor.GRAY),
-    UNCOMMON(20, DyeColor.GREEN, ChatColor.GREEN),
-    RARE(8,DyeColor.LIGHT_BLUE, ChatColor.AQUA),
-    GODLY(3,DyeColor.RED, ChatColor.DARK_RED),
-    SUPERIOR(0.5,DyeColor.YELLOW, ChatColor.YELLOW),
+    UNCOMMON(25, DyeColor.GREEN, ChatColor.GREEN),
+    RARE(10,DyeColor.LIGHT_BLUE, ChatColor.AQUA),
+    GODLY(3.5,DyeColor.RED, ChatColor.DARK_RED),
+    SUPERIOR(0.65,DyeColor.YELLOW, ChatColor.YELLOW),
     ;
     private final double chance;
 

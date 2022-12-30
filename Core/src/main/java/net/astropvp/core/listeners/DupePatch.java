@@ -11,7 +11,6 @@ public class DupePatch implements Listener {
         if (e.getPlayer() == null) return;
         if (e.getPlayer().getLocation().getWorld().getName().equals("world_duels")) {
             e.setCancelled(true);
-            return;
         }
     }
 

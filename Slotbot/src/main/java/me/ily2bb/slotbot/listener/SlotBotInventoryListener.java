@@ -1,9 +1,6 @@
 package me.ily2bb.slotbot.listener;
 
-import com.conaxgames.customskulls.CoreSkulls;
-import com.conaxgames.customskulls.ability.AbilityData;
-import com.conaxgames.customskulls.blocks.CustomBlock;
-import com.conaxgames.customskulls.util.CustomBlockUtil;
+
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
@@ -125,20 +122,18 @@ public class SlotBotInventoryListener implements Listener {
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&c&l** INFERNAL STRONGHOLD BONUS &7Saved &dSlotbot Tickets &c&l**"));
                     player.sendMessage("");
-                } else
-
-                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.COSMIC_CITIZEN_HELMET_CG) && Math.random() < 0.05) {
+                } else if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.COSMIC_CITIZEN_HELMET_CG) && Math.random() < 0.05) {
                     returnTickets(tickets, player);
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&b&lCosmicGames Hat: &fHas returned your SlotBot Tickets!"));
                     player.sendMessage("");
-                }else if (OutpostUtil.hasPlutoOutpost(player) && Math.random() < 0.075) {
+                } else if (OutpostUtil.hasPlutoOutpost(player) && Math.random() < 0.075) {
                     returnTickets(tickets, player);
                     player.sendMessage("");
                     player.sendMessage(CC.translate("&e&l* PLUTO OUTPOST &7Saved Slotbot Ticket(s) &e&l*"));
                     player.sendMessage("");
 
-                } else if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
+                } /*else if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
                     FPlayer killer = FactionUtils.getFPlayer(player);
                     for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
                         FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
@@ -156,6 +151,7 @@ public class SlotBotInventoryListener implements Listener {
                         }
                     }
                 }
+            }*/
             }
         } else if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot Loot")) {
             ItemStack item = e.getCurrentItem();

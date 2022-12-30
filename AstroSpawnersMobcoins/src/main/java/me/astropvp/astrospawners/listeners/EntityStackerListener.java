@@ -1,6 +1,5 @@
 package me.astropvp.astrospawners.listeners;
 
-import com.astropvp.cc.player.CosmicPlayers;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
@@ -9,7 +8,6 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
-import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
 import me.astropvp.cratekeys.enums.CrateType;
@@ -44,6 +42,8 @@ public class EntityStackerListener implements Listener {
     private final MobStackerUtils mobStackerUtils;
     private final AstroSpawners plugin;
     private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.GRINDER);
+    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
 
     private Map<UUID, Long> blazeCooldown;
@@ -70,6 +70,7 @@ public class EntityStackerListener implements Listener {
         Entity entity = e.getEntity();
         if (e.getDamager() instanceof Player) {
 
+            Player p = (Player) e.getDamager();
 
             if (!mobStackerUtils.isStackedMob(entity)) return;
 
@@ -84,7 +85,7 @@ public class EntityStackerListener implements Listener {
                 e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will be resolved."));
                 return;
             }
-            double exp = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("baseXp") * 0.01;
+            double exp = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("baseXp");
             int remove = 1;
 
             if (((Player) e.getDamager()).getItemInHand() != null) {
@@ -101,13 +102,13 @@ public class EntityStackerListener implements Listener {
                 }
 
                 if (enchants.containsKey(EnchantmentAPI.getEnchantment("Master Inquisitive"))) {
-                    exp += 150;
+                    exp *= 1.15;
                 } else if (enchants.containsKey(EnchantmentAPI.getEnchantment("Inquisitive"))) {
-                    exp += 100;
+                    exp *= 1.05;
 
                 }
 
-                if (enchants.containsKey(EnchantmentAPI.getEnchantment("Kill Aura")) && Math.random() < 0.1) {
+                if (enchants.containsKey(EnchantmentAPI.getEnchantment("Kill Aura")) && Math.random() < 0.075) {
                     remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
                 }
 
@@ -121,47 +122,39 @@ public class EntityStackerListener implements Listener {
             }
             amount -= remove;
             mobStackerUtils.setStackSize(entity, amount);
-
-
-            Player p = (Player) e.getDamager();
             if (remove > 1) {
                 p.sendMessage(CC.translate("&6&l* KILL AURA [&7-" + remove + "x&6&l] *"));
             }
 
 
-            boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
+            //boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
+
 
             if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
-                exp += 50;
+                exp *= 1.15;
             }
 
-            if (p.getInventory().firstEmpty() != -1) {
-                while (remove != 0) {
-                    blazeLoot(p);
-                    remove--;
-                }
+            while (remove != 0 && p.getInventory().firstEmpty() != -1) {
+                blazeLoot(p);
+                remove--;
             }
 
-
-            if (isOnCosmicClient) {
-                exp += 50;
-            }
 
             if (CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().containsKey(p.getUniqueId())) {
                 exp *= 2.05;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MEDIEVAL_SWORD_KING)) {
-                exp += 100;
+                exp *= 1.15;
             }
 
 
             if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(p), OutpostType.COURTYARD)) {
-                exp *= 1.25;
+                exp *= 1.15;
             }
 
             if (OutpostUtil.hasMarsOutpost(p)) {
-                exp *= 1.5;
+                exp *= 1.15;
             }
 
             if (e.getDamager().hasPermission("astrocore.nebula")) {
@@ -221,8 +214,8 @@ public class EntityStackerListener implements Listener {
 
     public void blazeLoot(Player p) {
         double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
+        double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.01
         attemptGiveMoney(p);
-
         int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
         if (Math.random() < AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
             MobcoinAPI.addMobcoins(p, mcAmount);
@@ -230,16 +223,18 @@ public class EntityStackerListener implements Listener {
             p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
         }
         if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
-            grinderKeyChance *= 1.1;
+            grinderKeyChance *= 1.2;
+            godlyKeyChance *= 1.2;
 
         }
 
         double num = Math.random();
 
-        if (grinderKeyChance >= num) {
+        if (godlyKeyChance >= num) {
+            PlayerUtil.giveOrDropProtectedItem(p, godlyKey, 60);
+        } else if (grinderKeyChance >= num) {
             PlayerUtil.giveOrDropProtectedItem(p, grinderKey, 60);
         }
-
     }
 
     public void attemptGiveMoney(Player player) {

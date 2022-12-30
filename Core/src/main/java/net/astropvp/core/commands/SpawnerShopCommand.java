@@ -43,7 +43,6 @@ public class SpawnerShopCommand
 
         if (amount <= 0) {
             sender.sendMessage(CC.translate("&aUsage: &f/spawnershop <amount>"));
-            sender.sendMessage(CC.translate("&7Ex. \"/spawnershop 500\" will allow you to buy 500 spawners at a time."));
             return false;
         }
 
@@ -56,7 +55,7 @@ public class SpawnerShopCommand
         Player player = ((Player) sender).getPlayer();
 
         SpawnerShopGUI spawnerShopGUI = new SpawnerShopGUI(player, amount);
-        spawnerShopGUI.open();
+        spawnerShopGUI.getGui().open(player);
         player.sendMessage(CC.translate("&a&l(!)&a Opening the spawner shop gui with value &f" + amount + "&a!"));
 
 

@@ -69,14 +69,14 @@ final class EnderpearlCooldownListener
                 long lastEnderpearlThrow = ((MetadataValue) pl.getMetadata("lastEnderpearlThrow").get(0)).asLong();
                 long cd = 400L;
                 long timeSinceThrow = System.currentTimeMillis() - lastEnderpearlThrow;
-                if (timeSinceThrow < 400L) {
+                /*if (timeSinceThrow < 400L) {
                     double timeToWait = Math.max(0.1D, (400L - timeSinceThrow) / 1000.0D);
                     e.setCancelled(true);
                     e.setUseItemInHand(Event.Result.DENY);
                     pl.sendMessage(CC.RedB + "(!) " + CC.Red + "You must wait " + CC.RedB + NumberUtils.format(timeToWait, DecimalFormatType.SECONDS) + CC.Red + "s before throwing another Enderpearl!");
                     pl.updateInventory();
                     return;
-                }
+                }*/
             }
                 boolean bl = teleblock = pl.hasMetadata("teleblock") && pl.getMetadata("teleblock").get(0).asLong() > System.currentTimeMillis();
             if (AstroItemSkinsAPI.hasSkinEquipped(e.getPlayer(), SkinType.CHRISTMAS_BOOTS_SLIPPERS)) teleblock = false;

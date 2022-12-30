@@ -36,7 +36,7 @@ public class AutoGrinderGui {
 
     public GuiItem getKeyClaimItem(AutoGrinder autoGrinder) {
         ItemStack item = new ItemBuilder(Material.GOLD_NUGGET)
-                .setName("&6&lGrinder Keys &7(x" + NumberUtils.formatMoney(autoGrinder.getGrinderKeys()) + "&7)")
+                .setName("&6&lGrinder Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGrinderKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
                 .addLoreLine("&7Click to claim the keys in this auto grinder!")
                 .colorize()
                 .build();
@@ -53,11 +53,11 @@ public class AutoGrinderGui {
     }
 
     public GuiItem getStatusItem(AutoGrinder autoGrinder) {
-        ItemStack activateButton = new com.cosmicpvp.cosmicutils.utils.ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
+        ItemStack activateButton = new com.cosmicpvp.cosmicutils.utils.ItemBuilder(Material.STONE_BUTTON, CC.translate("&6&lActivate Grinder"))
                 .addLoreLine("")
                 .addLoreLine(CC.translate("&6Expires in: &f" + ((autoGrinder.getLastActivated() + 3600000) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.fancy((autoGrinder.getLastActivated() + 3600000) - System.currentTimeMillis()))))
                 .addLoreLine(CC.translate("&6Status: " + (autoGrinder.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
-                .addLoreLine(CC.translate("&6Price: &e$" + NumberUtils.formatMoney(autoGrinder.getActivationPrice())))
+                .addLoreLine(CC.translate("&6Price: &2$&a" + NumberUtils.formatMoney(autoGrinder.getActivationPrice())))
                 .addLoreLine("")
                 .addLoreLine(CC.translate("&7Click to activate this auto grinder"))
                 .build();
@@ -95,7 +95,7 @@ public class AutoGrinderGui {
                 .setName("&a&lUpgrade Autogrinder")
                 .addLoreLine("")
                 .addLoreLine("&aCurrent Level: &f" + autoGrinder.getLevel() + "&7/" + autoGrinder.getMaxLevel())
-                .addLoreLine(autoGrinder.getLevel() == autoGrinder.getMaxLevel() ? "&aUpgrade Price: &c" + "MAX" : "&a&lUpgrade Price: &f$" + NumberUtils.formatMoney(autoGrinder.getUpgradePrice(autoGrinder.getLevel())))
+                .addLoreLine(autoGrinder.getLevel() == autoGrinder.getMaxLevel() ? "&aUpgrade Price: &c" + "MAX" : "&aUpgrade Price: &f$" + NumberUtils.formatMoney(autoGrinder.getUpgradePrice(autoGrinder.getLevel())))
                 .addLoreLine("")
                 .addLoreLine("&7Click to upgrade the auto grinder!")
                 .colorize()

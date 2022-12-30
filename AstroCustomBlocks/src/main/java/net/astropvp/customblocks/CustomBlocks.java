@@ -38,6 +38,10 @@ public class CustomBlocks extends JavaPlugin {
         commandManager.register(new CustomBlockCommand());
         this.customBlockManager = new CustomBlockManager(this);
         customBlockManager.loadAll();
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+            customBlockManager.saveAll();
+        }, 40L, 15*60*20L);
+
         this.configManager = new ConfigManager(this);
         configManager.setupFiles();
         registerListeners();

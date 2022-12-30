@@ -54,7 +54,7 @@ public class EnvoyManager implements PlaceholderReplacer {
         List<Location> locations = new ArrayList<>(getLocations());
         List<Location> finalLocations = new ArrayList<>();
         this.currentChests = new ArrayList<>();
-        int crates = Bukkit.getOnlinePlayers().size() > 15 ? Bukkit.getOnlinePlayers().size() / 3 : 7;
+        int crates = Bukkit.getOnlinePlayers().size() > 15 ? Bukkit.getOnlinePlayers().size() / 6 : 7;
         for(int i = 0; i < crates; i++) {
             Location location = locations.get(ThreadLocalRandom.current().nextInt(0, locations.size() - 1));
             locations.remove(location);

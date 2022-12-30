@@ -2,6 +2,7 @@ package net.astropvp.customblocks.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.CustomBlocksAPI;
@@ -32,6 +33,11 @@ public class CustomBlockPlaceListener implements Listener {
         if (CustomBlocksAPI.isCustomBlockItem(item)) {
             CustomBlockType type = CustomBlocksAPI.getTypeFromItem(item);
 
+            if (FactionUtils.isWilderness(event.getBlock().getLocation())) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place custom blocks in wilderness!"));
+                event.setCancelled(true);
+                return;
+            }
             if (!EconomyUtils.hasBalance(event.getPlayer(), type.getPlacePrice())) {
                 event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to place the " + type.getDisplayName() + " Custom Block!"));
                 event.setCancelled(true);

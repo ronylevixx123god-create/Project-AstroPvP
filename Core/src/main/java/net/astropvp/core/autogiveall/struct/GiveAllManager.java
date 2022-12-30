@@ -15,6 +15,8 @@ package net.astropvp.core.autogiveall.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.collect.Lists;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
 import net.astropvp.CollectPlugin;
@@ -32,7 +34,7 @@ import java.util.HashMap;
 
 public class GiveAllManager {
     private static long nextGiveAll = 2400;
-    private static MysteryChest giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("LootboxGenerator");
+    private static ItemStack giveAllItem = CrateKeyItem.getItem(CrateType.GODLY);
 
     public static long getNextGiveAll() {
         return nextGiveAll;
@@ -60,12 +62,12 @@ public class GiveAllManager {
                 ItemStack[] items = giveall.getItems();
                 ItemStack[] newarray = new ItemStack[items.length + 1];
                 System.arraycopy(items, 0, newarray, 0, items.length);
-                newarray[newarray.length - 1] = giveAllItem.createClaimableItem(true);
+                newarray[newarray.length - 1] = giveAllItem;
                 giveall.setItems(newarray);
             } else {
 
                 ItemStack[] items = new ItemStack[1];
-                items[0] = giveAllItem.createClaimableItem(false);
+                items[0] = giveAllItem;
                 collect.add(new CollectCategory(CollectType.GIVEALL, items, CC.YellowB + "Auto Giveall Loot", System.currentTimeMillis()));
             }
             nextGiveAll = 2400;
@@ -73,7 +75,7 @@ public class GiveAllManager {
     }
 
     public static ItemStack getGiveAllItem() {
-        return giveAllItem.createClaimableItem(true);
+        return giveAllItem;
     }
 }
 

@@ -23,12 +23,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerItemDamageEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
 
@@ -344,6 +342,17 @@ public class DamageListener implements Listener {
         event.getPlayer().updateInventory();
         event.setCancelled(true);
 
+    }
+
+    @EventHandler
+    public void onClickBookAndQuil(PlayerInteractEvent event) {
+        if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
+            if (event.getPlayer().getItemInHand() != null && event.getPlayer().getItemInHand().getType() != Material.AIR) {
+                if (event.getPlayer().getItemInHand().getType() == Material.BOOK_AND_QUILL || event.getPlayer().getItemInHand().getType() == Material.WRITTEN_BOOK) {
+                    event.setCancelled(true);
+                }
+            }
+        }
     }
 
 

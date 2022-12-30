@@ -95,14 +95,6 @@
             <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
         </dependency>
 
-
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>customblocks</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CustomBlocks.jar</systemPath>
-        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>slot</artifactId>

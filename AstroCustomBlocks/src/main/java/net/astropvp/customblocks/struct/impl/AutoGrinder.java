@@ -56,11 +56,12 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
         if (!isActive()) return;
         double keyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("keyChance") * 0.01 * level;
         int expPer = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("expPer") * level;
+        exp+=expPer;
         if (Math.random() < keyChance) {
+            if (grinderKeys >= getMaxKeys(level)) return;
             grinderKeys++;
         }
 
-        exp+=expPer;
     }
 
     @Override
@@ -96,9 +97,24 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
                 return 500000000;
             case 5:
                 return 1000000000;
-
         }
         return 5000000;
+    }
+
+    public int getMaxKeys(int level) {
+        switch (level) {
+            case 1:
+                return 384;
+            case 2:
+                return 512;
+            case 3:
+                return 1024;
+            case 4:
+                return 2048;
+            case 5:
+                return 3456;
+        }
+        return 500;
     }
 
 }
