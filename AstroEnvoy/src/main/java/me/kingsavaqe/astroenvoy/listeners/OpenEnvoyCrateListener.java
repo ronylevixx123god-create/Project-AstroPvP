@@ -33,7 +33,7 @@ public class OpenEnvoyCrateListener implements Listener {
         Player player = event.getPlayer();
         player.playSound(player.getLocation(), Sound.FIZZ, 2.0F, 2.0F);
         PlayerUtil.giveOrDropProtectedItem(player, LootTableAPI.getRandomLootItem(LootTableType.ENVOY), 15);
-        //PlayerUtil.giveOrDropProtectedItem(player, LootTableAPI.getRandomLootItem(LootTableType.ENVOY), 15);
+        PlayerUtil.giveOrDropProtectedItem(player, LootTableAPI.getRandomLootItem(LootTableType.ENVOY), 15);
         //PlayerUtil.giveOrDropProtectedItem(player, LootTableAPI.getRandomLootItem(LootTableType.ENVOY), 15);
         if(this.plugin.getEnvoyManager().getRemainingCrates() <= 0) {
             this.plugin.getEnvoyManager().endEnvoyEvent();

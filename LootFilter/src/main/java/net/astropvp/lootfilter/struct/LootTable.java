@@ -23,6 +23,7 @@ public enum LootTable {
     SLOTBOT("Slotbot Loot", CosmicSlotBotAPI.getSlotBotItems(),Material.PAPER, "&b"),
     GRINDER("Grinder Key Loot", AstroCrateKeysAPI.getListItems(CrateType.GRINDER),Material.TRIPWIRE_HOOK, "&6"),
     GODLY("Godly Key Loot", AstroCrateKeysAPI.getListItems(CrateType.GODLY),Material.TRIPWIRE_HOOK, "&e"),
+    OP("OP Key Loot", AstroCrateKeysAPI.getListItems(CrateType.OP),Material.TRIPWIRE_HOOK, "&4"),
     ENVOY("Envoy Loot",  LootTableAPI.getAllLootFromLootTable(LootTableType.ENVOY),Material.FIREWORK, "&b")
 
 
