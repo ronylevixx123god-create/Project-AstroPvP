@@ -91,6 +91,13 @@ public class ItemUtils {
         return true;
     }
 
+    public static ItemStack decreaseItemStackAmountByOne(ItemStack itemStack) {
+        if (itemStack.getAmount() == 1) return null;
+
+        itemStack.setAmount(itemStack.getAmount() - 1);
+        return itemStack;
+    }
+
     public static MaterialData parseData(String str) {
         Material mat;
         short data = 0;

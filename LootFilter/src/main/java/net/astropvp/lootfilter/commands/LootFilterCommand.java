@@ -14,6 +14,9 @@ import net.astropvp.core.struct.AstroPlayer;
 import net.astropvp.lootfilter.AstroLootFilterPlugin;
 import net.astropvp.lootfilter.guis.LootFilterMainGUI;
 import net.astropvp.lootfilter.struct.LootTable;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTableType;
+import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -44,6 +47,7 @@ public class LootFilterCommand extends BaseCommand {
         LootTable.SLOTBOT.setLoot(CosmicSlotBotAPI.getSlotBotItems());
         LootTable.GODLY.setLoot(AstroCrateKeysAPI.getListItems(CrateType.GODLY));
         LootTable.GRINDER.setLoot(AstroCrateKeysAPI.getListItems(CrateType.GRINDER));
+        LootTable.ENVOY.setLoot(LootTableAPI.getAllLootFromLootTable(LootTableType.ENVOY));
 
         player.sendMessage(CC.translate("&a&l(!)&a Force updated all loottable filters!"));
 

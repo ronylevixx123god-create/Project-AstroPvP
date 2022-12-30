@@ -19,10 +19,12 @@ public class CustomBlockDeserializer implements JsonDeserializer<CustomBlock> {
     public CustomBlock deserialize(JsonElement jsonElement, Type type, JsonDeserializationContext context) throws JsonParseException {
         JsonObject jsonObject = jsonElement.getAsJsonObject();
         CustomBlockType cType = CustomBlockType.valueOf(jsonObject.get("type").getAsString());
-        CustomBlock customBlock = cType.getCustomBlockClass().newInstance();
-        customBlock.setLocation(LocationUtils.getLocationFromString(jsonObject.get("location").getAsString(), false));
+        //CustomBlock customBlock = cType.getCustomBlockClass().newInstance();
+        //customBlock.setLocation(LocationUtils.getLocationFromString(jsonObject.get("location").getAsString(), false));
 
-        if (customBlock instanceof LevelAble) {
+
+
+        /*if (customBlock instanceof LevelAble) {
             ((LevelAble) customBlock).setLevel(jsonObject.get("level").getAsInt());
         }
 
@@ -33,9 +35,9 @@ public class CustomBlockDeserializer implements JsonDeserializer<CustomBlock> {
         if (customBlock instanceof AutoGrinder) {
             ((AutoGrinder) customBlock).setGrinderKeys(jsonObject.get("grinderKeys").getAsInt());
             ((AutoGrinder) customBlock).setExp(jsonObject.get("exp").getAsInt());
-        }
+        }*/
 
-        return customBlock;
+        return context.deserialize(jsonElement, cType.getCustomBlockClass());
     }
 
 }

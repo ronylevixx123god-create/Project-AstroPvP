@@ -75,7 +75,7 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
 
     @Override
     public double getActivationPrice() {
-        return 2500000;
+        return CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("autoGrinderActivationPrice");
     }
 
     @Override
@@ -83,5 +83,22 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
         this.lastActivated = lastActivated;
     }
 
+
+    public double getUpgradePrice(int currentLevel) {
+        switch (currentLevel) {
+            case 1:
+                return 50000000;
+            case 2:
+                return 100000000;
+            case 3:
+                return 250000000;
+            case 4:
+                return 500000000;
+            case 5:
+                return 1000000000;
+
+        }
+        return 5000000;
+    }
 
 }

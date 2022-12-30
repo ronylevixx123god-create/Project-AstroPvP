@@ -25,9 +25,10 @@ public class AutoGrinderGui {
     private final ItemStack grinderKeyItem = CrateKeyItem.getItem(CrateType.GRINDER);
     public AutoGrinderGui(Player player, AutoGrinder autoGrinder) throws IllegalAccessException, InstantiationException {
         this.gui = new PaginatedGui(3, 27, "Auto Mob Grinder Menu");
-        this.gui.setItem(2, 3, getKeyClaimItem(autoGrinder));
-        this.gui.setItem(2, 7, getExpClaimItem(autoGrinder));
-        this.gui.setItem(2, 5, getStatusItem(autoGrinder));
+        this.gui.setItem(2, 2, getKeyClaimItem(autoGrinder));
+        this.gui.setItem(2, 4, getStatusItem(autoGrinder));
+        this.gui.setItem(2, 6, getExpClaimItem(autoGrinder));
+        this.gui.setItem(2, 8, getUpgradeItem(autoGrinder));
 
         this.gui.setDefaultClickAction(event -> event.setCancelled(true));
 
@@ -45,8 +46,30 @@ public class AutoGrinderGui {
                 autoGrinder.setGrinderKeys(autoGrinder.getGrinderKeys()-1);
                 PlayerUtil.giveOrDropProtectedItem((Player) event.getWhoClicked(), grinderKeyItem, 60);
             }
-            this.gui.updateItem(2, 3, getKeyClaimItem(autoGrinder));
+            this.gui.updateItem(2, 2, getKeyClaimItem(autoGrinder));
 
+
+        });
+    }
+
+    public GuiItem getStatusItem(AutoGrinder autoGrinder) {
+        ItemStack activateButton = new com.cosmicpvp.cosmicutils.utils.ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&6Expires in: &f" + ((autoGrinder.getLastActivated() + 3600000) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.fancy((autoGrinder.getLastActivated() + 3600000) - System.currentTimeMillis()))))
+                .addLoreLine(CC.translate("&6Status: " + (autoGrinder.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
+                .addLoreLine(CC.translate("&6Price: &e$" + NumberUtils.formatMoney(autoGrinder.getActivationPrice())))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7Click to activate this auto grinder"))
+                .build();
+        return new GuiItem(activateButton, event -> {
+            if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getActivationPrice())) {
+                autoGrinder.activate((Player) event.getWhoClicked());
+                EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getActivationPrice());
+                event.getWhoClicked().sendMessage(CC.translate("&c&l- " + NumberUtils.formatMoney(autoGrinder.getActivationPrice())));
+            } else {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate this auto grinder!"));
+            }
+            this.gui.updateItem(2, 4, getStatusItem(autoGrinder));
 
         });
     }
@@ -62,31 +85,32 @@ public class AutoGrinderGui {
             ((Player)event.getWhoClicked()).giveExp(autoGrinder.getExp());
             event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(autoGrinder.getExp()) + " EXP"));
             autoGrinder.setExp(0);
-            this.gui.updateItem(2, 7, getExpClaimItem(autoGrinder));
+            this.gui.updateItem(2, 6, getExpClaimItem(autoGrinder));
 
         });
     }
 
-
-    public GuiItem getStatusItem(AutoGrinder autoGrinder) {
-        ItemStack activateButton = new com.cosmicpvp.cosmicutils.utils.ItemBuilder(Material.STONE_BUTTON, CC.translate("&a&lActivate Button"))
+    public GuiItem getUpgradeItem(AutoGrinder autoGrinder) {
+        ItemStack item = new ItemBuilder(Material.EMERALD)
+                .setName("&a&lUpgrade Autogrinder")
                 .addLoreLine("")
-                .addLoreLine(CC.translate("&f&l● &6Expires in: &f" + ((autoGrinder.getLastActivated() + 3600000) - System.currentTimeMillis() <= 0 ? "✗" : TimeUtil.fancy((autoGrinder.getLastActivated() + 3600000) - System.currentTimeMillis()))))
-                .addLoreLine(CC.translate("&f&l● &6Status: " + (autoGrinder.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
-                .addLoreLine(CC.translate("&f&l● &6Price: &e$" + NumberUtils.formatMoney(autoGrinder.getActivationPrice())))
+                .addLoreLine("&aCurrent Level: &f" + autoGrinder.getLevel() + "&7/" + autoGrinder.getMaxLevel())
+                .addLoreLine(autoGrinder.getLevel() == autoGrinder.getMaxLevel() ? "&aUpgrade Price: &c" + "MAX" : "&a&lUpgrade Price: &f$" + NumberUtils.formatMoney(autoGrinder.getUpgradePrice(autoGrinder.getLevel())))
                 .addLoreLine("")
-                .addLoreLine(CC.translate("&7Click to activate this auto grinder"))
+                .addLoreLine("&7Click to upgrade the auto grinder!")
+                .colorize()
                 .build();
-        return new GuiItem(activateButton, event -> {
-            if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getActivationPrice())) {
-                autoGrinder.activate((Player) event.getWhoClicked());
-                EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getActivationPrice());
-                event.getWhoClicked().sendMessage(CC.translate("&c&l- " + NumberUtils.formatMoney(autoGrinder.getActivationPrice())));
-            } else {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate this auto grinder!"));
+        return new GuiItem(item, event -> {
+            if (autoGrinder.getLevel() == autoGrinder.getMaxLevel()) return;
+            if (!EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getUpgradePrice(autoGrinder.getLevel()))) {
+                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to upgrade your auto grinder! ($" + NumberUtils.formatMoney(autoGrinder.getUpgradePrice(autoGrinder.getLevel())) + ")"));
+                return;
             }
-            this.gui.updateItem(2, 5, getStatusItem(autoGrinder));
 
+            EconomyUtils.withdrawBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getUpgradePrice(autoGrinder.getLevel()));
+            event.getWhoClicked().sendMessage(CC.translate("&c&l- " + NumberUtils.formatMoney(autoGrinder.getUpgradePrice(autoGrinder.getLevel()))));
+            autoGrinder.setLevel(autoGrinder.getLevel()+1);
+            this.gui.updateItem(2, 8, getUpgradeItem(autoGrinder));
         });
     }
 }

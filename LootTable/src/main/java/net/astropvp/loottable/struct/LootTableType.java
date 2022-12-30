@@ -14,6 +14,7 @@ public enum LootTableType {
     GODLY(Material.TRIPWIRE_HOOK,  ChatColor.YELLOW),
     OP(Material.TRIPWIRE_HOOK,  ChatColor.DARK_RED),
     SLOTS(Material.PAPER,  ChatColor.YELLOW),
+    ENVOY(Material.FIREWORK,  ChatColor.AQUA),
 
     ;
 
