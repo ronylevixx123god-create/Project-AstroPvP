@@ -3,8 +3,9 @@ package net.astropvp.inventories;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.google.common.collect.Lists;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
+
 import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.PlayerCollect;

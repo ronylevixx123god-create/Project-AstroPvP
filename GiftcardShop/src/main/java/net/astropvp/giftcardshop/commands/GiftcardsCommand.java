@@ -1,7 +1,6 @@
 package net.astropvp.giftcardshop.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.giftcardshop.GiftcardShopPlugin;
 import net.astropvp.giftcardshop.guis.GiftcardMenu;
 import org.bukkit.command.Command;

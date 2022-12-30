@@ -264,7 +264,7 @@ public class Showcase {
                         if (this.getEmptySlots() > 0) {
                             p.sendMessage((String)(ChatColor.GREEN + "You have more pages available that this item can be added to."));
                         } else if (this.getSize() < 558) {
-                            p.sendMessage((String)(ChatColor.GRAY + "You can purchase more showcase slots at " + ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.cosmicpvp.com"));
+                            p.sendMessage((String)(ChatColor.GRAY + "You can purchase more showcase slots at " + ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
                         } else {
                             p.sendMessage((String)(ChatColor.GRAY + "You already have the max amount of Showcase slots available!"));
                         }

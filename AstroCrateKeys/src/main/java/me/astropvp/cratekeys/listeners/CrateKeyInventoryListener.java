@@ -2,13 +2,10 @@ package me.astropvp.cratekeys.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.ExpUtils;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
-import me.astropvp.cratekeys.AstroCrateKeysPlugin;
 import me.astropvp.cratekeys.data.CrateData;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
-import me.astropvp.cratekeys.utils.ConfigUtils;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.lootfilter.struct.LootTable;

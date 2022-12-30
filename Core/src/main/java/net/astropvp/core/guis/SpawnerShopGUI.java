@@ -4,7 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.earth2me.essentials.api.Economy;
 import com.earth2me.essentials.api.NoLoanPermittedException;
 import com.earth2me.essentials.api.UserDoesNotExistException;
-import me.ifamasssxd.cosmicguishop.utils.ItemBuilder;
+import net.astropvp.core.cosmiccoinflip.utils.ItemBuilder;
 import net.astropvp.core.utils.SpawnerGUIBuilder;
 import net.astropvp.core.utils.SpawnerShopUtil;
 import org.bukkit.Bukkit;

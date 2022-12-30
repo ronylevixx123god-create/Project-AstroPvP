@@ -1,10 +1,10 @@
 package net.astropvp.lootfilter.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
+
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
 import net.astropvp.lootfilter.AstroLootFilterPlugin;
 import net.astropvp.lootfilter.data.LootFilterData;
 import net.astropvp.lootfilter.struct.LootTable;

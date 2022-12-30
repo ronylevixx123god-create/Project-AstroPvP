@@ -24,7 +24,7 @@ public class MainEventsUI {
         this.eventsUI = new PaginatedGui(3, 27, "Events Menu");
         this.eventsUI.setDefaultClickAction(event -> event.setCancelled(true));
 
-        BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(plugin, () -> eventsUI.updateItem(4, new GuiItem(
+        /*BukkitTask runnable = Bukkit.getScheduler().runTaskTimer(plugin, () -> eventsUI.updateItem(4, new GuiItem(
                 new ItemBuilder(Material.CHEST)
                         .setName("&6&lAstro Events Menu")
                         .addLore(
@@ -35,9 +35,9 @@ public class MainEventsUI {
                                 "&6* &7Next event will happen in &6" + plugin.getMiniGameManager().getTimeUntilNextMiniGame()
                         )
                         .colorize()
-                        .build())), 20L, 20L);
+                        .build())), 20L, 20L);*/
 
-        this.eventsUI.setCloseGuiAction(event -> runnable.cancel());
+        //this.eventsUI.setCloseGuiAction(event -> runnable.cancel());
 
         plugin.getMiniGameRegister().getMiniGames().forEach(((miniGameType, miniGame) -> {
 

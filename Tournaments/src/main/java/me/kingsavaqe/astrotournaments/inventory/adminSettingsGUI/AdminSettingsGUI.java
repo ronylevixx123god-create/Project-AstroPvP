@@ -1,11 +1,12 @@
 package me.kingsavaqe.astrotournaments.inventory.adminSettingsGUI;
 
+import dev.triumphteam.gui.guis.Gui;
+import dev.triumphteam.gui.guis.GuiItem;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.inventory.TournamentGUI;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
-import me.mattstudios.mfgui.gui.guis.Gui;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;

@@ -1,10 +1,7 @@
 package me.astropvp.astrospawners.listeners;
 
 import com.astropvp.cc.player.CosmicPlayers;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import io.netty.util.internal.ThreadLocalRandom;
@@ -45,11 +42,8 @@ public class EntityStackerListener implements Listener {
 
 
     private final MobStackerUtils mobStackerUtils;
-    private final PlayerDataManager manager;
     private final AstroSpawners plugin;
-    private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
-    private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
-    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+    private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.GRINDER);
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
 
     private Map<UUID, Long> blazeCooldown;
@@ -58,7 +52,6 @@ public class EntityStackerListener implements Listener {
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
         this.mobStackerUtils = plugin.getMobStackerUtils();
-        this.manager = plugin.getManager();
         this.blazeCooldown = new HashMap<>();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(AstroSpawners.getInstance(), () -> {
             this.blazeCooldown.clear();
@@ -137,13 +130,6 @@ public class EntityStackerListener implements Listener {
 
 
             boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
-
-
-            //EconomyUtils.depositBalance(p, 27);
-
-
-            //PlayerData data = manager.getPlayerData(p);
-
 
             if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
                 exp += 50;
@@ -234,9 +220,7 @@ public class EntityStackerListener implements Listener {
     }
 
     public void blazeLoot(Player p) {
-        double legKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("legKeyChancePercent") * 0.01; //0.01
-        double astroKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("astroKeyChancePercent") * 0.01; //0.125
-        double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.001
+        double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
         attemptGiveMoney(p);
 
         int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
@@ -246,23 +230,16 @@ public class EntityStackerListener implements Listener {
             p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
         }
         if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
-            legKeyChance *= 1.1;
-            astroKeyChance *= 1.1;
-            godlyKeyChance *= 1.1;
+            grinderKeyChance *= 1.1;
 
         }
 
         double num = Math.random();
-        try {
-            if (num >= 0 && num <= godlyKeyChance) {
-                p.getInventory().addItem(godlyKey);
-            } else if (num >= 0 && num <= legKeyChance) {
-                p.getInventory().addItem(legKey);
-            } else if (num >= 0 && num <= astroKeyChance) {
-                p.getInventory().addItem(astroKey);
-            }
-        } catch (IllegalArgumentException ignored) {
+
+        if (grinderKeyChance >= num) {
+            PlayerUtil.giveOrDropProtectedItem(p, grinderKey, 60);
         }
+
     }
 
     public void attemptGiveMoney(Player player) {

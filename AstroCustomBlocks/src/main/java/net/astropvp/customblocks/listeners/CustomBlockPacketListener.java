@@ -5,7 +5,6 @@ import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import net.astropvp.customblocks.CustomBlocks;
-import net.astropvp.customblocks.data.CustomBlockData;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
 import net.minecraft.server.v1_8_R3.BlockPosition;
@@ -39,7 +38,6 @@ public class CustomBlockPacketListener extends PacketAdapter {
     public void onPacketSending(PacketEvent event) {
         try {
             PacketPlayOutTileEntityData data = (PacketPlayOutTileEntityData) event.getPacket().getHandle();
-            //Nothing we can do.
             if (tagField == null)
                 return;
 
@@ -56,7 +54,7 @@ public class CustomBlockPacketListener extends PacketAdapter {
             if (!compound.hasKey("note"))
                 return;
 
-            CustomBlockData customBlockData = CustomBlocks.getInstance().getCustomBlockManager().getCustomBlockData(new Location(event.getPlayer().getWorld(), pos.getX(), pos.getY(), pos.getZ()));
+            CustomBlock customBlockData = CustomBlocks.getInstance().getCustomBlockManager().getCustomBlockData(new Location(event.getPlayer().getWorld(), pos.getX(), pos.getY(), pos.getZ()));
 
             if (customBlockData == null)
                 return;
@@ -66,7 +64,7 @@ public class CustomBlockPacketListener extends PacketAdapter {
             NBTTagCompound customData = new NBTTagCompound();
             insertTag.set("customBlockData", customData);
 
-            customData.setString("type", CustomBlockType.valueOf(customBlockData.getType()).name());
+            customData.setString("type", customBlockData.getType().name());
             customData.setString("facing", EnumDirection.fromAngle(event.getPlayer().getLocation().getYaw()).opposite().name());
 
             compound.set("tag", insertTag);

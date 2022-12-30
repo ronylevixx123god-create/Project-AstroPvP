@@ -5,10 +5,10 @@ import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
-import net.astropvp.customblocks.data.CustomBlockData;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
+import net.astropvp.customblocks.utils.ChunkUtil;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
@@ -40,7 +40,7 @@ public class CustomBlocksAPI {
         return null;
     }
 
-    public static CustomBlockData getCustomBlockData(Location location) {
+    public static CustomBlock getCustomBlockData(Location location) {
         if (isCustomBlock(location)) {
             return customBlockManager.getCustomBlockData(location);
         }
@@ -49,6 +49,17 @@ public class CustomBlocksAPI {
 
     public static boolean isCustomBlock(Location location) {
         return customBlockManager.contains(LocationUtils.getStringFromLocation(location));
+    }
+
+    public static boolean chunkContainsCustomBlock(Location location, CustomBlockType type) {
+        for (String key : customBlockManager.getCacheKeys()) {
+            Location loc = LocationUtils.getLocationFromString(key, false);
+            CustomBlock data = customBlockManager.getCustomBlockData(loc);
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(loc, location) && type == data.getType()) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

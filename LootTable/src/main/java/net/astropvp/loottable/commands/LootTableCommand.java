@@ -8,7 +8,7 @@ import me.mattstudios.mf.base.CommandBase;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.LootTablePlugin;
 import net.astropvp.loottable.guis.LootTableMainGUI;
-import net.astropvp.loottable.commands.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTableType;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

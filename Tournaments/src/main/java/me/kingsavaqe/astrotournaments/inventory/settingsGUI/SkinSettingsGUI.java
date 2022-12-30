@@ -1,6 +1,7 @@
 package me.kingsavaqe.astrotournaments.inventory.settingsGUI;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import dev.triumphteam.gui.guis.Gui;
 import lombok.Getter;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -8,8 +9,8 @@ import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.kingsavaqe.astrotournaments.utils.ItemBuilder;
-import me.mattstudios.mfgui.gui.guis.Gui;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.GuiItem;
+
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;

@@ -1,17 +1,25 @@
 package net.astropvp.customblocks.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.CustomBlocksAPI;
-import net.astropvp.customblocks.data.CustomBlockData;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
+import net.astropvp.customblocks.struct.abilities.LevelAble;
+import net.astropvp.customblocks.struct.impl.AutoGrinder;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockPlaceEvent;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.EntityExplodeEvent;
+
+import java.util.List;
 
 public class CustomBlockBreakListener implements Listener {
     private CustomBlockManager customBlockManager;
@@ -22,15 +30,47 @@ public class CustomBlockBreakListener implements Listener {
         this.customBlockManager = plugin.getCustomBlockManager();
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.HIGH)
     public void onBreak(BlockBreakEvent event) {
+        if (event.isCancelled()) return;
         if (CustomBlocksAPI.isCustomBlock(event.getBlock().getLocation())) {
-            CustomBlockData customBlockData = CustomBlocksAPI.getCustomBlockData(event.getBlock().getLocation());
-            //check if chunk alrdy has the cblock
+            CustomBlock customBlockData = CustomBlocksAPI.getCustomBlockData(event.getBlock().getLocation());
+            CustomBlockType type = customBlockData.getType();
+
+            if (!EconomyUtils.hasBalance(event.getPlayer(), type.getMinePrice())) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to mine the " + type.getDisplayName() + " Custom Block!"));
+                event.setCancelled(true);
+                return;
+            }
+            int level = 0;
+            if (customBlockData instanceof LevelAble) {
+                level = ((LevelAble) customBlockData).getLevel();
+            }
             event.setCancelled(true);
             event.getBlock().setType(Material.AIR);
-            event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), CustomBlockType.valueOf(customBlockData.getType()).getCustomBlock().getCustomBlockItem(customBlockData));
+            event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), customBlockData.getType().build(level));
+            EconomyUtils.withdrawBalance(event.getPlayer(), type.getMinePrice());
+            event.getPlayer().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(type.getMinePrice())));
             customBlockManager.removeFromCache(customBlockData);
+        }
+    }
+
+    @EventHandler
+    public void onExplode(EntityExplodeEvent event) {
+        List<Block> blockList = event.blockList();
+        for (Block block : blockList) {
+            if (block.getType() != Material.NOTE_BLOCK) continue;
+            if (CustomBlocksAPI.isCustomBlock(block.getLocation())) {
+                block.getDrops().clear();
+                CustomBlock customBlockData = CustomBlocksAPI.getCustomBlockData(block.getLocation());
+                block.setType(Material.AIR);
+                int level = 0;
+                if (customBlockData instanceof LevelAble) {
+                    level = ((LevelAble) customBlockData).getLevel();
+                }
+                block.getLocation().getWorld().dropItemNaturally(block.getLocation(), customBlockData.getType().build(level));
+                customBlockManager.removeFromCache(customBlockData);
+            }
         }
     }
 }

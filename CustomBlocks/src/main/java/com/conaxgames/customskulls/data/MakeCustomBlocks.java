@@ -44,15 +44,11 @@ public class MakeCustomBlocks {
             ymlFile.set("lastActivated", mobGrinder.getLastActivated());
             ymlFile.set("level", mobGrinder.getLevel());
 
-            ymlFile.set("astro", 0);
-            ymlFile.set("legendary", 0);
-            ymlFile.set("godly", 0);
+            ymlFile.set("grinder", 0);
             ymlFile.set("xp", 0);
             mobGrinder.setLastActivated(mobGrinder.getLastActivated());
             mobGrinder.setLevel(mobGrinder.getLevel());
-            mobGrinder.getCrateKeys().put(CrateType.ASTRO, 0);
-            mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, 0);
-            mobGrinder.getCrateKeys().put(CrateType.GODLY, 0);
+            mobGrinder.getCrateKeys().put(CrateType.GRINDER, 0);
             mobGrinder.setXp(0);
 
         }

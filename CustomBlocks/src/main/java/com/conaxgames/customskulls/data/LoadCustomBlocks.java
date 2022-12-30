@@ -56,13 +56,9 @@ public class LoadCustomBlocks {
                 mobGrinder.setLastActivated(lastActivated);
                 mobGrinder.setLevel(level);
 
-                int astroKeys = ymlFile.getInt("astro");
-                int legKeys = ymlFile.getInt("legendary");
-                int godKeys = ymlFile.getInt("godly");
+                int godKeys = ymlFile.getInt("grinder");
                 double xp =  ymlFile.getInt("xp");
-                mobGrinder.getCrateKeys().put(CrateType.ASTRO, astroKeys);
-                mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, legKeys);
-                mobGrinder.getCrateKeys().put(CrateType.GODLY, godKeys);
+                mobGrinder.getCrateKeys().put(CrateType.GRINDER, godKeys);
                 mobGrinder.setXp(xp);
 
                 if (mobGrinder.isActive()) {

@@ -3,8 +3,8 @@ package net.astropvp.loottable.data;
 
 import lombok.Getter;
 
-import net.astropvp.loottable.commands.struct.LootRarity;
-import net.astropvp.loottable.commands.struct.LootTableType;
+import net.astropvp.loottable.struct.LootRarity;
+import net.astropvp.loottable.struct.LootTableType;
 import net.astropvp.storage.utils.KeyToSave;
 import org.bukkit.inventory.ItemStack;
 

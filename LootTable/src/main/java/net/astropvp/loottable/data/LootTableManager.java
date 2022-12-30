@@ -2,7 +2,7 @@ package net.astropvp.loottable.data;
 
 
 import net.astropvp.loottable.LootTablePlugin;
-import net.astropvp.loottable.commands.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTableType;
 import net.astropvp.storage.StoragePlugin;
 import net.astropvp.storage.utils.SaveLoadManager;
 

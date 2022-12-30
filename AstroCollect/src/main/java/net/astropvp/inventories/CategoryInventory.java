@@ -2,8 +2,9 @@ package net.astropvp.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import net.astropvp.CollectPlugin;
 import net.astropvp.struct.CollectCategory;
 import org.bukkit.DyeColor;

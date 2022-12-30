@@ -74,13 +74,7 @@ public class MobGrinderRunnable extends BukkitRunnable {
             double chance = Math.random();
             if (chance < chanceGodlyKey) {
                 int godlyKeys = mobGrinder.getCrateKeys().get(CrateType.GODLY);
-                mobGrinder.getCrateKeys().put(CrateType.GODLY, godlyKeys + 1);
-            } else if (chance < chanceLegKey) {
-                int legKeys = mobGrinder.getCrateKeys().get(CrateType.LEGENDARY);
-                mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, legKeys + 1);
-            } else if (chance < chanceAstroKey) {
-                int astroKeys = mobGrinder.getCrateKeys().get(CrateType.ASTRO);
-                mobGrinder.getCrateKeys().put(CrateType.ASTRO, astroKeys + 1);
+                mobGrinder.getCrateKeys().put(CrateType.GRINDER, godlyKeys + 1);
             }
         }
 

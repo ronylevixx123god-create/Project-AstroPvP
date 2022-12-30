@@ -42,11 +42,8 @@ public class LootFilterCommand extends BaseCommand {
     public void updateCommand(Player player) {
         LootTable.SPACE.setLoot(AstroSpaceGrindingAPI.getListItems(MonsterType.SPACE_ALIEN));
         LootTable.SLOTBOT.setLoot(CosmicSlotBotAPI.getSlotBotItems());
-        LootTable.ASTRO.setLoot(AstroCrateKeysAPI.getListItems(CrateType.ASTRO));
-        LootTable.LEGENDARY.setLoot(AstroCrateKeysAPI.getListItems(CrateType.LEGENDARY));
         LootTable.GODLY.setLoot(AstroCrateKeysAPI.getListItems(CrateType.GODLY));
-        LootTable.SEASON.setLoot(AstroCrateKeysAPI.getListItems(CrateType.SEASON));
-        LootTable.MUTATED.setLoot(AstroCrateKeysAPI.getListItems(CrateType.MUTATED));
+        LootTable.GRINDER.setLoot(AstroCrateKeysAPI.getListItems(CrateType.GRINDER));
 
         player.sendMessage(CC.translate("&a&l(!)&a Force updated all loottable filters!"));
 

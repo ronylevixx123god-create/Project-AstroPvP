@@ -21,13 +21,7 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>cosmicshop</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicShop (1).jar</systemPath>
-        </dependency>
+
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot</artifactId>

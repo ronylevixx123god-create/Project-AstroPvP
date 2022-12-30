@@ -1,4 +1,4 @@
-package net.astropvp.loottable.commands.struct;
+package net.astropvp.loottable.struct;
 
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import lombok.AllArgsConstructor;

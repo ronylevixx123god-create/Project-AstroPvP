@@ -30,9 +30,7 @@ import org.bukkit.inventory.PlayerInventory;
 @Getter
 public class GrinderCustomBlockGUI {
     private final PaginatedGui customBlockGui;
-    private final ItemStack astroKey = CrateKeyItem.getItem(CrateType.ASTRO);
-    private final ItemStack legKey = CrateKeyItem.getItem(CrateType.LEGENDARY);
-    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GRINDER);
     private final MobGrinderManager mobGrinderManager = CoreSkulls.instance.getMobGrinderManager();
 
     public GrinderCustomBlockGUI(AbilityData data, Block block) {
@@ -84,75 +82,14 @@ public class GrinderCustomBlockGUI {
 
         }));
 
-        //Astro key
-        ItemStack astroKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&a&lAstro Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.ASTRO) + "&8)"), CC.translate("&7Click to redeem the astro crate keys")).build();
-        this.customBlockGui.setItem(2, 2, new GuiItem(astroKey, event -> {
-            if (CoreSkulls.isSavingGrinderBlocks) {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
-                return;
-            }
-            int astroKeys = mobGrinder.getCrateKeys().get(CrateType.ASTRO);
-            if (astroKeys == 0) return;
-            int givenKeys = 0;
-            int amountToGive;
-            if (event.getWhoClicked().getInventory().firstEmpty() != -1) {
-                int space = getEmptySlots((Player) event.getWhoClicked()) * 64;
-                amountToGive = Math.min(astroKeys, space);
-                while (givenKeys != amountToGive) {
-                    event.getWhoClicked().getInventory().addItem(this.astroKey);
-                    givenKeys++;
-                }
-            } else {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please clear some inventory space."));
-                return;
-            }
-
-
-            event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " Astro &f&lCrate Keys"));
-            mobGrinder.getCrateKeys().put(CrateType.ASTRO, astroKeys - givenKeys);
-            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
-            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
-
-        }));
-
-        //Legendary key
-        ItemStack legKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&6&lLegendary Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.LEGENDARY) + "&8)"), CC.translate("&7Click to redeem the legendary crate keys")).build();
-        this.customBlockGui.setItem(3, 2, new GuiItem(legKey, event -> {
-            if (CoreSkulls.isSavingGrinderBlocks) {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
-                return;
-            }
-            int legKeys = mobGrinder.getCrateKeys().get(CrateType.LEGENDARY);
-            if (legKeys == 0) return;
-            int givenKeys = 0;
-            int amountToGive;
-            if (event.getWhoClicked().getInventory().firstEmpty() != -1) {
-                int space = getEmptySlots((Player) event.getWhoClicked()) * 64;
-                amountToGive = Math.min(legKeys, space);
-                while (givenKeys != amountToGive) {
-                    event.getWhoClicked().getInventory().addItem(this.legKey);
-                    givenKeys++;
-                }
-            } else {
-                event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please clear some inventory space."));
-                return;
-            }
-
-
-            event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &6&lLegendary &f&lCrate Keys"));
-            mobGrinder.getCrateKeys().put(CrateType.LEGENDARY, legKeys - givenKeys);
-            GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
-            grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
-        }));
-
         //Godly key
-        ItemStack godlyKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&4&lGodly Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.GODLY) + "&8)"), CC.translate("&7Click to redeem the godly crate keys")).build();
+        ItemStack godlyKey = new ItemBuilder(Material.GOLD_NUGGET, CC.translate("&4&lGodly Crate Keys &8(&7" + mobGrinder.getCrateKeys().get(CrateType.GRINDER) + "&8)"), CC.translate("&7Click to redeem the godly crate keys")).build();
         this.customBlockGui.setItem(4, 2, new GuiItem(godlyKey, event -> {
             if (CoreSkulls.isSavingGrinderBlocks) {
                 event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Please retry in a second, the customblock is saving the data"));
                 return;
             }
-            int godlyKeys = mobGrinder.getCrateKeys().get(CrateType.GODLY);
+            int godlyKeys = mobGrinder.getCrateKeys().get(CrateType.GRINDER);
             if (godlyKeys == 0) return;
             int givenKeys = 0;
             int amountToGive;
@@ -170,7 +107,7 @@ public class GrinderCustomBlockGUI {
 
 
             event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(givenKeys) + " &4&lGodly &f&lCrate Keys"));
-            mobGrinder.getCrateKeys().put(CrateType.GODLY, godlyKeys - givenKeys);
+            mobGrinder.getCrateKeys().put(CrateType.GRINDER, godlyKeys - givenKeys);
             GrinderCustomBlockGUI grinderCustomBlockGUI = new GrinderCustomBlockGUI(data, block);
             grinderCustomBlockGUI.getCustomBlockGui().open(event.getWhoClicked());
 

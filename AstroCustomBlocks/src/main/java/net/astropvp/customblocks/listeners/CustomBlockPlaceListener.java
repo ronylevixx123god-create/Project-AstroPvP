@@ -1,11 +1,17 @@
 package net.astropvp.customblocks.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.CustomBlocksAPI;
-import net.astropvp.customblocks.data.CustomBlockData;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
+import net.astropvp.customblocks.struct.CustomBlockType;
+import net.astropvp.customblocks.struct.abilities.LevelAble;
+import net.astropvp.customblocks.struct.impl.AutoGrinder;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.inventory.ItemStack;
@@ -19,12 +25,35 @@ public class CustomBlockPlaceListener implements Listener {
         this.customBlockManager = plugin.getCustomBlockManager();
     }
 
-    @EventHandler
-    public void onPlace(BlockPlaceEvent event) {
+    @EventHandler(priority = EventPriority.HIGH)
+    public void onPlace(BlockPlaceEvent event) throws IllegalAccessException, InstantiationException {
         ItemStack item = event.getItemInHand();
+        if (event.isCancelled()) return;
         if (CustomBlocksAPI.isCustomBlockItem(item)) {
-            //check if chunk alrdy has the cblock
-            customBlockManager.addToCache(new CustomBlockData(event.getBlock().getLocation(), CustomBlocksAPI.getLevelFromItem(item), CustomBlocksAPI.getTypeFromItem(item).name()));
+            CustomBlockType type = CustomBlocksAPI.getTypeFromItem(item);
+
+            if (!EconomyUtils.hasBalance(event.getPlayer(), type.getPlacePrice())) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to place the " + type.getDisplayName() + " Custom Block!"));
+                event.setCancelled(true);
+                return;
+            }
+
+            if (CustomBlocksAPI.chunkContainsCustomBlock(event.getBlock().getLocation(), type)) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains a " + type.getDisplayName() + " Custom Block!"));
+                event.setCancelled(true);
+                return;
+            }
+
+            event.getPlayer().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(type.getPlacePrice())));
+            EconomyUtils.withdrawBalance(event.getPlayer(), type.getPlacePrice());
+
+            CustomBlock customBlock = type.getCustomBlockClass().newInstance();
+            customBlock.setLocation(event.getBlock().getLocation());
+
+            if (customBlock instanceof LevelAble) {
+                ((LevelAble) customBlock).setLevel(CustomBlocksAPI.getLevelFromItem(item));
+            }
+            customBlockManager.addToCache(customBlock);
         }
     }
 }

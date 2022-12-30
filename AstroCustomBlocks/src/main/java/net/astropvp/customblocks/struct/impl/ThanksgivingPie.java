@@ -7,6 +7,10 @@ import org.bukkit.entity.Player;
 
 public class ThanksgivingPie extends CustomBlock {
 
+    public ThanksgivingPie() {
+        super(CustomBlockType.THANKSGIVING_PIE);
+    }
+
     @Override
     public void onClick(Player clicker) {
         clicker.sendMessage("Thanksgiving piiiiii candle");

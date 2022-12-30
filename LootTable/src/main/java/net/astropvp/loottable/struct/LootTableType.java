@@ -1,4 +1,4 @@
-package net.astropvp.loottable.commands.struct;
+package net.astropvp.loottable.struct;
 
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -10,11 +10,9 @@ import org.bukkit.Material;
 @Getter
 public enum LootTableType {
     SPACE(Material.NETHER_STAR, ChatColor.LIGHT_PURPLE),
-    ASTRO(Material.TRIPWIRE_HOOK,  ChatColor.GREEN),
-    LEGENDARY(Material.TRIPWIRE_HOOK,  ChatColor.GOLD),
-    GODLY(Material.TRIPWIRE_HOOK,  ChatColor.DARK_RED),
-    SEASON(Material.TRIPWIRE_HOOK,  ChatColor.YELLOW),
-    MUTATED(Material.TRIPWIRE_HOOK,  ChatColor.DARK_GREEN),
+    GRINDER(Material.TRIPWIRE_HOOK,  ChatColor.GOLD),
+    GODLY(Material.TRIPWIRE_HOOK,  ChatColor.YELLOW),
+    OP(Material.TRIPWIRE_HOOK,  ChatColor.DARK_RED),
     SLOTS(Material.PAPER,  ChatColor.YELLOW),
 
     ;

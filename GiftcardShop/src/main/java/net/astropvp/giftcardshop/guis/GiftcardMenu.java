@@ -3,9 +3,10 @@ package net.astropvp.giftcardshop.guis;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import dev.triumphteam.gui.guis.GuiItem;
+import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
-import me.mattstudios.mfgui.gui.guis.GuiItem;
-import me.mattstudios.mfgui.gui.guis.PaginatedGui;
+
 import net.astropvp.giftcardshop.GiftcardShopPlugin;
 import net.astropvp.giftcardshop.struct.Giftcard;
 import org.bukkit.Material;
