@@ -23,9 +23,11 @@ import org.bukkit.inventory.ItemStack;
 public class AutoGrinderGui {
     private PaginatedGui gui;
     private final ItemStack grinderKeyItem = CrateKeyItem.getItem(CrateType.GRINDER);
+    private final ItemStack godlyKeyItem = CrateKeyItem.getItem(CrateType.GODLY);
     public AutoGrinderGui(Player player, AutoGrinder autoGrinder) throws IllegalAccessException, InstantiationException {
         this.gui = new PaginatedGui(3, 27, "Auto Mob Grinder Menu");
         this.gui.setItem(2, 2, getKeyClaimItem(autoGrinder));
+        this.gui.setItem(3, 2, getGodlyKeysClaimItem(autoGrinder));
         this.gui.setItem(2, 4, getStatusItem(autoGrinder));
         this.gui.setItem(2, 6, getExpClaimItem(autoGrinder));
         this.gui.setItem(2, 8, getUpgradeItem(autoGrinder));
@@ -37,7 +39,7 @@ public class AutoGrinderGui {
     public GuiItem getKeyClaimItem(AutoGrinder autoGrinder) {
         ItemStack item = new ItemBuilder(Material.GOLD_NUGGET)
                 .setName("&6&lGrinder Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGrinderKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
-                .addLoreLine("&7Click to claim the keys in this auto grinder!")
+                .addLoreLine("&7Click to claim the grinder keys in this auto grinder!")
                 .colorize()
                 .build();
         return new GuiItem(item, event -> {
@@ -47,8 +49,22 @@ public class AutoGrinderGui {
                 PlayerUtil.giveOrDropProtectedItem((Player) event.getWhoClicked(), grinderKeyItem, 60);
             }
             this.gui.updateItem(2, 2, getKeyClaimItem(autoGrinder));
+        });
+    }
 
-
+    public GuiItem getGodlyKeysClaimItem(AutoGrinder autoGrinder) {
+        ItemStack item = new ItemBuilder(Material.GOLD_NUGGET)
+                .setName("&e&lGodly Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGodlyKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
+                .addLoreLine("&7Click to claim the godly keys in this auto grinder!")
+                .colorize()
+                .build();
+        return new GuiItem(item, event -> {
+            if (autoGrinder.getGodlyKeys() == 0) return;
+            while (event.getWhoClicked().getInventory().firstEmpty() != -1 && autoGrinder.getGodlyKeys() != 0) {
+                autoGrinder.setGodlyKeys(autoGrinder.getGodlyKeys()-1);
+                PlayerUtil.giveOrDropProtectedItem((Player) event.getWhoClicked(), godlyKeyItem, 60);
+            }
+            this.gui.updateItem(3, 2, getGodlyKeysClaimItem(autoGrinder));
         });
     }
 

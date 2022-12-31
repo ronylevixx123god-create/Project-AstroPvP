@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, ActivateAble {
     private Integer exp;
     private Integer grinderKeys;
+    private Integer godlyKeys;
     private Integer level;
     private Long lastActivated;
 
@@ -26,6 +27,7 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
         this.level = 0;
         this.exp = 0;
         this.grinderKeys = 0;
+        this.godlyKeys = 0;
         this.lastActivated = 0L;
     }
 
@@ -54,10 +56,15 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
     @Override
     public void onTick() {
         if (!isActive()) return;
-        double keyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("keyChance") * 0.01 * level;
+        double grinderKeyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("grinderKeyChance") * 0.01 * level;
+        double godlyKeyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("godlyKeyChance") * 0.01 * level;
+
         int expPer = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("expPer") * level;
-        exp+=expPer;
-        if (Math.random() < keyChance) {
+        exp += expPer;
+        if (Math.random() < godlyKeyChance) {
+            if (godlyKeys >= getMaxKeys(level)) return;
+            godlyKeys++;
+        } else if (Math.random() < grinderKeyChance) {
             if (grinderKeys >= getMaxKeys(level)) return;
             grinderKeys++;
         }
@@ -104,17 +111,17 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
     public int getMaxKeys(int level) {
         switch (level) {
             case 1:
-                return 384;
-            case 2:
                 return 512;
-            case 3:
+            case 2:
                 return 1024;
-            case 4:
+            case 3:
                 return 2048;
-            case 5:
+            case 4:
                 return 3456;
+            case 5:
+                return 5504;
         }
-        return 500;
+        return 512;
     }
 
 }
