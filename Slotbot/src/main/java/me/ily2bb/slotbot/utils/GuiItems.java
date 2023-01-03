@@ -6,7 +6,7 @@ import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.objects.Glow;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemStack;
@@ -16,11 +16,11 @@ import java.util.*;
 
 public class GuiItems {
     public static List<ItemStack> getLootTableItems() {
-        return LootTableAPI.getAllLootFromLootTable(LootTableType.SLOTS);
+        return LootTableAPI.getAllLootFromLootTable(LootTable.SLOTS);
     }
 
     public static List<ItemStack> getShowItems() {
-        return LootTableAPI.getAllLootFromLootTable(LootTableType.SLOTS);
+        return LootTableAPI.getAllLootFromLootTable(LootTable.SLOTS);
     }
 
 

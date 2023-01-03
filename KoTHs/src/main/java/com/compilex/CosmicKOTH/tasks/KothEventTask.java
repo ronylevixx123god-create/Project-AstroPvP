@@ -2,6 +2,9 @@ package com.compilex.CosmicKOTH.tasks;
 
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.customfiles.CustomConfig;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.JSONMessage;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -65,7 +68,7 @@ implements Runnable {
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
                 Bukkit.broadcastMessage("");
                 for (Player p : Bukkit.getServer().getOnlinePlayers()) {
-                    p.playSound(p.getLocation(), Sound.ENTITY_ENDER_DRAGON_GROWL, 1.2f, 1.6f);
+                    p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 1.2f, 1.6f);
                 }
             }
         });
@@ -196,7 +199,7 @@ implements Runnable {
             CombatLog.flagCombat(this.playerCapped);
         }
 
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.3) {
             GiftcardAPI.createGiftCard(this.playerCapped, 10);
         } else {
             this.playerCapped.sendMessage(CC.translate("&c&l(!)&c Unfortunately you didn't get a 10$ Buycraft Giftcard, better luck next time!"));

@@ -86,7 +86,7 @@ public class Rage extends CustomEnchantment {
                     if (Math.random() < 0.25) {
                         user.sendMessage(CC.translate("&4&l* SEASON'S BEATING &7[+10% Rage DMG] &4&l*"));
                     }
-                } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.35) {
+                } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.1) {
                     target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
                 } else if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
                     rageMath = 1 + (baseRageMath * 1.1);

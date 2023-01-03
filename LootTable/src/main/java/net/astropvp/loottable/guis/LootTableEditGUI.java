@@ -8,45 +8,40 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 
 import net.astropvp.loottable.LootTablePlugin;
-import net.astropvp.loottable.data.LootTable;
-import net.astropvp.loottable.struct.LootRarity;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.Map;
 
 @Getter
 public class LootTableEditGUI {
     private PaginatedGui lootEditGUI;
 
-    public LootTableEditGUI(LootTable lootTable, LootRarity lootRarity) {
-        this.lootEditGUI = new PaginatedGui(6, 54, lootTable.getLootTableType().getFancy() + " - " + lootRarity.getFancy());
+    public LootTableEditGUI(LootTable lootTableType) {
+        this.lootEditGUI = new PaginatedGui(6, 54, lootTableType.getFancy() + " Loot");
         this.lootEditGUI.setItem(6, 1, new GuiItem(createPreviousItem(), event -> {
-            LootTableRarityGUI lootTableRarityGUI = new LootTableRarityGUI((Player) event.getWhoClicked(), lootTable);
-            lootTableRarityGUI.getRarityGUI().open(((Player) event.getWhoClicked()).getPlayer());
+            LootTableMainGUI lootTableMainGUI = new LootTableMainGUI((Player) event.getWhoClicked());
+            lootTableMainGUI.getMainGUI().open(event.getWhoClicked());
         }));
 
         lootEditGUI.setDefaultClickAction(event -> {
-            if (event.getClickedInventory() == event.getWhoClicked().getOpenInventory().getBottomInventory() && event.isLeftClick()) {
-                if (event.getCurrentItem() == null) return;
-                if (event.getCurrentItem().getType() == Material.AIR) return;
-                event.getWhoClicked().sendMessage(CC.translate("&a&l(!)&a Added " + ItemUtils.getDisplayName(event.getCurrentItem()) + "&c to the " + lootTable.getLootTableType().getFancy() + " - " + lootRarity.getFancy()));
-                lootTable.addItem(lootRarity,event.getCurrentItem().clone());
-            }
             event.setCancelled(true);
-            LootTableEditGUI editGUI = new LootTableEditGUI(lootTable, lootRarity);
-            editGUI.getLootEditGUI().open(event.getWhoClicked());
         });
-        for (ItemStack item : LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTable.getLootTableType()).getLootRarityMap().get(lootRarity)) {
-            if (item == null) continue;
-            if (item.getType() == Material.AIR) continue;
-            lootEditGUI.addItem(new GuiItem(new ItemBuilder(item.clone()).addLoreLine("").addLoreLine(CC.translate("&aLeft-Click &7items in your inv to add")).addLoreLine(CC.translate("&cRight-Click &7items in gui to remove")).build(), event -> {
+        for (Map.Entry<ItemStack, Double> entry : LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).getLootMap().entrySet()) {
+            ItemStack item = entry.getKey();
+            double chance = entry.getValue();
+            if (ItemUtils.isAirOrNull(item)) continue;
+            lootEditGUI.addItem(new GuiItem(new ItemBuilder(item.clone()).addLoreLine("").addLoreLine(CC.translate(lootTableType.getColor() + "Chance: &f" + chance + "%")).addLoreLine("").addLoreLine(CC.translate("&cRight-Click &7items in gui to remove")).build(), event -> {
                 if (event.isRightClick()) {
-                    event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from the " + lootTable.getLootTableType().getFancy() + " - " + lootRarity.getFancy()));
+                    event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from the " + lootTableType.getFancy() + " - " + lootTableType.getFancy()));
                     lootEditGUI.removeItem(event.getSlot());
-                    lootTable.removeItem(lootRarity, item);
-                    LootTableEditGUI editGUI = new LootTableEditGUI(lootTable, lootRarity);
+                    LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).removeItem(item);
+                    LootTableEditGUI editGUI = new LootTableEditGUI(lootTableType);
                     editGUI.getLootEditGUI().open(event.getWhoClicked());
-
+                } else {
+                    event.getWhoClicked().getInventory().addItem(item);
                 }
             }));
         }

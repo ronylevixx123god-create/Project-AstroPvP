@@ -107,3 +107,4 @@ commands:
   chatcolor:
     aliases: [ color ]
   togglepotsdrop:
+  togglebossmessages:

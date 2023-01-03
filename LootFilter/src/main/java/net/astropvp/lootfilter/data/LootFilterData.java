@@ -4,7 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
-import net.astropvp.lootfilter.struct.LootTable;
+import net.astropvp.loottable.struct.LootTable;
 import net.astropvp.storage.utils.KeyToSave;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -18,35 +18,35 @@ import java.util.*;
 public class LootFilterData implements KeyToSave {
 
     private UUID uuid;
-    private Map<LootTable, List<ItemStack>> filteredItems;
+    private Map<String, List<ItemStack>> filteredItems;
 
     public void filterItem(LootTable lootTable, ItemStack item) {
-        if (!filteredItems.containsKey(lootTable)) {
+        if (!filteredItems.containsKey(lootTable.name())) {
             List<ItemStack> itemList = new ArrayList<>();
-            getPlayer().sendMessage(CC.translate("&a&l(!)&a Added " + item.getItemMeta().getDisplayName() + " &ato " + lootTable.getColorCode() + "&l" + lootTable.getFancyName() + " &aFilter."));
+            getPlayer().sendMessage(CC.translate("&a&l(!)&a Added " + item.getItemMeta().getDisplayName() + " &ato " + lootTable.getColor() + "&l" + lootTable.getFancy() + " &aFilter."));
             itemList.add(item);
-            filteredItems.put(lootTable, itemList);
-        } else if (filteredItems.get(lootTable).contains(item)) {
-            getPlayer().sendMessage(CC.translate("&c&l(!)&c Removed " + item.getItemMeta().getDisplayName() + " &cfrom " + lootTable.getColorCode() + "&l" + lootTable.getFancyName() + " &cFilter."));
-            filteredItems.get(lootTable).remove(item);
+            filteredItems.put(lootTable.name(), itemList);
+        } else if (filteredItems.get(lootTable.name()).contains(item)) {
+            getPlayer().sendMessage(CC.translate("&c&l(!)&c Removed " + item.getItemMeta().getDisplayName() + " &cfrom " + lootTable.getColor() + "&l" + lootTable.getFancy() + " &cFilter."));
+            filteredItems.get(lootTable.name()).remove(item);
         } else {
-            getPlayer().sendMessage(CC.translate("&a&l(!)&a Added " + item.getItemMeta().getDisplayName() + " &ato " + lootTable.getColorCode() + "&l" + lootTable.getFancyName() + " &aFilter."));
-            filteredItems.get(lootTable).add(item);
+            getPlayer().sendMessage(CC.translate("&a&l(!)&a Added " + item.getItemMeta().getDisplayName() + " &ato " + lootTable.getColor() + "&l" + lootTable.getFancy() + " &aFilter."));
+            filteredItems.get(lootTable.name()).add(item);
         }
     }
 
     public boolean isFiltered(LootTable lootTable, ItemStack item) {
-        if (!filteredItems.containsKey(lootTable)) {
+        if (!filteredItems.containsKey(lootTable.name())) {
             return false;
         }
-        return filteredItems.get(lootTable).contains(item);
+        return filteredItems.get(lootTable.name()).contains(item);
     }
 
     public int getFilteredItemsAmount(LootTable lootTable) {
-        if (!filteredItems.containsKey(lootTable)) {
+        if (!filteredItems.containsKey(lootTable.name())) {
             return 0;
         }
-        return filteredItems.get(lootTable).size();
+        return filteredItems.get(lootTable.name()).size();
     }
 
     public Player getPlayer () {

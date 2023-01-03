@@ -7,8 +7,9 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import net.astropvp.lootfilter.AstroLootFilterPlugin;
 import net.astropvp.lootfilter.data.LootFilterData;
-import net.astropvp.lootfilter.struct.LootTable;
 import net.astropvp.lootfilter.utils.ItemBuilder;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -22,11 +23,11 @@ public class LootFilterSubGUI {
     private final PaginatedGui lootFilterSubGUI;
 
     public LootFilterSubGUI(UUID uuid, LootTable lootTable) {
-        this.lootFilterSubGUI = new PaginatedGui(6, 54, lootTable.getFancyName() + " Filter");
+        this.lootFilterSubGUI = new PaginatedGui(6, 54, lootTable.getFancy() + " Filter");
         this.lootFilterSubGUI.setDefaultClickAction(event -> event.setCancelled(true));
 
         LootFilterData data = AstroLootFilterPlugin.getInstance().getLootFilterManager().getLootFilterData(uuid);
-        for (ItemStack item : lootTable.getLoot()) {
+        for (ItemStack item : LootTableAPI.getAllLootFromLootTable(lootTable)) {
             if (data.isFiltered(lootTable, item)) {
                 lootFilterSubGUI.addItem(new GuiItem(createFilteredItem(item), event -> {
                     data.filterItem(lootTable, item);

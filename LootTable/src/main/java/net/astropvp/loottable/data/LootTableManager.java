@@ -2,21 +2,23 @@ package net.astropvp.loottable.data;
 
 
 import net.astropvp.loottable.LootTablePlugin;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import net.astropvp.storage.StoragePlugin;
 import net.astropvp.storage.utils.SaveLoadManager;
 
-public class LootTableManager extends SaveLoadManager<LootTable> {
+public class LootTableManager extends SaveLoadManager<LootTableData> {
     public LootTableManager(LootTablePlugin plugin) {
-        super(plugin, StoragePlugin.getInstance().getGson(), "/data", LootTable.class);
+        super(plugin, LootTablePlugin.getInstance().getGson(), "/data", LootTableData.class);
+        for (LootTable type : LootTable.values()) {
+            addToCache(new LootTableData(type));
+        }
     }
 
-    public LootTable getLootTable(LootTableType lootTableType) {
+    public LootTableData getLootTable(LootTable lootTableType) {
         if (!contains(lootTableType.name())) {
-            LootTable lootTable = new LootTable(lootTableType);
+            LootTableData lootTable = new LootTableData(lootTableType);
             addToCache(lootTable);
         }
         return getFromCache(lootTableType.name());
-
     }
 }

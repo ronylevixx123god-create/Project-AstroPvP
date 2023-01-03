@@ -1,17 +1,12 @@
 package me.astropvp.astrospacegrinding;
 
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.concurrent.ThreadLocalRandom;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
-import com.google.common.collect.Maps;
-import me.astropvp.astrospacegrinding.utils.ConfigUtils;
 import me.astropvp.astrospacegrinding.utils.LocationUtils;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -70,7 +65,7 @@ public class AstroSpaceGrindingAPI {
 	}
 
 	public static List<ItemStack> getListItems(MonsterType type) {
-		return LootTableAPI.getAllLootFromLootTable(LootTableType.SPACE);
+		return LootTableAPI.getAllLootFromLootTable(LootTable.SPACE);
 	}
 
 

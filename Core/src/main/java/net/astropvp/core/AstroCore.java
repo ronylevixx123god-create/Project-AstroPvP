@@ -388,6 +388,7 @@ public class AstroCore extends JavaPlugin {
         getCommand("togglekilltitle").setExecutor(new ToggleKillTitleCommand());
         getCommand("togglefactionland").setExecutor(new ToggleFactionLandTitle());
         getCommand("togglepotsdrop").setExecutor(new TogglePotsDropCommand());
+        getCommand("togglebossmessages").setExecutor(new ToggleBossMessagesCommand());
 
         freezeCommand = new Freeze();
 

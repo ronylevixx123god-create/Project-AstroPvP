@@ -1,5 +1,6 @@
 package net.astropvp.customblocks.struct.impl;
 
+import net.astropvp.customblocks.guis.SlotBotOpenerGUI;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
 import org.bukkit.entity.Player;
@@ -13,6 +14,7 @@ public class SlotOpener extends CustomBlock {
 
     @Override
     public void onClick(Player clicker) {
-        clicker.sendMessage("Slot opener");
+        SlotBotOpenerGUI slotBotOpenerGUI = new SlotBotOpenerGUI(this, clicker);
+        slotBotOpenerGUI.getCustomBlockGui().open(clicker);
     }
 }

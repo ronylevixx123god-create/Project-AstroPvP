@@ -1,7 +1,6 @@
 package me.astropvp.astrospacegrinding.entities.mobs;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
@@ -17,10 +16,9 @@ import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
-import me.astropvp.astrospawners.utils.MobCoinUtils;
 import net.astropvp.core.utils.OutpostUtil;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -30,13 +28,10 @@ import org.bukkit.entity.*;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import com.google.common.collect.Lists;
 
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -136,9 +131,9 @@ public class SpaceAlien extends SpaceMonster {
 
 
         if (Math.random() < chance / 100) {
-            rewards.add(LootTableAPI.getRandomLootItem(LootTableType.SPACE));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
             if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET)) {
-                rewards.add(LootTableAPI.getRandomLootItem(LootTableType.SPACE));
+                rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
             }
         }
 

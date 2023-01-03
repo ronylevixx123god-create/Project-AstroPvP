@@ -16,9 +16,8 @@ import me.astropvp.cratekeys.enums.CrateType;
 
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import net.astropvp.lootfilter.LootFilterAPI;
-import net.astropvp.lootfilter.struct.LootTable;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -88,8 +87,8 @@ public class CrateKeyOpenerGUI {
                                 chest = (Chest) newNearbyChest.getBlock().getState();
                             }
                         }
-                        ItemStack itemStack = LootTableAPI.getRandomLootItem(LootTableType.valueOf(type.name()));
-                        if (!LootFilterAPI.isFiltered(player,LootTable.valueOf(type.name()), itemStack)) {
+                        ItemStack itemStack = LootTableAPI.getRandomLootItem(LootTable.valueOf(type.name()));
+                        if (!LootFilterAPI.isFiltered(player, net.astropvp.lootfilter.struct.LootTable.valueOf(type.name()), itemStack)) {
                             if (ArkhamMoneyNotesAPI.isMoneyNote(itemStack)) {
                                 double moneyNoteVal = ArkhamMoneyNotesAPI.getMoneyNoteVal(itemStack);
                                 EconomyUtils.depositBalance(player, moneyNoteVal);

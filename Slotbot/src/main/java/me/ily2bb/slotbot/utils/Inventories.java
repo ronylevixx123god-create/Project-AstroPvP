@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -165,12 +166,12 @@ public class Inventories {
                     }
                     player.removeMetadata("slot_rolling_" + column, SlotBotPlugin.getInstance());
 
-                    LootFilterAPI.giveItem(player, net.astropvp.lootfilter.struct.LootTable.SLOTBOT, this.previousItems[2]);
+                    LootFilterAPI.giveItem(player, LootTable.SLOTS, this.previousItems[2]);
 
                     this.cancel();
                 } else if (!player.hasMetadata("slot_rolling_" + column)) {
 
-                    LootFilterAPI.giveItem(player, net.astropvp.lootfilter.struct.LootTable.SLOTBOT, item);
+                    LootFilterAPI.giveItem(player, LootTable.SLOTS, item);
 
                     this.cancel();
                 }

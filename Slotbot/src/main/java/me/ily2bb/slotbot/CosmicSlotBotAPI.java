@@ -8,7 +8,7 @@ import de.tr7zw.nbtapi.plugin.NBTAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ily2bb.slotbot.utils.Utils;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -31,7 +31,7 @@ public class CosmicSlotBotAPI {
 
 
     public static ItemStack getRandomSlotBotLootItem() {
-        return LootTableAPI.getRandomLootItem(LootTableType.SLOTS);
+        return LootTableAPI.getRandomLootItem(LootTable.SLOTS);
     }
 
 
@@ -59,7 +59,7 @@ public class CosmicSlotBotAPI {
     }
 
     public static List<ItemStack> getSlotBotItems() {
-        return LootTableAPI.getAllLootFromLootTable(LootTableType.SLOTS);
+        return LootTableAPI.getAllLootFromLootTable(LootTable.SLOTS);
 
     }
 

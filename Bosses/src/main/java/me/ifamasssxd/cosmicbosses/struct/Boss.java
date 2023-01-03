@@ -33,6 +33,8 @@ import me.ifamasssxd.cosmicbosses.utils.MapUtils;
 import me.ifamasssxd.cosmicbosses.utils.NumberUtils;
 import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
 import me.ifamasssxd.cosmicbosses.utils.StringUtils;
+import net.astropvp.core.AstroCore;
+import net.astropvp.core.struct.AstroPlayer;
 import net.astropvp.core.utils.InventoryUtils;
 import net.crankedpvp.shards.MobcoinAPI;
 import net.minecraft.server.v1_8_R3.*;
@@ -201,6 +203,8 @@ public abstract class Boss extends Equipable implements Healable {
             String starting = ChatColor.RED + "Defeated by ";
             String killMsg = getKillMessage();
             for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+                AstroPlayer astroPlayer = AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId());
+                if (!astroPlayer.isBossMessagesEnabled()) continue;
                 if (this instanceof GlobalBoss || BossUtils.isWarzone(player.getLocation()) || WorldGuardUtils.getRegionName(player.getLocation()).contains("spawn")) {
                     player.sendMessage(msg);
                     if (killMsg == null || killMsg.length() <= starting.length())
@@ -286,6 +290,8 @@ public abstract class Boss extends Equipable implements Healable {
 
         boolean dragon = this instanceof me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
         for (Player pl : pls) {
+            AstroPlayer astroPlayer = AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(pl.getUniqueId());
+            if (!astroPlayer.isBossMessagesEnabled()) continue;
             pl.sendMessage("");
             pl.sendMessage(str1);
             pl.playSound(pl.getLocation(), dragon ? Sound.ENDERDRAGON_GROWL : Sound.CHICKEN_EGG_POP, 4.0F, 1.2F);

@@ -316,10 +316,8 @@ public class AstroArmorSetsAPI {
 
     public static boolean hasCrystalsApplied(ItemStack item) {
         if (item == null) return false;
-        if (getCrystalsFromItem(item) != null) {
-            return !getCrystalsFromItem(item).isEmpty();
-        }
-        return false;
+        getCrystalsFromItem(item);
+        return !getCrystalsFromItem(item).isEmpty();
     }
 
     public static Map<ArmorSetType, Integer> getBonusCrystalsEquipped(Player player) {

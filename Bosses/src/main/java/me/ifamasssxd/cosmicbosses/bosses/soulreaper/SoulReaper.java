@@ -14,7 +14,7 @@ import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicbosses.utils.ItemBuilder;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.minecraft.server.v1_8_R3.Entity;
 import net.minecraft.server.v1_8_R3.World;
 import org.arkhamnetwork.enchantments.EnchantmentBook;

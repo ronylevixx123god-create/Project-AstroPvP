@@ -8,7 +8,7 @@ import me.astropvp.astrospacegrinding.utils.StringUtils;
 import me.astropvp.astrospacegrinding.utils.TimeUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import net.astropvp.lootfilter.LootFilterAPI;
-import net.astropvp.lootfilter.struct.LootTable;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;

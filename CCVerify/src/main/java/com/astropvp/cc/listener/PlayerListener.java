@@ -99,7 +99,7 @@ public class PlayerListener implements Listener {
 
     private String colorDamage(double finalDamage){
         if(finalDamage < 10.0D){
-            return Chat.c("&c-" + (int) (finalDamage) + " HP");
+            return Chat.c("&c&l-" + (int) (finalDamage) + " HP");
         }else{
             return Chat.c("&4&l-" + (int) (finalDamage) + " HP");
         }

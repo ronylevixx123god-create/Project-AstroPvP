@@ -3,7 +3,7 @@ package me.ifamasssxd.cosmicbosses.dungeonboss.planetnul;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonAbility;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
-import me.ifamasssxd.killtracker.KillTrackerAPI;
+import net.astropvp.core.killtracker.KillTrackerAPI;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;

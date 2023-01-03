@@ -2,10 +2,14 @@ package net.astropvp.customblocks.utils;
 
 import org.bukkit.Chunk;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,5 +42,75 @@ public class ChunkUtil {
             }
         }
         return toReturn;
+    }
+
+    public static boolean isEmpty(Inventory inv) {
+        for (ItemStack item : inv.getContents()) {
+            if (item != null) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public static List<Location> getNearbyChests(Location location) {
+        List<Location> chests = new ArrayList<>();
+
+        if (location.clone().add(-1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(-1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(-1, 0, 0).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+        if (location.clone().add(0, 0, -1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, -1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, -1).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+
+
+        if (location.clone().add(1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(1, 0, 0).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+
+        if (location.clone().add(0, 0, 1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, 1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, 1).getBlock().getState();
+            chests.add(chest.getLocation());
+
+        }
+        return chests;
+    }
+
+    public static Location getClosestChestLocation(Location location) {
+        if (location.clone().add(-1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(-1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(-1, 0, 0).getBlock().getState();
+            if (isEmpty(chest.getInventory())) {
+                return location.clone().add(-1, 0, 0);
+            }
+        }
+        if (location.clone().add(0, 0, -1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, -1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, -1).getBlock().getState();
+            if (isEmpty(chest.getInventory())) {
+                return location.clone().add(0, 0, -1);
+            }
+        }
+
+
+        if (location.clone().add(1, 0, 0).getBlock().getType() == Material.CHEST || location.clone().add(1, 0, 0).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(1, 0, 0).getBlock().getState();
+            if (isEmpty(chest.getInventory())) {
+                return location.clone().add(1, 0, 0);
+            }
+        }
+
+        if (location.clone().add(0, 0, 1).getBlock().getType() == Material.CHEST || location.clone().add(0, 0, 1).getBlock().getType() == Material.TRAPPED_CHEST) {
+            Chest chest = (Chest) location.clone().add(0, 0, 1).getBlock().getState();
+            if (isEmpty(chest.getInventory())) {
+                return location.clone().add(0, 0, 1);
+            }
+        }
+        return null;
+
     }
 }

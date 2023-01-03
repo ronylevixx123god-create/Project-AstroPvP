@@ -8,9 +8,8 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import net.astropvp.lootfilter.LootFilterAPI;
-import net.astropvp.lootfilter.struct.LootTable;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -101,7 +100,7 @@ public class CrateKeyInventoryListener implements Listener {
     public static void addItemToPlayer(Player player, CrateData data) {
 
         CrateType type = data.getCrateType();
-        ItemStack item = LootTableAPI.getRandomLootItem(LootTableType.valueOf(type.name()));
+        ItemStack item = LootTableAPI.getRandomLootItem(LootTable.valueOf(type.name()));
         if (ArkhamMoneyNotesAPI.isMoneyNote(item)) {
             double amount = ArkhamMoneyNotesAPI.getMoneyNoteVal(item);
             EconomyUtils.depositBalance(player, amount);

@@ -6,8 +6,7 @@ import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 
-import net.astropvp.loottable.LootTablePlugin;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.entity.Player;
 
 @Getter
@@ -18,10 +17,10 @@ public class LootTableMainGUI {
     public LootTableMainGUI(Player player) {
         this.mainGUI = new PaginatedGui(3, 27, "Loottable Menu");
         mainGUI.setDefaultClickAction(event -> event.setCancelled(true));
-        for (LootTableType tableType : LootTableType.values()) {
+        for (LootTable tableType : LootTable.values()) {
             mainGUI.addItem(new GuiItem(new ItemBuilder(tableType.getMaterial(), CC.translate(tableType.getColor() + "&l" + tableType.getFancy()), CC.translate("&7Click to open this loottable.")).build(), event -> {
-                LootTableRarityGUI lootTableRarityGUI = new LootTableRarityGUI(player, LootTablePlugin.getInstance().getLootTableManager().getLootTable(tableType));
-                lootTableRarityGUI.getRarityGUI().open(player);
+                LootTableEditGUI lootTableEditGUI = new LootTableEditGUI(tableType);
+                lootTableEditGUI.getLootEditGUI().open(event.getWhoClicked());
             }));
         }
     }

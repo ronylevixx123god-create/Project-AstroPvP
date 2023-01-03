@@ -8,7 +8,7 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.astropvp.cratekeys.managers.CrateDataManager;
 import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -121,6 +121,6 @@ public class AstroCrateKeysAPI {
 
 
     public static List<ItemStack> getListItems(CrateType type) {
-        return LootTableAPI.getAllLootFromLootTable(LootTableType.valueOf(type.name()));
+        return LootTableAPI.getAllLootFromLootTable(LootTable.valueOf(type.name()));
     }
 }

@@ -45,6 +45,7 @@ public enum CosmicToggle {
     FACTION_LAND_TITLE("Faction Land Title", "/togglefactionland"),
     LOOTTABLE_MESSAGE("LootFilter Message", "/lootfilter togglemessage"),
     KILL_LAND_TITLE("Kill Title", "/togglekilltitle"),
+    BOSS_MESSAGES("Boss Messages", "/togglebossmessages"),
 
     CLEAR_INVENTORY_CONFIRMATION("/clearinventory Confirmation", "/toggleciconfirm"),
     POTS_DROP("Pots Dropping from Kills", "/togglepotsdrop")
@@ -110,7 +111,9 @@ public enum CosmicToggle {
                 // empty catch block
             }
         }
-
+        if (this == BOSS_MESSAGES) {
+            return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isBossMessagesEnabled();
+        }
         if (this == POTS_DROP) {
             return AstroCore.getInstance().getAstroPlayerManager().getFromCache(player.getUniqueId().toString()).isPotsDropEnabled();
         }

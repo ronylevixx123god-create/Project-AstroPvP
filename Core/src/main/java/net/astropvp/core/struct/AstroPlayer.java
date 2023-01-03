@@ -16,6 +16,7 @@ public class AstroPlayer implements KeyToSave {
     private boolean factionsLandTitleEnabled;
     private boolean killTitleEnabled;
     private boolean potsDropEnabled;
+    private boolean bossMessagesEnabled;
 
     private ChatColor chatColor;
     private boolean lootTableMessageEnabled;
@@ -26,6 +27,7 @@ public class AstroPlayer implements KeyToSave {
         this.killTitleEnabled = true;
         this.lootTableMessageEnabled = true;
         this.potsDropEnabled = true;
+        this.bossMessagesEnabled = false;
         this.chatColor = ChatColor.WHITE;
     }
 

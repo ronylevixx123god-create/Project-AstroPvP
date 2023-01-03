@@ -8,14 +8,13 @@ import org.bukkit.Material;
 
 @AllArgsConstructor
 @Getter
-public enum LootTableType {
+public enum LootTable {
     SPACE(Material.NETHER_STAR, ChatColor.LIGHT_PURPLE),
     GRINDER(Material.TRIPWIRE_HOOK,  ChatColor.GOLD),
     GODLY(Material.TRIPWIRE_HOOK,  ChatColor.YELLOW),
     OP(Material.TRIPWIRE_HOOK,  ChatColor.DARK_RED),
     SLOTS(Material.PAPER,  ChatColor.YELLOW),
     ENVOY(Material.FIREWORK,  ChatColor.AQUA),
-
     ;
 
     public String getFancy() {

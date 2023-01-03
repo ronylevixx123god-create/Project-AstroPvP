@@ -1,23 +1,13 @@
 package net.astropvp.lootfilter.commands;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.*;
-import co.aikar.commands.bukkit.contexts.OnlinePlayer;
+import co.aikar.commands.annotation.CommandAlias;
+import co.aikar.commands.annotation.Default;
+import co.aikar.commands.annotation.Subcommand;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
-import me.astropvp.astrospacegrinding.enums.MonsterType;
-import me.astropvp.cratekeys.AstroCrateKeysAPI;
-import me.astropvp.cratekeys.enums.CrateType;
-import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.struct.AstroPlayer;
-import net.astropvp.lootfilter.AstroLootFilterPlugin;
 import net.astropvp.lootfilter.guis.LootFilterMainGUI;
-import net.astropvp.lootfilter.struct.LootTable;
-import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTableType;
-import org.bukkit.Material;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 
@@ -38,18 +28,6 @@ public class LootFilterCommand extends BaseCommand {
             astroPlayer.setLootTableMessageEnabled(true);
             player.sendMessage(CC.translate("&e&l(!)&e LootFilter messages have been &a&lENABLED&e."));
         }
-
-    }
-    @CommandPermission("admin")
-    @Subcommand("update|refresh")
-    public void updateCommand(Player player) {
-        LootTable.SPACE.setLoot(AstroSpaceGrindingAPI.getListItems(MonsterType.SPACE_ALIEN));
-        LootTable.SLOTBOT.setLoot(CosmicSlotBotAPI.getSlotBotItems());
-        LootTable.GODLY.setLoot(AstroCrateKeysAPI.getListItems(CrateType.GODLY));
-        LootTable.GRINDER.setLoot(AstroCrateKeysAPI.getListItems(CrateType.GRINDER));
-        LootTable.ENVOY.setLoot(LootTableAPI.getAllLootFromLootTable(LootTableType.ENVOY));
-
-        player.sendMessage(CC.translate("&a&l(!)&a Force updated all loottable filters!"));
 
     }
 }
