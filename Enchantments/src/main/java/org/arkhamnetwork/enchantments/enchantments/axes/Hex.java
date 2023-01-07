@@ -29,7 +29,7 @@ public class Hex extends CustomEnchantment {
             return;
         }
         final double random = Math.random();
-        final double chance = 0.01 * level;
+        final double chance = 0.025 * level;
         if (random < chance && (!playerHit.hasMetadata("hexEnchantExpire") || playerHit.getMetadata("hexEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
             playerHit.setMetadata("hexEnchantExpire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis() + (2 + level / 2) * 1000));
             playerHit.setMetadata("hexEnchantLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), level));

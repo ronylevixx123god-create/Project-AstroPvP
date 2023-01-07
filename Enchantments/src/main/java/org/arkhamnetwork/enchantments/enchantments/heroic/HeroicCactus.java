@@ -22,7 +22,7 @@ public class HeroicCactus extends HeroicCustomEnchantment {
             final Player p = (Player) player;
             if (attacker != null && attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;
-                //pAttacker.damage(0.5 * level);
+                pAttacker.damage(0.5 * level);
 
 
                 final Location l = p.getLocation();
@@ -31,7 +31,7 @@ public class HeroicCactus extends HeroicCustomEnchantment {
             }
             final double thornNegateChance = (level == 1) ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {
-                //e.setDamage(0);
+                e.setDamage(0);
             }
         }
     }

@@ -180,11 +180,6 @@ public class Phoenix extends CustomEnchantment {
 
                 }
 
-                if (player.hasMetadata("witchered")) {
-                    player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&7Witcher Ability&c&l] *"));
-                    return false;
-                }
-
                 if (UndertowFieldTask.affected.contains(player)) {
                     player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED &7Undertow Field&4&l *"));
                     return false;

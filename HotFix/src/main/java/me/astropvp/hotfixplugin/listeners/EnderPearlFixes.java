@@ -27,7 +27,7 @@ import java.util.List;
 import java.util.Set;
 
 public class EnderPearlFixes implements Listener {
-    private final List<Material> hollowMaterials;
+    /*private final List<Material> hollowMaterials;
 
 
     public EnderPearlFixes() {
@@ -217,5 +217,5 @@ public class EnderPearlFixes implements Listener {
 
     private boolean isSolidBlock(final Location l) {
         return l.getBlock().getType() != Material.AIR && !this.hollowMaterials.contains(l.getBlock().getType());
-    }
+    }*/
 }

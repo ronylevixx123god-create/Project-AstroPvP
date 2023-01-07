@@ -31,7 +31,7 @@ public class ToggleKillTitleCommand implements CommandExecutor {
             sender.sendMessage(CC.translate("&e&l(!)&e Kill titles have been &c&lDISABLED&e."));
         } else {
             astroPlayer.setKillTitleEnabled(true);
-            sender.sendMessage(CC.translate("&e&l(!)&e Faction land titles have been &a&lENABLED&e."));
+            sender.sendMessage(CC.translate("&e&l(!)&e Kill titles have been &a&lENABLED&e."));
         }
         return true;
     }

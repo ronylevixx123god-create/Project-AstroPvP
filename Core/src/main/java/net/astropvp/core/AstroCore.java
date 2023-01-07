@@ -17,6 +17,7 @@ import net.astropvp.core.giveaway.GiveAwayCommand;
 import net.astropvp.core.giveaway.GiveAwayManager;
 import net.astropvp.core.items.coder.EnchantmentCoderManager;
 import net.astropvp.core.managers.AstroPlayerManager;
+import net.astropvp.core.struct.Gift;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
 import net.astropvp.core.titles.listeners.PermissionListener;
@@ -66,10 +67,15 @@ import net.astropvp.core.items.*;
 import net.astropvp.core.items.coder.HeroicEnchantmentCoderItem;
 import net.astropvp.core.listeners.*;
 import net.astropvp.core.tasks.LastManStandingCapTask;
+import net.astropvp.core.typeadapters.GiftAdapterSerializer;
+import net.astropvp.core.typeadapters.GiftsListAdapterSerializer;
 import net.astropvp.core.utils.CleanseScroll;
 import net.astropvp.core.utils.CooldownUtils;
 import net.astropvp.core.utils.ItemUtils;
 import net.astropvp.core.utils.cache.CacheManager;
+import net.astropvp.storage.StoragePlugin;
+import net.astropvp.storage.gson.Gson;
+import net.astropvp.storage.gson.reflect.TypeToken;
 import net.milkbowl.vault.economy.Economy;
 import org.bukkit.*;
 import org.bukkit.command.Command;
@@ -85,6 +91,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.*;
 import java.util.logging.Level;
 
@@ -96,6 +103,9 @@ public class AstroCore extends JavaPlugin {
     private static Economy econ = null;
     private static Field bukkitCommand;
     private final String consolePrefix = "[AstroCore]";
+    private final Type giftListType = new TypeToken<List<Gift>>(){}.getType();
+    private Gson gson;
+    private me.mattstudios.mf.base.CommandManager commandManager2;
 
     public static AstroCore getInstance() {
         return instance;
@@ -135,10 +145,19 @@ public class AstroCore extends JavaPlugin {
     @SneakyThrows
     public void onEnable() {
         instance = this;
+        this.gson = StoragePlugin.getInstance()
+                .getGson()
+                .newBuilder()
+                //.registerTypeAdapter(Gift.class, new GiftAdapterDeserializer()).setLenient()
+                .registerTypeAdapter(Gift.class, new GiftAdapterSerializer()).setLenient()
+                .registerTypeAdapter(this.giftListType, new GiftsListAdapterSerializer()).setLenient()
+                //.registerTypeAdapter(this.giftListType, new GiftsListAdapterDeserializer()).setLenient()
+                .create();
         getConfig().options().copyDefaults(true);
         saveDefaultConfig();
         setupEconomy();
         events();
+        this.commandManager2 = new me.mattstudios.mf.base.CommandManager(this);
         this.enchantmentCoderManager = new EnchantmentCoderManager();
         this.astroPlayerManager = new AstroPlayerManager();
 
@@ -397,6 +416,8 @@ public class AstroCore extends JavaPlugin {
         this.commandManager = new PaperCommandManager(this);
         this.commandManager.registerCommand(new Invsee());
         this.commandManager.registerCommand(new ReloadCommand());
+        commandManager2.register(new GiftCommand(this));
+        commandManager2.register(new GiftsCommand());
 
     }
 
@@ -440,7 +461,7 @@ public class AstroCore extends JavaPlugin {
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
         getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
-        getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
+        //getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
         getServer().getPluginManager().registerEvents(new DamageFixes(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);

@@ -26,22 +26,6 @@ import org.bukkit.util.BlockIterator;
 import org.bukkit.util.Vector;
 
 public class TeleportSafetyListener implements Listener {
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerTeleport(PlayerTeleportEvent event) {
-        if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
-            if (event.getTo().getY() < 1.0D)
-                event.setCancelled(true);
-            if (event.getTo().getBlock().getLocation().add(0.0D, 1.0D, 0.0D).getBlock().getType().isSolid() && event.getTo().getBlock().getLocation().add(0.0D, -1.0D, 0.0D).getBlock().getType().isSolid())
-                event.setCancelled(true);
-        }
-    }
-
-    @EventHandler
-    public void onPlayerTeleportPearl(PlayerTeleportEvent event) {
-        if (event.getCause() == PlayerTeleportEvent.TeleportCause.ENDER_PEARL &&
-                event.getTo().getY() < 1.0D)
-            event.setCancelled(true);
-    }
 
     @EventHandler
     public void playerDamageEvent(EntityDamageEvent e) {

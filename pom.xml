@@ -74,6 +74,7 @@
         <module>Showcase</module>
         <module>ShowcaseGUI</module>
         <module>AstroCustomBlocks</module>
+        <module>Gifts</module>
 
     </modules>
 

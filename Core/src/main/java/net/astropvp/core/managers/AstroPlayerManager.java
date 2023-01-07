@@ -14,7 +14,7 @@ import java.util.UUID;
 @Getter
 public class AstroPlayerManager  extends SaveLoadManager<AstroPlayer> {
     public AstroPlayerManager() {
-        super(AstroCore.getInstance(), StoragePlugin.getInstance().getGson(), "data/", AstroPlayer.class);
+        super(AstroCore.getInstance(), AstroCore.getInstance().getGson(), "data/", AstroPlayer.class);
     }
 
     public AstroPlayer getAstroPlayer(UUID uuid) {

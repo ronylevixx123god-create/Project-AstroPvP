@@ -55,7 +55,7 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onChatCombat(AsyncPlayerChatEvent event) {
-        if (event.getMessage().equalsIgnoreCase("/eendersee") && CombatLog.inCombat(event.getPlayer())) {
+        if ((event.getMessage().equalsIgnoreCase("/eendersee") || event.getMessage().equalsIgnoreCase("/spawn")) && CombatLog.inCombat(event.getPlayer())) {
             event.getPlayer().sendMessage(CC.Red + "Disabled in combat");
             event.setMessage("/null");
             event.setCancelled(true);

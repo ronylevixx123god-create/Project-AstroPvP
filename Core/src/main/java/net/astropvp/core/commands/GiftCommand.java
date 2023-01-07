@@ -1,0 +1,61 @@
+package net.astropvp.core.commands;
+
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
+import me.mattstudios.mf.annotations.Command;
+import me.mattstudios.mf.annotations.Completion;
+import me.mattstudios.mf.annotations.Default;
+import me.mattstudios.mf.annotations.WrongUsage;
+import me.mattstudios.mf.base.CommandBase;
+
+import net.astropvp.core.AstroCore;
+import net.astropvp.core.managers.AstroPlayerManager;
+import net.astropvp.core.struct.AstroPlayer;
+import org.arkhamnetwork.Arkkit.patches.CombatLog;
+import org.bukkit.entity.Player;
+
+@Command("gift")
+public class GiftCommand extends CommandBase {
+
+    private final AstroPlayerManager crankedUserManager;
+
+    public GiftCommand(AstroCore plugin) {
+        this.crankedUserManager = plugin.getAstroPlayerManager();
+    }
+
+    @Default
+    @WrongUsage("&c/gift <player> <message>")
+    public void giftToPlayer(Player sender, @Completion("#players") Player receiver, String[] message) {
+        if (sender.equals(receiver)) {
+            sender.sendMessage(CC.translate("&c&l(!)&c You cannot send yourself gifts!"));
+            return;
+        }
+
+
+        if (ItemUtils.isAirOrNull(sender.getItemInHand())) {
+            sender.sendMessage(CC.translate("&c&l(!)&c You need to hold an item!"));
+            return;
+        }
+
+        AstroPlayer crankedUser = this.crankedUserManager.getAstroPlayer(receiver.getUniqueId());
+
+        if (crankedUser == null) {
+            sender.sendMessage(CC.translate("&c&l(!)&c Player is invalid or not online!"));
+            return;
+        }
+        if (CombatLog.inCombat(crankedUser.getPlayer())) {
+            sender.sendMessage(CC.translate("&c&l(!)&c Not allowed in combat!"));
+            return;
+        }
+
+        if (crankedUser.alreadyHasOver5GiftsFromPlayer(sender)) {
+            sender.sendMessage(CC.translate("&c&l(!)&c You already have a sent over 5  gifts to that player, let them know they should claim them first!"));
+            return;
+        }
+
+        crankedUser.addGift(sender, sender.getItemInHand(), message);
+        crankedUser.getPlayer().sendMessage(CC.translate("&a&l(!)&a You have received a gift from &f" + sender.getName() + "&a! Type &f/gifts&a to view all your gifts."));
+        sender.sendMessage(CC.translate("&a&l(!)&a You have sent a gift to &f" + crankedUser.getPlayer().getName() + "&a!"));
+        sender.setItemInHand(null);
+    }
+}
