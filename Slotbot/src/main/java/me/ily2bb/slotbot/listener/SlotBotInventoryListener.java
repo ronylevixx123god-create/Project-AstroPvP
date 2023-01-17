@@ -233,6 +233,7 @@ public class SlotBotInventoryListener implements Listener {
         }
 
         Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), ()->{
+            if (player == null) return;
             if (player.isOnline()) {
                 returnTickets(slots, player);
             }

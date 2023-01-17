@@ -46,9 +46,9 @@ public class Cactus extends CustomEnchantment {
             final Player p = (Player) player;
             if (attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;
-                pAttacker.damage(0.5 * level);
-
-
+                //pAttacker.damage(0.5 * level);
+                RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) pAttacker);
+                rageStacksCache.resetRageStack();
                 final Location l = p.getLocation();
                 WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);
             }

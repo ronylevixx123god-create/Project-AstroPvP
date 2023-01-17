@@ -31,4 +31,9 @@ public class CachedPlayer {
         this.caches.put(cache.getName(), cache);
         return cache;
     }
+
+    public void removeCache(String cacheName) {
+        this.caches.remove(cacheName);
+    }
+
 }

@@ -432,8 +432,8 @@ public class AstroCore extends JavaPlugin {
             }
         }, 20L, 20L);
 
+        Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
         Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), () -> {
-            Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
             for (Player p : allPlayers) {
                 if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient() && !p.isOp()) {
                     p.sendMessage("");

@@ -262,6 +262,9 @@ public class HolyWhiteScrollListener implements Listener {
             killed.setTotalExperience(0);
         }
         List<ItemStack> itemList = e.getDrops();
+
+
+
         if (!AstroCore.getInstance().getAstroPlayerManager().getFromCache(killer.getUniqueId().toString()).isPotsDropEnabled()) {
             itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
         }

@@ -1,6 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import org.arkhamnetwork.enchantments.enchantments.swords.Rage;
+import org.arkhamnetwork.enchantments.util.CacheUtils;
+import org.arkhamnetwork.enchantments.util.RageStacksCache;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import com.cosmicpvp.cosmicutils.utils.*;
@@ -22,8 +24,9 @@ public class HeroicCactus extends HeroicCustomEnchantment {
             final Player p = (Player) player;
             if (attacker != null && attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;
-                pAttacker.damage(0.5 * level);
-
+                //pAttacker.damage(0.5 * level);
+                RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) pAttacker);
+                rageStacksCache.resetRageStack();
 
                 final Location l = p.getLocation();
                 WorldUtil.sendWorldEffect(l.getBlock(), 81, 2001);

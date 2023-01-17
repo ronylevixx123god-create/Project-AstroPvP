@@ -69,6 +69,16 @@ public class SlotBotOpenerGUI {
                     p.sendMessage(CC.translate("&c&l(!)&c Please empty the chest before opening new slotbots!"));
                     return;
                 }
+                //remove slots from player inv
+                Inventory inventory = p.getInventory();
+                for (ItemStack itemStack : inventory) {
+                    if (CosmicSlotBotAPI.isSlotbotTicket(itemStack)) {
+                        inventory.remove(itemStack);
+                    }
+                }
+                p.getInventory().setContents(inventory.getContents());
+                p.closeInventory();
+                p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
 
                 while (a != 0) {
 
@@ -95,6 +105,7 @@ public class SlotBotOpenerGUI {
                             p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
                             p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ " + xpValue + " xp");
                         } else {
+                            if (itemStack == null) continue;
                             chest.getInventory().addItem(itemStack);
                         }
                     }
@@ -108,16 +119,7 @@ public class SlotBotOpenerGUI {
             }
 
 
-            //remove slots from player inv
-            Inventory inventory = p.getInventory();
-            for (ItemStack itemStack : inventory) {
-                if (CosmicSlotBotAPI.isSlotbotTicket(itemStack)) {
-                    inventory.remove(itemStack);
-                }
-            }
-            p.getInventory().setContents(inventory.getContents());
-            p.closeInventory();
-            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
+
 
 
         }));

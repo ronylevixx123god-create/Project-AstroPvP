@@ -54,7 +54,9 @@ extends CustomEnchantment {
         }
         if (player.hasMetadata("neutralized"))
             return;
-        double chance = (double)level * 0.02;
+        if (player.hasMetadata("noDefenseProcs"))
+            return;
+        double chance = (double)level * 0.01;
         if (e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && Math.random() < chance) {
             FPlayer fp = (FPlayer)FPlayers.getInstance().getByPlayer((Player) player);
             boolean KOTH = player.getWorld().getName().equals("world_koth");

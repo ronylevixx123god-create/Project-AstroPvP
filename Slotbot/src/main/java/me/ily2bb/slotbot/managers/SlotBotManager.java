@@ -54,9 +54,9 @@ public class SlotBotManager {
                     ItemStack x = inventory.getItem(i);
                     if (x.getType() == Material.STAINED_GLASS_PANE) {
                         if (!x.containsEnchantment((Enchantment) new Glow(70))) {
-                            x = Utils.addGlow(x);
+                            Utils.addGlow(x);
                         } else {
-                            x = Utils.removeGlow(x);
+                            Utils.removeGlow(x);
                         }
                         inventory.setItem(i, x);
                     }

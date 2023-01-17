@@ -146,7 +146,7 @@ public class Utils {
             if (from <= random && to >= random)
                 return entry.getValue();
         }
-        return null;
+        return new ItemStack(Material.GRASS);
     }
 
     public static ItemStack addGlow(final ItemStack item) {

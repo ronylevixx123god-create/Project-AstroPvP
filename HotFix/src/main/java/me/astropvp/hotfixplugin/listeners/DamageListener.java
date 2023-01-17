@@ -52,13 +52,20 @@ public class DamageListener implements Listener {
             event.setCancelled(true);
         }
     }
-
-    @EventHandler
+    
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onChatCombat(AsyncPlayerChatEvent event) {
-        if ((event.getMessage().equalsIgnoreCase("/eendersee") || event.getMessage().equalsIgnoreCase("/spawn")) && CombatLog.inCombat(event.getPlayer())) {
+        if ((event.getMessage().equalsIgnoreCase("/eendersee") || event.getMessage().equalsIgnoreCase("/spawn") || event.getMessage().equalsIgnoreCase("/warp spawn")) && CombatLog.inCombat(event.getPlayer())) {
             event.getPlayer().sendMessage(CC.Red + "Disabled in combat");
             event.setMessage("/null");
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onDeath(PlayerDeathEvent event) {
+        if (event.getEntity().getLocation().getWorld().getName().equalsIgnoreCase("world_arcade")) {
+            event.getDrops().removeIf(itemStack -> itemStack.getType() == Material.POTION);
         }
     }
 

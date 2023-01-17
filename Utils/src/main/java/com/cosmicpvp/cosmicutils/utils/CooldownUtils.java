@@ -22,4 +22,9 @@ public class CooldownUtils {
         CachedPlayer cachedPlayer = CosmicUtils.get().getCacheManager().getCachedPlayer(player);
         return cachedPlayer.hasCache(cache) && ((CurrentCooldown)cachedPlayer.getCache(cache)).isActive();
     }
+
+    public static void removeCooldown(Player player, String cacheName) {
+        CachedPlayer cachedPlayer = CosmicUtils.get().getCacheManager().getCachedPlayer(player);
+        cachedPlayer.removeCache(cacheName);
+    }
 }

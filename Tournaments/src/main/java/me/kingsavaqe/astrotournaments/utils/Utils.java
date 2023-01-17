@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.EnchantmentAPI;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
+import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
 import org.bukkit.*;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -95,6 +96,8 @@ public class Utils {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
+        PlayerPotionEffectListener.rescanPlayerArmor(player);
+
     }
 
     public static double round(double value, int precision) {
