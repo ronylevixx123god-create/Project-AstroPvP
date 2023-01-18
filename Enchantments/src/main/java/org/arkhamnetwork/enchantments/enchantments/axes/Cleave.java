@@ -26,7 +26,6 @@ public class Cleave extends CustomEnchantment {
         this.max = 7;
         this.base = 15.0;
         this.interval = 5.0;
-        Bukkit.getLogger().info("[Enchantments (Cleave)] mcMMO support = " + this.mcmmo);
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {

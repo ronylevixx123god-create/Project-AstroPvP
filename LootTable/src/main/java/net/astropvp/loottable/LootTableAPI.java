@@ -8,7 +8,10 @@ import net.astropvp.loottable.utils.RandomUtils;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class LootTableAPI {
     private static LootTableManager lootTableManager = LootTablePlugin.getInstance().getLootTableManager();
@@ -20,8 +23,8 @@ public class LootTableAPI {
 
     public static List<ItemStack> getAllLootFromLootTable(LootTable type) {
         LootTableData lootTable = lootTableManager.getLootTable(type);
-        return new ArrayList<>(lootTable.getLootMap().keySet());
-
+        Set<ItemStack> loot  = lootTable.getLootMap().keySet();
+        return loot.stream().sorted(Comparator.comparing(ItemStack::getType)).collect(Collectors.toList());
     }
 
 

@@ -3,7 +3,6 @@ package org.arkhamnetwork.enchantments.util;
 import lombok.Getter;
 import lombok.Setter;
 import net.astropvp.core.utils.cache.Cache;
-import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.UUID;
@@ -44,12 +43,14 @@ public class RageStacksCache extends Cache {
     }
 
     public void decrementRageStack() {
+        if (rageStack == 0) return;
         this.rageStack--;
+
     }
 
 
     public void resetRageStack() {
-        this.rageStack = 0;
+        this.rageStack = 1;
     }
 
     public int getRageStack() {
