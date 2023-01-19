@@ -19,7 +19,6 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.LuckPermUtils;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonSyntaxException;
@@ -62,6 +61,8 @@ public class PacketIO {
     public static PacketIO get() {
         return instance;
     }
+
+    public static Map<UUID, List<Short>> receivedIDS = new HashMap<>();
 
     private static final Map<UUID, ConcurrentLinkedDeque<FutureOutPacket>> outPacketQueue = new ConcurrentHashMap<>();
 
@@ -121,16 +122,21 @@ public class PacketIO {
                 byte[] packetArray = customPayload.b().array();
                 FutureInPacket received = new FutureInPacket(packetArray, event.getPlayer());
                 Debug.log("Received packet ID " + received.getMyID() + " at " + (System.currentTimeMillis() - PacketIO.timeInit) + " from " + event.getPlayer() + "!");
+
                 synchronized (PacketIO.inPacketQueue) {
                     if (PacketIO.inPacketQueue.containsKey(event.getPlayer().getUniqueId())) {
                         ((ConcurrentLinkedDeque<FutureInPacket>) PacketIO.inPacketQueue.get(event.getPlayer().getUniqueId())).add(received);
                     } else {
                         PacketIO.inPacketQueue.put(event.getPlayer().getUniqueId(), new ConcurrentLinkedDeque(Lists.newArrayList((Object[]) new FutureInPacket[]{received})));
                     }
+
+
                 }
             }
+
         };
         ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener) this.adapter);
+
     }
 
     public void queuePacket(Player recipient, Packet container) {
@@ -258,6 +264,18 @@ public class PacketIO {
                         continue;
                     }
                     Debug.log("Received packet: " + packetClass.getSimpleName() + " (ID: " + packet.getMyID() + ")");
+                    synchronized (PacketIO.receivedIDS) {
+
+                        if (receivedIDS.containsKey(uuid)) {
+                            if (!receivedIDS.get(uuid).contains(packetID)) {
+                                receivedIDS.get(uuid).add(packetID);
+                            }
+                        } else {
+                            List<Short> ids = new ArrayList<>();
+                            ids.add(packetID);
+                            receivedIDS.put(uuid, ids);
+                        }
+                    }
                     String content = container.getContent();
                     if (packetID != 7)
                         content = new String(encryptor.b(Base64.getDecoder().decode(content), true), StandardCharsets.UTF_8);

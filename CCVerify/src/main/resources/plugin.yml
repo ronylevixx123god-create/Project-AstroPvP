@@ -33,3 +33,4 @@ commands:
     permission: ccverify.popup.use
   ccreload:
     permission: ccverify.reload
+  cccheck:
