@@ -207,6 +207,10 @@ public class PacketIO {
             outPacketQueue.remove(player.getUniqueId());
         }
         removePlayerFromHeader(player);
+
+        synchronized (receivedIDS) {
+            receivedIDS.remove(player.getUniqueId());
+        }
     }
 
     private void registerPlayer(Player player) {

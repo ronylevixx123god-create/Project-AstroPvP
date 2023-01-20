@@ -29,10 +29,11 @@ public class CCCheckCommand implements CommandExecutor {
             return false;
         }
         List<Short> packets = PacketIO.receivedIDS.get(player.getUniqueId());
-        sender.sendMessage(CC.translate(  "Scanning &f" + player.getName() + "&e..."));
+        sender.sendMessage(CC.translate(  "&e&l(!)&e Scanning &f" + player.getName() + "&e..."));
         sender.sendMessage(CC.translate("&e* &fOn CosmicClient: &e" + CosmicPlayers.get().getCosmicPlayer(player.getUniqueId()).isOnCosmicClient()));
         if (sender.isOp()) {
-            sender.sendMessage(CC.translate("&ePackets: "));
+            sender.sendMessage(CC.translate("&eClient Packets: "));
+            if (packets.isEmpty()) return true;
             for (Short packet : packets) {
                 sender.sendMessage(CC.Green + packet);
             }
