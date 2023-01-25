@@ -24,7 +24,7 @@ final class DivineImmolationListener implements Listener {
             }
             if (System.currentTimeMillis() - e.getEntity().getMetadata("divineFire").get(0).asLong() < (4 + enchantLevel) * 1000L) {
                 final LivingEntity le = (LivingEntity) e.getEntity();
-                double damage = Math.min(4, 4 + enchantLevel) / 2.0;
+                double damage = (double)Math.min(4, 4 + enchantLevel) / 4.0;
                 if (enchantLevel == 5) {
                     damage *= 1.25;
                 }

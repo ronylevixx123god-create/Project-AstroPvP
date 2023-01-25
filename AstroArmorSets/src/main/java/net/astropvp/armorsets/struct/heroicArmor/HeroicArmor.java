@@ -4,17 +4,22 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import de.tr7zw.nbtapi.NBTItem;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Getter
+@AllArgsConstructor
 public enum HeroicArmor {
     HELMET(3, 1, Material.LEATHER_HELMET, CC.DarkRedB + "Heroic Helmet", false),
     CHESTPLATE(8, 1, Material.LEATHER_CHESTPLATE, CC.DarkRedB + "Heroic Chestplate", false),
@@ -23,19 +28,13 @@ public enum HeroicArmor {
     SWORD(1, 4, Material.GOLD_SWORD, CC.DarkRedB + "Heroic Sword", true),
     AXE(1, 4, Material.GOLD_AXE, CC.DarkRedB + "Heroic Axe", true);
 
-    private double reduction;
-    private double increase;
-    private Material type;
-    private String display;
-    private boolean isWeapon;
+    public int reduction;
+    public double increase;
+    public Material type;
+    public String display;
+    public boolean isWeapon;
 
-    HeroicArmor(double reduction, double increase, Material type, String display, boolean isWeapon) {
-        this.reduction = reduction;
-        this.increase = increase;
-        this.type = type;
-        this.display = display;
-        this.isWeapon = isWeapon;
-    }
+
 
     public static List<ItemStack> getHeroicItems() {
         List<ItemStack> items = new ArrayList<>();
@@ -50,6 +49,10 @@ public enum HeroicArmor {
                         .addEnchantment(Enchantment.DAMAGE_ALL, 5)
                         .addEnchantment(Enchantment.DURABILITY, 3)
                         .build();
+                ItemMeta meta = item.getItemMeta();
+                meta.spigot().setUnbreakable(true);
+                meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+                item.setItemMeta(meta);
             } else {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)
@@ -59,6 +62,13 @@ public enum HeroicArmor {
                         .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
                         .addEnchantment(Enchantment.DURABILITY, 3)
                         .build();
+                ItemMeta meta = item.getItemMeta();
+                meta.spigot().setUnbreakable(true);
+                meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+                item.setItemMeta(meta);
+                NBTItem nbtItem = new NBTItem(item);
+                nbtItem.setInteger("wine-armor-override", armor.reduction);
+                item = nbtItem.getItem();
             }
 
             NBTWrapper wrapper = new NBTWrapper(item);
@@ -68,6 +78,8 @@ public enum HeroicArmor {
             builder.setBoolean("heroicArmor", true);
             wrapper.setNBTBase("cosmicData", (NBTBase) builder.get());
             items.add(wrapper.build());
+
+
         }
         return items;
     }

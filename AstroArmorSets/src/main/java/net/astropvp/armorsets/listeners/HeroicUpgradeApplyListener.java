@@ -2,6 +2,7 @@ package net.astropvp.armorsets.listeners;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.*;
+import de.tr7zw.nbtapi.NBTItem;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
@@ -17,8 +18,11 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.Objects;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class HeroicUpgradeApplyListener implements Listener {
@@ -90,6 +94,14 @@ public class HeroicUpgradeApplyListener implements Listener {
                     display.setInt("color", color);
                     wrapper.setNBTBase("display", display.get());
                     retItem = wrapper.build();
+                    ItemMeta meta = retItem.getItemMeta();
+                    meta.spigot().setUnbreakable(true);
+                    meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+                    retItem.setItemMeta(meta);
+                    NBTItem nbtItem = new NBTItem(retItem);
+                    nbtItem.setBoolean("heroic", true);
+                    nbtItem.setInteger("wine-armor-override", Objects.requireNonNull(HeroicArmor.getFromMaterial(retItem.getType())).getReduction());
+                    retItem = nbtItem.getItem();
                     event.setCurrentItem(retItem);
                     player.sendMessage(CC.GreenB + "(!) " + CC.Green + "You have upgraded your " + ItemUtils.getDisplayName(clicked) + CC.Green + " to the Heroic Armor version!");
                 } else {

@@ -38,7 +38,7 @@ extends CustomEnchantment {
             }
 
             double multi = 1.0D + ((double)level * 0.020D);
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
+            e.setDamage(e.getDamage() * multi);
         }
 
     }

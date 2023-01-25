@@ -43,7 +43,7 @@ public class UltraArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.075) {
+        if (Math.random() < 0.15) {
             activateUltraAbility(attacker, (Player) attacked);
             event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)) * 1.25);
         } else {
@@ -53,7 +53,7 @@ public class UltraArmorSet extends ArmorSet {
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 10 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.04) {
+        if (Math.random() < 0.07) {
             activateUltraAbility(attacker, (Player) attacked);
             event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)) * 1.25);
         } else {

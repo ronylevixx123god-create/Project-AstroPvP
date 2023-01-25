@@ -8,8 +8,6 @@ import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
 import net.astropvp.armorsets.items.OmniCrystal;
 import net.astropvp.armorsets.listeners.*;
-import net.astropvp.armorsets.struct.ArmorSetType;
-import net.astropvp.armorsets.struct.sets.TravelerArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -49,6 +47,7 @@ public class AstroArmorSets extends JavaPlugin {
         getCommand("debugarmorsets").setExecutor(new CommandDebugArmorSet());
         getCommand("armorsets").setExecutor(new CommandOpenGUI());
         getCommand("aarmorset").setExecutor(new CommandAdminArmorSet());
+        getCommand("heroicfix").setExecutor(new CommandHeroicFix());
 
 
 
@@ -57,7 +56,7 @@ public class AstroArmorSets extends JavaPlugin {
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new ArmorSetApplyListener(this), this);
         getServer().getPluginManager().registerEvents(new HeroicUpgradeApplyListener(), this);
-        getServer().getPluginManager().registerEvents(new HeroicArmorDamageListener(), this);
+        getServer().getPluginManager().registerEvents(new HeroicArmorWeaponDamageListener(), this);
         getServer().getPluginManager().registerEvents(new AntiMkitDamagedListener(), this);
         getServer().getPluginManager().registerEvents(new OmniArmorDamageListener(), this);
         getServer().getPluginManager().registerEvents(new GUIInventoryListener(), this);

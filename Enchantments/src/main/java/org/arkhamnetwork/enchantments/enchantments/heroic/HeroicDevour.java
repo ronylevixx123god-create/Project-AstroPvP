@@ -25,7 +25,7 @@ public class HeroicDevour extends CustomEnchantment
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
             if (GeneralUtil.isEffectedByRage(target)) {
                 return;
             }

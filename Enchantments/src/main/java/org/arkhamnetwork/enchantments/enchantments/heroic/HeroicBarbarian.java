@@ -30,6 +30,6 @@ public class HeroicBarbarian extends HeroicCustomEnchantment {
             return;
         }
         final double mod = 1.1;
-        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
+        e.setDamage(e.getDamage() * mod);
     }
 }

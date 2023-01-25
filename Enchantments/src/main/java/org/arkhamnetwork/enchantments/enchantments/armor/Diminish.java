@@ -43,7 +43,7 @@ public class Diminish extends CustomEnchantment {
 
             if (player.hasMetadata("diminishEffect")) {
                 final double maxDmg = player.getMetadata("diminishEffect").get(0).asDouble();
-                if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
+                if (e.getDamage() > maxDmg) {
                     e.setDamage(maxDmg);
                     player.removeMetadata("diminishEffect", (Plugin) Enchantments.getInstance());
                     return;
@@ -51,9 +51,9 @@ public class Diminish extends CustomEnchantment {
             }
             final double random = Math.random();
             final double procChance = 0.0015 * level;
-            if (random < procChance && e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0) {
-                player.setMetadata("diminishEffect", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getDamage(EntityDamageEvent.DamageModifier.BASE)));
-                ((Player) player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "DMG: " + this.df.format(Math.max(0.0, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) + ChatColor.BOLD + "] *");
+            if (random < procChance && e.getDamage() > 0.0) {
+                player.setMetadata("diminishEffect", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) e.getDamage()));
+                ((Player) player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "DMG: " + this.df.format(Math.max(0.0, e.getDamage())) + ChatColor.BOLD + "] *");
             }
         }
     }

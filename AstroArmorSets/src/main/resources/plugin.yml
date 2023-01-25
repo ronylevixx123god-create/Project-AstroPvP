@@ -20,3 +20,4 @@ commands:
   aarmorset:
     aliases: ['aarmorset', 'aset', 'asets' ]
 
+  heroicfix:

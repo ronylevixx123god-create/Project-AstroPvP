@@ -33,7 +33,7 @@ public class Rage extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0D && user instanceof Player) {
+        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
 
             if (!(target instanceof Player)) {
                 return;
@@ -92,7 +92,7 @@ public class Rage extends CustomEnchantment {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.1) {
                 target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
             } else {
-                event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1 + rageDamage));
+                event.setDamage(event.getDamage() * (1 + rageDamage));
             }
 
             if (rageStacksCache.getRageStack() > 1) {

@@ -38,7 +38,7 @@ public class HeroicAntiGank extends HeroicCustomEnchantment {
         }
         final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGankHeroic_uniqueEnemies") ? player.getMetadata("antiGankHeroic_uniqueEnemies").get(0).value() : new HashSet<UUID>());
         if (enemies.size() >= 2 && Math.random() < 0.2) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 1.5);
+            e.setDamage(e.getDamage() * 1.5);
             final Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
         }
     }

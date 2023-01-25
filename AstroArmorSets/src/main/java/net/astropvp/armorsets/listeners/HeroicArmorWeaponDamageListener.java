@@ -17,15 +17,15 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
-public class HeroicArmorDamageListener implements Listener {
-    @EventHandler(priority = EventPriority.LOW , ignoreCancelled = true)
-    public void reduceDamage(EntityDamageEvent e) {
+public class HeroicArmorWeaponDamageListener implements Listener {
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         Player player = ((Player) e.getEntity()).getPlayer();
         if (e.getEntity().getWorld().getName().equals("world_outpost_pluto")) {
             return;
         }
-
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getHeroicPieces() != 0) {
             double totalReduction = cache.getHeroicPieces() * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicDamageDecrease");
@@ -36,8 +36,18 @@ public class HeroicArmorDamageListener implements Listener {
                     return;
                 }
             }
-            e.setDamage( e.getDamage() * 1 - (totalReduction * 0.01));
+            e.setDamage(e.getDamage() * 1 - (totalReduction * 0.01));
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onDamageSword(EntityDamageByEntityEvent event) {
+        if(event.getEntity() == null || event.getDamager() == null) return;
+        if(!(event.getDamager() instanceof Player)) return;
+        Player player = (Player) event.getDamager();
+        if(!AstroArmorSetsAPI.isHeroic(player.getItemInHand())) return;
+        double increaseAmount = AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicWeaponDamageIncrease");
+        event.setDamage(event.getDamage()*1+ (increaseAmount/100));
 
     }
 }

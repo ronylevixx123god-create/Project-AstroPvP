@@ -475,7 +475,6 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DungeonInventoryEvent(), this);
         getServer().getPluginManager().registerEvents(new ServerFixes(), this);
         getServer().getPluginManager().registerEvents(new MOTD(), this);
-        getServer().getPluginManager().registerEvents(new HeroicArmorFix(), this);
         getServer().getPluginManager().registerEvents(new ChunkBusterListener(), this);
         getServer().getPluginManager().registerEvents(new OmniGemFix(), this);
         getServer().getPluginManager().registerEvents(new CommandAliases(), this);

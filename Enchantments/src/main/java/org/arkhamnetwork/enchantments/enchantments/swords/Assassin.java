@@ -55,7 +55,7 @@ public class Assassin extends CustomEnchantment {
                 dmgMod -= 0.025D * (double)enchantLevel;
             }
 
-            event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * dmgMod);
+            event.setDamage(event.getDamage() * dmgMod);
         }
     }
 }

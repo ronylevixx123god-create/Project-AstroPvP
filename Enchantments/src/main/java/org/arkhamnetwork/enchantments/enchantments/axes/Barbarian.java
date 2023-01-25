@@ -20,6 +20,6 @@ public class Barbarian extends CustomEnchantment {
             return;
         }
         final double mod = 1.0 + 0.05 * level;
-        e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
+        e.setDamage(e.getDamage() * mod);
     }
 }

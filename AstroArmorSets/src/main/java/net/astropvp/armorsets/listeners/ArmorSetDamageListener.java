@@ -102,7 +102,6 @@ public class ArmorSetDamageListener implements Listener {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
-
                 }
             }
         }

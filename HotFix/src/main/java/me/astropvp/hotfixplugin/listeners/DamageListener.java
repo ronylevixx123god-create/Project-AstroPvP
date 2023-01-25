@@ -89,7 +89,7 @@ public class DamageListener implements Listener {
         if (faction.isWarZone() || faction.isSafeZone()) event.setCancelled(true);
     }
 
-    @EventHandler(priority = EventPriority.HIGH)
+    /*@EventHandler(priority = EventPriority.HIGH)
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -112,15 +112,7 @@ public class DamageListener implements Listener {
             e.setDamage(e.getDamage() * 1 + (dmgBuff * 0.01));
 
         }
-    }
-
-    @EventHandler(priority = EventPriority.HIGH)
-    public void dmgDuel(EntityDamageByEntityEvent e) {
-        if (e.getDamager().getWorld().getName().equals("world_duels")) {
-            e.setDamage(e.getDamage() * 1.5);
-        }
-        //Bukkit.broadcastMessage(CC.Red + String.valueOf(e.getFinalDamage()));
-    }
+    }*/
 
     @EventHandler(priority = EventPriority.HIGH)
     public void dmg(EntityDamageByEntityEvent e) {
@@ -208,7 +200,7 @@ public class DamageListener implements Listener {
         }
     }
 
-    @EventHandler
+/*    @EventHandler
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -235,7 +227,7 @@ public class DamageListener implements Listener {
                 e.setDamage(e.getDamage() * 0.5);
             }
         }
-    }
+    }*/
 
 
     @EventHandler
@@ -344,12 +336,12 @@ public class DamageListener implements Listener {
 
     }*/
 
-    @EventHandler(priority = EventPriority.MONITOR)
+/*    @EventHandler(priority = EventPriority.MONITOR)
     public void onDurabilityLoss(PlayerItemDamageEvent event) {
         event.getPlayer().updateInventory();
         event.setCancelled(true);
 
-    }
+    }*/
 
     @EventHandler
     public void onClickBookAndQuil(PlayerInteractEvent event) {

@@ -41,7 +41,7 @@ public class AntiGank extends CustomEnchantment {
         }
         final HashSet<UUID> enemies = (HashSet<UUID>) (player.hasMetadata("antiGank_uniqueEnemies") ? player.getMetadata("antiGank_uniqueEnemies").get(0).value() : new HashSet<UUID>());
         if (enemies.size() >= 6 - level) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * Math.min(1.5, 1.0 + 0.1 * enemies.size()));
+            e.setDamage(e.getDamage() * Math.min(1.5, 1.0 + 0.1 * enemies.size()));
             final Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
         }
     }

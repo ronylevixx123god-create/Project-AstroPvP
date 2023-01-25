@@ -78,13 +78,16 @@ public class AstroArmorSetsAPI {
     public static ArmorSetType getCurrentArmorSet(Player player) {
         CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        if (cache == null) return null;
         return cache.getCurrentArmorSet();
     }
 
 
     public static Map<ArmorSetType, Integer> getCurrentCrystals(Player player) {
+        Map<ArmorSetType, Integer> empty = new HashMap<>();
         CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        if (cache == null) return empty;
         return cache.getCurrentSetCrystals();
     }
 
@@ -304,7 +307,7 @@ public class AstroArmorSetsAPI {
     public static boolean isHeroic(ItemStack item) {
         if (item == null)
             return false;
-        if (!item.getType().name().contains("LEATHER"))
+        if (!item.getType().name().contains("LEATHER") && !item.getType().name().contains("GOLD_"))
             return false;
 
         NBTWrapper wrapper = new NBTWrapper(item);

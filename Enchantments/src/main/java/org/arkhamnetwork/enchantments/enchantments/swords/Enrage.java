@@ -17,7 +17,7 @@ public class Enrage extends CustomEnchantment
 
     @SneakyThrows
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        /*double hpPercent = (double)user.getClass().getMethod("getHealth").invoke(user) / (double)user.getClass().getMethod("getMaxHealth").invoke(user);
+        double hpPercent = (double)user.getClass().getMethod("getHealth").invoke(user) / (double)user.getClass().getMethod("getMaxHealth").invoke(user);
         double multi = 1.0D;
         if (hpPercent <= 0.75D) {
             multi += 0.15D;
@@ -31,7 +31,7 @@ public class Enrage extends CustomEnchantment
             multi += 0.15D;
         }
 
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);*/
+        event.setDamage(event.getDamage() * multi);
     }
 }
 

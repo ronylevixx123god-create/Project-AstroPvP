@@ -44,7 +44,7 @@ public class DivineImmolation extends CustomEnchantment {
         }
 
         final Player p = (Player) player;
-        double radius = 1.0 * level;
+        double radius = level;
         double damage = Math.floor(level * 2);
 
         if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
