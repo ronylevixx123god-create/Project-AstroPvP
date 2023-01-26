@@ -6,6 +6,7 @@ import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import lombok.Getter;
 import net.crankedpvp.arcade.ArcadeAPI;
+import net.crankedpvp.arcade.ArcadePlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -15,20 +16,29 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 public class ArcadeGUI {
     private Gui arcadeGui;
+    private DyeColor color = DyeColor.WHITE;
 
     public ArcadeGUI() {
         this.arcadeGui = new Gui(1, "Astro Arcade");
         this.arcadeGui.setDefaultClickAction(event -> event.setCancelled(true));
-
-        this.arcadeGui.setItem(4, new GuiItem(getArcadeItem(), event -> {
+        this.arcadeGui.setItem(4, new GuiItem(getArcadeItem(color), event -> {
             ((Player) event.getWhoClicked()).chat("/warp arcade");
         }));
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(ArcadePlugin.getInstance(), () -> {
+            color = DyeColor.values()[(color.ordinal() + 1) % DyeColor.values().length];
+            this.arcadeGui.updateItem(4, new GuiItem(getArcadeItem(color), event -> {
+                ((Player) event.getWhoClicked()).chat("/warp arcade");
+            }));
+        }, 1L, 10L);
+
+
     }
 
 
-    public ItemStack getArcadeItem() {
+    public ItemStack getArcadeItem(DyeColor color) {
+
         ItemBuilder itemBuilder = new ItemBuilder(
-                Material.STAINED_CLAY, 1, DyeColor.GREEN.getWoolData())
+                Material.STAINED_CLAY, 1, color.getWoolData())
                 .setName(CC.translate("&d&lArcade Warp"))
                 .addLoreLine(CC.translate("&7This are is a warp meant"))
                 .addLoreLine(CC.translate("&7only for the warriors who hold"))

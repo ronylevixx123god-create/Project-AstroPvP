@@ -80,9 +80,7 @@ public class DivineImmolation extends CustomEnchantment {
             damage *= 1.25;
         }
 
-        if (OutpostUtil.hasMarsOutpost((Player) player)) {
-            damage *= 1.15;
-        }
+
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
             damage *= 1.3;

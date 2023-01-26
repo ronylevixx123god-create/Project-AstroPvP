@@ -119,7 +119,7 @@ public class OmniBlackscroll extends CosmicItem implements InventoryInteractable
     }
 
     private void fillInventory(Inventory inventory) {
-        ItemStack pane = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) DyeColor.BLACK.getData())).name("&7").build();
+        ItemStack pane = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) DyeColor.BLACK.getData())).name(CC.translate("&7")).build();
         for (int i = 0; i < inventory.getSize(); i++) {
             if (inventory.getItem(i) == null || inventory.getItem(i).getType() == Material.AIR)
                 inventory.setItem(i, pane);

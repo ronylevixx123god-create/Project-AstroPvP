@@ -26,4 +26,4 @@ public class ArcadeHiderTask extends BukkitRunnable {
             }
         }
     }
-}a
+}

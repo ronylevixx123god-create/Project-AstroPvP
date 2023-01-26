@@ -141,9 +141,7 @@ public class HeroKiller
                 increase += 0.15;
             }
 
-            if (OutpostUtil.hasMarsOutpost((Player) player)) {
-                increase +=0.15;
-            }
+
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                 increase -= 0.1;

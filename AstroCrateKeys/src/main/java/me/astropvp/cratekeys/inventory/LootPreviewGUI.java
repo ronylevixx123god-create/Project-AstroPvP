@@ -2,6 +2,7 @@ package me.astropvp.cratekeys.inventory;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.google.common.collect.Lists;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
@@ -35,9 +36,6 @@ public class LootPreviewGUI {
         this.type = type;
 
         this.expShopUI = new PaginatedGui(6, 45, type.getName() + " Crate Loot Preview");
-
-
-
 
         expShopUI.setDefaultClickAction(event -> {
             event.setCancelled(true);
@@ -73,9 +71,12 @@ public class LootPreviewGUI {
 
 
         for (ItemStack item : AstroCrateKeysAPI.getListItems(type)) {
-
             ItemBuilder itemBuilder = new ItemBuilder(item);
-            this.expShopUI.addItem(new GuiItem(itemBuilder.build()));
+            this.expShopUI.addItem(new GuiItem(itemBuilder.build(), event -> {
+                if (player.isOp()) {
+                    PlayerUtil.giveOrDropProtectedItem(player, item, 60);
+                }
+            }));
         }
 
     }

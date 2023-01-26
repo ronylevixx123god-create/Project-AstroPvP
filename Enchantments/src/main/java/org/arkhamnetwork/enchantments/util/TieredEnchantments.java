@@ -20,6 +20,7 @@ public enum TieredEnchantments {
     feigndeath(8),
     poltergeist(8),
     demonicgateway(8),
+    keygrind(8),
     mortalcoil(8),
     rotanddecay(8),
     soulsiphon(8),

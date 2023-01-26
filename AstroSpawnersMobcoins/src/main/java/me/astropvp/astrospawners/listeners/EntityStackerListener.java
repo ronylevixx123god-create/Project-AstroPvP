@@ -215,6 +215,17 @@ public class EntityStackerListener implements Listener {
     public void blazeLoot(Player p) {
         double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
         double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.01
+        Map<CustomEnchantment, Integer> enchants;
+        UUID uuid =p.getUniqueId();
+        if (cachedWeaponEnchants.containsKey(uuid)) {
+            enchants = cachedWeaponEnchants.get(p.getUniqueId());
+        } else {
+            enchants = EnchantmentAPI.getEnchantments((p.getItemInHand()));
+            cachedWeaponEnchants.put(uuid, enchants);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+                cachedWeaponEnchants.remove(uuid);
+            }, 60 * 20L);
+        }
         attemptGiveMoney(p);
         int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
         if (Math.random() < AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
@@ -225,7 +236,13 @@ public class EntityStackerListener implements Listener {
         if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
             grinderKeyChance *= 1.2;
             godlyKeyChance *= 1.2;
+        }
 
+
+
+        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Key Grind"))) {
+            grinderKeyChance *= 1.25;
+            godlyKeyChance *= 1.25;
         }
 
         double num = Math.random();
