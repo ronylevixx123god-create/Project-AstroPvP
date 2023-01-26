@@ -14,6 +14,7 @@ import me.astropvp.astroscoreboard.utils.TimeUtils;
 import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
+import me.astropvp.hotfixplugin.HotFixPlugin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
@@ -55,6 +56,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerStrongHoldScoreboard();
         registerDuelScoreboard();
         registerSpaceScoreboard();
+        registerTournamentScoreboard();
         //registerListener(new ListenerSB());
     }
 
@@ -88,6 +90,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%kdr%", getMS(5), player -> getPlayerKDR((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%date%", getMS(86400), Scoreboard::getDateSuffix);
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%exp_format%", getMS(1), player -> NumberUtils.formatMoney(((Player) player.getPlayer()).getTotalExperience()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%ping%", getMS(5), player -> HotFixPlugin.getPing((Player) player.getPlayer()));
 
     }
 
@@ -112,9 +115,9 @@ public class AstroScoreboardPlugin extends JavaPlugin {
 
     public void registerTournamentScoreboard() {
         TournamentManager tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
-        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-tournament%", getMS(5), player -> ((Player) player.getPlayer()).getWorld().getName().equals("tournament_world") && tournamentManager.getTournamentPlayer(player.getUniqueId()).isInTournament());
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-tournament%", getMS(1), player -> ((Player) player.getPlayer()).getWorld().getName().equals("tournament_world") && tournamentManager.getTournamentPlayer(player.getUniqueId()).isInTournament());
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%match-string%", getMS(1), player -> getMatchString((Player) player.getPlayer(), tournamentManager));
-        TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%participants%", getMS(5), () -> tournamentManager.getTournamentParticipants().size());
+        TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%participants%", getMS(1), () -> tournamentManager.getTournamentParticipants().size());
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%position-queue%", getMS(1), player -> tournamentManager.getPlayerQueue().getPosition(tournamentManager.getTournamentPlayer(player.getUniqueId())));
 
     }
@@ -124,7 +127,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     public String getMatchString(Player player, TournamentManager tournamentManager) {
         for (TournamentMatch match : tournamentManager.getTournamentMatchList()) {
             Player p1 = match.getPlayerOne().getPlayer();
-            Player p2 = match.getPlayerOne().getPlayer();
+            Player p2 = match.getPlayerTwo().getPlayer();
             if (player.getUniqueId().equals(p1.getUniqueId()) || player.getUniqueId().equals(p2.getUniqueId())) {
                 return "&7" + p1.getName() + " &fVS &7" + p2.getName();
             }
