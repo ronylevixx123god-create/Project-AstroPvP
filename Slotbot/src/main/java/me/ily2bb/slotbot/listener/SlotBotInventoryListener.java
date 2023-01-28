@@ -92,7 +92,7 @@ public class SlotBotInventoryListener implements Listener {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
                 player.sendMessage(CC.translate("&c&l(!)&c This slot requires 1 more ticket in the bot to roll!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
-            } else if (CosmicSlotBotAPI.isSlotbotTicket(item)) {
+            } else if (CosmicSlotBotAPI.isSlotbotTicket(item) || CosmicSlotBotAPI.isHeroicSlotbotTicket(item)) {
                 if (tickets >= 5)
                     return;
                 for (int i = 2; i <= 6; i++) {

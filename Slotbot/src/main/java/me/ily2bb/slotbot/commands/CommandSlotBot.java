@@ -45,7 +45,21 @@ public class CommandSlotBot implements CommandExecutor {
             sender.sendMessage(CC.Green + "Gave " + player.getName() + " " + amount + " slot bot tickets");
             return false;
         }
+        if (args.length >= 3 && args[0].contentEquals("giveheroic")) {
+            final Player player = Bukkit.getPlayer(args[1]);
+            final int amount = Integer.parseInt(args[2]);
+            final ItemStack item2 = CosmicSlotBotAPI.createHeroicSlotBotItem();
+            item2.setAmount(amount);
 
+            if (Utils.isInventoryFull(player)) {
+                player.getWorld().dropItem(player.getLocation(), item2);
+                sender.sendMessage(CC.Green + "Dropped " + amount + " heroic slot bot tickets at " + player.getName() + "'s location.");
+                return false;
+            }
+            player.getInventory().addItem(item2);
+            sender.sendMessage(CC.Green + "Gave " + player.getName() + " " + amount + " heroic slot bot tickets");
+            return false;
+        }
         final Player player = (Player) sender;
         if (!SlotBotPlugin.getInstance().getConfig().getBoolean("slot-bot-enabled") && !player.isOp()) {
             player.sendMessage(CC.Red + "Slot bots are currently disabled.");

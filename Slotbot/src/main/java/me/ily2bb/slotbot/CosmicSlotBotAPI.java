@@ -29,6 +29,16 @@ public class CosmicSlotBotAPI {
         return Utils.addSkin("SLOT_BOT_TICKET", item);
     }
 
+    public static ItemStack createHeroicSlotBotItem() {
+        ItemStack item = new ItemStack(Material.PAPER);
+        final ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(CC.translate("&d&k;&f&lHeroic&d&k;&r ") +  CC.GoldB + "Astro" + CC.GoldB + " Slot Bot " + CC.WhiteB + "Ticket");
+        final List<String> lore = Arrays.asList(CC.Gray + "Right-Click the Slot Bot located", String.valueOf(CC.Gray) + "at " + CC.White + "/spawn " + CC.Gray + "or use /bot then", String.valueOf(CC.Gray) + "insert (Left-Click) this ticket", String.valueOf(CC.Gray) + "into the bot");
+        meta.setLore((List) lore);
+        item.setItemMeta(meta);
+        return Utils.addSkin("SLOT_BOT_TICKET", item);
+    }
+
 
     public static ItemStack getRandomSlotBotLootItem() {
         return LootTableAPI.getRandomLootItem(LootTable.SLOTS);
@@ -56,6 +66,28 @@ public class CosmicSlotBotAPI {
             }
         }
         return skins.contains("SLOT_BOT_TICKET");
+    }
+
+    public static boolean isHeroicSlotbotTicket(ItemStack item) {
+        List<String> skins = new ArrayList<>();
+        if (item == null || item.getType() == Material.AIR || !item.hasItemMeta() || item.getType() != Material.PAPER)
+            return false;
+        NBTWrapper wrapper = new NBTWrapper(item);
+        NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
+        if (!cosmicData.hasKey("itemSkinType"))
+            return false;
+        List<String> stringSkins = new ArrayList<>(Arrays.asList(cosmicData.getString("itemSkinType").split(",")));
+        for (String string : stringSkins) {
+            string = string.replace("[", "");
+            string = string.replace("]", "");
+            string = string.replace(" ", "");
+            try {
+                skins.add(string);
+            } catch (Exception ignored) {
+
+            }
+        }
+        return skins.contains("SLOT_BOT_TICKET") && CC.strip(item.getItemMeta().getDisplayName()).toLowerCase().contains("heroic");
     }
 
     public static List<ItemStack> getSlotBotItems() {

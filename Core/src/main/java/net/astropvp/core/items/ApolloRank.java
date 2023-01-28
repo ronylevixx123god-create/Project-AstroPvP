@@ -99,7 +99,7 @@ public class ApolloRank extends CosmicItem
         player.sendMessage("");
 
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(CC.translate("&8[&a&lAstro&e&lPvP&8] &b" + player.getName() + "&f has unlocked the &bApollo Rank&f!"));
+        Bukkit.broadcastMessage(CC.translate("&8[&6&lAstro&f&lPvP&8] &b" + player.getName() + "&f has unlocked the &bApollo Rank&f!"));
         Bukkit.broadcastMessage(CC.translate("&7Purchase this rank on &f&nbuy.astropvp.net&7! (/buy)"));
         Bukkit.broadcastMessage("");
     }

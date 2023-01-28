@@ -32,15 +32,15 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
                 CC.translate("&5&lNebula Perks"),
                 CC.translate("&5&l* &dAll Apollo Perks"),
                 CC.translate("&5&l* &dx2 Xp Rates"),
-                CC.translate("&5&l* &dAccess to Nebula /kit"),
+                CC.translate("&5&l* &dAccess to Nebula /kit &7(3 Days Cooldown)"),
                 CC.translate("&5&l* &dAccess to &f/chatcolor"),
                 CC.translate("&5&l* &d999 homes"),
-                CC.translate("&5&l* &d999 playervaults"),
+                CC.translate("&5&l* &d99 playervaults"),
                 CC.translate("&5&l* &dx3 Fly Boost"),
                 CC.translate("&5&l* &dAccess to private giveaways"),
                 CC.translate("&5&l* &dAccess to &f/armorcolor"),
                 CC.translate("&5&l* &d5% Chance To Keep Lootbox"),
-                CC.translate("&5&l* &dNeblua Prefix"),
+                CC.translate("&5&l* &dNebula Prefix"),
                 CC.translate("&5&l* &dAccess To Nebula Shop"),
                 CC.translate("&5&l* &dand much more..."),
                 "",
@@ -102,7 +102,7 @@ public class NebulaRank extends CosmicItem implements InventoryInteractable {
         player.sendMessage("");
 
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(CC.translate("&8[&a&lAstro&e&lPvP&8] &5" + player.getName() + "&f has unlocked the &5Nebula Rank&f!"));
+        Bukkit.broadcastMessage(CC.translate("&8[&6&lAstro&f&lPvP&8] &5" + player.getName() + "&f has unlocked the &5Nebula Rank&f!"));
         Bukkit.broadcastMessage(CC.translate("&7Purchase this rank on &f&nbuy.astropvp.net&7! (/buy)"));
         Bukkit.broadcastMessage("");
     }

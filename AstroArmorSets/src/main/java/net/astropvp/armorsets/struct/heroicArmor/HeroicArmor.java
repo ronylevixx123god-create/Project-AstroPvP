@@ -7,6 +7,9 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import net.astropvp.armorsets.utils.Pair;
+import net.astropvp.armorsets.utils.modifiers.AttributeModifier;
+import net.astropvp.armorsets.utils.modifiers.ModifierType;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Color;
 import org.bukkit.Material;
@@ -16,6 +19,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @Getter
@@ -53,6 +57,8 @@ public enum HeroicArmor {
                 meta.spigot().setUnbreakable(true);
                 meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
                 item.setItemMeta(meta);
+                Pair<ModifierType, Double> modifierTypePair = new Pair<>(ModifierType.ATTACK_DAMAGE, 7D);
+                item= AttributeModifier.applyModifications(item, Collections.singletonList(modifierTypePair));
             } else {
                 item = new ItemBuilder(armor.type).setColor(Color.RED)
                         .setName(armor.display)

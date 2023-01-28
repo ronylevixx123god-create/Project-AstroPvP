@@ -7,6 +7,7 @@ import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
+import de.tr7zw.nbtapi.NBTItem;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
@@ -16,6 +17,8 @@ import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.armorsets.utils.Pair;
+import net.astropvp.armorsets.utils.modifiers.AttributeModifier;
+import net.astropvp.armorsets.utils.modifiers.ModifierType;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.cache.CacheManager;
 import net.astropvp.core.utils.cache.CachedPlayer;
@@ -24,6 +27,7 @@ import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.LeatherArmorMeta;
@@ -307,7 +311,7 @@ public class AstroArmorSetsAPI {
     public static boolean isHeroic(ItemStack item) {
         if (item == null)
             return false;
-        if (!item.getType().name().contains("LEATHER") && !item.getType().name().contains("GOLD_"))
+        if (!item.getType().name().contains("LEATHER") && item.getType() != Material.GOLD_SWORD  &&item.getType() != Material.GOLD_AXE)
             return false;
 
         NBTWrapper wrapper = new NBTWrapper(item);
@@ -484,7 +488,14 @@ public class AstroArmorSetsAPI {
         wrapper.setNBTBase("cosmicData", cosmicData.get());
 
 
-        return wrapper.build();
+        ItemStack tempItem = wrapper.build();
+        ItemMeta meta = tempItem.getItemMeta();
+        meta.spigot().setUnbreakable(true);
+        meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);
+        meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
+        tempItem.setItemMeta(meta);
+        Pair<ModifierType, Double> modifierTypePair = new Pair<>(ModifierType.ATTACK_DAMAGE, 7D);
+        return AttributeModifier.applyModifications(tempItem, Collections.singletonList(modifierTypePair));
     }
 
     public static ItemStack createArmorSetUpgrade(ArmorSetType armorset, double successRate) {

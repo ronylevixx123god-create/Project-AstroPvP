@@ -22,9 +22,7 @@ public class HeroicBarbarian extends HeroicCustomEnchantment {
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        if (player.getEquipment().getItemInHand().getType().name().contains("_AXE")) {
-            e.setDamage(e.getDamage()*1.1);
-        }
+
         final boolean enemyHasAxe = playerHit.getEquipment().getItemInHand().getType().name().contains("_AXE");
         if (!enemyHasAxe) {
             return;

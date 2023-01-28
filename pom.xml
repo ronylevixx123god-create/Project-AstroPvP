@@ -9,6 +9,7 @@
     <packaging>pom</packaging>
     <version>1.0</version>
 
+
     <modules>
         <module>Utils</module>
         <module>Ark</module>
@@ -96,6 +97,7 @@
         <luckperms-version>5.4</luckperms-version>
         <essentials-version>2.17.2</essentials-version>
         <protocol-lib-version>4.7.0</protocol-lib-version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
     <repositories>

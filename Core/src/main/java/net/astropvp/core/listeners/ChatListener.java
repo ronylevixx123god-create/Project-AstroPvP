@@ -190,6 +190,9 @@ public class ChatListener implements Listener {
             }
 
             ChatColor chatcolor = AstroCore.getInstance().getAstroPlayerManager().getAstroPlayer(player.getUniqueId()).getChatColor();
+            if (player.isOp()) {
+                chatcolor = ChatColor.DARK_RED;
+            }
             String[] messageSplit = message.split(" ");
             StringBuilder newMessage = new StringBuilder();
             for (String s : messageSplit) {

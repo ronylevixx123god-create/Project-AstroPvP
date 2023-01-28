@@ -504,6 +504,8 @@ public class AstroCore extends JavaPlugin {
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RogueScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new ApolloRank());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new NebulaRank());
+        CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new GalaxyRank());
+
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new RevokeScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new SlotbotScratchCard());
         CosmicSkyCustomItems.get().getItemManager().registerCustomItem(new HolyWhitescrollItem());
