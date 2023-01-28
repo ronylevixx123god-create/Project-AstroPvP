@@ -47,7 +47,7 @@ implements Listener {
     SelfDestructListener() {
     }
 
-    @EventHandler(priority=EventPriority.LOWEST)
+    @EventHandler
     public void onBlockExplode(EntityExplodeEvent e) {
         if (e.getEntity() != null && SelfDestruct.tntList.containsKey(e.getEntity().getUniqueId())) {
             e.setYield(0.0f);

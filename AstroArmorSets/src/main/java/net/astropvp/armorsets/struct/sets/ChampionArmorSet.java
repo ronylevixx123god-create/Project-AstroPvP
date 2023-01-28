@@ -18,6 +18,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
@@ -58,7 +59,7 @@ public class ChampionArmorSet extends ArmorSet {
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 8 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("championSetDamageIncrease") * 0.01));
-        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
+        event.setDamage( event.getDamage() * (1 + (increasePercent * amount * 0.01)));
         if (Math.random() < 0.025) {
             activateChampionAbility(attacker, (Player) attacked);
         }

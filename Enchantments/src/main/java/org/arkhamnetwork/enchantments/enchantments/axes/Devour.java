@@ -21,9 +21,9 @@ public class Devour extends CustomEnchantment
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player && Bleed.getBleedStack(target) > 0) {
-            if (GeneralUtil.isEffectedByRage(target)) {
-                return;
-            }
+//            if (GeneralUtil.isEffectedByRage(target)) {
+//                return;
+//            }
 
                 if (SinkOrSwipFlippers.insanityDevourSilenced.contains(user)) {
                     return;

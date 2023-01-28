@@ -10,6 +10,7 @@ import net.crankedpvp.arcade.listeners.SignListener;
 import net.crankedpvp.arcade.struct.ArcadeManager;
 import net.crankedpvp.arcade.tasks.ArcadeHiderTask;
 import net.crankedpvp.arcade.tasks.ArcadeRegionChecker;
+import net.crankedpvp.arcade.tasks.ArcadeTimerChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -19,6 +20,7 @@ public class ArcadePlugin extends JavaPlugin {
     private LanguageHandler languageHandler;
     private ArcadeRegionChecker arcadeRegionChecker;
     private ArcadeHiderTask arcadeHiderTask;
+    private ArcadeTimerChecker arcadeTimerChecker;
     private CommandManager commandManager;
 
     @Getter
@@ -34,8 +36,11 @@ public class ArcadePlugin extends JavaPlugin {
         this.arcadeManager = new ArcadeManager();
         this.arcadeRegionChecker = new ArcadeRegionChecker();
         this.arcadeHiderTask = new ArcadeHiderTask();
+        this.arcadeTimerChecker = new ArcadeTimerChecker();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, arcadeRegionChecker, 20L, 10L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, arcadeHiderTask, 20L, 5L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, arcadeHiderTask, 20L, 4L);
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, arcadeTimerChecker, 20L, 20L);
+
         getServer().getPluginManager().registerEvents(new ArcadeLogicListener(this), this);
         getServer().getPluginManager().registerEvents(new SignListener(), this);
 

@@ -1,22 +1,31 @@
 package net.crankedpvp.arcade.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import lombok.Getter;
+import lombok.Setter;
 import net.crankedpvp.arcade.ArcadeAPI;
+import net.crankedpvp.arcade.ArcadePlugin;
 import net.crankedpvp.arcade.language.Language;
+import net.crankedpvp.arcade.tasks.ArcadeTimerChecker;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerTeleportEvent;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.UUID;
 
 @Getter
 public class ArcadeManager {
     private List<ArcadeMatch> matches;
+    @Setter
+    private boolean enabled;
 
     public ArcadeManager() {
         this.matches = new ArrayList<>();
+        this.enabled = false;
     }
 
     public void endMatch(UUID uuid) {
@@ -78,8 +87,40 @@ public class ArcadeManager {
     }
 
     public void onDisable() {
-        for(ArcadeMatch arcadeMatch : matches) {
+        for (ArcadeMatch arcadeMatch : matches) {
             endMatch(arcadeMatch.getPlayers().getLeft());
+        }
+        matches.clear();
+    }
+
+    public String timeUntilArcadeEnabled() {
+        Calendar now = Calendar.getInstance();
+        int hour = now.get(Calendar.HOUR_OF_DAY);
+        int minutes = now.get(Calendar.MINUTE);
+        int seconds = now.get(Calendar.SECOND);
+        int nextOpenHour = Integer.MAX_VALUE;
+        for (int openHour : ArcadeTimerChecker.openhours) {
+            if (openHour > hour) {
+                nextOpenHour = openHour;
+                break;
+            }
+        }
+        if (nextOpenHour == Integer.MAX_VALUE) {
+            nextOpenHour = ArcadeTimerChecker.openhours.get(0);
+        }
+        int hoursUntilOpen = nextOpenHour - hour;
+        int minutesUntilOpen = (60 - minutes) + (60 * hoursUntilOpen);
+        int secondsUntilOpen = (60 - seconds) + (60 * (minutesUntilOpen));
+        return TimeUtils.formatSeconds(secondsUntilOpen);
+    }
+
+    public void closeArcade() {
+        for (ArcadeMatch arcadeMatch : matches) {
+            endMatch(arcadeMatch.getPlayers().getLeft());
+        }
+        for (Player player : Bukkit.getWorld(ArcadeAPI.WORLD_NAME).getPlayers()) {
+            player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            player.sendMessage(CC.translate("&c&l(!)&c The arcade warp has closed, check /arcade to see when it opens again!"));
         }
         matches.clear();
     }

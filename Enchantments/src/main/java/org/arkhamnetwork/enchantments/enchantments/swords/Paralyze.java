@@ -37,7 +37,7 @@ public class Paralyze
             return;
         }
         final double random = Math.random();
-        final double chance = (level == 3) ? 0.05 : (0.0175 * level);
+        final double chance = (level == 3) ? 0.05 : (0.075 * level);
         if (random < chance) {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 playerHit.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));

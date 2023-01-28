@@ -96,6 +96,14 @@ public class ArcadeLogicListener implements Listener {
     }
 
     @EventHandler
+    public void onTeleportArcadeDisabled(PlayerTeleportEvent event) {
+        if (event.getTo().getWorld().getName().equals(ArcadeAPI.WORLD_NAME) && !arcadeManager.isEnabled() && !event.getPlayer().isOp()) {
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot teleport to the arcade world while it is disabled!"));
+            event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
     public void teleportTo(PlayerTeleportEvent event) {
         if (event.getTo().getWorld().getName().equals(ArcadeAPI.WORLD_NAME) && event.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL && !event.getPlayer().hasPermission("cranked.admin")) {
             event.getPlayer().setFlying(false);

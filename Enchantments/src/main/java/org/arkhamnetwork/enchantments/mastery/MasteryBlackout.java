@@ -39,7 +39,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         if (relation != Relation.NEUTRAL && relation != Relation.ENEMY) {
             return;
         }
-        if (Math.random() < 0.002 * level) {
+        if (Math.random() < 0.01 * level) {
             procBlackout((Player) player, pTarget, level);
         }
     }
@@ -60,7 +60,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
             return;
         }
         player.setMetadata("BlackoutCooldown", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
-        long durationInTicks = (4 + level) * 20;
+        long durationInTicks = level * 20;
         if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CHRISTMAS_HELMET_STAR)) {
             durationInTicks *= (long)0.66;
         }
@@ -69,6 +69,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
 
         }
 
+        DamageIndicatorUtils.sendDamageIndicator(pTarget, "&5&l* BLACKOUT *", "blackout");
         player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + (int)(durationInTicks / 20L) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
         pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + durationInTicks/20 + "&7s] &5&l *"));
         pTarget.setMetadata("blackout", new FixedMetadataValue((Plugin)Enchantments.getInstance(), "banana"));

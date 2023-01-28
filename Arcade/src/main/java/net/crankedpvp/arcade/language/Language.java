@@ -28,7 +28,8 @@ public enum Language {
     TELEPORT_NO_SET,
     WHITELISTED_COMMANDS,
     BLACKLISTED_COMMAND,
-
+    ENABLED_MESSAGE,
+    CLOSED_MESSAGE
     ;
 
     private String value;

@@ -6,6 +6,7 @@ import me.mattstudios.mf.annotations.Permission;
 import me.mattstudios.mf.annotations.SubCommand;
 import me.mattstudios.mf.annotations.WrongUsage;
 import me.mattstudios.mf.base.CommandBase;
+import net.crankedpvp.arcade.ArcadeAPI;
 import net.crankedpvp.arcade.ArcadePlugin;
 import net.crankedpvp.arcade.language.Language;
 import net.crankedpvp.arcade.language.LanguageHandler;
@@ -45,4 +46,7 @@ public class ArcadeAdminCommand extends CommandBase {
         }
         sender.sendMessage(CC.translate("&cYeahhhh... We fucked up xD"));
     }
+
+
+
 }

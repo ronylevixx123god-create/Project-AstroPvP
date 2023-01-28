@@ -68,3 +68,7 @@ WHITELISTED_COMMANDS:
   - sc
   - near
   - enear
+ENABLED_MESSAGE:
+  - ""
+CLOSED_MESSAGE:
+  - ""

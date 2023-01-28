@@ -26,8 +26,15 @@ public class ArcadeGUI {
         }));
         Bukkit.getScheduler().scheduleSyncRepeatingTask(ArcadePlugin.getInstance(), () -> {
             color = DyeColor.values()[(color.ordinal() + 1) % DyeColor.values().length];
+            if (!ArcadePlugin.getInstance().getArcadeManager().isEnabled()) {
+                color = DyeColor.RED;
+            }
             this.arcadeGui.updateItem(4, new GuiItem(getArcadeItem(color), event -> {
-                ((Player) event.getWhoClicked()).chat("/warp arcade");
+                if (ArcadePlugin.getInstance().getArcadeManager().isEnabled()) {
+                    ((Player) event.getWhoClicked()).chat("/warp arcade");
+                } else {
+                    event.getWhoClicked().sendMessage(CC.translate("&d&l(!)&d The arcade warp opens in &f" + ArcadePlugin.getInstance().getArcadeManager().timeUntilArcadeEnabled() + "&d."));
+                }
             }));
         }, 1L, 10L);
 
@@ -49,7 +56,11 @@ public class ArcadeGUI {
                 .addLoreLine(CC.translate("&dCurrent Info:"))
                 .addLoreLine(CC.translate("&fPlayers: &7" + Bukkit.getWorld(ArcadeAPI.WORLD_NAME).getPlayers().size()))
                 .addLoreLine("")
+                .addLoreLine(CC.translate("&dStatus"))
+                .addLoreLine(CC.translate("&f" + (ArcadePlugin.getInstance().getArcadeManager().isEnabled() ? "&a&lOPEN" : "&c&lCLOSED &7(&fOpens in &d" + ArcadePlugin.getInstance().getArcadeManager().timeUntilArcadeEnabled() + "&7)")))
+                .addLoreLine("")
                 .addLoreLine(CC.translate("&7Click to teleport to the arcade."));
+
         return itemBuilder.build();
     }
 }

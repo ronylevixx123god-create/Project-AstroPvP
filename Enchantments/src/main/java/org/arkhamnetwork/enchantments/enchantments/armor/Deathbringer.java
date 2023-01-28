@@ -57,9 +57,9 @@ public class Deathbringer extends CustomEnchantment {
             final Entity damage = e.getDamager();
             if ((damage instanceof Projectile && DeathbringEvents.doubleDamage.contains(((Projectile) damage).getShooter())) || DeathbringEvents.doubleDamage.contains(damage)) {
                 final double random = Math.random();
-                final double chance = 0.1 * (DeathbringEvents.playerLevels.getOrDefault((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage, 1));
+                final double chance = 0.15 * (DeathbringEvents.playerLevels.getOrDefault((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage, 1));
                 if (random < chance) {
-                    e.setDamage(e.getDamage() * 1.2);
+                    e.setDamage(e.getDamage() * 1.5);
                 }
             }
         }

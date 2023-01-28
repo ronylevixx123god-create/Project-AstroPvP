@@ -16,6 +16,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -64,6 +65,7 @@ public class ArmorSetDamageListener implements Listener {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onAttackCrystal((Player) attacker, attacked, e, amount);
+
                 }
             }
 
@@ -98,10 +100,12 @@ public class ArmorSetDamageListener implements Listener {
             //crystals damaged
             if (cache != null && !cache.getCurrentSetCrystals().isEmpty()) {
                 Map<ArmorSetType, Integer> crystals = AstroArmorSetsAPI.getBonusCrystalsEquippedIncludingCorruption((Player) attacker, (Player) attacked);
+                if (attacked.hasMetadata("blackout")) return;
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
                     armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
+
                 }
             }
         }

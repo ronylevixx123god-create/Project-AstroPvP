@@ -33,14 +33,14 @@ public class Rage extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage() > 0.0D && user instanceof Player) {
+        if (!event.isCancelled() && user instanceof Player) {
 
             if (!(target instanceof Player)) {
                 return;
             }
-            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
-                return;
-            }
+//            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
+//                return;
+//            }
 
 
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);
@@ -95,9 +95,8 @@ public class Rage extends CustomEnchantment {
                 event.setDamage(event.getDamage() * (1 + rageDamage));
             }
 
-            if (rageStacksCache.getRageStack() > 1) {
                 this.playRageEffect(target.getLocation());
-            }
+
 
 
             rageStacksCache.incrementRageStack();
