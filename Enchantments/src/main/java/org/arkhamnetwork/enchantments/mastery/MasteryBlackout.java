@@ -39,7 +39,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         if (relation != Relation.NEUTRAL && relation != Relation.ENEMY) {
             return;
         }
-        if (Math.random() < 0.01 * level) {
+        if (Math.random() < 0.0075 * level) {
             procBlackout((Player) player, pTarget, level);
         }
     }

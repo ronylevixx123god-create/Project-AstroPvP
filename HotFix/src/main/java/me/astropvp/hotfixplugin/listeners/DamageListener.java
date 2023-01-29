@@ -199,7 +199,7 @@ public class DamageListener implements Listener {
             e.setCancelled(true);
         }
     }
-
+/*
     @EventHandler
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
@@ -227,7 +227,7 @@ public class DamageListener implements Listener {
                 e.setDamage(e.getDamage() * 0.5);
             }
         }
-    }
+    }*/
 
 
     @EventHandler
@@ -271,14 +271,14 @@ public class DamageListener implements Listener {
     }
 
 
-/*    @EventHandler
+   @EventHandler
     public void onDamageBoss(EntityDamageByEntityEvent e) {
         if (e.getDamager() instanceof Player && e.getEntity() != null) {
-            if (e.getEntity().hasMetadata("boss")) {
-                e.setDamage(e.getDamage() *5);
+            if (e.getEntity().hasMetadata("boss") && e.getEntity().getWorld().getName().equals("dungeon_yijki_a")) {
+                e.setDamage(e.getDamage() *3);
             }
         }
-    }*/
+    }
 
 
     @EventHandler(priority = EventPriority.LOWEST)
@@ -291,7 +291,7 @@ public class DamageListener implements Listener {
     }
 
 
-    @EventHandler(priority = EventPriority.HIGH)
+/*    @EventHandler(priority = EventPriority.HIGH)
     public void diaPvP(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
@@ -312,7 +312,7 @@ public class DamageListener implements Listener {
             e.setDamage(e.getDamage() * 1 + (dmgBuff*0.01));
 
         }
-    }
+    }*/
 
 
     @EventHandler
@@ -336,12 +336,12 @@ public class DamageListener implements Listener {
 
     }*/
 
-    @EventHandler(priority = EventPriority.MONITOR)
+/*    @EventHandler(priority = EventPriority.MONITOR)
     public void onDurabilityLoss(PlayerItemDamageEvent event) {
         event.getPlayer().updateInventory();
         event.setCancelled(true);
 
-    }
+    }*/
 
     @EventHandler
     public void onClickBookAndQuil(PlayerInteractEvent event) {

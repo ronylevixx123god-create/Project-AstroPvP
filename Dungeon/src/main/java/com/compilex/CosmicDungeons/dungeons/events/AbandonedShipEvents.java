@@ -165,10 +165,6 @@ extends DungeonEvents {
                         this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.TAG_TEAM);
                     }
                 }
-                if (tracker.size() == 1 && this.dungeon.getDungeonChallengesCompleted().contains((Object)DungeonChallenge.GUARDIAN) && (singleDamager = UUID.fromString((String)((Map.Entry)tracker.entrySet().stream().findFirst().orElse(null)).getKey())) != null && singleDamager.equals(this.singularDamager)) {
-                    Bukkit.getLogger().info("Granting OVERLORD due to " + singleDamager + " ONLY dealing damage to boss!");
-                    this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.OVERLORD);
-                }
                 this.checkForQuickKill(this.dungeon);
             }
         }

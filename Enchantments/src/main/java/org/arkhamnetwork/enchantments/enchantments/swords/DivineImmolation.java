@@ -182,7 +182,7 @@ public class DivineImmolation extends CustomEnchantment {
 
                     le.damage(damage);
 
-                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.35) {
                         pEnt.sendMessage(CC.translate("&e&l** SOUL HARVESTER [&7Blocked Divine Immolation&e&l] **"));
                         continue;
                     }
@@ -215,7 +215,7 @@ public class DivineImmolation extends CustomEnchantment {
                     if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD) || (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && le instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) || player.hasMetadata("soulEnchantMultiplier")) {
                         multiplier += 0.25;
                     }
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 2 * 20, 1));
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 4 * 20, 1));
 
                     ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                     ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));

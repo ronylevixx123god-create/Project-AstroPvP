@@ -32,7 +32,7 @@ public class MobStackerUtils {
             for (int i = 0; i < mobMap.keySet().size(); i++) {
                 Entity entity  = (Entity) mobMap.keySet().toArray()[i];
                 if (!entity.isValid() || entity.isDead()) {
-                    mobMap.remove(entity);
+                     mobMap.remove(entity);
                     continue;
                 }
                 stackMobs(entity);

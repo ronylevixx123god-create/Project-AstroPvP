@@ -18,9 +18,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 
 public class Rage extends CustomEnchantment {
@@ -61,7 +59,7 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.resetRageStack();
             }
 
-            double rageDamage = (rageStacksCache.getRageStack()*Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier")) / 10F;
+            double rageDamage = (rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier")) / 10F;
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
@@ -95,8 +93,7 @@ public class Rage extends CustomEnchantment {
                 event.setDamage(event.getDamage() * (1 + rageDamage));
             }
 
-                this.playRageEffect(target.getLocation());
-
+            this.playRageEffect(target.getLocation());
 
 
             rageStacksCache.incrementRageStack();

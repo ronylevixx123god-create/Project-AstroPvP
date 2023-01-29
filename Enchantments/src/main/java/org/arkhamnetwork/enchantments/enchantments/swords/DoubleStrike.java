@@ -43,11 +43,9 @@ public class DoubleStrike
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double random = Math.random();
-        double chance = 0.05D * level;
+        double chance = 0.01D * level;
         if (random < chance) {
-            double dmg = e.getFinalDamage();
-            if (dmg == 0.0D)
-                dmg = e.getFinalDamage();
+            double dmg = e.getDamage();
             final double fdmg = dmg;
             Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
 

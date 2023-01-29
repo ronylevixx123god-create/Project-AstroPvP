@@ -77,7 +77,7 @@ public enum CustomBlockType {
             CC.translate("&6&l* &eSpooky Aura: &f33% Less Phoenix Cooldown")
     ), Cauldron.class),
 
-    COSMIC_TOKEN_GENERATOR("Slotbot Opener", ChatColor.GREEN, 1000000, 1000000, Arrays.asList(
+    COSMIC_TOKEN_GENERATOR("Slotbot Opener", ChatColor.GREEN, 1000000, 150000, Arrays.asList(
             CC.translate("&7Roll all your slotbot tickets"),
             CC.translate("&7at once using the slotbot opener."),
             "",
@@ -85,7 +85,7 @@ public enum CustomBlockType {
             CC.translate("&7to collect all the loot from the bot.")
     ), SlotOpener.class),
 
-    SECURITY_SYSTEM("Key Opener", ChatColor.AQUA, 1000000, 1000000, Arrays.asList(
+    SECURITY_SYSTEM("Key Opener", ChatColor.AQUA, 1000000, 150000, Arrays.asList(
             CC.translate("&7Open all your cratekeys"),
             CC.translate("&7at once using the key opener."),
             "",
@@ -93,7 +93,7 @@ public enum CustomBlockType {
             CC.translate("&7to collect all the loot from the keys.")
     ), KeyOpener.class),
 
-    BLAZE_STONE_TOTEM("Auto Mob Grinder", ChatColor.RED, 1000000, 1000000, Arrays.asList(
+    BLAZE_STONE_TOTEM("Auto Mob Grinder", ChatColor.RED, 1000000, 150000, Arrays.asList(
             CC.translate("&7Automatically grinds Blazes"),
             CC.translate("&7in a 1 block radius from the block."),
             "",

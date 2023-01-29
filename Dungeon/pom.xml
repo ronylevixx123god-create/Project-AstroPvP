@@ -148,6 +148,20 @@
         <!-- System Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>shop</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicShop.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>cr</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCrateKeys.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>guard</artifactId>
             <version>0.1</version>
             <scope>system</scope>

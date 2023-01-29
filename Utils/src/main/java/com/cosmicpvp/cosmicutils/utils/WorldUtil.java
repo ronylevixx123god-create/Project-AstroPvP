@@ -70,7 +70,7 @@ public class WorldUtil {
         }
         worlds.remove(world.getName().toLowerCase());
         console.worlds.remove((Object) handle);
-        WorldUtil.unloadRegionFolder(world, null);
+        //WorldUtil.unloadRegionFolder(world, null);
         return true;
     }
 
@@ -107,7 +107,7 @@ public class WorldUtil {
                 WorldUtil.removeFiles(fil);
             }
         }
-        WorldUtil.removeFromCache(file);
+        //WorldUtil.removeFromCache(file);
     }
 
     public static void removeFromCache(File file) {

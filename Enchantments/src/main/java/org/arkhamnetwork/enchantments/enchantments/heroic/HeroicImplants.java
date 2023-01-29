@@ -47,7 +47,7 @@ extends HeroicCustomEnchantment {
         super("Alien Implants", "Implants", GeneralUtil.helmets, 2);
         this.max = 3;
         Bukkit.getPluginManager().registerEvents((Listener)new HeroicImplantsListener(), (Plugin)Enchantments.getInstance());
-        final int healthIncrease = 2;
+        final int healthIncrease = 1;
         for (int i = 1; i <= this.max; ++i) {
             final int finalI = i;
             BukkitTask existing = heroicImplantTasks.get(i);

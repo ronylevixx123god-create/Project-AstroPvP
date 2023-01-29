@@ -241,8 +241,8 @@ public class EntityStackerListener implements Listener {
 
 
         if (enchants.containsKey(EnchantmentAPI.getEnchantment("Key Grind"))) {
-            grinderKeyChance *= 1.25;
-            godlyKeyChance *= 1.25;
+            grinderKeyChance *= 1.4;
+            godlyKeyChance *= 1.4;
         }
 
         double num = Math.random();

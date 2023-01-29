@@ -23,18 +23,18 @@ public class ArcadeTimerChecker extends BukkitRunnable {
         int hour = now.get(Calendar.HOUR_OF_DAY);
         if (openhours.contains(hour)) {
             if (!arcadeManager.isEnabled()) {
+                arcadeManager.setEnabled(true);
                 for (String msg : Language.ENABLED_MESSAGE.getValuesAsList()) {
                     Bukkit.broadcastMessage(CC.translate(msg));
                 }
-                arcadeManager.setEnabled(true);
             }
         } else {
             if (arcadeManager.isEnabled()) {
+                arcadeManager.setEnabled(false);
+                arcadeManager.closeArcade();
                 for (String msg : Language.CLOSED_MESSAGE.getValuesAsList()) {
                     Bukkit.broadcastMessage(CC.translate(msg));
                 }
-                arcadeManager.setEnabled(false);
-                arcadeManager.closeArcade();
             }
         }
     }
