@@ -58,7 +58,7 @@ public class HeroicDiminish extends CustomEnchantment {
         double random = Math.random();
         double procChance = 0.02D * level;
         if (random < procChance) {
-            e.setDamage(e.getDamage() / 2.0D);
+            //e.setDamage(e.getDamage() / 2.0D);
             player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), e.getFinalDamage() / 2.0D));
             ((Player)player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getFinalDamage() / 2.0D) + ChatColor.BOLD + "] *");
         }

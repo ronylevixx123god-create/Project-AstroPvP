@@ -2,6 +2,7 @@ package me.kingsavaqe.astrotournaments.utils;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
@@ -11,6 +12,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -86,18 +88,14 @@ public class Utils {
         player.getInventory().setChestplate(null);
         player.getInventory().setLeggings(null);
         player.getInventory().setBoots(null);
-        try {
-            PlayerPotionEffects.untrackPotionEffect(player, new SpecificCustomEnchantment(EnchantmentAPI.getEnchantment("gears"), 3));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        try {
-            PlayerPotionEffects.untrackPotionEffect(player, new SpecificCustomEnchantment(EnchantmentAPI.getEnchantment("gears"), 4));
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-        PlayerPotionEffectListener.rescanPlayerArmor(player);
-
+        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
+            @Override
+            public void run() {
+                if (!player.getPlayer().isDead() && player.getPlayer().isValid()) {
+                    PlayerPotionEffectListener.rescanPlayerArmor(player);
+                }
+            }
+        }, 11L);
     }
 
     public static double round(double value, int precision) {

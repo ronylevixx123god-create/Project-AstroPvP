@@ -97,9 +97,16 @@ public class ArcadeLogicListener implements Listener {
 
     @EventHandler
     public void onTeleportArcadeDisabled(PlayerTeleportEvent event) {
-        if (event.getTo().getWorld().getName().equals(ArcadeAPI.WORLD_NAME) && !arcadeManager.isEnabled() && !event.getPlayer().isOp()) {
+        if (event.getTo().getWorld().getName().equals(ArcadeAPI.WORLD_NAME) && !arcadeManager.isEnabled() && !event.getPlayer().isOp() && event.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot teleport to the arcade world while it is disabled!"));
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void onJoinInDisabledArcade(PlayerJoinEvent event) {
+        if (!arcadeManager.isEnabled() && event.getPlayer().getLocation().getWorld().getName().equals(ArcadeAPI.WORLD_NAME)) {
+            event.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
     }
 

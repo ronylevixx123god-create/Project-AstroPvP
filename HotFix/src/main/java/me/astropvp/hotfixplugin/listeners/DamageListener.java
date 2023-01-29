@@ -272,10 +272,10 @@ public class DamageListener implements Listener {
 
 
    @EventHandler
-    public void onDamageBoss(EntityDamageByEntityEvent e) {
-        if (e.getDamager() instanceof Player && e.getEntity() != null) {
+    public void onDamageBoss(EntityDamageEvent e) {
+        if (e.getEntity() != null && (!(e.getEntity() instanceof Player))) {
             if (e.getEntity().hasMetadata("boss") && e.getEntity().getWorld().getName().equals("dungeon_yijki_a")) {
-                e.setDamage(e.getDamage() *3);
+                e.setDamage(e.getDamage() *4);
             }
         }
     }
@@ -336,12 +336,12 @@ public class DamageListener implements Listener {
 
     }*/
 
-/*    @EventHandler(priority = EventPriority.MONITOR)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onDurabilityLoss(PlayerItemDamageEvent event) {
-        event.getPlayer().updateInventory();
+        //event.getPlayer().updateInventory();
         event.setCancelled(true);
 
-    }*/
+    }
 
     @EventHandler
     public void onClickBookAndQuil(PlayerInteractEvent event) {

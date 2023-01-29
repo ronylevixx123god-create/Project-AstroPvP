@@ -1,5 +1,8 @@
 package net.astropvp.customblocks.struct.impl;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -11,6 +14,7 @@ import net.astropvp.customblocks.struct.abilities.ActivateAble;
 import net.astropvp.customblocks.struct.abilities.LevelAble;
 import net.astropvp.customblocks.struct.abilities.TickAble;
 import net.astropvp.customblocks.utils.config.ConfigManager;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 @Getter
@@ -34,8 +38,18 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
     @SneakyThrows
     @Override
     public void onClick(Player clicker) {
-        AutoGrinderGui autoGrinderGui = new AutoGrinderGui(clicker, this);
-        autoGrinderGui.getGui().open(clicker);
+        if (clicker.isSneaking()) {
+            if (EconomyUtils.hasBalance((OfflinePlayer) clicker, this.getActivationPrice())) {
+                this.activate((Player) clicker);
+                EconomyUtils.withdrawBalance((OfflinePlayer) clicker, this.getActivationPrice());
+                clicker.sendMessage(CC.translate("&c&l- " + NumberUtils.formatMoney(this.getActivationPrice())));
+            } else {
+                clicker.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate this auto grinder!"));
+            }
+        } else {
+            AutoGrinderGui autoGrinderGui = new AutoGrinderGui(clicker, this);
+            autoGrinderGui.getGui().open(clicker);
+        }
     }
 
     @Override

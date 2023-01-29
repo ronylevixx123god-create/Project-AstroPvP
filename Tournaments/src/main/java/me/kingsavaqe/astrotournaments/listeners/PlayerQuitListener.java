@@ -31,7 +31,8 @@ public class PlayerQuitListener implements Listener {
         TournamentPlayer player2;
 
         if(astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
-        for(TournamentMatch tournamentMatch : astroTournamentsPlugin.getTournamentManager().getTournamentMatchList()) {
+        for (int i = 0; i < astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size(); i++) {
+            TournamentMatch tournamentMatch = astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().get(i);
             if(tournamentMatch.getPlayerOne() == player1 || tournamentMatch.getPlayerTwo() == player1) {
 
                 player1.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
@@ -88,7 +89,8 @@ public class PlayerQuitListener implements Listener {
         TournamentPlayer player2;
 
         if(astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
-        for(TournamentMatch tournamentMatch : astroTournamentsPlugin.getTournamentManager().getTournamentMatchList()) {
+        for (int i = 0; i < astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size(); i++) {
+            TournamentMatch tournamentMatch = astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().get(i);
             if(tournamentMatch.getPlayerOne() == player1 || tournamentMatch.getPlayerTwo() == player1) {
 
                 player1.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);

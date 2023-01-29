@@ -19,7 +19,7 @@ import java.util.concurrent.TimeUnit;
 import org.bukkit.ChatColor;
 
 public enum DungeonType {
-    ABANDONED_SHIP("dungeon_yijki_a", "Abandoned Ship", null, 0, AbandonedShipEvents.class, 2500000.0, -1.0, ChatColor.DARK_PURPLE, TimeUnit.DAYS.toMillis(7L), null, 5000000L),
+    ABANDONED_SHIP("dungeon_yijki_a", "Abandoned Ship", null, 0, AbandonedShipEvents.class, 25000000.0, -1.0, ChatColor.DARK_PURPLE, TimeUnit.DAYS.toMillis(7L), null, 50000000L),
     DESTROYED_OUTPOST("dungeon_destroyed_outpost", "Destroyed Outpost", null, 1, DestroyedOutpostEvents.class, 5000000.0, -1.0, ChatColor.DARK_RED, TimeUnit.DAYS.toMillis(14L), null, 25000000L),
     PLANET_NUL("dungeon_planet_nul", "Planet Nul", null, 2, PlanetNulEvents.class, 5000000.0, -1.0, ChatColor.DARK_GRAY, TimeUnit.DAYS.toMillis(14L), null, 25000000L);
 

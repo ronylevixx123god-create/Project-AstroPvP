@@ -30,7 +30,8 @@ public class TournamentDeathListener implements Listener {
         TournamentPlayer attacker;
 
         if(astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size() < 1) return;
-        for(TournamentMatch tournamentMatch : astroTournamentsPlugin.getTournamentManager().getTournamentMatchList()) {
+        for (int i = 0; i < astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().size(); i++) {
+            TournamentMatch tournamentMatch = astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().get(i);
             if(tournamentMatch.getPlayerOne() == victim || tournamentMatch.getPlayerTwo() == victim) {
 
 

@@ -131,7 +131,7 @@ public class CosmicKOTHPlugin
         this.baseName = this.getConfig().getString("outpost-name", "Stronghold");
         this.outpostManager = new OutpostManager();
         this.outpostManager.loadOutposts(this);
-        Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(14600), 20L, 20L);
+        Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(7300), 20L, 20L);
         CustomConfig.setup();
         CustomConfig.save();
         kothWins = CustomConfig.load();

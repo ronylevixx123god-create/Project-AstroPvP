@@ -66,6 +66,8 @@ extends CosmicGUI {
     public void redraw() {
         int index = 0;
         for (DungeonType dungeonType : DungeonType.values()) {
+            if (dungeonType == DungeonType.DESTROYED_OUTPOST) continue;
+            if (dungeonType == DungeonType.PLANET_NUL) continue;
             if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)dungeonType)) continue;
             DungeonKeyItem item = new DungeonKeyItem(dungeonType);
             ItemBuilder builder = new ItemBuilder(item.build());

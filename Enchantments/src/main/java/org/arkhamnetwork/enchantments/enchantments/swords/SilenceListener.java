@@ -31,9 +31,9 @@ public final class SilenceListener implements Listener {
             int stacks = ((MetadataValue)e.getEntity().getMetadata("noDefenseProcs").get(0)).asInt();
             double extraStackDmg = 0.07 * (double)stacks;
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
-                e.setDamage(e.getDamage() * (1.3D + extraStackDmg));
+                e.setDamage(e.getDamage() * (1.35D + extraStackDmg));
             } else {
-                e.setDamage(e.getDamage() * (1.25 + extraStackDmg));
+                e.setDamage(e.getDamage() * (1.3 + extraStackDmg));
 
             }
 

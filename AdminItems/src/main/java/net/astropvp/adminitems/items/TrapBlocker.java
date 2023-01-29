@@ -3,6 +3,8 @@ package net.astropvp.adminitems.items;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import com.cosmicpvp.cosmicutils.utils.PVPUtils;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.adminitems.AdminItemsPlugin;
 import net.astropvp.adminitems.AstroAdminItemsAPI;
 import net.astropvp.adminitems.cooldowns.AbilityCooldown;
@@ -95,9 +97,15 @@ public class TrapBlocker extends AdminItem implements Interactable {
                 String msg = Language.TRAP_BLOCKER_ENEMY_ON_COOLDOWN.getMessage().replace("%time%", cd);
                 msg = msg.replace("%enemy%", enemy.getName());
                 player.sendMessage(CC.translate(msg));
-            } else {
-                trapBlockedPossibleList.add(uuid);
+
             }
+            if (AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.EASTER_2022_MUTATED_BACKPACK)) {
+                player.sendMessage("&c&l(!)&c " + enemy.getName() + " has bypassed your trapblocker due to his Door To Wonderland ItemSkin!");
+                continue;
+
+            }
+            trapBlockedPossibleList.add(uuid);
+
         }
         if (trapBlockedPossibleList.isEmpty()) {
             int uses = AstroAdminItemsAPI.getUsesFromFromItem(player.getItemInHand());

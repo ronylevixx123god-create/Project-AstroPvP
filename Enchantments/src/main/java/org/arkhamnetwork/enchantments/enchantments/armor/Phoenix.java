@@ -295,7 +295,7 @@ public class Phoenix extends CustomEnchantment {
             soulCost *= 2;
         }
 
-        soulCost = Math.min(soulCost, 8000);
+        soulCost = Math.min(soulCost, 2000);
         return soulCost;
     }
 
