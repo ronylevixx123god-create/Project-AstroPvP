@@ -36,7 +36,7 @@ public class PlayerListener implements Listener {
         Player damaged = (Player)((Object)event.getEntity());
 
         final double oldHealth = damaged.getHealth();
-        Bukkit.getScheduler().scheduleAsyncDelayedTask(CCVerify.get(), () -> {
+        Bukkit.getScheduler().scheduleSyncDelayedTask(CCVerify.get(), () -> {
             if (damaged.isDead()) {
                 return;
             }

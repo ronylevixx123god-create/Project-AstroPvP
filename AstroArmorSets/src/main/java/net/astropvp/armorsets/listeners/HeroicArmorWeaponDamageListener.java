@@ -10,12 +10,15 @@ import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.core.AstroCore;
 import net.astropvp.damagehandler.AstroDamageHandler;
+import org.bukkit.Material;
+import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class HeroicArmorWeaponDamageListener implements Listener {
 
@@ -49,5 +52,34 @@ public class HeroicArmorWeaponDamageListener implements Listener {
         double increaseAmount = AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicWeaponDamageIncrease");
         event.setDamage(event.getDamage()*1+ (increaseAmount/100));
 
+    }
+
+    @EventHandler
+    public void onHitP6(EntityDamageByEntityEvent e) {
+        if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
+        if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
+
+        if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
+            Player phurt = (Player) e.getEntity();
+            if (getProtectionReduction(phurt) != 0) {
+                double totalReduction = getProtectionReduction(phurt);
+                e.setDamage(e.getDamage() * (1 - (totalReduction * 0.01)));
+
+            }
+        }
+    }
+
+    public double getProtectionReduction(Player p) {
+        double decrease = 0;
+        for (ItemStack armorPiece : p.getInventory().getArmorContents()) {
+            if (armorPiece == null) continue;
+            if (armorPiece.getType() == Material.AIR) continue;
+            if (armorPiece.containsEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL)) {
+                int protLevel = armorPiece.getEnchantmentLevel(Enchantment.PROTECTION_ENVIRONMENTAL);
+                if (protLevel == 6) decrease += AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("prot6Reduction");
+                if (protLevel == 5) decrease += AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("prot5Reduction");
+            }
+        }
+        return decrease;
     }
 }

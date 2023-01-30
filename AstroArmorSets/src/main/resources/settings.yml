@@ -21,3 +21,6 @@ omniSetDamageDecrease: 15
 
 heroicDamageDecrease: 15
 heroicWeaponDamageIncrease: 15
+
+prot5Reduction: 4.5
+prot6Reduction: 7.5
