@@ -72,7 +72,7 @@ public class EListener implements Listener {
     }
 
     @SneakyThrows
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onHit(final EntityDamageByEntityEvent event) {
         if (EListener.excuse) {
             EListener.excuse = false;
@@ -172,7 +172,7 @@ public class EListener implements Listener {
         return 0;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDamaged(final EntityDamageEvent event) {
         if (!(event.getEntity() instanceof LivingEntity)) {
             return;
@@ -193,7 +193,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDamaged(final EntityDamageByBlockEvent event) {
         if (!(event.getEntity() instanceof LivingEntity)) {
             return;
@@ -206,7 +206,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDamageBlock(final BlockDamageEvent event) {
         if (event.getItemInHand().getType() != Material.DIAMOND_PICKAXE && event.getItemInHand().getType() != Material.IRON_PICKAXE) {
             return;
@@ -218,7 +218,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onBreakBlock(final BlockBreakEvent event) {
         for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItemInHand((LivingEntity) event.getPlayer())).entries()) {
             if (!event.getPlayer().hasMetadata("inInvisibleMaze")) {
@@ -232,7 +232,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(final PlayerInteractEvent event) {
         if (event.hasBlock() && event.hasItem() && (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) && event.getClickedBlock().getType() == Material.OBSIDIAN) {
             for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItemInHand((LivingEntity) event.getPlayer())).entries()) {
@@ -255,7 +255,7 @@ public class EListener implements Listener {
         return false;
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onInteract(final PlayerInteractEntityEvent event) {
         for (final Map.Entry<CustomEnchantment, Integer> entry : getValidEnchantments((LivingEntity) event.getPlayer(), this.getItems((LivingEntity) event.getPlayer())).entries()) {
             if (!event.getPlayer().hasMetadata("inInvisibleMaze")) {
@@ -264,7 +264,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEquip(final InventoryClickEvent event) {
         if (event.getInventory().getTitle().equals("container.crafting")) {
             if (event.getCurrentItem() == null && event.getCursor() == null) {
@@ -291,12 +291,12 @@ public class EListener implements Listener {
         new EEquip(event.getPlayer()).runTaskLater((Plugin) this.plugin, 1L);
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onConnect(final PlayerJoinEvent event) {
         EEquip.loadPlayer(event.getPlayer());
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onDisconnect(final PlayerQuitEvent event) {
         EEquip.unequipPlayer(event.getPlayer(), false);
         final TableTask found = this.tasks.remove(event.getPlayer().getName());
@@ -305,7 +305,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onProjectile(final ProjectileLaunchEvent event) {
         if (event.getEntity().getShooter() == null) {
             return;
@@ -401,7 +401,7 @@ public class EListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler(priority = EventPriority.MONITOR)
     public void onPrepareEnchant(final PrepareItemEnchantEvent event) {
         if (event.getItem() != null && event.getItem().hasItemMeta() && event.getItem().getItemMeta().hasLore() && event.getItem().getItemMeta().getLore().contains(this.tasks.get(event.getEnchanter().getName()).cantEnchant)) {
             event.setCancelled(true);

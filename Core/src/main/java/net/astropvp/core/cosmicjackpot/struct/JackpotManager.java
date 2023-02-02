@@ -127,7 +127,7 @@ public class JackpotManager {
         // contest is not used Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contest add " + winner.getUuid() + " lotteryMoneyWin " + winnings);
     }
 
-    public Inventory getJackpotConfirmMenu(int ticketsToBuy, double totalCost) {
+    public Inventory getJackpotConfirmMenu(int ticketsToBuy, long totalCost) {
         Inventory inv = Bukkit.createInventory(null, 9, "Confirm Ticket Purchase");
         for (int i = 5; i < 9; ++i) {
             inv.setItem(i, ItemUtils.createItem(Material.STAINED_GLASS_PANE, DyeColor.RED.getWoolData(), ChatColor.RED + ChatColor.BOLD.toString() + "Cancel Purchase", Lists.newArrayList(ChatColor.GRAY + "Click to " + ChatColor.RED + "cancel" + ChatColor.GRAY + " ticket purchase.")));

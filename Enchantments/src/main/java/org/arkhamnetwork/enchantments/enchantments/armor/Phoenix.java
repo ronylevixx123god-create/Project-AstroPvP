@@ -153,7 +153,7 @@ public class Phoenix extends CustomEnchantment {
                     Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                     return false;
                 }
-                if (damager.hasMetadata("bansheed")) {
+                if (damager.hasMetadata("bansheed") || damager.hasMetadata("champion_ability")) {
                     player.sendMessage("");
                     player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");
                     player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));

@@ -8,12 +8,14 @@ import net.crankedpvp.arcade.struct.ArcadeManager;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.time.ZoneId;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
+import java.util.TimeZone;
 
 public class ArcadeTimerChecker extends BukkitRunnable {
-    public static List<Integer> openhours = Arrays.asList(0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22);
+    public static List<Integer> openhours = Arrays.asList(0, 3, 6, 9, 12, 15, 18, 21);
     private ArcadeManager arcadeManager = ArcadePlugin.getInstance().getArcadeManager();
 
     @Override

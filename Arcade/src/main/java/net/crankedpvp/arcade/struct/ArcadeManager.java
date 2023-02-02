@@ -111,14 +111,16 @@ public class ArcadeManager {
         int hoursUntilOpen = nextOpenHour - hour;
         int minutesUntilOpen = (60 - minutes) + (60 * hoursUntilOpen);
         int secondsUntilOpen = (60 - seconds) + (60 * (minutesUntilOpen));
-        return TimeUtils.formatSeconds(secondsUntilOpen);
+        return TimeUtils.formatSeconds(secondsUntilOpen-3600);
     }
 
     public void closeArcade() {
-        for (ArcadeMatch arcadeMatch : matches) {
+        final List<ArcadeMatch> cloneMatches = new ArrayList<>(matches);
+        final List<Player> arcadePlayers = new ArrayList<>(Bukkit.getWorld(ArcadeAPI.WORLD_NAME).getPlayers());
+        for (ArcadeMatch arcadeMatch : cloneMatches) {
             endMatch(arcadeMatch.getPlayers().getLeft());
         }
-        for (Player player : Bukkit.getWorld(ArcadeAPI.WORLD_NAME).getPlayers()) {
+        for (Player player : arcadePlayers) {
             player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             player.sendMessage(CC.translate("&c&l(!)&c The arcade warp has closed, check /arcade to see when it opens again!"));
         }

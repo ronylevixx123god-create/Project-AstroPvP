@@ -1,6 +1,7 @@
 package me.astropvp.hotfixplugin.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.*;
 import com.rit.sucy.EnchantmentAPI;
@@ -29,6 +30,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -277,6 +279,13 @@ public class DamageListener implements Listener {
             if (e.getEntity().hasMetadata("boss") && e.getEntity().getWorld().getName().equals("dungeon_yijki_a")) {
                 e.setDamage(e.getDamage() *4);
             }
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onWaterPlace(BlockPlaceEvent event) {
+        if (event.isCancelled() && event.getPlayer().getWorld().getName().equals("dungeon_yijki_a") && !ItemUtils.isAirOrNull(event.getPlayer().getItemInHand()) && event.getPlayer().getItemInHand().getType().name().contains("BUCKET")) {
+            event.getPlayer().setVelocity(new Vector(0, -5, 0));
         }
     }
 

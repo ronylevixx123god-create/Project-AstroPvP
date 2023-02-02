@@ -54,7 +54,7 @@ implements CommandExecutor {
                     sender.sendMessage(ChatColor.RED + "Please enter a ticket amount between 0 and 1,000,000!");
                     return true;
                 }
-                double totalPrice = tickets * current.getTicketPrice();
+                long totalPrice = (long) tickets * current.getTicketPrice();
                 if (Arkkit.economy.getBalance(player) < totalPrice) {
                     sender.sendMessage(ChatColor.RED + "You cannot afford the total price of $" + manager.getMoneyFormat().format(totalPrice) + " for " + tickets + " tickets!");
                     return true;

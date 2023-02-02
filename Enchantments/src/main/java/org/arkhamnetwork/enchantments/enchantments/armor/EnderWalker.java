@@ -65,8 +65,8 @@ public class EnderWalker extends CustomEnchantment {
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (e.getCause() == EntityDamageEvent.DamageCause.WITHER || e.getCause() == EntityDamageEvent.DamageCause.POISON) {
             e.setCancelled(true);
-            final boolean heal = Math.random() <= level * 0.01;
-            if (heal && GeneralUtil.healPlayer(player, e.getDamage())) {
+            final boolean heal = Math.random() <= level * 0.15;
+            if (heal && GeneralUtil.healPlayer(player, e.getDamage(EntityDamageEvent.DamageModifier.BASE))) {
                 try {
                     de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayer((Player) player, player.getLocation(), 0,1,0,0.75f,35);
                 } catch (Exception exception) {
