@@ -39,7 +39,7 @@ public class ArcadePlugin extends JavaPlugin {
         this.arcadeTimerChecker = new ArcadeTimerChecker();
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, arcadeRegionChecker, 20L, 10L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, arcadeHiderTask, 20L, 4L);
-        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, arcadeTimerChecker, 20L, 20L);
+        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, arcadeTimerChecker, 20L, 20L);
 
         getServer().getPluginManager().registerEvents(new ArcadeLogicListener(this), this);
         getServer().getPluginManager().registerEvents(new SignListener(), this);
