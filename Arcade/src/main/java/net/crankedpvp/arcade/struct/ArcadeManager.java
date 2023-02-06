@@ -121,6 +121,7 @@ public class ArcadeManager {
             endMatch(arcadeMatch.getPlayers().getLeft());
         }
         for (Player player : arcadePlayers) {
+            player.closeInventory();
             player.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             player.sendMessage(CC.translate("&c&l(!)&c The arcade warp has closed, check /arcade to see when it opens again!"));
         }
