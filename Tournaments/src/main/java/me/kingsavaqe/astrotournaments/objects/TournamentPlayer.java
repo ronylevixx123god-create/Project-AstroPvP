@@ -187,12 +187,12 @@ public class TournamentPlayer implements KeyToSave {
     }
 
     public ItemStack getSword() {
-        ItemStack sword = EnchantmentBook.applyTransmogScroll(ItemUtil.applyCustomEnchantments(AstroArmorSetsAPI.convertArmorToHeroic(new ItemBuilder(Material.DIAMOND_SWORD, "&6&lTournament Sword")
+        ItemStack sword = EnchantmentBook.applyTransmogScroll(ItemUtil.applyCustomEnchantments(AstroArmorSetsAPI.convertItemToHeroic(new ItemBuilder(Material.DIAMOND_SWORD, "&6&lTournament Sword")
                 .addEnchantment(Enchantment.DAMAGE_ALL, 5)
                 .addEnchantment(Enchantment.DURABILITY, 3)
                 .addEnchantment(Enchantment.FIRE_ASPECT, 2)
                 .colorize()
-                .build(), HeroicArmor.SWORD), getSwordEnchants()));
+                .build()), getSwordEnchants()));
 
         if (swordSkin != null) {
             if (AstroTournamentsPlugin.instance.getTournamentManager().isBannedItemSkin(swordSkin)) {

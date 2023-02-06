@@ -88,14 +88,11 @@ public class Utils {
         player.getInventory().setChestplate(null);
         player.getInventory().setLeggings(null);
         player.getInventory().setBoots(null);
-        Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
-            @Override
-            public void run() {
-                if (!player.getPlayer().isDead() && player.getPlayer().isValid()) {
-                    PlayerPotionEffectListener.rescanPlayerArmor(player);
-                }
+        Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+            if (!player.getPlayer().isDead() && player.getPlayer().isValid()) {
+                PlayerPotionEffectListener.rescanPlayerArmor(player);
             }
-        }, 11L);
+        }, 20L);
     }
 
     public static double round(double value, int precision) {

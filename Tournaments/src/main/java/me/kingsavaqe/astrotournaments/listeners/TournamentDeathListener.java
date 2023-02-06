@@ -44,9 +44,11 @@ public class TournamentDeathListener implements Listener {
                     attacker = tournamentMatch.getPlayerOne();
                 }
 
-                for(TournamentPlayer player : astroTournamentsPlugin.getTournamentManager().getTournamentParticipants()) {
+                for (int j = 0; j < astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size(); j++) {
+                    TournamentPlayer player = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(i);
                     player.getPlayer().sendMessage(Utils.fixColor("&6Tournaments &8| &7" + attacker.getPlayer().getName() + " &ehas beaten the player &7" + victim.getPlayer().getName() + " &ein a tournament match"));
-                };
+
+                }
 
 
                 tournamentMatch.getArena().reset();

@@ -206,6 +206,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
     public void end() {
         for (TournamentPlayer tournamentPlayer : getTournamentParticipants()) {
+
             Utils.emptyInventory(tournamentPlayer.getPlayer());
             tournamentPlayer.setInTournament(false);
             tournamentPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);

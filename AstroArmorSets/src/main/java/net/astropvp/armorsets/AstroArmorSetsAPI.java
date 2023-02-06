@@ -460,12 +460,19 @@ public class AstroArmorSetsAPI {
         if (im instanceof LeatherArmorMeta) {
             ((LeatherArmorMeta) im).setColor(Color.RED);
         }
+        im.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
+
         item.setItemMeta(im);
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
         cosmicData.setBoolean("heroicArmor", true);
         wrapper.setNBTBase("cosmicData", cosmicData.get());
-        return wrapper.build();
+
+        ItemStack tempItem = wrapper.build();
+        NBTItem nbtItem = new NBTItem(tempItem);
+        nbtItem.setInteger("wine-armor-override", Objects.requireNonNull(HeroicArmor.getFromMaterial(tempItem.getType())).getReduction());
+        item = nbtItem.getItem();
+        return item;
     }
 
     public static ItemStack convertWeaponToHeroic(HeroicArmor type, ItemStack item) {

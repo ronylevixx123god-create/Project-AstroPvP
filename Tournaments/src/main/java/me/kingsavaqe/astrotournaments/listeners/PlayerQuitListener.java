@@ -44,8 +44,10 @@ public class PlayerQuitListener implements Listener {
                     player2 = tournamentMatch.getPlayerOne();
                 }
 
-                for(TournamentPlayer player : astroTournamentsPlugin.getTournamentManager().getTournamentParticipants()) {
+                for (int j = 0; j < astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size(); j++) {
+                    TournamentPlayer player = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(i);
                     player.getPlayer().sendMessage(Utils.fixColor("&6Tournaments &8| &7" + player2.getPlayer().getName() + " &ehas beaten the player &7" + player1.getPlayer().getName() + " &ein a tournament match"));
+
                 }
 
                 tournamentMatch.getArena().reset();
@@ -102,8 +104,10 @@ public class PlayerQuitListener implements Listener {
                     player2 = tournamentMatch.getPlayerOne();
                 }
 
-                for(TournamentPlayer player : astroTournamentsPlugin.getTournamentManager().getTournamentParticipants()) {
+                for (int j = 0; j < astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size(); j++) {
+                    TournamentPlayer player = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(i);
                     player.getPlayer().sendMessage(Utils.fixColor("&6Tournaments &8| &7" + player2.getPlayer().getName() + " &ehas beaten the player &7" + player1.getPlayer().getName() + " &ein a tournament match"));
+
                 }
 
                 tournamentMatch.getArena().reset();
