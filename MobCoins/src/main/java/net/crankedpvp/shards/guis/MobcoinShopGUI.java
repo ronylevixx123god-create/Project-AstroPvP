@@ -53,7 +53,7 @@ public class MobcoinShopGUI {
         }
 
     }
-i
+
     public ItemStack createUserInfoItem(MobcoinsUser shardsUser) {
         return new ItemBuilder(SkullUtils.getSkullFromPlayer(Bukkit.getPlayer(shardsUser.getOfflinePlayer().getUniqueId())))
                 .setName("&e&l"+shardsUser.getOfflinePlayer().getName() + "'s Mobcoins Info")

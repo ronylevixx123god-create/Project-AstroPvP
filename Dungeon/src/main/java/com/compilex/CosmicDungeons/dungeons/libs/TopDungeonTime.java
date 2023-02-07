@@ -119,7 +119,7 @@ public class TopDungeonTime {
                     }
                 });
             } else {
-                players.forEach(pl -> pl.sendMessage(CC.GoldB + "(!)" + CC.Gold + "Your group defeated the current fastest completion record for " + this.dungeonType.getDungeonName() + CC.Gold + ". However, because the dungeon has not yet been cleared 10 times this map, you will not receive the record time bonus."));
+                players.forEach(pl -> pl.sendMessage(CC.GoldB + "(!)" + CC.Gold + " Your group defeated the current fastest completion record for " + this.dungeonType.getDungeonName() + CC.Gold + ". However, because the dungeon has not yet been cleared 10 times this map, you will not receive the record time bonus."));
             }
             this.secondsCompletedIn = seconds;
             this.timeCompleted = System.currentTimeMillis();

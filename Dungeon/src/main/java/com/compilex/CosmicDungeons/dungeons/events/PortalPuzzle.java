@@ -44,9 +44,7 @@ public class PortalPuzzle {
 
     public PortalDirection findDirection(Location containingLocation) {
         for (Map.Entry<PortalDirection, List<Location>> entry : this.portalBlocks.entrySet()) {
-            System.out.println("[DEBUG] in loop size: " + entry.getValue().size());
             if (!entry.getValue().contains((Object)containingLocation)) continue;
-            System.out.println("[DEBUG] returned direction: " + (Object)((Object)entry.getKey()));
             return entry.getKey();
         }
         return null;

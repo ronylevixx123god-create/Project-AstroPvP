@@ -104,11 +104,11 @@ public enum DungeonType {
             cost *= 0.1;
         }*/
         if (this.getDungeonInstance().dungeonType == DungeonType.ABANDONED_SHIP) {
-            return 1000000;
+            return 10000000;
         } else if (this.getDungeonInstance().dungeonType == DungeonType.DESTROYED_OUTPOST) {
-            return 2500000;
+            return 25000000;
         } else {
-            return 5000000;
+            return 50000000;
         }
     }
 

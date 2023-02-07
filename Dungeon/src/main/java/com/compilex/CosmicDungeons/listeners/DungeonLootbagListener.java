@@ -116,8 +116,8 @@ implements Listener {
         boolean isDestroyed = dungeonType.equals((Object)DungeonType.DESTROYED_OUTPOST);
         ArrayList<ItemStack> loot = new ArrayList<ItemStack>();
         ThreadLocalRandom random = ThreadLocalRandom.current();
-        loot.add(ArkhamMoneyNotesAPI.getMoneyNote("Dungeon", 100000000));
-        loot.add(ExpBottles.getXpBottle(5000000, "Dungeon"));
+        loot.add(ArkhamMoneyNotesAPI.getMoneyNote("Dungeon", random.nextInt(100000000) + 50000000));
+        loot.add(ExpBottles.getXpBottle(random.nextInt(75000000) + 100000000, "Dungeon"));
         loot.add(CrateKeyItem.getItem(CrateType.OP));
         loot.add(CrateKeyItem.getItem(CrateType.OP));
         loot.add(CrateKeyItem.getItem(CrateType.OP));
@@ -139,8 +139,10 @@ implements Listener {
         int moneyToGive;
         boolean isDestroyedOutpost = dungeonType.equals((Object)DungeonType.DESTROYED_OUTPOST);
         ArrayList<ItemStack> loot = new ArrayList<ItemStack>();
-        loot.add(ArkhamMoneyNotesAPI.getMoneyNote("Dungeon", 100000000));
-        loot.add(ExpBottles.getXpBottle(5000000, "Dungeon"));
+        ThreadLocalRandom random = ThreadLocalRandom.current();
+
+        loot.add(ArkhamMoneyNotesAPI.getMoneyNote("Dungeon", random.nextInt(100000000) + 50000000));
+        loot.add(ExpBottles.getXpBottle(random.nextInt(75000000) + 100000000, "Dungeon"));
         loot.add(CrateKeyItem.getItem(CrateType.OP));
         loot.add(CrateKeyItem.getItem(CrateType.OP));
         loot.add(CrateKeyItem.getItem(CrateType.OP));

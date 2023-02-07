@@ -382,11 +382,13 @@ public class Dungeon {
     }
 
     public boolean playerHasCooldown(DungeonPlayer player) {
+        if (player.getBukkitPlayer().isOp()) return false;
         return !player.getCooldowns().canPlayerDoDungeon(this);
     }
 
     public boolean hasCompletedRecently(DungeonPlayer playerData, long hoursToCheck) {
         Long lastCompleted = playerData.getLastCompleted().get((Object)this.getDungeonType());
+        if (playerData.getBukkitPlayer().isOp()) return true;
         return lastCompleted != null && System.currentTimeMillis() - lastCompleted <= TimeUnit.HOURS.toMillis(hoursToCheck);
     }
 

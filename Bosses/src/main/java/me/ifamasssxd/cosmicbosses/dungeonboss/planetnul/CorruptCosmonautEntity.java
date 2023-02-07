@@ -56,7 +56,12 @@ public class CorruptCosmonautEntity extends EntitySkeleton {
                     if (event.getTarget() == null) {
                         this.setGoalTarget(null);
                     } else {
-                        this.setGoalTarget((EntityLiving) ((CraftEntity) event.getTarget()).getHandle());
+                        try {
+                            this.setGoalTarget((EntityLiving) ((CraftEntity) event.getTarget()).getHandle());
+
+                        } catch (Exception e) {
+
+                        }
                     }
                 }
             }

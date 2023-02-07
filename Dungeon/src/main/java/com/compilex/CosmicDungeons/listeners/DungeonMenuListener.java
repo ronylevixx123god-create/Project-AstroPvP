@@ -237,6 +237,7 @@ implements Listener {
             }
             inv.setItem(dungeon.getHeroicDungeonKeyMenuSlot() + 9, ItemUtils.addGlow(ItemUtils.buildItem(Material.WATCH, (short)0, heroicBeenCompleted ? CC.AquaB + "Heroic Dungeon has not been completed!" : CC.AquaB + "Heroic Dungeon Run Analytics", fastestLore)));
             boolean hasCompletedPreviousRecently = false;
+
             if (dungeon.isAbandondedSpaceship()) {
                 hasCompletedPreviousRecently = true;
             } else if (dungeon.isDestroyedOutpost()) {
@@ -250,6 +251,10 @@ implements Listener {
                 inv.setItem(dungeon.getDungeonKeyMenuSlot(), ItemUtils.buildItem(Material.STAINED_GLASS_PANE, (short)4, (Object)ChatColor.YELLOW + "" + (Object)ChatColor.BOLD + "REBUILDING", (Object)ChatColor.GRAY + "Your loot cooldown for this dungeon", (Object)ChatColor.GRAY + "expires in: " + (Object)ChatColor.UNDERLINE + com.compilex.CosmicDungeons.utils.TimeUtils.formatDifference(DungeonsAPI.get().getPlayerDungeonData(p).getCooldowns().getCooldown(dungeon)), "", (Object)ChatColor.GRAY + "You cannot earn rewards from this", (Object)ChatColor.GRAY + "dungeon until your cooldown expires."));
             } else if ((hasKeyPermission || (hasKey = dungeon.playerHasKey(p))) && hasCompletedPreviousRecently) {
                 inv.setItem(dungeon.getDungeonKeyMenuSlot(), ItemUtils.buildItem(Material.TRIPWIRE_HOOK, (short)0, (Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + "UNLOCKED", "", (Object)ChatColor.GRAY + "You are eligible to enter the", (Object)ChatColor.GRAY + dungeon.getDungeonName() + " Portal", "", (Object)ChatColor.GRAY + "To access the portal, you must", (Object)ChatColor.GRAY + "either craft it yourself, or", (Object)ChatColor.GRAY + "find another player with one.", "", (Object)ChatColor.GRAY + "Dungeon Portals are very complex", (Object)ChatColor.GRAY + "crafting recipes that take time", (Object)ChatColor.GRAY + "to collect all the ingredients for."));
+            }
+            if (player.getBukkitPlayer().isOp()) {
+                hasCompletedPreviousRecently = true;
+                hasKeyPermission = true;
             }
             if ((atSlot = inv.getItem(dungeon.getDungeonKeyMenuSlot())) != null && atSlot.getType() != Material.AIR) continue;
             ArrayList locked = new ArrayList();

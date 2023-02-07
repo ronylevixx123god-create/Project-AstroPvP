@@ -109,11 +109,7 @@ import com.compilex.CosmicDungeons.struct.DungeonChallenge;
 import com.compilex.CosmicDungeons.utils.ChatUtils;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.earth2me.essentials.User;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
 import com.google.common.collect.Lists;
@@ -203,6 +199,7 @@ implements CommandExecutor {
     private Map<Location, Boolean> extraChests;
     private boolean airlockKeyUnlocked = false;
     public int randomParkourChosen;
+    private double MONEY_REWARD = 500000000;
 
     public PlanetNulEvents(Dungeon d) {
         super(d);
@@ -479,7 +476,6 @@ implements CommandExecutor {
                 DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p2);
                 if (dp == null || dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this.dungeon)) continue;
                 ++total;
-                Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("contests add " + p2.getName() + " dungeonsCompleted 1"));
                 Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(p2, "DUNGEON_COMPLETE", new Object[]{this.dungeon.dungeonType.name()}));
                 if (!dp.getCooldowns().canPlayerDoDungeon(this.dungeon)) {
                     p2.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot receive rewards from the " + this.dungeon.getDungeonName() + (Object)ChatColor.RED + " dungeon for " + TimeUtils.formatDifference(dp.getCooldowns().getCooldown(this.dungeon)) + ".");
@@ -491,10 +487,10 @@ implements CommandExecutor {
                 }
                 validLooters.add(p2.getUniqueId());
                 p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
-                p2.sendMessage(CC.translate((String)"&a&l+ $30,000,000 (&7Planet Nul dungeon complete!&a&l)"));
+                p2.sendMessage(CC.translate((String)"&a&l+ $" + NumberUtils.formatMoney(MONEY_REWARD) +  " (&7Planet Nul dungeon complete!&a&l)"));
                 User eUser = CosmicDungeonsPlugin.get().ess3.getUser(p2);
                 try {
-                    eUser.setMoney(eUser.getMoney().add(new BigDecimal(25000000)));
+                    eUser.setMoney(eUser.getMoney().add(new BigDecimal(MONEY_REWARD)));
                 }
                 catch (MaxMoneyException e) {
                     e.printStackTrace();
@@ -719,6 +715,7 @@ implements CommandExecutor {
                 }, 1L);
             }
         }
+
         return false;
     }
 

@@ -142,7 +142,6 @@ public class DestroyedOutpostDungeon
         HashSet<String> factionIdsToCredit = new HashSet<String>();
         String playerList = "";
         boolean firstToComplete = !this.hasBeenDefeated;
-        boolean armorSetsEnabled = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
         if (firstToComplete) {
             CosmicDungeonsPlugin.get().getConfig().set("destroyedOutpostDefeated", (Object) true);
             CosmicDungeonsPlugin.get().saveConfig();
@@ -258,7 +257,6 @@ public class DestroyedOutpostDungeon
             }
         }
         Bukkit.broadcastMessage((String) "");
-        factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("fquests add DUNGEON_MASTER " + tag)));
     }
 
     @Override

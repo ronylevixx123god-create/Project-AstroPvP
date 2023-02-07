@@ -66,8 +66,6 @@ extends CosmicGUI {
     public void redraw() {
         int index = 0;
         for (DungeonType dungeonType : DungeonType.values()) {
-            if (dungeonType == DungeonType.DESTROYED_OUTPOST) continue;
-            if (dungeonType == DungeonType.PLANET_NUL) continue;
             if (CosmicDungeonsPlugin.get().getDisabledDungeons().contains((Object)dungeonType)) continue;
             DungeonKeyItem item = new DungeonKeyItem(dungeonType);
             ItemBuilder builder = new ItemBuilder(item.build());
@@ -104,7 +102,7 @@ extends CosmicGUI {
         for (int i = 0; i < this.size; ++i) {
             ItemStack found = this.inventory.getItem(i);
             if (found != null && found.getType() != Material.AIR) continue;
-            this.setItem(i, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, "", new String[0]).data((short)DyeColor.GRAY.getDyeData()).build()));
+            this.setItem(i, new InventoryItem(new ItemBuilder(Material.STAINED_GLASS_PANE, "&7 ", new String[0]).data((short)DyeColor.GRAY.getDyeData()).build()));
         }
     }
 }
