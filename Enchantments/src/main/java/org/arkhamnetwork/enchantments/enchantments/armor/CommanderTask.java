@@ -41,6 +41,9 @@ extends BukkitRunnable {
                 continue;
             }
             Player p = Bukkit.getPlayer((String)playerName);
+            String worldAttacker = p.getWorld().getName();
+            boolean isDungeonWorld = worldAttacker.equals("dungeon_yijki_a") || worldAttacker.equals("dungeon_destroyed_outpost") || worldAttacker.equals("dungeon_planet_nul");
+            if (isDungeonWorld) continue;
             Location l = p.getEyeLocation().add(0.0, 0.5, 0.0);
             int x = 0;
             for (Entity ent : p.getNearbyEntities((double)(level * 2 + 3), (double)(level * 2 + 3), (double)(level * 2 + 3))) {

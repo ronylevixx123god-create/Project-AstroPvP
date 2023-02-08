@@ -10,9 +10,7 @@ import com.astropvp.cc.util.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.entity.EnderPearl;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.Player;
+import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -28,55 +26,97 @@ public class PlayerListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageByEntityEvent event){
-        if(!(event.getDamager() instanceof Player) || !(event.getEntity() instanceof Player))
+        if(!(event.getDamager() instanceof Player))
             return;
         if (event.isCancelled())
             return;
-        Player damager = (Player)((Object)event.getDamager());
-        Player damaged = (Player)((Object)event.getEntity());
+        Player damager = (Player) ((Object) event.getDamager());
+        String worldAttacker = event.getDamager().getWorld().getName();
+        boolean isDungeonWorld = worldAttacker.equals("dungeon_yijki_a") || worldAttacker.equals("dungeon_destroyed_outpost") || worldAttacker.equals("dungeon_planet_nul");
 
-        final double oldHealth = damaged.getHealth();
-        Bukkit.getScheduler().scheduleSyncDelayedTask(CCVerify.get(), () -> {
-            if (damaged.isDead()) {
-                return;
-            }
-            double healthDifference = Math.round(damaged.getHealth() - oldHealth);
-            if (healthDifference >= 0.0) {
-                return;
-            }
+        if (!(event.getEntity() instanceof Player)) {
+             if (!isDungeonWorld) return;
+            LivingEntity damaged = (LivingEntity) event.getEntity();
 
-            healthDifference = healthDifference*-1;
+            final double oldHealth = damaged.getHealth();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(CCVerify.get(), () -> {
+                if (damaged.isDead()) {
+                    return;
+                }
+                double healthDifference = Math.round(damaged.getHealth() - oldHealth);
+                if (healthDifference >= 0.0) {
+                    return;
+                }
 
-            if (healthDifference > 44) {
-                healthDifference = 44;
-            }
+                healthDifference = healthDifference * -1;
 
-            CosmicPlayer cDamager = CosmicPlayers.get().getCosmicPlayer((Player) event.getDamager());
-            cDamager.sendHealthBar(damaged);
-            CosmicPlayer cDamaged = CosmicPlayers.get().getCosmicPlayer(damaged);
-            cDamaged.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
-
-            Location place = updateDamageSplatLocation(event.getEntity().getLocation());
+                Location place = updateDamageSplatLocation(event.getEntity().getLocation());
 
 
-            PacketOutHitSplat hitSplat = new PacketOutHitSplat(new PacketOutHitSplat.HitSplatData(event.getEntity().getEntityId(),
-                    colorDamage(healthDifference),
-                    "HEALTH",
-                    place.getX(),
-                    place.getY(),
-                    place.getZ()));
+                PacketOutHitSplat hitSplat = new PacketOutHitSplat(new PacketOutHitSplat.HitSplatData(event.getEntity().getEntityId(),
+                        colorDamage(healthDifference),
+                        "HEALTH",
+                        place.getX(),
+                        place.getY(),
+                        place.getZ()));
 
-            for(CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()){
+                for (CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()) {
 
-                if(cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld())continue;
+                    if (cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld()) continue;
 
-                if(cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 15)continue;
+                    if (cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 15) continue;
 
-                if(cosmicPlayer.getPlayer() == event.getEntity())continue;
+                    if (cosmicPlayer.getPlayer() == event.getEntity()) continue;
 
-                cosmicPlayer.sendPacket(hitSplat);
-            }
-        }, 3L);
+                    cosmicPlayer.sendPacket(hitSplat);
+                }
+            }, 3L);
+        } else{
+            Player damaged = (Player) ((Object) event.getEntity());
+
+            final double oldHealth = damaged.getHealth();
+            Bukkit.getScheduler().scheduleSyncDelayedTask(CCVerify.get(), () -> {
+                if (damaged.isDead()) {
+                    return;
+                }
+                double healthDifference = Math.round(damaged.getHealth() - oldHealth);
+                if (healthDifference >= 0.0) {
+                    return;
+                }
+
+                healthDifference = healthDifference * -1;
+
+                if (healthDifference > 44) {
+                    healthDifference = 44;
+                }
+
+                CosmicPlayer cDamager = CosmicPlayers.get().getCosmicPlayer((Player) damager);
+                cDamager.sendHealthBar(damaged);
+                CosmicPlayer cDamaged = CosmicPlayers.get().getCosmicPlayer(damaged);
+                cDamaged.sendPacket(new PacketOutCooldown("Combat Tag", "DEBUFF", false, -43691, "Combat Tag", 15000, 15000, null, 283));
+
+                Location place = updateDamageSplatLocation(event.getEntity().getLocation());
+
+
+                PacketOutHitSplat hitSplat = new PacketOutHitSplat(new PacketOutHitSplat.HitSplatData(event.getEntity().getEntityId(),
+                        colorDamage(healthDifference),
+                        "HEALTH",
+                        place.getX(),
+                        place.getY(),
+                        place.getZ()));
+
+                for (CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()) {
+
+                    if (cosmicPlayer.getPlayer().getWorld() != event.getEntity().getWorld()) continue;
+
+                    if (cosmicPlayer.getPlayer().getLocation().distance(event.getEntity().getLocation()) > 15) continue;
+
+                    if (cosmicPlayer.getPlayer() == event.getEntity()) continue;
+
+                    cosmicPlayer.sendPacket(hitSplat);
+                }
+            }, 3L);
+        }
 
 
 

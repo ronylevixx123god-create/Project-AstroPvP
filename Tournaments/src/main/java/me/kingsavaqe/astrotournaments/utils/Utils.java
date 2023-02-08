@@ -13,6 +13,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.potion.PotionEffect;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -88,11 +89,14 @@ public class Utils {
         player.getInventory().setChestplate(null);
         player.getInventory().setLeggings(null);
         player.getInventory().setBoots(null);
+        for (PotionEffect pe : player.getActivePotionEffects()) {
+            player.removePotionEffect(pe.getType());
+        }
         Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
             if (!player.getPlayer().isDead() && player.getPlayer().isValid()) {
                 PlayerPotionEffectListener.rescanPlayerArmor(player);
             }
-        }, 20L);
+        }, 5L);
     }
 
     public static double round(double value, int precision) {

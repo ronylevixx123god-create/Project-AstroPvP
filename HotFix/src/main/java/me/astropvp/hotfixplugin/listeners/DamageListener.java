@@ -276,8 +276,10 @@ public class DamageListener implements Listener {
    @EventHandler
     public void onDamageBoss(EntityDamageEvent e) {
         if (e.getEntity() != null && (!(e.getEntity() instanceof Player))) {
-            if (e.getEntity().hasMetadata("boss") && e.getEntity().getWorld().getName().equals("dungeon_yijki_a")) {
-                e.setDamage(e.getDamage() *1.5);
+            String eWorld = e.getEntity().getWorld().getName();
+            boolean isDungeonWorld = eWorld.equals("dungeon_yijki_a") || eWorld.equals("dungeon_destroyed_outpost") || eWorld.equals("dungeon_planet_nul");
+            if (e.getEntity().hasMetadata("boss") && isDungeonWorld) {
+                e.setDamage(e.getDamage() *2);
             }
         }
     }

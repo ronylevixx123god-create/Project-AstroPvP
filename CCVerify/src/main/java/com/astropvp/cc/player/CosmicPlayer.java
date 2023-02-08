@@ -11,6 +11,7 @@ import com.astropvp.cc.voice.EnumChannel;
 import lombok.Getter;
 import lombok.Setter;
 import org.bukkit.Bukkit;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 
@@ -46,8 +47,8 @@ public class CosmicPlayer {
         PacketIO.get().queuePacket(getPlayer(), new PacketOutNotification(message, displayTime));
     }
 
-    public void sendHealthBar(Player who) {
-        sendPacket((Packet) new PacketOutHealthBar((long) who.getHealth(), (long) who.getMaxHealth(), who.getDisplayName()));
+    public void sendHealthBar(LivingEntity who) {
+        sendPacket((Packet) new PacketOutHealthBar((long) who.getHealth(), (long) who.getMaxHealth(), who.getName()));
         this.lastSentHealthBarPacket = System.currentTimeMillis();
         int ticksToExpire = 140;
         Bukkit.getScheduler().runTaskLater((Plugin) CCVerify.get(), () -> {

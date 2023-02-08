@@ -1196,8 +1196,10 @@ extends DungeonEvents {
                 loc.getWorld().playSound(loc, Sound.ZOMBIE_WOODBREAK, 0.1f, 1.9f);
                 this.lastIcicleDropped = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(2L);
             }
+
             if (parkourPlayers.size() > 0) {
                 Player random = (Player)parkourPlayers.get(ThreadLocalRandom.current().nextInt(parkourPlayers.size()));
+                if (!random.getLocation().getBlock().getType().name().contains("QUARTZ")) return;
                 Location toSpawnAt = LocationUtils.getNearbyLocation(random.getLocation().add(0.0, 5.0, 0.0), 0, 2);
                 if (toSpawnAt.getY() >= 204.0) {
                     toSpawnAt.setY(203.0);
@@ -1205,10 +1207,10 @@ extends DungeonEvents {
                 if (toSpawnAt.getBlock().isEmpty()) {
                     this.lastBlockDrop = System.currentTimeMillis();
                     boolean stained = ThreadLocalRandom.current().nextInt(10) == 0;
-                    FallingBlock block = toSpawnAt.getWorld().spawnFallingBlock(toSpawnAt, stained ? Material.STAINED_GLASS : Material.QUARTZ_BLOCK, stained ? DyeColor.PURPLE.getWoolData() : (byte)0);
-                    ((DestroyedOutpostEvents)this.dungeon.getDungeonEvents()).addFallingBlock(block);
-                    block.setDropItem(false);
-                    ((CraftFallingSand)block).getHandle().a(true);
+                    FallingBlock block3 = toSpawnAt.getWorld().spawnFallingBlock(toSpawnAt, stained ? Material.STAINED_GLASS : Material.QUARTZ_BLOCK, stained ? DyeColor.PURPLE.getWoolData() : (byte)0);
+                    block3.setMetadata("parkourBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)this.dungeon.getDungeonType().name()));
+                    block3.setDropItem(false);
+                    ((CraftFallingSand)block3).getHandle().a(true);
                 }
             }
         }
