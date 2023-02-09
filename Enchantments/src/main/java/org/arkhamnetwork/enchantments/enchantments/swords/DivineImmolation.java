@@ -92,6 +92,10 @@ public class DivineImmolation extends CustomEnchantment {
             damage *= 1.25;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+            damage*=1.15;
+        }
+
         if (player.hasMetadata("carver_damage")) {
             damage *= 1.3;
         }
@@ -182,8 +186,22 @@ public class DivineImmolation extends CustomEnchantment {
 
                     le.damage(damage);
 
-                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.35) {
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
                         pEnt.sendMessage(CC.translate("&e&l** SOUL HARVESTER [&7Blocked Divine Immolation&e&l] **"));
+                        continue;
+                    }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+                        continue;
+                    }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.CHRISTMAS_2022_HELMET_ACTIVE) && Math.random() < 0.5) {
+                        pEnt.sendMessage(CC.translate("&9&l** FROST MONSTER TROPHY [&7Blocked Divine Immolation&9&l] **"));
+                        continue;
+                    }
+
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_2022_SWORD_GREEN) && Math.random() < 0.33) {
+                        pEnt.sendMessage(CC.translate("&e&l** RAY SABRE [&7Blocked Divine Immolation&e&l] **"));
                         continue;
                     }
 
@@ -191,6 +209,11 @@ public class DivineImmolation extends CustomEnchantment {
                         pEnt.sendMessage(CC.translate("&3&l** DARKSTAR CHASER [&7Blocked Divine Immolation&3&l] **"));
                         continue;
                     }
+                    if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.BACK_TO_SCHOOL_2022_AXE) && Math.random() < 0.5) {
+                        pEnt.sendMessage(CC.translate("&8&l** CALCULATOR [&7Blocked Divine Immolation&8&l] **"));
+                        continue;
+                    }
+
 
                     if (le.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player) le).isActive())
                         continue;

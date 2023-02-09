@@ -92,6 +92,7 @@ public class HeroicRocketEscape
                     event.setDamage(event.getDamage()*1.5);
                     player.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7Heroic Rocket Escape 2x Damage&2&l] *"));
                 }
+
                 RocketEscape.last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
                 if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - ((MetadataValue) pl.getMetadata("sabotage").get(0)).asLong() <= 1000L) {
                     int sabotageLevel = ((MetadataValue) pl.getMetadata("sabotageLevel").get(0)).asInt();

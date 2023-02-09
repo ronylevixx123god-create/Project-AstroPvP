@@ -30,6 +30,7 @@ public class HeroicBleed extends HeroicCustomEnchantment
 
     public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
+
             final double bleedChance = 0.025 * enchantLevel;
             if (Math.random() < bleedChance && getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
                 if (Math.random() < 0.25 && user.hasMetadata("bleedStack") && EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Combat Medic")) {
@@ -71,6 +72,12 @@ public class HeroicBleed extends HeroicCustomEnchantment
                 p.sendMessage(CC.DarkGrayB + "* DRAGON SLAYER [" + ChatColor.GRAY + "Deep Bleed slowness blocked!" + CC.DarkGrayB + "] *");
                 return;
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) p, SkinType.THANKSGIVING_2022_BOOTS)) {
+                p.sendMessage(CC.translate("&6&l* MAINFRAME BOOTS &7[Deep Bleed slowness blocked] &6&l*"));
+                return;
+            }
+
             if (MaskType.HOLY.hasEquipped(p)) {
                 p.sendMessage(CC.GoldB + "* HOLY MASK [" + ChatColor.GRAY + "Deep Bleed slowness blocked!" + CC.GoldB + "] *");
                 return;

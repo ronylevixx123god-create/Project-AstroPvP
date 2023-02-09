@@ -3,6 +3,8 @@ package net.astropvp.armorsets.struct.sets;
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
@@ -53,6 +55,10 @@ public class ChampionArmorSet extends ArmorSet {
         double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("championSetDamageIncrease") * 0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
         if (Math.random() < 0.05) {
+            if (Math.random() < 0.3 && AstroItemSkinsAPI.hasSkinEquipped((Player) attacked, SkinType.HALLOWEEN_2022_AMULET)) {
+                attacked.sendMessage(CC.translate("&4&l* MOMENTO MORI &7[Blocked Champion Wrath] &4&l*"));
+                return;
+            }
             activateChampionAbility(attacker, (Player) attacked);
         }
     }
@@ -61,6 +67,10 @@ public class ChampionArmorSet extends ArmorSet {
         double increasePercent = 8 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("championSetDamageIncrease") * 0.01));
         event.setDamage( event.getDamage() * (1 + (increasePercent * amount * 0.01)));
         if (Math.random() < 0.025) {
+            if (Math.random() < 0.3 && AstroItemSkinsAPI.hasSkinEquipped((Player) attacked, SkinType.HALLOWEEN_2022_AMULET)) {
+                attacked.sendMessage(CC.translate("&4&l* MOMENTO MORI &7[Blocked Champion Wrath] &4&l*"));
+                return;
+            }
             activateChampionAbility(attacker, (Player) attacked);
         }
     }

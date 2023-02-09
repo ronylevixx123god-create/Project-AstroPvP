@@ -57,7 +57,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
-    private double cageDuration = 5.0;
+    public double cageDuration = 5.0;
 
 
     public int getCooldown() {
@@ -150,6 +150,20 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
             return true;
         }
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.THANKSGIVING_2022_BELT)) {
+            petItem.setLastUsed(System.currentTimeMillis());
+            player.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&c" + target.getName() + "&7] &e&l*"));
+            target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&cBlocked World Destroyer&7] &e&l*"));
+            return true;
+        }
+
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
+            petItem.setLastUsed(System.currentTimeMillis());
+            player.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&c" + target.getName() + "&7] &2&l*"));
+            target.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&cBlocked World Destroyer&7] &2&l*"));
+            return true;
+        }
 
         if (((Player) target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
 
@@ -176,31 +190,15 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-        //CageCooldown.enterCageCooldown(target);
-        player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
-        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-
-        target.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
-        player.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
-
-
-        player.sendMessage("");
-        player.sendMessage(CC.translate("&a&l*** WORLD DESTROYER PET [&f" + target.getName() + "&a&l] - CAGED! **"));
-        player.sendMessage("");
-
-        target.sendMessage("");
-        target.sendMessage(CC.translate("&a&l*** " + player.getName() + "&a&l's WORLD DESTROYER PET [&f" + cageDuration + "s&a&l] - CAGE! **"));
-        target.sendMessage("");
-        DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&a&l* WORLD DESTROYER [&77s&a&l] *"), "RKO");
-
-        CrankedAmuletUtil.tryHatchAbility(target, player);
-
-
-        int cageCooldown = 30;
-        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
-
         petItem.setLastUsed(System.currentTimeMillis());
-        cagePlayer(player, target);
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_BOOTS) && Math.random() < 0.3) {
+            cagePlayer(target, player, cageDuration);
+            player.sendMessage(CC.translate("&2&l* " + target.getName() + "'s CROCS GATORS &7[Cage Reflect] &2&l*"));
+            target.sendMessage(CC.translate("&2&l* CROCS GATORS &7[Cage Reflect] &2&l*"));
+        } else {
+            cagePlayer(player, target, cageDuration);
+        }
 
 
         Player finalTarget1 = target;
@@ -270,13 +268,31 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         return filteredLocations;
     }
 
-    public static void cagePlayer(final Player player, final Player affected) {
+    public static void cagePlayer(final Player player, final Player target, double cageDuration) {
+        CrankedAmuletUtil.tryHatchAbility(target, player);
+        int cageCooldown = 30;
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
+        player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
+        player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
+
+        target.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+        player.setMetadata("caged", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
+
+
+        player.sendMessage("");
+        player.sendMessage(CC.translate("&a&l*** WORLD DESTROYER PET [&f" + target.getName() + "&a&l] - CAGED! **"));
+        player.sendMessage("");
+
+        target.sendMessage("");
+        target.sendMessage(CC.translate("&a&l*** " + player.getName() + "&a&l's WORLD DESTROYER PET [&f" + cageDuration + "s&a&l] - CAGE! **"));
+        target.sendMessage("");
+        DamageIndicatorUtils.sendDamageIndicator(target, CC.translate("&a&l* WORLD DESTROYER [&77s&a&l] *"), "RKO");
         final List<Location> list = new ArrayList<Location>();
         final List<Location> toPlace = new ArrayList<Location>();
         final BukkitScheduler scheduler = Bukkit.getScheduler();
-        final Block block = affected.getLocation().getBlock();
+        final Block block = target.getLocation().getBlock();
         final Block current = null;
-        final Location baseLocation = affected.getLocation();
+        final Location baseLocation = target.getLocation();
         list.addAll(setInside(baseLocation.clone().add(0.0, -1.0, 0.0), Material.OBSIDIAN));
         list.addAll(setInside(baseLocation.clone().add(0.0, 3.0, 0.0), Material.OBSIDIAN));
         list.addAll(setOutside(baseLocation.clone().add(0.0, -1.0, 0.0), Material.OBSIDIAN));
@@ -294,17 +310,17 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     this.cancel();
                 }
-                if (!affected.isDead() && WorldGuardUtils.isPvPEnabled(affected.getLocation()) && !(AstroItemSkinsAPI.hasSkinEquipped(affected, SkinType.VALENTINES_2022_AMULET))) {
+                if (!target.isDead() && WorldGuardUtils.isPvPEnabled(target.getLocation()) && !(AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.VALENTINES_2022_AMULET))) {
                     final int dmg = 1;
 
-                    if (AstroItemSkinsAPI.hasSkinEquipped(affected, SkinType.VALENTINES_2022_MUTATED_AMULET)) {
-                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(affected, dmg, "&e&lReverted Cage Ticks");
+                    if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.VALENTINES_2022_MUTATED_AMULET)) {
+                        AstroDamageHandler.getInstance().getDamageHandler().healPlayer(target, dmg, "&e&lReverted Cage Ticks");
 
                     } else {
-                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(affected, dmg, "&e&lCage Ticks");
+                        AstroDamageHandler.getInstance().getDamageHandler().dealDamage(target, dmg, "&e&lCage Ticks");
                     }
                 }
-                if (affected.getHealth() <= 0.0 || affected.isDead()) {
+                if (target.getHealth() <= 0.0 || target.isDead()) {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     this.cancel();
                 }

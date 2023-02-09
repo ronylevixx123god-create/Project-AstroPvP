@@ -71,6 +71,11 @@ public class Rage extends CustomEnchantment {
                 rageDamage *= 1.1;
                 user.sendMessage(CC.translate("&4&l* SEASON'S BEATING &7[+10% Rage DMG] &4&l*"));
             }
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.HALLOWEEN_2022_BACKPACK)) {
+                rageDamage *= 1.25;
+                user.sendMessage(CC.translate("&4&l* GRIM CLOAK &7[+25% Rage DMG] &4&l*"));
+            }
+
 
             if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
                 rageDamage *= 1.1;
@@ -79,6 +84,10 @@ public class Rage extends CustomEnchantment {
             if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {
                 rageDamage *= 0.65;
                 target.sendMessage(CC.translate("&e&l* CHESHIRE GRIN &7[-35% Rage DMG] &e&l*"));
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+                rageDamage *= 0.75;
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {

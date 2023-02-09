@@ -88,6 +88,11 @@ extends CustomEnchantment {
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.HALLOWEEN_2022_HELMET)) {
+                ptarget.sendMessage(CC.translate("&4&l* GRIM HOOD BLOCKED &7[Titan Trap] &4&l*"));
+                return;
+            }
+
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.SPRING_BREAK_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.SPRING_BREAK_2022_MUTATED_BOOTS)) {
                 SinkOrSwipFlippers.addSinkStack((Player) ptarget);

@@ -104,6 +104,8 @@ public class ArmorSetDamageListener implements Listener {
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
+
+                    if (attacked.hasMetadata("noDefensiveCrystals") && AstroArmorSetsAPI.isDefensiveCrystal(armorSetType)) continue;
                     armorSetType.getArmorSet().onDamagedCrystal(attacker, (Player) attacked, e, amount);
 
                 }

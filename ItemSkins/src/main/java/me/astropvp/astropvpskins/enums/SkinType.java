@@ -541,7 +541,7 @@ public enum SkinType {
             CC.translate("&c2% chance when Cactus procs to deal +10% Outgoing"),
             CC.translate("&cDamage and receive -3% Incoming Damage for 5s"))),
 
-    BACK_TO_SCHOOL_2022_BACKPACK(CC.translate("&8&lKeg"), ItemSkinType.BACKPACK, new CowboyChaps(), Arrays.asList(
+    BACK_TO_SCHOOL_2022_BACKPACK(CC.translate("&8&lKeg"), ItemSkinType.BACKPACK, new KegSkin(), Arrays.asList(
             CC.translate("&c-75% Silence Duration"),
             CC.translate("&cBlocks all enemy Ragdoll and Rocket Escape"),
             CC.translate("&c-15% Incoming Soul Enchant Damage")
@@ -565,25 +565,23 @@ public enum SkinType {
             CC.translate("&c+10% Outgoing Damage to players wearing:"),
             CC.translate("&7* Grim Hood /skin"),
             CC.translate("&7* Grim Cloak /skin"),
-            CC.translate("&c7* Momento Mori /skin")
+            CC.translate("&7* Momento Mori /skin")
     )),
     HALLOWEEN_2022_AMULET(CC.translate("&4&lMomento Mori"), ItemSkinType.AMULET, new MomentoMoriSkin(), Arrays.asList(
-            CC.translate("&cNature Wrath V"),
-            CC.translate("&7(Cannot be blocked by:"),
-            CC.translate("&7* Amulet of Angels /skin"),
-            CC.translate("&7* Preserved Snowflake /skin)"),
+            CC.translate("&cImmune to Rogue Enchant"),
+            CC.translate("&c30 Chance to block Champion Ability"),
             CC.translate("&c+5% Outgoing Damage to players wielding Diamond Weapons")
     )),
-    HALLOWEEN_2022_BACKPACK(CC.translate("&4&lGrim Cloak"), ItemSkinType.BACKPACK, new CowboyChaps(), Arrays.asList(
+    HALLOWEEN_2022_BACKPACK(CC.translate("&4&lGrim Cloak"), ItemSkinType.BACKPACK, new GrimCloakSkin(), Arrays.asList(
             CC.translate("&c-50% Incoming Rogue Damage"),
-            CC.translate("&cIncrease Combat Tag on players by 3s"),
-            CC.translate("&c1% chance to /fix all when taking damage")
+            CC.translate("&c1.25x Rage Damage Multiplier"),
+            CC.translate("&c+25% Extra Damage from behind")
     )),
     HALLOWEEN_2022_AXE(CC.translate("&4&lGrim Axe"), ItemSkinType.AXE, new GrimAxeSkin(), Arrays.asList(
             CC.translate("&cOpening Combo V"),
             CC.translate("&cSoul Master VI"),
-            CC.translate("&c1% chance to silence enemy Soul Harvester for 3s"),
-            CC.translate("&c+2% Outgoing Damage to enemies with Soul Mode active")
+            CC.translate("&c5% chance to silence enemy Soul Harvester for 3s"),
+            CC.translate("&c+15% Outgoing Damage to enemies with Soul Mode active")
     )),
 
 
@@ -599,7 +597,7 @@ public enum SkinType {
             CC.translate("&cLimits enemy stackable enchant level by 50%"),
             CC.translate("&cImmune to World Destroyer Pet"),
             CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
-            CC.translate("&c25% chance to not proc pet cooldown"))),
+            CC.translate("&c25% chance to block Ultra Rage"))),
 
     THANKSGIVING_2022_BOOTS(CC.translate("&6&lMainframe Boots"), ItemSkinType.BOOTS, new MainframeSkin(), Arrays.asList(
             CC.translate("&cGears IV"),

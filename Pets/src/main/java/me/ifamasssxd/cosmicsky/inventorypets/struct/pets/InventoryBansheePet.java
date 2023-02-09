@@ -130,6 +130,12 @@ public class InventoryBansheePet extends InventoryPet {
                     continue;
                 }
 
+                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.CHRISTMAS_2022_HELMET_ACTIVE)) {
+                    nearPlayer.sendMessage(CC.translate("&9&l* FROST MONSTER TROPHY &7Blocked &4Banshee Pet &7[" + player.getName() + "&7] &9&l*"));
+                    player.sendMessage(CC.translate("&9&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&9&lFrost Monster Trophy&7] &9&l*"));
+                    continue;
+                }
+
 
 
 

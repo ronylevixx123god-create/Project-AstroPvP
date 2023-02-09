@@ -341,7 +341,7 @@ public class AstroArmorSetsAPI {
         Map<ArmorSetType, Integer> map = new HashMap<>();
         CachedPlayer cachedOther = CacheManager.getInstance().getCachedPlayer(attacked);
         ArmorSetCache cacheOther = (ArmorSetCache) cachedOther.getCache("armor_set");
-        if (attacker.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(attacker, SkinType.CORRUPT_AMULET_CORRUPTION) && attacked.getInventory().getChestplate() != null && !AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.THANKSGIVING_2021_AMULET)) {
+        if (attacker.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(attacker, SkinType.CORRUPT_AMULET_CORRUPTION)) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.RUINS_HELMET)) {
                 return cacheOther.getCurrentSetCrystals();
@@ -350,6 +350,25 @@ public class AstroArmorSetsAPI {
             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.EASTER_2022_MUTATED_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.EASTER_2022_BOOTS)) {
                 return cacheOther.getCurrentSetCrystals();
             }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.THANKSGIVING_2021_AMULET)) {
+                return cacheOther.getCurrentSetCrystals();
+
+            }
+
+             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
+                 return cacheOther.getCurrentSetCrystals();
+
+             }
+
+             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+                 return cacheOther.getCurrentSetCrystals();
+             }
+
+             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.CHRISTMAS_2022_HELMET_ACTIVE)) {
+                 return cacheOther.getCurrentSetCrystals();
+
+             }
             List<ArmorSetType> chestplateCrystalsPlayer = getCrystalsFromItem(attacker.getInventory().getChestplate());
             for (Map.Entry<ArmorSetType, Integer> entry : cacheOther.getCurrentSetCrystals().entrySet()) {
                 ArmorSetType type = entry.getKey();

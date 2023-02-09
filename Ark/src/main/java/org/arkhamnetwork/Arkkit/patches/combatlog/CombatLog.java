@@ -167,6 +167,7 @@ public class CombatLog
         if (mask_plugin && MaskUtils.hasMaskEquipped(player, "JOKER")) {
             toRetr -= 3000L;
         }
+
         if (player.hasMetadata("affectedByJokerMask") && player.getMetadata("affectedByJokerMask").get(0).asLong() > (long) MinecraftServer.currentTick) {
             toRetr += 4000L;
         }

@@ -58,6 +58,11 @@ public class HeroicTrap extends HeroicCustomEnchantment
                 return;
             }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.HALLOWEEN_2022_HELMET)) {
+                ptarget.sendMessage(CC.translate("&4&l* GRIM HOOD BLOCKED &7[Titan Trap] &4&l*"));
+                return;
+            }
+
             if (((Player)ptarget).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) ptarget, SkinType.HALLOWEEN_2021_BOOTS))
                 return;
             if (AstroItemSkinsAPI.hasSkinEquipped(ptarget, SkinType.FLAMING_HALO) && Math.random() < 0.50) {

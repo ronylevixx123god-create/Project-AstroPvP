@@ -83,6 +83,12 @@ public class RocketEscape
                     return;
                 }
 
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2022_BACKPACK)) {
+                    player.sendMessage(CC.translate("&8&l ** &7" + attacker.getName() + "'s &8KEG &7Blocked Rocket Escape &8&l**"));
+                    attacker.sendMessage(CC.translate("&8&l ** &8KEG &7Blocked " + player.getName() + "'s Rocket Escape &8&l**"));
+                    return;
+                }
+
                 if (((Player) player).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) player).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK))) {
                     e.setDamage(e.getDamage()*1.5);
                     player.sendMessage(CC.translate("&2&l* TOMMY TAIL [&7Heroic Rocket Escape 2x Damage&2&l] *"));

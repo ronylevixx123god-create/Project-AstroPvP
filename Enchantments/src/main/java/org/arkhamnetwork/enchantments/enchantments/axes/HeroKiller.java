@@ -85,6 +85,10 @@ public class HeroKiller
             return;
         }
 
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+            return;
+        }
+
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY_2021_BACKPACK) && !playerHit.hasMetadata("noCape")) {
             return;
@@ -139,6 +143,10 @@ public class HeroKiller
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
                 increase += 0.15;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+                increase+=1.15;
             }
 
 

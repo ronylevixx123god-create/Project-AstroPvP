@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.Faction;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import javafx.scene.control.Skin;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -12,6 +13,7 @@ import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.swords.Carver;
 import net.astropvp.core.killtracker.KillTrackerAPI;
 import net.astropvp.core.utils.OutpostUtil;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -23,6 +25,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.text.DecimalFormat;
 
@@ -55,9 +58,16 @@ public class Rogue extends CustomEnchantment {
 
             if (p.hasMetadata("noSoulProc"))
                 return;
+            if (playerHit.hasMetadata("immuneRogue"))
+                return;
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SUMMER_2021_AMULET) && Math.random() <= 0.20) {
                 playerHit.sendMessage(CC.translate("&c&l* LUAU LEI &7Blocked Rogue &c&l*"));
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2022_BACKPACK) && playerHit.getHealth() < 10) {
+                playerHit.sendMessage(CC.translate("&9&l* Arctic Excursion Pack &7Blocked Rogue &9&l*"));
                 return;
             }
 
@@ -65,7 +75,22 @@ public class Rogue extends CustomEnchantment {
                 return;
             }
 
-            if (((Carver) SkinType.THANKSGIVING_2021_SWORD.getItemSkin()).getRogueSilenced().contains(p.getName())) {
+
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.THANKSGIVING_2022_BOOTS) && player.getHealth() < 20 && Math.random() < 0.05) {
+                playerHit.setMetadata("immuneRogue", new FixedMetadataValue(Enchantments.getInstance(), true));
+                playerHit.sendMessage(CC.translate("&6&l* MAINFRAME BOOTS &7[5s Immune to Rogue] &6&l*"));
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()-> {
+                    playerHit.removeMetadata("immuneRogue", Enchantments.getInstance());
+                }, 20*5L);
+            }
+
+
+                if (((Carver) SkinType.THANKSGIVING_2021_SWORD.getItemSkin()).getRogueSilenced().contains(p.getName())) {
+                return;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2022_AMULET)) {
                 return;
             }
 
@@ -99,6 +124,14 @@ public class Rogue extends CustomEnchantment {
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.JULY_2021_BACKPACK) && player.getHealth() <= player.getMaxHealth() / 2 && !player.hasMetadata("noCape")) {
                     multi *= 1.15;
                 }
+
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+                    multi*=1.15;
+                }
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2022_BACKPACK)) {
+                    multi *= 0.5;
+                }
+
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.EASTER_2022_MUTATED_SWORD)) {
                     multi *= 1.1;
@@ -140,8 +173,8 @@ public class Rogue extends CustomEnchantment {
                 //e.setDamage(damage + multi * 0.1);
                 e.setDamage(damage * multi * 0.9);
 
-                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
-                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.4f, 12);
+                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 20);
+                de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 20);
 
                 KillTrackerAPI.removeSoulsFromGems(p, soulCost);
                 DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkAquaB + "* " + "ROGUE" + CC.Gray + "[" + new DecimalFormat("##.##").format(multi) + "x]" + CC.DarkAquaB + "*", "ROGUE");

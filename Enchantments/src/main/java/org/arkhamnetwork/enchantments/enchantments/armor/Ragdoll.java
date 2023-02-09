@@ -53,6 +53,12 @@ public class Ragdoll
                     return;
                 }
 
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2022_BACKPACK)) {
+                    return;
+                }
+
+                if (player.hasMetadata("noRagdoll")) return;
+
                 if (UndertowHelmet.undertowField.contains(player)) {
                     return;
                 }

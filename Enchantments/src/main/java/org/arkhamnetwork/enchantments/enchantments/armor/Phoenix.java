@@ -140,6 +140,11 @@ public class Phoenix extends CustomEnchantment {
                     return false;
                 }
 
+                if (player.hasMetadata("soulSilenced")) {
+                    player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED &7[Soul Enchants Silenced] &4&l*"));
+                    return false;
+                }
+
                 if (thanosBlockedPheonix) {
                     player.sendMessage("");
                     player.sendMessage(CC.RedB + "* PHOENIX BLOCKED [" + CC.Gray + damager.getName() + CC.RedB + "] *");

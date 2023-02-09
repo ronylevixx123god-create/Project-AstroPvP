@@ -2,7 +2,8 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import net.astropvp.armorsets.AstroArmorSets;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
@@ -13,12 +14,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,22 +40,20 @@ public class UltraArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.15) {
-            activateUltraAbility(attacker, (Player) attacked);
-            event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)) * 1.25);
-        } else {
-            event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
+        if (Math.random() < 0.25) {
+            activateUltraAbility(attacker, (Player) attacked, event);
         }
+        event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
     }
+
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 10 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.07) {
-            activateUltraAbility(attacker, (Player) attacked);
-            event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)) * 1.25);
-        } else {
-            event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
+        if (Math.random() < 0.1) {
+            activateUltraAbility(attacker, (Player) attacked, event);
         }
+        event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
+
     }
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
@@ -116,8 +110,13 @@ public class UltraArmorSet extends ArmorSet {
 
     }
 
-    public void activateUltraAbility(Player player, final Player target) {
-        target.sendMessage(CC.translate((String)("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*")));
-        player.sendMessage(CC.translate((String)"&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
+    public void activateUltraAbility(Player player, final Player target, EntityDamageByEntityEvent event) {
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.THANKSGIVING_2022_BELT) && Math.random() < 0.25) {
+            target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[Blocked Ultra Rage] &e&l*"));
+            return;
+        }
+        event.setDamage(event.getDamage() * 1.25);
+        target.sendMessage(CC.translate((String) ("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*")));
+        player.sendMessage(CC.translate((String) "&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
     }
 }

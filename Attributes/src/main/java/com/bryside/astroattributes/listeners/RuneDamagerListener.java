@@ -5,6 +5,7 @@ import com.bryside.astroattributes.objects.RuneCacher;
 import com.bryside.astroattributes.utils.Utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -45,7 +46,13 @@ public class RuneDamagerListener implements Listener {
                     return;
                 }
             }
-            type.getRune().procDamageEvent(e, level, damager);
+            if (e.getEntity() instanceof Player) {
+                if (AstroItemSkinsAPI.hasSkinEquipped((Player) e.getEntity(), SkinType.CHRISTMAS_2022_HELMET_ACTIVE) && Math.random() < 0.5) {
+                    return;
+                }
+            }
+
+                type.getRune().procDamageEvent(e, level, damager);
         }
 
     }
@@ -65,7 +72,6 @@ public class RuneDamagerListener implements Listener {
     public void placeRune(BlockPlaceEvent e) {
         RuneCacher cacher = new RuneCacher(e.getItemInHand());
         if (cacher.getRuneType() != null) {
-            e.getPlayer().sendMessage(CC.Red + "You may not place Titan Attributes.");
             e.setCancelled(true);
         }
 

@@ -9,6 +9,7 @@ public class KegSkin extends ItemSkin {
 
     @Override
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+        event.setDamage(event.getDamage() * 0.9);
 
     }
 
