@@ -119,16 +119,7 @@ public class YijkiDisciple extends Boss implements MiniBoss {
             //ParticleEffect.sendToLocation(ParticleEffect.LAVA, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.05f, 50);
             //ParticleEffect.sendToLocation(ParticleEffect.PORTAL, entity.getLocation(), 1.0f, 1.0f, 1.0f, 0.1f, 30);
 
-            try {
-                ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.05f, 50);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            try {
-                ParticleEffect.LAVA.sendToPlayer((Player) entity, entity.getLocation(), 1f, 1f, 1f, 0.1f, 30);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
+
         }
         if (this.loops % 2 == 0) {
             final Creature boss = (Creature) this.getEntity();

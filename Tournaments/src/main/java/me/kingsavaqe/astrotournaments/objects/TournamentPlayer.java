@@ -225,7 +225,7 @@ public class TournamentPlayer implements KeyToSave {
     }
 
     public LinkedList<CustomEnchantment> getSwordEnchants() {
-        return new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Neutralize"), EnchantmentAPI.getEnchantment("Blackout"), EnchantmentAPI.getEnchantment("Permanent Execute"), EnchantmentAPI.getEnchantment("Perfect Solitude"), EnchantmentAPI.getEnchantment("Reality Inversion"), EnchantmentAPI.getEnchantment("Unrestrained Enrage"), EnchantmentAPI.getEnchantment("Reflective Block"), EnchantmentAPI.getEnchantment("Deep Bleed"), EnchantmentAPI.getEnchantment("Bloody Deep Wounds"), EnchantmentAPI.getEnchantment("Shadow Assassin"), EnchantmentAPI.getEnchantment("Divine Immolation"), EnchantmentAPI.getEnchantment("Rage"), EnchantmentAPI.getEnchantment("Silence"), EnchantmentAPI.getEnchantment("Double Strike"), EnchantmentAPI.getEnchantment("Devour"), EnchantmentAPI.getEnchantment("IceAspect")));
+        return new LinkedList<>(Arrays.asList(EnchantmentAPI.getEnchantment("Neutralize"), EnchantmentAPI.getEnchantment("Permanent Execute"), EnchantmentAPI.getEnchantment("Perfect Solitude"), EnchantmentAPI.getEnchantment("Reality Inversion"), EnchantmentAPI.getEnchantment("Unrestrained Enrage"), EnchantmentAPI.getEnchantment("Reflective Block"), EnchantmentAPI.getEnchantment("Deep Bleed"), EnchantmentAPI.getEnchantment("Bloody Deep Wounds"), EnchantmentAPI.getEnchantment("Shadow Assassin"), EnchantmentAPI.getEnchantment("Divine Immolation"), EnchantmentAPI.getEnchantment("Rage"), EnchantmentAPI.getEnchantment("Silence"), EnchantmentAPI.getEnchantment("Double Strike"), EnchantmentAPI.getEnchantment("Devour"), EnchantmentAPI.getEnchantment("IceAspect")));
     }
 
     @Override

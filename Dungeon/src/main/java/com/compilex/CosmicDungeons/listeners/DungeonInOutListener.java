@@ -101,6 +101,11 @@ implements Listener {
                 e.getPlayer().setGameMode(GameMode.ADVENTURE);
             }
             DisguiseAPI.undisguiseToAll((Entity)e.getPlayer());
+            for (ItemStack item : e.getPlayer().getInventory().getContents()) {
+                if (item.getType().name().contains("BUCKET")) {
+                    e.getPlayer().getInventory().remove(item);
+                }
+            }
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(e.getPlayer());
             Dungeon d = dp.getCurrentDungeon();
             if (d != null) {

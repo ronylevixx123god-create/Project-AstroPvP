@@ -110,8 +110,8 @@ public class SpawnerBreakListener implements Listener {
             if (data != null) {
                 EntityType type = data.getEntityType();
                 int amount = data.getSpawnerAmount();
-                data.setSpawnerAmount(0);
                 block.getWorld().dropItem(block.getLocation(), ItemSpawner.getItem(type, amount));
+                data.setSpawnerAmount(0);
                 event.getPlayer().sendMessage(CC.translate("&c&l- &c&n" + amount + "&c " + EntityUtils.getEntityName(type) + " Spawner(s)"));
                 AstroSpawners.getInstance().getSpawnerManager().removeFromCache(data);
                 block.setType(Material.AIR);

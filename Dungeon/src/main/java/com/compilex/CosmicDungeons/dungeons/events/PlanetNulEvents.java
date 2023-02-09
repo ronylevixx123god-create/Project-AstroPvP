@@ -134,6 +134,7 @@ import java.util.stream.Collectors;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
 import net.ess3.api.MaxMoneyException;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -446,11 +447,12 @@ implements CommandExecutor {
     }
 
     private void fillChest(Block block, int lootToFill, Set<UUID> eligible) {
-        List potentialLoot = null;//CosmicDungeonsPlugin.get_().getPlanetNulLootbox().getRandomRewards().stream().map(r -> DecimateRewardItem.removeMetaLines((ItemStack)r.generatePlayerViewableStack((LootboxManager)CosmicDungeonsPlugin.get().getLootboxManager()), (boolean)true)).collect(Collectors.toList());
+        List<CustomLoot> potentialLoot = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PlanetNulLootbag").getLootItems();
         Collections.shuffle(potentialLoot);
         Chest chest = (Chest)block.getState();
         for (int i = 0; i < lootToFill && i < potentialLoot.size(); ++i) {
-            ItemStack item = (ItemStack)potentialLoot.get(i);
+            CustomLoot customLoot = potentialLoot.get(i);
+            ItemStack item = customLoot.getItem();
             if (item == null) continue;
             chest.getInventory().addItem(item);
         }

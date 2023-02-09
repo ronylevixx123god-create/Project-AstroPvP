@@ -104,7 +104,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
 public class DestroyedOutpostEvents
-extends DungeonEvents {
+        extends DungeonEvents {
     private final int MAX_PORTAL_ID = 5;
     private List<Location> portalWorldLocations = new LinkedList<Location>();
     private Map<Location, Location> chestLocations = new HashMap<Location, Location>();
@@ -470,11 +470,7 @@ extends DungeonEvents {
                 }
                 MagmaCube cube = (MagmaCube)event.getEntity().getWorld().spawnEntity(event.getEntity().getLocation().add(0.0, 4.0, 0.0), EntityType.MAGMA_CUBE);
                 cube.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
-                try {
-                    EntityUtils.setGenericAttribute((Entity)cube, (EntityAttribute)EntityAttribute.MOVEMENT_SPEED, (float)0.38f);
-                } catch (NoSuchMethodException e) {
-                    e.printStackTrace();
-                }
+
                 cube.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 4).build());
                 cube.getEquipment().setItemInHandDropChance(0.0f);
                 cube.getEquipment().setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).enchant(this.random.nextInt(10) <= 2 ? Enchantment.THORNS : Enchantment.DURABILITY, 1).build());
@@ -1043,7 +1039,7 @@ extends DungeonEvents {
     }
 
     class DestroyedDungeonParkourRestrictionTask
-    extends BukkitRunnable {
+            extends BukkitRunnable {
         Dungeon dungeon;
         private long lastBlockDrop = 0L;
         private long lastLavaBlockSpawn;
@@ -1162,11 +1158,13 @@ extends DungeonEvents {
                 if (this.lastLavaBlockSpawn <= System.currentTimeMillis()) {
                     Location loc = (Location)DestroyedOutpostEvents.this.lavaSpewLocations.get(DestroyedOutpostEvents.this.random.nextInt(DestroyedOutpostEvents.this.lavaSpewLocations.size()));
                     FallingBlock block = loc.getWorld().spawnFallingBlock(loc.clone().add(0.0, 14.0, 0.0), Material.STAINED_GLASS, DyeColor.ORANGE.getWoolData());
+
                     ((DestroyedOutpostEvents)this.dungeon.getDungeonEvents()).addDungeonLavaBlock(block);
                     Vector vel = DestroyedOutpostEvents.this.lavaRealmCenter.toVector().subtract(loc.toVector());
                     if (vel.length() != 0.0) {
                         vel.normalize();
                     }
+
                     vel.multiply(new Vector(0.9 + DestroyedOutpostEvents.this.random.nextGaussian(), 1.0, 0.9 + DestroyedOutpostEvents.this.random.nextGaussian())).multiply(-2.6);
                     vel.setY(1.3 + DestroyedOutpostEvents.this.random.nextGaussian());
                     block.setVelocity(vel);
@@ -1174,7 +1172,45 @@ extends DungeonEvents {
                     block.setDropItem(false);
                     block.setFireTicks(100);
                     this.lastLavaBlockSpawn = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(3L);
-                }
+
+                    Collection<Entity> magmas = block.getLocation().getWorld().getEntitiesByClasses(MagmaCube.class);
+                    if (magmas.size() >= 10) {
+
+                        boolean foundOldMagmas = false;
+                        for (Entity magma : magmas) {
+                            if (magma.getTicksLived() >= 1200 && magma.getLocation().getY() <= 65.0) {
+                                magma.remove();
+                                foundOldMagmas = true;
+                                continue;
+                            }
+                            if (magma.getTicksLived() < 4800) continue;
+                            magma.remove();
+                            foundOldMagmas = true;
+                        }
+                        if (!foundOldMagmas) {
+
+                            return;
+                        }
+                    }
+
+                        MagmaCube cube = (MagmaCube) block.getLocation().getWorld().spawnEntity(block.getLocation().clone().add(0.0, 4.0, 0.0), EntityType.MAGMA_CUBE);
+                        cube.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 1));
+
+                        cube.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD).enchant(Enchantment.DAMAGE_ALL, 4).build());
+                        cube.getEquipment().setItemInHandDropChance(0.0f);
+                        cube.getEquipment().setChestplate(new ItemBuilder(Material.DIAMOND_CHESTPLATE).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 5).enchant(Enchantment.DURABILITY, 1).build());
+                        cube.getEquipment().setChestplateDropChance(0.0f);
+                        cube.getWorld().playSound(cube.getLocation(), Sound.GHAST_MOAN, 3.0f, 1.3f);
+                        cube.setMetadata("lavaSlime", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDungeonsPlugin.get(), (Object) ""));
+                        cube.setMetadata("no_slime_split", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDungeonsPlugin.get_(), (Object) ""));
+                        cube.setSize(4);
+                        cube.setMaxHealth(200.0);
+                        cube.setHealth(cube.getMaxHealth());
+                        cube.setCustomName(CC.RedB + "Lava Minion");
+                        cube.setCustomNameVisible(true);
+                        worldMobs.add((Entity) cube);
+                    }
+
                 double lavaDamage = 2.0;
                 for (Player pl : playersInLavaRealm) {
                     Block bl;
@@ -1196,7 +1232,6 @@ extends DungeonEvents {
                 loc.getWorld().playSound(loc, Sound.ZOMBIE_WOODBREAK, 0.1f, 1.9f);
                 this.lastIcicleDropped = System.currentTimeMillis() + TimeUnit.SECONDS.toMillis(2L);
             }
-
             if (parkourPlayers.size() > 0) {
                 Player random = (Player)parkourPlayers.get(ThreadLocalRandom.current().nextInt(parkourPlayers.size()));
                 if (!random.getLocation().getBlock().getType().name().contains("QUARTZ")) return;
@@ -1207,10 +1242,10 @@ extends DungeonEvents {
                 if (toSpawnAt.getBlock().isEmpty()) {
                     this.lastBlockDrop = System.currentTimeMillis();
                     boolean stained = ThreadLocalRandom.current().nextInt(10) == 0;
-                    FallingBlock block3 = toSpawnAt.getWorld().spawnFallingBlock(toSpawnAt, stained ? Material.STAINED_GLASS : Material.QUARTZ_BLOCK, stained ? DyeColor.PURPLE.getWoolData() : (byte)0);
-                    block3.setMetadata("parkourBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)this.dungeon.getDungeonType().name()));
-                    block3.setDropItem(false);
-                    ((CraftFallingSand)block3).getHandle().a(true);
+                    FallingBlock block = toSpawnAt.getWorld().spawnFallingBlock(toSpawnAt, stained ? Material.STAINED_GLASS : Material.QUARTZ_BLOCK, stained ? DyeColor.PURPLE.getWoolData() : (byte)0);
+                    ((DestroyedOutpostEvents)this.dungeon.getDungeonEvents()).addFallingBlock(block);
+                    block.setDropItem(false);
+                    ((CraftFallingSand)block).getHandle().a(true);
                 }
             }
         }
@@ -1250,4 +1285,3 @@ extends DungeonEvents {
         }
     }
 }
-
