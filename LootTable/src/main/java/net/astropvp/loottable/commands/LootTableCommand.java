@@ -33,10 +33,23 @@ public class LootTableCommand extends CommandBase {
     }
 
     @Permission("astro.admin")
+    @SubCommand("fix")
+    public void onFix(CommandSender sender) {
+        for (LootTable table : LootTable.values()) {
+            LootTableAPI.fixLoot(table);
+        }
+        sender.sendMessage(CC.Green + "Fixed!!!");
+    }
+
+    @Permission("astro.admin")
     @SubCommand("additem")
     public void addItem(Player player, @Completion("#loottables") LootTable lootTableType, Double chance) {
         if (ItemUtils.isAirOrNull(player.getItemInHand())) {
             player.sendMessage(CC.translate("&c&l(!)&c Please hold an item!"));
+            return;
+        }
+        if (chance < 0) {
+            player.sendMessage(CC.translate("&c&l(!)&c Higher the chance retard!"));
             return;
         }
         player.sendMessage(CC.translate("&a&l(!)&a Added " + ItemUtils.getDisplayName(player.getItemInHand()) + " &ato the " + lootTableType.getFancy() + " &aLoottable!"));

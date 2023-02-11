@@ -1,6 +1,7 @@
 package net.astropvp.loottable.utils;
 
 import com.google.common.util.concurrent.AtomicDouble;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -26,7 +27,7 @@ public class RandomUtils {
             }
             currentValue = currentValue + entry.getValue();
         }
-        return null;
+        return new ItemStack(Material.GRASS);
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sort(Map<K, V> map) {

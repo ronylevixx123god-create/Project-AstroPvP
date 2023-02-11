@@ -21,6 +21,7 @@ public class FrostBoundSkin extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (!(damaged instanceof Player)) return;
         new OpeningCombo().applyEffect(damager, (LivingEntity) damaged, 6, event);
         event.setDamage(event.getDamage() * 1.25);
     }

@@ -21,6 +21,7 @@ import com.boydti.fawe.util.EditSessionBuilder;
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
+import com.cosmicpvp.cosmicutils.utils.BlockUtils;
 import com.sk89q.worldedit.EditSession;
 import com.sk89q.worldedit.Vector;
 import com.sk89q.worldedit.regions.CuboidRegion;

@@ -16,7 +16,7 @@ public class MomentoMoriSkin extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (damaged instanceof Player && !ItemUtils.isAirOrNull((ItemStack) damaged)) {
+        if (damaged instanceof Player && !ItemUtils.isAirOrNull(((Player) damaged).getItemInHand())) {
             if (((Player) damaged).getItemInHand().getType().name().contains("DIAMOND_")) {
                 event.setDamage(event.getDamage() * 1.05);
             }

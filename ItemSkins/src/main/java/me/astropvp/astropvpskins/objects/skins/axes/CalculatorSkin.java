@@ -19,6 +19,7 @@ public class CalculatorSkin extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (!(damaged instanceof Player)) return;
         (new OpeningCombo()).applyEffect((LivingEntity) damager, (LivingEntity) damaged, 5, event);
         (new SoulMaster()).applyEffect((LivingEntity) damager, (LivingEntity) damaged, 4, event);
 

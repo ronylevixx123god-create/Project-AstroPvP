@@ -51,7 +51,8 @@ public class GiftsGUI {
                 player.sendMessage(CC.translate("&a&l(!)&a You have opened the gift and received &f" + ItemUtils.getDisplayName(crankedUser.getGifts().get(finalI).getItemStack()) + "&a!"));
                 PlayerUtil.giveOrDropProtectedItem(player, crankedUser.getGifts().get(finalI).getItemStack(), 60);
                 crankedUser.getGifts().remove(finalI);
-                player.closeInventory();
+                GiftsGUI giftsGUI = new GiftsGUI(player);
+                giftsGUI.getGui().open(player);
             }));
         }
     }

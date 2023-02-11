@@ -1,6 +1,7 @@
 package net.astropvp.loottable;
 
 
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import net.astropvp.loottable.data.LootTableData;
 import net.astropvp.loottable.data.LootTableManager;
 import net.astropvp.loottable.struct.LootTable;
@@ -27,5 +28,13 @@ public class LootTableAPI {
         return loot.stream().sorted(Comparator.comparing(ItemStack::getType)).collect(Collectors.toList());
     }
 
-
+    public static void fixLoot(LootTable type) {
+        LootTableData lootTable = lootTableManager.getLootTable(type);
+        Set<ItemStack> loot  = lootTable.getLootMap().keySet();
+        for (ItemStack itemStack  : loot) {
+            if (ItemUtils.isAirOrNull(itemStack)) {
+                lootTable.removeItem(itemStack);
+            }
+        }
+    }
 }

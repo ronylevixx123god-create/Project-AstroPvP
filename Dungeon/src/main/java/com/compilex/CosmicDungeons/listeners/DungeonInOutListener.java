@@ -33,6 +33,8 @@ import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.compilex.CosmicDungeons.utils.Logger;
 import java.util.concurrent.TimeUnit;
+
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import me.libraryaddict.disguise.DisguiseAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
@@ -101,11 +103,7 @@ implements Listener {
                 e.getPlayer().setGameMode(GameMode.ADVENTURE);
             }
             DisguiseAPI.undisguiseToAll((Entity)e.getPlayer());
-            for (ItemStack item : e.getPlayer().getInventory().getContents()) {
-                if (item.getType().name().contains("BUCKET")) {
-                    e.getPlayer().getInventory().remove(item);
-                }
-            }
+
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(e.getPlayer());
             Dungeon d = dp.getCurrentDungeon();
             if (d != null) {
@@ -122,6 +120,12 @@ implements Listener {
                             d.reset();
                         }
                     }, 100L);
+                }
+            }
+            for (ItemStack item : e.getPlayer().getInventory().getContents()) {
+                if (ItemUtils.isAirOrNull(item)) continue;
+                if (item.getType().name().contains("BUCKET")) {
+                    e.getPlayer().getInventory().remove(item);
                 }
             }
         }

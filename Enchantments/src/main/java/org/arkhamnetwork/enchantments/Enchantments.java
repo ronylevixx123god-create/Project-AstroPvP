@@ -93,7 +93,7 @@ public class Enchantments extends EnchantPlugin {
                 new MasteryPoltergeist(), new MasteryFeignDeath(), new HeroicRocketEscape(), new HeroicTeleportation(), new HeroicTrap(), new HeroicBlock(), new HeroicGhost(), new MasterySoulSiphon(), new MasteryMortalCoil(), new MasteryRotAndDecay(),
                 new MasteryDemonicGateway(), new Reflect(), new AvengingAngel(), new HeroicReflect(), new MasteryLifesteal(), new MasteryBlackout(), new MasteryNeutralize(), new MasteryDeathPact(), new MasteryTombstone(), new MasteryDiscombobulate(), new MasteryExplosivesExpert(),
                 this.permafrostEnchant = new MasteryPermafrost(), new HeroicMetaphysical(), new MasteryWebWalker(), new HeroicCactus(), new HeroicTank(), new Sabotage(), new MasteryLavaStrider(), new HeroicInsanity(),
-                new OpeningCombo(), new HeroicOverwhelm(), new SoulMaster(), new KeyGrind()
+                new OpeningCombo(), new HeroicOverwhelm(), new SoulMaster(), new KeyGrind(), new Coins()
         };
         EnchantmentAPI.registerCustomEnchantments(array);
 

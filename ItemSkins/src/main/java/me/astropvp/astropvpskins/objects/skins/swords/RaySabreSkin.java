@@ -22,6 +22,7 @@ public class RaySabreSkin extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (!(damaged instanceof Player)) return;
         new SoulMaster().applyEffect(damager, (LivingEntity) damaged, 6, event);
         event.setDamage(event.getDamage() * 1.2);
         if (Math.random() < 0.03) {

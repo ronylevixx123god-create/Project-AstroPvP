@@ -215,6 +215,7 @@ public class EntityStackerListener implements Listener {
     public void blazeLoot(Player p) {
         double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
         double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.01
+        double mobcoinChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") * 0.01;
         Map<CustomEnchantment, Integer> enchants;
         UUID uuid =p.getUniqueId();
         if (cachedWeaponEnchants.containsKey(uuid)) {
@@ -227,8 +228,13 @@ public class EntityStackerListener implements Listener {
             }, 60 * 20L);
         }
         attemptGiveMoney(p);
+
+        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Coins"))) {
+            mobcoinChance *= 1.4;
+        }
+
         int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
-        if (Math.random() < AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {
+        if (Math.random() < mobcoinChance) {
             MobcoinAPI.addMobcoins(p, mcAmount);
             p.playSound(p.getLocation(), Sound.LEVEL_UP, 2, 1);
             p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
@@ -244,6 +250,8 @@ public class EntityStackerListener implements Listener {
             grinderKeyChance *= 1.4;
             godlyKeyChance *= 1.4;
         }
+
+
 
         double num = Math.random();
 
