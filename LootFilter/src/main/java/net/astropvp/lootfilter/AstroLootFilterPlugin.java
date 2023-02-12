@@ -24,6 +24,7 @@ public class AstroLootFilterPlugin extends JavaPlugin {
         this.commandManager.registerCommand(new LootFilterCommand());
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, () -> {
             System.out.println("[LootFilter] Started auto saving lootfilter data");
+            lootFilterManager.purge();
             lootFilterManager.saveAll();
             System.out.println("[LootFilter] Finished auto saving lootfilter data");
         },60L, 10*20*60);
@@ -31,6 +32,7 @@ public class AstroLootFilterPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        lootFilterManager.purge();
         lootFilterManager.saveAll();
         instance = null;
 

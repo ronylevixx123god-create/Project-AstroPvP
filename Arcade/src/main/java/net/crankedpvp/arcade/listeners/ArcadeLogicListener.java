@@ -121,6 +121,7 @@ public class ArcadeLogicListener implements Listener {
     @EventHandler
     public void teleportToNoSet(PlayerTeleportEvent event) {
         if (event.getTo().getWorld().getName().equals(ArcadeAPI.WORLD_NAME) && event.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL && !event.getPlayer().hasPermission("cranked.admin")) {
+
             if (AstroArmorSetsAPI.getBonusCrystalsEquipped(event.getPlayer()).isEmpty()) {
                 event.setCancelled(true);
                 Language.TELEPORT_NO_SET.send(event.getPlayer());

@@ -11,7 +11,7 @@ public class FrostMonsterSkin extends ItemSkin {
 
     @Override
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
-        if (damager instanceof Player && !ItemUtils.isAirOrNull((ItemStack) damager)) {
+        if (damager instanceof Player && !ItemUtils.isAirOrNull(((Player) damager).getItemInHand())) {
             if (((Player) damager).getItemInHand().getType().name().contains("AXE")) {
                 event.setDamage(event.getDamage() * 0.85);
             }
@@ -20,7 +20,7 @@ public class FrostMonsterSkin extends ItemSkin {
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (damaged instanceof Player && !ItemUtils.isAirOrNull((ItemStack) damaged)) {
+        if (damaged instanceof Player && !ItemUtils.isAirOrNull((ItemStack) ((Player) damaged).getItemInHand())) {
             if (((Player) damaged).getItemInHand().getType().name().contains("SWORD")) {
                 event.setDamage(event.getDamage() * 1.05);
             }

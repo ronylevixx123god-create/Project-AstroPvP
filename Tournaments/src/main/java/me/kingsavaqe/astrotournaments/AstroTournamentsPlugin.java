@@ -49,11 +49,11 @@ public class AstroTournamentsPlugin extends JavaPlugin {
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             System.out.println("[Tournaments] Started auto saving tournament data");
-
+            getTournamentManager().purge();
             getTournamentManager().saveAll();
             System.out.println("[Tournaments] Finished auto saving tournament data");
 
-        },60L, 20L*10);
+        },60L, 20L*60);
     }
 
     public void onDisable() {
@@ -61,6 +61,8 @@ public class AstroTournamentsPlugin extends JavaPlugin {
             getTournamentManager().end();
             System.out.println("[Tournaments] Force ended an active tournament");
         }
+        getTournamentManager().purge();
+
         getTournamentManager().saveAll();
         getTournamentManager().saveBannedSkinsToConfig();
         getTournamentManager().saveCurrentArmorCrystalToConfig();

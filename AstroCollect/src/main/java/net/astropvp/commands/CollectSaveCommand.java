@@ -24,6 +24,7 @@ public class CollectSaveCommand implements CommandExecutor {
 
         if (!player.isOp()) return true;
 
+        this.collectPlugin.getCollectManager().purge();
 
         this.collectPlugin.getCollectManager().saveAll();
         return true;

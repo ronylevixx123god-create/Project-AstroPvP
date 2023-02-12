@@ -17,6 +17,8 @@ public class SaveSpawnersCommand implements CommandExecutor {
         for (String key : AstroSpawners.getInstance().getSpawnerManager().getCacheKeys()) {
             sender.sendMessage(key);
         }
+        AstroSpawners.getInstance().getSpawnerManager().purge();
+
         AstroSpawners.getInstance().getSpawnerManager().saveAll();
         sender.sendMessage(CC.Green + "Done saving!");
         return true;

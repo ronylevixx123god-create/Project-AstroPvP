@@ -134,6 +134,8 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 return;
             }
 
+
+
             if (UndertowFieldTask.affected.contains(player)) {
                 player.sendMessage(CC.translate("&c&lPET: &cYour pets are silenced by a player's UnderTow Field."));
                 return;
@@ -172,6 +174,11 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
             if (player.getLocation().getWorld().getName().equalsIgnoreCase("world_arcade")) {
                 playerInteractEvent.setCancelled(true);
                 throw new PrefixedPetException(CC.Red + "You cannot use pets at arcade!");
+            }
+
+            if (player.getLocation().getWorld().getName().equalsIgnoreCase("tournament_world")) {
+                playerInteractEvent.setCancelled(true);
+                throw new PrefixedPetException(CC.Red + "You cannot use pets in tournaments!");
             }
 
 

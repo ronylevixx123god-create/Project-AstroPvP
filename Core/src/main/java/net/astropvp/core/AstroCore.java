@@ -2,6 +2,7 @@ package net.astropvp.core;
 
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
+import com.astropvp.cc.player.CosmicPlayer;
 import com.astropvp.cc.player.CosmicPlayers;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -231,10 +232,12 @@ public class AstroCore extends JavaPlugin {
         enchantmentCoderManager.loadAll();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             System.out.println("[EnchantmentCoder] Started auto saving coder data");
+            enchantmentCoderManager.purge();
             enchantmentCoderManager.saveAll();
             System.out.println("[EnchantmentCoder] Finished auto saving coder data");
 
             Bukkit.getLogger().info("[AstroCore] Started Saving astrocore playerdata");
+            enchantmentCoderManager.purge();
             astroPlayerManager.saveAll();
             Bukkit.getLogger().info("[AstroCore] Finished Saving astrocore playerdata");
 
@@ -307,6 +310,8 @@ public class AstroCore extends JavaPlugin {
         }
 
         saveConfig();
+        enchantmentCoderManager.purge();
+        astroPlayerManager.purge();
         enchantmentCoderManager.saveAll();
         astroPlayerManager.saveAll();
 
@@ -433,9 +438,11 @@ public class AstroCore extends JavaPlugin {
         }, 20L, 20L);
 
         Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
-        Bukkit.getScheduler().runTaskTimerAsynchronously(getInstance(), () -> {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), () -> {
             for (Player p : allPlayers) {
-                if (!CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient() && !p.isOp()) {
+                CosmicPlayer cosmicPlayer = CosmicPlayers.get().getCosmicPlayer(p);
+                if (cosmicPlayer == null) continue;
+                if (!cosmicPlayer.isOnCosmicClient() && !p.isOp()) {
                     p.sendMessage("");
                     p.sendMessage(CC.translate("&c&lHey &n" + p.getName() + "&c&l, &cwe have noticed that you are not on the official version of &nCosmicClient&c."));
                     p.sendMessage(CC.translate("&7If you wish to download it, follow the steps in the &f#cc-features&7 channel in our &f/discord&7."));

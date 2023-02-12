@@ -43,6 +43,7 @@ public class MobcoinPlugin extends JavaPlugin {
         this.shardsShopManager = new MobcoinShopManager(this);
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             System.out.println("[Shards] Started auto saving");
+            shardsManager.purge();
             shardsManager.saveAll();
             System.out.println("[Shards] Finished auto saving");
         }, 60L, 5*20*60);
@@ -50,6 +51,7 @@ public class MobcoinPlugin extends JavaPlugin {
 
     @Override
     public void onDisable() {
+        shardsManager.purge();
         shardsManager.saveAll();
         shardsShopManager.save(this);
         instance = null;

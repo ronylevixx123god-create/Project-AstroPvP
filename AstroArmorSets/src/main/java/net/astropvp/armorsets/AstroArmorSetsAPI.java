@@ -331,6 +331,7 @@ public class AstroArmorSetsAPI {
         Map<ArmorSetType, Integer> empty = new HashMap<>();
         CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        if (cache == null) return empty;
         if (cache.getCurrentSetCrystals() != null && !cache.getCurrentSetCrystals().isEmpty()) {
             return cache.getCurrentSetCrystals();
         }
