@@ -15,7 +15,7 @@ import org.bukkit.event.entity.EntityDamageEvent;
 
 public class OmniArmorDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.LOW, ignoreCancelled = true)
+            priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (e.getDamager().getWorld().getName().equals("world_outpost_pluto")) {
@@ -25,15 +25,14 @@ public class OmniArmorDamageListener implements Listener {
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
             double totalReduction =  AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageDecrease");
-            e.setDamage( e.getDamage() * (1-(totalReduction/100) * (1+(cache.getOmniPieces()/10F))));
+            totalReduction *=cache.getOmniPieces();
+            e.setDamage( e.getDamage() * (1-(totalReduction/100)));
         }
 
     }
 
     @EventHandler(
-            priority = EventPriority.LOW,
-            ignoreCancelled = true
-    )
+            priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void increaseDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (e.getDamager().getWorld().getName().equals("world_outpost_pluto")) {
@@ -43,7 +42,8 @@ public class OmniArmorDamageListener implements Listener {
         ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
         if (cache != null && cache.getOmniPieces() != 0) {
             double totalIncrease = AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("omniSetDamageIncrease");
-            e.setDamage(e.getDamage() * (1+(totalIncrease/100) * (1+(cache.getOmniPieces()/10F))));
+            totalIncrease *=cache.getOmniPieces();
+            e.setDamage(e.getDamage() * (1+(totalIncrease/100)));
         }
     }
 }

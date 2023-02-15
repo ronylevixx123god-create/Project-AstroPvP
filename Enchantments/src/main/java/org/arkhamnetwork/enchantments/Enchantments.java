@@ -157,6 +157,8 @@ public class Enchantments extends EnchantPlugin {
         getServer().getPluginManager().registerEvents(new OmniBlackScrollListener(), this);
         getServer().getPluginManager().registerEvents(new SilenceListener(), this);
         getServer().getPluginManager().registerEvents(new AutoBlessListener(), this);
+        getServer().getPluginManager().registerEvents(new EnderWalkerListener(), (Plugin) Enchantments.getInstance());
+
 
     }
 

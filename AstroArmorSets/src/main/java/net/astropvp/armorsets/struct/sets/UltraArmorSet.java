@@ -40,7 +40,7 @@ public class UltraArmorSet extends ArmorSet {
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.25) {
+        if (Math.random() < 0.1) {
             activateUltraAbility(attacker, (Player) attacked, event);
         }
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
@@ -49,7 +49,7 @@ public class UltraArmorSet extends ArmorSet {
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent = 10 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.1) {
+        if (Math.random() < 0.05) {
             activateUltraAbility(attacker, (Player) attacked, event);
         }
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
@@ -115,7 +115,7 @@ public class UltraArmorSet extends ArmorSet {
             target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[Blocked Ultra Rage] &e&l*"));
             return;
         }
-        event.setDamage(event.getDamage() * 1.25);
+        event.setDamage(event.getDamage() * 1.2);
         target.sendMessage(CC.translate((String) ("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*")));
         player.sendMessage(CC.translate((String) "&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
     }

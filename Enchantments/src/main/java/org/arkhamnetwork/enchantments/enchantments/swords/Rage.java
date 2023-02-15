@@ -19,6 +19,7 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.metadata.MetadataValue;
 
 
 public class Rage extends CustomEnchantment {
@@ -36,9 +37,9 @@ public class Rage extends CustomEnchantment {
             if (!(target instanceof Player)) {
                 return;
             }
-//            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
-//                return;
-//            }
+            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
+                return;
+            }
 
 
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);

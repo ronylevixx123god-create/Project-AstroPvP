@@ -1,31 +1,28 @@
 package me.astropvp.discordsync.listeners;
 
 
-import java.util.*;
-
 import me.astropvp.discordsync.DiscordSyncPlugin;
 import me.astropvp.discordsync.utils.CC;
 import net.dv8tion.jda.api.entities.Guild;
 import net.dv8tion.jda.api.entities.Member;
-import net.dv8tion.jda.api.entities.Role;
 import net.dv8tion.jda.api.entities.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.*;
 
 public class ChatListener implements Listener {
     private static final long ASTRO_GUILD_ID = 470324147411615744L;
     public static final String LEADER_BADGE = CC.translate("&9&l❖");
     public static final String BOOSTER_BADGE = CC.translate("&d&l✪");
     private static final Set<UUID> nitroBoosterList = new HashSet<>();
-    private static final Set<UUID> factionLeaderList =  new HashSet<>();
-    private static final Set<UUID> youtuberList =  new HashSet<>();
-    private static final Set<UUID> famousList =  new HashSet<>();
+    private static final Set<UUID> factionLeaderList = new HashSet<>();
+    private static final Set<UUID> youtuberList = new HashSet<>();
+    private static final Set<UUID> famousList = new HashSet<>();
 
     private final String nitroBoosterRole;
     private final String factionLeaderRole;
@@ -48,17 +45,17 @@ public class ChatListener implements Listener {
             public void run() {
                 ChatListener.this.updateNitroBoosters();
             }
-        }).runTaskTimer(plugin, 400L, 6000L);
+        }).runTaskTimerAsynchronously(plugin, 40L, 2000L);
     }
 
     public void updateNitroBoosters() {
         if (this.plugin.getDatabaseManager().isConnected()) {
             Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
                 Map<UUID, Long> uuidUserMap = this.plugin.getDatabaseManager().fetchMap();
-                Set<UUID> toAdd =  new HashSet<>();
-                Set<UUID> toAddLeaders =  new HashSet<>();
-                Set<UUID> toAddYoutubers =  new HashSet<>();
-                Set<UUID> toAddFamous =  new HashSet<>();
+                Set<UUID> toAdd = new HashSet<>();
+                Set<UUID> toAddLeaders = new HashSet<>();
+                Set<UUID> toAddYoutubers = new HashSet<>();
+                Set<UUID> toAddFamous = new HashSet<>();
 
                 for (UUID uuid : uuidUserMap.keySet()) {
                     Long discordId = uuidUserMap.get(uuid);
@@ -98,28 +95,12 @@ public class ChatListener implements Listener {
                 Bukkit.getScheduler().runTask(this.plugin, () -> {
                     famousList.addAll(toAddFamous);
                 });
-                Bukkit.getScheduler().runTaskLater(this.plugin, () -> {
-                    for (Player player : Bukkit.getOnlinePlayers()) {
-                        checkPermissions(player);
-                    }
-                }, 20L);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    checkPermissions(player);
+                }
 
             });
         }
-    }
-
-
-
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        if (event.getPlayer().getName().equalsIgnoreCase("Bryside")) {
-            User user = this.plugin.getJda().getUserById("688321603209003008");
-            this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(user.getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("470359231812599819"))).queue();
-            event.getPlayer().sendMessage(CC.translate("&aGave you discord roles!!!"));
-        }
-        checkPermissions(player);
-
     }
 
     private void checkPermissions(Player player) {
@@ -136,7 +117,8 @@ public class ChatListener implements Listener {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kits.faction false");
         } else if (isFactionLeader(player) && !player.hasPermission("essentials.kit.faction")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kits.faction true");
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kit.faction true");                        }
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " permission set essentials.kit.faction true");
+        }
 
         if (player.hasPermission("essentials.kit.media") && !isYoutuber(player)) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set apollo");

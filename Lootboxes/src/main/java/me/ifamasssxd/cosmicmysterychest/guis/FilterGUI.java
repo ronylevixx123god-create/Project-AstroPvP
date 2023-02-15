@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicmysterychest.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.data.LootboxFilterData;
@@ -37,9 +38,9 @@ public class FilterGUI {
 
     private Player player;
 
-    private final LootboxFilterData filter;
+    private LootboxFilterData filter;
 
-    private final PaginatedGui lootboxMenu;
+    private  PaginatedGui lootboxMenu;
 
 
     public PaginatedGui getFilterGUI() {
@@ -57,72 +58,51 @@ public class FilterGUI {
 
         lootboxMenu.getFiller().fillBottom(new GuiItem(createFillerItem()));
 
-        ItemStack prevPage = new ItemStack(Material.ARROW);
-        ItemMeta prevMeta = prevPage.getItemMeta();
-        prevMeta.setDisplayName(CC.translate("&c<- Previous Page"));
-        List<String> prevLore = new ArrayList<>();
-        prevLore.add(CC.translate("&7Right-Click&7 to go to the previous page."));
-        prevMeta.setLore(prevLore);
-        prevPage.setItemMeta(prevMeta);
-
-        ItemStack nextPage = new ItemStack(Material.ARROW);
-        ItemMeta nextMeta = nextPage.getItemMeta();
-        nextMeta.setDisplayName(CC.translate("&aNext Page ->"));
-        List<String> nextLore = new ArrayList<>();
-        nextLore.add(CC.translate("&7Right-Click&7 to go to the next page."));
-        nextMeta.setLore(nextLore);
-        nextPage.setItemMeta(nextMeta);
-
-        lootboxMenu.setItem(6, 1, new GuiItem(prevPage, event -> {
+        lootboxMenu.setItem(6, 1, new GuiItem(createPreviousItem(), event -> {
             lootboxMenu.previous();
             event.setCancelled(true);
         }));
 
-        lootboxMenu.setItem(6, 9, new GuiItem(nextPage, event -> {
+        lootboxMenu.setItem(6, 9, new GuiItem(createNextItem(), event -> {
             lootboxMenu.next();
             event.setCancelled(true);
         }));
 
         for (ItemStack item : FilterUtils.getItems(chest)) {
-            ItemStack copyItem = item.clone();
-            if (filter.isFiltered(chest.getInternalName(), item)) {
-                ItemMeta meta = copyItem.getItemMeta();
-                List<String> lore = meta.getLore();
-                if (lore.contains(CC.translate("&f&l➥ &f&lFILTERED"))) {
-                    lore.remove(lore.size() - 1);
-                    lore.remove(lore.size() - 1);
-                }
-                lore.add("");
-                lore.add(CC.translate("&f&l➥ &f&lFILTERED: &aTrue"));
-                meta.setLore(lore);
-                copyItem.setItemMeta(meta);
-            } else {
-                ItemMeta meta = copyItem.getItemMeta();
-                List<String> lore = meta.getLore();
-                if (lore == null) continue;
-                if (lore.contains(CC.translate("&f&l➥ &f&lFILTERED"))) {
-                    lore.remove(lore.size() - 1);
-                    lore.remove(lore.size() - 1);
-                }
-                lore.add("");
-                lore.add(CC.translate("&f&l➥ &f&lFILTERED: &cFalse"));
-                meta.setLore(lore);
-                copyItem.setItemMeta(meta);
-            }
-            lootboxMenu.addItem(new GuiItem(copyItem, event -> {
-                if (event.isRightClick() && event.isShiftClick() && event.getWhoClicked().isOp()) {
-                    chest.removeItem(item);
-                    FilterGUI filterGUI = new FilterGUI(player, chest);
-                    filterGUI.getFilterGUI().open(player);
-                    player.sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from " + chest.getDisplayName()));
-                    return;
-                }
-                filter.filterItem(chest.getInternalName(),item);
+            lootboxMenu.addItem(createGuiItem(chest, item));
+        }
+    }
+
+    public GuiItem createGuiItem(MysteryChest chest, ItemStack item) {
+        return new GuiItem(filter.isFiltered(chest.getInternalName(), item) ? createFilteredItem(item.clone()) :  createNonFilteredItem(item.clone()), event -> {
+            if (event.isRightClick() && event.isShiftClick() && event.getWhoClicked().isOp()) {
+                chest.removeItem(item);
                 FilterGUI filterGUI = new FilterGUI(player, chest);
                 filterGUI.getFilterGUI().open(player);
-                player.playSound(player.getLocation(), Sound.NOTE_PLING, 1f, 1f);
-            }));
-        }
+                player.sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from " + chest.getDisplayName()));
+                return;
+            }
+            filter.filterItem(chest.getInternalName(),item);
+
+            lootboxMenu.updateItem(event.getSlot(), createGuiItem(chest, item));
+            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.0f);
+        });
+    }
+
+    public ItemStack createFilteredItem(ItemStack itemStack) {
+        ItemBuilder builder = new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.RED.getData()));
+        builder.addLoreLines(itemStack.getItemMeta().getLore());
+        builder.name(itemStack.getItemMeta().getDisplayName());
+        builder.addLoreLine("");
+        builder.addLoreLine(CC.translate("&7Left-Click to &c&lUNFILTER &7this item."));
+        return builder.build();
+    }
+
+    public ItemStack createNonFilteredItem(ItemStack itemStack) {
+        ItemBuilder builder = new ItemBuilder(itemStack);
+        builder.addLoreLine("");
+        builder.addLoreLine(CC.translate("&7Left-Click to &a&lFILTER &7this item."));
+        return builder.build();
     }
 
     public ItemStack createFillerItem() {
@@ -131,6 +111,15 @@ public class FilterGUI {
         meta.setDisplayName(CC.translate("&f"));
         item.setItemMeta(meta);
         return item;
+    }
+
+    public ItemStack createPreviousItem() {
+        return new ItemBuilder(Material.ARROW, CC.translate("&c<- Go Back"), CC.translate("&7Right-Click&7 to go to the previous page.")).build();
+    }
+
+    public ItemStack createNextItem() {
+        return new ItemBuilder(Material.ARROW, CC.translate("&aNext Page ->"), CC.translate("&7Right-Click&7 to go to the next page.")).build();
+
     }
 
 }

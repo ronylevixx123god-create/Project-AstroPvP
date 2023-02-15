@@ -22,23 +22,24 @@ public class CandyBladeSkin extends ItemSkin {
 
         if (DuelAPI.isSpectator(damager)) return;
 
-        if(damaged instanceof Player) {
-            //new MasteryLifesteal().applyDamagedOtherPlayer(damager, (Player) damaged, event, 10);
+        if(!(damaged instanceof Player)) {
+            return;
         }
 
         if (Math.random() < 0.1) {
-            //damager.setMetadata("candyBladeAbility", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), true));
+            damager.setMetadata("candyBladeAbility", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), true));
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
+                damager.removeMetadata("candyBladeAbility", AstroItemSkinsPlugin.getInstance());
+            },60L );
         }
 
 
         if (damager.hasMetadata("candyBladeAbility") && Math.random() < 0.15) {
-            //damager.sendMessage(CC.translate("&c&l* SUGAR RUSH&7 [+20% DMG] &c&l*"));
-            //event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE)*1.2);
+            damager.sendMessage(CC.translate("&c&l* SUGAR RUSH&7 [+20% DMG] &c&l*"));
+            event.setDamage(event.getDamage()*1.2);
         }
 
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), ()-> {
-            //damager.removeMetadata("candyBladeAbility", AstroItemSkinsPlugin.getInstance());
-        },60L );
+
     }
 }

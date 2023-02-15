@@ -24,23 +24,22 @@ public class HeroicHex extends HeroicCustomEnchantment
         if (!(playerHit instanceof Player)) {
             return;
         }
+        if (e.isCancelled())return;
+
         final double random = Math.random();
-        final double chance = 0.04 * level;
-        if (random < chance && (!playerHit.hasMetadata("hexEnchantExpire") || playerHit.getMetadata("hexEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
-            playerHit.setMetadata("hexEnchantExpire", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + (2 + level / 2) * 1000));
-            playerHit.setMetadata("hexEnchantLevel", new FixedMetadataValue((Plugin)Enchantments.getInstance(), level));
-            ((Player)playerHit).sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + (2 + level / 2) * 2 + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *");
-            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
-                @Override
-                public void run() {
-                    ((Player)playerHit).sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "* HEX OFF *");
-                }
-            }, (2 + level / 2) * 2 * 20L);
+        final double chance = 0.0075 * level;
+        if (random < chance && !playerHit.hasMetadata("hexEnchant")) {
+            playerHit.setMetadata("hexEnchant", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + (level / 2) * 1000L));
+            ((Player)playerHit).sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + (level / 2) * 2 + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *");
+            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> {
+                ((Player)playerHit).sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "* HEX OFF *");
+                playerHit.removeMetadata("hexEnchant", Enchantments.getInstance());
+            }, (level / 2)  * 20L);
         }
     }
 
     public static boolean isHexed(final LivingEntity e) {
-        return e.hasMetadata("hexEnchantExpire") && e.getMetadata("hexEnchantExpire").get(0).asLong() > System.currentTimeMillis();
+        return e.hasMetadata("hexEnchant");
     }
 
     public static int getHexLevel(final LivingEntity e) {

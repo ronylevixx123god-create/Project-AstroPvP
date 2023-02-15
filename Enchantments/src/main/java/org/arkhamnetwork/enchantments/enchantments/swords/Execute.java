@@ -50,8 +50,8 @@ public class Execute extends CustomEnchantment
             return;
         }
         final double random = Math.random();
-        final double chance = 0.05 * level;
-        final double mod = 4.2;
+        final double chance = 0.035 * level;
+        double mod = 2.0D + (level/2D);
         if (random < chance) {
             e.setDamage(e.getDamage() * mod);
             final Location l = target.getLocation();

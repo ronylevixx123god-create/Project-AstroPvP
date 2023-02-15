@@ -67,6 +67,7 @@ public class CosmicMysteryChest
 
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             System.out.println("[Lootboxes] Started saving lootboxes");
+            filterManager.purge();
             filterManager.saveAll();
             System.out.println("[Lootboxes] Finished saving lootboxes");
         },60L, 15*20*60);
@@ -76,7 +77,7 @@ public class CosmicMysteryChest
     public void onDisable() {
         this.toggle.saveToggles();
         System.out.println("Started Saving Lootboxes Database");
-
+        filterManager.purge();
         filterManager.saveAll();
         if (this.chestManager != null) {
             this.chestManager.onDisable(this);
