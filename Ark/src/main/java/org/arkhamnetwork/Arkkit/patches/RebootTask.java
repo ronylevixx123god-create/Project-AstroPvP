@@ -29,6 +29,7 @@ final class RebootTask
                     Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "** This is " + ChatColor.UNDERLINE + "NOT" + ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + " a rollback!");
                 }
                 Bukkit.broadcastMessage("");
+
             }
         } else {
             Bukkit.getServer().shutdown();

@@ -97,7 +97,7 @@ public class MobSpawnerListener implements Listener {
         Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
             AstroSpawners.coolDownSpawnerPlace.remove(event.getPlayer());
         }, 20L);
-        Location location = event.getBlockPlaced().getLocation();
+        Location location = event.getBlock().getLocation();
 
         SpawnerData spawnerData = new SpawnerData(type, math, location);
         AstroSpawners.getInstance().getSpawnerManager().addToCache(spawnerData);

@@ -1,6 +1,7 @@
 package net.crankedpvp.arcade.struct;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import lombok.Getter;
 import lombok.Setter;
@@ -21,6 +22,7 @@ import java.util.UUID;
 public class ArcadeManager {
     private List<ArcadeMatch> matches;
     @Setter
+
     private boolean enabled;
 
     public ArcadeManager() {
@@ -41,6 +43,7 @@ public class ArcadeManager {
         }
 
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
+            if (EssentialsUtils.isVanished(player)) continue;
             if (!player.canSee(player1)) player.showPlayer(player1);
             if (!player.canSee(player2)) player.showPlayer(player2);
             if (!player1.canSee(player)) player1.showPlayer(player);

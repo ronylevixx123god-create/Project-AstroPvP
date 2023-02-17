@@ -45,7 +45,7 @@ public class AstroCollectors extends JavaPlugin {
         this.registerListeners();
         new CollectorWorthUpdateTask().runTaskTimer(this, 0L, 100L);
 
-        Bukkit.getScheduler().runTaskLaterAsynchronously(this, () -> {
+        Bukkit.getScheduler().runTaskLater(this, () -> {
             for (Collector collector : CollectorManager.DELEGATE.collectors.values()) {
                 collector.clearSpawners();
                 collector.scanSpawners(collector.getLocation());

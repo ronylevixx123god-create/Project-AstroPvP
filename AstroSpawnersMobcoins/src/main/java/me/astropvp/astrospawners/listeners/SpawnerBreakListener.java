@@ -102,7 +102,7 @@ public class SpawnerBreakListener implements Listener {
         }
     }
 
-    @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
     public void onMine(BlockBreakEvent event) {
         if (event.getBlock().getType() == Material.MOB_SPAWNER) {
             Block block = event.getBlock();

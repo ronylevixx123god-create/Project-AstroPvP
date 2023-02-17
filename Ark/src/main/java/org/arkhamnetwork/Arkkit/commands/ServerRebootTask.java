@@ -11,12 +11,14 @@
  */
 package org.arkhamnetwork.Arkkit.commands;
 
+import com.massivecraft.factions.util.TitleAPI;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
+import org.github.paperspigot.Title;
 
 final class ServerRebootTask
         extends BukkitRunnable {
@@ -28,6 +30,7 @@ final class ServerRebootTask
         Bukkit.broadcastMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "      *** An Astro reboot has been queued. *** ");
         Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Astro pulls a critical core update.");
         Bukkit.broadcastMessage("");
+
         if (force) {
             this.iteration = 0;
         }
@@ -81,6 +84,10 @@ final class ServerRebootTask
     }
 
     private void doBroadcast() {
+        Title title = new Title(restartWarnMessage);
+        for (Player player : Bukkit.getOnlinePlayers()) {
+            player.sendTitle(title);
+        }
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(this.restartWarnMessage.replace("[time]", String.valueOf(this.iteration)));
         Bukkit.broadcastMessage("");

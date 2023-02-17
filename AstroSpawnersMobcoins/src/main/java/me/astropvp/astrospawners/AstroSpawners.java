@@ -73,7 +73,7 @@ public class AstroSpawners extends JavaPlugin {
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
             spawnerManager.purge();
             spawnerManager.saveAll();
-        }, 60L, 5*20*60);
+        }, 60L, 20*60);
 
 
 

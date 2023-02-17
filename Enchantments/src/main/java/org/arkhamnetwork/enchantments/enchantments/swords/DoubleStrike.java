@@ -43,7 +43,7 @@ public class DoubleStrike
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double random = Math.random();
-        double chance = 0.01D * level;
+        double chance = 0.0075D * level;
         if (random < chance) {
             double dmg = e.getDamage();
             final double fdmg = dmg;
