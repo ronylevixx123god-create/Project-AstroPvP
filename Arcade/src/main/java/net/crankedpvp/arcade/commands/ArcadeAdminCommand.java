@@ -47,6 +47,23 @@ public class ArcadeAdminCommand extends CommandBase {
         sender.sendMessage(CC.translate("&cYeahhhh... We fucked up xD"));
     }
 
+    @SubCommand("forceopen")
+    @Permission("cranked.admin")
+    public void openCommand(Player player) {
+
+
+        if (!ArcadePlugin.getInstance().getArcadeManager().isForceOpen()) {
+            player.sendMessage(CC.translate("&a&l(!)&a You have force opened arcade!"));
+            ArcadePlugin.getInstance().getConfig().set("force-open", true);
+            ArcadePlugin.getInstance().saveConfig();
+        } else {
+            player.sendMessage(CC.translate("&c&l(!)&c You have force closed arcade!"));
+            ArcadePlugin.getInstance().getConfig().set("force-open", false);
+            ArcadePlugin.getInstance().saveConfig();
+        }
+    }
+
+
 
 
 }

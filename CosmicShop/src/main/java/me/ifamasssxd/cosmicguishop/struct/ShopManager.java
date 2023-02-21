@@ -47,11 +47,11 @@ public class ShopManager {
     private File priceFile;
     private YamlConfiguration priceConfig;
 
-    private static ItemStack getMobSpawner(EntityType entityType) {
+    private static ItemStack getMobSpawner(EntityType entityType, int amount) {
         /*Bukkit.getLogger().info("TYPE: " +  entityType + " ID: " + entityType.getTypeId());
         ItemStack item = ItemBuilder.buildItem(Material.MOB_SPAWNER, 1, entityType.getTypeId(), ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + StringUtils.capitaliseAllWords((String) entityType.name().replace("_", " ").toLowerCase()) + ChatColor.GOLD.toString() + " Spawner",  ChatColor.GRAY + "Be careful where you place this!");
         item.setDurability(entityType.getTypeId());*/
-        ItemStack item = ItemSpawner.getItem(entityType, 1);
+        ItemStack item = ItemSpawner.getItem(entityType, amount);
         return item;
     }
 
@@ -239,7 +239,7 @@ public class ShopManager {
                     public void onClick(InventoryClickEvent event) {
                         boolean fillInventory = false;
                         int sellAmount = event.getClick().equals(ClickType.RIGHT) ? 1 : (event.getClick().equals(ClickType.SHIFT_RIGHT) ? data.getType().getMaxStackSize() : -1);
-                        int buyAmount = event.getClick().equals(ClickType.LEFT) ? 1 : ((event.getClick().equals(ClickType.SHIFT_LEFT) && data.getType() != Material.MOB_SPAWNER) ? data.getType().getMaxStackSize() : ((fillInventory = (data.getType() != Material.MOB_SPAWNER && event.getClick().equals(ClickType.MIDDLE) && emptySlots > 1)) ? (emptySlots * data.getType().getMaxStackSize()) : 1));
+                        int buyAmount = event.getClick().equals(ClickType.LEFT) ? 1 : ((event.getClick().equals(ClickType.SHIFT_LEFT)) ? data.getType().getMaxStackSize() : ((fillInventory = (event.getClick().equals(ClickType.MIDDLE) && emptySlots > 1)) ? (emptySlots * data.getType().getMaxStackSize()) : 1));
                         if (sellAmount != -1) {
                             if (price.getSellPrice() <= 0.0D) {
                                 player.sendMessage(ChatColor.RED + "You cannot sell this item to the shop!");
@@ -281,8 +281,8 @@ public class ShopManager {
                             }
                             if (fillInventory) {
                                 int finalBuyAmount = buyAmount;
-                                new ConfirmPurchaseMenu("Confirm Inventory Purchase", 9, new ItemStack(data.getType(), 1, data.getData()), ItemUtils.getPrettyName(data), buyAmount, totalPrice, acceptStatus -> {
-                                    if (acceptStatus.booleanValue()) {
+                                new ConfirmPurchaseMenu("Confirm Inventory Purchase", 9,data.getType() == Material.MOB_SPAWNER ? ItemSpawner.getItem(EntityType.fromId(data.getData()), buyAmount) : new ItemStack(data.getType(), 1, data.getData()), ItemUtils.getPrettyName(data), buyAmount, totalPrice, acceptStatus -> {
+                                    if (acceptStatus) {
                                         if (!CosmicGUIShop.getEconomy().has((OfflinePlayer) player, totalPrice)) {
                                             player.sendMessage( ChatColor.RED + "You no longer have the funds!");
                                             player.closeInventory();
@@ -293,16 +293,15 @@ public class ShopManager {
                                             return;
                                         }
                                         int slots = SlotUtils.getEmptySlots(player);
-                                        if (slots < emptySlots) {
+                                        if (slots < emptySlots && data.getType() != Material.MOB_SPAWNER) {
                                             player.sendMessage(ChatColor.RED + "You do not have the inventory space needed!");
                                             return;
                                         }
                                         ShopManager.this.finishPurchase(player, data, totalPrice, buyAmount);
-                                        menu.open(player);
                                     } else {
                                         player.sendMessage( ChatColor.RED + "Purchase Cancelled!");
-                                        menu.open(player);
                                     }
+                                    menu.open(player);
                                 }).open(player);
                                 return;
                             }
@@ -325,6 +324,11 @@ public class ShopManager {
         Material type = data.getType();
         if (type == Material.CHEST && data.getData() == 100) {
             player.getInventory().addItem(CollectorUtils.createCollector(buyAmount));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "SHOP_BUY", totalPrice, data, buyAmount));
+            return;
+        }
+        if (type == Material.MOB_SPAWNER) {
+            player.getInventory().addItem(ItemSpawner.getItem(EntityType.fromId(data.getData()), buyAmount));
             Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(player, "SHOP_BUY", totalPrice, data, buyAmount));
             return;
         }
@@ -371,7 +375,7 @@ public class ShopManager {
                     Bukkit.getLogger().info("Data: " + data.getData() + " from : " + data);
                     type = EntityType.PIG;
                 }
-                toGive = ShopManager.getMobSpawner(type);
+                toGive = ShopManager.getMobSpawner(type, amount);
                 if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
                     toGive = ItemID.setItemID(toGive, ItemID.generateNewItemID());
                 }

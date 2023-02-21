@@ -24,6 +24,9 @@ public class ArcadeTimerChecker extends BukkitRunnable {
         Calendar cal = Calendar.getInstance();
         int hour = cal.get(Calendar.HOUR_OF_DAY);
         boolean isOpenHour = openhours.contains(hour);
+        if (arcadeManager.isForceOpen()) {
+            isOpenHour = true;
+        }
 
         if (isOpenHour && !arcadeManager.isEnabled()) {
             arcadeManager.setEnabled(true);

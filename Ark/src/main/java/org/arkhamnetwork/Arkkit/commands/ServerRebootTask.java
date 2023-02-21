@@ -22,7 +22,7 @@ import org.github.paperspigot.Title;
 
 final class ServerRebootTask
         extends BukkitRunnable {
-    private final String restartWarnMessage = ChatColor.translateAlternateColorCodes('&', "&e&l *** LOCAL SERVER REBOOTING IN [time] SECONDS ***");
+    private final String restartWarnMessage = ChatColor.translateAlternateColorCodes('&', "&e&l *** LOCAL SERVER REBOOTING IN &f&l[time]&e&l SECONDS ***");
     volatile int iteration = 60;
 
     public ServerRebootTask(boolean force) {
@@ -84,7 +84,7 @@ final class ServerRebootTask
     }
 
     private void doBroadcast() {
-        Title title = new Title(restartWarnMessage);
+        Title title = new Title("", this.restartWarnMessage.replace("[time]", String.valueOf(this.iteration)), 5, 15 , 5);
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(title);
         }

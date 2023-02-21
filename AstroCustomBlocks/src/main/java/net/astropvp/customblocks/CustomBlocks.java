@@ -39,7 +39,6 @@ public class CustomBlocks extends JavaPlugin {
         this.customBlockManager = new CustomBlockManager(this);
         customBlockManager.loadAll();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
-            customBlockManager.purge();
             customBlockManager.saveAll();
         }, 40L, 15*60*20L);
 

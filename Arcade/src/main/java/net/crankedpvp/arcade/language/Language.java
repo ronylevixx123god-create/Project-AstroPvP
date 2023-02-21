@@ -13,7 +13,9 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public enum Language {
-
+    BORDER_TIMER,
+    BORDER_STARTED,
+    BORDER_EXPIRED,
     CANT_PVP,
     MATCH_STARTED_KILLER,
     MATCH_STARTED_VICTIM,

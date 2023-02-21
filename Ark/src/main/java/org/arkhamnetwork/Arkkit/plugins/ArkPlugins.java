@@ -17,6 +17,7 @@ public enum ArkPlugins {
     TILE_ENTITY_CLEANER(new TileEntityCleaner(Arkkit.get()), "Removes empty tile entities (chests) as chunks load to decrease CPU tick iterations."),
     BULK_SAVING(new BulkSaving(Arkkit.get()), "Disables all incremental I/O saving, only saves on server shutdown, costs RAM, saves (massive) CPU."),
     NO_NATURAL_MOBS(new NoNaturalMobs(Arkkit.get()), "Excluse natural mob spawning from server tick(), saves CPU."),
+    FILL_COMMAND(new FillCommand(Arkkit.get()), "Enables /fill which automatically fills dispensers with TNT from inventory."),
     COMMAND_BLOCKER(new CommandBlocker(Arkkit.get()), "Allows for dynamic command blocking / unblocking."),
     ESSENTIALS_WARP_ALIASES(new EssentialsWarpAliases(Arkkit.get()), "Enables per-warp /aliase net.astropvp.armorsets.commands. So /warp test will become /test, useful in prison server configurations."),
     CHAT_LIMITER(new ChatLimiter(Arkkit.get()), "Enables a chat limiter with configurable delays between chat messages, and a custom VIP delay and permission node."),

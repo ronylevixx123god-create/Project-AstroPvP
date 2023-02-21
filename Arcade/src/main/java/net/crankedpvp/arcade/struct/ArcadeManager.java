@@ -8,8 +8,12 @@ import lombok.Setter;
 import net.crankedpvp.arcade.ArcadeAPI;
 import net.crankedpvp.arcade.ArcadePlugin;
 import net.crankedpvp.arcade.language.Language;
+import net.crankedpvp.arcade.tasks.ArcadeBorderPlayers;
 import net.crankedpvp.arcade.tasks.ArcadeTimerChecker;
+import net.crankedpvp.arcade.utils.ChunkUtils;
+import org.apache.commons.codec.language.bm.Lang;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent;
 
@@ -21,6 +25,7 @@ import java.util.UUID;
 @Getter
 public class ArcadeManager {
     private List<ArcadeMatch> matches;
+    ;
     @Setter
 
     private boolean enabled;
@@ -42,6 +47,12 @@ public class ArcadeManager {
             Language.MATCH_ENDED.send(player2);
         }
 
+        List<Location> blocks = ChunkUtils.getRegionBlocks("arcade_blocks");
+        ArcadeBorderPlayers.borderPlayers.remove(player1.getUniqueId());
+        ArcadeBorderPlayers.borderPlayers.remove(player2.getUniqueId());
+        ChunkUtils.unHideBlocks(player1.getUniqueId(), blocks);
+        ChunkUtils.unHideBlocks(player2.getUniqueId(), blocks);
+
         for (Player player : Bukkit.getServer().getOnlinePlayers()) {
             if (EssentialsUtils.isVanished(player)) continue;
             if (!player.canSee(player1)) player.showPlayer(player1);
@@ -56,6 +67,7 @@ public class ArcadeManager {
         matches.add(new ArcadeMatch(uuid1, uuid2));
         Player player1 = Bukkit.getPlayer(uuid1);
         Player player2 = Bukkit.getPlayer(uuid2);
+
         String msgKiller = Language.MATCH_STARTED_KILLER.getMessage().replace("{victim}", player2.getName());
         String msgVictim = Language.MATCH_STARTED_VICTIM.getMessage().replace("{killer}", player1.getName());
         player1.sendMessage(CC.translate(msgKiller));
@@ -63,14 +75,37 @@ public class ArcadeManager {
         for (Player player : Bukkit.getWorld(ArcadeAPI.WORLD_NAME).getPlayers()) {
             player.sendMessage(CC.translate(Language.MATCH_STARTED_BROADCAST.getMessage().replace("{player1}", player1.getName()).replace("{player2}", player2.getName())));
         }
+        ArcadeBorderPlayers.borderPlayers.add(uuid1);
+        ArcadeBorderPlayers.borderPlayers.add(uuid2);
+        Language.BORDER_STARTED.send(player1);
+        Language.BORDER_STARTED.send(player2);
+
+
+        Bukkit.getScheduler().runTaskLater(ArcadePlugin.getInstance(), ()-> {
+            List<Location> blocks = ChunkUtils.getRegionBlocks("arcade_blocks");
+            ArcadeBorderPlayers.borderPlayers.remove(uuid1);
+            ArcadeBorderPlayers.borderPlayers.remove(uuid2);
+            ChunkUtils.unHideBlocks(uuid1, blocks);
+            ChunkUtils.unHideBlocks(uuid2, blocks);
+            Language.BORDER_EXPIRED.send(player1);
+            Language.BORDER_EXPIRED.send(player2);
+        }, Long.parseLong(Language.BORDER_TIMER.getValue())*20L);
 
     }
+
+
+
+
 
     public boolean inArcadeMatch(UUID uuid) {
         for (ArcadeMatch arcadeMatch : matches) {
             if (arcadeMatch.getPlayers().contains(uuid)) return true;
         }
         return false;
+    }
+
+    public boolean isForceOpen() {
+        return ArcadePlugin.getInstance().getConfig().getBoolean("force-open");
     }
 
     public boolean inSameArcadeMatch(UUID uuid1, UUID uuid2) {

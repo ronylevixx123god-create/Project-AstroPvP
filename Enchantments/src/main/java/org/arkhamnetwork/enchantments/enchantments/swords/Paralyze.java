@@ -37,7 +37,7 @@ public class Paralyze
             return;
         }
         final double random = Math.random();
-        final double chance = (level == 3) ? 0.05 : (0.03 * level);
+        final double chance = 0.015 * level;
         if (random < chance) {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 playerHit.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
@@ -59,7 +59,7 @@ public class Paralyze
             }
             //playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&5&l* PARALYZE &5&l*"), "PARALYZE");
-            playerHit.damage((double)(1 + level));
+            playerHit.damage((double)(level));
             GeneralCooldown.enterCooldown((Player) player);
 
         }

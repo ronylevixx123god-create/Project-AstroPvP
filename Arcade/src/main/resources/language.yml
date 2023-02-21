@@ -1,3 +1,4 @@
+BORDER_TIMER: 10
 ADMIN_RELOADING: '&3&l(!) &7Reloading configs now...'
 ADMIN_RELOADED: '&3&l(!) &7Reloaded configs and other cool stuff. Took &3%took%ms&7.'
 CANT_PVP: '&d&lArcade &8➥ &7You cannot attack &d{victim} &7because they/you are in
@@ -19,6 +20,8 @@ TELEPORT_NO_SET: '&d&lArcade &8➥ &7You need to wear an armor set to enter the 
   warp!'
 BLACKLISTED_COMMAND: '&d&lArcade &8➥ &7You are not allowed to type this command at
   warp arcade!'
+BORDER_STARTED: '&d&lArcade &8➥ &7You can no longer enter the &asafezone&7 for &c10s&7!'
+BORDER_EXPIRED: '&d&lArcade &8➥ &7You can now enter the &asafezone&7 again!'
 WHITELISTED_COMMANDS:
   - pv
   - bless

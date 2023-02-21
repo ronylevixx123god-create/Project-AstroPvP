@@ -37,7 +37,7 @@ public class Rage extends CustomEnchantment {
             if (!(target instanceof Player)) {
                 return;
             }
-            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - ((MetadataValue) target.getMetadata("doubleStriked").get(0)).asLong() < 500L) {
+            if (target.hasMetadata("doubledStriked") && System.currentTimeMillis() - target.getMetadata("doubleStriked").get(0).asLong() < 500L) {
                 return;
             }
 
