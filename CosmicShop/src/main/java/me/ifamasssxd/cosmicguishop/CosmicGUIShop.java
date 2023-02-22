@@ -27,8 +27,8 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class CosmicGUIShop extends JavaPlugin {
     private static CosmicGUIShop instance;
@@ -79,6 +79,20 @@ public class CosmicGUIShop extends JavaPlugin {
 
     public List<String> getItemList() {
         return itemList;
+    }
+
+    public Map<ItemStack, Float> getItemListSorted() {
+        Map<ItemStack, Float> items = new HashMap<>();
+        for (String string : itemList) {
+            ItemStack item = Base64Utils.getItem(string);
+            float price = Base64Utils.getCost(string);
+            items.put(item, price);
+        }
+        Map<ItemStack, Float> yourSortedMap = items.entrySet()
+                .stream()
+                .sorted(Map.Entry.comparingByKey(Comparator.comparing(ItemStack::getType)))
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (value1, value2) -> value1, LinkedHashMap::new));
+        return yourSortedMap;
     }
 
     public void setItemList(List<String> itemList) {

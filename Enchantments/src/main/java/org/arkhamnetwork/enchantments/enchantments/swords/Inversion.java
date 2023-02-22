@@ -30,9 +30,7 @@ public class Inversion extends CustomEnchantment
                 }
 
                 GeneralUtil.healPlayer(playerHit, heal);
-                e.setDamage(0.0D);
 
-                e.setCancelled(true);
                 playerHit.playSound(playerHit.getLocation(), Sound.PISTON_EXTEND, 0.8F, 2.0F);
             }
         }

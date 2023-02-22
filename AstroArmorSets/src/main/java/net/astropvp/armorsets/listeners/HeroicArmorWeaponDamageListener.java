@@ -54,17 +54,16 @@ public class HeroicArmorWeaponDamageListener implements Listener {
 
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.LOWEST)
     public void onHitP6(EntityDamageByEntityEvent e) {
         if (e.getDamager().getLocation().getWorld().getName().equals("lms_world")) return;
         if (e.getDamager().getLocation().getWorld().getName().equals("world_outpost_pluto")) return;
 
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
-            if (getProtectionReduction(phurt) != 0) {
-                double totalReduction = getProtectionReduction(phurt);
+            double totalReduction = getProtectionReduction(phurt);
+            if (totalReduction != 0) {
                 e.setDamage(e.getDamage() * (1 - (totalReduction * 0.01)));
-
             }
         }
     }

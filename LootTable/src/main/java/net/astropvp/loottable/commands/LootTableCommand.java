@@ -54,6 +54,7 @@ public class LootTableCommand extends CommandBase {
         }
         player.sendMessage(CC.translate("&a&l(!)&a Added " + ItemUtils.getDisplayName(player.getItemInHand()) + " &ato the " + lootTableType.getFancy() + " &aLoottable!"));
         LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).addItem(chance, player.getItemInHand().clone());
+
     }
 
     @Permission("astro.admin")

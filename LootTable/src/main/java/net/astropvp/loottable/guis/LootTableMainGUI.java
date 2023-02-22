@@ -6,6 +6,7 @@ import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 
+import net.astropvp.loottable.LootTablePlugin;
 import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.entity.Player;
 

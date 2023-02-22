@@ -78,10 +78,10 @@ public class VaultManager {
      */
     public void saveVault(Inventory inventory, String target, int number) {
         YamlConfiguration yaml = getPlayerVaultFile(target, true);
-        int size = VaultOperations.getMaxVaultSize(target);
+        //int size = VaultOperations.getMaxVaultSize(target);
         String serialized = CardboardBoxSerialization.toStorage(inventory, target);
         yaml.set(String.format(VAULTKEY, number), serialized);
-        saveFileSync(target, yaml);
+        saveFileASync(target, yaml);
     }
 
     /**
@@ -389,5 +389,28 @@ public class VaultManager {
             PlayerVaults.getInstance().getLogger().log(Level.SEVERE, "Failed to save vault file for: " + holder, e);
         }
         PlayerVaults.debug("Saved vault for " + holder);
+    }
+
+    public void saveFileASync(final String holder, final YamlConfiguration yaml) {
+        Bukkit.getScheduler().runTaskAsynchronously(PlayerVaults.getInstance(), () -> {
+            if (cachedVaultFiles.containsKey(holder)) {
+                cachedVaultFiles.put(holder, yaml);
+            }
+
+            final boolean backups = PlayerVaults.getInstance().isBackupsEnabled();
+            final File backupsFolder = PlayerVaults.getInstance().getBackupsFolder();
+            final File file = new File(directory, holder + ".yml");
+            if (file.exists() && backups) {
+                file.renameTo(new File(backupsFolder, holder + ".yml"));
+            }
+            try {
+                yaml.save(file);
+            } catch (IOException e) {
+                PlayerVaults.getInstance().addException(new IllegalStateException("Failed to save vault file for: " + holder, e));
+                PlayerVaults.getInstance().getLogger().log(Level.SEVERE, "Failed to save vault file for: " + holder, e);
+            }
+            PlayerVaults.debug("Saved vault for " + holder);
+
+        });
     }
 }

@@ -20,12 +20,16 @@ package me.ifamasssxd.cosmicguishop.menus;
 
 import com.conaxgames.banana.utils.Utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
@@ -56,12 +60,12 @@ public class XpShopMenu{
 
     public XpShopMenu(Player player) {
 
-        this.expShopUI = new PaginatedGui(6, 45, "XpShop Menu");
+        this.expShopUI = new PaginatedGui(6, "XpShop Menu");
         expShopUI.setDefaultClickAction(event -> {
             event.setCancelled(true);
         });
 
-        expShopUI.getFiller().fillBottom(new GuiItem(createFillerItem()));
+        expShopUI.getFiller().fillBorder(new GuiItem(createFillerItem()));
 
         ItemStack prevPage = new ItemStack(Material.ARROW);
         ItemMeta prevMeta = prevPage.getItemMeta();
@@ -79,12 +83,12 @@ public class XpShopMenu{
         nextMeta.setLore(nextLore);
         nextPage.setItemMeta(nextMeta);
 
-        expShopUI.setItem(6, 1, new GuiItem(prevPage, event -> {
+        expShopUI.setItem(6, 4, new GuiItem(prevPage, event -> {
             expShopUI.previous();
             event.setCancelled(true);
         }));
 
-        expShopUI.setItem(6, 9, new GuiItem(nextPage, event -> {
+        expShopUI.setItem(6, 6, new GuiItem(nextPage, event -> {
             expShopUI.next();
             event.setCancelled(true);
         }));
@@ -92,40 +96,34 @@ public class XpShopMenu{
         expShopUI.setItem(6, 5, new GuiItem(createGUIItem(player)));
 
 
-        for (String s : CosmicGUIShop.getInstance().getItemList()) {
-            ItemStack item = Base64Utils.getItem(s);
-            ItemMeta meta = item.getItemMeta();
+        for (Map.Entry<ItemStack, Float> s : CosmicGUIShop.getInstance().getItemListSorted().entrySet()) {
+            ItemStack itemStack = s.getKey();
+            ItemStack guiItem = itemStack.clone();
+            ItemMeta meta = guiItem.getItemMeta();
             List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
             lore.add(CC.translate("&f&l&c&b"));
-            lore.add(CC.translate("&a&l* COST: " + CC.White + NumberFormat.getInstance().format((int) Base64Utils.getCost(s)) + CC.GreenB + " XP"));
+            lore.add(CC.translate("&a&l* COST: " + CC.White + NumberFormat.getInstance().format(s.getValue()) + CC.GreenB + " XP"));
             lore.add(CC.translate("&f&l&c&b"));
             meta.setLore(lore);
-            item.setItemMeta(meta);
-            NBTWrapper wrapper = new NBTWrapper(item);
-            wrapper.setFloat("xpShopPrice", Base64Utils.getCost(s));
-            expShopUI.addItem(new GuiItem(wrapper.build(), event -> {
-                int cost = (int) getCostFromItem(item);
+            guiItem.setItemMeta(meta);
+            //NBTWrapper wrapper = new NBTWrapper(item);
+            //wrapper.setFloat("xpShopPrice", Base64Utils.getCost(s));
+            expShopUI.addItem(new GuiItem(itemStack.clone(), event -> {
+                float cost = s.getValue();
                 if (cost == 0)
                     return;
                 if (player.getTotalExperience() < cost) {
                     player.sendMessage(CC.Red + "You do not have enough exp to purchase this item.");
                 } else {
-                    int exp = player.getTotalExperience() - cost;
+                    int exp = (int) (player.getTotalExperience() - cost);
                     player.setTotalExperience(0);
                     player.setExp(0);
                     player.setLevel(0);
                     player.giveExp(exp);
-                    ItemStack itemStack = event.getCurrentItem().clone();
-                    ItemMeta meta2 = itemStack.getItemMeta();
-                    List<String> lore2 = meta.getLore();
-                    lore2.remove(lore2.size() - 1);
-                    lore2.remove(lore2.size() - 1);
-                    lore2.remove(lore2.size() - 1);
-                    meta2.setLore(lore2);
-                    itemStack.setItemMeta(meta2);
-                    player.getInventory().addItem(itemStack);
+
+                    player.getInventory().addItem(itemStack.clone());
                     player.updateInventory();
-                    player.sendMessage(CC.Green + "Purchased " + meta2.getDisplayName() + CC.Green + " for " + NumberFormat.getInstance().format((int) cost) + "XP!");
+                    player.sendMessage(CC.translate("&a&l(!)&a " + "Purchased " + ItemUtils.getDisplayName(itemStack) + CC.Green + " for &f" + NumberFormat.getInstance().format((int) cost) + "&a XP!"));
                 }
             }));
         }

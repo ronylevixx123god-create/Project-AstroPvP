@@ -27,7 +27,6 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -112,32 +111,25 @@ final class HotbarArmorSwapListener
         String worldName = e.getPlayer().getWorld().getName();
 
         Player p = e.getPlayer();
-        if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - p.getMetadata("lastArmorSwap").get(0).asLong() <= 12L) {
+        if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - p.getMetadata("lastArmorSwap").get(0).asLong() <= 15L) {
             return;
         }
         if (e.isCancelled() && p.hasMetadata("noArmorSwap")) {
             return;
         }
-        if (getOldArmorPiece(p, e.getItem()) != null && getOldArmorPiece(p, e.getItem()).getType() != Material.AIR) {
-            AstroArmorSetsAPI.refreshArmorPiece(e.getItem(), getOldArmorPiece(p, e.getItem()), e.getPlayer());
-        }
-        if (getOldArmorPiece(p, e.getItem()) != null && getOldArmorPiece(p, e.getItem()).getType() != Material.AIR) {
-            if (AstroItemSkinsAPI.hasItemSkin(getOldArmorPiece(p, e.getItem()))) {
-                AstroItemSkinsAPI.getItemSkin(getOldArmorPiece(p, e.getItem())).forEach(s -> s.getItemSkin().onUnequip(p));
-            }
-            if (AstroItemSkinsAPI.hasItemSkin(e.getItem())) {
-                AstroItemSkinsAPI.getItemSkin(e.getItem()).forEach(s -> s.getItemSkin().onEquip(p));
-            }
-        }
+
         e.setCancelled(true);
         e.setUseInteractedBlock(Event.Result.DENY);
         e.setUseItemInHand(Event.Result.DENY);
         p.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
+
         this.equipArmor(p, e.getPlayer().getItemInHand());
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
             MaskType.rescanMask(p, true);
         }
+        AstroArmorSetsAPI.refreshArmorSets(p, false);
 
+        AstroItemSkinsAPI.updateSkins(p);
         p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
     }
 

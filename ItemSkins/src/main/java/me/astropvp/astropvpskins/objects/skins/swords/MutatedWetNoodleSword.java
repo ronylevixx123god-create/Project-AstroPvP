@@ -54,7 +54,9 @@ public class MutatedWetNoodleSword extends ItemSkin {
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
                 damager.removeMetadata("wetNoodleAbility", AstroItemSkinsPlugin.getInstance());
                 damager.sendMessage(CC.translate("&e&l*&f&l* &e&lWET NOODLE ABILITY &cExpired &f&l*&e&l*"));
-                damager.sendMessage(CC.translate("&e&l* &eDamaging " + wetNoodleAbility.get(damager).size() + " enemies for &716s&e."));
+                if (wetNoodleAbility.containsKey(damager)) {
+                    damager.sendMessage(CC.translate("&e&l* &eDamaging " + wetNoodleAbility.get(damager).size() + " enemies for &716s&e."));
+                }
                 for (Map.Entry<Player, Integer> entry : wetNoodleAbility.get(damager).entrySet()) {
                     Player affected = entry.getKey();
                     int stacks = entry.getValue();

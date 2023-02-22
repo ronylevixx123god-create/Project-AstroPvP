@@ -67,6 +67,8 @@ public class Base64Utils {
         return Base64Utils.fromBase64(line.split(":")[0]).getContents()[0];
     }
 
+
+
     public static float getCost(String line) {
         String[] split = line.split(":");
         return Integer.valueOf(split[split.length - 1]).intValue();

@@ -10,25 +10,23 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.stream.Collectors;
 
 public class RandomUtils {
     public static ItemStack getRandomItem(Map<ItemStack, Double> itemsMap) {
-
-        double maxValue = 0;
-        for(Double value : itemsMap.values()) {
-            maxValue = maxValue+value;
-        }
-
-        double currentValue = 0;
-        double randomDouble = ThreadLocalRandom.current().nextDouble(maxValue);
-
-        for(Map.Entry<ItemStack, Double> entry : sort(itemsMap).entrySet()) {
-            if(randomDouble > currentValue && randomDouble < currentValue + entry.getValue()) {
-                return entry.getKey();
+        double maxValue = itemsMap.values().stream().mapToDouble(Double::doubleValue).sum();
+        List<Map.Entry<ItemStack, Double>> sortedEntries = itemsMap.entrySet().stream()
+                .sorted(Map.Entry.comparingByValue())
+                .collect(Collectors.toList());
+        while (true) {
+            double randomDouble = ThreadLocalRandom.current().nextDouble(maxValue);
+            for (Map.Entry<ItemStack, Double> entry : sortedEntries) {
+                if (randomDouble < entry.getValue()) {
+                    return entry.getKey();
+                }
+                randomDouble -= entry.getValue();
             }
-            currentValue = currentValue + entry.getValue();
         }
-        return getRandomItem(itemsMap);
     }
 
     public static <K, V extends Comparable<? super V>> Map<K, V> sort(Map<K, V> map) {

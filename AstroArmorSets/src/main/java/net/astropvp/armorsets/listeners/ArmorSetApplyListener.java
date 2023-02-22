@@ -31,11 +31,10 @@ public class ArmorSetApplyListener implements Listener {
 
     @EventHandler
     public void onArmorChange(ArmorEquipEvent e) {
-
-        AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+        AstroArmorSetsAPI.refreshArmorSets(e.getPlayer(), true);
 
         Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
-            AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+            AstroArmorSetsAPI.refreshArmorSets(e.getPlayer(), false);
         }, 10L);
 
     }
@@ -45,7 +44,7 @@ public class ArmorSetApplyListener implements Listener {
     public void onDeath(PlayerDeathEvent e) {
         if (e.getEntity() != null) {
             Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
-                AstroArmorSetsAPI.refreshArmorSets(e.getEntity());
+                AstroArmorSetsAPI.refreshArmorSets(e.getEntity(), true);
             }, 30L);
         }
     }
@@ -55,7 +54,7 @@ public class ArmorSetApplyListener implements Listener {
         if (ProxyPatch.playerNames.contains(e.getPlayer().getName())) return;
         if (e.getPlayer() != null) {
             Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
-                AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+                AstroArmorSetsAPI.refreshArmorSets(e.getPlayer(), true);
             }, 30L);
         }
     }
@@ -64,7 +63,7 @@ public class ArmorSetApplyListener implements Listener {
     public void onWorldChange(PlayerChangedWorldEvent e) {
         if (e.getPlayer() != null) {
             Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
-                AstroArmorSetsAPI.refreshArmorSets(e.getPlayer());
+                AstroArmorSetsAPI.refreshArmorSets(e.getPlayer(), true);
             }, 30L);
         }
     }

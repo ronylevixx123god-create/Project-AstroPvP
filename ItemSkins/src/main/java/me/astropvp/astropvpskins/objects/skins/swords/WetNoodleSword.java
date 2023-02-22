@@ -11,7 +11,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,7 +18,7 @@ public class WetNoodleSword extends ItemSkin {
     public static Map<Player, Map<Player, Integer>> wetNoodleAbility;
 
     public WetNoodleSword() {
-        wetNoodleAbility =  new HashMap<>();
+        wetNoodleAbility = new HashMap<>();
     }
 
 
@@ -45,12 +44,14 @@ public class WetNoodleSword extends ItemSkin {
             Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
                 damager.removeMetadata("wetNoodleAbility", AstroItemSkinsPlugin.getInstance());
                 damager.sendMessage(CC.translate("&e&l*&f&l* &e&lWET NOODLE ABILITY &cExpired &f&l*&e&l*"));
-                damager.sendMessage(CC.translate("&e&l* &eDamaging " + wetNoodleAbility.get(damager).size() + " enemies for &710s&e."));
+                if (wetNoodleAbility.containsKey(damager)) {
+                    damager.sendMessage(CC.translate("&e&l* &eDamaging " + wetNoodleAbility.get(damager).size() + " enemies for &716s&e."));
+                }
                 for (Map.Entry<Player, Integer> entry : wetNoodleAbility.get(damager).entrySet()) {
                     Player affected = entry.getKey();
                     int stacks = entry.getValue();
                     double damage = 0.25 * stacks;
-                    if (damage >= affected.getHealth()/2) {
+                    if (damage >= affected.getHealth() / 2) {
                         damage = affected.getHealth() / 2;
                     }
                     affected.damage(damage);
@@ -59,7 +60,6 @@ public class WetNoodleSword extends ItemSkin {
                 wetNoodleAbility.remove(damager);
             }, 10 * 20);
         }
-
 
 
     }
@@ -77,7 +77,7 @@ public class WetNoodleSword extends ItemSkin {
                 damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a1 Stack&7] &f&l*&e&l*"));
             } else {
                 int currentAmount = currentStacks.get(damaged);
-                currentStacks.put(damaged, currentAmount+1);
+                currentStacks.put(damaged, currentAmount + 1);
                 int display = currentStacks.get(damaged);
                 damaged.sendMessage(CC.translate("&e&l*&f&l* " + damager.getName() + "'s &e&lWET NOODLE ABILITY &7[&a" + display + " Stack&7] &f&l*&e&l*"));
             }

@@ -84,7 +84,7 @@ final class ServerRebootTask
     }
 
     private void doBroadcast() {
-        Title title = new Title("", this.restartWarnMessage.replace("[time]", String.valueOf(this.iteration)), 5, 15 , 5);
+        Title title = new Title("", this.restartWarnMessage.replace("[time]", String.valueOf(this.iteration)), 5, 30 , 5);
         for (Player player : Bukkit.getOnlinePlayers()) {
             player.sendTitle(title);
         }

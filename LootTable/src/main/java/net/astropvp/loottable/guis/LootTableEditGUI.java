@@ -29,6 +29,9 @@ public class LootTableEditGUI {
         lootEditGUI.setDefaultClickAction(event -> {
             event.setCancelled(true);
         });
+
+
+
         for (Map.Entry<ItemStack, Double> entry : LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).getLootMap().entrySet()) {
             ItemStack item = entry.getKey();
             double chance = entry.getValue();

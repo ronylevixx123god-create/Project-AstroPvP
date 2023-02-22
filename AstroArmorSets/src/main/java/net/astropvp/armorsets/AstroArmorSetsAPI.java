@@ -8,10 +8,10 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import de.tr7zw.nbtapi.NBTItem;
+import dev.triumphteam.gui.guis.BaseGui;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
-import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
@@ -35,7 +35,6 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.*;
 
 public class AstroArmorSetsAPI {
-
 
 
     public static ArmorSetType getSetTypeOnItem(ItemStack item) {
@@ -95,16 +94,18 @@ public class AstroArmorSetsAPI {
         return cache.getCurrentSetCrystals();
     }
 
-    public static void refreshArmorSets(Player player) {
+    public static boolean isInOmni(Player player) {
+        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
+        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        if (cache == null) return false;
+        return cache.getOmniPieces() == 3 && cache.getCurrentArmorSet() != null;
+    }
+
+    public static void refreshArmorSets(Player player, boolean silent) {
 
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
-        cache.setHeroicPieces(0);
-        cache.setOmniPieces(0);
-        cache.getCurrentAntiMkitCrystals().clear();
-        cache.setCurrentArmorSet(null);
-        cache.getCurrentSetCrystals().clear();
-        cache.getCurrentArmorSets().clear();
+        clearCache(player);
 
         ItemStack[] armor = player.getInventory().getArmorContents();
 
@@ -112,26 +113,21 @@ public class AstroArmorSetsAPI {
             if (item == null) continue;
             if (item.getType() == Material.AIR) continue;
 
-            if (hasSetTypeOnItem(item)) {
-                ArmorSetType set = getSetTypeOnItem(item);
-                set.getArmorSet().onUnequip(player);
-                cache.addArmorSet(set);
-                set.getArmorSet().onEquip(player);
-            }
-
             if (hasCrystalsApplied(item)) {
                 List<ArmorSetType> crystals = AstroArmorSetsAPI.getCrystalsFromItem(item);
                 for (ArmorSetType type : crystals) {
                     cache.addArmorCrystal(type);
                 }
             }
-
-            if (isHeroic(item)) {
-                cache.addHeroicArmor(item);
+            if (hasSetTypeOnItem(item)) {
+                ArmorSetType set = getSetTypeOnItem(item);
+                cache.addArmorSet(set);
             }
-
             if (isOmniPiece(item)) {
                 cache.addOmniPiece(item);
+            }
+            if (isHeroic(item)) {
+                cache.addHeroicArmor(item);
             }
 
             if (AstroArmorSetsAPI.itemHasMkitCrystals(item)) {
@@ -143,7 +139,17 @@ public class AstroArmorSetsAPI {
             }
         }
 
+        if (!silent) {
+                if (cache.getCurrentArmorSet() != null) {
+                    cache.getCurrentArmorSet().getArmorSet().onEquip(player);
 
+                    for (String s : cache.getCurrentArmorSet().getArmorSet().getArmorEquipMessage()) {
+                        player.sendMessage(s);
+                    }
+                }
+
+
+        }
     }
 
     public static void clearCache(Player player) {
@@ -155,12 +161,19 @@ public class AstroArmorSetsAPI {
         cache.getCurrentAntiMkitCrystals().clear();
         cache.setCurrentArmorSet(null);
         cache.getCurrentSetCrystals().clear();
+        cache.getCurrentArmorSets().clear();
     }
 
     public static void refreshArmorPiece(ItemStack newArmorPiece, ItemStack oldArmorPiece, Player player) {
 
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
         ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
+        if (isOmniPiece(oldArmorPiece)) {
+            cache.removeOmniPiece(oldArmorPiece);
+        }
+        if (isOmniPiece(newArmorPiece)) {
+            cache.addOmniPiece(newArmorPiece);
+        }
         if (hasSetTypeOnItem(oldArmorPiece)) {
             ArmorSetType set = getSetTypeOnItem(oldArmorPiece);
             set.getArmorSet().onUnequip(player);
@@ -190,12 +203,6 @@ public class AstroArmorSetsAPI {
             cache.addHeroicArmor(newArmorPiece);
         }
 
-        if (isOmniPiece(oldArmorPiece)) {
-            cache.removeOmniPiece(oldArmorPiece);
-        }
-        if (isOmniPiece(newArmorPiece)) {
-            cache.addOmniPiece(newArmorPiece);
-        }
 
         if (AstroArmorSetsAPI.itemHasMkitCrystals(oldArmorPiece)) {
             Set<AntiMkit> crystals = AstroArmorSetsAPI.getAntiMkitCrystalsOnItem(oldArmorPiece);
@@ -311,7 +318,7 @@ public class AstroArmorSetsAPI {
     public static boolean isHeroic(ItemStack item) {
         if (item == null)
             return false;
-        if (!item.getType().name().contains("LEATHER") && item.getType() != Material.GOLD_SWORD  &&item.getType() != Material.GOLD_AXE)
+        if (!item.getType().name().contains("LEATHER") && item.getType() != Material.GOLD_SWORD && item.getType() != Material.GOLD_AXE)
             return false;
 
         NBTWrapper wrapper = new NBTWrapper(item);
@@ -357,19 +364,19 @@ public class AstroArmorSetsAPI {
 
             }
 
-             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
-                 return cacheOther.getCurrentSetCrystals();
+            if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
+                return cacheOther.getCurrentSetCrystals();
 
-             }
+            }
 
-             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
-                 return cacheOther.getCurrentSetCrystals();
-             }
+            if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
+                return cacheOther.getCurrentSetCrystals();
+            }
 
-             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.CHRISTMAS_2022_HELMET_ACTIVE)) {
-                 return cacheOther.getCurrentSetCrystals();
+            if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.CHRISTMAS_2022_HELMET_ACTIVE)) {
+                return cacheOther.getCurrentSetCrystals();
 
-             }
+            }
             List<ArmorSetType> chestplateCrystalsPlayer = getCrystalsFromItem(attacker.getInventory().getChestplate());
             for (Map.Entry<ArmorSetType, Integer> entry : cacheOther.getCurrentSetCrystals().entrySet()) {
                 ArmorSetType type = entry.getKey();
