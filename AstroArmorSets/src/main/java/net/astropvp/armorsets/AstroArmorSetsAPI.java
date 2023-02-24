@@ -147,8 +147,6 @@ public class AstroArmorSetsAPI {
                         player.sendMessage(s);
                     }
                 }
-
-
         }
     }
 
