@@ -57,7 +57,7 @@ final class ExpOrbsCommand
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You must withdraw at least 100XP points per orb.");
             return true;
         }
-        float currentXp = p.getTotalExperience();
+        int currentXp = p.getTotalExperience();
         if (currentXp < amount) {
             p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You only have " + currentXp + " xp points to convert.");
             p.sendMessage(ChatColor.GRAY + "View your exp values with /xp");

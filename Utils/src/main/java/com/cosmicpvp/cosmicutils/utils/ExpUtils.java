@@ -25,6 +25,15 @@ public class ExpUtils {
         }
     }
 
+    public static void giveXP(Player player ,int exp)  {
+        if (player.getExp() + exp >= Integer.MAX_VALUE) {
+            player.setTotalExperience(Integer.MAX_VALUE);
+            player.sendMessage(CC.translate("&c&l(!)&c You have reached the max amount of exp."));
+            return;
+        }
+        player.giveExp(exp);
+    }
+
     private static int getExpAtLevel(Player player) {
         return ExpUtils.getExpAtLevel(player.getLevel());
     }

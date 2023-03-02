@@ -1,9 +1,6 @@
 package net.astropvp.customblocks.guis;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
-import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.cosmicpvp.cosmicutils.utils.*;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
@@ -98,7 +95,7 @@ public class AutoGrinderGui {
                 .build();
         return new GuiItem(item, event -> {
             if (autoGrinder.getExp() == 0) return;
-            ((Player)event.getWhoClicked()).giveExp(autoGrinder.getExp());
+            ExpUtils.giveXP((Player) event.getWhoClicked(), autoGrinder.getExp());
             event.getWhoClicked().sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(autoGrinder.getExp()) + " EXP"));
             autoGrinder.setExp(0);
             this.gui.updateItem(2, 6, getExpClaimItem(autoGrinder));

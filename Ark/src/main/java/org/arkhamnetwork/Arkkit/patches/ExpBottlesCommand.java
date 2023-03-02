@@ -44,9 +44,7 @@ final class ExpBottlesCommand
         super(command, usage, description, aliases);
     }
 
-    protected static boolean canMakeXPBottle(Player p) {
-        return !p.hasMetadata("nextExpBottle") || System.currentTimeMillis() >= p.getMetadata("nextExpBottle").get(0).asLong();
-    }
+
 
     protected static String getTimeString(long millis) {
         return String.format("%02dm %02ds", TimeUnit.MILLISECONDS.toMinutes(millis) - TimeUnit.HOURS.toMinutes(TimeUnit.MILLISECONDS.toHours(millis)), TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis)));
@@ -65,28 +63,7 @@ final class ExpBottlesCommand
             p.sendMessage(ChatColor.GRAY + "Use " + ChatColor.YELLOW + "/xp" + ChatColor.GRAY + " to view your current exp points.");
             return true;
         }
-        if (!ExpBottlesCommand.canMakeXPBottle(p)) {
-            boolean noLimit = false;
-            if (p.hasPermission("arkkit.xpbottles.immune")) {
-                if (p.getName().equals("Woofless") || p.getName().equals("TBNRfrags")) {
-                    if (p.getGameMode() == GameMode.CREATIVE) {
-                        noLimit = true;
-                    }
-                } else {
-                    noLimit = true;
-                }
-            }
-            if (!noLimit) {
-                p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot create another XP Bottle for " + ExpBottlesCommand.getTimeString(p.getMetadata("nextExpBottle").get(0).asLong() - System.currentTimeMillis()));
-                if (!p.hasPermission("playervaults.amount.15")) {
-                    p.sendMessage(ChatColor.GRAY + "Complete a Rank Quest from buy.astropvp.net to decrease this delay.");
-                } else if (!p.hasPermission("cosmicpvp.heroic")) {
-                    p.sendMessage(ChatColor.GRAY + "Purchase a Heroic Rank Crystal at buy.astropvp.net to decrease this delay.");
-                }
-                return true;
-            }
-        }
-        float amount = 0;
+        int amount = 0;
         if (args[0].equalsIgnoreCase("all")) {
             amount = p.getTotalExperience();
         } else {
@@ -101,7 +78,7 @@ final class ExpBottlesCommand
             p.sendMessage(ChatColor.RED + "You must withdraw at least 25XP points per bottle.");
             return true;
         }
-        float currentXp = p.getTotalExperience();
+        int currentXp = p.getTotalExperience();
         if (currentXp < amount) {
             p.sendMessage(ChatColor.RED + "You only have " + currentXp + " xp points to convert.");
             p.sendMessage(ChatColor.GRAY + "View your exp values with /xp");
@@ -111,12 +88,7 @@ final class ExpBottlesCommand
             p.sendMessage(ChatColor.RED + "You do not have any inventory space.");
             return true;
         }
-        FLocation pLoc = new FLocation(p.getLocation());
-        if (FactionUtils.getFactionAt(pLoc).isWarZone() && !WorldGuardUtils.getRegionName(p.getLocation()).startsWith("spawn_")) {
-            p.sendMessage(ChatColor.RED + "You " + ChatColor.UNDERLINE + "cannot" + ChatColor.RED + " bottle EXP in Warzones.");
-            return true;
-        }
-        int exp = (int) (player.getTotalExperience() - amount);
+        int exp = player.getTotalExperience() - amount;
         player.setTotalExperience(0);
         player.setExp(0);
         player.setLevel(0);
@@ -127,26 +99,5 @@ final class ExpBottlesCommand
         return true;
     }
 
-    private double getExpBottleCreationDelayMinutes(Player p) {
-        if (p.hasPermission("cosmicpvp.heroic")) {
-            return 3.0;
-        }
-        if (p.hasPermission("playervaults.amount.15") || p.hasPermission("enchantments.max.20")) {
-            return 7.0;
-        }
-        if (p.hasPermission("playervaults.amount.12")) {
-            return 8.0;
-        }
-        if (p.hasPermission("playervaults.amount.9")) {
-            return 11.0;
-        }
-        if (p.hasPermission("playervaults.amount.6")) {
-            return 12.0;
-        }
-        if (p.hasPermission("playervaults.amount.3")) {
-            return 15.0;
-        }
-        return 17.0;
-    }
 }
 

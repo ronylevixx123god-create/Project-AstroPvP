@@ -74,7 +74,9 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
         double godlyKeyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("godlyKeyChance") * 0.01 * level;
 
         int expPer = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("expPer") * level;
-        exp += expPer;
+        if (exp + expPer < Integer.MAX_VALUE) {
+            exp += expPer;
+        }
         if (Math.random() < godlyKeyChance) {
             if (godlyKeys >= getMaxKeys(level)) return;
             godlyKeys++;
