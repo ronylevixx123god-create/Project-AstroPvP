@@ -9,10 +9,10 @@ import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 public class CratePlacementItem {
-    public static ItemStack getItem(CrateType type) {
+    public static ItemStack getItem(CrateType type, Material material) {
         if (type == null)
             return null;
-        ItemBuilder item = new ItemBuilder(Material.CHEST);
+        ItemBuilder item = new ItemBuilder(material);
         item.setName(String.valueOf(type.getPrefixedName()) + " Crate");
         item.addLoreLine(String.valueOf(CC.Gray) + "Right-Click to place crate.");
         ItemStack built = item.build();

@@ -265,17 +265,17 @@ public class HolyWhiteScrollListener implements Listener {
 
 
 
-        if (!AstroCore.getInstance().getAstroPlayerManager().getFromCache(killer.getUniqueId().toString()).isPotsDropEnabled()) {
+        //if (!AstroCore.getInstance().getAstroPlayerManager().getFromCache(killer.getUniqueId().toString()).isPotsDropEnabled()) {
             itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
-        }
+        //}
 
 
-        /*if (itemList.size() > 0) {
-            CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory", System.currentTimeMillis()));
+        if (itemList.size() > 0) {
+            CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Loot", System.currentTimeMillis()));
         }
         e.getDrops().clear();
         itemList.clear();
-        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed.getName() + "'s Death Loot has been put into your &n/collect&c."));*/
+        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed.getName() + "'s Death Loot has been put into your &n/collect"));
 
     }
 

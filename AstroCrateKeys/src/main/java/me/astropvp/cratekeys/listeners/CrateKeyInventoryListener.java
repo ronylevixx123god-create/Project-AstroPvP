@@ -14,7 +14,6 @@ import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -32,57 +31,54 @@ public class CrateKeyInventoryListener implements Listener {
         Block block = event.getClickedBlock();
 
 
-        if ((block.getState() instanceof Chest)) {
-            Chest chest = (Chest) block.getState();
-            CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
-            if (data == null) {
-                return;
-            }
-
-            if (!AstroCrateKeysAPI.isCrateKey(player.getItemInHand())) {
-                player.sendMessage(CC.translate("&c&l(!)&c Please hold a " + data.getCrateType().getPrefix() + CC.Bold +
-                        data.getCrateType().getName() + "&f&l Crate Key&c to open this crate."));
-                event.setCancelled(true);
-                return;
-            }
-
-
-            if (CrateKeyItem.getCrateType(player.getItemInHand()) != data.getCrateType()) {
-                player.sendMessage(CC.translate("&c&l(!)&c This is not the correct crate type. You need to click the " + CrateKeyItem.getCrateType(player.getItemInHand()).getPrefix() +
-                        CC.Bold + CrateKeyItem.getCrateType(player.getItemInHand()).getName() + CC.Bold + "&f&l Crate&c to open this key."));
-                event.setCancelled(true);
-                return;
-            }
-            if (isPlayerInventoryFull(player)) {
-                player.sendMessage(CC.translate("&cYour inventory is full. Clear some space before opening more keys!"));
-                event.setCancelled(true);
-                return;
-            }
-
-            if (player.isSneaking()) {
-                int amountOfKeys = player.getItemInHand().getAmount();
-                while (amountOfKeys != 0) {
-                    addItemToPlayer(player, data);
-                    amountOfKeys--;
-                }
-                player.setItemInHand(null);
-            } else {
-                addItemToPlayer(player, data);
-
-                if (player.getItemInHand().getAmount() > 1) {
-                    player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
-                } else {
-                    player.setItemInHand(null);
-                }
-            }
-
-            player.playSound(player.getLocation(), Sound.LEVEL_UP, 1f, 1f);
-
-
-            event.setCancelled(true);
+        CrateData data = AstroCrateKeysAPI.findCrate(block.getLocation());
+        if (data == null) {
+            return;
         }
 
+        if (!AstroCrateKeysAPI.isCrateKey(player.getItemInHand())) {
+            player.sendMessage(CC.translate("&c&l(!)&c Please hold a " + data.getCrateType().getPrefix() + CC.Bold +
+                    data.getCrateType().getName() + "&f&l Crate Key&c to open this crate."));
+            event.setCancelled(true);
+            return;
+        }
+
+
+        if (CrateKeyItem.getCrateType(player.getItemInHand()) != data.getCrateType()) {
+            player.sendMessage(CC.translate("&c&l(!)&c This is not the correct crate type. You need to click the " + CrateKeyItem.getCrateType(player.getItemInHand()).getPrefix() +
+                    CC.Bold + CrateKeyItem.getCrateType(player.getItemInHand()).getName() + CC.Bold + "&f&l Crate&c to open this key."));
+            event.setCancelled(true);
+            return;
+        }
+        if (isPlayerInventoryFull(player)) {
+            player.sendMessage(CC.translate("&cYour inventory is full. Clear some space before opening more keys!"));
+            event.setCancelled(true);
+            return;
+        }
+
+        if (player.isSneaking()) {
+            int amountOfKeys = player.getItemInHand().getAmount();
+            while (amountOfKeys != 0) {
+                addItemToPlayer(player, data);
+                amountOfKeys--;
+            }
+            player.setItemInHand(null);
+        } else {
+            addItemToPlayer(player, data);
+
+            if (player.getItemInHand().getAmount() > 1) {
+                player.getItemInHand().setAmount(player.getItemInHand().getAmount() - 1);
+            } else {
+                player.setItemInHand(null);
+            }
+        }
+
+        player.playSound(player.getLocation(), Sound.LEVEL_UP, 1f, 1f);
+
+
+        event.setCancelled(true);
     }
+        
 
     public static boolean isPlayerInventoryFull(Player player) {
         byte b;
@@ -108,7 +104,7 @@ public class CrateKeyInventoryListener implements Listener {
             player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "+ $" + amount);
         } else if (ExpBottles.isXpBottle(item)) {
             int xpValue = ExpBottles.getXpAmount(item);
-            int exp = (player.getTotalExperience() +xpValue);
+            int exp = (player.getTotalExperience() + xpValue);
             player.setTotalExperience(0);
             player.setExp(0);
             player.setLevel(0);

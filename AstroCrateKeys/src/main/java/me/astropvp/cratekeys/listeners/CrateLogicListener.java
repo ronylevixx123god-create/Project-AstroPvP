@@ -32,13 +32,7 @@ public class CrateLogicListener implements Listener {
         if (type == null)
             return;
         final Block block = event.getBlock();
-        Bukkit.getScheduler().runTaskLater((Plugin) AstroCrateKeysPlugin.getInstance(), (Runnable)new BukkitRunnable() {
-            public void run() {
-                //block.getLocation().getBlock().setType(Material.CHEST);
-            }
-        },  1L);
         CrateDataManager.newInstance(type, block.getLocation());
-        //event.setCancelled(true);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -46,8 +40,7 @@ public class CrateLogicListener implements Listener {
         Block block = event.getBlock();
         if (!(block.getState() instanceof Chest))
             return;
-        Chest chest = (Chest) block.getState();
-        CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
+        CrateData data = AstroCrateKeysAPI.findCrate(block.getLocation());
         if (data == null)
             return;
         CrateDataManager.removeInstance(data);
@@ -59,10 +52,8 @@ public class CrateLogicListener implements Listener {
             return;
         Player player = event.getPlayer();
         Block block = event.getClickedBlock();
-        if (!(block.getState() instanceof Chest))
-            return;
-        Chest chest = (Chest) block.getState();
-        CrateData data = AstroCrateKeysAPI.findCrate(chest.getLocation());
+
+        CrateData data = AstroCrateKeysAPI.findCrate(block.getLocation());
         if (data == null)
             return;
 

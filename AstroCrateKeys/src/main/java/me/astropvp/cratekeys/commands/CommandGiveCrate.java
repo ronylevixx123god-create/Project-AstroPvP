@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CratePlacementItem;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -21,20 +22,16 @@ public class CommandGiveCrate implements CommandExecutor {
                 return false;
             }
             CrateType type = CrateType.valueOf(args[1].toUpperCase());
-            if (type == null) {
-                player.sendMessage(String.valueOf(CC.RedB) + "(!) " + CC.Red + "That Crate Type is invalid!");
-                return false;
-            }
-            int amount = Integer.valueOf(args[2]).intValue();
-            sender.sendMessage(String.valueOf(CC.Green) + "You gave " + player.getName() + " " + amount + "x Crate(s) of type: " +
+            Material material = Material.valueOf(args[2].toUpperCase());
+            sender.sendMessage(CC.Green + "You gave " + player.getName() + " " + 1 + "x Crate(s) of type: " +
                     type.getName() + "!");
-            ItemStack item = CratePlacementItem.getItem(type);
+            ItemStack item = CratePlacementItem.getItem(type, material);
             player.getInventory().addItem(item);
             return false;
         }
         sender.sendMessage("");
         sender.sendMessage(String.valueOf(CC.RedB) + CC.Underline + "Give Crate Command Arguments");
-        sender.sendMessage(String.valueOf(CC.Yellow) + "Usage: " + CC.White + "/givecrate [PLAYER] [CRATE] [AMOUNT]");
+        sender.sendMessage(String.valueOf(CC.Yellow) + "Usage: " + CC.White + "/givecrate [PLAYER] [CRATE] [MATERIAL]");
         sender.sendMessage("");
         return false;
     }

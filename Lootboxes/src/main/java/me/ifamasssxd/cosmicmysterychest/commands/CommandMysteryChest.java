@@ -76,7 +76,7 @@ public class CommandMysteryChest
                     double amount = this.getNumber(args[2]);
                     boolean isStoreLootbox = Boolean.parseBoolean(args[3]);
 
-                    MysteryChest chest = new MysteryChest(name, (int) amount, handItem.clone(), isStoreLootbox);
+                    MysteryChest chest = new MysteryChest(name, (int) amount, handItem.clone(), isStoreLootbox, false);
                     this.plugin.getChestManager().getMysteryChestMap().put(name, chest);
                     this.plugin.getChestManager().saveMysteryChest(chest);
                     Bukkit.getLogger().info("Registering MysteryChest: " + chest + " Display: " + (Object) handItem + " ToGive: " + amount);

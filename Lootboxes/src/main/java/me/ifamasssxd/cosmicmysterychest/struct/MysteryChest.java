@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Getter
 public class MysteryChest {
     private final String internalName;
     private ItemStack handDisplay;
@@ -45,10 +45,10 @@ public class MysteryChest {
     private final List<CustomLoot> lootItems;
     private transient LootTable<CustomLoot> lootTable;
     public transient File file;
-    @Getter
     private final boolean isStoreLootbox;
+    private final boolean hideLore;
 
-    public MysteryChest(String internalName, int itemBundleSize, ItemStack hand, boolean isStoreLootbox) {
+    public MysteryChest(String internalName, int itemBundleSize, ItemStack hand, boolean isStoreLootbox, boolean hideLore) {
         this.internalName = internalName;
         this.lootTable = new LootTable();
         this.lootItems = Lists.newArrayList();
@@ -56,6 +56,7 @@ public class MysteryChest {
         this.garunteedItems = Lists.newArrayList();
         this.handDisplay = hand;
         this.isStoreLootbox = isStoreLootbox;
+        this.hideLore = hideLore;
     }
 
     public String getDisplayName() {
@@ -117,44 +118,35 @@ public class MysteryChest {
         ArrayList<CustomLoot> lootItems = Lists.newArrayList(this.lootItems);
         List<CustomLoot> jackpotItems = lootItems.stream().filter(CustomLoot::isJackpotItem).collect(Collectors.toList());
         lootItems.removeAll(jackpotItems);
-        lore.add("");
-        lore.add(CC.WhiteB + "Random Loot (" + CC.Gray + this.getItemBundleSize() + " item" + (this.getItemBundleSize() > 1 ? "s" : "") + CC.WhiteB + ")");
-        for (CustomLoot item : lootItems) {
-            lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
-        }
-        if (jackpotItems.size() > 0) {
+        if (!isHideLore()) {
             lore.add("");
-            lore.add(CC.WhiteB + "Jackpot Loot");
-            for (CustomLoot item : jackpotItems) {
+            lore.add(CC.WhiteB + "Random Loot (" + CC.Gray + this.getItemBundleSize() + " item" + (this.getItemBundleSize() > 1 ? "s" : "") + CC.WhiteB + ")");
+            for (CustomLoot item : lootItems) {
                 lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
             }
-        }
-        if (this.garunteedItems != null && !this.garunteedItems.isEmpty()) {
-            lore.add("");
-            lore.add(CC.WhiteB + "Bonus Loot (" + CC.Gray + this.garunteedItems.size() + " item" + (this.garunteedItems.size() == 1 ? "" : "s") + CC.WhiteB + ")");
-            for (ItemStack is : this.garunteedItems) {
-                lore.add(" " + CC.WhiteB + "* " + CC.White + is.getAmount() + "x " + ItemUtils.getDisplayName(is));
+            if (jackpotItems.size() > 0) {
+                lore.add("");
+                lore.add(CC.WhiteB + "Jackpot Loot");
+                for (CustomLoot item : jackpotItems) {
+                    lore.add(" " + CC.WhiteB + "* " + CC.White + item.getItem().getAmount() + "x " + ItemUtils.getDisplayName(item.getItem()));
+                }
             }
-        }
-        if (expiration != null && expiration > 0L) {
-            lore.add("");
-            lore.add(CC.RedB + "Valid Until " + CC.RedU + TimeUtil.formatTimeToDate(expiration, "MMM d'%s' hh:mmaa", "CST").replace(" 0", " ") + " CST");
+            if (this.garunteedItems != null && !this.garunteedItems.isEmpty()) {
+                lore.add("");
+                lore.add(CC.WhiteB + "Bonus Loot (" + CC.Gray + this.garunteedItems.size() + " item" + (this.garunteedItems.size() == 1 ? "" : "s") + CC.WhiteB + ")");
+                for (ItemStack is : this.garunteedItems) {
+                    lore.add(" " + CC.WhiteB + "* " + CC.White + is.getAmount() + "x " + ItemUtils.getDisplayName(is));
+                }
+            }
         }
         im.setLore(lore);
         hand.setItemMeta(im);
         NBTWrapper wrapper = new NBTWrapper(hand);
         NBTTagCompoundBuilder builder = wrapper.getCompoundOrCreate("conaxData");
         builder.setString("mysteryChest", this.internalName);
-        if (expiration != null && expiration > 0L) {
-            builder.setLong("expiration", expiration);
-        }
         wrapper.setNBTBase("conaxData", builder.get());
         hand = wrapper.build();
         hand.setAmount(1);
-        if (iid && ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-            hand = ItemID.removeItemID(hand);
-            hand = ItemID.assignItemID(null, hand);
-        }
         return hand;
     }
 
