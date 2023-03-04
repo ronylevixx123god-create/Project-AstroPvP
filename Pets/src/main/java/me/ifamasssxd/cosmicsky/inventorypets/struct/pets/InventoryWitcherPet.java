@@ -15,7 +15,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -147,9 +146,7 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             }
 
-            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player)) {
-                continue;
-            }
+
 
             CrankedAmuletUtil.tryHatchAbility(p, player);
 

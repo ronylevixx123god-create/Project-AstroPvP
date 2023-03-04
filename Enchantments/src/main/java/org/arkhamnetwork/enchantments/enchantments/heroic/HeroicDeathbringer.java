@@ -3,6 +3,9 @@ package org.arkhamnetwork.enchantments.enchantments.heroic;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
+import me.astropvp.astropvpskins.utils.ItemSkinUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -55,10 +58,15 @@ public class HeroicDeathbringer extends CustomEnchantment {
         @EventHandler
         public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
             Entity damage = e.getDamager();
-            if (damage instanceof Projectile && doubleDamage.contains(((Projectile)damage).getShooter()) || doubleDamage.contains(damage)) {
+            if (!(e.getEntity() instanceof Player)) {
+                return;
+            }
+            Player player = (Player)e.getEntity();
+            if (doubleDamage.contains(damage)) {
+
                 double random = Math.random();
-                double chance = 0.05;
-                if (random < chance) {
+                double chance = 0.1 * (double) playerLevels.get(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage);
+                if (random < (chance *= 1.5)) {
                     e.setDamage(e.getDamage() * 1.5);
                     GeneralCooldown.enterCooldown((Player) e.getDamager());
                 }

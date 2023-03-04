@@ -1,27 +1,29 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
-import java.util.*;
-
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import me.astropvp.astropvpskins.utils.DamageIndicatorUtils;
-import org.bukkit.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
-import org.bukkit.entity.*;
-import org.bukkit.metadata.*;
-import org.arkhamnetwork.enchantments.listeners.*;
-import org.arkhamnetwork.enchantments.events.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.event.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.listeners.CustomEnchantListener;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
-public class HeroicMetaphysical extends HeroicCustomEnchantment
-{
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+public class HeroicMetaphysical extends HeroicCustomEnchantment {
     private Map<UUID, Integer> equippedMetaphysical;
 
     public HeroicMetaphysical() {
         super("Polymorphic Metaphysical", "Metaphysical", GeneralUtil.boots, 1);
         this.equippedMetaphysical = new HashMap<UUID, Integer>();
         this.max = 4;
-        Bukkit.getPluginManager().registerEvents(new HeroicMetaphysicalListener(this), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new HeroicMetaphysicalListener(this), (Plugin) Enchantments.getInstance());
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
@@ -30,14 +32,14 @@ public class HeroicMetaphysical extends HeroicCustomEnchantment
             return;
         }
         this.equippedMetaphysical.put(player.getUniqueId(), enchantLevel);
-        player.setMetadata("metaphysicalEnchant", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enchantLevel));
+        player.setMetadata("metaphysicalEnchant", new FixedMetadataValue((Plugin) Enchantments.getInstance(), enchantLevel));
     }
 
     public void applyUnequipEffect(final Player player, final int enchantLevel) {
         final Integer stored = this.equippedMetaphysical.get(player.getUniqueId());
         if (stored != null && stored <= enchantLevel) {
             this.equippedMetaphysical.remove(player.getUniqueId());
-            player.removeMetadata("metaphysicalEnchant", (Plugin)Enchantments.getInstance());
+            player.removeMetadata("metaphysicalEnchant", (Plugin) Enchantments.getInstance());
         }
     }
 
@@ -45,8 +47,7 @@ public class HeroicMetaphysical extends HeroicCustomEnchantment
         return this.equippedMetaphysical;
     }
 
-    class HeroicMetaphysicalListener extends CustomEnchantListener<HeroicMetaphysical>
-    {
+    class HeroicMetaphysicalListener extends CustomEnchantListener<HeroicMetaphysical> {
         public HeroicMetaphysicalListener(final HeroicMetaphysical enchant) {
             super(enchant);
         }
@@ -54,15 +55,14 @@ public class HeroicMetaphysical extends HeroicCustomEnchantment
         @EventHandler
         public void onIceAspectProc(final CustomEnchantProcOnEntityEvent event) {
             if (event.getEnchant() == Enchantments.getInstance().getIceAspectEnchant() && event.getTarget() != null) {
-                final Integer damagedEquipped = ((HeroicMetaphysical)this.customEnchant).getEquippedMetaphysical().get(event.getTarget().getUniqueId());
+                final Integer damagedEquipped = ((HeroicMetaphysical) this.customEnchant).getEquippedMetaphysical().get(event.getTarget().getUniqueId());
                 if (damagedEquipped != null) {
                     final double chance = 0.2 * damagedEquipped;
                     if (HeroicMetaphysical.this.random.nextDouble() <= chance) {
                         if (event.getTarget() instanceof Player && !event.getTarget().hasMetadata("neutralized")) {
-                            ((Player)event.getTarget()).sendMessage(CC.LightPurpleB + "** POLYMORPHIC METAPHYSICAL (" + CC.Gray + "Ice Aspect blocked!" + CC.LightPurpleB + ") **");
-                            if (Math.random() < 0.1) {
-                                DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL *", "METAPHYSICAL");
-                            }
+                            ((Player) event.getTarget()).sendMessage(CC.LightPurpleB + "** POLYMORPHIC METAPHYSICAL (" + CC.Gray + "Ice Aspect blocked!" + CC.LightPurpleB + ") **");
+                            DamageIndicatorUtils.sendDamageIndicator((Player) event.getTarget(), CC.LightPurpleB + "* POLYMORPHIC METAPHYSICAL *", "METAPHYSICAL");
+
 
                         }
                     }

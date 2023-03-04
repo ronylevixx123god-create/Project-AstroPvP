@@ -40,9 +40,7 @@ public class Cactus extends CustomEnchantment {
             if (player.hasMetadata("noDefenseProcs")) {
                 return;
             }
-            if (player.hasMetadata("neutralized")) {
-                return;
-            }
+
             final Player p = (Player) player;
             if (attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;

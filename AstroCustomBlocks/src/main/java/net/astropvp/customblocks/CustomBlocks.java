@@ -2,6 +2,7 @@ package net.astropvp.customblocks;
 
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketListener;
+import net.astropvp.customblocks.tasks.ChunkCustomBlocksTask;
 import net.astropvp.customblocks.tasks.TickAbleBlocksRunnable;
 import net.astropvp.customblocks.utils.config.ConfigManager;
 import net.astropvp.storage.StoragePlugin;
@@ -51,7 +52,6 @@ public class CustomBlocks extends JavaPlugin {
     }
 
     public void onDisable() {
-        customBlockManager.purge();
         customBlockManager.saveAll();
         instance = null;
     }
@@ -63,6 +63,7 @@ public class CustomBlocks extends JavaPlugin {
     }
 
     public void registerTasks() {
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new ChunkCustomBlocksTask(), 40L, 20L * 10);
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, new TickAbleBlocksRunnable(), 40L, 20L);
     }
 }

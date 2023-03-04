@@ -204,7 +204,7 @@ public class CosmicKOTHPlugin
     }
 
     private void loadConfig() {
-        this.registerConfigData();
+        Bukkit.getScheduler().runTask(this, this::registerConfigData);
         if (_.getConfig().getBoolean("relaunch")) {
             _.getConfig().set("relaunch", false);
             _.saveConfig();
@@ -249,7 +249,7 @@ public class CosmicKOTHPlugin
 
 
     public void registerConfigData() {
-        this.world = Bukkit.getWorld(CosmicKOTHPlugin.get_().getConfig().getString("world"));
+        this.world = Bukkit.getWorld(CosmicKOTHPlugin.get_().getConfig().getString("world_koth"));
         if (_.getConfig().getString("playerSpawn") != null) {
             this.spawn = LocationUtils.convertStringToLocation(_.getConfig().getString("playerSpawn"));
         }
@@ -259,7 +259,7 @@ public class CosmicKOTHPlugin
     }
 
     public void registerCenter() {
-        ProtectedRegion region = WorldGuardUtils.getRegionFromName("world", "koth_center");
+        ProtectedRegion region = WorldGuardUtils.getRegionFromName("world_koth", "koth_center");
         if (region != null) {
             BlockVector maxVector = region.getMaximumPoint();
             BlockVector minVector = region.getMinimumPoint();

@@ -98,8 +98,8 @@ public class CategoryInventory {
             event.setCancelled(true);
         }));
 
-        for (ItemStack item : category.getItems()) {
-            categoryInventory.addItem(new GuiItem(item, event -> {
+        for (ItemStack item : category.getItems().clone()) {
+            categoryInventory.addItem(new GuiItem(item.clone(), event -> {
 
 
                 if (player.getInventory().firstEmpty() == -1) {

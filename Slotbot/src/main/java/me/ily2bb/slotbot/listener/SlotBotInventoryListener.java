@@ -133,25 +133,7 @@ public class SlotBotInventoryListener implements Listener {
                     player.sendMessage(CC.translate("&e&l* PLUTO OUTPOST &7Saved Slotbot Ticket(s) &e&l*"));
                     player.sendMessage("");
 
-                } /*else if (CustomBlockUtil.chunkHasCertainBlock(player, "COSMIC_TROPHY")) {
-                    FPlayer killer = FactionUtils.getFPlayer(player);
-                    for (AbilityData data : CustomBlockUtil.getBlockDatasInChunk(player)) {
-                        FPlayer owner = FactionUtils.getFPlayer(Bukkit.getPlayer(data.getOwner()));
-                        CustomBlock customBlock = CoreSkulls.customBlocks.get(data.getAbilityType().getName());
-                        if (killer.getFaction() == null) return;
-                        if (customBlock == null) return;
-                        if (owner.getFaction() == null) return;
-                        if (killer.getFaction() == owner.getFaction() && customBlock.getIdentifier().equals("COSMIC_TROPHY")) {
-                            if (Math.random() < 0.1) {
-                                returnTickets(tickets, player);
-                                player.sendMessage("");
-                                player.sendMessage(CC.translate("&8[&e&l☆&8] &eAstroTrophy returned your tickets from the slot bot."));
-                                player.sendMessage("");
-                            }
-                        }
-                    }
                 }
-            }*/
             }
         } else if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot Loot")) {
             ItemStack item = e.getCurrentItem();

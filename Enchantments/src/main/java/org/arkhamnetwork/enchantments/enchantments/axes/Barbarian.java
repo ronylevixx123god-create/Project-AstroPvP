@@ -19,7 +19,7 @@ public class Barbarian extends CustomEnchantment {
         if (!enemyHasAxe) {
             return;
         }
-        final double mod = 1.0 + 0.05 * level;
+        final double mod = 1.0 + (0.05 * level);
         e.setDamage(e.getDamage() * mod);
     }
 }

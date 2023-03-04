@@ -265,17 +265,14 @@ public class HolyWhiteScrollListener implements Listener {
 
 
 
-        //if (!AstroCore.getInstance().getAstroPlayerManager().getFromCache(killer.getUniqueId().toString()).isPotsDropEnabled()) {
-            itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
-        //}
+        itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
 
-
-        if (itemList.size() > 0) {
-            CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Loot", System.currentTimeMillis()));
-        }
+        CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory", System.currentTimeMillis()));
         e.getDrops().clear();
         itemList.clear();
-        killer.sendMessage(CC.translate("&c&l(COLLECT&c&l)&c " + killed.getName() + "'s Death Loot has been put into your &n/collect"));
+        killer.sendMessage("");
+        killer.sendMessage(CC.translate("&3&l(&b&lCOLLECT&3&l)&b The Death Loot from &f" + killed.getName() + "&b has been put into your &f/collect&b."));
+        killer.sendMessage("");
 
     }
 

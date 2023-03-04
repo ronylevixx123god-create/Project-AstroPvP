@@ -1,10 +1,12 @@
 package net.astropvp.customblocks.struct.impl;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
+import net.astropvp.customblocks.struct.abilities.ChunkAble;
 import org.bukkit.entity.Player;
 
-public class LeviathanTotem extends CustomBlock {
+public class LeviathanTotem extends CustomBlock implements ChunkAble {
 
     public LeviathanTotem() {
         super(CustomBlockType.LEVIATHAN_TOTEM);
@@ -12,6 +14,6 @@ public class LeviathanTotem extends CustomBlock {
 
     @Override
     public void onClick(Player clicker) {
-        clicker.sendMessage("Levi tothem");
+        clicker.sendMessage(CC.translate("&e&l(!)&e Stand in the same chunk as this Custom Block to unlock it's powers."));
     }
 }

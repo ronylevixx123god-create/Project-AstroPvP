@@ -30,12 +30,6 @@ public class Lifesteal extends CustomEnchantment {
                 return;
             }
 
-            if (user.hasMetadata("neutralized")) {
-                return;
-            }
-            if (user.hasMetadata("noDefenseProcs")) {
-                return;
-            }
 
             if ((target instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.SPRING_BREAK_2022_MUTATED_BELT))) {
                 return;

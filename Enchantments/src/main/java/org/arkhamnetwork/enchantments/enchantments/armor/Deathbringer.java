@@ -11,7 +11,6 @@ import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.plugin.Plugin;
 
@@ -27,7 +26,7 @@ public class Deathbringer extends CustomEnchantment {
         Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), (Runnable) new Runnable() {
             @Override
             public void run() {
-                Deathbringer.this.heroicVersion = EnchantmentAPI.getEnchantment("Planetary Deathbringer");
+                Deathbringer.this.heroicVersion = EnchantmentAPI.getEnchantment((String)"Planetary Deathbringer");
             }
         }, 2L);
         Bukkit.getPluginManager().registerEvents((Listener) new DeathbringEvents(), (Plugin) Enchantments.getInstance());
@@ -53,14 +52,12 @@ public class Deathbringer extends CustomEnchantment {
         }
 
         @EventHandler
-        public void onEntityDamageByEntity(final EntityDamageByEntityEvent e) {
-            final Entity damage = e.getDamager();
-            if ((damage instanceof Projectile && DeathbringEvents.doubleDamage.contains(((Projectile) damage).getShooter())) || DeathbringEvents.doubleDamage.contains(damage)) {
-                final double random = Math.random();
-                final double chance = 0.15 * (DeathbringEvents.playerLevels.getOrDefault((damage instanceof Projectile) ? ((Projectile) damage).getShooter() : damage, 1));
-                if (random < chance) {
-                    e.setDamage(e.getDamage() * 1.5);
-                }
+        public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+            double chance;
+            double random;
+            Entity damage = e.getDamager();
+            if ((damage instanceof Projectile && doubleDamage.contains(((Projectile) damage).getShooter()) || doubleDamage.contains(damage)) && (random = Math.random()) < (chance = 0.1 * (double) (playerLevels.containsKey(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage) ? playerLevels.get(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage) : 1))) {
+                e.setDamage(e.getDamage() * 1.5);
             }
         }
 

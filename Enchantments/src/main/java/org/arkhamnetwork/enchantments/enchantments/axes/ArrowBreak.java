@@ -38,12 +38,11 @@ extends CustomEnchantment {
         EntityDamageByEntityEvent edbee;
         if (e instanceof EntityDamageByEntityEvent && (edbee = (EntityDamageByEntityEvent)e).getDamager() instanceof Projectile && Math.random() < (0.1 + 0.04 * (double)level) / 2.0) {
             try {
-                ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), edbee.getDamager().getLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 16);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
             ((Player)player).playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
-            //e.setDamage(0.0);
+            e.setCancelled(true);
             edbee.getDamager().remove();
         }
     }

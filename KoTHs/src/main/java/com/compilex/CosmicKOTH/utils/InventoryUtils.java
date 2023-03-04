@@ -53,7 +53,7 @@ public class InventoryUtils {
         String status = CosmicKOTHAPI.canTeleportToKOTH() ? ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "OPEN" : ChatColor.RED.toString() + ChatColor.BOLD.toString() + "CLOSED";
         ItemStack item = new ItemStack(Material.BEACON);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.GoldB + "Desert KOTH Information " + CC.Gray + "(/warp desert)");
+        meta.setDisplayName(CC.GoldB + "KOTH Information " + CC.Gray + "(/koth)");
         ArrayList lore = Lists.newArrayList();
         lore.add("");
         lore.add(CC.WhiteB + "KOTH Status: " + status);

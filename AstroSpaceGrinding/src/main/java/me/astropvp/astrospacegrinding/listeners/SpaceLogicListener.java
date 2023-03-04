@@ -11,7 +11,9 @@ import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
 import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
+import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
 import org.bukkit.*;
 
 import org.bukkit.entity.Player;
@@ -28,6 +30,7 @@ import com.google.common.collect.Lists;
 
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
+import org.bukkit.potion.PotionEffect;
 
 
 public class SpaceLogicListener implements Listener {
@@ -42,16 +45,24 @@ public class SpaceLogicListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
     public void onWorldLeave(PlayerTeleportEvent event) {
+        Player player = event.getPlayer();
         if (event.getTo() == null) {
             return;
         }
         if (!event.getFrom().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
             if (event.getTo().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+                for (PotionEffect pe : player.getActivePotionEffects()) {
+                    player.removePotionEffect(pe.getType());
+                }
+                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), () -> {
+                    if (!player.getPlayer().isDead() && player.getPlayer().isValid()) {
+                        PlayerPotionEffectListener.rescanPlayerArmor(player);
+                    }
+                }, 5L);
                 new SpacePlayerData(event.getPlayer());
             }
             return;
         }
-        Player player = event.getPlayer();
 
         if (!event.getFrom().getWorld().getName().equals(event.getTo().getWorld().getName())) {
             if (CombatLog.inCombat(player)) {

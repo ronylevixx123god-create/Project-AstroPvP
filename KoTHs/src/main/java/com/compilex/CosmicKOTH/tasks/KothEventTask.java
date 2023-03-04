@@ -171,7 +171,7 @@ implements Runnable {
         running = false;
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
-        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe &6Desert koth&f has been Captured!")));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe &6Koth&f has been Captured!")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe winner received a &6Koth Lootbag &fand &610$ Buycraft&f.")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lWinner&7: &f" + this.getNameOfFlagCapper())));

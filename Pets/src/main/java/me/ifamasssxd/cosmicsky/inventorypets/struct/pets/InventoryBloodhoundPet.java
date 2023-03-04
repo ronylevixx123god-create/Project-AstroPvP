@@ -37,7 +37,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -125,10 +124,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
          return true;
       }
 
-      if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(pTarget) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(pTarget)) {
-         player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
-         return true;
-      }
+
 
       if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
          pTarget.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Bloodhound Pet &7[" + player.getName() + "&7] &8&l*"));

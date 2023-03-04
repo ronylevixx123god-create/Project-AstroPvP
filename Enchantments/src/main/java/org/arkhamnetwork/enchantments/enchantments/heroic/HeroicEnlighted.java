@@ -27,7 +27,9 @@ public class HeroicEnlighted extends CustomEnchantment
         if (player.hasMetadata("neutralized")) {
             return;
         }
-
+        if (player.hasMetadata("noDefenseProcs")) {
+            return;
+        }
         if (!(player instanceof Player)) {
             return;
         }
@@ -35,7 +37,7 @@ public class HeroicEnlighted extends CustomEnchantment
             level = 4;
         }
         double random = Math.random();
-        double chance = 0.0075D * (double)level;
+        double chance = 0.05 * (double)level;
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
             chance*=1.1;
         }

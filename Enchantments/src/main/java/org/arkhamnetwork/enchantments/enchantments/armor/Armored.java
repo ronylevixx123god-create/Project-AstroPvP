@@ -26,7 +26,9 @@ public class Armored extends CustomEnchantment
         }
 
 
-
+        if (player.hasMetadata("noDefenseProcs")) {
+            return;
+        }
 
         if (player.hasMetadata("neutralized")) {
             return;
@@ -39,9 +41,9 @@ public class Armored extends CustomEnchantment
             if (AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.EASTER_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(pAttacker, SkinType.EASTER_2022_MUTATED_SWORD)) return;
             i = pAttacker.getItemInHand();
         }
-        double damage_negation = level * 0.01875D;
+        double damage_negation = level * 0.01;
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage() * (1.0D - damage_negation));
+            e.setDamage(e.getDamage() * 0.95);
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 57, 2001);
         }

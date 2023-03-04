@@ -18,7 +18,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.damagehandler.AstroDamageHandler;
@@ -178,10 +177,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             }
         }
 
-        if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target)) {
-            player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
-            return true;
-        }
+
 
 
         if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {

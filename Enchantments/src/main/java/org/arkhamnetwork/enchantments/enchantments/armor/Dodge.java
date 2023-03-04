@@ -38,7 +38,7 @@ public class Dodge extends CustomEnchantment
         if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
             return;
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.01 * level;
+            double chance = 0.025;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.15;

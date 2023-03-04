@@ -42,8 +42,9 @@ public class HeroicDodge
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (e instanceof EntityDamageByEntityEvent) {
-
+            if (player.getWorld().getName().toLowerCase().contains("dungeon_planet_nul")) {
+                return;
+            }
             if (player.hasMetadata("neutralized"))
                 return;
             if (player.hasMetadata("noDefenseProcs"))
@@ -51,7 +52,7 @@ public class HeroicDodge
             if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
                 return;
 
-            double chance = 0.015 * level;
+            double chance = 0.05 * (double)level;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.2;
@@ -69,7 +70,6 @@ public class HeroicDodge
                 ((Player) player).sendMessage((Object) ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }
-        }
     }
 }
 

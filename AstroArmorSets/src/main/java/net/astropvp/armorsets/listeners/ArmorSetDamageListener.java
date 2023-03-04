@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class ArmorSetDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.LOWEST , ignoreCancelled = true)
+            priority = EventPriority.LOWEST)
     public void onAttack(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();
@@ -50,16 +50,10 @@ public class ArmorSetDamageListener implements Listener {
         if (attacker instanceof Player) {
             cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
             if (cache.getCurrentArmorSet() != null) {
-                if (((Player) attacker).getItemInHand() == null) return;
-                if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
                 cache.getCurrentArmorSet().getArmorSet().onAttack((Player) attacker, attacked, e);
             }
 
             if (!cache.getCurrentSetCrystals().isEmpty()) {
-                if (((Player) attacker).getItemInHand() == null) return;
-                if (((Player) attacker).getItemInHand().getType() == Material.AIR) return;
-
-
                 Map<ArmorSetType, Integer> crystals = cache.getCurrentSetCrystals();
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
@@ -74,7 +68,7 @@ public class ArmorSetDamageListener implements Listener {
     }
 
     @EventHandler(
-            priority = EventPriority.LOWEST , ignoreCancelled = true)
+            priority = EventPriority.LOWEST)
     public void onDamaged(EntityDamageByEntityEvent e) throws Exception {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();

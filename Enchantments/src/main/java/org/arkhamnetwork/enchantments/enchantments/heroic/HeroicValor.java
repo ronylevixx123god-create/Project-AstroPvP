@@ -29,15 +29,15 @@ public class HeroicValor extends HeroicCustomEnchantment
                 return;
             }
         }
-        double damage_negation = level * 0.015D;
-        double hp_threshold = (level * 5 + 6);
+        double damage_negation = (double)level * 0.06;
+        double hp_threshold = level * 2 + 8;
 
         if (attacker instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
             damage_negation /=2;
         }
 
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage() * (1.0D - damage_negation));
+            e.setDamage(e.getDamage() * 0.95);
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 41, 2001);
         }

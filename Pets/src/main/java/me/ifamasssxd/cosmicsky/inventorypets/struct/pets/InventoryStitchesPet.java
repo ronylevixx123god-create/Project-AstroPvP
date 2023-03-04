@@ -14,7 +14,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
@@ -98,10 +97,7 @@ public class InventoryStitchesPet extends InventoryPet {
                 return  false;
             }
 
-            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(casted) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(casted)) {
-                player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
-                return false;
-            }
+
 
             if (nearbyEntity.hasMetadata("lastStitches") &&
                     TimeUnit.SECONDS.toMillis(90) - (System.currentTimeMillis() - nearbyEntity.getMetadata("lastStitches").get(0).asLong()) > 0) {

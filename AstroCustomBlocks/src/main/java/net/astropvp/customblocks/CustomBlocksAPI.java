@@ -8,12 +8,15 @@ import de.tr7zw.nbtapi.NBTItem;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
+import net.astropvp.customblocks.tasks.ChunkCustomBlocksTask;
 import net.astropvp.customblocks.utils.ChunkUtil;
 import org.bukkit.Location;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 public class CustomBlocksAPI {
     private static CustomBlockManager customBlockManager = CustomBlocks.getInstance().getCustomBlockManager();
+
     public static boolean isCustomBlockItem(ItemStack itemStack) {
         if (ItemUtils.isAirOrNull(itemStack)) return false;
         NBTItem nbtItem = new NBTItem(itemStack);
@@ -61,5 +64,13 @@ public class CustomBlocksAPI {
         }
         return false;
     }
+
+    public static boolean playerChunkContainsBlock(Player player, CustomBlockType type) {
+        if (ChunkCustomBlocksTask.playerChunkCustomBlocks.containsKey(player)) {
+            return ChunkCustomBlocksTask.playerChunkCustomBlocks.get(player).contains(type);
+        }
+        return false;
+    }
+
 
 }

@@ -39,7 +39,7 @@ public class NebulaShopInventory extends BaseGUI {
 
                 double price = NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice();
                 if(!EconomyUtils.hasBalance(player1, price)) {
-                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You require $" + price + " to purchase this item.");
+                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You require $" + NumberUtils.formatMoney(price) + " to purchase this item.");
                     return;
                 }
                 if(player1.getInventory().firstEmpty() < 0) {

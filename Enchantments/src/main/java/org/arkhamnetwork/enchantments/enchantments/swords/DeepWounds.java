@@ -28,11 +28,6 @@ public class DeepWounds extends CustomEnchantment
                 return;
             }
             playerHit.setMetadata("deepWounds", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis() + level * 1500));
-            double mod = (double) Bleed.getBleedStack(playerHit) * 0.0045D + (double)level * 0.01D + 1.0D;
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.JULY4TH_2022_HELMET)) {
-                mod *= 0.8;
-            }
-            e.setDamage(e.getDamage() * mod);
         }
     }
 }

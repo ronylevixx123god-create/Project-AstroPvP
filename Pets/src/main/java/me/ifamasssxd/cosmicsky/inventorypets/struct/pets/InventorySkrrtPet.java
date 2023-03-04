@@ -22,7 +22,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -156,14 +155,7 @@ public class InventorySkrrtPet extends InventoryPet {
                 continue;
             }
 
-            if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(p)) {
-                continue;
-            }
 
-            if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(p)) {
-                player.sendMessage(CC.translate("&c&l(!)&c You cannot skrrt pet " + p.getName() + " while he has cage match immunity!"));
-                continue;
-            }
 
             if (UndertowHelmet.undertowField.contains(p)) {
                 p.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4Skrrt Pet &7[&f" + player.getName() + "&7] &a&l*"));

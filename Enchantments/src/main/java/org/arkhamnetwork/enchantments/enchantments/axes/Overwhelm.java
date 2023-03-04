@@ -33,9 +33,7 @@ public class Overwhelm extends CustomEnchantment
         to.setMetadata("noReflectiveBlock", new FixedMetadataValue((Plugin)Enchantments.getInstance(), from.getName()));
         to.sendMessage(CC.translate("&c&l* DISABLED REFLECTIVE BLOCK [" + seconds + "s] &7[by " + from.getName() + "] &c&l*"));
         Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
-            if (to != null) {
-                to.removeMetadata("noReflectiveBlock", (Plugin)Enchantments.getInstance());
-            }
+            to.removeMetadata("noReflectiveBlock", (Plugin)Enchantments.getInstance());
         }, 20L * seconds);
     }
 }

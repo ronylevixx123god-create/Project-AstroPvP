@@ -38,7 +38,6 @@ final class LeadershipTask extends BukkitRunnable {
                 if (x <= 0 || l.getWorld().getName().equals("world_duels") || l.getWorld().getName().equals("world_duels2") || l.getWorld().getName().equals("cosmic-pvparenas")) {
                     continue;
                 }
-                ParticleEffect.SNOWBALL.sendToPlayer(p.getPlayer(),l, 0,0, 0,1.5f,10);
                 WorldUtil.sendWorldEffect(l.getBlock(), Material.SNOW_BLOCK.getId(), 2001);
             }
         }

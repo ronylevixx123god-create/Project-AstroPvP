@@ -38,7 +38,7 @@ public class Enlighted extends CustomEnchantment
         if (level > 3) {
             level = 3;
         }
-        double chance = 0.005 * level;
+        double chance = 0.03 * level;
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
             chance*=1.1;
         }

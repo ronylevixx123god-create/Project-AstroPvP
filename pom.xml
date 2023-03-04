@@ -78,6 +78,7 @@
         <module>Gifts</module>
         <module>Arcade</module>
         <module>AstroKits</module>
+        <module>AstroSlotBot</module>
 
     </modules>
 

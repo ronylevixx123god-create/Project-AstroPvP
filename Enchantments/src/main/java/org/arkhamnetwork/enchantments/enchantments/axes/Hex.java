@@ -12,38 +12,45 @@ import org.bukkit.metadata.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 import org.bukkit.*;
 
-public class Hex extends CustomEnchantment {
+public class Hex
+        extends CustomEnchantment {
     public Hex() {
         super("Hex", GeneralUtil.axe, 2);
         this.max = 5;
         this.base = 15.0;
         this.interval = 5.0;
-        Bukkit.getPluginManager().registerEvents(new HexListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new HexListener(), (Plugin)((Object)Enchantments.getInstance()));
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        double chance;
         if (!(playerHit instanceof Player)) {
             return;
         }
-        if (e.isCancelled())return;
-        final double random = Math.random();
-        final double chance = 0.005 * level;
-        if (random < chance && !playerHit.hasMetadata("hexEnchant")) {
-            playerHit.setMetadata("hexEnchant", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis() + (level / 3) * 1000L));
-            ((Player)playerHit).sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + (level / 3) * 2 + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *");
-            Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> {
-                ((Player)playerHit).sendMessage(ChatColor.LIGHT_PURPLE + "" + ChatColor.BOLD + "* HEX OFF *");
-                playerHit.removeMetadata("hexEnchant", Enchantments.getInstance());
-            }, (level / 3)  * 20L);
+        if (e.isCancelled()) {
+            return;
+        }
+        double random = Math.random();
+        if (random < (chance = 0.02 * (double)level) && (!playerHit.hasMetadata("hexEnchantExpire") || playerHit.getMetadata("hexEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
+            playerHit.setMetadata("hexEnchantExpire", new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), System.currentTimeMillis() + (long)((2 + level / 2) * 1000)));
+            playerHit.setMetadata("hexEnchantLevel", new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), level));
+            ((Player)playerHit).sendMessage((Object)((Object)ChatColor.DARK_PURPLE) + "" + (Object)((Object)ChatColor.BOLD) + "* HEX DEBUFF [" + (Object)((Object)ChatColor.LIGHT_PURPLE) + (Object)((Object)ChatColor.BOLD) + (2 + level / 2) + "s" + (Object)((Object)ChatColor.DARK_PURPLE) + (Object)((Object)ChatColor.BOLD) + "] *");
+            Bukkit.getScheduler().runTaskLater((Plugin)((Object)Enchantments.getInstance()), new Runnable(){
+
+                @Override
+                public void run() {
+                    ((Player)playerHit).sendMessage((Object)((Object)ChatColor.LIGHT_PURPLE) + "" + (Object)((Object)ChatColor.BOLD) + "* HEX OFF *");
+                }
+            }, (long)(2 + level / 2) * 20L);
         }
     }
 
-    public static boolean isHexed(final LivingEntity e) {
-        return e.hasMetadata("hexEnchant");
+    public static boolean isHexed(LivingEntity e) {
+        return e.hasMetadata("hexEnchantExpire") && e.getMetadata("hexEnchantExpire").get(0).asLong() > System.currentTimeMillis();
     }
 
-    public static int getHexLevel(final LivingEntity e) {
-        if (!isHexed(e)) {
+    public static int getHexLevel(LivingEntity e) {
+        if (!Hex.isHexed(e)) {
             return 0;
         }
         return e.getMetadata("hexEnchantLevel").get(0).asInt();

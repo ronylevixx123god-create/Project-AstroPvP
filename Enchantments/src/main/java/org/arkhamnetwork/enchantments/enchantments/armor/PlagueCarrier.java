@@ -115,7 +115,6 @@ public class PlagueCarrier
         c.setPowered(true);
 
         try {
-            ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), c.getLocation().add(0.0, 1.0, 0.0), 0.5f, 0.5f, 0.5f, 0.1f, 20);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

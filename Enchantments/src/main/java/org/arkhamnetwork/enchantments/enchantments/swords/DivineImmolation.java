@@ -224,7 +224,7 @@ public class DivineImmolation extends CustomEnchantment {
 
 
                     try {
-                        ParticleEffect.LAVA.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation(), 1, 1, 1, 0.05f, 10);
+                        ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), le.getLocation(), 1, 1, 1, 0.05f, 10);
                     } catch (Exception ex) {
                         ex.printStackTrace();
                     }

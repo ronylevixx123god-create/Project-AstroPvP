@@ -150,7 +150,6 @@ extends CustomEnchantment {
 
     public void applyProjectileEffect(LivingEntity player, int level, ProjectileLaunchEvent e) {
         try {
-            ParticleEffect.PORTAL.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation(), 0.7f, 0.7f, 0.7f, 0.7f, 16);
         } catch (Exception exception) {
             exception.printStackTrace();
         }

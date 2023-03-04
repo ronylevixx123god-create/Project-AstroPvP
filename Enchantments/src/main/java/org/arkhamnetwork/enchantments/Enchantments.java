@@ -151,14 +151,13 @@ public class Enchantments extends EnchantPlugin {
         getServer().getPluginManager().registerEvents(new CosmicAlchemistListener(), this);
         getServer().getPluginManager().registerEvents(new EnchantmentOrbListener(), this);
         getServer().getPluginManager().registerEvents(new EnchantmentLoginListener(), this);
-        //getServer().getPluginManager().registerEvents(new VanillaDamageListener(), this);
+        getServer().getPluginManager().registerEvents(new VanillaDamageListener(), this);
         getServer().getPluginManager().registerEvents(new ExploitListener(), this);
         getServer().getPluginManager().registerEvents(new PlayerPotionEffectListener(), this);
         getServer().getPluginManager().registerEvents(new OmniBlackScrollListener(), this);
         getServer().getPluginManager().registerEvents(new SilenceListener(), this);
         getServer().getPluginManager().registerEvents(new AutoBlessListener(), this);
         getServer().getPluginManager().registerEvents(new EnderWalkerListener(), (Plugin) Enchantments.getInstance());
-
 
     }
 

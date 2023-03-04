@@ -5,6 +5,7 @@ import java.text.*;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import org.arkhamnetwork.enchantments.enchantments.axes.Bleed;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -28,13 +29,12 @@ public class HeroicBleed extends HeroicCustomEnchantment
         this.max = 6;
     }
 
-    public void applyEffect(final LivingEntity user, final LivingEntity target, final int enchantLevel, final EntityDamageByEntityEvent event) {
+    public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
-
-            final double bleedChance = 0.025 * enchantLevel;
-            if (Math.random() < bleedChance && getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
-                if (Math.random() < 0.25 && user.hasMetadata("bleedStack") && EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), "Combat Medic")) {
-                    clearBleedEffect(user);
+            double bleedChance = 0.08 * (double)enchantLevel + 0.4;
+            if (Math.random() < bleedChance && Bleed.getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
+                if (Math.random() < 0.25 && user.hasMetadata("bleedStack") && EnchantmentAPI.itemHasEnchantment(((Player)user).getItemInHand(), (String)"Combat Medic")) {
+                    Bleed.clearBleedEffect(user);
                 }
                 this.addBleedStack(user, target);
             }

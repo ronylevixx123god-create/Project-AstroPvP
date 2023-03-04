@@ -18,7 +18,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.*;
 import org.bukkit.block.Block;
@@ -135,10 +134,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
         /*if (CageCooldown.isOnCageCooldown(target))
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");*/
 
-        if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(target)) {
-            player.sendMessage(CC.translate("&c&l(!)&c You cannot use a pet on someone that is in a different cage match."));
-            return true;
-        }
+
 
 
         if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {

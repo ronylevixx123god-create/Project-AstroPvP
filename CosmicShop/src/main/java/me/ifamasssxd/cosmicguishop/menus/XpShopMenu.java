@@ -108,7 +108,7 @@ public class XpShopMenu{
             guiItem.setItemMeta(meta);
             //NBTWrapper wrapper = new NBTWrapper(item);
             //wrapper.setFloat("xpShopPrice", Base64Utils.getCost(s));
-            expShopUI.addItem(new GuiItem(itemStack.clone(), event -> {
+            expShopUI.addItem(new GuiItem(guiItem.clone(), event -> {
                 float cost = s.getValue();
                 if (cost == 0)
                     return;

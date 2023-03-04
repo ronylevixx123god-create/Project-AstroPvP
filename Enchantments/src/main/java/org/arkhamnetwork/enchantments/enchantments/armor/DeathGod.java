@@ -28,12 +28,12 @@ public class DeathGod
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+        double procChance;
         if (player.hasMetadata("neutralized")) {
             return;
         }
-        final double random = Math.random();
-        final double procChance = 0.005 * level;
-        if (random < procChance && player.getHealth() - e.getFinalDamage() <= 4 + level) {
+        double random = Math.random();
+        if (random < 0.025 * (double)level && player.getHealth() - e.getFinalDamage() <= (double)(4 + level)) {
             ((Player) player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *", "DEATH_GOD");
 

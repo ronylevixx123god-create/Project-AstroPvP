@@ -28,7 +28,6 @@ public class HeroicInsanity extends HeroicCustomEnchantment
 
             final double mod = 1.0 + 0.04 * level;
             e.setDamage(e.getDamage() * mod);
-            GeneralCooldown.enterCooldown((Player) player);
         }
     }
 }

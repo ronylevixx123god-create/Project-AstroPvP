@@ -16,7 +16,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -91,14 +90,7 @@ public class InventoryMutatedBansheePet extends InventoryPet {
                     continue;
 
 
-                if (AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(nearPlayer) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) || AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(player) && !AstroCagePvP.getInstance().getWildPvPManager().hasWildPvP(nearPlayer)) {
-                    continue;
-                }
 
-                if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(nearPlayer)) {
-                    player.sendMessage(CC.translate("&c&l(!)&c You cannot banshee pet " + nearPlayer.getName() + " while he has cage match immunity!"));
-                    continue;
-                }
 
 
                 if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {

@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.block.Block;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
@@ -31,6 +32,7 @@ public class Heavy extends CustomEnchantment {
                 .getDamage() * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage() * (1.0D - damage_negation));
             Location l = player.getLocation();
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)133, (int)2001);
         }
     }
 }

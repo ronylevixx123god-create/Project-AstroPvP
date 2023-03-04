@@ -32,7 +32,7 @@ public class CosmicSlotBotAPI {
     public static ItemStack createHeroicSlotBotItem() {
         ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.translate("&d&k;&f&lHeroic&d&k;&r ") +  CC.GoldB + "Astro" + CC.GoldB + " Slot Bot " + CC.WhiteB + "Ticket");
+        meta.setDisplayName(CC.translate("&b&kiii&f&l&nHeroic&d&kiii&r ") +  CC.GoldB + "Astro" + CC.GoldB + " Slot Bot " + CC.WhiteB + "Ticket");
         final List<String> lore = Arrays.asList(CC.Gray + "Right-Click the Slot Bot located", String.valueOf(CC.Gray) + "at " + CC.White + "/spawn " + CC.Gray + "or use /bot then", String.valueOf(CC.Gray) + "insert (Left-Click) this ticket", String.valueOf(CC.Gray) + "into the bot");
         meta.setLore((List) lore);
         item.setItemMeta(meta);
