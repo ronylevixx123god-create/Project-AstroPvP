@@ -295,7 +295,7 @@ implements Runnable {
     }
 
     public List<Player> getKothPlayers() {
-        return CosmicKOTHPlugin.get_().getWorld().getPlayers();
+        return Bukkit.getWorld("world_koth").getPlayers();
     }
 
     public boolean isCapped() {

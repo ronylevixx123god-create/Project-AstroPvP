@@ -69,7 +69,6 @@ import java.util.*;
 public class CosmicKOTHPlugin
         extends JavaPlugin {
     private static CosmicKOTHPlugin _;
-    private World world;
     private Location spawn;
     private Location kothCenter;
     private KothEventTask koth;
@@ -88,6 +87,7 @@ public class CosmicKOTHPlugin
     private String baseName = "Outpost";
     private String serverType = "hcf";
     private Map<String, String> cachedMessages = new HashMap<String, String>();
+    private World world = Bukkit.getWorld("world_koth");
 
     private Map<String, Integer> kothWins;
 
@@ -95,6 +95,8 @@ public class CosmicKOTHPlugin
     public void onEnable() {
         _ = this;
         WorldGuardUtils.hook();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv import world_koth NORMAL -g VoidGenerator");
+
         this.ess3 = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         isVanillaGalaxy = !new File("plugins/Enchantments.jar").exists();
         this.kothWorldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
@@ -135,6 +137,8 @@ public class CosmicKOTHPlugin
         CustomConfig.setup();
         CustomConfig.save();
         kothWins = CustomConfig.load();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv import world_koth NORMAL -g VoidGenerator");
+
     }
 
     public void onDisable() {
@@ -215,7 +219,7 @@ public class CosmicKOTHPlugin
 
             @Override
             public void run() {
-                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv remove world_koth");
+                //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv remove world_koth");
                 Bukkit.getScheduler().runTaskLater(CosmicKOTHPlugin.get_(), new Runnable() {
 
                     @Override
@@ -249,7 +253,6 @@ public class CosmicKOTHPlugin
 
 
     public void registerConfigData() {
-        this.world = Bukkit.getWorld(CosmicKOTHPlugin.get_().getConfig().getString("world_koth"));
         if (_.getConfig().getString("playerSpawn") != null) {
             this.spawn = LocationUtils.convertStringToLocation(_.getConfig().getString("playerSpawn"));
         }

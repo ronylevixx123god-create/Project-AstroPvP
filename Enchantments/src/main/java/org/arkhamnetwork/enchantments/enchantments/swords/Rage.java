@@ -32,8 +32,7 @@ public class Rage extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && user instanceof Player) {
-
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
             if (!(target instanceof Player)) {
                 return;
             }
@@ -60,7 +59,7 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.resetRageStack();
             }
 
-            double rageDamage = (rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier")) / 10F;
+            double rageDamage = (rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {

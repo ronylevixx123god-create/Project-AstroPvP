@@ -1,8 +1,8 @@
 name: CosmicKOTH
 main: com.compilex.CosmicKOTH.CosmicKOTHPlugin
 version: 1.0
-softdepend: [WorldGuard, WorldEdit, Essentials, CosmicPvPUtils, Factions]
-load: postworld
+softdepend: [WorldGuard, WorldEdit, Essentials, DecimateCommons]
+load: POSTWORLD
 commands:
   koth:
     description: Display information regarding ongoing or upcoming KOTH events.

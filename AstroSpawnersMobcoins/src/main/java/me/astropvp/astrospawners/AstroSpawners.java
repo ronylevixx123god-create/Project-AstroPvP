@@ -154,7 +154,7 @@ public class AstroSpawners extends JavaPlugin {
     }
 
     public void addPlayerToAfkGrinding(Player p) {
-        UUID uuid = p.getUniqueId();
+        /*UUID uuid = p.getUniqueId();
 
         if (afkGrinders.containsKey(uuid)) {
             int amount = afkGrinders.get(uuid);
@@ -167,7 +167,7 @@ public class AstroSpawners extends JavaPlugin {
         if (amount >= 5000) {
             AntiAFKGrindingGUI antiAFKGrindingGUI = new AntiAFKGrindingGUI(p);
             antiAFKGrindingGUI.getAntiAfkGrindingGui().open(p);
-        }
+        }*/
 
 
     }
