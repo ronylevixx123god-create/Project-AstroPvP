@@ -1,9 +1,6 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
@@ -22,6 +19,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
@@ -70,13 +68,13 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-        long lastUse = petItem.getLastUsed();
+/*        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
         List<Player> nearbyEnemies = Lists.newArrayList();
 
         Faction faction = FactionUtils.getFaction(player);
@@ -131,10 +129,10 @@ public class InventoryBansheePet extends InventoryPet {
 
 
 
-                if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
+/*                if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
                     player.sendMessage(CC.translate("&c&lPET: &c" + nearPlayer.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(nearPlayer, "bansheeCooldown") + "&c."));
                     continue;
-                }
+                }*/
                 nearbyEnemies.add(nearPlayer);
             }
         }
@@ -143,7 +141,8 @@ public class InventoryBansheePet extends InventoryPet {
             throw new PrefixedPetException("Could not find a valid target!");
         }
 
-        petItem.setLastUsed(System.currentTimeMillis());
+        //petItem.setLastUsed(System.currentTimeMillis());
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
         int duration;
 
@@ -196,13 +195,13 @@ public class InventoryBansheePet extends InventoryPet {
 
     public static void startBansheeEffect(Player player, Player enemy, int duration) {
 
-        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(enemy, "bansheeCooldown")) {
+/*        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(enemy, "bansheeCooldown")) {
             player.sendMessage(CC.translate("&c&lPET: &c" + enemy.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(enemy, "bansheeCooldown") + "&c."));
             return;
         }
 
         int bansheeCooldownInSeconds = 20;
-        CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldownInSeconds * 1000);
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldownInSeconds * 1000);*/
 
 
         enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
@@ -216,7 +215,6 @@ public class InventoryBansheePet extends InventoryPet {
         DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&c&l* BANSHEE RKO [&7" + duration + "s&c&l] *"), "RKO");
         CombatLog.flagCombat(player);
         player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
         player.setMetadata("banshee_active", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
         player.sendMessage("");

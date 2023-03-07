@@ -20,6 +20,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -63,15 +64,16 @@ public class InventorySkrrtPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
 
-        long lastUse = petItem.getLastUsed();
+/*        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
 
-        petItem.setLastUsed(System.currentTimeMillis());
+        //petItem.setLastUsed(System.currentTimeMillis());
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
 
         this.petLevel = 5;
@@ -125,10 +127,10 @@ public class InventorySkrrtPet extends InventoryPet {
             FPlayer castingPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(player);
             FPlayer surroundingPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(p);
 
-            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "skrrtCooldown")) {
+/*            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "skrrtCooldown")) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on skrrt cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "skrrtCooldown") + "&c."));
                 continue;
-            }
+            }*/
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &8&l*"));
@@ -181,7 +183,7 @@ public class InventorySkrrtPet extends InventoryPet {
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
                 int skrrtCooldown = 120;
-                CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "skrrtCooldown", skrrtCooldown * 1000);
+                //CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "skrrtCooldown", skrrtCooldown * 1000);
                 CrankedAmuletUtil.tryHatchAbility(p, player);
 
                 CombatLog.flagCombat(p);

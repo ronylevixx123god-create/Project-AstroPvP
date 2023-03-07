@@ -1,7 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import com.rit.sucy.*;
+import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.event.entity.*;
@@ -39,7 +39,11 @@ public class SpiritLink extends CustomEnchantment
                     }
                     GeneralUtil.healPlayer(playerNear, healAmount);                }
             }
-            ParticleEffect.sendToLocation((ParticleEffect)ParticleEffect.HEART, (Location)player.getLocation().add(0.0, 0.5, 0.0), (float)((float)Math.random() / 2.0f), (float)((float)Math.random() / 2.0f), (float)((float)Math.random() / 2.0f), (float)0.05f, (int)3);
+            try {
+                ParticleEffect.FLAME.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 1, 1, 1, 0.05f, 10);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
             player.getWorld().playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 0.35f);
         }
     }

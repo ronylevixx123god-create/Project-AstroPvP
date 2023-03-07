@@ -73,7 +73,6 @@ public class InventoryImplingPet extends InventoryPet {
         int duration = 30;
 
         player.setMetadata("demonic_pet", (MetadataValue)new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
 
         player.sendMessage(CC.translate("&e&lPET: ** DEMONIC IMPLING PET [&6" + duration + "s&e&l] - Demonic Buff! **"));
         player.sendMessage("");

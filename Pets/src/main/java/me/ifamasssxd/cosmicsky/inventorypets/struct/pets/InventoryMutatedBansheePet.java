@@ -93,10 +93,10 @@ public class InventoryMutatedBansheePet extends InventoryPet {
 
 
 
-                if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
+/*                if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
                     player.sendMessage(CC.translate("&c&lPET: &c" + nearPlayer.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(nearPlayer, "bansheeCooldown") + "&c."));
                     continue;
-                }
+                }*/
 
                 nearbyEnemies.add(nearPlayer);
             }
@@ -132,13 +132,13 @@ public class InventoryMutatedBansheePet extends InventoryPet {
 
     public static void startBansheeEffect(Player player, Player enemy, int duration) {
 
-        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(enemy, "bansheeCooldown")) {
+/*        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(enemy, "bansheeCooldown")) {
             player.sendMessage(CC.translate("&c&lPET: &c" + enemy.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(enemy, "bansheeCooldown") + "&c."));
             return;
         }
 
         int bansheeCooldownInSeconds = 20;
-        CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldownInSeconds * 1000);
+        CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldownInSeconds * 1000);*/
 
 
         enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
@@ -152,7 +152,6 @@ public class InventoryMutatedBansheePet extends InventoryPet {
         DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&a&l* &2&lMUTATED&r &a&lBANSHEE RKO [&7" + duration + "s&a&l] *"), "RKO");
         CombatLog.flagCombat(player);
         player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
         player.setMetadata("banshee_active", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         player.setMetadata("mutated_banshee", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
 

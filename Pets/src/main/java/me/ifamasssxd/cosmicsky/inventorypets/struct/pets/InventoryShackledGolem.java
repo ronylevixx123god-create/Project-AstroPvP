@@ -1,6 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import java.util.List;
@@ -11,6 +12,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -33,13 +35,12 @@ public class InventoryShackledGolem extends InventoryPet {
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, final InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-        long lastUse = petItem.getLastUsed();
+/*        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis(getCooldown());
         long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
-        if (player.hasMetadata("stitched"))
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You are pet silenced!");
+            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));*/
+
         if (player.hasMetadata("no_knockback"))
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You already have no knockback, wait for it to run out!");
         petItem.getPetType().sendMsg(player, CC.Red + "Shacked Golem activated.");
@@ -51,7 +52,9 @@ public class InventoryShackledGolem extends InventoryPet {
                 petItem.getPetType().sendMsg(player, CC.translate("Shackled Golem worn off!"));
             }
         }, abilitySeconds * 20L);
-        petItem.setLastUsed(System.currentTimeMillis());
+        //petItem.setLastUsed(System.currentTimeMillis());
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+
         return true;
     }
 

@@ -1,9 +1,5 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -21,6 +17,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.libraryaddict.disguise.DisguiseAPI;
 import me.libraryaddict.disguise.disguisetypes.Disguise;
 import me.libraryaddict.disguise.disguisetypes.DisguiseType;
@@ -69,13 +66,13 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
     @Override
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         FPlayer surroundingPlayer;
-        long lastUse = petItem.getLastUsed();
+/*        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
 
         if (player.hasMetadata("spectator")) {
             return true;
@@ -117,7 +114,8 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
         }
         FPlayer castingPlayer = FPlayers.getInstance().getByPlayer(player);
         if (FactionUtils.canPvP(player, p2)) {
-            petItem.setLastUsed(System.currentTimeMillis());
+            //petItem.setLastUsed(System.currentTimeMillis());
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
             this.freezeThePlayer(p2, player);
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1f, 3.0f);
             player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1f, 3.0f);

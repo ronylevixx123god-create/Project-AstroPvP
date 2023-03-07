@@ -13,6 +13,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -54,40 +55,27 @@ public class InventoryTitanPet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
-        long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
-        long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-        if (itemStack.getAmount() > 1) {
-            player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
 
-            return false;
-        }
-        if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
             Faction faction = FactionUtils.getFaction(player);
             if (faction != null && !faction.isNone()) {
-                if (player.hasMetadata("in_duel")) {
-                    return true;
-                } else {
+                if (!player.hasMetadata("in_duel")) {
                     Location locationClicked = player.getLocation();
                     if (!player.hasMetadata("spectator") && WorldGuardUtils.isPvPEnabled(locationClicked)) {
                         this.petLevel = petItem.getLevel();
-                        petItem.setLastUsed(System.currentTimeMillis());
+                        //petItem.setLastUsed(System.currentTimeMillis());
+                        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+
                         this.resetInventoryToFull(player);
                         this.startTenSecondAbilities(player);
                         boolean xpGain = true;
                         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
                         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
-                        return true;
-                    } else {
-                        return true;
                     }
                 }
+                return true;
             } else {
                 throw new PrefixedPetException("You must be in a faction to use this pet!");
             }
-        } else {
-            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long) ((int) (timeTillCanUse / 1000L))));
-        }
     }
 
     private void applyShockwaveDefence(Player player) throws Exception {

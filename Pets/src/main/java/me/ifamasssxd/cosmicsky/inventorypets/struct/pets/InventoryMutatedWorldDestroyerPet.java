@@ -137,10 +137,10 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
 
 
 
-        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
+/*        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
             player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(target, "cageCooldown") + "&c."));
             return false;
-        }
+        }*/
 
 
         //CageCooldown.enterCageCooldown(target);
@@ -163,7 +163,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
 
 
         int cageCooldown = 30;
-        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
+        //CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
 
         petItem.setLastUsed(System.currentTimeMillis());
         cagePlayer(player, target);

@@ -40,7 +40,6 @@ public class Rage extends CustomEnchantment {
                 return;
             }
 
-
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);
 
             if (rageStacksCache.getLastRageStackTime() + 10000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
@@ -59,7 +58,7 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.resetRageStack();
             }
 
-            double rageDamage = (rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageMultiplier"));
+            double rageDamage = Math.max(1, rageStacksCache.getRageStack()/Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageDivider"));
 
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {

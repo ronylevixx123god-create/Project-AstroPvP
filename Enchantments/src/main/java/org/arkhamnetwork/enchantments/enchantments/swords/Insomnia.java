@@ -32,7 +32,6 @@ extends CustomEnchantment {
         double chance = 0.025D * (double)level;
         int time = level > 1 ? 6 : 4;
         if (random < chance) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(time * 10, 40), Math.min(level - 1, 2)));
             if (level >= 6) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Math.max(time * 10, 40), 1));
             }

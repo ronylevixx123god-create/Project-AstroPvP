@@ -2,6 +2,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
 import com.cosmicpvp.cosmicutils.compat.ASound;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
@@ -14,6 +15,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.buffs.XpPetBuff;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -54,22 +56,19 @@ public class InventoryPetXpBooster extends InventoryPet {
    }
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-      event.setCancelled(true);
+/*      event.setCancelled(true);
       long lastUse = petItem.getLastUsed();
       long cd = TimeUnit.SECONDS.toMillis(this.getCooldown());
       long timeTillCanUse = cd - (System.currentTimeMillis() - lastUse);
 
-      if (item.getAmount() > 1) {
-         player.sendMessage(CC.translate("&cYou cannot use stacked pets!"));
-
-         return false;
-      }
-      if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {
+      if (lastUse <= 0L || timeTillCanUse <= 0L || player.isOp() && player.isSneaking()) {*/
          if (CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().containsKey(player.getUniqueId())) {
             throw new PrefixedPetException("You must wait for your previous buff to expire!");
          } else {
             double increase = this.getIncrease(petItem.getLevel());
-            petItem.setLastUsed(System.currentTimeMillis());
+            //petItem.setLastUsed(System.currentTimeMillis());
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+
             boolean xp = true;
             int duration = this.getDuration(5);
             CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().put(player.getUniqueId(), new XpPetBuff(increase, System.currentTimeMillis() + (long)(duration * 1000)));
@@ -83,10 +82,10 @@ public class InventoryPetXpBooster extends InventoryPet {
             ASound.VILLAGER_YES.play(player, 3.0F, 1.1F);
             return true;
          }
-      } else {
+      } /*else {
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
-      }
-   }
+      }*/
+
 
    public boolean onTickInHotBar(Player player, int inventorySlot, InventoryPetItem item) {
       return false;

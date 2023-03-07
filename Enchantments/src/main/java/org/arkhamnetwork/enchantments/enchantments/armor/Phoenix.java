@@ -52,15 +52,15 @@ public class Phoenix extends CustomEnchantment {
         //Bukkit.getScheduler().runTaskTimer(Enchantments.getEssentials(), new reducePhoenixCount(), 12000L, 12000L);
     }
 
-    public static boolean hasPhoenixEquipped(final Player player) {
+    public static boolean hasPhoenixEquipped( Player player) {
         return Phoenix.phoenixEquipped.containsKey(player.getUniqueId());
     }
 
-    public void applyEquipEffect(final Player player, final int enchantLevel) {
+    public void applyEquipEffect( Player player,  int enchantLevel) {
         Phoenix.phoenixEquipped.put(player.getUniqueId(), enchantLevel);
     }
 
-    public void applyUnequipEffect(final Player player, final int level, final ItemStack item) {
+    public void applyUnequipEffect( Player player,  int level,  ItemStack item) {
         Phoenix.phoenixEquipped.remove(player.getUniqueId());
     }
 
@@ -74,16 +74,16 @@ public class Phoenix extends CustomEnchantment {
         }
     }
 
-    public void applyUnequipEffect(final Player player, final int enchantLevel) {
+    public void applyUnequipEffect( Player player,  int enchantLevel) {
         this.applyUnequipEffect(player, enchantLevel, null);
     }
 
-    public static boolean procPhoenix(final Player player, final LivingEntity damager, final double dmg) {
-        final Integer level = Phoenix.phoenixEquipped.get(player.getUniqueId());
+    public static boolean procPhoenix( Player player,  LivingEntity damager,  double dmg) {
+         Integer level = Phoenix.phoenixEquipped.get(player.getUniqueId());
         return level != null && procPhoenix(player, damager, level, dmg);
     }
 
-    public static boolean procPhoenix(final Player player, final LivingEntity damager, final int level, double dmg) {
+    public static boolean procPhoenix( Player player,  LivingEntity damager,  int level, double dmg) {
         if (!(damager instanceof Player)) {
             return false;
         }
@@ -92,11 +92,11 @@ public class Phoenix extends CustomEnchantment {
             return false;
         }
 
-        final boolean utilityBelt = AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY);
-        final boolean deathKnightBlockedPheonix = Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT");
-        final boolean thanosBlockedPheonix = MaskType.hasEquipped((Player) damager, "THANOS");
+         boolean utilityBelt = AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.CORRUPT_BELT_UTILITY);
+         boolean deathKnightBlockedPheonix = Math.random() <= 0.5 && MaskType.hasEquipped((Player) damager, "DEATH_KNIGHT");
+         boolean thanosBlockedPheonix = MaskType.hasEquipped((Player) damager, "THANOS");
 
-        final boolean canUse = canUsePhoenix(player);
+         boolean canUse = canUsePhoenix(player);
 
         if (!canUse) {
             if (120L - (System.currentTimeMillis() - Phoenix.last_phoenix.get(player.getUniqueId().toString())) / 1000L != 0L) {
@@ -237,7 +237,7 @@ public class Phoenix extends CustomEnchantment {
             }
 
 
-            final int soulCost = getPhoenixProcSoulCost(player);
+             int soulCost = getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount(player, soulCost)) {
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);
                 Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
@@ -266,7 +266,7 @@ public class Phoenix extends CustomEnchantment {
                     }
                 }
                 player.playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
-                for (final Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
+                for ( Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (ent instanceof Player) {
                         ent.sendMessage(CC.translate(""));
                         ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** PHOENIX SOUL (" + ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + ChatColor.RED + ChatColor.BOLD + ") ***");
@@ -275,7 +275,7 @@ public class Phoenix extends CustomEnchantment {
                         ((Player) ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
                     }
                 }
-                DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&c&l* PHOENIX *"), "PHOENIX");
+                DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&e&l* PHOENIX *"), "PHOENIX");
                 Title title = new Title(CC.translate("&c&l** PHOENIX**"), CC.translate("&7You have &n" + KillTrackerAPI.getAllSouls(player) + "&7 souls left."), 3, 30, 3);
                 player.sendTitle(title);
                 return true;
@@ -289,11 +289,11 @@ public class Phoenix extends CustomEnchantment {
         return false;
     }
 
-    public static boolean canUsePhoenix(final Player pl) {
+    public static boolean canUsePhoenix( Player pl) {
         return !Phoenix.last_phoenix.containsKey(pl.getUniqueId().toString()) || System.currentTimeMillis() - Phoenix.last_phoenix.get(pl.getUniqueId().toString()) > 120000L;
     }
 
-    public static int getPhoenixProcSoulCost(final Player player) {
+    public static int getPhoenixProcSoulCost( Player player) {
         int soulCost = 500;
         int procsSinceOutOfCombat = player.hasMetadata("phoenixProcs") ? player.getMetadata("phoenixProcs").get(0).asInt() : 0;
         while (procsSinceOutOfCombat-- > 0) {

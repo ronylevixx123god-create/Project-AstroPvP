@@ -16,6 +16,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
@@ -73,13 +74,13 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-        long lastUse = petItem.getLastUsed();
+/*        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
 
         if (player.hasMetadata("in_duel"))
             return true;
@@ -180,13 +181,17 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
 
-        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
+/*        if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(target, "cageCooldown")) {
             player.sendMessage(CC.translate("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(target, "cageCooldown") + "&c."));
             return false;
         }
 
 
-        petItem.setLastUsed(System.currentTimeMillis());
+        //petItem.setLastUsed(System.currentTimeMillis());
+        */
+
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_BOOTS) && Math.random() < 0.3) {
             cagePlayer(target, player, cageDuration);
@@ -266,8 +271,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
     public static void cagePlayer(final Player player, final Player target, double cageDuration) {
         CrankedAmuletUtil.tryHatchAbility(target, player);
-        int cageCooldown = 30;
-        CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
+        int cageCooldown = 60;
+        //CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
 

@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.nbt.*;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.mojang.authlib.*;
 import com.mojang.authlib.properties.*;
+import lombok.Getter;
 import net.minecraft.server.v1_8_R3.*;
 import com.cosmicpvp.cosmicutils.utils.*;
 import org.bukkit.*;

@@ -13,6 +13,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
@@ -62,7 +63,7 @@ public class InventoryWitcherPet extends InventoryPet {
     }
 
     public int getCooldown() {
-        return (int) TimeUnit.MINUTES.toSeconds((11 - 5));
+        return 300;
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
@@ -70,15 +71,16 @@ public class InventoryWitcherPet extends InventoryPet {
             throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
-        long lastUse = petItem.getLastUsed();
+/*        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
 
         //PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
-        petItem.setLastUsed(System.currentTimeMillis());
+        //petItem.setLastUsed(System.currentTimeMillis());
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
 
 
@@ -111,10 +113,10 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation()))
                 continue;
-            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "witcherCooldown")) {
+/*            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "witcherCooldown")) {
                 player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on witcher cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "witcherCooldown") + "&c."));
                 continue;
-            }
+            }*/
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
@@ -155,8 +157,8 @@ public class InventoryWitcherPet extends InventoryPet {
             p.setWalkSpeed(0.0F);
             p.setMetadata("witcher_ability", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
 
-            int witcherCooldown = 30;
-            CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "witcherCooldown", witcherCooldown * 1000);
+            int witcherCooldown = 120;
+            //CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "witcherCooldown", witcherCooldown * 1000);
             if(!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
                 p.setMetadata("teleblock", new FixedMetadataValue(Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
             } else {

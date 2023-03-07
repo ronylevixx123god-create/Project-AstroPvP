@@ -200,7 +200,6 @@ implements CommandExecutor {
     private Map<Location, Boolean> extraChests;
     private boolean airlockKeyUnlocked = false;
     public int randomParkourChosen;
-    private double MONEY_REWARD = 500000000;
 
     public PlanetNulEvents(Dungeon d) {
         super(d);
@@ -488,11 +487,12 @@ implements CommandExecutor {
                     continue;
                 }
                 validLooters.add(p2.getUniqueId());
+                double moneyReward = random.nextInt(75000000) + 250000000;
                 p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
-                p2.sendMessage(CC.translate((String)"&a&l+ $" + NumberUtils.formatMoney(MONEY_REWARD) +  " (&7Planet Nul dungeon complete!&a&l)"));
+                p2.sendMessage(CC.translate((String)"&a&l+ $" + NumberUtils.formatMoney(moneyReward) +  " (&7Planet Nul dungeon complete!&a&l)"));
                 User eUser = CosmicDungeonsPlugin.get().ess3.getUser(p2);
                 try {
-                    eUser.setMoney(eUser.getMoney().add(new BigDecimal(MONEY_REWARD)));
+                    eUser.setMoney(eUser.getMoney().add(new BigDecimal(moneyReward)));
                 }
                 catch (MaxMoneyException e) {
                     e.printStackTrace();

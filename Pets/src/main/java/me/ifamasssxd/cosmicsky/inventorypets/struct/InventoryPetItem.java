@@ -20,6 +20,7 @@ import net.minecraft.server.v1_8_R3.GameProfileSerializer;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
@@ -119,6 +120,8 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 throw new PrefixedException("Corrupted Inventory Pet found?");
             }
 
+
+
             if (player.hasMetadata("stitchesPet") && player.hasMetadata("stitchesPetTime")) {
                 final long delay = player.getMetadata("stitchesPetTime").get(0).asLong();
                 final long timeTillCanUse = delay - (System.currentTimeMillis() - player.getMetadata("stitchesPet").get(0).asLong());
@@ -186,8 +189,17 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 throw new PrefixedPetException(CC.Red + "You cannot use stacked pets!");
             }
 
+            if (CooldownUtils.isCooldownActive(player, type.name())) {
+                String cd =  CooldownUtils.getFormattedCooldown(player, type.name());
+                player.sendMessage(CC.translate("&c&lPET: &cYour " + type.getItemName() + " &cis still on cooldown for &7" + cd + "&c!"));
+                player.playSound(player.getLocation(), Sound.ANVIL_LAND, 2.0F, 2.0F);
+                return;
+            }
+
             if (type.getInternalClass().onPetItemInteract(player, itemStack, item, playerInteractEvent)) {
                 player.getInventory().setItemInHand(item.build());
+                player.playSound(player.getLocation(), Sound.CHICKEN_EGG_POP, 1.0f, 0.25f);
+                player.sendMessage(CC.translate("&a&lPET: &aYour " + type.getItemName() + " &ais now on a &7" + type.getInternalClass().getCooldown()/60 + "m &acooldown!"));
                 player.updateInventory();
             }
         }

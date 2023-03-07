@@ -10,7 +10,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.BleedTask;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.tasks.PetUpdateTask;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.CooldownUtils;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import org.bukkit.Bukkit;
@@ -29,7 +28,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private InventoryPetItem petItem;
    private PetLeashItem petLeashItem;
    @Getter
-   private CooldownUtils cooldownUtils;
+   //private CooldownUtils cooldownUtils;
    public static Map<UUID, Player> cageCooldown;
    public static Map<UUID, Player> witcherCooldown;
    public static Map<UUID, Player> skrrtCooldown;
@@ -62,7 +61,7 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       }
 
       this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new BleedTask(), 0L, 10L);
-      this.cooldownUtils = new CooldownUtils("petsPlugin");
+      //this.cooldownUtils = new CooldownUtils("petsPlugin");
       new PetUpdateTask().runTaskTimer(this, 60L, 30L);
    }
 

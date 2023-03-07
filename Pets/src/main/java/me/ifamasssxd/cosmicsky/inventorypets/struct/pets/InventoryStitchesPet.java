@@ -13,6 +13,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -43,7 +44,7 @@ public class InventoryStitchesPet extends InventoryPet {
                 CC.Gray + "( Players can be pet-silenced 1x per 90s )",
                 "",
                 CC.WhiteB + "Cooldown",
-                CC.Gray + ("5 Minutes"));
+                CC.Gray + ("15 Minutes"));
     }
 
     public int getExpForLevel(final int level) {
@@ -55,20 +56,21 @@ public class InventoryStitchesPet extends InventoryPet {
     }
 
     public int getCooldown() {
-        return (int) TimeUnit.MINUTES.toSeconds(5);
+        return (int) TimeUnit.MINUTES.toSeconds(15);
     }
 
 
     @Override
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-        final long lastUse = petItem.getLastUsed();
+/*        final long lastUse = petItem.getLastUsed();
         final long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
             throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
-                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));
+                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
 
         List<Player> nearbyEntities = player.getNearbyEntities(14, 14, 14).stream().filter(nearbyEntity -> {
