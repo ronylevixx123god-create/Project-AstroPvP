@@ -52,7 +52,7 @@ public class IceAspect
             return;
         }
         final double random = Math.random();
-        final double chance = 0.005;
+        final double chance = 0.0035;
         final int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();

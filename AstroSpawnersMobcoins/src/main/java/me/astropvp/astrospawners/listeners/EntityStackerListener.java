@@ -134,7 +134,7 @@ public class EntityStackerListener implements Listener {
                 exp *= 1.15;
             }
 
-            while (remove != 0 && p.getInventory().firstEmpty() != -1) {
+            while (remove != 0) {
                 blazeLoot(p);
                 remove--;
             }
