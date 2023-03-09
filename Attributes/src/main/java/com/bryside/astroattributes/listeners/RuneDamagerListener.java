@@ -17,10 +17,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class RuneDamagerListener implements Listener {
-    @EventHandler(
-            priority = EventPriority.LOW,
-            ignoreCancelled = true
-    )
+
+    @EventHandler
     public void damageEvent(EntityDamageByEntityEvent e) throws Exception {
         if (e.getDamager() instanceof Player) {
             Player damager = (Player) e.getDamager();
@@ -28,6 +26,7 @@ public class RuneDamagerListener implements Listener {
             if (item == null || !Utils.isWeapon(item)) {
                 return;
             }
+            if (e.isCancelled()) return;
 
             RuneCacher cacher = RuneCacher.getRuneCacher(damager);
             if (cacher == null) {

@@ -7,11 +7,13 @@ import me.matthawkk.plugin.Plugins;
 import net.astropvp.christmas.commands.NebulaCommand;
 import net.astropvp.christmas.listeners.NebulaShopListener;
 import net.astropvp.christmas.managers.NebulaShopManager;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
-public class NebulaShop extends BasePlugin {
+public class NebulaShop extends JavaPlugin {
     @Getter
     private static NebulaShop instance;
 
@@ -19,21 +21,24 @@ public class NebulaShop extends BasePlugin {
     private NebulaShopManager nebulaShopManager;
 
 
-    public void load() {
+    public void onEnable() {
         instance = this;
         File file = new File(this.getDataFolder() + File.separator + "config.yml");
         if (!file.exists()) {
             saveDefaultConfig();
         }
-        nebulaShopManager = new NebulaShopManager();
+        this.nebulaShopManager = new NebulaShopManager();
+        this.nebulaShopManager.loadAll();
+        Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
+            nebulaShopManager.saveAll();
+        }, 100L, 10*20*60);
         getCommand("nebula").setExecutor(new NebulaCommand());
-        Plugins.registerListeners(this, new NebulaShopListener());
-        this.defaultColor = ChatColor.LIGHT_PURPLE;
-        this.pluginPrefix = CC.DarkPurpleB + "<" + CC.LightPurpleB + "Nebula Shop" + CC.DarkPurpleB + ">";
+        Bukkit.getServer().getPluginManager().registerEvents(new NebulaShopListener(), this);
     }
 
-    public void unload() {
+    public void onDisable() {
         getNebulaShopManager().saveShop();
+        nebulaShopManager.saveAll();
         instance = null;
     }
 }

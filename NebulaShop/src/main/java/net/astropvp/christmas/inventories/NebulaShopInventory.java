@@ -32,8 +32,12 @@ public class NebulaShopInventory extends BaseGUI {
         ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.LightPurpleB + " * PRICE: " + CC.White + "$" + NumberUtils.formatMoney(NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice())).build();
         return new GUIItem(item.clone()) {
             public void onClick(Player player1, ClickType clickType, InventoryClickEvent inventoryClickEvent) {
-                if(NebulaShop.getInstance().getNebulaShopManager().hasAlreadyBought(player1)) {
-                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You may only buy this item once per restock.");
+                if (!NebulaShop.getInstance().getNebulaShopManager().canBuy(player1)) {
+                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You may only get this item once per restock and 1 per ip.");
+                    return;
+                }
+                if (player1.getInventory().firstEmpty() < 0) {
+                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You must have an empty slot to get this item.");
                     return;
                 }
 
@@ -42,14 +46,11 @@ public class NebulaShopInventory extends BaseGUI {
                     player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You require $" + NumberUtils.formatMoney(price) + " to purchase this item.");
                     return;
                 }
-                if(player1.getInventory().firstEmpty() < 0) {
-                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You must have an empty slot to buy this item.");
-                    return;
-                }
+                NebulaShop.getInstance().getNebulaShopManager().setAlreadyBought(player1);
                 EconomyUtils.withdrawBalance(player1, price);
                 NebulaShop.getInstance().getNebulaShopManager().setAlreadyBought(player1);
                 player1.getInventory().addItem(NebulaShop.getInstance().getNebulaShopManager().getCurrentItem());
-                Bukkit.broadcastMessage(new PrefixedMessage(NebulaShop.getInstance(), CC.DarkPurple + player1.getName() + CC.LightPurple + " has purchased " + NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().getItemMeta().getDisplayName() + CC.LightPurple + " from the " + CC.LightPurpleU + "Nebula Shop!").get());
+                Bukkit.broadcastMessage(CC.translate("&5&l<&d&lNebula&5&l> ") +  CC.DarkPurple + player1.getName() + CC.LightPurple + " has purchased " + NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().getItemMeta().getDisplayName() + CC.LightPurple + " from the " + CC.LightPurpleU + "Nebula Shop!");
             }
         };
     }

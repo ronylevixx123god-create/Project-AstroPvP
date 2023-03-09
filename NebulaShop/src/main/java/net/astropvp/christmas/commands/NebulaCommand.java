@@ -27,7 +27,7 @@ public class NebulaCommand implements CommandExecutor {
 
         if (args.length != 0 && args[0].equalsIgnoreCase("shop")) {
             new NebulaShopInventory().open(player);
-            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Opening Nebula Shop.").get());
+            player.sendMessage(CC.translate("&5&l<&d&lNebula&5&l> &d") + "Opening Nebula Shop.");
             return true;
         }
 
@@ -40,7 +40,7 @@ public class NebulaCommand implements CommandExecutor {
             NebulaShop.getInstance().getNebulaShopManager().setCurrentItem(player.getItemInHand().clone());
             NebulaShop.getInstance().getNebulaShopManager().setCurrentPrice(Double.parseDouble(args[1]));
             NebulaShop.getInstance().getNebulaShopManager().clearAlreadyBought();
-            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Success.").get());
+            player.sendMessage(CC.Green + "Success!");
             Bukkit.broadcastMessage("");
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.LightPurpleB + CC.Underline + "Nebula Shop"));
             Bukkit.broadcastMessage("");
@@ -51,7 +51,7 @@ public class NebulaCommand implements CommandExecutor {
         }
         if(args[0].equalsIgnoreCase("setspawn")) {
             NebulaShop.getInstance().getNebulaShopManager().setShopLocation(player.getLocation());
-            player.sendMessage(new PrefixedMessage(NebulaShop.getInstance(), "Success.").get());
+            player.sendMessage(CC.Green + "Success!");
             return true;
         }
 

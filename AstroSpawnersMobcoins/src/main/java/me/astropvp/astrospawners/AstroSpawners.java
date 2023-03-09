@@ -16,6 +16,7 @@ import me.astropvp.astrospawners.utils.*;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.WorldCreator;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;

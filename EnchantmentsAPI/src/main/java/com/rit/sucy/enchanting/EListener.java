@@ -525,7 +525,8 @@ public class EListener implements Listener {
 
             }
         }
-        if (!p.getWorld().getName().startsWith("world_duels") && validEnchantments.size() > maxEnchantments) {
+        //if (!p.getWorld().getName().startsWith("world_duels") && validEnchantments.size() > maxEnchantments) {
+        if (validEnchantments.size() > maxEnchantments) {
             int maxRarity = 0;
             while (trimmedValidEnchantments.size() < maxEnchantments) {
                 ++maxRarity;

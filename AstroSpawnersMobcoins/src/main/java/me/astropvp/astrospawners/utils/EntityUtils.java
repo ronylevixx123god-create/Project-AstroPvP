@@ -4,7 +4,10 @@ import java.util.List;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.data.SpawnerData;
+import me.astropvp.astrospawners.data.SpawnerManager;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.*;
 import org.bukkit.metadata.FixedMetadataValue;
@@ -18,6 +21,7 @@ public class EntityUtils {
 
     public static void onEnable() {
         entities = Lists.newArrayList();
+
     }
 
     public static void addHeartsAboveEntity(LivingEntity entity, String display) {

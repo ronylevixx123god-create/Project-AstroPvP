@@ -50,15 +50,11 @@ public class AutoGiveAllTask implements Runnable {
     }
 
     private void announceGiveAll(long time, boolean minutes) {
-        sendCenteredMessage("");
-        sendCenteredMessage(CC.translate("&2&m--&8&m--&7&m--&a&m--&r[ &a&lAuto Giveall &f]&a&m--&7&m--&8&m--&2&m--"));
         if (minutes) {
-            sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "m");
+            Bukkit.broadcastMessage(CC.translate("&a&lAuto Giveall &8➥ &7The next auto giveall is in &f" + time + "&7m!"));
         } else {
-            sendCenteredMessage(CC.Green + "Time Remaining: " + CC.White + time + "s");
+            Bukkit.broadcastMessage(CC.translate("&a&lAuto Giveall &8➥ &7The next auto giveall is in &f" + time + "&7s!"));
         }
-        sendCenteredMessage(CC.translate("&aUse the command &f/nextgiveall&a to stay updated!"));
-        sendCenteredMessage("");
     }
 
 }
