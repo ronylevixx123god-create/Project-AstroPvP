@@ -73,7 +73,7 @@ public class Enchantments extends EnchantPlugin {
         CustomEnchantment[] array = {
                 new Lifesteal(), new Glowing(), new Blind(), new Deathbringer(), new Implants(), new Springs(), new Gears(), new Obsidianshield(), new Block(), new DeepWounds(),
                 new Enlighted(), new Frozen(), new Hardened(), this.iceAspectEnchant = new IceAspect(), new Lightning(), new Molten(), new Poison(), new Poisoned(), new ThunderingBlow(), new Vampire(),
-                new Trap(), new Overload(), new Headless(), new Haste(), new ObsidianDestroyer(), new DoubleStrike(), new EnderShift(), new Healing(), new Piercing(), new Curse(),
+                new Trap(), new Treasure(), new Overload(), new Headless(), new Haste(), new ObsidianDestroyer(), new DoubleStrike(), new EnderShift(), new Healing(), new Piercing(), new Curse(),
                 new Infernal(), new Shockwave(), new Aquatic(), new Explosive(), new Venom(), new Wither(), new Tank(), new Featherweight(), new Epicness(),
                 new AntiGravity(), new Immortal(), new Armored(), new Nutrition(), new SelfDestruct(), new SpiritLink(), new Berserk(), new Bleed(), new Blessed(), new Confusion(), new Decapitation(),
                 new Ravenous(), new Reforged(), new Cleave(), new Commander(), new Valor(), new Inquisitive(), new Cactus(), new RocketEscape(), new Guardians(), new Teleportation(),

@@ -155,7 +155,12 @@ implements Runnable {
         for (Player p : this.getKothPlayers()) {
             String regionName2 = WorldGuardUtils.getRegionName(p.getLocation());
             if (!regionName2.equals("koth_center") || CosmicKOTHPlugin.get_().getEss3() != null && CosmicKOTHPlugin.get_().getEss3().getUser(p).isVanished() || p.getGameMode() != GameMode.SURVIVAL) continue;
-            double dist = p.getLocation().distanceSquared(CosmicKOTHPlugin.get_().getKothCenter());
+            double dist;
+            try {
+                 dist = p.getLocation().distanceSquared(CosmicKOTHPlugin.get_().getKothCenter());
+            } catch (Exception e) {
+                 dist = 0;
+            }
             if (pClosest != null && dist >= lowestDistance) continue;
             pClosest = p;
             lowestDistance = dist;

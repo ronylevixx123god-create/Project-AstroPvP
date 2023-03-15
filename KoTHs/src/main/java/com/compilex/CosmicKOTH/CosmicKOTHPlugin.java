@@ -133,11 +133,11 @@ public class CosmicKOTHPlugin
         this.baseName = this.getConfig().getString("outpost-name", "Stronghold");
         this.outpostManager = new OutpostManager();
         this.outpostManager.loadOutposts(this);
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv import world_koth NORMAL -g VoidGenerator");
         Bukkit.getScheduler().runTaskTimer((Plugin) CosmicKOTHPlugin.get_(), (Runnable) new LauncherTask(7300), 20L, 20L);
         CustomConfig.setup();
         CustomConfig.save();
         kothWins = CustomConfig.load();
-        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "mv import world_koth NORMAL -g VoidGenerator");
 
     }
 

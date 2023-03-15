@@ -161,13 +161,6 @@ public class PlayerListener
                 UUID uuid = CosmicDuel.get().getDuelHistoryManager().storeInventorySnapshot(p);
                 d.getEndingInventoryCache().put(p.getName(), uuid);
             }
-            if (e.getDrops() != null) {
-                if (!e.getDrops().isEmpty()) {
-                    for (ItemStack is : e.getDrops()) {
-                        e.getDrops().remove(is);
-                    }
-                }
-            }
             e.setKeepLevel(true);
             System.out.println("EXP: " + p.getExp() + " Level: " + p.getLevel());
             new BukkitRunnable() {

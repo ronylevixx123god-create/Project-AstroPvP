@@ -79,6 +79,7 @@
         <module>Arcade</module>
         <module>AstroKits</module>
         <module>AstroSlotBot</module>
+        <module>Trials</module>
 
     </modules>
 

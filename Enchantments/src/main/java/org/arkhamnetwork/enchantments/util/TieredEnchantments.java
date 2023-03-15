@@ -13,6 +13,7 @@ import java.util.*;
 
 public enum TieredEnchantments {
     blackout(8),
+    treasure(8),
     neutralize(8),
     webwalker(8),
     markofthebeast(8),

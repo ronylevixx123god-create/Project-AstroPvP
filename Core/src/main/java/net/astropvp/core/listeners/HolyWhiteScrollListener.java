@@ -267,6 +267,7 @@ public class HolyWhiteScrollListener implements Listener {
 
         itemList.removeIf(itemStack -> itemStack.getType() == Material.POTION);
 
+        if(itemList.size() <= 0) return;
         CollectPlugin.getInstance().getCollectManager().getOrCreate(killer.getUniqueId().toString()).add(new CollectCategory(CollectType.DEATH_INVENTORY, itemList.toArray(new ItemStack[itemList.size() - 1]), CC.RedB + killed.getName() + "'s Death Inventory", System.currentTimeMillis()));
         e.getDrops().clear();
         itemList.clear();

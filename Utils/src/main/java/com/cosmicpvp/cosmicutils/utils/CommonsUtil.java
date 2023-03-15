@@ -113,6 +113,49 @@ public class CommonsUtil {
         return result <= 0 ? 9 : result;
     }
 
+    public static String getCenteredMessage(String message) {
+        if (message != null && !message.equals("")) {
+            message = ChatColor.translateAlternateColorCodes('&', message);
+            int messagePxSize = 0;
+            boolean previousCode = false;
+            boolean isBold = false;
+            char[] var4 = message.toCharArray();
+            int toCompensate = var4.length;
+
+            int spaceLength;
+            for(spaceLength = 0; spaceLength < toCompensate; ++spaceLength) {
+                char c = var4[spaceLength];
+                if (c == 167) {
+                    previousCode = true;
+                } else if (previousCode) {
+                    previousCode = false;
+                    if (c != 'l' && c != 'L') {
+                        isBold = false;
+                    } else {
+                        isBold = true;
+                    }
+                } else {
+                    StringUtils.DefaultFontInfo dFI = StringUtils.DefaultFontInfo.getDefaultFontInfo(c);
+                    messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
+                    ++messagePxSize;
+                }
+            }
+
+            int halvedMessageSize = messagePxSize / 2;
+            toCompensate = 154 - halvedMessageSize;
+            spaceLength = StringUtils.DefaultFontInfo.SPACE.getLength() + 1;
+            StringBuilder sb = new StringBuilder();
+
+            for(int compensated = 0; compensated < toCompensate; compensated += spaceLength) {
+                sb.append(" ");
+            }
+
+            return sb.toString() + message;
+        } else {
+            return "";
+        }
+    }
+
     public static String color(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }

@@ -15,6 +15,11 @@ public enum LootTable {
     OP(Material.TRIPWIRE_HOOK,  ChatColor.DARK_RED),
     SLOTS(Material.PAPER,  ChatColor.YELLOW),
     ENVOY(Material.FIREWORK,  ChatColor.AQUA),
+    RECRUIT(Material.TORCH, ChatColor.WHITE),
+    APPRENTICE(Material.TORCH, ChatColor.GREEN),
+    MASTER(Material.TORCH, ChatColor.AQUA),
+    HARDCORE(Material.TORCH, ChatColor.YELLOW),
+    DEMONIC(Material.TORCH, ChatColor.GOLD),
     ;
 
     public String getFancy() {

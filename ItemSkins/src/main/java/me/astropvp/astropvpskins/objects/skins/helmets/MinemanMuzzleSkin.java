@@ -39,10 +39,12 @@ public class MinemanMuzzleSkin extends ItemSkin {
 
             double dmg = ThreadLocalRandom.current().nextInt(3, 6 + 1);
             nearby.forEach(player -> {
-                if (FactionUtils.isInEnemyFaction(damaged, (Player) player)) {
-                    ((Player) player).damage(dmg);
+                if (player instanceof Player) {
+                    if (FactionUtils.isInEnemyFaction(damaged, (Player) player)) {
+                        ((Player) player).damage(dmg);
 
-                    player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmg + "DMG] &8&l**"));
+                        player.sendMessage(CC.translate("&8&l** " + damaged.getName() + "'s Mineman Muzzle &7[" + dmg + "DMG] &8&l**"));
+                    }
                 }
             });
         }

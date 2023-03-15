@@ -29,13 +29,13 @@ public class HastebinUtils {
         byte[] postData = text.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
 
-        String requestURL = "https://hastebin.com/documents";
+        String requestURL = "https://www.toptal.com/developers/hastebin/documents";
         URL url = new URL(requestURL);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setInstanceFollowRedirects(false);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("User-Agent", "Hastebin Java Api");
+        conn.setRequestProperty("Authorization", "af9a940c9a9014ae9bc1e47170f9814d602464a6e35895f55ea2a5f9f754a08c1815e7fdcf5221444f0b66ec9c4154b2bc943b1b8c9c43f5f6d27bc3e6f3704c");
         conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
         conn.setUseCaches(false);
 
@@ -53,7 +53,7 @@ public class HastebinUtils {
         if (response.contains("\"key\"")) {
             response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 
-            String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/";
+            String postURL = raw ? "https://www.toptal.com/developers/hastebin/raw/" : "https://www.toptal.com/developers/hastebin";
             response = postURL + response;
         }
 

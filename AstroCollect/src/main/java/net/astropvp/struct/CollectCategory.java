@@ -62,8 +62,7 @@ public class CollectCategory implements Serializable {
     }
 
     public void sort() {
-        Arrays.sort(items, Comparator.comparing(a -> a.getItemMeta().getDisplayName()));
-
+        Arrays.sort(items, Comparator.comparing(a -> a.hasItemMeta() ? a.getItemMeta().getDisplayName(): a.getType().name()));
     }
 
 

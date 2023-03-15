@@ -3,6 +3,7 @@ package me.astropvp.astrospawners.listeners;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
+import de.inventivegames.particle.ParticleEffect;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -14,6 +15,7 @@ import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -43,6 +45,7 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.GRINDER);
     private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+    private final ItemStack memoryChest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MemoryChest").createClaimableItem(false);
 
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
 
@@ -216,6 +219,8 @@ public class EntityStackerListener implements Listener {
         double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
         double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.01
         double mobcoinChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") * 0.01;
+        double treasureChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("treasureChance") * 0.01;
+
         Map<CustomEnchantment, Integer> enchants;
         UUID uuid =p.getUniqueId();
         if (cachedWeaponEnchants.containsKey(uuid)) {
@@ -249,6 +254,17 @@ public class EntityStackerListener implements Listener {
         if (enchants.containsKey(EnchantmentAPI.getEnchantment("Key Grind"))) {
             grinderKeyChance *= 1.4;
             godlyKeyChance *= 1.4;
+        }
+
+        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
+            PlayerUtil.giveOrDropProtectedItem(p, memoryChest, 60);
+            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
+            try {
+                ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            p.sendMessage(CC.translate("&a&l+ &c&lM&6&le&e&lm&a&lo&b&lr&d&ly&c&l &c&lC&6&lh&e&le&a&ls&b&lt"));
         }
 
 

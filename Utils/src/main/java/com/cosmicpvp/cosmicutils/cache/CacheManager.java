@@ -4,13 +4,14 @@ import lombok.Getter;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.UUID;
 
 @Getter
 public class CacheManager {
 
     @Getter
     private static CacheManager instance;
-    private final HashMap<Player, CachedPlayer> playerCaches;
+    private final HashMap<UUID, CachedPlayer> playerCaches;
 
     public CacheManager() {
         instance = this;
@@ -18,9 +19,9 @@ public class CacheManager {
     }
 
     public CachedPlayer getCachedPlayer(Player player) {
-        if(!this.playerCaches.containsKey(player))
-            this.playerCaches.put(player, new CachedPlayer(player, this));
-        return this.playerCaches.get(player);
+        if(!this.playerCaches.containsKey(player.getUniqueId()))
+            this.playerCaches.put(player.getUniqueId(), new CachedPlayer(player, this));
+        return this.playerCaches.get(player.getUniqueId());
     }
 
 }

@@ -12,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.util.Vector;
 
@@ -34,7 +35,8 @@ public class SwitcherBall extends AdminItem implements Throwable {
     @ConfigValue()
     private int cooldown = 60;
 
-    private Map<UUID, Player> snowballPlayers = new HashMap<>();
+    private Map<UUID, UUID> snowballPlayers = new HashMap<>();
+    //shooter, snowball
 
 
     @Override
@@ -99,9 +101,14 @@ public class SwitcherBall extends AdminItem implements Throwable {
             return;
         }
 
-        this.snowballPlayers.put(e.getEntity().getUniqueId(), ((Player) e.getEntity().getShooter()).getPlayer());
+        this.snowballPlayers.put( ((Player) e.getEntity().getShooter()).getPlayer().getUniqueId(),e.getEntity().getUniqueId());
         CooldownUtils.registerCooldown(shooter, new AbilityCooldown(getCooldownID(), cooldown));
 
+    }
+
+    @EventHandler
+    public void onWorldSwitch(PlayerChangedWorldEvent event) {
+        this.snowballPlayers.remove(event.getPlayer().getUniqueId());
     }
 
 
@@ -120,17 +127,17 @@ public class SwitcherBall extends AdminItem implements Throwable {
             return;
         }
         final Player shooter = (Player) snowball.getShooter();
-        if (!this.snowballPlayers.containsKey(snowball.getUniqueId())) {
+        if (!this.snowballPlayers.containsValue(snowball.getUniqueId())) {
             return;
         }
 
-        if (this.snowballPlayers.get(snowball.getUniqueId()) != shooter) {
+        if (this.snowballPlayers.get(shooter.getUniqueId()) != snowball.getUniqueId()) {
             return;
         }
 
         if (!WorldGuardUtils.isPvPEnabled(shooter.getLocation()) || !WorldGuardUtils.isPvPEnabled(hit.getLocation())) return;
 
-        this.snowballPlayers.remove(snowball.getUniqueId());
+        this.snowballPlayers.remove(shooter.getUniqueId());
         final Location loc = shooter.getLocation();
         shooter.teleport(hit, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         hit.teleport(loc, PlayerTeleportEvent.TeleportCause.UNKNOWN);
@@ -139,14 +146,21 @@ public class SwitcherBall extends AdminItem implements Throwable {
 
     }
 
+
+
     @EventHandler
     public void onHit(ProjectileHitEvent event) {
         if (event.getEntity() instanceof Snowball) {
-            if (snowballPlayers.containsKey(event.getEntity().getUniqueId())) {
-                Player shooter = snowballPlayers.get(event.getEntity().getUniqueId());
-                Language.SWITCHER_HIT_NONE.send(shooter);
-                //shooter.setItemInHand(AdminItemsPlugin.getInstance().getAdminItemRegister().getAdminItemFromID("SwitcherBall").getItem(1));
-                snowballPlayers.remove(event.getEntity().getUniqueId());
+            if (snowballPlayers.containsValue(event.getEntity().getUniqueId())) {
+                for (Map.Entry<UUID, UUID> entry : snowballPlayers.entrySet()) {
+                    UUID shooter = entry.getKey();
+                    UUID snowball = entry.getValue();
+                    if (snowball != event.getEntity().getUniqueId()) return;
+
+                    Language.SWITCHER_HIT_NONE.send(Bukkit.getPlayer(shooter));
+                    //shooter.setItemInHand(AdminItemsPlugin.getInstance().getAdminItemRegister().getAdminItemFromID("SwitcherBall").getItem(1));
+                    snowballPlayers.remove(event.getEntity().getUniqueId());
+                }
             }
         }
 
