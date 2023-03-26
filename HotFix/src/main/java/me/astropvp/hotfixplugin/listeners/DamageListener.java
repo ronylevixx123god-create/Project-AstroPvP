@@ -46,14 +46,6 @@ public class DamageListener implements Listener {
         this.killCooldown = new ArrayList<>();
     }
 
-
-    @EventHandler
-    public void onChat(AsyncPlayerChatEvent event) {
-        if (event.getMessage().toLowerCase().contains("jndi")) {
-            event.setMessage("/null");
-            event.setCancelled(true);
-        }
-    }
     
     @EventHandler(priority = EventPriority.LOWEST)
     public void onChatCombat(AsyncPlayerChatEvent event) {

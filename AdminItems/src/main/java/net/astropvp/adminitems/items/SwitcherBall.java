@@ -8,6 +8,7 @@ import net.astropvp.adminitems.struct.AdminItem;
 import net.astropvp.adminitems.struct.Throwable;
 import net.astropvp.adminitems.struct.annotations.ConfigValue;
 
+import net.ess3.api.events.teleport.TeleportEvent;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.command.CommandSender;
@@ -108,6 +109,11 @@ public class SwitcherBall extends AdminItem implements Throwable {
 
     @EventHandler
     public void onWorldSwitch(PlayerChangedWorldEvent event) {
+        this.snowballPlayers.remove(event.getPlayer().getUniqueId());
+    }
+
+    @EventHandler
+    public void onLocationSwitch(PlayerTeleportEvent event) {
         this.snowballPlayers.remove(event.getPlayer().getUniqueId());
     }
 
