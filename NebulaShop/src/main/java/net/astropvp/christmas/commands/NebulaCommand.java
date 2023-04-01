@@ -26,7 +26,7 @@ public class NebulaCommand implements CommandExecutor {
         }
 
         if (args.length != 0 && args[0].equalsIgnoreCase("shop")) {
-            new NebulaShopInventory().open(player);
+            new NebulaShopInventory(player).open(player);
             player.sendMessage(CC.translate("&5&l<&d&lNebula&5&l> &d") + "Opening Nebula Shop.");
             return true;
         }

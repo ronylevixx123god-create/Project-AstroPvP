@@ -10,10 +10,9 @@ import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
+import com.google.common.collect.Maps;
 import com.massivecraft.factions.Faction;
 import net.minecraft.server.v1_8_R3.NBTBase;
 import org.bukkit.Bukkit;
@@ -23,6 +22,9 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.Plugin;
 
 public class CosmicKOTHAPI {
+
+    public static Map<UUID, Integer> playerLivesUsed = new HashMap<>();
+
     public static boolean isKOTHRunning() {
         return (CosmicKOTHPlugin.get_().getKoth() != null && CosmicKOTHPlugin.get_().getKoth().isRunning());
     }
@@ -54,6 +56,7 @@ public class CosmicKOTHAPI {
 
     public static void resetKOTH() {
         int oldTaskId;
+        playerLivesUsed.clear();
         if (CosmicKOTHPlugin.get_().getKoth() != null && (oldTaskId = CosmicKOTHPlugin.get_().getKoth().getTaskId()) != -1) {
             Bukkit.getLogger().info("[CosmicKOTH] Resetting KOTH, cancelling task ID #" + oldTaskId);
             Bukkit.getScheduler().cancelTask(oldTaskId);

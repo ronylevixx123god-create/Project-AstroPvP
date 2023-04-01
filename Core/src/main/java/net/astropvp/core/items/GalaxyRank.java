@@ -24,22 +24,23 @@ public class GalaxyRank extends CosmicItem implements InventoryInteractable {
     }
 
     public ItemStack createItem(Player player, Object ... objects) {
-        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&3&l✪ &3&l&nG&b&l&nA&f&l&nL&5&l&nA&d&l&nX&f&l&nY&9&l RANK &f&l&oVoucher &3&l✪ &7(Right Click)")
+        ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&f&l<&f&k;&r&c&lG&6&lA&e&lL&a&lA&b&lX&d&lY&f&k;&f&l>&c&l RANK &f&l&oVoucher &7(Right Click)")
                 , CC.Gray + ""
                 , CC.translate("&7&nRight-Click&7 to unlock"),
-                CC.translate("&7the &3&lG&b&lA&f&lL&5&lA&d&lX&f&lY &7rank on this server!"),
+                CC.translate("&7the &f&l<&f&k;&r&c&lG&6&lA&e&lL&a&lA&b&lX&d&lY&f&k;&f&l> &7rank on this server!"),
                 CC.Gray + "",
-                CC.translate("&9&lGalaxy Perks"),
-                CC.translate("&9&l* &bAll Nebula Perks"),
-                CC.translate("&9&l* &bAccess to Galaxy /kit &7(3 Days Cooldown)"),
-                CC.translate("&9&l* &bAccess to private giveaways"),
-                CC.translate("&9&l* &b10% Chance To Keep Lootbox"),
-                CC.translate("&9&l* &bGalaxy Prefix"),
-                CC.translate("&9&l* &bNo Teleport Timer"),
-                CC.translate("&9&l* &bTop Queue priority"),
-                CC.translate("&9&l* &band much more..."),
+                CC.translate("&c&lGalaxy Perks"),
+                CC.translate("&c&l* &fAll Nebula Perks"),
+                CC.translate("&c&l* &fNebula shop is FREE"),
+                CC.translate("&c&l* &fAccess to Galaxy /kit &7(3 Days Cooldown)"),
+                CC.translate("&c&l* &fAccess to private giveaways"),
+                CC.translate("&c&l* &f10% Chance To Keep Lootbox"),
+                CC.translate("&c&l* &fGalaxy Prefix"),
+                CC.translate("&c&l* &fNo Teleport Timer"),
+                CC.translate("&c&l* &fTop Queue priority"),
+                CC.translate("&c&l* &fand much more..."),
                 "",
-                CC.translate("&8[&9✪&8] &bobtained from &f&nbuy.astropvp.net&7 (&n/buy&7)")
+                CC.translate("&8[&c✪&8] &cobtained from &f&nbuy.astropvp.net&7 (&n/buy&7)")
 
         ).build())).build();
 
@@ -97,7 +98,7 @@ public class GalaxyRank extends CosmicItem implements InventoryInteractable {
         player.sendMessage("");
 
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(CC.translate("&8[&6&lAstro&f&lPvP&8] &9" + player.getName() + "&f has unlocked the &9Galaxy Rank&f!"));
+        Bukkit.broadcastMessage(CC.translate("&8[&6&lAstro&f&lPvP&8] &c" + player.getName() + "&f has unlocked the &f&l<&f&k;&r&c&lG&6&lA&e&lL&a&lA&b&lX&d&lY&f&k;&f&l>&c&l Rank&f!"));
         Bukkit.broadcastMessage(CC.translate("&7Purchase this rank on &f&nbuy.astropvp.net&7! (/buy)"));
         Bukkit.broadcastMessage("");
     }

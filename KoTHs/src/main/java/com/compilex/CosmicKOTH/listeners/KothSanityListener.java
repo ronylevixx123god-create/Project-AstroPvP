@@ -44,14 +44,19 @@ import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.compilex.CosmicKOTH.CosmicKOTHPlugin;
 import com.compilex.CosmicKOTH.utils.RewardUtils;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.ExpUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
+import com.google.common.cache.LoadingCache;
 import com.massivecraft.factions.Faction;
 import com.sk89q.jchronic.utils.Time;
 import net.astropvp.core.utils.DamageUtils;
@@ -72,22 +77,16 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.player.PlayerCommandPreprocessEvent;
-import org.bukkit.event.player.PlayerDropItemEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.event.player.PlayerPickupItemEvent;
-import org.bukkit.event.player.PlayerQuitEvent;
-import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
 
 public class KothSanityListener implements Listener {
+    private Map<UUID, Integer> storeEXP = new HashMap<>();
 
-    private Cache<UUID, Long> recentKothDeaths = CacheBuilder.newBuilder().expireAfterWrite(8L, TimeUnit.MINUTES).build((CacheLoader)new CacheLoader<UUID, Long>() {
-
+    private LoadingCache recentKothDeaths = CacheBuilder.newBuilder().expireAfterWrite(8L, TimeUnit.MINUTES).build((CacheLoader)new CacheLoader<UUID, Long>() {
         public Long load(UUID uuid) {
             return System.currentTimeMillis();
         }
@@ -141,6 +140,49 @@ public class KothSanityListener implements Listener {
             e.setCancelled(true);
             e.setResult(Event.Result.DENY);
         }
+    }
+
+    @EventHandler
+    public void onRespawnFromKothDeath(PlayerRespawnEvent e) {
+        Player player = e.getPlayer();
+        if (e.getPlayer().getWorld().getName().equals("world_koth") && this.storeEXP != null && this.storeEXP.containsKey(e.getPlayer().getUniqueId())) {
+            ExpUtils.setTotalExperience(player, this.storeEXP.get(player.getUniqueId()));
+            this.storeEXP.remove(e.getPlayer().getUniqueId());
+            player.sendMessage(CC.translate((String)"&a&l(!) &aSince you died in the KOTH world, your inventory contents & EXP were saved!"));
+        }
+        if (e.getPlayer().getWorld().getName().contains("_koth")) {
+            this.recentKothDeaths.apply(e.getPlayer().getUniqueId());
+            CosmicKOTHAPI.playerLivesUsed.put(e.getPlayer().getUniqueId(), CosmicKOTHAPI.playerLivesUsed.getOrDefault(e.getPlayer().getUniqueId(), 0) + 1);
+        }
+    }
+
+    @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
+    public void onPlayerTeleport(PlayerTeleportEvent event) {
+        if (event.getFrom() != null && event.getTo() != null && event.getTo().getWorld().getName().contains("_koth") && !event.getTo().getWorld().getName().equals(event.getFrom().getWorld().getName())) {
+            Long lastDeath;
+            if (CosmicKOTHAPI.playerLivesUsed.containsKey(event.getPlayer().getUniqueId()) && CosmicKOTHAPI.playerLivesUsed.get(event.getPlayer().getUniqueId()) == 2) {
+                event.getPlayer().sendMessage(CC.translate((String)"&c&l(!) &cYou cannot return to the KOTH world because you have used both of your lives!"));
+                event.setCancelled(true);
+                if (!event.getPlayer().isOp()) {
+                    return;
+                }
+            }
+            if ((lastDeath = (Long)this.recentKothDeaths.asMap().get(event.getPlayer().getUniqueId())) != null) {
+                int secondsLeft;
+                long timeToLookFor = this.getTimeTillReturn(event.getPlayer());
+                long timeSinceDeath = System.currentTimeMillis() - lastDeath;
+                if (timeSinceDeath < timeToLookFor && (secondsLeft = (int)((timeToLookFor - timeSinceDeath) / 1000L)) > 0) {
+                    if (!event.getPlayer().isOp()) {
+                        event.setCancelled(true);
+                    }
+                    event.getPlayer().sendMessage(CC.RedB + "(!) " + CC.Red + "You cannot return to the KOTH world for another " + CC.RedU + TimeUtils.formatSeconds((long)secondsLeft) + CC.Red + " due to your recent death!");
+                }
+            }
+        }
+    }
+
+    private long getTimeTillReturn(Player player) {
+        return player.hasPermission("cosmicpvp.heroic") ? TimeUnit.MINUTES.toMillis(5L) : TimeUnit.MINUTES.toMillis(8L);
     }
 
 }

@@ -20,8 +20,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NebulaShopInventory extends BaseGUI {
-    public NebulaShopInventory() {
+    public Player player;
+    public NebulaShopInventory(Player player) {
         super("Nebula Shop", 9);
+        this.player = player;
         setItem(3, getCurrentItem());
         setItem(5, getInformationBook());
     }
@@ -29,7 +31,12 @@ public class NebulaShopInventory extends BaseGUI {
 
     private GUIItem getCurrentItem() {
         ItemStack shopItem = NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().clone();
-        ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.LightPurpleB + " * PRICE: " + CC.White + "$" + NumberUtils.formatMoney(NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice())).build();
+        double price = NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice();
+        if (player.hasPermission("astrocore.galaxy")) {
+            price = 0;
+        }
+        ItemStack item = new ItemBuilder(shopItem).addLore("").addLore(CC.LightPurpleB + " * PRICE: " + CC.White + "$" + NumberUtils.formatMoney(price)).build();
+        double finalPrice = price;
         return new GUIItem(item.clone()) {
             public void onClick(Player player1, ClickType clickType, InventoryClickEvent inventoryClickEvent) {
                 if (!NebulaShop.getInstance().getNebulaShopManager().canBuy(player1)) {
@@ -41,13 +48,13 @@ public class NebulaShopInventory extends BaseGUI {
                     return;
                 }
 
-                double price = NebulaShop.getInstance().getNebulaShopManager().getCurrentPrice();
-                if(!EconomyUtils.hasBalance(player1, price)) {
-                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You require $" + NumberUtils.formatMoney(price) + " to purchase this item.");
+
+                if(!EconomyUtils.hasBalance(player1, finalPrice)) {
+                    player1.sendMessage(CC.RedB + "(!) " + CC.Red + "You require $" + NumberUtils.formatMoney(finalPrice) + " to purchase this item.");
                     return;
                 }
                 NebulaShop.getInstance().getNebulaShopManager().setAlreadyBought(player1);
-                EconomyUtils.withdrawBalance(player1, price);
+                EconomyUtils.withdrawBalance(player1, finalPrice);
                 NebulaShop.getInstance().getNebulaShopManager().setAlreadyBought(player1);
                 player1.getInventory().addItem(NebulaShop.getInstance().getNebulaShopManager().getCurrentItem());
                 Bukkit.broadcastMessage(CC.translate("&5&l<&d&lNebula&5&l> ") +  CC.DarkPurple + player1.getName() + CC.LightPurple + " has purchased " + NebulaShop.getInstance().getNebulaShopManager().getCurrentItem().getItemMeta().getDisplayName() + CC.LightPurple + " from the " + CC.LightPurpleU + "Nebula Shop!");

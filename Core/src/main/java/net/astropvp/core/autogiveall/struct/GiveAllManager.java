@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 public class GiveAllManager {
     private static long nextGiveAll = 2400;
-    private static ItemStack giveAllItem = CrateKeyItem.getItem(CrateType.GODLY);
+    private static ItemStack giveAllItem = CrateKeyItem.getItem(CrateType.OP);
 
     public static long getNextGiveAll() {
         return nextGiveAll;
