@@ -45,6 +45,7 @@ public class TPWarmup
         double xp = p.getTotalExperience();
         double teleportWarmup = 7.0;
 
+        if (p.hasPermission("astrocore.galaxy")) return 0;
         if (p.getWorld().getEnvironment() == World.Environment.THE_END) {
             return 1.0;
         }

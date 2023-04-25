@@ -56,7 +56,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>LootTable</artifactId>
+            <artifactId>Loot</artifactId>
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/../LootTable/target/LootTable.jar</systemPath>

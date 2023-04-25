@@ -8,6 +8,8 @@ import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astrospawners.AstroSpawners;
+import me.astropvp.astrospawners.struct.GrindingCache;
+import me.astropvp.astrospawners.struct.GrindingManager;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
@@ -20,6 +22,8 @@ import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.OutpostUtil;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.loottable.struct.LootTable;
 import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -43,14 +47,14 @@ public class EntityStackerListener implements Listener {
 
     private final MobStackerUtils mobStackerUtils;
     private final AstroSpawners plugin;
+    private final GrindingManager grindingManager;
+    private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
     private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.GRINDER);
     private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
     private final ItemStack memoryChest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MemoryChest").createClaimableItem(false);
 
-    private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
 
     private Map<UUID, Long> blazeCooldown;
-    private final Map<UUID, Integer> playerMoneyMap;
 
     public EntityStackerListener(AstroSpawners plugin) {
         this.plugin = plugin;
@@ -59,8 +63,8 @@ public class EntityStackerListener implements Listener {
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(AstroSpawners.getInstance(), () -> {
             this.blazeCooldown.clear();
         }, 10, 5 * 20 * 60);
-        this.playerMoneyMap = new HashMap<>();
         this.cachedWeaponEnchants = new HashMap<>();
+        this.grindingManager = new GrindingManager();
     }
 
     @EventHandler(priority = EventPriority.LOW, ignoreCancelled = true)
@@ -108,13 +112,11 @@ public class EntityStackerListener implements Listener {
                     exp *= 1.15;
                 } else if (enchants.containsKey(EnchantmentAPI.getEnchantment("Inquisitive"))) {
                     exp *= 1.05;
-
                 }
 
                 if (enchants.containsKey(EnchantmentAPI.getEnchantment("Kill Aura")) && Math.random() < 0.075) {
                     remove = ThreadLocalRandom.current().nextInt(2, 5 + 1);
                 }
-
             }
 
 
@@ -130,18 +132,9 @@ public class EntityStackerListener implements Listener {
             }
 
 
-            //boolean isOnCosmicClient = CosmicPlayers.get().getCosmicPlayer(p).isOnCosmicClient();
-
-
             if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
                 exp *= 1.15;
             }
-
-            while (remove != 0) {
-                blazeLoot(p);
-                remove--;
-            }
-
 
             if (CosmicSkyInventoryPets.get().getPetManager().getPetBuffExpiration().containsKey(p.getUniqueId())) {
                 exp *= 2.05;
@@ -164,12 +157,15 @@ public class EntityStackerListener implements Listener {
                 exp *= 2;
             }
 
-            p.giveExp((int) exp);
-
+            GrindingCache cache = grindingManager.getGrindingCache(p);
+            cache.addMobKilled(remove);
+            while (remove != 0) {
+                blazeLoot(cache, p);
+                remove--;
+            }
+            cache.addExp((int) exp);
             plugin.addPlayerToAfkGrinding(p);
-
             boolean showParticles = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("showGrindParticles");
-
             if (showParticles) {
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 0, 1, 0, 0.4f, 12);
             }
@@ -177,6 +173,80 @@ public class EntityStackerListener implements Listener {
         }
 
 
+    }
+
+
+    private void blazeLoot(GrindingCache cache, Player p) {
+        double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
+        double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.01
+        double mobcoinChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") * 0.01;
+        double treasureChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("treasureChance") * 0.01;
+
+        Map<CustomEnchantment, Integer> enchants;
+        UUID uuid = p.getUniqueId();
+        if (cachedWeaponEnchants.containsKey(uuid)) {
+            enchants = cachedWeaponEnchants.get(p.getUniqueId());
+        } else {
+            enchants = EnchantmentAPI.getEnchantments((p.getItemInHand()));
+            cachedWeaponEnchants.put(uuid, enchants);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
+                cachedWeaponEnchants.remove(uuid);
+            }, 60 * 20L);
+        }
+
+        cache.addMoney(22);
+
+        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Coins"))) {
+            mobcoinChance *= 1.4;
+        }
+
+        int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
+        if (Math.random() < mobcoinChance) {
+            cache.addCoins(mcAmount);
+        }
+
+
+        if (p.getInventory().firstEmpty() == -1) {
+            return;
+        }
+
+
+        if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
+            grinderKeyChance *= 1.2;
+            godlyKeyChance *= 1.2;
+        }
+
+        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Key Grind"))) {
+            grinderKeyChance *= 1.4;
+            godlyKeyChance *= 1.4;
+        }
+
+        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
+            if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, memoryChest)) {
+                PlayerUtil.giveOrDropProtectedItem(p, memoryChest, 60);
+                p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
+                try {
+                    ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
+                p.sendMessage(CC.translate("&a&l+ &c&lM&6&le&e&lm&a&lo&b&lr&d&ly&c&l &c&lC&6&lh&e&le&a&ls&b&lt"));
+            }
+
+        }
+
+        double num = Math.random();
+
+        if (godlyKeyChance >= num) {
+            if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, godlyKey)) {
+
+                PlayerUtil.giveOrDropProtectedItem(p, godlyKey, 60);
+            }
+        } else if (grinderKeyChance >= num) {
+            if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, grinderKey)) {
+                PlayerUtil.giveOrDropProtectedItem(p, grinderKey, 60);
+            }
+        }
     }
 
 
@@ -213,87 +283,6 @@ public class EntityStackerListener implements Listener {
         }
         entity.setHealth(entity.getMaxHealth());
         e.setCancelled(true);
-    }
-
-    public void blazeLoot(Player p) {
-        double grinderKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("grinderKeyChancePercent") * 0.01; //0.01
-        double godlyKeyChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("godlyKeyChancePercent") * 0.01; //0.01
-        double mobcoinChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") * 0.01;
-        double treasureChance = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("treasureChance") * 0.01;
-
-        Map<CustomEnchantment, Integer> enchants;
-        UUID uuid =p.getUniqueId();
-        if (cachedWeaponEnchants.containsKey(uuid)) {
-            enchants = cachedWeaponEnchants.get(p.getUniqueId());
-        } else {
-            enchants = EnchantmentAPI.getEnchantments((p.getItemInHand()));
-            cachedWeaponEnchants.put(uuid, enchants);
-            Bukkit.getScheduler().runTaskLaterAsynchronously(AstroSpawners.getInstance(), () -> {
-                cachedWeaponEnchants.remove(uuid);
-            }, 60 * 20L);
-        }
-        attemptGiveMoney(p);
-
-        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Coins"))) {
-            mobcoinChance *= 1.4;
-        }
-
-        int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
-        if (Math.random() < mobcoinChance) {
-            MobcoinAPI.addMobcoins(p, mcAmount);
-            p.playSound(p.getLocation(), Sound.LEVEL_UP, 2, 1);
-            p.sendMessage(CC.translate("&6&l+ &6⛃&e" + mcAmount));
-        }
-        if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
-            grinderKeyChance *= 1.2;
-            godlyKeyChance *= 1.2;
-        }
-
-
-
-        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Key Grind"))) {
-            grinderKeyChance *= 1.4;
-            godlyKeyChance *= 1.4;
-        }
-
-        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
-            PlayerUtil.giveOrDropProtectedItem(p, memoryChest, 60);
-            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
-            try {
-                ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
-            } catch (Exception exception) {
-                exception.printStackTrace();
-            }
-            p.sendMessage(CC.translate("&a&l+ &c&lM&6&le&e&lm&a&lo&b&lr&d&ly&c&l &c&lC&6&lh&e&le&a&ls&b&lt"));
-        }
-
-
-
-        double num = Math.random();
-
-        if (godlyKeyChance >= num) {
-            PlayerUtil.giveOrDropProtectedItem(p, godlyKey, 60);
-        } else if (grinderKeyChance >= num) {
-            PlayerUtil.giveOrDropProtectedItem(p, grinderKey, 60);
-        }
-    }
-
-    public void attemptGiveMoney(Player player) {
-        UUID uuid = player.getUniqueId();
-        double blazeRodPrice = 22;
-        if (this.playerMoneyMap.containsKey(uuid)) {
-            int current = this.playerMoneyMap.get(uuid);
-            this.playerMoneyMap.put(uuid, current + 1);
-        } else {
-            this.playerMoneyMap.put(uuid, 1);
-        }
-        if (this.playerMoneyMap.get(uuid) >= 10) {
-            this.playerMoneyMap.put(uuid, 0);
-            EconomyUtils.depositBalance(player, blazeRodPrice * 10);
-            player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(blazeRodPrice * 10)));
-            player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
-
-        }
     }
 
 

@@ -143,16 +143,16 @@ public class KothSanityListener implements Listener {
     }
 
     @EventHandler
-    public void onRespawnFromKothDeath(PlayerRespawnEvent e) {
-        Player player = e.getPlayer();
-        if (e.getPlayer().getWorld().getName().equals("world_koth") && this.storeEXP != null && this.storeEXP.containsKey(e.getPlayer().getUniqueId())) {
+    public void onRespawnFromKothDeath(PlayerDeathEvent e) {
+        Player player = e.getEntity();
+        if (e.getEntity().getWorld().getName().equals("world_koth") && this.storeEXP != null && this.storeEXP.containsKey(e.getEntity().getUniqueId())) {
             ExpUtils.setTotalExperience(player, this.storeEXP.get(player.getUniqueId()));
-            this.storeEXP.remove(e.getPlayer().getUniqueId());
+            this.storeEXP.remove(e.getEntity().getUniqueId());
             player.sendMessage(CC.translate((String)"&a&l(!) &aSince you died in the KOTH world, your inventory contents & EXP were saved!"));
         }
-        if (e.getPlayer().getWorld().getName().contains("_koth")) {
-            this.recentKothDeaths.apply(e.getPlayer().getUniqueId());
-            CosmicKOTHAPI.playerLivesUsed.put(e.getPlayer().getUniqueId(), CosmicKOTHAPI.playerLivesUsed.getOrDefault(e.getPlayer().getUniqueId(), 0) + 1);
+        if (e.getEntity().getWorld().getName().contains("_koth")) {
+            this.recentKothDeaths.apply(e.getEntity().getUniqueId());
+            CosmicKOTHAPI.playerLivesUsed.put(e.getEntity().getUniqueId(), CosmicKOTHAPI.playerLivesUsed.getOrDefault(e.getEntity().getUniqueId(), 0) + 1);
         }
     }
 
