@@ -206,7 +206,10 @@ public class EntityStackerListener implements Listener {
         }
 
 
-        if (p.getInventory().firstEmpty() == -1) {
+        boolean allowFullInvGrinding = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("allow-full-inv-grinding");
+
+
+        if (p.getInventory().firstEmpty() == -1 && !allowFullInvGrinding) {
             return;
         }
 

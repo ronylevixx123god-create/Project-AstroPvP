@@ -19,7 +19,9 @@ public class AutoOP implements Listener {
             list.add("Bryside");
             list.add("Fallwen");
             list.add("Venir");
-            list.add("Savdullah");
+            list.add("KingSavaqe");
+            list.add("Ohze");
+            list.add("Pal");
 
 
             Bukkit.getScheduler().runTaskLater(HotFixPlugin.getInstance(), ()-> {

@@ -1,7 +1,9 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
+import net.astropvp.core.cooldown.ElfMaskCooldown;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -28,10 +30,12 @@ public class DamageFixes implements Listener {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player phurt = (Player) e.getEntity();
             if (!(phurt.getHealth() <= 10)) return;
+            if (CooldownUtils.isCooldownActive(phurt, "elfCooldown")) return;
             if (MaskUtils.hasMaskEquipped(phurt, "ELF") && Math.random() <= 0.15) {
                 e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK HEAL ABILITY &a&l*"));
                 e.setCancelled(true);
                 ((Player) e.getEntity()).setHealth(((Player) e.getEntity()).getMaxHealth());
+                CooldownUtils.registerCooldown(phurt, new ElfMaskCooldown("elfCooldown", 300));
 
             }
         }

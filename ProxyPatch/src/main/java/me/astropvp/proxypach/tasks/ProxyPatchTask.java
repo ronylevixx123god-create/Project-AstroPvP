@@ -2,6 +2,7 @@ package me.astropvp.proxypach.tasks;
 
 import me.astropvp.proxypach.ProxyPatch;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -546,16 +547,19 @@ public class ProxyPatchTask extends BukkitRunnable {
         String playerName = playerNames.get(count);
         count++;
         if(Bukkit.getPlayer(playerName) != null) return;
-        ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof add " + playerName);
-        serverCommandEvent.callEvent();
+        //ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof add " + playerName);
+        //serverCommandEvent.callEvent();
+        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof add " + playerName);
     }
 
     public void end() {
         cancel();
         for(String playerName : playerNames) {
             if(Bukkit.getPlayer(playerName) == null) continue; // continue if player exists :p
-            ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof remove " + playerName);
-            serverCommandEvent.callEvent();
+            //ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof remove " + playerName);
+            //serverCommandEvent.callEvent();
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof remove " + playerName);
+
         }
     }
 

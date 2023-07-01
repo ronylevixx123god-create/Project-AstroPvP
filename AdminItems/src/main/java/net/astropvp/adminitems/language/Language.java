@@ -13,7 +13,7 @@ import java.util.function.UnaryOperator;
 import java.util.stream.Collectors;
 
 public enum Language {
-
+    enabled,
     ADMIN_COMMAND_HELP,
     INVALID_ADMIN_ITEM,
     ADMIN_RELOADING,

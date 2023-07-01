@@ -7,3 +7,4 @@ showGrindParticles: true
 mobcoinChance: 15
 mobcoinAmount: 1
 treasureChance: 0.02
+allow-full-inv-grinding: true

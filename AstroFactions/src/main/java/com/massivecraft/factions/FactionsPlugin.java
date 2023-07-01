@@ -173,7 +173,7 @@ public class FactionsPlugin extends JavaPlugin implements FactionsAPI {
 
             @Override
             public void flush() {
-
+                Material.END
             }
 
             @Override

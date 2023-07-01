@@ -40,6 +40,7 @@ public enum PermissibleAction {
     ROSTERCONTROL(true, DefaultPermissionsConfig.Permissions::getRosterControl, TL.PERM_ROSTERCONTROL, TL.PERM_SHORT_ROSTERCONTROL, "ANVIL"),
     CLAIM_CORNER(true, DefaultPermissionsConfig.Permissions::getCorner, TL.PERM_CLAIMCORNER, TL.PERM_SHORT_CLAIMCORNER, "MAP"),
     COLLECTOR_ACCESS(true, DefaultPermissionsConfig.Permissions::getCollectorAccess, TL.PERM_COLLECTOR_ACCESS, TL.PERM_SHORT_COLLECTOR_ACCESS, "BEACON"),
+
     ;
 
     private final boolean factionOnly;

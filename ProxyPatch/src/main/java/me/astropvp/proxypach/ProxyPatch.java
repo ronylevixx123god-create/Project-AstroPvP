@@ -25,7 +25,7 @@ public class ProxyPatch extends JavaPlugin {
         instance = this;
         loadConfig();
         this.proxyPatchTask = new ProxyPatchTask();
-        this.proxyPatchTask.runTaskTimerAsynchronously(this, 80L, 20L);
+        this.proxyPatchTask.runTaskTimer(this, 80L, 20L);
         CommandManager commandManager = new CommandManager(this, true);
         commandManager.register(new ProxyPatchCommand(this));
         playerNames.add("Haru_s");

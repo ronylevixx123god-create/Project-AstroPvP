@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 public enum CrateType {
     GRINDER("Grinder", "&6", ""),
     GODLY("Godly", "&e", ""),
+    MUTATED("Mutated", "&2", ""),
     OP("OP", "&4", "");
     private final String name;
 

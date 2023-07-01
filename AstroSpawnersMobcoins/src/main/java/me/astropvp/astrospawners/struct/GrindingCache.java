@@ -44,7 +44,7 @@ public class GrindingCache {
         player.sendMessage(CC.translate("&8 - &7Money: &2$&a" + NumberUtils.formatMoney(moneyEarned)));
         player.sendMessage(CC.translate("&8 - &7Mobcoins: &e" + NumberUtils.formatMoney(coinsEarned)));
         player.sendMessage(CC.translate("&8 - &7Mobs Killed: &c" + NumberUtils.formatMoney(mobsKilled)));
-        player.sendMessage(CC.translate("&7&o(( Every &f10s&7&o you will receive your grinding rewards from the last 15s. ))"));
+        player.sendMessage(CC.translate("&7&o(( Every &f15s&7&o you will receive your grinding rewards from the last 15s. ))"));
         player.sendMessage(CC.translate(""));
 
         this.expEarned = 0;

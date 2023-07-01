@@ -1,5 +1,6 @@
 package me.astropvp.astropvpskins.objects.skins.swords;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
@@ -46,8 +47,8 @@ public class PricklePear extends ItemSkin {
     }
 
     public void prickleAbility(Player player, Player enemy) {
-        player.sendMessage("&a&l** PRICKLE CHAOS &7[" + enemy.getName() + "] &a&l**");
-        enemy.sendMessage("&a&l** PRICKLED &7[" + player.getName() + "] &a&l**");
+        player.sendMessage(CC.translate("&a&l** PRICKLE CHAOS &7[" + enemy.getName() + "] &a&l**"));
+        enemy.sendMessage(CC.translate("&a&l** PRICKLED &7[" + player.getName() + "] &a&l**"));
 
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin) AstroItemSkinsPlugin.getInstance(), (Runnable) new BukkitRunnable() {
             int count = 0;
@@ -60,6 +61,9 @@ public class PricklePear extends ItemSkin {
                     AstroDamageHandler.getInstance().getDamageHandler().dealDamage(enemy, dmg, "&a&lPickle Ticks");
                 }
                 if (enemy.getHealth() <= 0.0 || enemy.isDead()) {
+                    this.cancel();
+                }
+                if (!WorldGuardUtils.isPvPEnabled(enemy.getLocation())) {
                     this.cancel();
                 }
                 ++this.count;

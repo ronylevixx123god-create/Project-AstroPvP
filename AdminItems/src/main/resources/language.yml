@@ -1,3 +1,5 @@
+enabled: true
+
 INVALID_ADMIN_ITEM: "&c&l(!)&c Invalid admin item name."
 USE_STACKED_ADMIN_ITEM: "&3&lAdmin Items &8➥ &7You cannot use stacked admin items."
 ADMIN_COMMAND_HELP:

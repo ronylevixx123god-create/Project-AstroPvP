@@ -49,6 +49,12 @@ public class AstroAdminItemsAPI {
         if (!AstroAdminItemsAPI.getAdminItemFromItem(itemStack).getID().equals(adminItem.getID())) {
             return false;
         }
+
+        if (!Boolean.parseBoolean(Language.enabled.getValue())) {
+            player.sendMessage(CC.translate("&c&l(!)&c Partner items are currently disabled."));
+            return false;
+        }
+
         if (itemStack.getAmount() > 1) {
             Language.USE_STACKED_ADMIN_ITEM.send(player);
             player.playSound(player.getLocation(), Sound.VILLAGER_NO, 10f, 1.1f);
