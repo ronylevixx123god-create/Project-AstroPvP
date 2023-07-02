@@ -196,13 +196,14 @@ public class ChatListener implements Listener {
             String[] messageSplit = message.split(" ");
             StringBuilder newMessage = new StringBuilder();
             for (String s : messageSplit) {
-                newMessage.append(chatcolor + s).append(" ");
+                newMessage.append(chatcolor).append(s).append(" ");
             }
             clickable.add(chatcolor + newMessage.toString());
             clickable.sendToPlayer(recipient);
             if (!player.isOp()) {
                 AstroCore.getInstance().getCooldownUtils().add(player, "chatCooldown", (long) (chatCooldown * 1000));
             }
+            Bukkit.getServer().getConsoleSender().sendMessage(CC.translate("&8[&a" + fPlayer.getChatTag() + "&8]&r " + Objects.requireNonNull(LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId())).getCachedData().getMetaData().getPrefix() + " " +  player.getName() + " " + message));
         }
     }
 

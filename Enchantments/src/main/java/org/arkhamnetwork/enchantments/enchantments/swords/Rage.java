@@ -94,12 +94,13 @@ public class Rage extends CustomEnchantment {
                 target.sendMessage(CC.translate("&c&l* SKELETON KEY &7[+10% Rage DMG] &c&l*"));
             }
 
-
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.1) {
                 target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
             } else {
                 event.setDamage(event.getDamage() * (1 + rageDamage));
             }
+
+
 
             this.playRageEffect(target.getLocation());
 
