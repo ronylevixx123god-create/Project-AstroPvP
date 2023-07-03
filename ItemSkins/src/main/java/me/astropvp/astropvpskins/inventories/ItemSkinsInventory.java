@@ -73,6 +73,7 @@ public class ItemSkinsInventory {
         byte b = 0;
         SkinType[] arrayOfSkinType;
         for (SkinType skinType : SkinType.values()) {
+            if (!skinType.isEnabled()) continue;
             if (ItemSkinType.isSimilarItemSkin(skinType.getItemSkinType(), type)) {
                 String d = ChatColor.stripColor(skinType.getName());
                 d = String.valueOf(CC.GoldB) + "* " + CC.Yellow + d;

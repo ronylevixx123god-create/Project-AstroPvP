@@ -34,8 +34,10 @@ public class ItemSkinInventoryClickListener implements Listener {
         } else if (title.startsWith(CC.translate("&8Item Skins:"))) {
             if (item.equals(ItemSkinSubInventory.createBackButton()))
                 ItemSkinsInventory.openInventory(player);
-            if (AstroItemSkinsAPI.isItemSkin(item) && player.isOp())
+            if (AstroItemSkinsAPI.isItemSkin(item) && player.isOp()) {
                 player.getInventory().addItem(item);
+                player.sendMessage(CC.translate("&aGiven you the &f" + AstroItemSkinsAPI.getItemSkin(item).get(0).name() + "&a."));
+            }
             e.setCancelled(true);
         }
     }

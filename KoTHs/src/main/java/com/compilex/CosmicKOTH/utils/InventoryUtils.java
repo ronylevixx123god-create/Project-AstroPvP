@@ -57,7 +57,7 @@ public class InventoryUtils {
         ArrayList lore = Lists.newArrayList();
         lore.add("");
         lore.add(CC.WhiteB + "KOTH Status: " + status);
-        lore.add(CC.WhiteB + "Location: " + CC.GoldB + "Desert warp " + CC.Gray + "(X2504, Y19, Z4638)");
+        lore.add(CC.WhiteB + "Location: " + CC.LightPurpleB + "Koth warp " + CC.Gray + "(X-150, Y100, Z-150)");
         KothWorldType worldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
         if (CosmicKOTHAPI.isKOTHRunning()) {
             KothEventTask KET = CosmicKOTHPlugin.get_().getKoth();
@@ -90,7 +90,7 @@ public class InventoryUtils {
         lore.add("");
         lore.add(CC.GoldB + "Winner Reward:");
         lore.add(CC.WhiteB + "● " + CC.Gray + "1x Koth Lootbag");
-        lore.add(CC.WhiteB + "● " + CC.Yellow + "40% Chance for 10$ Buycraft Giftcard");
+        lore.add(CC.WhiteB + "● " + CC.Gray + "10$ Buycraft Giftcard");
         lore.add("");
         lore.add(CC.translate("&6&lFaction Bonus:"));
         lore.add(CC.translate("&f&l● &7+10% Outgoing Damage"));

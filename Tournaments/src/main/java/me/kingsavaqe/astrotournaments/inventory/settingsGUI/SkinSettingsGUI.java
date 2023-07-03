@@ -27,6 +27,7 @@ public class SkinSettingsGUI {
         TournamentManager tournamentManager = AstroTournamentsPlugin.instance.getTournamentManager();
 
         for (SkinType skinType : SkinType.values()) {
+            if (!skinType.isEnabled()) continue;
             if (skinType.getItemSkinType() != itemSkinType) continue;
             switch (itemSkinType) {
                 case HELMET:

@@ -27,6 +27,7 @@ public class BannedSkinsGUI {
         this.bannedSkinSettingsGUI.setDefaultClickAction(event -> event.setCancelled(true));
 
         for (SkinType skinType : SkinType.values()) {
+            if (!skinType.isEnabled()) continue;
             if (skinType.getItemSkinType() != itemSkinType) continue;
             if (tournamentManager.isBannedItemSkin(skinType)) {
                 this.bannedSkinSettingsGUI.addItem(new GuiItem(createBannedSkinItem(skinType), event -> {

@@ -27,6 +27,7 @@ public class ItemSkinSubInventory {
         byte b2 = 0;
         SkinType[] arrayOfSkinType2;
         for (SkinType skinType : SkinType.values()) {
+            if (!skinType.isEnabled()) continue;
             if (ItemSkinType.isSimilarItemSkin(skinType.getItemSkinType(), type)) {
                 inventory.setItem(pos, skinType.getItem());
                 pos++;

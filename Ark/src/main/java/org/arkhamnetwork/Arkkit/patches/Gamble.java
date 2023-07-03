@@ -11,6 +11,7 @@ import org.arkhamnetwork.Arkkit.plugins.ArkPlugin;
 import org.bukkit.plugin.Plugin;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 
 public class Gamble
@@ -28,7 +29,7 @@ public class Gamble
                 disabledRollUUIDs.add(s);
             }
         }
-        this.registerCommand(new CommandRoll("roll", "/<command> <1-10000>", "Rolls a random number between 0 and X", Arrays.asList("gamble")));
+        this.registerCommand(new CommandRoll("roll", "/<command> <1-10000>", "Rolls a random number between 0 and X", Collections.emptyList()));
     }
 
     @Override

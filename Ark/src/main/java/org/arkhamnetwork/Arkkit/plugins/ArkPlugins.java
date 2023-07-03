@@ -70,7 +70,7 @@ public enum ArkPlugins {
     NEAR_LEGACY(new NearLegacy(Arkkit.get()), "Custom near command."),
 
     VAULT_DISABLE(new VaultDisable(Arkkit.get()), "Disable adding items into PlayerVaults, (Only withdrawls allowed)"),
-    GAMBLE(new Gamble(Arkkit.get()), "Enables players gambling net.astropvp.armorsets.commands such as /roll."),
+    GAMBLE(new Gamble(Arkkit.get()), "Enables players net.astropvp.gambling net.astropvp.armorsets.commands such as /roll."),
     //HIDE_LORE(new HideLore(Arkkit.get()), "Hides specific lore and item attributes via ProtocolLib."),
     SHOWCASE_EXPANDER(new ShowcaseExpander(Arkkit.get()), "Enables showcase expander items."),
     ANTI_EXPLOIT(new AntiExploit(Arkkit.get()), "Prevents a number of general server exploits."),

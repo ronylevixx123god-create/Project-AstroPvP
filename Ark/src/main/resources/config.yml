@@ -207,7 +207,7 @@ patches:
   # Enables some goofy 4th of July celebrations
   july_freedom: false
 
-  # Enables player gambling me.astropvp.cratekeys.net.astropvp.armorsets.commands such as /roll.
+  # Enables player net.astropvp.gambling me.astropvp.cratekeys.net.astropvp.armorsets.commands such as /roll.
   gamble: false
 
   # Makes creative gamemode persist between worlds.
