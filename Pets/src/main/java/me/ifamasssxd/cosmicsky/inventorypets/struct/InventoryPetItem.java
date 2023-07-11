@@ -173,6 +173,11 @@ public class InventoryPetItem extends CosmicPersistentItem implements PlayerInte
                 throw new PrefixedPetException(CC.Red + "You cannot use that pet here (Safezone)!");
             }
 
+            if (player.getLocation().getWorld().getName().equals("nebula")) {
+                playerInteractEvent.setCancelled(true);
+                throw new PrefixedPetException(CC.Red + "You cannot use that pet here (Safezone)!");
+            }
+
             if (player.getLocation().getWorld().getName().equalsIgnoreCase("world_arcade")) {
                 playerInteractEvent.setCancelled(true);
                 throw new PrefixedPetException(CC.Red + "You cannot use pets at arcade!");

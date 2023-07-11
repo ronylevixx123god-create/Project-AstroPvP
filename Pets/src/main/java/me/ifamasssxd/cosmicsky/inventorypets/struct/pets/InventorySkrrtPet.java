@@ -201,15 +201,15 @@ public class InventorySkrrtPet extends InventoryPet {
         try {
             p.playSound(p.getLocation(), Sound.STEP_SNOW, 1.0F, 1.4F);
             p.setWalkSpeed(0.0F);
-            p.removePotionEffect(PotionEffectType.JUMP);
-            p.removePotionEffect(PotionEffectType.SLOW);
-            p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) ((long) this.freezeDuration(this.petLevel) * 20L), 128));
-            p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) ((long) this.freezeDuration(this.petLevel) * 20L), 128));
+            //p.removePotionEffect(PotionEffectType.JUMP);
+            //p.removePotionEffect(PotionEffectType.SLOW);
+            //p.addPotionEffect(new PotionEffect(PotionEffectType.JUMP, (int) ((long) this.freezeDuration(this.petLevel) * 20L), 128));
+            //p.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int) ((long) this.freezeDuration(this.petLevel) * 20L), 128));
             p.setMetadata("frozenSkrrt", new FixedMetadataValue(CosmicSkyInventoryPets.get(), System.currentTimeMillis()));
             Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> {
                 p.removeMetadata("frozenSkrrt", CosmicSkyInventoryPets.get());
-                p.removePotionEffect(PotionEffectType.SLOW);
-                p.removePotionEffect(PotionEffectType.JUMP);
+                //p.removePotionEffect(PotionEffectType.SLOW);
+                //p.removePotionEffect(PotionEffectType.JUMP);
                 p.setWalkSpeed(0.2F);
             }, this.freezeDuration(this.petLevel) * 20L);
 

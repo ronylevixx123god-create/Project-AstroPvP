@@ -487,7 +487,7 @@ implements CommandExecutor {
                     continue;
                 }
                 validLooters.add(p2.getUniqueId());
-                double moneyReward = random.nextInt(75000000) + 250000000;
+                double moneyReward = random.nextInt(10000000) + 25000000;
                 p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
                 p2.sendMessage(CC.translate((String)"&a&l+ $" + NumberUtils.formatMoney(moneyReward) +  " (&7Planet Nul dungeon complete!&a&l)"));
                 User eUser = CosmicDungeonsPlugin.get().ess3.getUser(p2);

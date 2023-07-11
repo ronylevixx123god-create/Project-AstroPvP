@@ -76,10 +76,9 @@ public class GamblingInventory {
         }));
 
         this.gamblingInventory.addItem(new GuiItem(jackpotBuilder.colorize().build(), event -> {
+            player.closeInventory();
             player.chat("/jackpot");
         }));
-
-        this.gamblingInventory.addItem(new GuiItem(jackpotBuilder.colorize().build()));
 
 
         this.gamblingInventory.setItem(8, new GuiItem(createExitItem(), event -> player.closeInventory()));

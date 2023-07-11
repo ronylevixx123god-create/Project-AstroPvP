@@ -25,7 +25,7 @@ public class SpaceGUI {
 
     public SpaceGUI(SpacePlayerData spacePlayerData) {
         Player player = spacePlayerData.getPlayer();
-        this.spaceGUI = new Gui(1, "Space Menu");
+        this.spaceGUI = new Gui(2, "Space Menu");
 
         this.spaceGUI.setDefaultClickAction(event -> event.setCancelled(true));
         player.sendMessage(CC.translate("&a&l(!)&a Opening the space menu..."));
@@ -70,7 +70,7 @@ public class SpaceGUI {
             player.chat("/warp space");
         }));
 
-/*        this.spaceGUI.setItem(2, 5, new GuiItem(forceField, event -> {
+        this.spaceGUI.setItem(2, 5, new GuiItem(forceField, event -> {
             if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
                 player.sendMessage(CC.translate("&b&l(!)&b You can only enable &f&lFORCEFIELD&b in the space warp."));
                 return;
@@ -95,7 +95,7 @@ public class SpaceGUI {
             } else {
                 player.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate the forcefield."));
             }
-        }*/
+        }));
 
 
 

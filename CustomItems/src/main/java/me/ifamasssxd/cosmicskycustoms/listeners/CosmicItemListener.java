@@ -145,7 +145,7 @@ implements Listener {
         }
     }
 
-    @EventHandler(priority=EventPriority.HIGH, ignoreCancelled=true)
+    @EventHandler(priority=EventPriority.HIGH)
     public void onPlayerInteractNBT(PlayerInteractNBTWrapperEvent event) {
         block7: {
             if (event.getWrapper() == null) {
