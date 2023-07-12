@@ -159,7 +159,7 @@ public class InventoryWitcherPet extends InventoryPet {
 
             int witcherCooldown = 120;
             //CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "witcherCooldown", witcherCooldown * 1000);
-            if(!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
+            if(!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS) && !MaskType.hasEquipped(p, "GLITCH")) {
                 p.setMetadata("teleblock", new FixedMetadataValue(Enchantments.getInstance(), Long.valueOf(System.currentTimeMillis() + (level * 2000))));
             } else {
                 p.sendMessage(CC.translate("&c&lSNOWFLAKE SLIPPERS: &7Blocked &cTeleblock!"));
