@@ -67,7 +67,7 @@ public class Rage extends CustomEnchantment {
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
-                rageDamage *= 1.1;
+                rageDamage *= 1.05;
                 user.sendMessage(CC.translate("&4&l* SEASON'S BEATING &7[+10% Rage DMG] &4&l*"));
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.HALLOWEEN_2022_BACKPACK)) {
@@ -77,7 +77,7 @@ public class Rage extends CustomEnchantment {
 
 
             if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
-                rageDamage *= 1.1;
+                rageDamage *= 1.05;
             }
 
             if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {

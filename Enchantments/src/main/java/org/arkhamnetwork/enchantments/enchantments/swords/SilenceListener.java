@@ -24,7 +24,7 @@ public final class SilenceListener implements Listener {
         if (e.getDamager().hasMetadata("banshee_active")) return;
         if (e.getDamager().hasMetadata("mutated_banshee")) return;
         if (e.getEntity().hasMetadata("neutralized")) {
-            e.setDamage(e.getDamage() * 1.15D);
+            e.setDamage(e.getDamage() * 1.1D);
         }
 
         if (e.getDamage() > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs") && ((Player) e.getEntity()).getKiller() != null) {

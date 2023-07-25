@@ -4,6 +4,7 @@ import com.rit.sucy.EnchantmentAPI;
 import lombok.Getter;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import org.arkhamnetwork.enchantments.listeners.AutoBlessListener;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -40,9 +41,15 @@ public class BarrysBoltsSkin extends ItemSkin {
 
     public void onEquip(Player player) {
         EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 4);
+        AutoBlessListener.blessedPlayers.add(player.getUniqueId());
+
     }
 
     public void onUnequip(Player player) {
         EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 4);
+        AutoBlessListener.blessedPlayers.remove(player.getUniqueId());
+
     }
+
+
 }

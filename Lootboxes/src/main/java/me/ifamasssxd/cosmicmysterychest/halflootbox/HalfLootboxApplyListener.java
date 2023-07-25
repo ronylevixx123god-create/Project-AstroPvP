@@ -1,21 +1,19 @@
 package me.ifamasssxd.cosmicmysterychest.halflootbox;
 
-import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
-import org.bukkit.Bukkit;
+import org.bukkit.EntityEffect;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.ItemStack;
 
 public class HalfLootboxApplyListener implements Listener {
@@ -50,10 +48,8 @@ public class HalfLootboxApplyListener implements Listener {
 
 
         if (HalfLootbox.isHalfLootboxItem(cursor) && HalfLootbox.isHalfLootboxItem(clicked)) {
-            if (cursor.getAmount() > 1 || clicked.getAmount() > 1) {
-                player.sendMessage(CC.translate("&c&l(!)&c You cannot apply stacked half lootboxes!"));
-                return;
-            }
+
+
             HalfLootboxType halfLootboxTypeCursor = HalfLootbox.getHalfLootboxType(cursor);
             HalfLootboxType halfLootboxTypeClicked = HalfLootbox.getHalfLootboxType(clicked);
 
@@ -69,17 +65,34 @@ public class HalfLootboxApplyListener implements Listener {
                 }
 
 
+                int cursorAmount = cursor.getAmount();
+                int clickedAmount = clicked.getAmount();
+
+                ItemStack lootbox = cosmicMysteryChestCursor.createClaimableItem(false);
+                if (cursorAmount > 1 || clickedAmount > 1) {
+                    int diff = Math.max(clickedAmount, cursorAmount) - Math.min(clickedAmount, cursorAmount);
+                    if (diff != 0) {
+                        if (clickedAmount > cursorAmount) {
+                            ItemStack clickedHalf = new HalfLootbox(cosmicMysteryChestClicked.getInternalName(), halfLootboxTypeClicked).getHalfLootboxItem().clone();
+                            clickedHalf.setAmount(diff);
+                            PlayerUtil.giveOrDropProtectedItem(player, clickedHalf, 60);
+                        } else {
+                            ItemStack cursorHalf = new HalfLootbox(cosmicMysteryChestCursor.getInternalName(), halfLootboxTypeCursor).getHalfLootboxItem().clone();
+                            cursorHalf.setAmount(diff);
+                            PlayerUtil.giveOrDropProtectedItem(player, cursorHalf, 60);
+                        }
+                    }
+                    lootbox.setAmount(Math.min(cursorAmount, clickedAmount));
+                }
                 e.setCancelled(true);
                 e.getWhoClicked().setItemOnCursor(null);
-                e.setCurrentItem(cosmicMysteryChestCursor.createClaimableItem(false));
+                e.setCurrentItem(lootbox);
+                player.sendMessage(CC.translate("&a&l(!)&a You have created " + cosmicMysteryChestCursor.getDisplayName() + " &7(&fx" + Math.min(cursorAmount, clickedAmount) + "&7)"));
+                player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 0.75f);
+                player.playEffect(EntityEffect.WITCH_MAGIC);
 
-
-                player.sendMessage(CC.translate("&a&l(!)&a You have created " + cosmicMysteryChestCursor.getDisplayName()));
-                player.playSound(player.getLocation(), Sound.ANVIL_USE, 10, 10);
             }
         }
-
-
     }
 
 
