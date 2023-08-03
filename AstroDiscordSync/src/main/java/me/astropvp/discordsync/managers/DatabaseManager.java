@@ -169,7 +169,7 @@ public class DatabaseManager {
             } else {
                 Class.forName("com.mysql.jdbc.Driver");
                 //this.connection = DriverManager.getConnection("jdbc:mysql://u4_1KRTto7gWF:96+HGu!c8h5Tt0PZ^5Nc=l3+@127.0.0.1:3306/s4_DiscordSync");
-                this.connection = DriverManager.getConnection("jdbc:mysql://172.18.0.1:3306/s4_DiscordSync", "u4_1KRTto7gWF", "96+HGu!c8h5Tt0PZ^5Nc=l3+");
+                this.connection = DriverManager.getConnection("jdbc:mysql://172.18.0.1:3306/s1_DiscordSync", "u1_TRMKCdRajy", "^A!IN68G0e19fw^zEIeo8^wP");
                 System.out.println("DB connected!");
             }
         }

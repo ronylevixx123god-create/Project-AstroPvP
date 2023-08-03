@@ -15,10 +15,10 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockPlaceEvent;
 
 public class BlockPlaceListener implements Listener {
-    @EventHandler(priority = EventPriority.HIGHEST)
+    @EventHandler
     public void onCollectorPlace(BlockPlaceEvent event) {
         if (!CollectorUtils.isCollector(event.getItemInHand())) return;
-
+        if (event.isCancelled()) return;
         Location location = event.getBlockPlaced().getLocation();
 
         if (CollectorManager.DELEGATE.isCollectorContained(location)) {

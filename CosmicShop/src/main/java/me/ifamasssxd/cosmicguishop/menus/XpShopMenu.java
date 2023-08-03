@@ -102,7 +102,7 @@ public class XpShopMenu{
             ItemMeta meta = guiItem.getItemMeta();
             List<String> lore = meta.hasLore() ? meta.getLore() : new ArrayList<>();
             lore.add(CC.translate("&f&l&c&b"));
-            lore.add(CC.translate("&a&l* COST: " + CC.White + NumberFormat.getInstance().format(s.getValue()) + CC.GreenB + " XP"));
+            lore.add(CC.translate("&a&l* COST: " + CC.White + NumberFormat.getInstance().format(s.getValue()) + CC.GreenB + " XP &7(" + NumberFormat.getInstance().format(s.getValue()*64) + " XP/stack)"));
             lore.add(CC.translate("&f&l&c&b"));
             meta.setLore(lore);
             guiItem.setItemMeta(meta);
@@ -112,6 +112,11 @@ public class XpShopMenu{
                 float cost = s.getValue();
                 if (cost == 0)
                     return;
+                ItemStack bought = itemStack.clone();
+                if (event.isShiftClick()) {
+                    cost *=64;
+                    bought.setAmount(64);
+                }
                 if (player.getTotalExperience() < cost) {
                     player.sendMessage(CC.Red + "You do not have enough exp to purchase this item.");
                 } else {
@@ -121,9 +126,14 @@ public class XpShopMenu{
                     player.setLevel(0);
                     player.giveExp(exp);
 
-                    player.getInventory().addItem(itemStack.clone());
+                    player.getInventory().addItem(bought);
                     player.updateInventory();
-                    player.sendMessage(CC.translate("&a&l(!)&a " + "Purchased " + ItemUtils.getDisplayName(itemStack) + CC.Green + " for &f" + NumberFormat.getInstance().format((int) cost) + "&a XP!"));
+                    if (event.isShiftClick()) {
+                        player.sendMessage(CC.translate("&a&l(!)&a " + "Purchased " + ItemUtils.getDisplayName(itemStack) + " (x64) " + CC.Green + " for &f" + NumberFormat.getInstance().format((int) cost) + "&a XP!"));
+                    } else {
+                        player.sendMessage(CC.translate("&a&l(!)&a " + "Purchased " + ItemUtils.getDisplayName(itemStack) + CC.Green + " for &f" + NumberFormat.getInstance().format((int) cost) + "&a XP!"));
+
+                    }
                 }
             }));
         }

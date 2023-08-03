@@ -22,20 +22,22 @@ import javax.net.ssl.HttpsURLConnection;
 public class HastebinUtils {
 
     private static final DateTimeFormatter DATE_FORMATED = DateTimeFormatter.ofPattern("EEE, MMM dd | HH:mm");
-    private static Map<String, Long> clickCooldown = new HashMap<>();
+    private static final Map<String, Long> clickCooldown = new HashMap<>();
+    private static final String REQUEST_URL = "https://hastebin.com/documents";
 
 
     public static String post(String text, boolean raw) throws IOException {
         byte[] postData = text.getBytes(StandardCharsets.UTF_8);
         int postDataLength = postData.length;
 
-        String requestURL = "https://www.toptal.com/developers/hastebin/documents";
-        URL url = new URL(requestURL);
+        URL url = new URL(REQUEST_URL);
         HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
         conn.setDoOutput(true);
         conn.setInstanceFollowRedirects(false);
         conn.setRequestMethod("POST");
-        conn.setRequestProperty("Authorization", "af9a940c9a9014ae9bc1e47170f9814d602464a6e35895f55ea2a5f9f754a08c1815e7fdcf5221444f0b66ec9c4154b2bc943b1b8c9c43f5f6d27bc3e6f3704c");
+        conn.setRequestProperty("User-Agent", "Hastebin Java Api");
+        conn.setRequestProperty("content-type", "text/plain");
+        conn.setRequestProperty("Authorization", "Bearer af9a940c9a9014ae9bc1e47170f9814d602464a6e35895f55ea2a5f9f754a08c1815e7fdcf5221444f0b66ec9c4154b2bc943b1b8c9c43f5f6d27bc3e6f3704c");
         conn.setRequestProperty("Content-Length", Integer.toString(postDataLength));
         conn.setUseCaches(false);
 
@@ -50,10 +52,11 @@ public class HastebinUtils {
             e.printStackTrace();
         }
 
+        assert response != null;
         if (response.contains("\"key\"")) {
             response = response.substring(response.indexOf(":") + 2, response.length() - 2);
 
-            String postURL = raw ? "https://hastebin.com/raw" : "https://hastebin.com";
+            String postURL = raw ? "https://hastebin.com/raw/" : "https://hastebin.com/share/";
             response = postURL + response;
         }
 
