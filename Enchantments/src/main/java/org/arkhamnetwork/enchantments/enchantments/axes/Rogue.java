@@ -1,10 +1,8 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.massivecraft.factions.Faction;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import javafx.scene.control.Skin;
 import lombok.SneakyThrows;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -12,7 +10,6 @@ import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.swords.Carver;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
@@ -23,7 +20,6 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 
@@ -76,17 +72,16 @@ public class Rogue extends CustomEnchantment {
             }
 
 
-
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.THANKSGIVING_2022_BOOTS) && player.getHealth() < 20 && Math.random() < 0.05) {
                 playerHit.setMetadata("immuneRogue", new FixedMetadataValue(Enchantments.getInstance(), true));
                 playerHit.sendMessage(CC.translate("&6&l* MAINFRAME BOOTS &7[5s Immune to Rogue] &6&l*"));
-                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), ()-> {
+                Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
                     playerHit.removeMetadata("immuneRogue", Enchantments.getInstance());
-                }, 20*5L);
+                }, 20 * 5L);
             }
 
 
-                if (((Carver) SkinType.THANKSGIVING_2021_SWORD.getItemSkin()).getRogueSilenced().contains(p.getName())) {
+            if (((Carver) SkinType.THANKSGIVING_2021_SWORD.getItemSkin()).getRogueSilenced().contains(p.getName())) {
                 return;
             }
 
@@ -126,7 +121,7 @@ public class Rogue extends CustomEnchantment {
                 }
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.CHRISTMAS_2022_AMULET_ACTIVE)) {
-                    multi*=1.15;
+                    multi *= 1.15;
                 }
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.HALLOWEEN_2022_BACKPACK)) {
                     multi *= 0.5;
@@ -146,7 +141,6 @@ public class Rogue extends CustomEnchantment {
                 }
 
 
-
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.CHRISTMAS_2021_MUTATED_HELMET)) {
                     multi *= 0.9;
                 }
@@ -161,17 +155,25 @@ public class Rogue extends CustomEnchantment {
 
                 if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.THANKSGIVING_SWORD_HARVESTER) && !AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                     playerHit.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&e&lSoul Harvester&c&l)"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] ** (&e&lSoul Harvester&3&l)"));
+
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.SUMMER_2021_SWORD)) {
                     playerHit.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&c&lSoul Maui's Hook&c&l)"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] ** (&c&lSoul Maui's Hook&3&l)"));
+
                 } else if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.DOOMSDAY_SWORD)) {
                     playerHit.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS ** (&2&lDoomsday Machete&c&l)"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] ** (&2&lDoomsday Machete&3&l)"));
+
                 } else {
-                    playerHit.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** " + ((Player) player).getName() + "'s ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));
+                    playerHit.sendMessage(ChatColor.translateAlternateColorCodes('&', "&c&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] &c&l-" + soulCost + " SOULS **"));
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "&3&l** ROGUE &7[" + new DecimalFormat("##.##").format(multi) + "x] **"));
+
                 }
 
 
                 //e.setDamage(damage + multi * 0.1);
-                e.setDamage(damage * multi * 0.85);
+                e.setDamage(damage * multi);
 
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 20);
 

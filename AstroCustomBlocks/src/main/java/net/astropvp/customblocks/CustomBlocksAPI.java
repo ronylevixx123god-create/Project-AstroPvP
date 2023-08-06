@@ -1,9 +1,12 @@
 package net.astropvp.customblocks;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
+import com.massivecraft.factions.Board;
+import com.massivecraft.factions.FLocation;
 import de.tr7zw.nbtapi.NBTItem;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
@@ -63,6 +66,18 @@ public class CustomBlocksAPI {
             }
         }
         return false;
+    }
+
+    public static int getFactionCustomBlocksOfType(String factionId, CustomBlockType type) {
+        int amount = 0;
+
+        for (CustomBlock key : customBlockManager.getCacheValues()) {
+            if (type != key.getType()) continue;
+            FLocation fLocation = new FLocation(key.getLocation());
+            if (!Board.getFactionAt(fLocation).getId().equals(factionId)) continue;
+            amount++;
+        }
+        return amount;
     }
 
     public static boolean playerChunkContainsBlock(Player player, CustomBlockType type) {

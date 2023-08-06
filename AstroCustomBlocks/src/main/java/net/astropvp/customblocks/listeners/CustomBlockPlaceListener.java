@@ -11,6 +11,7 @@ import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
 import net.astropvp.customblocks.struct.abilities.LevelAble;
 import net.astropvp.customblocks.struct.impl.AutoGrinder;
+import net.astropvp.customblocks.utils.config.ConfigManager;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -32,7 +33,11 @@ public class CustomBlockPlaceListener implements Listener {
         if (event.isCancelled()) return;
         if (CustomBlocksAPI.isCustomBlockItem(item)) {
             CustomBlockType type = CustomBlocksAPI.getTypeFromItem(item);
-
+            if (FactionUtils.getFaction(event.getPlayer()).isNone()) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place custom blocks without a faction (/f create <name>)"));
+                event.setCancelled(true);
+                return;
+            }
             if (FactionUtils.isWilderness(event.getBlock().getLocation())) {
                 event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place custom blocks in wilderness!"));
                 event.setCancelled(true);
@@ -49,6 +54,13 @@ public class CustomBlockPlaceListener implements Listener {
                 event.setCancelled(true);
                 return;
             }
+
+
+/*            if (CustomBlocksAPI.getFactionCustomBlocksOfType(FactionUtils.getFactionId(event.getPlayer()), type) >= CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("maxCustomBlocksPerTypeFaction") * FactionUtils.getFaction(event.getPlayer()).getFPlayers().size()) {
+                event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains a " + type.getDisplayName() + " Custom Block!"));
+                event.setCancelled(true);
+                return;
+            }*/
 
             event.getPlayer().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(type.getPlacePrice())));
             EconomyUtils.withdrawBalance(event.getPlayer(), type.getPlacePrice());
