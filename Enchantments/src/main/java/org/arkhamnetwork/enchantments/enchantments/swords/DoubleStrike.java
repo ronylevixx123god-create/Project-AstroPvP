@@ -42,24 +42,23 @@ public class DoubleStrike
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        double chance;
         double random = Math.random();
-        double chance = 0.01 * (double)level;
-        if (random < chance) {
-            double dmg = VanillaDamageListener.getLastFinalDamage(playerHit);
+        if (random < (chance = 0.02 * (double)level)) {
+            double dmg = VanillaDamageListener.getLastFinalDamage((Entity)playerHit);
+            if (dmg == 0.0) {
+                dmg = e.getDamage();
+            }
             final double fdmg = dmg;
-            Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
+            final Player pp = (Player)e.getDamager();
+            Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0) {
-                        playerHit.setMetadata("doubleStriked", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) System.currentTimeMillis()));
-                        playerHit.damage(fdmg, player);
-                        GeneralCooldown.enterCooldown((Player) e.getDamager());
-
-                        if (playerHit instanceof Player) {
-                            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.RedB + "* DOUBLE STRIKE *", "DOUBLE_STRIKE");
-                        }
-
+                        playerHit.setMetadata("doubleStriked", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
+                        playerHit.damage(fdmg, (Entity)player);
+                        pp.sendMessage("§6§l** DOUBLE STRIKE **");
                     }
                 }
             }, 2L);

@@ -26,6 +26,7 @@ public class ThunderingBlow extends CustomEnchantment
             }
             playerHit.setMetadata("lastThunderingBlowProc", new FixedMetadataValue((Plugin)Arkkit.get(), System.currentTimeMillis()));
             playerHit.getWorld().strikeLightningEffect(playerHit.getLocation());
+            playerHit.damage(1.0);
         }
     }
 }

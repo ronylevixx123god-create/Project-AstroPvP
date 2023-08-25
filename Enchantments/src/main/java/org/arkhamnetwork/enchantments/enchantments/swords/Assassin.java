@@ -12,50 +12,43 @@ public class Assassin extends CustomEnchantment {
     public Assassin() {
         super("Assassin", GeneralUtil.swords, 5);
         this.max = 5;
-        this.base = 15.0D;
-        this.interval = 6.0D;
-        Bukkit.getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> {
-            this.heroicVersion = EnchantmentAPI.getEnchantment("Shadow Assassin");
+        this.base = 15.0;
+        this.interval = 6.0;
+        Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), () -> {
+            this.heroicVersion = EnchantmentAPI.getEnchantment((String)"Shadow Assassin");
         }, 2L);
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (user.getWorld().equals(target.getWorld())) {
-            double distance = user.getLocation().distance(target.getLocation());
-            double dmgMod = 1.0D;
-            if (distance < 0.25D) {
-                dmgMod += 0.01D * (double)enchantLevel;
-            }
-
-            if (distance < 0.5D) {
-                dmgMod += 0.01D * (double)enchantLevel;
-            }
-
-            if (distance < 0.75D) {
-                dmgMod += 0.01D * (double)enchantLevel;
-            }
-
-            if (distance < 1.0D) {
-                dmgMod += 0.01D * (double)enchantLevel;
-            }
-
-            if (distance < 1.5D) {
-                dmgMod += 0.01D * (double)enchantLevel;
-            }
-
-            if (distance > 2.0D) {
-                dmgMod -= 0.01D * (double)enchantLevel;
-            }
-
-            if (distance > 2.5D) {
-                dmgMod -= 0.0125D * (double)enchantLevel;
-            }
-
-            if (distance > 3.0D) {
-                dmgMod -= 0.025D * (double)enchantLevel;
-            }
-
-            event.setDamage(event.getDamage() * dmgMod);
+        if (!user.getWorld().equals(target.getWorld())) {
+            return;
         }
+        double distance = user.getLocation().distance(target.getLocation());
+        double dmgMod = 1.0;
+        if (distance < 0.25) {
+            dmgMod += 0.01 * (double)enchantLevel;
+        }
+        if (distance < 0.5) {
+            dmgMod += 0.01 * (double)enchantLevel;
+        }
+        if (distance < 0.75) {
+            dmgMod += 0.01 * (double)enchantLevel;
+        }
+        if (distance < 1.0) {
+            dmgMod += 0.01 * (double)enchantLevel;
+        }
+        if (distance < 1.5) {
+            dmgMod += 0.01 * (double)enchantLevel;
+        }
+        if (distance > 2.0) {
+            dmgMod -= 0.01 * (double)enchantLevel;
+        }
+        if (distance > 2.5) {
+            dmgMod -= 0.0125 * (double)enchantLevel;
+        }
+        if (distance > 3.0) {
+            dmgMod -= 0.025 * (double)enchantLevel;
+        }
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * dmgMod);
     }
 }

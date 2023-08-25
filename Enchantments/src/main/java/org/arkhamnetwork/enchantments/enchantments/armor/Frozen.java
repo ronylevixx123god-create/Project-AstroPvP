@@ -77,7 +77,7 @@ extends CustomEnchantment {
                 attacker.sendMessage(CC.translate("&a&l* BLOCKED FREEZE &7[+1 Stack] &a&l*"));
                 return;
             }
-            //attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
+            attacker.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, amp));
             Location l = player.getLocation();
             DamageIndicatorUtils.sendDamageIndicator((Player) attacker, CC.AquaB + "* FROZEN " + CC.Gray + "[" + time + "s]" + CC.AquaB + " *" + CC.AquaB +  "*", "FROZEN");
             WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);

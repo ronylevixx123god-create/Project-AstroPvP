@@ -23,6 +23,8 @@ public class HeroicDeepWounds
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         if (playerHit instanceof Player) {
             playerHit.setMetadata("deepWounds", new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), System.currentTimeMillis() + (long)(level * 1500L)));
+            double mod = (double)Bleed.getBleedStack(playerHit) * 0.008 + (double)level * 0.01 + 1.0;
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
         }
     }
 }

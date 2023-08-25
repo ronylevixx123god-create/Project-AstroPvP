@@ -29,8 +29,8 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 
 
-public class Execute extends CustomEnchantment
-{
+public class Execute
+        extends CustomEnchantment {
     public Execute() {
         super("Execute", GeneralUtil.swords, 2);
         this.max = 7;
@@ -38,23 +38,21 @@ public class Execute extends CustomEnchantment
         this.interval = 3.0;
     }
 
-    public void applyEffect(final LivingEntity player, final LivingEntity target, final int level, final EntityDamageByEntityEvent e) {
+    public void applyEffect(LivingEntity player, LivingEntity target, int level, EntityDamageByEntityEvent e) {
         if (!(target instanceof Player)) {
             return;
         }
-        double healThres = 12.0;
-        if (((Player)player).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.HALLOWEEN_2021_BOOTS))
-            healThres*=1.3;
-
-        if (target.getHealth() > healThres) {
+        if (target.getHealth() > 10.0) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.035 * level;
-        double mod = 2.0D + (level/2D);
+        if (GeneralUtil.isEffectedByRage(target)) {
+            return;
+        }
+        double random = Math.random();
+        double chance = 0.1 * (double)level;
         if (random < chance) {
-            e.setDamage(e.getDamage() * mod);
-            final Location l = target.getLocation();
+            e.setDamage(e.getDamage() * 4.2);
+            Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.REDSTONE_WIRE.getId(), 2001);
             DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.AquaB + "* EXECUTE *", "EXECUTE");
         }

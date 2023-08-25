@@ -20,7 +20,7 @@ import com.rit.sucy.*;
 public class MasteryBlackout extends MasteryCustomEnchantment
 {
     public MasteryBlackout() {
-        super("Blackout", GeneralUtil.swords, 10);
+        super("Blackout", GeneralUtil.swords, 2);
         this.max = 4;
         this.base = 25.0;
         this.interval = 10.0;
@@ -39,7 +39,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         if (relation != Relation.NEUTRAL && relation != Relation.ENEMY) {
             return;
         }
-        if (Math.random() < 0.0075 * level) {
+        if (Math.random() <= 0.06 * (double)level / 4.0) {
             procBlackout((Player) player, pTarget, level);
         }
     }
@@ -48,6 +48,12 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         if (pTarget.hasMetadata("blackout")) {
             return;
         }
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player)pTarget, (SkinType)SkinType.VIRUS_BELT) && Math.random() < 0.5) {
+            pTarget.sendMessage("§2§l* BLOCKED " + ((Player)player).getName() + "'s BLACKOUT §7(First Aid Fannypack) §2§l*");
+            ((Player)player).sendMessage(CC.translate((String)("&7&l* &7&l&mBLACKOUT&r &7[Blocked by " + pTarget.getName() + "'s First Aid Fannypack] &7&l*")));
+            return;
+        }
+
         if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.VIRUS_BELT) && Math.random() < 0.5) {
             ((Player)player).sendMessage(CC.translate("&4&l* BLACKOUT BLOCKED * &7[&7" + pTarget.getName() + "'s &a&lFirst Aid Fannypack&7]"));
             return;
@@ -68,7 +74,7 @@ public class MasteryBlackout extends MasteryCustomEnchantment
             durationInTicks *= 0.4;
 
         }
-
+        pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
         DamageIndicatorUtils.sendDamageIndicator(pTarget, "&5&l* BLACKOUT *", "blackout");
         player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + (int)(durationInTicks / 20L) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
         pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + durationInTicks/20 + "&7s] &5&l *"));

@@ -51,9 +51,9 @@ public class IceAspect
         if (playerHit.hasPotionEffect(PotionEffectType.SLOW)) {
             return;
         }
-        final double random = Math.random();
-        final double chance = 0.0035;
-        final int time = 2 * level;
+        double random = Math.random();
+        double chance = 0.035 * (double)level;
+        int time = 2 * level;
         if (random < chance && playerHit instanceof Player) {
             Location l = playerHit.getLocation();
             if (!new CustomEnchantProcOnEntityEvent(player, playerHit, (Event) e, this, level).callEvent()) {
@@ -106,7 +106,7 @@ public class IceAspect
                 return;
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
-
+            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
             playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 2));
         }
     }

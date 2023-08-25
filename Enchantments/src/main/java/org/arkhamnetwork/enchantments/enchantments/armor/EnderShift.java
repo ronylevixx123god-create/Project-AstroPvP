@@ -70,6 +70,7 @@ extends CustomEnchantment {
                 Player pl = (Player)player;
                 last_ender_shift.put(pl.getUniqueId(), System.currentTimeMillis());
                 e.setDamage(0);
+                e.setCancelled(true);
                 pl.sendMessage("");
                 pl.sendMessage(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.LIGHT_PURPLE + "You were about to die, so you have entered the Ender dimension, escape to safety!");
                 pl.sendMessage("");

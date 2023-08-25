@@ -21,7 +21,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Blind
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public static String RECENTLY_BLINDED_METADATA = "recentlyBlinded";
 
     public Blind() {
@@ -43,4 +43,3 @@ extends CustomEnchantment {
         }
     }
 }
-

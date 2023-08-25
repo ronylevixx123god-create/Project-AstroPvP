@@ -27,7 +27,9 @@ public class DeepWounds extends CustomEnchantment
                 playerHit.sendMessage(CC.translate("&c&l** BARRY's BOLTS [&7Blocked Deep Wounds&c&l] **"));
                 return;
             }
-            playerHit.setMetadata("deepWounds", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis() + level * 1500));
+            playerHit.setMetadata("deepWounds", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + (long)(level * 1500))));
+            double mod = (double)Bleed.getBleedStack(playerHit) * 0.005 + (double)level * 0.01 + 1.0;
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
         }
     }
 }

@@ -5,6 +5,8 @@ import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 
+import java.util.Random;
+
 public class Lucky extends CustomEnchantment
 {
     public Lucky() {
@@ -15,11 +17,14 @@ public class Lucky extends CustomEnchantment
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
-        if (player.hasMetadata("neutralized")) {
-            return;
-        }
-        if (player.hasMetadata("noDefenseProcs")) {
-            return;
+        if (player instanceof Player && new Random().nextInt(400) <= level) {
+            Player p = (Player)player;
+            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+            dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
+            if (player.getHealth() - dmg <= 0.0) {
+                e.setCancelled(true);
+                e.setDamage(0.0);
+            }
         }
     }
 }

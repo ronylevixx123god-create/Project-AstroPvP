@@ -6,8 +6,8 @@ import org.arkhamnetwork.enchantments.util.*;
 import org.bukkit.entity.*;
 import org.bukkit.event.entity.*;
 
-public class Enrage extends CustomEnchantment
-{
+public class Enrage
+        extends CustomEnchantment {
     public Enrage() {
         super("Enrage", GeneralUtil.swords, 5);
         this.max = 3;
@@ -15,24 +15,19 @@ public class Enrage extends CustomEnchantment
         this.interval = 6.0;
     }
 
-    @SneakyThrows
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        double hpPercent = (double)user.getClass().getMethod("getHealth").invoke(user) / (double)user.getClass().getMethod("getMaxHealth").invoke(user);
-        double multi = 1.0D;
-        if (hpPercent <= 0.65D) {
-            multi += 0.07D;
+        double hpPercent = user.getHealth() / user.getMaxHealth();
+        double multi = 1.0;
+        if (hpPercent <= 0.75) {
+            multi += 0.15;
         }
-
-        if (hpPercent <= 0.4D) {
-            multi += 0.07D;
+        if (hpPercent <= 0.5) {
+            multi += 0.15;
         }
-
-        if (hpPercent <= 0.15D) {
-            multi += 0.07D;
+        if (hpPercent <= 0.25) {
+            multi += 0.15;
         }
-
-        event.setDamage(event.getDamage() * multi);
+        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
     }
 }
-
 

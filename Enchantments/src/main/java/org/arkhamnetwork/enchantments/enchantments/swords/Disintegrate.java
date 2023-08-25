@@ -32,10 +32,10 @@ extends CustomEnchantment {
         if (Math.random() <= 0.02 * (double)enchantLevel && target instanceof Player) {
             ((Player)user).playSound(target.getLocation(), Sound.ANVIL_BREAK, 0.3f, 0.8f);
             Player pTarget = (Player)target;
-            ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.HELMET, -1, false);
+/*            ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.HELMET, -1, false);
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.CHESTPLATE, -2, false);
             ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.LEGGINGS, -2, false);
-            ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.BOOTS, -1, false);
+            ArmorUtil.modifyPlayerArmor(pTarget, ArmorSlot.BOOTS, -1, false);*/
         }
     }
 }

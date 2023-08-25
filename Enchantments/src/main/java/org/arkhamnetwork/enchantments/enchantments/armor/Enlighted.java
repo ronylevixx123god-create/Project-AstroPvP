@@ -26,19 +26,11 @@ public class Enlighted extends CustomEnchantment
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, int level, final EntityDamageEvent e) {
-        if (player.hasMetadata("neutralized")) {
-            return;
-        }
-        if (player.hasMetadata("noDefenseProcs")) {
-            return;
-        }
-
-
         final double random = Math.random();
         if (level > 3) {
             level = 3;
         }
-        double chance = 0.03 * level;
+        double chance = 0.075 * level;
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
             chance*=1.1;
         }
@@ -49,7 +41,7 @@ public class Enlighted extends CustomEnchantment
                     if (player.hasMetadata("reflectedEnglighted")) {
                         player.damage(1);
                     } else {
-                        GeneralUtil.healPlayer(player, 1.0D);
+                        GeneralUtil.healPlayer(player, 1.0);
                     }
                 }
             }, 1L);

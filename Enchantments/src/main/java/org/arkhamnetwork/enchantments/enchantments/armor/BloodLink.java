@@ -35,11 +35,11 @@ extends CustomEnchantment {
     }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
-        player.setMetadata("bloodLink", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
+        //player.setMetadata("bloodLink", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
-        player.removeMetadata("bloodLink", (Plugin)Enchantments.getInstance());
+        //player.removeMetadata("bloodLink", (Plugin)Enchantments.getInstance());
     }
 }
 

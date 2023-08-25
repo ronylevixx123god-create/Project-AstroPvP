@@ -24,9 +24,7 @@ public class Tank extends CustomEnchantment
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("noDefenseProcs")) {
-            return;
-        }
+
 
         if (attacker == null) return;
         if (!(attacker instanceof Player)) return;
@@ -38,18 +36,16 @@ public class Tank extends CustomEnchantment
             return;
         }
 
-        if (player.hasMetadata("neutralized")) {
-            return;
-        }
+
         ItemStack i = null;
         if (attacker instanceof Player) {
             final Player pAttacker = (Player)attacker;
             i = pAttacker.getItemInHand();
         }
-        final double damage_negation = level * 0.01875;
+        double damage_negation = (double)level * 0.01875;
         if (i != null && i.getType().name().contains("_AXE") && e.getDamage() * (1.0 - damage_negation) > 1.0) {
 
-            e.setDamage(e.getDamage() * 0.95);
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
             final Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 42, 2001);
         }

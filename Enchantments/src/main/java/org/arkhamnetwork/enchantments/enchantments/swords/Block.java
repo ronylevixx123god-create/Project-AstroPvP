@@ -6,8 +6,8 @@ import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import org.bukkit.*;
 
-public class Block extends CustomEnchantment
-{
+public class Block
+        extends CustomEnchantment {
     public Block() {
         super("Block", GeneralUtil.swords, 2);
         this.max = 3;
@@ -15,15 +15,14 @@ public class Block extends CustomEnchantment
         this.interval = 4.0;
     }
 
-    public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
+    public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
-            final Player player2 = (Player)player;
-            if (player2.hasMetadata("heroicCorruptTaskID") && Math.random() < 0.2) {
-                return;
-            }
-            final double random = Math.random();
-            final double chance = 0.1 * level;
-            if (random < chance && player2.isBlocking()) {
+            double chance;
+            Player player2 = (Player)player;
+            double random = Math.random();
+            if (random < (chance = 0.1 * (double)level) && player2.isBlocking()) {
+                double reduceDamage = 0.5 * (double)(level / 2);
+                e.setDamage(e.getDamage() * (1.0 - reduceDamage));
                 player2.playSound(player2.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
             }
         }

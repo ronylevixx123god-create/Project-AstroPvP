@@ -46,7 +46,9 @@ public class Angelic extends CustomEnchantment {
             if (level >= 5) {
                 healDelay = 60L;
             }
-            final long healDuration = Math.max(healDelay + 2L, level * 20L + (10L + ThreadLocalRandom.current().nextInt(16)));
+            long healDuration = Math.max(healDelay + 2L, (long)level * 20L + (10L + (long)ThreadLocalRandom.current().nextInt(16)));
+
+
             final double healAmount = 1.0;
             if (player.hasMetadata("angelicTaskID")) {
                 return;

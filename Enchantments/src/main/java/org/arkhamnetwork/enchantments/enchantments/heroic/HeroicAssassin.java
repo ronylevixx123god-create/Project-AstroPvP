@@ -24,28 +24,27 @@ public class HeroicAssassin extends CustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         if (user.getWorld().equals(target.getWorld())) {
+            if (!user.getWorld().equals(target.getWorld())) {
+                return;
+            }
             double distance = user.getLocation().distance(target.getLocation());
-            double dmgMod = 1.0D;
-            if (distance < 0.625D) {
-                dmgMod += 0.015D * (double)enchantLevel;
+            double dmgMod = 1.0;
+            double heroicMult = 2.5;
+            if (distance < 0.625) {
+                dmgMod += 0.015 * (double)enchantLevel;
             }
-
-            if (distance < 1.25D) {
-                dmgMod += 0.015D * (double)enchantLevel;
+            if (distance < 1.25) {
+                dmgMod += 0.015 * (double)enchantLevel;
             }
-
-            if (distance < 1.875D) {
-                dmgMod += 0.015D * (double)enchantLevel;
+            if (distance < 1.875) {
+                dmgMod += 0.015 * (double)enchantLevel;
             }
-
-            if (distance < 2.5D) {
-                dmgMod += 0.015D * (double)enchantLevel;
+            if (distance < 2.5) {
+                dmgMod += 0.015 * (double)enchantLevel;
             }
-
-            if (distance < 3.75D) {
-                dmgMod += 0.015D * (double)enchantLevel;
+            if (distance < 3.75) {
+                dmgMod += 0.015 * (double)enchantLevel;
             }
-
             event.setDamage(event.getDamage() * dmgMod);
         }
     }

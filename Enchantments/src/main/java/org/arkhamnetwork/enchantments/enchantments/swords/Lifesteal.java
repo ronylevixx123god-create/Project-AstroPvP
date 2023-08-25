@@ -1,14 +1,13 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.rit.sucy.*;
+import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class Lifesteal extends CustomEnchantment {
     public Lifesteal() {
@@ -22,6 +21,10 @@ public class Lifesteal extends CustomEnchantment {
         final double random = Math.random();
 
         final double chance = enchantLevel * 0.01;
+        int health = (int) user.getHealth() + enchantLevel;
+        if ((double)health > user.getMaxHealth()) {
+            health = (int)user.getMaxHealth();
+        }
         if (random <= chance) {
             if (target instanceof Player && MaskType.hasEquipped((Player) target, "NECROMANCER")) {
                 return;
@@ -43,8 +46,11 @@ public class Lifesteal extends CustomEnchantment {
                 return;
             }
 
-                if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT))) return;
-            GeneralUtil.healPlayer(user, 2);
+            if (target instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_BELT) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_BELT)))
+                return;
+
+            GeneralUtil.setPlayerHealth(user, health);
+
         }
     }
 }

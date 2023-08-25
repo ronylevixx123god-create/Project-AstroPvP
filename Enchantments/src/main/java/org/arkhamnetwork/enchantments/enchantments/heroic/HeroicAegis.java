@@ -23,7 +23,7 @@ public class HeroicAegis extends HeroicCustomEnchantment {
 
     @SneakyThrows
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (!(attacker instanceof Player))
+/*        if (!(attacker instanceof Player))
             return;
         if (player.hasMetadata("aegis_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > player.getMetadata("aegis_nextReset").get(0).asLong()) {
@@ -40,6 +40,6 @@ public class HeroicAegis extends HeroicCustomEnchantment {
             return;
         }
         enemies.add(pAttacker.getUniqueId());
-        player.setMetadata("aegis_uniqueEnemies", new FixedMetadataValue(Enchantments.getInstance(), enemies));
+        player.setMetadata("aegis_uniqueEnemies", new FixedMetadataValue(Enchantments.getInstance(), enemies));*/
     }
 }

@@ -45,7 +45,7 @@ extends CustomEnchantment {
         this.max = 3;
         this.base = 10.0;
         this.interval = 5.0;
-/*        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)Enchantments.getInstance(), () -> this.claritiedPlayers.forEach((player, maxBlindLevelToRemove) -> {
+        Bukkit.getScheduler().scheduleSyncRepeatingTask((Plugin)Enchantments.getInstance(), () -> this.claritiedPlayers.forEach((player, maxBlindLevelToRemove) -> {
             if (!player.isValid()) {
                 return;
             }
@@ -56,13 +56,14 @@ extends CustomEnchantment {
                 if (!pe.getType().getName().equals("BLINDNESS") || pe.getAmplifier() > maxBlindLevelToRemove) continue;
                 player.removePotionEffect(PotionEffectType.BLINDNESS);
                 try {
-                    //ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 0.6f, 0.6f, 0.6f, 0.1f, 20);
+                    ParticleEffect.SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), player.getEyeLocation(), 1f, 1f, 1f, 0.1f, 20);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
+                player.playSound(player.getLocation(), Sound.FIZZ, 1.0f, 0.6f);
                 return;
             }
-        }), 3L, 3L);*/
+        }), 3L, 3L);
     }
 
     public void applyEquipEffect(Player player, int level) {

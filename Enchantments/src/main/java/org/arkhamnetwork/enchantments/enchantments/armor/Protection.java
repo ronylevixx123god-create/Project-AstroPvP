@@ -37,7 +37,7 @@ public class Protection extends CustomEnchantment {
         this.max = 5;
         this.base = 10.0D;
         this.interval = 5.0D;
-        for (int i = 1; i <= this.max; i++) {
+        /*for (int i = 1; i <= this.max; i++) {
             final int level = i;
             BukkitTask existing = protectionTasks.get(Integer.valueOf(i));
             if (existing != null)
@@ -79,16 +79,16 @@ public class Protection extends CustomEnchantment {
                 }
             }).runTaskTimer((Plugin) Enchantments.getInstance(), (40 * 5 / level), (40 * 5 / level));
             protectionTasks.put(Integer.valueOf(i), task);
-        }
+        }*/
     }
 
     public void applyEquipEffect(Player player, int level) {
-        player.setMetadata(name() + "_enchant", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(level)));
-        this.protectionPlayers.put(Integer.valueOf(level), player);
+        //player.setMetadata(name() + "_enchant", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), Integer.valueOf(level)));
+        //this.protectionPlayers.put(Integer.valueOf(level), player);
     }
 
     public void applyUnequipEffect(Player player, int level) {
-        player.removeMetadata(name() + "_enchant", (Plugin) Enchantments.getInstance());
-        this.protectionPlayers.remove(Integer.valueOf(level), player);
+        //player.removeMetadata(name() + "_enchant", (Plugin) Enchantments.getInstance());
+        //this.protectionPlayers.remove(Integer.valueOf(level), player);
     }
 }

@@ -64,6 +64,7 @@ extends BukkitRunnable {
                 pAlly.removePotionEffect(PotionEffectType.POISON);
             }
             if (x <= 0 || p.getWorld().getName().equals("world_duels") || p.getWorld().getName().equals("world_duels2") || p.getWorld().getName().equals("cosmic-pvparenas")) continue;
+            WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)57, (int)2001);
         }
     }
 

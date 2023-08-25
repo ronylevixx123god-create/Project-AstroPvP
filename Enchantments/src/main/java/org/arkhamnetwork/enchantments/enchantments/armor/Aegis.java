@@ -30,7 +30,7 @@ public class Aegis extends CustomEnchantment {
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (!(attacker instanceof Player))
             return;
-        int ticksToCheck = 100;
+        /*int ticksToCheck = 100;
         if (player.hasMetadata("aegis_nextReset")) {
             if (MinecraftServerUtils.getCurrentServerTick() > ((MetadataValue)player.getMetadata("aegis_nextReset").get(0)).asLong()) {
                 player.removeMetadata("aegis_uniqueEnemies", (Plugin) Enchantments.getInstance());
@@ -47,6 +47,6 @@ public class Aegis extends CustomEnchantment {
             return;
         }
         enemies.add(pAttacker.getUniqueId());
-        player.setMetadata("aegis_uniqueEnemies", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), enemies));
+        player.setMetadata("aegis_uniqueEnemies", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), enemies));*/
     }
 }

@@ -19,7 +19,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
 public class Insomnia
-extends CustomEnchantment {
+        extends CustomEnchantment {
     public Insomnia() {
         super("Insomnia", GeneralUtil.swords, 2);
         this.max = 7;
@@ -28,17 +28,17 @@ extends CustomEnchantment {
     }
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
+        int time;
         double random = Math.random();
-        double chance = 0.025D * (double)level;
-        int time = level > 1 ? 6 : 4;
+        double chance = 0.025 * (double)level;
+        int n = time = level > 1 ? 6 : 4;
         if (random < chance) {
+            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, time * 10, Math.min(level - 1, 2)));
             if (level >= 6) {
-                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, Math.max(time * 10, 40), 1));
+                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 10, 1));
             }
-
-            double multi = 1.0D + ((double)level * 0.020D);
-            e.setDamage(e.getDamage() * multi);
+            double multi = 1.0 + (double)level * 0.05;
+            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
         }
-
     }
 }

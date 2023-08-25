@@ -45,10 +45,6 @@ public class HeroicDodge
             if (player.getWorld().getName().toLowerCase().contains("dungeon_planet_nul")) {
                 return;
             }
-            if (player.hasMetadata("neutralized"))
-                return;
-            if (player.hasMetadata("noDefenseProcs"))
-                return;
             if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
                 return;
 
@@ -67,6 +63,7 @@ public class HeroicDodge
                 }
 
                 e.setDamage(0);
+                e.setCancelled(true);
                 ((Player) player).sendMessage((Object) ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }

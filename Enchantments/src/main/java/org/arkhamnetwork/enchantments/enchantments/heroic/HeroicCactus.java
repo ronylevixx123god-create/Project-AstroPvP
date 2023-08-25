@@ -15,16 +15,16 @@ public class HeroicCactus extends HeroicCustomEnchantment {
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player) {
-            if (player.hasMetadata("noDefenseProcs")) {
+/*            if (player.hasMetadata("noDefenseProcs")) {
                 return;
-            }
+            }*/
             if (player.hasMetadata("neutralized")) {
                 return;
             }
             final Player p = (Player) player;
             if (attacker != null && attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;
-                //pAttacker.damage(0.5 * level);
+                pAttacker.damage(0.5 * level);
                 //RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) pAttacker);
                 //rageStacksCache.resetRageStack();
 
@@ -35,6 +35,7 @@ public class HeroicCactus extends HeroicCustomEnchantment {
             final double thornNegateChance = (level == 1) ? 0.5 : 1.0;
             if (e.getCause() == EntityDamageEvent.DamageCause.THORNS && Math.random() < thornNegateChance) {
                 e.setDamage(0);
+                e.setCancelled(true);
             }
         }
     }
