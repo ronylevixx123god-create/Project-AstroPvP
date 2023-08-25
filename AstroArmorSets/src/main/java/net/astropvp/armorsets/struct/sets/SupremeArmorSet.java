@@ -43,6 +43,10 @@ public class SupremeArmorSet extends ArmorSet implements ArmorSetWeapon {
         double increasePercent = 3;
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));    }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         double reductionPercent = 10;

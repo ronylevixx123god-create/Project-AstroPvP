@@ -81,7 +81,7 @@ public class VaultManager {
         //int size = VaultOperations.getMaxVaultSize(target);
         String serialized = CardboardBoxSerialization.toStorage(inventory, target);
         yaml.set(String.format(VAULTKEY, number), serialized);
-        saveFileASync(target, yaml);
+        saveFileSync(target, yaml);
     }
 
     /**

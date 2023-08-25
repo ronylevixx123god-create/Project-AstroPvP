@@ -54,7 +54,7 @@ public class SlotBotInventoryListener implements Listener {
             return;
         Player player = (Player) e.getWhoClicked();
         Inventory inventory = e.getInventory();
-        if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot")) {
+        if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Roll Bot")) {
             ItemStack item = e.getCurrentItem();
             e.setCancelled(true);
             if (item == null)
@@ -74,23 +74,23 @@ public class SlotBotInventoryListener implements Listener {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
             } else if (item.equals(GuiItems.createRoller(5))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
-                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 5 more ticket in the bot to roll!"));
+                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 5 more ticket in the bot to use!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
             } else if (item.equals(GuiItems.createRoller(4))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
-                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 4 more ticket in the bot to roll!"));
+                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 4 more ticket in the bot to use!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
             } else if (item.equals(GuiItems.createRoller(3))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
-                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 3 more ticket in the bot to roll!"));
+                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 3 more ticket in the bot to use!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
             } else if (item.equals(GuiItems.createRoller(2))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
-                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 2 more ticket in the bot to roll!"));
+                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 2 more ticket in the bot to use!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
             } else if (item.equals(GuiItems.createRoller(1))) {
                 player.playSound(player.getLocation(), Sound.NOTE_PLING, 1.0F, 0.5F);
-                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 1 more ticket in the bot to roll!"));
+                player.sendMessage(CC.translate("&c&l(!)&c This slot requires 1 more ticket in the bot to use!"));
                 player.sendMessage(CC.translate("&7Purchase Slot Bot Tickets at &rbuy.astropvp.net"));
             } else if (CosmicSlotBotAPI.isSlotbotTicket(item) || CosmicSlotBotAPI.isHeroicSlotbotTicket(item)) {
                 if (tickets >= 5)
@@ -135,11 +135,12 @@ public class SlotBotInventoryListener implements Listener {
 
                 }
             }
-        } else if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot Loot")) {
+        } else if (inventory.getTitle().contentEquals(CC.DarkGray + "Astro Roll Bot Loot")) {
             ItemStack item = e.getCurrentItem();
             e.setCancelled(true);
             if (item == null)
                 return;
+            player.sendMessage(CC.translate("&7The odds of pulling this item is equal to all others"));
             if (!inventory.equals(e.getInventory()))
                 return;
             inventory = e.getInventory();
@@ -201,7 +202,7 @@ public class SlotBotInventoryListener implements Listener {
         if (!(e.getPlayer() instanceof Player))
             return;
         Inventory inventory = e.getInventory();
-        if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot"))
+        if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Roll Bot"))
             return;
         int slots = SlotBotManager.getSlotBotTickets(inventory);
         Player player = (Player) e.getPlayer();
@@ -243,7 +244,7 @@ public class SlotBotInventoryListener implements Listener {
         if (!(e.getPlayer() instanceof Player))
             return;
         Inventory inventory = e.getInventory();
-        if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Slot Bot Loot"))
+        if (!inventory.getTitle().contentEquals(CC.DarkGray + "Astro Roll Bot Loot"))
             return;
         Player player = (Player) e.getPlayer();
         ItemDeleter deleter = ItemDeleter.getPlayer(player);

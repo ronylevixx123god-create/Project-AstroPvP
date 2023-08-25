@@ -31,7 +31,7 @@ public class PotionsCommand implements CommandExecutor {
         }
         Player p = (Player) sender;
 
-        if (CombatLog.inCombat(p)) {
+        if (CombatLog.inCombat(p) && !p.isOp()) {
             p.sendMessage(CC.Red + "You cannot type /pots while in combat");
             return false;
         }

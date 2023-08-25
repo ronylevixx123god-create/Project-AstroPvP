@@ -13,7 +13,7 @@ import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class OmniArmorDamageListener implements Listener {
     @EventHandler(
-            priority = EventPriority.LOWEST, ignoreCancelled = true)
+            priority = EventPriority.LOWEST)
     public void reduceDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Player)) return;
@@ -27,7 +27,7 @@ public class OmniArmorDamageListener implements Listener {
     }
 
     @EventHandler(
-            priority = EventPriority.LOWEST, ignoreCancelled = true)
+            priority = EventPriority.LOWEST)
     public void increaseDamage(EntityDamageByEntityEvent e) {
         if (!(e.getEntity() instanceof Player)) return;
         if (!(e.getDamager() instanceof Player)) return;

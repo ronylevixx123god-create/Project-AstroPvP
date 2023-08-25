@@ -271,7 +271,7 @@ public class DamageListener implements Listener {
             String eWorld = e.getEntity().getWorld().getName();
             boolean isDungeonWorld = eWorld.equals("dungeon_yijki_a") || eWorld.equals("dungeon_destroyed_outpost") || eWorld.equals("dungeon_planet_nul");
             if (e.getEntity().hasMetadata("boss") && isDungeonWorld) {
-                e.setDamage(e.getDamage() *2);
+                e.setDamage(e.getDamage() *4);
             }
         }
     }

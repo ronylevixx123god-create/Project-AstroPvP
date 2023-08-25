@@ -13,6 +13,7 @@ public abstract class ArmorSet implements Listener {
     public abstract ItemStack getChestplate();
     public abstract ItemStack getLeggings();
     public abstract ItemStack getBoots();
+    public abstract int getLadderTier();
 
     public abstract List<String> getArmorLore();
 

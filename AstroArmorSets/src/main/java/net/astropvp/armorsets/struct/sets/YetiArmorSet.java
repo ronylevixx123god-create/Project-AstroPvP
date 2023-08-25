@@ -54,6 +54,11 @@ public class YetiArmorSet extends ArmorSet implements ArmorSetWeapon {
         event.setDamage(event.getDamage() * (1-(reductionPercent*0.01)));
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
         lore.add(CC.translate("&b&lYETI SET BONUS"));

@@ -58,6 +58,11 @@ public class YijkiArmorSet extends ArmorSet implements ArmorSetWeapon {
         }
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) throws Exception {
         double reductionPercent = 30;

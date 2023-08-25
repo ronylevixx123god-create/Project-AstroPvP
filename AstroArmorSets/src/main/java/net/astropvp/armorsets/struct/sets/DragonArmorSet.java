@@ -35,6 +35,11 @@ public class DragonArmorSet extends ArmorSet {
         return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&e&lDragon Slayer Battle Boots")).addLoreLines(CC.translate("&eThe mythical boots of dragons.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         double reductionPercent = 5;

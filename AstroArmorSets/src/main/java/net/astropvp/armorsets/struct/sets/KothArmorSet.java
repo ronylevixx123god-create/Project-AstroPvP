@@ -49,6 +49,11 @@ public class KothArmorSet extends ArmorSet implements ArmorSetWeapon {
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
         double increasePercent;
         if (attacked instanceof Player) {

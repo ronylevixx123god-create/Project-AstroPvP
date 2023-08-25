@@ -41,6 +41,11 @@ public class NebulaArmorSet extends ArmorSet {
 
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 45*  (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("nebulaSetDamageIncrease")  *  0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent  * 0.01)));    }

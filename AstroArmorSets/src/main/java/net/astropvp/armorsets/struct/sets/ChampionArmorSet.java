@@ -49,6 +49,11 @@ public class ChampionArmorSet extends ArmorSet {
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
+    @Override
+    public int getLadderTier() {
+        return 3;
+    }
+
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("championSetDamageIncrease") * 0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));

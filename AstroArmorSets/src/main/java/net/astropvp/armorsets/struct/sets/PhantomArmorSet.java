@@ -37,6 +37,11 @@ public class PhantomArmorSet extends ArmorSet implements ArmorSetWeapon {
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
         double increasePercent = 20;
         event.setDamage(event.getDamage() * (1 + (increasePercent  * 0.01)));    }

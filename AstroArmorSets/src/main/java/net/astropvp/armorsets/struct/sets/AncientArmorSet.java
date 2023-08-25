@@ -54,6 +54,11 @@ public class AncientArmorSet extends ArmorSet {
         return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&3&lAncient Boots")).addLoreLines(CC.translate("&3Powerful martine boots.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
+    @Override
+    public int getLadderTier() {
+        return 1;
+    }
+
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         double reductionPercent = 3 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ancientSetDamageDecrease")  *  0.01));

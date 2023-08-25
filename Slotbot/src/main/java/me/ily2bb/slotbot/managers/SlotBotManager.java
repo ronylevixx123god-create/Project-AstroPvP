@@ -47,7 +47,7 @@ public class SlotBotManager {
         }
         final BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask((Plugin) SlotBotPlugin.getInstance(), (Runnable) new BukkitRunnable() {
-            int time = 10;
+            int time = 1;
 
             public void run() {
                 for (int i = 18; i <= 26; ++i) {

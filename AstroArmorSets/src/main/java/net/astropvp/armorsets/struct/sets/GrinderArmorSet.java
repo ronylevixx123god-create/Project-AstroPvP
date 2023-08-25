@@ -33,6 +33,11 @@ public class GrinderArmorSet extends ArmorSet {
         return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&8&lGrinder Kicks")).addLoreLines(CC.translate("&8Grinding blazes all day long....")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();

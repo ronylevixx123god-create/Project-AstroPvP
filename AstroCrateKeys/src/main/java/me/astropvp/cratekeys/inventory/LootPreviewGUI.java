@@ -76,6 +76,7 @@ public class LootPreviewGUI {
                 if (player.isOp()) {
                     PlayerUtil.giveOrDropProtectedItem(player, item, 60);
                 }
+                player.sendMessage(CC.translate("&7The odds of pulling this item is equal to all others"));
             }));
         }
 

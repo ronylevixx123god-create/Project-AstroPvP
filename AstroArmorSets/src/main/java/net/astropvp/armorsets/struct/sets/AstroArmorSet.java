@@ -141,6 +141,11 @@ public class AstroArmorSet extends ArmorSet {
         }
     }
 
+    @Override
+    public int getLadderTier() {
+        return 2;
+    }
+
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
         lore.add(CC.translate("&a&lASTRO SET BONUS"));

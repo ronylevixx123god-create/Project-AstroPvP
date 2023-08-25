@@ -54,6 +54,11 @@ public class EngineerArmorSet extends ArmorSet implements ArmorSetWeapon {
         return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&6&lEngineer Steel Toed Boots")).addLoreLines(CC.translate("&6Light as feather, heavy as stone.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         double reductionPercent = 9;

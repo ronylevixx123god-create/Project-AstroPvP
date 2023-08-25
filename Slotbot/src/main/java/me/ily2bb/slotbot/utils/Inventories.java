@@ -22,7 +22,7 @@ public class Inventories {
         ;
         final int len = list.size() + 9;
         final int size = (len <= 9) ? 9 : ((len <= 18) ? 18 : ((len <= 27) ? 27 : ((len <= 36) ? 36 : ((len <= 45) ? 45 : ((len <= 54) ? 54 : 54)))));
-        final Inventory inventory = Bukkit.createInventory(null, size, CC.DarkGray + "Astro Slot Bot Loot");
+        final Inventory inventory = Bukkit.createInventory(null, size, CC.DarkGray + "Astro Roll Bot Loot");
         for (ItemStack item : list) {
             inventory.addItem(item);
         }
@@ -37,7 +37,7 @@ public class Inventories {
     }
 
     public static Inventory createInventory(final int slots) {
-        final Inventory inventory = Bukkit.createInventory(null, 54, CC.DarkGray + "Astro Slot Bot");
+        final Inventory inventory = Bukkit.createInventory(null, 54, CC.DarkGray + "Astro Roll Bot");
         final ItemStack item = GuiItems.createLootTable();
         inventory.setItem(0, item);
         for (int i = 1; i < inventory.getSize() - 9; i += 9) {
@@ -97,7 +97,7 @@ public class Inventories {
     }
 
     public static Inventory createRollingInventory(final Player player, final int slots) {
-        final Inventory inventory = Bukkit.createInventory(null, 54, CC.DarkGray + "Astro Slot Bot");
+        final Inventory inventory = Bukkit.createInventory(null, 54, CC.DarkGray + "Astro Roll Bot");
         final ItemStack item = GuiItems.createLootTable();
         inventory.setItem(0, item);
         for (int i = 1; i < inventory.getSize() - 9; i += 9) {
@@ -129,7 +129,7 @@ public class Inventories {
         final BukkitScheduler scheduler = Bukkit.getScheduler();
         scheduler.scheduleSyncDelayedTask(SlotBotPlugin.getInstance(), (Runnable) new BukkitRunnable() {
             final ItemStack[] previousItems = new ItemStack[6];
-            int time = 45;
+            int time = 1;
 
             public void run() {
                 if (this.previousItems[0] == null) {

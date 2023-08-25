@@ -64,6 +64,11 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
         }
     }
 
+    @Override
+    public int getLadderTier() {
+        return 0;
+    }
+
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         if (attacker instanceof Player) {

@@ -182,12 +182,12 @@ public class AstroCore extends JavaPlugin {
         this.ess = (Essentials) Bukkit.getPluginManager().getPlugin("Essentials");
         this.payToggles = new PayToggle("toggles.yml");
 
-        this.jackpotManager = new JackpotManager();
+       /* this.jackpotManager = new JackpotManager();
         try {
             this.jackpotManager.loadFileData(this);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
 
         this.setupSQL();
         this.dataManager = new TitleDatabaseManager();
@@ -252,11 +252,11 @@ public class AstroCore extends JavaPlugin {
     public void onDisable() {
         this.staffModeManager.toggleOffAllStaffModes();
         this.payToggles.saveToggles();
-        try {
+        /*try {
             this.jackpotManager.saveFileData();
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
         this.dataManager.saveAllEquippedTitlesToSQL();
 
         Bukkit.getLogger().info("[AstroCore] Saving astrocore playerdata");
@@ -404,7 +404,7 @@ public class AstroCore extends JavaPlugin {
         getCommand("coinflip").setExecutor(new CommandCoinFlip());
         getCommand("list").setExecutor(new ListCommand());
         getCommand("grinding").setExecutor(new ToggleGrindingMessages());
-        getCommand("jackpot").setExecutor(new CommandJackpot());
+        //getCommand("jackpot").setExecutor(new CommandJackpot());
         getCommand("chatcolor").setExecutor(new ChatColorCommand());
         getCommand("helpenchants").setExecutor(new CommandHelpEnchants());
         getCommand("randomtp").setExecutor(new RandomTpCommand());
@@ -429,13 +429,13 @@ public class AstroCore extends JavaPlugin {
     public void registerTasks() {
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
-        this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
+        /*this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             try {
                 this.jackpotManager.onJackpotTick();
             } catch (UserDoesNotExistException | NoLoanPermittedException e) {
                 e.printStackTrace();
             }
-        }, 20L, 20L);
+        }, 20L, 20L);*/
 
         Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), () -> {
@@ -501,7 +501,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new WarpCommand(), this);
         getServer().getPluginManager().registerEvents(new PlayerListener(), this);
         getServer().getPluginManager().registerEvents(new WorldBorderPearlFix(), this);
-        getServer().getPluginManager().registerEvents(new JackpotListener(), this);
+        //getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
     }
