@@ -29,7 +29,7 @@ public class DeepWounds extends CustomEnchantment
             }
             playerHit.setMetadata("deepWounds", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(System.currentTimeMillis() + (long)(level * 1500))));
             double mod = (double)Bleed.getBleedStack(playerHit) * 0.005 + (double)level * 0.01 + 1.0;
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * mod);
+            e.setDamage(e.getDamage() * mod);
         }
     }
 }

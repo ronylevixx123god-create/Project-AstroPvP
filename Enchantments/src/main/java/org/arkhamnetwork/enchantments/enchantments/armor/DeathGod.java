@@ -34,7 +34,7 @@ public class DeathGod
         }
         double random = Math.random();
         if (random < 0.015 * (double)level && player.getHealth() - e.getDamage() <= (double)(4 + level)) {
-            e.setCancelled(true);
+            //e.setCancelled(true);
             e.setDamage(0.0);
             GeneralUtil.healPlayer(player, 5 + level);
             ((Player) player).sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "* DEATH GOD [" + ChatColor.GOLD + "+" + (5 + level) + "HP" + ChatColor.BOLD + "] *");

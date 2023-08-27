@@ -18,9 +18,10 @@ public class HeroicTank extends HeroicCustomEnchantment
         if (!(player instanceof Player) || !(attacker instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("neutralized")) {
+        if (player.hasMetadata("neutralized"))
             return;
-        }
+        if (player.hasMetadata("noDefenseProcs"))
+            return;
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {
             return;

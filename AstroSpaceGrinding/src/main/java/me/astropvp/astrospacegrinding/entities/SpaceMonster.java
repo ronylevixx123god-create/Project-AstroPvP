@@ -22,7 +22,7 @@ public class SpaceMonster {
 		return null;
 	}
 
-	public List<ItemStack> getRewards(Player player) {
+	public List<ItemStack> getRewards(Player player, LivingEntity entity) {
 		return Lists.newArrayList();
 	}
 

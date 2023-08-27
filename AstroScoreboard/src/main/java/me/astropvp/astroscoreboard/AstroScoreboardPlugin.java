@@ -18,8 +18,10 @@ import me.astropvp.hotfixplugin.HotFixPlugin;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import me.ifamasssxd.cosmicduel.struct.enums.DuelState;
 import me.ifamasssxd.cosmicduel.struct.newduel.NewDuel;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.managers.OutpostManager;
 import me.ifamasssxd.cosmichcf.struct.Outpost;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.TournamentMatch;
@@ -70,17 +72,27 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         OutpostManager outpostManager = CosmicKOTHPlugin.get_().getOutpostManager();
         Outpost infernalOutpost = outpostManager.getOutpostFromName("courtyard");
         Outpost frozenOutpost = outpostManager.getOutpostFromName("great_hall");
+        Outpost spaceOutpost = outpostManager.getOutpostFromName("space");
 
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-infernal-region%", getMS(5), player -> WorldGuardUtils.getRegionName(((Player) player.getPlayer()).getLocation()).contains("infernal"));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-frozen-region%", getMS(5), player -> WorldGuardUtils.getRegionName(((Player) player.getPlayer()).getLocation()).contains("frozen"));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%in-space-sh%", getMS(5), player -> WorldGuardUtils.getRegionName(((Player) player.getPlayer()).getLocation()).contains("space_cap"));
+
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%infernal-controlling-faction%", getMS(5), () -> strongHoldGetFaction(infernalOutpost.getDefendingFaction()));
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%frozen-controlling-faction%", getMS(5), () -> strongHoldGetFaction(frozenOutpost.getDefendingFaction()));
+        TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%space-controlling-faction%", getMS(5), () -> strongHoldGetFaction(spaceOutpost.getDefendingFaction()));
+
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%infernal-attacking-faction%", getMS(5), () -> strongHoldGetFaction(infernalOutpost.getAttackingFaction()));
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%frozen-attacking-faction%", getMS(5), () -> strongHoldGetFaction(frozenOutpost.getAttackingFaction()));
+        TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%space-attacking-faction%", getMS(5), () -> strongHoldGetFaction(spaceOutpost.getAttackingFaction()));
+
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%infernal-status%", getMS(5), () -> infernalOutpost.getOutpostState().getName());
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%frozen-status%", getMS(5), () -> frozenOutpost.getOutpostState().getName());
+        TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%space-status%", getMS(5), () -> spaceOutpost.getOutpostState().getName());
+
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%frozen-cap-percent%", getMS(1), () -> round(frozenOutpost.getCapPercentage(), 2));
         TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%infernal-cap-percent%", getMS(1), () -> round(infernalOutpost.getCapPercentage(), 2));
+        TabAPI.getInstance().getPlaceholderManager().registerServerPlaceholder("%space-cap-percent%", getMS(1), () -> round(spaceOutpost.getCapPercentage(), 2));
     }
 
     public void registerDefaultAndFactionScoreboard() {
@@ -110,6 +122,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-money-made%", getMS(5), player -> getSpaceMoneyMadePlayer((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%space-xp-earned%", getMS(5), player -> getSpaceXPEarned((Player) player.getPlayer()));
         TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%mobcoins%", getMS(1), player -> getMobCoins((Player) player.getPlayer()));
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%has-space-sh-string%", getMS(5), player -> getStrongSpaceSh((Player) player.getPlayer()));
 
     }
 
@@ -124,6 +137,10 @@ public class AstroScoreboardPlugin extends JavaPlugin {
 
 
 
+
+    public String getStrongSpaceSh(Player player) {
+        return HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE) ? CC.translate("&aON") : CC.translate("&cOFF");
+    }
     public String getMatchString(Player player, TournamentManager tournamentManager) {
         for (TournamentMatch match : tournamentManager.getTournamentMatchList()) {
             Player p1 = match.getPlayerOne().getPlayer();

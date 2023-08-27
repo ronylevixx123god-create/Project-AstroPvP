@@ -37,7 +37,7 @@ public class HeroicCleave extends HeroicCustomEnchantment {
             return;
         }
         player.setMetadata("previous_cleave_use", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
-        if (damage > 0.0 && e.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0) {
+        if (damage > 0.0 && e.getDamage() > 0.0) {
             List<Entity> aoe = e.getEntity().getNearbyEntities(radius, radius, radius);
             for (Entity aoe_ent : aoe) {
                 LivingEntity le_ent;

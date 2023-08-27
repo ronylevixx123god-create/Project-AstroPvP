@@ -48,6 +48,13 @@
             <systemPath>${project.basedir}/lib/MobCoins.jar</systemPath>
         </dependency>
         <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>koth</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/KoTHs-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
             <version>2.17.2</version>
@@ -324,6 +331,12 @@
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/DamageIndicators.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.astropvp</groupId>
+            <artifactId>CCVerify</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
         </dependency>
     </dependencies>
 

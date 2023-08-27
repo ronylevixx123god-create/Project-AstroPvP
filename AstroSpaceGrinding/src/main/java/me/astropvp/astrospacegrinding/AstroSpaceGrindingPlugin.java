@@ -3,6 +3,7 @@ package me.astropvp.astrospacegrinding;
 import lombok.Getter;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.listeners.SpaceLogicListener;
+import me.astropvp.astrospacegrinding.listeners.StrongholdBuffsListener;
 import me.astropvp.astrospacegrinding.listeners.ViewItemsGUIListener;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
@@ -56,6 +57,7 @@ public class AstroSpaceGrindingPlugin extends JavaPlugin {
 		registerListener(new SpaceLogicListener());
 		registerListener(new SpaceMobListener());
 		registerListener(new ViewItemsGUIListener());
+		registerListener(new StrongholdBuffsListener());
 
 	}
 	

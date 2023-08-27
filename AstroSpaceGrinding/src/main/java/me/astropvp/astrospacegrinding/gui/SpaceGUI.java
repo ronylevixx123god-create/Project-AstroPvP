@@ -14,6 +14,8 @@ import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
 
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -29,6 +31,8 @@ public class SpaceGUI {
 
         this.spaceGUI.setDefaultClickAction(event -> event.setCancelled(true));
         player.sendMessage(CC.translate("&a&l(!)&a Opening the space menu..."));
+        double price = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("forceFieldPrice");
+        if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE)) price*=0.5;
 
         ItemStack infoItem = new ItemBuilder(Material.BOOK, CC.translate("&b&lSpace Warp"))
                 .addLoreLine(CC.translate("&7The space lands have been invaded by numerous"))
@@ -61,7 +65,7 @@ public class SpaceGUI {
                 .addLoreLine(CC.translate("&7"))
                 .addLoreLine(CC.translate("&7Leaving the space will reset your forcefield!"))
                 .addLoreLine("")
-                .addLoreLine(CC.translate("&e&l* Price: &f$" + NumberUtils.formatMoney(AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("forceFieldPrice")) + "/30 minutes"))
+                .addLoreLine(CC.translate("&e&l* Price: &f$" + NumberUtils.formatMoney(price) + "/30 minutes"))
                 .addLoreLine("")
                 .addLoreLine(CC.translate("&7&nClick here&7 to purchase 30 minutes of forcefield."))
                 .build();
@@ -70,6 +74,7 @@ public class SpaceGUI {
             player.chat("/warp space");
         }));
 
+        double finalPrice = price;
         this.spaceGUI.setItem(2, 5, new GuiItem(forceField, event -> {
             if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
                 player.sendMessage(CC.translate("&b&l(!)&b You can only enable &f&lFORCEFIELD&b in the space warp."));
@@ -86,11 +91,9 @@ public class SpaceGUI {
                 return;
             }
 
-            double price = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("forceFieldPrice");
-
-            if (EconomyUtils.hasBalance(player, price)) {
+            if (EconomyUtils.hasBalance(player, finalPrice)) {
                 player.sendMessage(CC.translate("&b&l(!)&b You have purchased a forcefield. This will last for &f&l30 MINUTES&b. During this time you cannot hit or be hit by enemies."));
-                EconomyUtils.withdrawBalance(player, price);
+                EconomyUtils.withdrawBalance(player, finalPrice);
                 ForceFieldData.findPlayer(player).activateShield();
             } else {
                 player.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate the forcefield."));

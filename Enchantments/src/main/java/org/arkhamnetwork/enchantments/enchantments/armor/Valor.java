@@ -21,10 +21,14 @@ public class Valor extends CustomEnchantment
         if (!(player instanceof Player)) {
             return;
         }
+        if (player.hasMetadata("neutralized"))
+            return;
+        if (player.hasMetadata("noDefenseProcs"))
+            return;
         double damage_negation = (double)level * 0.015;
         double hp_threshold = level * 2 + 6;
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * (1.0 - damage_negation));
+            e.setDamage(e.getDamage() * (1.0 - damage_negation));
             Location l = player.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), 41, 2001);
         }

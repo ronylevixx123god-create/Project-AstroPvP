@@ -33,12 +33,12 @@ public class Insomnia
         double chance = 0.025 * (double)level;
         int n = time = level > 1 ? 6 : 4;
         if (random < chance) {
-            player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, time * 10, Math.min(level - 1, 2)));
+            //player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, time * 10, Math.min(level - 1, 2)));
             if (level >= 6) {
                 player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 10, 1));
             }
             double multi = 1.0 + (double)level * 0.05;
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
+            e.setDamage(e.getDamage() * multi);
         }
     }
 }

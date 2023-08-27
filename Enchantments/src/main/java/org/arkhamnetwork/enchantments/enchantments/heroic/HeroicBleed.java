@@ -28,7 +28,7 @@ public class HeroicBleed extends HeroicCustomEnchantment
     }
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
-        if (!event.isCancelled() && event.getDamage(EntityDamageEvent.DamageModifier.BASE) > 0.0 && user instanceof Player) {
+        if (!event.isCancelled() && event.getDamage() > 0.0 && user instanceof Player) {
             double bleedChance = 0.1 * (double)enchantLevel + 0.4;
             if (Math.random() < bleedChance && HeroicBleed.getBleedStack(target) < this.getMaxBleedStack(enchantLevel)) {
                 this.addBleedStack(user, target);
@@ -47,7 +47,7 @@ public class HeroicBleed extends HeroicCustomEnchantment
     public static void clearBleedEffect(LivingEntity le) {
         le.removeMetadata("bleedStack", (Plugin)Enchantments.getInstance());
         if (le instanceof Player) {
-            ((Player)le).setWalkSpeed(0.2f);
+            //((Player)le).setWalkSpeed(0.2f);
         } else {
             le.removePotionEffect(PotionEffectType.SLOW);
         }
@@ -58,7 +58,7 @@ public class HeroicBleed extends HeroicCustomEnchantment
         int bleedStack = Math.max(1, HeroicBleed.getBleedStack(le) / 2);
         if (le instanceof Player) {
             Player p = (Player)le;
-            p.setWalkSpeed((float)((double)0.2f - 0.0075 * (double)bleedStack));
+            //p.setWalkSpeed((float)((double)0.2f - 0.0075 * (double)bleedStack));
             if (bleedStack >= 5 && bleedStack % 5 == 0) {
                 p.sendMessage(ChatColor.RED + "** DEEP BLEED [" + ChatColor.DARK_RED + "-" + this.df.format((double)bleedStack * 0.0075 / (double)0.2f * 100.0) + ChatColor.RED + "% Speed] **");
             }
@@ -72,7 +72,7 @@ public class HeroicBleed extends HeroicCustomEnchantment
                 pEnt.playSound(pEnt.getLocation(), Sound.EAT, 0.4f, 0.6f);
             }
         } else {
-            le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
+            //le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, bleedStack * 10, Math.max(1, bleedStack / 3)));
         }
         this.playBleedEffect(le.getLocation().add(0.0, 1.0, 0.0), bleedStack);
     }

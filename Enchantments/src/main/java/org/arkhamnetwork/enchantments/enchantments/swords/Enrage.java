@@ -27,7 +27,7 @@ public class Enrage
         if (hpPercent <= 0.25) {
             multi += 0.15;
         }
-        event.setDamage(event.getDamage(EntityDamageEvent.DamageModifier.BASE) * multi);
+        event.setDamage(event.getDamage() * multi);
     }
 }
 

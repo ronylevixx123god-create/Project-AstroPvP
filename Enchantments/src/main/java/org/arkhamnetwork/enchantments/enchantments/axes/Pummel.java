@@ -60,7 +60,7 @@ public class Pummel extends CustomEnchantment
                         continue;
                     }
 
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)duration * 20, level - 1));
+                    //le.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, (int)duration * 20, level - 1));
                 }
                 final Location l = playerHit.getLocation().add(0.0, 0.5, 0.0);
                 final int blockId = playerHit.getLocation().getBlock().getTypeId();

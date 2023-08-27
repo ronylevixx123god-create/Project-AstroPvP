@@ -96,6 +96,20 @@ perks:
       - '&b&l* &fNo Coin Flip Tax'
       - '&b&l* &a+10%&f bonus /jackpot tickets'
       - '&b&l* &a10%&f Chance to negate Holy White Scrolls'
+  space:
+    hcf:
+      - Increased EXP drops in claims
+      - Reduced DTR Freeze
+      - Faster DTR Regen
+      - Reduced Enderpearl cooldown by &b1.5s
+      - Passive Fire Resistance
+      - Increased brewing speed by &b25%
+    cosmic:
+      - '&d&l* &a20% &fFaction Point multiplier'
+      - '&d&l* &f/stronghold sell'
+      - '&d&l* &fNo Coin Flip Tax'
+      - '&d&l* &a+10%&f bonus /jackpot tickets'
+      - '&d&l* &a10%&f Chance to negate Holy White Scrolls'
 outposts:
   courtyard:
     displayName: '&c&lInfernal Stronghold'
@@ -109,6 +123,14 @@ outposts:
     displayName: '&b&lFrozen Stronghold'
     regionName: frozen_outpost
     blockRegionName: frozen_blocks
+    lastCapturedTime: 1600288129608
+    location: world:-3070:66:-3070:0.0:0.0
+    capturePercent: 0.0
+    lastTrophySpawned: 0
+  space:
+    displayName: '&d&lSpace Stronghold'
+    regionName: spacecap
+    blockRegionName: space_blocks
     lastCapturedTime: 1600288129608
     location: world:-3070:66:-3070:0.0:0.0
     capturePercent: 0.0

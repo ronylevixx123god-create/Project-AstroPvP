@@ -43,6 +43,7 @@ public class DivineImmolation extends CustomEnchantment {
             return;
         }
 
+
         final Player p = (Player) player;
         double radius = (double) level;
         double damage = Math.floor((double)level * 2.0);
@@ -114,6 +115,8 @@ public class DivineImmolation extends CustomEnchantment {
 
         if (playerHit instanceof Player) {
 
+
+
             if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && (AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
 
                 return;
@@ -143,6 +146,7 @@ public class DivineImmolation extends CustomEnchantment {
             if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
                 KillTrackerAPI.removeSoulsFromGems(p, 20);
             }
+
             final List<Entity> ents = playerHit.getNearbyEntities(radius, radius, radius);
             if (playerHit instanceof Player) {
                 ents.add(playerHit);
@@ -163,6 +167,8 @@ public class DivineImmolation extends CustomEnchantment {
                     if (!p.canSee(pEnt)) {
                         continue;
                     }
+
+
 
                     if (pEnt.getInventory() == null) continue;
                     if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)) {
@@ -214,6 +220,8 @@ public class DivineImmolation extends CustomEnchantment {
                     }
 
 
+
+
                     if (le.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player) le).isActive())
                         continue;
 
@@ -233,8 +241,12 @@ public class DivineImmolation extends CustomEnchantment {
                         ex.printStackTrace();
                     }
 
+
+
                     ((Player) le).playSound(le.getLocation(), Sound.FIREWORK_BLAST, 1.0f, 0.3f);
                     ((Player) le).playSound(le.getLocation(), Sound.ZOMBIE_PIG_ANGRY, 0.8f, 0.5f);
+
+
 
                     le.damage(damage);
 

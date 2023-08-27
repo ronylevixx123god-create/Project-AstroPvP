@@ -32,13 +32,13 @@ public class HeroicBlock extends HeroicCustomEnchantment
                     return;
                 }
                 double damageToReflect = reduceDamage;
-                e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * reduceDamage);
+                e.setDamage(e.getDamage() * reduceDamage);
                 double reflectChance = 0.08 * (double)level + (player.isBlocking() ? 0.05 : 0.0);
                 if (Math.random() < reflectChance && attacker instanceof Player) {
                     player.sendMessage(CC.GreenB + "* BLOCKED §7[" + NumberUtils.formatSeconds((double)finalDamage) + "]§&§l *");
                     if (damageToReflect > 0.0) {
                         Player attacking = (Player)attacker;
-                        attacking.damage(damageToReflect);
+                        //attacking.damage(damageToReflect);
                         player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_METAL, 10.0f, 2.0f);
                         attacking.sendMessage(CC.RedB + "* " + player.getName() + " REFLECTIVE BLOCK [" + CC.Gray + (int)(reduceDamage * 100.0) + "% DMG" + CC.RedB + "]");
                     }

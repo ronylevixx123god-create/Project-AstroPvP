@@ -26,6 +26,7 @@ public class Enlighted extends CustomEnchantment
     }
 
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, int level, final EntityDamageEvent e) {
+
         final double random = Math.random();
         if (level > 3) {
             level = 3;
@@ -35,6 +36,10 @@ public class Enlighted extends CustomEnchantment
             chance*=1.1;
         }
         if (random < chance) {
+            if (player.hasMetadata("neutralized"))
+                return;
+            if (player.hasMetadata("noDefenseProcs"))
+                return;
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
                 @Override
                 public void run() {

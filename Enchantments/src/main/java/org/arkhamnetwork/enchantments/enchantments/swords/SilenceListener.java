@@ -26,9 +26,9 @@ public final class SilenceListener implements Listener {
 
         if (e.getDamage() > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs") && ((Player) e.getEntity()).getKiller() != null) {
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
-                e.setDamage(e.getDamage() * (1.1D ));
+                e.setDamage(e.getDamage() * (1.15D ));
             } else {
-                e.setDamage(e.getDamage() * (1.05));
+                e.setDamage(e.getDamage() * (1.1));
 
             }
         }

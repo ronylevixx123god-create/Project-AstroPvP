@@ -24,7 +24,7 @@ public class HeroicCactus extends HeroicCustomEnchantment {
             final Player p = (Player) player;
             if (attacker != null && attacker instanceof Player) {
                 final Player pAttacker = (Player) attacker;
-                pAttacker.damage(0.5 * level);
+                //pAttacker.damage(0.5 * level);
                 //RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) pAttacker);
                 //rageStacksCache.resetRageStack();
 

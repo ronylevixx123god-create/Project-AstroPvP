@@ -40,7 +40,7 @@ public class SpaceLogicListener implements Listener {
 
     static {
         allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "pin", "sc", "staffchat"));
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "pin", "sc", "staffchat", "mute", "ban", "tempban"));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)

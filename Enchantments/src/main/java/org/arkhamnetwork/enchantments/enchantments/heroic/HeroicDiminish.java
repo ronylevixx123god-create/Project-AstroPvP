@@ -42,18 +42,18 @@ public class HeroicDiminish extends CustomEnchantment {
             if (dmgToDeal > 0.0 && attacker instanceof Player) {
                 attacker.damage(Math.min(15.0, dmgToDeal));
                 Player attackerPlayer = (Player)attacker;
-                Bukkit.getLogger().info("[Heroic Diminish] Damaging attacker " + attackerPlayer.getName() + " for " + dmgToDeal + " due to being then diminishEffect: " + maxDmg + " maxDmg: " + e.getDamage(EntityDamageEvent.DamageModifier.BASE));
+                Bukkit.getLogger().info("[Heroic Diminish] Damaging attacker " + attackerPlayer.getName() + " for " + dmgToDeal + " due to being then diminishEffect: " + maxDmg + " maxDmg: " + e.getDamage());
             }
-            if (e.getDamage(EntityDamageEvent.DamageModifier.BASE) > maxDmg) {
+            if (e.getDamage() > maxDmg) {
                 e.setDamage(maxDmg);
                 player.removeMetadata("diminishEffect", (Plugin)Enchantments.getInstance());
                 return;
             }
         }
         if (Math.random() < 0.001 * (double)level) {
-            e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0);
-            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0)));
-            ((Player)player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getDamage(EntityDamageEvent.DamageModifier.BASE) / 2.0) + ChatColor.BOLD + "] *");
+            e.setDamage(e.getDamage() / 2.0);
+            player.setMetadata("diminishEffect", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)(e.getDamage() / 2.0)));
+            ((Player)player).sendMessage(ChatColor.YELLOW + "" + ChatColor.BOLD + "* DIMINISH [" + ChatColor.YELLOW + "MAX DMG: " + this.df.format(e.getDamage() / 2.0) + ChatColor.BOLD + "] *");
         }
     }
 

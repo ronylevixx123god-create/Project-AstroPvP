@@ -106,8 +106,8 @@ public class IceAspect
                 return;
             }
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.DarkPurpleB + "* ICE ASPECT " + CC.Gray + "[" + time + "]" + CC.DarkPurpleB + "*", "ICE_ASPECT");
-            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
-            playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 2));
+            //playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 5));
+            //playerHit.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, time * 20, 2));
         }
     }
 }

@@ -19,10 +19,10 @@ public class Lucky extends CustomEnchantment
     public void applyDefenseEffect(final LivingEntity player, final LivingEntity attacker, final int level, final EntityDamageEvent e) {
         if (player instanceof Player && new Random().nextInt(400) <= level) {
             Player p = (Player)player;
-            double dmg = e.getDamage(EntityDamageEvent.DamageModifier.BASE);
+            double dmg = e.getDamage();
             dmg *= (double)ArmorUtil.getArmorDamageNullificationPercent(ArmorUtil.getArmorValue(p));
             if (player.getHealth() - dmg <= 0.0) {
-                e.setCancelled(true);
+                //e.setCancelled(true);
                 e.setDamage(0.0);
             }
         }

@@ -147,7 +147,7 @@ public class MasteryPermafrost extends MasteryCustomEnchantment {
                     if (stored != null && stored.getOwner().equals(damaged.getUniqueId())) {
                         double toReduce = (14 + stored.getLevel());
                         event.setDamage(event.getDamage() * (1.0D - 0.01D * toReduce));
-                        damager.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 50, 1), true);
+                        //damager.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, 50, 1), true);
                         Bukkit.getLogger().info("Reducing damage for " + damaged.getName() + " by " + toReduce + "% damaged by " + damager.getName());
                     }
                 }

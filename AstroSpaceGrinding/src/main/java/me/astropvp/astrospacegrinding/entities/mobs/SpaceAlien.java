@@ -15,7 +15,10 @@ import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
+import me.astropvp.astrospacegrinding.utils.DamageIndicatorUtils;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
+import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
+import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import net.astropvp.core.utils.OutpostUtil;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTable;
@@ -83,7 +86,7 @@ public class SpaceAlien extends SpaceMonster {
 
 
     @Override
-    public List<ItemStack> getRewards(Player player) {
+    public List<ItemStack> getRewards(Player player, LivingEntity entity) {
         List<ItemStack> rewards = Lists.newArrayList();
         SpacePlayerData data = SpacePlayerData.findPlayer(player);
         Random random = new Random();
@@ -111,6 +114,7 @@ public class SpaceAlien extends SpaceMonster {
             player.sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(randomNumberXP)) + " xp");
             player.giveExp(randomNumberXP);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1, 1);
+            DamageIndicatorUtils.sendDamageIndicator(entity, CC.translate("&a&l+ " + NumberUtils.formatMoney(randomNumberXP)) + " xp", "EXECUTE" );
             data.addXp(randomNumberXP);
 
         }
@@ -129,11 +133,22 @@ public class SpaceAlien extends SpaceMonster {
             chance *= 0.70;
         }
 
+        if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE)) {
+            chance*=1.15;
+        }
+
 
         if (Math.random() < chance / 100) {
             rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
-            if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET)) {
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET) && Math.random() < 0.15) {
+                player.sendMessage(CC.translate("&d&l(Radioactive Amulet) &dYou were &flucky&d and received &fdouble&d space loot."));
                 rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+            }
+            if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE) && Math.random() < 0.35) {
+                player.sendMessage(CC.translate("&d&l(Space Stronghold) &dYou were &flucky&d and received &fdouble&d space loot."));
+                rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+
             }
         }
 
@@ -142,6 +157,7 @@ public class SpaceAlien extends SpaceMonster {
             MobcoinAPI.addMobcoins(player, amount);
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 2, 1);
             player.sendMessage(CC.translate("&6&l+ &6⛃&e" + amount));
+            DamageIndicatorUtils.sendDamageIndicator(entity,CC.translate("&6&l+ &6⛃&e" + amount), "EXECUTE" );
         }
 
         return rewards;

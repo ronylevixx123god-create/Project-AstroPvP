@@ -22,7 +22,7 @@ public class Block
             double random = Math.random();
             if (random < (chance = 0.1 * (double)level) && player2.isBlocking()) {
                 double reduceDamage = 0.5 * (double)(level / 2);
-                e.setDamage(e.getDamage() * (1.0 - reduceDamage));
+                //e.setDamage(e.getDamage() * (1.0 - reduceDamage));
                 player2.playSound(player2.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.2f);
             }
         }

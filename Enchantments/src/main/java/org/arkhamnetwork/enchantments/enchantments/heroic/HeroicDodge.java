@@ -48,7 +48,7 @@ public class HeroicDodge
             if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
                 return;
 
-            double chance = 0.05 * (double)level;
+            double chance = 0.01 * (double)level;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.2;
@@ -63,7 +63,7 @@ public class HeroicDodge
                 }
 
                 e.setDamage(0);
-                e.setCancelled(true);
+                //e.setCancelled(true);
                 ((Player) player).sendMessage((Object) ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }
