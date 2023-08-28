@@ -112,7 +112,7 @@ public class CombatLogCombatListener
     public void onDeath(PlayerRespawnEvent event) {
         CombatLog.unflagCombat(event.getPlayer());
     }
-n
+
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onEntityShootBow(EntityShootBowEvent e) {
         if (e.getEntity() instanceof Player) {

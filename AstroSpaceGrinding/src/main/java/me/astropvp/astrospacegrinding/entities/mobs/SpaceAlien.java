@@ -63,14 +63,14 @@ public class SpaceAlien extends SpaceMonster {
         entity.getEquipment().setLeggings(new ItemBuilder(Material.IRON_LEGGINGS)
                 .enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
                 .enchant(Enchantment.DURABILITY, 3).build());
-        entity.getEquipment().setBoots(new ItemBuilder(Material.IRON_BOOTS)
+        entity.getEquipment().setBoots(new ItemBuilder(Material.DIAMOND_BOOTS)
                 .enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4)
                 .enchant(Enchantment.DURABILITY, 3).build());
         entity.getEquipment().setItemInHand(new ItemBuilder(Material.DIAMOND_SWORD)
                 .enchant(Enchantment.DAMAGE_ALL, 5)
                 .enchant(Enchantment.DURABILITY, 3).build());
-        entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 0));
-        entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 3));
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 9999, 1));
+        entity.addPotionEffect(new PotionEffect(PotionEffectType.INCREASE_DAMAGE, 9999, 4));
         if (entity.getEquipment() != null) {
             entity.getEquipment().setItemInHandDropChance(0.0F);
             entity.getEquipment().setHelmetDropChance(0.0F);

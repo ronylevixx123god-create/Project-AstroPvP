@@ -29,6 +29,19 @@ public class AstroDamageHandlerAPI {
         increaseDamage(amountInPercentage, event, instance, increaseAmount);
     }
 
+    public void cancelDamage(EntityDamageByEntityEvent event, String instance) {
+        event.setDamage(0);
+        if (event.getEntity() instanceof Player)
+        this.sendDebugMessage(event.getEntity(), "Cancelled Damage (" + instance  + ")");
+
+    }
+
+    public void cancelDamage(EntityDamageEvent event, String instance) {
+        event.setDamage(0);
+        if (event.getEntity() instanceof Player)
+            this.sendDebugMessage(event.getEntity(), "Cancelled Damage (" + instance  + ")");
+    }
+
     private void increaseDamage(double amountInPercentage, EntityDamageByEntityEvent event, String instance, double increaseAmount) {
         if (!WorldGuardUtils.isPvPEnabled(event.getEntity().getLocation()) || !WorldGuardUtils.isPvPEnabled(event.getDamager().getLocation())) return;
         double oldDamage = event.getDamage();
@@ -150,14 +163,14 @@ public class AstroDamageHandlerAPI {
     private void sendDebugMessage(Entity entity, String message) {
             entity.sendMessage(CC.translate(message));
 
-        Bukkit.getConsoleSender().sendMessage(CC.Aqua + message);
+        Bukkit.getConsoleSender().sendMessage(CC.Aqua + CC.translate(message));
 
     }
 
     private void sendDebugMessage(Player player, String message) {
-            player.sendMessage(CC.translate(message));
+            player.sendMessage(message);
 
-        Bukkit.getConsoleSender().sendMessage(CC.Aqua + message);
+        Bukkit.getConsoleSender().sendMessage(CC.Aqua + CC.translate(message));
 
     }
 

@@ -3,6 +3,7 @@ package me.astropvp.astrospacegrinding.data;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.UUID;
 
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -16,14 +17,14 @@ public class SpacePlayerData {
 	
 	private static final Set<SpacePlayerData> data = Sets.newHashSet();
 	
-	private final String player;
+	private final UUID uuid;
 	private final Map<MonsterType, Integer> kills;
 	private final long when_created;
 	private double moneyMade;
 	private double xpMade;
 
 	public SpacePlayerData(Player player) {
-		this.player = player.getName();
+		this.uuid = player.getUniqueId();
 		this.kills = Maps.newHashMap();
 		this.when_created = System.currentTimeMillis();
 		this.moneyMade = 0;
@@ -32,13 +33,17 @@ public class SpacePlayerData {
 	}
 	
 	public String getPlayerName() {
-		return this.player;
+		return Bukkit.getPlayer(this.uuid).getName();
 	}
 	
 	public Player getPlayer() {
-		return Bukkit.getPlayer(this.player);
+		return Bukkit.getPlayer(this.uuid);
 	}
-	
+
+	public UUID getUuid() {
+		return uuid;
+	}
+
 	public int getKills(MonsterType type) {
 		return kills.getOrDefault(type, 0);
 	}
@@ -83,21 +88,19 @@ public class SpacePlayerData {
 	}
 
 	public static void remove(Player player) {
-		Iterator<SpacePlayerData> iterator = data.iterator();
-		String name = player.getName();
-		while(iterator.hasNext()) {
-			SpacePlayerData pdata = iterator.next();
-			if(pdata.getPlayerName().equals(name)) {
-				iterator.remove();
+		UUID uuid = player.getUniqueId();
+		for(SpacePlayerData pdata: data) {
+			if(pdata.getUuid() == uuid) {
+				data.remove(pdata);
 				return;
 			}
 		}
 	}
 	
 	public static SpacePlayerData findPlayer(Player player) {
-		String name = player.getName();
+		UUID uuid = player.getUniqueId();
 		for(SpacePlayerData pdata: data) {
-			if(pdata.getPlayerName().equals(name)) {
+			if(pdata.getUuid() == uuid) {
 				return pdata;
 			}
 		}

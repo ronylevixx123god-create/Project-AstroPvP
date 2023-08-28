@@ -33,7 +33,7 @@ public enum SkinType {
     CUPID_HELMET(CC.RedB + "Cupid's Crown", ItemSkinType.HELMET, new MeatCleaverAxeSkin(), Arrays.asList(CC.Red + "5% to steal enemy health if below half health."), true),
     MEAT_CLEAVER_AXE(CC.RedB + "Meat Cleaver " + CC.DarkRedB + "Axe", ItemSkinType.AXE, new MeatCleaverAxeSkin(), Arrays.asList(new String[0]), true),
     CUPID_BELT(CC.RedB + "Divine Sash", ItemSkinType.BELT, new CupidBeltSkin(), Arrays.asList(CC.Red + "Auto Bless"), true),
-    SEXY_BELT(CC.LightPurpleB + "Gucci Belt", ItemSkinType.BELT, new SexyBeltSkin(), Arrays.asList(CC.Red + "-25% Incoming Projectile Damage", CC.Red + "All pearls act as escapist pearls"), true),
+    //SEXY_BELT(CC.LightPurpleB + "Gucci Belt", ItemSkinType.BELT, new SexyBeltSkin(), Arrays.asList(CC.Red + "-25% Incoming Projectile Damage", CC.Red + "All pearls act as escapist pearls"), true),
     CORRUPT_BELT_POWER(CC.DarkPurpleB + "Corrupt Belt", ItemSkinType.BELT, new CorruptPowerBeltSkin(), Arrays.asList(CC.Red + "Godly Overload V"), true),
     CORRUPT_BELT_UTILITY(CC.DarkPurpleB + "Utility Belt", ItemSkinType.BELT, new CorruptUtilityBeltSkin(), Arrays.asList(CC.Red + "Phoenix cannot be blocked", CC.Red + "Auto Feign Death (with Phoenix)"), true),
     CUPID_BOW(CC.RedB + "Cupid's Bow", ItemSkinType.BOW, new CupidBowSkin(), Arrays.asList(new String[0]), true),
@@ -45,7 +45,7 @@ public enum SkinType {
     FLAMING_HALO(CC.YellowB + "Flaming " + CC.GoldB + "Halo", ItemSkinType.HELMET, new FlamingHaloSkin(), Arrays.asList(CC.Red + "+4% Outgoing Damage"), true),
     REINDEER_ANTLERS(CC.GrayB + "Reindeer Antlers", ItemSkinType.HELMET, new ReindeerAntlersSkin(), Arrays.asList(CC.Red + "Chance to double active pet duration."), true),
     SANTA_HAT(CC.RedB + "Santa Hat", ItemSkinType.HELMET, new SantaHatSkin(), Arrays.asList(CC.Red + "+5% DMG", CC.Red + "-5% DMG"), true),
-    KOALA(CC.GrayB + "Koala", ItemSkinType.HELMET, new KoalaSkin(), Arrays.asList(CC.Red + "Immune to Fire/Blast DMG"), true),
+    //KOALA(CC.GrayB + "Koala", ItemSkinType.HELMET, new KoalaSkin(), Arrays.asList(CC.Red + "Immune to Fire/Blast DMG"), true),
     CORRUPT_AXE(CC.DarkPurpleB + "Corrupt Greataxe", ItemSkinType.AXE, new CorruptAxeSkin(), Arrays.asList(CC.Red + "Bypass Defensive Armor Set Bonuses"), true),
     CORRUPT_SWORD(CC.DarkPurpleB + "Corrupt Greatsword", ItemSkinType.SWORD, new CorruptSwordSkin(), Arrays.asList(CC.Red + "2x Chance to Neutralize enemies", CC.Red + "2x Blackout duration on enemies."), true),
     SEXY_SWORD(CC.LightPurpleB + "Selfie Stick", ItemSkinType.SWORD, new SelfieStickSkin(), Arrays.asList(new String[0]), true),
@@ -53,7 +53,7 @@ public enum SkinType {
     SEXY_HELMET(CC.LightPurpleB + "Chad Sunglasses", ItemSkinType.HELMET, new SexyHelmetSkin(), Arrays.asList(CC.Red + "50% Chance to Block World Destroyer"), true),
     CORRUPT_HELMET(CC.DarkPurpleB + "Corrupt Cosmonaut Visor", ItemSkinType.HELMET, new CorruptHelmetSkin(), Arrays.asList(CC.Red + "50% Chance to block Neutralize", CC.Red + "50% Silence Duration"), true),
     CUPID_AMULET(CC.RedB + "Amulet of Angels", ItemSkinType.AMULET, new CupidAmuletSkin(), Arrays.asList(CC.Red + "Immune to Nature's Wrath", CC.Red + "Immune to Revenge of Yijki"), true),
-    SEXY_AMULET(CC.LightPurpleB + "40K Gold Chain", ItemSkinType.AMULET, new SexyHelmetSkin(), Arrays.asList(CC.Red + "+2% /sell prices"), true),
+    //SEXY_AMULET(CC.LightPurpleB + "40K Gold Chain", ItemSkinType.AMULET, new SexyHelmetSkin(), Arrays.asList(CC.Red + "+2% /sell prices"), true),
     CORRUPT_AMULET_CORRUPTION(CC.DarkPurpleB + "Amulet of Corruption", ItemSkinType.AMULET, new CorruptAmuletCorruptionSkin(), Arrays.asList(CC.Red + "Immune to enemy armor crystals of same type on attached item."), true),
     CORRUPT_AMULET_DESTRUCTION(CC.DarkPurpleB + "Amulet of Destruction", ItemSkinType.AMULET, new CorruptAmuletDestructionSkin(), Arrays.asList(CC.Red + "+7.5% Outgoing Damage"), true),
     VIRUS_SWORD(CC.DarkGreenB + "Corona Beer Bottle", ItemSkinType.SWORD, new VirusSwordSkin(), Arrays.asList(CC.Red + "+3.5% Outgoing Damage", CC.Red + "Mighty Cleave V"), true),
@@ -77,7 +77,7 @@ public enum SkinType {
     DOOMSDAY_SWORD(CC.DarkGreenB + "Doomsday Machete", ItemSkinType.SWORD, new DoomsdayMacheteSkin(), Arrays.asList(CC.Red + "Increases outgoing damage from soul enchantments by 1.25x"), true),
     RUINS_SWORD(CC.DarkAquaB + "Trident of the Deep", ItemSkinType.SWORD, new TridentSkin(), Arrays.asList(CC.Red + "Blessed IV", CC.Red + "Hex V", CC.Red + "Mark of the Beast VI", CC.Red + "25% chance to bypass Full Armor Set", CC.Red + "or Armor Crystal defensive bonus"), true),
     COSMIC_CITIZEN_BOOTS(CC.AquaB + "Moon Boots", ItemSkinType.BOOTS, new MoonBootsSkin(), Arrays.asList(CC.Red + "Increases armor set bonus/crystal damage by 1.2x"), true),
-    MEDIEVAL_BOOTS_KNIGHT(CC.GrayB + "Knight's Boots", ItemSkinType.BOOTS, new KnightBootsSkin(), Arrays.asList(CC.Red + "Immune to all but vanilla knockback"), true),
+    //MEDIEVAL_BOOTS_KNIGHT(CC.GrayB + "Knight's Boots", ItemSkinType.BOOTS, new KnightBootsSkin(), Arrays.asList(CC.Red + "Immune to all but vanilla knockback"), true),
     DOOMSDAY_BOOTS(CC.DarkGreenB + "Camouflage Yeezys", ItemSkinType.BOOTS, new CamouflageBootsSkin(), Arrays.asList(CC.Red + "40% chance to negate soul trap", CC.Red + "Demonic Gateway V"), true),
     HALLOWEEN_BOOTS(CC.DarkGreenB + "Retaliation Boots", ItemSkinType.BOOTS, new RetaliationBoots(), Arrays.asList(CC.Red + "+15% Outgoing Damage to Bosses", CC.Red + "+10% Incoming Damage"), true),
     COSMIC_CITIZEN_AMULET(CC.GoldB + "Starquest Amulet", ItemSkinType.AMULET, new StarquestAmuletSkin(), Arrays.asList(CC.Red + "4% chance to earn extra dungeon lootbag"), true),
@@ -104,13 +104,13 @@ public enum SkinType {
     DEEP_SPACE_BACKPACK(CC.DarkPurpleB + "Deep Space Backpack", ItemSkinType.BACKPACK, new DeepSpaceBackpackSkin(), Arrays.asList(CC.translate("&c+3% Outgoing Damage."), CC.translate("&cImmune to Soul Trap")), true),
     HALLOWEEN_BACKPACK(CC.GoldB + "Cursed Wings", ItemSkinType.BACKPACK, new CursedWingsSkin(), Arrays.asList(CC.translate("&c-75% Silence Duration"), CC.translate("&cBlocks all enemy Rocket Escape"), CC.translate("&c-3% Incoming Damage")), true),
     VALENTINES_2021_BACKPACK(CC.RedB + "Teddy Backpack", ItemSkinType.BACKPACK, new TeddyBackpackSkin(), Arrays.asList(CC.Red + "Immune to (Lethal) Sniper", CC.Red + "Immune to Hero Killer", CC.Red + "+2% Outgoing Damage"), true),
-    MEDIEVAL_HELMET_KING(CC.GoldB + "Royal Crown", ItemSkinType.HELMET, new RoyalCrown(), Arrays.asList(CC.Red + "25% Faster cap time at Citadel Assault", CC.translate("&c-5% Incoming Damage"), CC.translate("&cImmune to enemy Guardians/Undead Ruse")), true),
-    MEDIEVAL_HELMET_KNIGHT(CC.GrayB + "Knight's Helmet", ItemSkinType.HELMET, new KnightHelmet(), Arrays.asList(CC.Red + "Immune to Teleblock", CC.translate("&cAquatic"), CC.translate("&cAll pearls act as Escapist Pearls"), CC.translate("&c2% Chance to prox Arcane Creeper when damaged")), true),
+    //MEDIEVAL_HELMET_KING(CC.GoldB + "Royal Crown", ItemSkinType.HELMET, new RoyalCrown(), Arrays.asList(CC.Red + "25% Faster cap time at Citadel Assault", CC.translate("&c-5% Incoming Damage"), CC.translate("&cImmune to enemy Guardians/Undead Ruse")), true),
+    //MEDIEVAL_HELMET_KNIGHT(CC.GrayB + "Knight's Helmet", ItemSkinType.HELMET, new KnightHelmet(), Arrays.asList(CC.Red + "Immune to Teleblock", CC.translate("&cAquatic"), CC.translate("&cAll pearls act as Escapist Pearls"), CC.translate("&c2% Chance to prox Arcane Creeper when damaged")), true),
     COSMIC_CITIZEN_HELMET_DRINKING(CC.translate("&b&lDrinking Helmet"), ItemSkinType.HELMET, new DrinkingHelmet(), Arrays.asList(CC.Red + "5-20s shorter /dungeon portal time", CC.translate("&cGhostly Ghost III")), true),
     COSMIC_CITIZEN_HELMET_CG(CC.translate("&b&lCosmicGames Hat"), ItemSkinType.HELMET, new CosmicGamesHat(), Arrays.asList(CC.Red + "5% chance to not consume Slotbot Ticket on Spin"), true),
     CHRISTMAS_HELMET_ICE(CC.translate("&c&lIce Crown"), ItemSkinType.HELMET, new IceCrown(), Arrays.asList(CC.Red + "-5% Incoming Damage", CC.translate("&cReflects (Titan) Trap effects on enemy")), true),
     MEDIEVAL_BELT_KING(CC.translate("&6&lRoyal Belt"), ItemSkinType.BELT, new RoyalBelt(), Arrays.asList(CC.Red + "25% chance to not proc Pet Cooldown"), true),
-    MEDIEVAL_BELT_KNIGHT(CC.translate("&7&lChain Belt"), ItemSkinType.BELT, new ChainBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c200% damage to Citadel Siege blocks"), CC.translate("&c+2.5% outgoing Damage")), true),
+    //MEDIEVAL_BELT_KNIGHT(CC.translate("&7&lChain Belt"), ItemSkinType.BELT, new ChainBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c200% damage to Citadel Siege blocks"), CC.translate("&c+2.5% outgoing Damage")), true),
     COSMIC_CITIZEN_BELT(CC.translate("&b&lSpace Belt"), ItemSkinType.BELT, new SpaceBelt(), Arrays.asList(CC.Red + "Auto Bless", CC.translate("&c+5% Blackscroll Bonus"), CC.translate("&c+2% to not consume Book on apply")), true),
     DOOMSDAY_BELT(CC.translate("&2&lTactical Belt"), ItemSkinType.BELT, new TacticalBelt(), Arrays.asList(CC.translate("&cIncreases pet ability duration by 1.5x"), CC.translate("&7 (Shackled Golem, Stitches, Sell Bot, Worlock"), CC.translate("&7 Stronghold, Tesla, XP Booster, Anti-Teleblock)")), true),
     HALLOWEEN_BELT(CC.translate("&6&lCandy Sorting Belt"), ItemSkinType.BELT, new HalloweenBelt(), Arrays.asList(CC.translate("&c5% Chance to negate Infinity Luck"), CC.translate("&cper Heroic Armor piece equipped"), CC.translate("&cBypasses Candy Collector's Sugar Rush")), true),
@@ -198,8 +198,8 @@ public enum SkinType {
     //TODO New Pickaxe Skins
 
 
-    MEDIEVAL_AMULET_KING(CC.GoldB + "Amulet of Kings", ItemSkinType.AMULET, new AmuletOfKingsSkin(), Arrays.asList(CC.Red + "15% chance for /end envoy chest loot to auto-/collect"), true),
-    MEDIEVAL_AMULET_KNIGHT(CC.GrayB + "Diamond Necklace", ItemSkinType.AMULET, new DiamondNecklaceSkin(), Arrays.asList(CC.Red + "Increased view distance by 1 chunk"), true),
+    //MEDIEVAL_AMULET_KING(CC.GoldB + "Amulet of Kings", ItemSkinType.AMULET, new AmuletOfKingsSkin(), Arrays.asList(CC.Red + "15% chance for /end envoy chest loot to auto-/collect"), true),
+    //MEDIEVAL_AMULET_KNIGHT(CC.GrayB + "Diamond Necklace", ItemSkinType.AMULET, new DiamondNecklaceSkin(), Arrays.asList(CC.Red + "Increased view distance by 1 chunk"), true),
     CHRISTMAS_AMULET_SNOWFLAKE(CC.RedB + "Preserved Snowflake", ItemSkinType.AMULET, new PreservedSnowflakeSkin(), Arrays.asList(CC.Red + "Immune to Soul Tether, Soul Trap", CC.Red + "Immune to Nature's Wrath", CC.Red + "Able to see invisible player", CC.Gray + " (Feign Death, Undead Ruse)"), true),
     NYE_AMULET(CC.LightPurpleB + "Radioactive Amulet", ItemSkinType.AMULET, new RadioactiveAmulet(), Arrays.asList(CC.Red + "15% chance for double loot from Mobs in /warp space", CC.Red + "-50% Incoming PvE Damage in /warp space"), true),
     CHRISTMAS_AMULET_SANTA(CC.GreenB + "Secret Santa", ItemSkinType.AMULET, new SecretSantaSkin(), Arrays.asList(CC.Red + "Jolly Suprise ability", CC.Gray + " (5% chance to Feign Death for 2.5s, spawning", CC.Gray + " a \"Demonic Gateway\" where you vanished. On", CC.Gray + " your next attack, you will deal 2x damage", CC.Gray + " if dealt from behind, 30s Cooldown)", CC.Red + "Negates enemy Feign Death"), true),
@@ -272,7 +272,7 @@ public enum SkinType {
             CC.translate("&c-25% Incoming Damage from Rogue"),
             CC.translate("&c+10% (Divine) Enlighted Chance")
 
-    ), false),
+    ), true),
 
     VALENTINES_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &d&lBank Roll Backpack"), ItemSkinType.BACKPACK, new MutatedValentinesBackpack(), Arrays.asList(
             CC.translate("&c+50% Opening Combo Damage"),
@@ -282,17 +282,17 @@ public enum SkinType {
             CC.translate("&2Immune to Lifesteal")
 
 
-    ), false),
+    ), true),
 
-    VALENTINES_2022_BELT(CC.translate("&c&lBling Belt"), ItemSkinType.BELT, new ValentinesBelt(), Arrays.asList(CC.Red + "+8 % Outgoing Damage", CC.Red + "+15% Pet Leash Negation", CC.Red + "10% Chance to block Rogue"), false),
-    VALENTINES_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &c&lBling Belt"), ItemSkinType.BELT, new MutatedValentinesBelt(), Arrays.asList(CC.Red + "+8 % Outgoing Damage", CC.Red + "+15% Pet Leash Negation", CC.Red + "10% Chance to block Rogue", CC.DarkGreen + "Soul Master VI"), false),
+    VALENTINES_2022_BELT(CC.translate("&c&lBling Belt"), ItemSkinType.BELT, new ValentinesBelt(), Arrays.asList(CC.Red + "+8 % Outgoing Damage", CC.Red + "+15% Pet Leash Negation", CC.Red + "10% Chance to block Rogue"), true),
+    VALENTINES_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &c&lBling Belt"), ItemSkinType.BELT, new MutatedValentinesBelt(), Arrays.asList(CC.Red + "+8 % Outgoing Damage", CC.Red + "+15% Pet Leash Negation", CC.Red + "10% Chance to block Rogue", CC.DarkGreen + "Soul Master VI"), true),
 
     VALENTINES_2022_BOOTS(CC.translate("&d&lGolden Boots"), ItemSkinType.BOOTS, new ValentinesBoots(), Arrays.asList(
             CC.Red + "Gears IV",
             CC.Red + "1.1x Critical Damage",
             CC.Red + "10% Chance to negate Incoming Knockback",
             CC.Red + "Immune to Witcher Pet"
-    ), false),
+    ), true),
 
 
     VALENTINES_2022_MUTATED_BOOTS(CC.translate("&2&l&nMutated&r &d&lGolden Boots"), ItemSkinType.BOOTS, new MutatedValentinesBoots(), Arrays.asList(
@@ -301,26 +301,26 @@ public enum SkinType {
             CC.Red + "10% Chance to negate Incoming Knockback",
             CC.Red + "Immune to Witcher Pet",
             CC.DarkGreen + "1.25x World Destroyer Duration"
-    ), false),
+    ), true),
 
 
     VALENTINES_2022_SWORD(CC.translate("&c&lSkeleton Key"), ItemSkinType.SWORD, new ValentinesSword(), Arrays.asList(
             CC.translate("&c+10% Rage Damage"),
             CC.translate("&c+1 Max Rage Stack"),
-            CC.translate("&c+10% Outgoing Damage to players on Phoenix CD")), false),
+            CC.translate("&c+10% Outgoing Damage to players on Phoenix CD")), true),
 
     VALENTINES_2022_MUTATED_SWORD(CC.translate("&2&l&nMutated&r &c&lSkeleton Key"), ItemSkinType.SWORD, new MutatedValentinesSword(), Arrays.asList(
             CC.translate("&c+10% Rage Damage"),
             CC.translate("&c+1 Max Rage Stack"),
             CC.translate("&c+10% Outgoing Damage to players on Phoenix CD"),
             CC.translate("&2+25% Chance to Block Utility Belt")
-    ), false),
+    ), true),
 
 
-    SPRING_BREAK_2022_BOOTS(CC.translate("&a&lSink or Swim Flippers"), ItemSkinType.BOOTS, new SinkOrSwipFlippers(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Inverts enemy Ragdoll", CC.Red + "Immune to Freezes", CC.Red + "When wielding a sword:", CC.Gray + " * Deal up to +25% damage if hitting your", CC.Gray + " enemy from behind", CC.Gray + " * 6% chance to silence enemy (Extreme)", CC.Gray + " Insanity and (Vampiric) Devour for 4s.", CC.Red + "Sink Effect", CC.Gray + " * Gain a stack when you negate a freeze.", CC.Gray + " * At 7 stacks, of the next 5 hits affecting", CC.Gray + " your enemy, they will receive Sink Effect", CC.Gray + " tick damage for 15s."), false),
-    SPRING_BREAK_2022_MUTATED_BOOTS(CC.translate("&2&l&nMutated&r &a&lSink or Swim Flippers"), ItemSkinType.BOOTS, new MutatedSinkOrSwipFlippers(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Inverts enemy Ragdoll", CC.Red + "Immune to Freezes", CC.Red + "When wielding a sword:", CC.Gray + " * Deal up to +25% damage if hitting your", CC.Gray + " enemy from behind", CC.Gray + " * 6% chance to silence enemy (Extreme)", CC.Gray + " Insanity and (Vampiric) Devour for 4s.", CC.Red + "Sink Effect", CC.Gray + " * Gain a stack when you negate a freeze.", CC.Gray + " * At 7 stacks, of the next 5 hits affecting", CC.Gray + " your enemy, they will receive Sink Effect", CC.Gray + " tick damage for 15s.", CC.DarkGreen + "Swim Effect", CC.Gray + " * Receive the following effects when hitting", CC.Gray + " enemies with your Sing Effect tick damage:", CC.Gray + "  * +12.5% Outgoing Damage", CC.Gray + "  * Absolute Bypass of enemy Holy White", CC.Gray + "  Scrolls (for 1 piece only)"), false),
-    SPRING_BREAK_2022_SWORD_YELLOW(CC.translate("&e&lWet Noodle Sword"), ItemSkinType.SWORD, new WetNoodleSword(), Arrays.asList(CC.Red + "For every 14HP you lose, you will deal +33%", CC.Red + "Outgoing Damage for 2s.", CC.Red + "2.5% chance when dealing damage to activate", CC.Red + "Wet Noodle Ability for 10s:", CC.Gray + " * All enemies you hit will receive +1 stack", CC.Gray + " * After 10s, all affected enemies will receive", CC.Gray + " -0.25HP for each stack they have (up to a", CC.Gray + " max of 50% of their current health)", CC.Gray + " * The enemy you hit to proc this ability will", CC.Gray + " also receive the following effects:", CC.Gray + "  * Mutated Crystal Silence for 10s", CC.Gray + "  * +7.5% Incoming Mutated Crystal Damage", CC.Gray + "  for 10s"), false),
-    SPRING_BREAK_2022_MUTATED_SWORD_YELLOW(CC.translate("&2&l&nMutated&r &e&lWet Noodle Sword"), ItemSkinType.SWORD, new MutatedWetNoodleSword(), Arrays.asList(CC.Red + "For every 14HP you lose, you will deal +33%", CC.Red + "Outgoing Damage for 2s.", CC.Red + "2.5% chance when dealing damage to activate", CC.Red + "Wet Noodle Ability for 10s:", CC.Gray + " * All enemies you hit will receive +1 stack", CC.Gray + " * After 10s, all affected enemies will receive", CC.Gray + " -0.25HP for each stack they have (up to a", CC.Gray + " max of 50% of their current health)", CC.Gray + " * The enemy you hit to proc this ability will", CC.Gray + " also receive the following effects:", CC.Gray + "  * Mutated Crystal Silence for 10s", CC.Gray + "  * +7.5% Incoming Mutated Crystal Damage", CC.Gray + "  for 10s", CC.DarkGreen + "For each player hit while your Wet Noodle effect", CC.DarkGreen + "is active, the duration will increase by 2s.", CC.Gray + " (up to a maximum of increase of 16s)"), false),
+    SPRING_BREAK_2022_BOOTS(CC.translate("&a&lSink or Swim Flippers"), ItemSkinType.BOOTS, new SinkOrSwipFlippers(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Inverts enemy Ragdoll", CC.Red + "Immune to Freezes", CC.Red + "When wielding a sword:", CC.Gray + " * Deal up to +25% damage if hitting your", CC.Gray + " enemy from behind", CC.Gray + " * 6% chance to silence enemy (Extreme)", CC.Gray + " Insanity and (Vampiric) Devour for 4s.", CC.Red + "Sink Effect", CC.Gray + " * Gain a stack when you negate a freeze.", CC.Gray + " * At 7 stacks, of the next 5 hits affecting", CC.Gray + " your enemy, they will receive Sink Effect", CC.Gray + " tick damage for 15s."), true),
+    SPRING_BREAK_2022_MUTATED_BOOTS(CC.translate("&2&l&nMutated&r &a&lSink or Swim Flippers"), ItemSkinType.BOOTS, new MutatedSinkOrSwipFlippers(), Arrays.asList(CC.Red + "Gears IV", CC.Red + "Inverts enemy Ragdoll", CC.Red + "Immune to Freezes", CC.Red + "When wielding a sword:", CC.Gray + " * Deal up to +25% damage if hitting your", CC.Gray + " enemy from behind", CC.Gray + " * 6% chance to silence enemy (Extreme)", CC.Gray + " Insanity and (Vampiric) Devour for 4s.", CC.Red + "Sink Effect", CC.Gray + " * Gain a stack when you negate a freeze.", CC.Gray + " * At 7 stacks, of the next 5 hits affecting", CC.Gray + " your enemy, they will receive Sink Effect", CC.Gray + " tick damage for 15s.", CC.DarkGreen + "Swim Effect", CC.Gray + " * Receive the following effects when hitting", CC.Gray + " enemies with your Sing Effect tick damage:", CC.Gray + "  * +12.5% Outgoing Damage", CC.Gray + "  * Absolute Bypass of enemy Holy White", CC.Gray + "  Scrolls (for 1 piece only)"), true),
+    SPRING_BREAK_2022_SWORD_YELLOW(CC.translate("&e&lWet Noodle Sword"), ItemSkinType.SWORD, new WetNoodleSword(), Arrays.asList(CC.Red + "For every 14HP you lose, you will deal +33%", CC.Red + "Outgoing Damage for 2s.", CC.Red + "2.5% chance when dealing damage to activate", CC.Red + "Wet Noodle Ability for 10s:", CC.Gray + " * All enemies you hit will receive +1 stack", CC.Gray + " * After 10s, all affected enemies will receive", CC.Gray + " -0.25HP for each stack they have (up to a", CC.Gray + " max of 50% of their current health)", CC.Gray + " * The enemy you hit to proc this ability will", CC.Gray + " also receive the following effects:", CC.Gray + "  * Mutated Crystal Silence for 10s", CC.Gray + "  * +7.5% Incoming Mutated Crystal Damage", CC.Gray + "  for 10s"), true),
+    SPRING_BREAK_2022_MUTATED_SWORD_YELLOW(CC.translate("&2&l&nMutated&r &e&lWet Noodle Sword"), ItemSkinType.SWORD, new MutatedWetNoodleSword(), Arrays.asList(CC.Red + "For every 14HP you lose, you will deal +33%", CC.Red + "Outgoing Damage for 2s.", CC.Red + "2.5% chance when dealing damage to activate", CC.Red + "Wet Noodle Ability for 10s:", CC.Gray + " * All enemies you hit will receive +1 stack", CC.Gray + " * After 10s, all affected enemies will receive", CC.Gray + " -0.25HP for each stack they have (up to a", CC.Gray + " max of 50% of their current health)", CC.Gray + " * The enemy you hit to proc this ability will", CC.Gray + " also receive the following effects:", CC.Gray + "  * Mutated Crystal Silence for 10s", CC.Gray + "  * +7.5% Incoming Mutated Crystal Damage", CC.Gray + "  for 10s", CC.DarkGreen + "For each player hit while your Wet Noodle effect", CC.DarkGreen + "is active, the duration will increase by 2s.", CC.Gray + " (up to a maximum of increase of 16s)"), true),
     SPRING_BREAK_2022_HELMET(CC.translate("&a&lUndertow Helmet"), ItemSkinType.HELMET, new UndertowHelmet(), Arrays.asList(
             CC.translate("&c1.5% chance when taking damage to summon a"),
             CC.translate("&c5 block Undertow Field for 15s. You receive:"),
@@ -333,7 +333,7 @@ public enum SkinType {
             CC.translate("  &7* +3% Incoming Damage"),
             CC.translate(" &7* Phoenix Silence"),
             CC.translate(" &7* Inventory Pet Silence")
-    ), false),
+    ), true),
     SPRING_BREAK_2022_MUTATED_HELMET(CC.translate("&2&l&nMutated&r &a&lUndertow Helmet"), ItemSkinType.HELMET, new MutatedUndertowHelmet(), Arrays.asList(
             CC.translate("&c1.5% chance when taking damage to summon a"),
             CC.translate("&c5 block Undertow Field for 15s. You receive:"),
@@ -351,7 +351,7 @@ public enum SkinType {
             CC.translate(" &2* Custom Block Effect Silence:"),
             CC.translate("  &7(Cauldron, Frosted Snowman, Heart Cookies,"),
             CC.translate("  &7Pumpkin Pie, Roast Turkey, Teddy Bear")
-    ), false),
+    ), true),
     SPRING_BREAK_2022_AMULET(CC.translate("&e&lCannonball!!! Amulet"), ItemSkinType.AMULET, new CannonballAmulet(), Arrays.asList(
             CC.translate("&cCrouch to activate Cannonball Ability in 3s."),
             CC.translate("&cWhen activated, you will receive immunity to"),
@@ -362,7 +362,7 @@ public enum SkinType {
             CC.translate(" &7* Limits enemy stackable enchants by 75%"),
             CC.translate(" &7* Ender Pearl Block"),
             CC.translate(" &7(Cooldown: 5 minutes")
-    ), false),
+    ), true),
     SPRING_BREAK_2022_BACKPACK(CC.translate("&a&lSpray and Pray Backpack"), ItemSkinType.BACKPACK, new SprayPrayBackpack(), Arrays.asList(
             CC.translate("&c2% chance when dealing damage to inflict the"),
             CC.translate("&cfollowing Spray and Pray Ability for 10s:"),
@@ -372,7 +372,7 @@ public enum SkinType {
             CC.translate(" &7* When receiving this tick damage, your enemy"),
             CC.translate(" &7 will infect a nearby enemy, within 7 blocks, with"),
             CC.translate(" &7* the same effects and remaining time.")
-    ), false),
+    ), true),
     SPRING_BREAK_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &a&lSpray and Pray Backpack"), ItemSkinType.BACKPACK, new MutatedSprayPrayBackpack(), Arrays.asList(
             CC.translate("&c2% chance when dealing damage to inflict the"),
             CC.translate("&cfollowing Spray and Pray Ability for 10s:"),
@@ -384,12 +384,12 @@ public enum SkinType {
             CC.translate(" &7 the same effects and remaining time."),
             CC.translate(" &2* A nearby ally, within 7 blocks, will also"),
             CC.translate(" &2receive Regeneration I for the remaining time.")
-    ), false),
+    ), true),
     SPRING_BREAK_2022_BELT(CC.translate("&e&lSplash Zone Belt"), ItemSkinType.BELT, new SplashZoneBelt(), Arrays.asList(
             CC.translate("&cAuto Bless"),
             CC.translate("&c-20% Silence duration"),
             CC.translate("&c+10% Outgoing Damage to Silenced enemies")
-    ), false),
+    ), true),
 
     SPRING_BREAK_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &e&lSplash Zone Belt"), ItemSkinType.BELT, new MutatedSplashZoneBelt(), Arrays.asList(
             CC.translate("&cAuto Bless"),
@@ -398,26 +398,26 @@ public enum SkinType {
             CC.translate("&2Immune to Lifesteal"),
             CC.translate("&2Immune to Opening Combo")
 
-    ), false),
+    ), true),
 
     EASTER_2022_HELMET(CC.translate("&d&lMad Hat"), ItemSkinType.HELMET, new MadHat(), Arrays.asList(
             CC.translate("&c1.25x Banshee Duration"),
             CC.translate("&cImmune to opening combo enchant"),
             CC.translate("&cBypass Utility Belt Skin")
-    ), false),
+    ), true),
 
     EASTER_2022_MUTATED_HELMET(CC.translate("&2&l&nMutated&r &d&lMad Hat"), ItemSkinType.HELMET, new MutatedMadHat(), Arrays.asList(
             CC.translate("&c1.25x Banshee Duration"),
             CC.translate("&cImmune to opening combo enchant"),
             CC.translate("&cBypass Utility Belt Skin"),
             CC.translate("&2Chance to fully heal your hp when below 14HP")
-    ), false),
+    ), true),
 
     EASTER_2022_BACKPACK(CC.translate("&d&lDoor to Wonderland"), ItemSkinType.BACKPACK, new DoorWonderland(), Arrays.asList(
             CC.translate("&cImmune to Hero Killer"),
             CC.translate("&cImmune to trap blockers"),
             CC.translate("&c-35% Silence duration")
-    ), false),
+    ), true),
 
     EASTER_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &d&lDoor to Wonderland"), ItemSkinType.BACKPACK, new MutatedDoorWonderland(), Arrays.asList(
             CC.translate("&cImmune to Hero Killer"),
@@ -426,13 +426,13 @@ public enum SkinType {
             CC.translate("&2Escape Ability"),
             CC.translate("&7 When sneaking, remove all (trap) doors, fence"),
             CC.translate("&7 gates and ladders in a 6x6 radius (15m cooldown)")
-    ), false),
+    ), true),
 
     EASTER_2022_BELT(CC.translate("&e&lMischievous Tail"), ItemSkinType.BELT, new Tail(), Arrays.asList(
             CC.translate("&c100% chance to monopoly atleast 1 piece"),
             CC.translate("&cImmune to (Demonic) Lifesteal"),
             CC.translate("&c50% chance to bypass Bloodstained Galoshes")
-    ), false),
+    ), true),
 
     EASTER_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &e&lMischievous Tail"), ItemSkinType.BELT, new MutatedTail(), Arrays.asList(
             CC.translate("&c100% chance to monopoly atleast 1 piece"),
@@ -440,14 +440,14 @@ public enum SkinType {
             CC.translate("&c50% chance to bypass Bloodstained Galoshes"),
             CC.translate("&2Stun Ability"),
             CC.translate("&7 Chance to stun nearby enemies upon being hit")
-    ), false),
+    ), true),
 
     EASTER_2022_BOOTS(CC.translate("&d&lMary Janes"), ItemSkinType.BOOTS, new MaryJanes(), Arrays.asList(
             CC.translate("&cGears IV"),
             CC.translate("&cImmune to Amulet of Corruption"),
             CC.translate("&c1.25x Critical Damage"),
             CC.translate("&cImmune to slowness and freezes")
-    ), false),
+    ), true),
 
     EASTER_2022_MUTATED_BOOTS(CC.translate("&2&l&nMutated&r &d&lMary Janes"), ItemSkinType.BOOTS, new MutatedMaryJanes(), Arrays.asList(
             CC.translate("&cGears IV"),
@@ -455,7 +455,7 @@ public enum SkinType {
             CC.translate("&c1.25x Critical Damage"),
             CC.translate("&cImmune to slowness and freezes"),
             CC.translate("&2-33% Rogue Enchant damage")
-    ), false),
+    ), true),
 
     EASTER_2022_SWORD(CC.translate("&e&lQueen's Verdict"), ItemSkinType.SWORD, new QueensVerdict(), Arrays.asList(
             CC.translate("&cBypass enemy (Paladin) Armored"),
@@ -463,7 +463,7 @@ public enum SkinType {
             CC.translate("&c15% chance to bypass enemy Ancient Crystals"),
             CC.translate("&cDevour VI"),
             CC.translate("&c20% chance to block enemy Divine Immolation")
-    ), false),
+    ), true),
 
     EASTER_2022_MUTATED_SWORD(CC.translate("&2&l&nMutated&r &e&lQueen's Verdict"), ItemSkinType.SWORD, new MutatedQueensVerdict(), Arrays.asList(
             CC.translate("&cBypass enemy (Paladin) Armored"),
@@ -472,13 +472,13 @@ public enum SkinType {
             CC.translate("&cDevour VI"),
             CC.translate("&c20% chance to block enemy Divine Immolation"),
             CC.translate("&2Double Strike IV")
-    ), false),
+    ), true),
 
     EASTER_2022_AMULET(CC.translate("&e&lCheshire Grin"), ItemSkinType.AMULET, new Grin(), Arrays.asList(
             CC.translate("&c-30% Incoming Rage Damage"),
             CC.translate("&cImmune to Divine Light Enchant"),
             CC.translate("&c-5% Incoming damage")
-    ), false),
+    ), true),
 
 
     EASTER_2022_MUTATED_AMULET(CC.translate("&2&l&nMutated&r &e&lCheshire Grin"), ItemSkinType.AMULET, new MutatedGrin(), Arrays.asList(
@@ -486,7 +486,7 @@ public enum SkinType {
             CC.translate("&cImmune to Divine Light Enchant"),
             CC.translate("&c-5% Incoming damage"),
             CC.translate("&2Immune to Stitches & Skrrt Pet")
-    ), false),
+    ), true),
 
 
     JULY4TH_2022_SWORD(CC.translate("&a&lPrickle Pear"), ItemSkinType.SWORD, new PricklePear(), Arrays.asList(
@@ -496,14 +496,14 @@ public enum SkinType {
             CC.translate("&cPrickle Chaos"),
             CC.translate("&7 Chance to struck enemy with a"),
             CC.translate("&7 prickle and make them bleed for 5s.")
-    ), false),
+    ), true),
 
     JULY4TH_2022_BELT(CC.translate("&6&lCowboy Chaps"), ItemSkinType.BELT, new CowboyChaps(), Arrays.asList(
             CC.translate("&cImmune to Stitches Pet Ability"),
             CC.translate("&c+6% Outgoing Damage"),
             CC.translate("&cGodly Overload IV"),
             CC.translate("&cAuto Bless")
-    ), false),
+    ), true),
 
     JULY4TH_2022_HELMET(CC.translate("&6&lCowboy Hat"), ItemSkinType.HELMET, new CowboyHat(), Arrays.asList(
             CC.translate("&c+15% Outgoing Crystal Damage"),
@@ -511,7 +511,7 @@ public enum SkinType {
             CC.translate("&cImmune to (Heroic) Lifesteal"),
             CC.translate("&c-20% Damage from enemy (Bloody) Deep Wounds"),
             CC.translate("&c15% Pet Leash Negation")
-    ), false),
+    ), true),
 
     PRISONS_DARKSTAR_PICKAXE_BLUE(CC.translate("&3&lDarkstar Chaser"), ItemSkinType.AXE, new DarkstarAxe(), Arrays.asList(
             CC.translate("&cBypass enemy Cupids Heart"),
@@ -521,7 +521,7 @@ public enum SkinType {
             CC.translate("&cBypass enemy (Heroic) Tank"),
             CC.translate("&c15% Chance to block Divine Immolation")
 
-    ), false),
+    ), true),
 
 
     //=================
@@ -534,19 +534,19 @@ public enum SkinType {
             CC.translate("&c3% chance when taking damage to make you"),
             CC.translate("&cand all allies within a 7 block radius"),
             CC.translate("&cImmune to Soul Enchant Damage for 10s")
-    ), false),
+    ), true),
 
     BACK_TO_SCHOOL_2022_BOOTS(CC.translate("&2&lCrocs \"Gators\""), ItemSkinType.BOOTS, new CrocsGatorsSkin(), Arrays.asList(
             CC.translate("&c33% chance to reflect cage back at the enemy"),
             CC.translate("&cImmune to Slownesses/Freezes"),
             CC.translate("&c2% chance when Cactus procs to deal +10% Outgoing"),
-            CC.translate("&cDamage and receive -3% Incoming Damage for 5s")), false),
+            CC.translate("&cDamage and receive -3% Incoming Damage for 5s")), true),
 
     BACK_TO_SCHOOL_2022_BACKPACK(CC.translate("&8&lKeg"), ItemSkinType.BACKPACK, new KegSkin(), Arrays.asList(
             CC.translate("&c-75% Silence Duration"),
             CC.translate("&cBlocks all enemy Ragdoll and Rocket Escape"),
             CC.translate("&c-15% Incoming Soul Enchant Damage")
-    ), false),
+    ), true),
 
     BACK_TO_SCHOOL_2022_AXE(CC.translate("&8&lCalculator"), ItemSkinType.AXE, new CalculatorSkin(), Arrays.asList(
             CC.translate("&cOpening Combo V"),
@@ -556,7 +556,7 @@ public enum SkinType {
             CC.translate("&cyour enemy's Heroic Weapon Enchants for 5s"),
             CC.translate("&c2.5% chance when dealing damage to make your"),
             CC.translate("&cenemy Soul Enchants cost 10x more for 5s")
-    ), false),
+    ), true),
 
 
 
@@ -567,23 +567,23 @@ public enum SkinType {
             CC.translate("&7* Grim Hood /skin"),
             CC.translate("&7* Grim Cloak /skin"),
             CC.translate("&7* Momento Mori /skin")
-    ), false),
+    ), true),
     HALLOWEEN_2022_AMULET(CC.translate("&4&lMomento Mori"), ItemSkinType.AMULET, new MomentoMoriSkin(), Arrays.asList(
             CC.translate("&cImmune to Rogue Enchant"),
             CC.translate("&c30 Chance to block Champion Ability"),
             CC.translate("&c+5% Outgoing Damage to players wielding Diamond Weapons")
-    ), false),
+    ), true),
     HALLOWEEN_2022_BACKPACK(CC.translate("&4&lGrim Cloak"), ItemSkinType.BACKPACK, new GrimCloakSkin(), Arrays.asList(
             CC.translate("&c-50% Incoming Rogue Damage"),
             CC.translate("&c1.25x Rage Damage Multiplier"),
             CC.translate("&c+25% Extra Damage from behind")
-    ), false),
+    ), true),
     HALLOWEEN_2022_AXE(CC.translate("&4&lGrim Axe"), ItemSkinType.AXE, new GrimAxeSkin(), Arrays.asList(
             CC.translate("&cOpening Combo V"),
             CC.translate("&cSoul Master VI"),
             CC.translate("&c5% chance to silence enemy Soul Harvester for 3s"),
             CC.translate("&c+15% Outgoing Damage to enemies with Soul Mode active")
-    ), false),
+    ), true),
 
 
 
@@ -592,25 +592,25 @@ public enum SkinType {
             CC.translate("&c2% chance to silence enemy Soul Enchants for 5s"),
             CC.translate("&c2% chance when taking damage to invert"),
             CC.translate("&cDivine Immolation tick damage for 5s"),
-            CC.translate("&ccausing it to heal instead of hurt you.")), false),
+            CC.translate("&ccausing it to heal instead of hurt you.")), true),
 
     THANKSGIVING_2022_BELT(CC.translate("&e&lMatrix Master Belt"), ItemSkinType.BELT, new MatrixMasterSkin(), Arrays.asList(
             CC.translate("&cLimits enemy stackable enchant level by 50%"),
             CC.translate("&cImmune to World Destroyer Pet"),
             CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
-            CC.translate("&c25% chance to block Ultra Rage")), false),
+            CC.translate("&c25% chance to block Ultra Rage")), true),
 
     THANKSGIVING_2022_BOOTS(CC.translate("&6&lMainframe Boots"), ItemSkinType.BOOTS, new MainframeSkin(), Arrays.asList(
             CC.translate("&cGears IV"),
             CC.translate("&c5% chance to silence enemy Heroic Enchant Reflect for 5s"),
             CC.translate("&cImmune to Deep Bleed slowness and Soul Trap"),
-            CC.translate("&c5% chance to negate enemy Rogue for 5s when their health is below 20 HP")), false),
+            CC.translate("&c5% chance to negate enemy Rogue for 5s when their health is below 20 HP")), true),
 
     THANKSGIVING_2022_SWORD_GREEN(CC.translate("&e&lRay Sabre"), ItemSkinType.SWORD, new RaySabreSkin(), Arrays.asList(
             CC.translate("&cSoul Master VI"),
             CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.25x"),
             CC.translate("&c33% chance to block Divine Immolation"),
-            CC.translate("&c3% chance to block enemy Defensive Crystals for 7s")), false),
+            CC.translate("&c3% chance to block enemy Defensive Crystals for 7s")), true),
 
 
     CHRISTMAS_2022_HELMET_ACTIVE(CC.translate("&9&lFrost Monster Trophy"), ItemSkinType.HELMET, new FrostMonsterSkin(), Arrays.asList(
@@ -618,27 +618,27 @@ public enum SkinType {
             CC.translate("&c50% chance to block Divine Immolation"),
             CC.translate("&c-15% Incoming Damage from enemies wielding Axes"),
             CC.translate("&c+5% Outgoing Damage to enemies wielding Swords"),
-            CC.translate("&c50% chance to dodge offensive Titan Attributes")), false),
+            CC.translate("&c50% chance to dodge offensive Titan Attributes")), true),
 
     CHRISTMAS_2022_AMULET_ACTIVE(CC.translate("&b&lIcicle Amulet"), ItemSkinType.AMULET, new IcicleSkin(), Arrays.asList(
             CC.translate("&cImmune to enemy Amulet of Corruption"),
             CC.translate("&cImmune to Divine Immolation"),
             CC.translate("&cImmune to Hero Killer"),
             CC.translate("&c+15% Outgoing Soul Enchant Damage"),
-            CC.translate("&c-25% damage from enemy Rage")), false),
+            CC.translate("&c-25% damage from enemy Rage")), true),
 
     CHRISTMAS_2022_SWORD_ACTIVE(CC.translate("&b&lFrostbound Sword"), ItemSkinType.SWORD, new FrostBoundSkin(), Arrays.asList(
             CC.translate("&cOpening Combo VI"),
             CC.translate("&c2.5% chance to silence enemy (Demonic) Lifesteal for 3s"),
             CC.translate("&c1% chance to silence enemy Titan Attributes for 3s"),
             CC.translate("&c+5% Outgoing Damage"),
-            CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.25x")), false),
+            CC.translate("&cIncreases outgoing damage from Soul Enchants by 1.25x")), true),
 
     CHRISTMAS_2022_BACKPACK(CC.translate("&9&lArctic Excursion Pack"), ItemSkinType.BACKPACK, new ArcticExcursionSkin(), Arrays.asList(
             CC.translate("&c5% chance to silence enemy Ragdoll for 5s"),
             CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
             CC.translate("&c+5% Outgoing PvP Damage when using a sword"),
-            CC.translate("&cImmune to enemy Rogue when below 10 HP")), false),
+            CC.translate("&cImmune to enemy Rogue when below 10 HP")), true),
     ;
 
 
