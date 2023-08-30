@@ -87,7 +87,7 @@ public class CosmicKOTHPlugin
     private String baseName = "Outpost";
     private String serverType = "hcf";
     private Map<String, String> cachedMessages = new HashMap<String, String>();
-    private World world = Bukkit.getWorld("world_koth");
+    private World world = Bukkit.getWorld("world");
 
     private Map<String, Integer> kothWins;
 
@@ -262,7 +262,7 @@ public class CosmicKOTHPlugin
     }
 
     public void registerCenter() {
-        ProtectedRegion region = WorldGuardUtils.getRegionFromName("world_koth", "koth_center");
+        ProtectedRegion region = WorldGuardUtils.getRegionFromName("world", "koth_center");
         if (region != null) {
             BlockVector maxVector = region.getMaximumPoint();
             BlockVector minVector = region.getMinimumPoint();

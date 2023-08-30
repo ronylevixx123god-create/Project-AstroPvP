@@ -57,7 +57,7 @@ public class InventoryUtils {
         ArrayList lore = Lists.newArrayList();
         lore.add("");
         lore.add(CC.WhiteB + "KOTH Status: " + status);
-        lore.add(CC.WhiteB + "Location: " + CC.LightPurpleB + "Koth warp " + CC.Gray + "(X-150, Y100, Z-150)");
+        lore.add(CC.WhiteB + "Location: " + CC.LightPurpleB + "Desert Koth " + CC.Gray + "(X2500, Y19, Z4600)");
         KothWorldType worldType = KothWorldType.getFromIndex(RewardUtils.getMapIndex());
         if (CosmicKOTHAPI.isKOTHRunning()) {
             KothEventTask KET = CosmicKOTHPlugin.get_().getKoth();

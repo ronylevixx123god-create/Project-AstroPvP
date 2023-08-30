@@ -40,6 +40,10 @@ final class EssentialsWarpAliasesListener
                 continue;
             }
 
+            if (warp.equalsIgnoreCase("koth")) {
+                continue;
+            }
+
             if (warp.equalsIgnoreCase("space")) continue;
 
             if (!e.getMessage().toLowerCase().equals("/" + warp.toLowerCase())) continue;

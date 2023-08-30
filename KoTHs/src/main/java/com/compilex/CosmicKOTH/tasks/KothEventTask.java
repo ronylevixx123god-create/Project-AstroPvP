@@ -289,7 +289,7 @@ public class KothEventTask
     }
 
     public List<Player> getKothPlayers() {
-        return Bukkit.getWorld("world_koth").getPlayers();
+        return Bukkit.getWorld("world").getPlayers();
     }
 
     public boolean isCapped() {
