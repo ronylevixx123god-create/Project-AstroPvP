@@ -504,6 +504,8 @@ public class AstroCore extends JavaPlugin {
         //getServer().getPluginManager().registerEvents(new JackpotListener(), this);
         getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
+        getServer().getPluginManager().registerEvents(new KnockbackFixListener(), this);
+
     }
 
     public void registerCustomItems() {

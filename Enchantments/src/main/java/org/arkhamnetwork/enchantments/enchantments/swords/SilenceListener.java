@@ -23,13 +23,28 @@ public final class SilenceListener implements Listener {
         if (!(e.getEntity() instanceof Player)) return;
         if (e.getDamager().hasMetadata("banshee_active")) return;
         if (e.getDamager().hasMetadata("mutated_banshee")) return;
+        if (e.getEntity().hasMetadata("neutralized")) {
+            e.setDamage(e.getDamage() * 1.25D);
+        }
 
         if (e.getDamage() > 0.0D && e.getEntity() instanceof Player && e.getEntity().hasMetadata("noDefenseProcs") && ((Player) e.getEntity()).getKiller() != null) {
+            int stacks = ((MetadataValue)e.getEntity().getMetadata("noDefenseProcs").get(0)).asInt();
+            double extraStackDmg = 0.07 * (double)stacks;
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.BACK_TO_SCHOOL_2021_HELMET) || AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.SPRING_BREAK_2022_MUTATED_BELT)) {
-                e.setDamage(e.getDamage() * (1.15D ));
+                e.setDamage(e.getDamage() * (1.3D + extraStackDmg));
             } else {
-                e.setDamage(e.getDamage() * (1.1));
+                e.setDamage(e.getDamage() * (1.25 + extraStackDmg));
 
+            }
+
+            for(int i = 0; i < stacks; ++i) {
+
+                try {
+                    de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), e.getEntity().getLocation().clone().add(0.0D, 1.0D, 0.0D), 1.0f, 1.0f, 1.0f, 0.1f, 15);
+
+                } catch (Exception exception) {
+                    exception.printStackTrace();
+                }
             }
         }
 

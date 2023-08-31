@@ -7,9 +7,11 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.utils.ItemSkinUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Projectile;
@@ -61,12 +63,15 @@ public class HeroicDeathbringer
 
         @EventHandler
         public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
+            if (e.isCancelled()) return;
             Entity damage = e.getDamager();
             if (doubleDamage.contains(damage)) {
                 double random = Math.random();
-                double chance = 0.02 * (double)playerLevels.get(damage instanceof Projectile ? ((Projectile)damage).getShooter() : damage).intValue();
-                if (random < chance * 0.5) {
-                    e.setDamage(e.getDamage() * 1.2);
+                double chance = 0.02 * (double) playerLevels.get(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage);
+                if (random < chance) {
+                    e.setDamage(e.getDamage() * 2);
+                    DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.translate("&d&l* PLANETARY DEATHBRINGER *"), "CITADEL");
+                    e.getEntity().sendMessage(CC.translate("&d&l* PLANETARY DEATHBRINGER *"));
                 }
             }
         }

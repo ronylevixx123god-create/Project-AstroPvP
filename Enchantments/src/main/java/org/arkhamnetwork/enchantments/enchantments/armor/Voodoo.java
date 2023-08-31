@@ -23,7 +23,7 @@ public class Voodoo extends CustomEnchantment {
         final double random = Math.random();
         final double chance = 0.025 * level;
         if (random < chance && e.getCause() == EntityDamageEvent.DamageCause.ENTITY_ATTACK && attacker != null) {
-            attacker.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, time * 20 + 25, (int) ((level >= 4) ? 1 : 0)));
+            //attacker.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, time * 20 + 25, (int) ((level >= 4) ? 1 : 0)));
             de.inventivegames.particle.ParticleEffect.MOB_SPELL.sendToPlayers(Bukkit.getOnlinePlayers(), attacker.getEyeLocation(), 0,0.5f,0,0.4f,15);
         }
     }

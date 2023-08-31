@@ -27,6 +27,7 @@
 package org.arkhamnetwork.Arkkit.patches;
 
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
+import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
@@ -70,6 +71,9 @@ final class HotbarArmorSwapListener
             inv.setHelmet(is);
             player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
+                for (SkinType skinType : AstroItemSkinsAPI.getItemSkinByItem(old)) {
+                    skinType.getItemSkin().onUnequip(player);
+                }
                 inv.setItemInHand(old);
             }
         } else if (n.contains("chestplate")) {
@@ -77,6 +81,9 @@ final class HotbarArmorSwapListener
             inv.setChestplate(is);
             player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
+                for (SkinType skinType : AstroItemSkinsAPI.getItemSkinByItem(old)) {
+                    skinType.getItemSkin().onUnequip(player);
+                }
                 inv.setItemInHand(old);
             }
         } else if (n.contains("leggings")) {
@@ -84,6 +91,9 @@ final class HotbarArmorSwapListener
             inv.setLeggings(is);
             player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
+                for (SkinType skinType : AstroItemSkinsAPI.getItemSkinByItem(old)) {
+                    skinType.getItemSkin().onUnequip(player);
+                }
                 inv.setItemInHand(old);
             }
         } else if (n.contains("boots")) {
@@ -91,6 +101,9 @@ final class HotbarArmorSwapListener
             inv.setBoots(is);
             player.setItemInHand(null);
             if (old != null && old.getType() != Material.AIR) {
+                for (SkinType skinType : AstroItemSkinsAPI.getItemSkinByItem(old)) {
+                    skinType.getItemSkin().onUnequip(player);
+                }
                 inv.setItemInHand(old);
             }
         }

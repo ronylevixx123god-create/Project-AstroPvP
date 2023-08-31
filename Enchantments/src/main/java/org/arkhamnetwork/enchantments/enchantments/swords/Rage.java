@@ -58,8 +58,8 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.resetRageStack();
             }
 
-            double rageDamage = Math.max(1, rageStacksCache.getRageStack()/Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageDivider"));
-
+            //double rageDamage = Math.max(1, rageStacksCache.getRageStack()/Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageDivider"));
+            double rageDamage = Math.max(1, (1 + (rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageDivider"))));
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
                 //rageDamage *= 0.5;
@@ -97,7 +97,9 @@ public class Rage extends CustomEnchantment {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.1) {
                 target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
             } else {
-                event.setDamage(event.getDamage() * (1 + rageDamage));
+                //event.setDamage(event.getDamage() * (1 + rageDamage));
+                event.setDamage(event.getDamage() * rageDamage);
+
             }
 
 
@@ -110,7 +112,6 @@ public class Rage extends CustomEnchantment {
             rageStacksCache.updateVictim((Player) target);
 
             target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
-
         }
     }
 

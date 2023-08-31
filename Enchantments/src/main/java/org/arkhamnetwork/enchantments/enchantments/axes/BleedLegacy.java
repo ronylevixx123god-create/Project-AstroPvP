@@ -50,7 +50,7 @@ extends CustomEnchantment {
         }
         if (random < chance && playerHit instanceof Player) {
             if (random < chance1) {
-                playerHit.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, time * 20, level - 1));
+                //playerHit.addPotionEffect(new PotionEffect(PotionEffectType.WEAKNESS, time * 20, level - 1));
             }
             if (!playerHit.hasMetadata("ce_bleeding")) {
                 new BleedEvent((Player)playerHit, amp, time).start();

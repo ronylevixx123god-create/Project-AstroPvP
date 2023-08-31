@@ -32,11 +32,11 @@ extends CustomEnchantment {
     }
 
     public void applyEquipEffect(Player player, int enchantLevel) {
-        player.setMetadata("normal_reflect_enchant", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
+        //player.setMetadata("normal_reflect_enchant", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)enchantLevel));
     }
 
     public void applyUnequipEffect(Player player, int enchantLevel) {
-        player.removeMetadata("normal_reflect_enchant", (Plugin)Enchantments.getInstance());
+        //player.removeMetadata("normal_reflect_enchant", (Plugin)Enchantments.getInstance());
     }
 
     public static int getReflectLevel(LivingEntity player, String key) {

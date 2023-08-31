@@ -16,10 +16,10 @@ public class HeroicReflect extends HeroicCustomEnchantment
     }
 
     public void applyEquipEffect(final Player player, final int enchantLevel) {
-        player.setMetadata("heroic_reflect_enchant", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enchantLevel));
+        //player.setMetadata("heroic_reflect_enchant", new FixedMetadataValue((Plugin)Enchantments.getInstance(), enchantLevel));
     }
 
     public void applyUnequipEffect(final Player player, final int enchantLevel) {
-        player.removeMetadata("heroic_reflect_enchant", (Plugin)Enchantments.getInstance());
+        //player.removeMetadata("heroic_reflect_enchant", (Plugin)Enchantments.getInstance());
     }
 }

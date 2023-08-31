@@ -95,6 +95,7 @@ public enum TieredEnchantments {
     disarmor(5),
     lifesteal(5),
     rage(5),
+    shiva(5),
     drunk(5),
     clarity(5),
     devour(5),
