@@ -51,7 +51,7 @@ public class EntityStackerListener implements Listener {
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
     private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.GRINDER);
     private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
-    private final ItemStack memoryChest = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MemoryChest").createClaimableItem(false);
+    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox").createClaimableItem(false);
 
 
     private Map<UUID, Long> blazeCooldown;
@@ -92,6 +92,15 @@ public class EntityStackerListener implements Listener {
                 e.getDamager().sendMessage(CC.translate("&c&l(!)&c You cannot interact with blazes until you have solved the captcha, if you think there is an issue, relog and it will be resolved."));
                 return;
             }
+
+            boolean allowFullInvGrinding = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("allow-full-inv-grinding");
+
+            if (p.getInventory().firstEmpty() == -1 && !allowFullInvGrinding) {
+                p.sendMessage(CC.translate("&c&l(!)&c Clear some space in your inventory before you keep grinding mobs!"));
+                p.playSound(p.getLocation(), Sound.VILLAGER_NO, 2f, 2f);
+                return;
+            }
+
             double exp = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("baseXp");
             int remove = 1;
 
@@ -164,7 +173,7 @@ public class EntityStackerListener implements Listener {
                 remove--;
             }
             cache.addExp((int) exp);
-            plugin.addPlayerToAfkGrinding(p);
+            //plugin.addPlayerToAfkGrinding(p);
             boolean showParticles = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("showGrindParticles");
             if (showParticles) {
                 de.inventivegames.particle.ParticleEffect.CRIT.sendToPlayers(Bukkit.getOnlinePlayers(), entity.getLocation(), 0, 1, 0, 0.4f, 12);
@@ -206,14 +215,6 @@ public class EntityStackerListener implements Listener {
         }
 
 
-        boolean allowFullInvGrinding = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getBoolean("allow-full-inv-grinding");
-
-
-        if (p.getInventory().firstEmpty() == -1 && !allowFullInvGrinding) {
-            return;
-        }
-
-
         if (AstroArmorSetsAPI.getCurrentArmorSet(p) != null && AstroArmorSetsAPI.getCurrentArmorSet(p) == ArmorSetType.GRINDER) {
             grinderKeyChance *= 1.2;
             godlyKeyChance *= 1.2;
@@ -225,15 +226,15 @@ public class EntityStackerListener implements Listener {
         }
 
         if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
-            if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, memoryChest)) {
-                PlayerUtil.giveOrDropProtectedItem(p, memoryChest, 60);
+            if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, mysteryLootbox)) {
+                PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
                 p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
                 try {
                     ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                p.sendMessage(CC.translate("&a&l+ &c&lM&6&le&e&lm&a&lo&b&lr&d&ly&c&l &c&lC&6&lh&e&le&a&ls&b&lt"));
+                p.sendMessage(CC.translate("&a&l+ &b&lMystery Lootbox"));
             }
 
         }

@@ -22,10 +22,10 @@ public class GlobalMysteryChest {
     }
 
     public String getExpirationString() {
-        if (this.expiration > System.currentTimeMillis()) {
+/*        if (this.expiration > System.currentTimeMillis()) {
             return CC.Yellow + (this.activeMysteryChest != null && this.activeMysteryChest.getDisplayName() != null ? this.activeMysteryChest.getDisplayName() + CC.Yellow + " sale ends in " : "No longer available in ") + CC.YellowB + TimeUtils.formatFutureTime((long) this.expiration) + CC.Yellow + "...";
-        }
-        return CC.RedB + "NO LONGER AVAILABLE";
+        }*/
+        return CC.translate("&a&lAVAILABLE");
     }
 
     public MysteryChest getActiveMysteryChest() {

@@ -34,7 +34,7 @@ import java.util.HashMap;
 
 public class GiveAllManager {
     private static long nextGiveAll = 2400;
-    private static ItemStack giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("RandomLootbox").createClaimableItem(false);
+    private static ItemStack giveAllItem = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox").createClaimableItem(false);
 
     public static long getNextGiveAll() {
         return nextGiveAll;

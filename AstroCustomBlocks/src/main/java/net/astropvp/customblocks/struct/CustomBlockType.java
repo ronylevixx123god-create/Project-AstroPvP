@@ -94,12 +94,15 @@ public enum CustomBlockType {
     ), KeyOpener.class),
 
     BLAZE_STONE_TOTEM("Auto Mob Grinder", ChatColor.RED, 1000000, 150000, Arrays.asList(
-            CC.translate("&7Automatically grinds Blazes"),
-            CC.translate("&7in a 1 block radius from the block."),
+            CC.translate("&7Automatically grinds Keys"),
+            CC.translate("&7while the custom block is placed."),
             "",
             CC.translate("&7Dug up from the deep depths of"),
             CC.translate("&7the gold mines, this custom block is"),
-            CC.translate("&7essential for grinding Blazes.")
+            CC.translate("&7essential for grinding Blazes."),
+            "",
+            CC.translate("&c&lWARNING &7You must stay in a &f16x16&7 radius of"),
+            CC.translate("&7this auto grinder block for it to keep grinding keys.")
     ), AutoGrinder.class);
 
     private final String displayName;

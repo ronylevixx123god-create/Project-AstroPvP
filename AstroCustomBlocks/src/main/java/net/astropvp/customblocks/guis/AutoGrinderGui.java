@@ -72,7 +72,11 @@ public class AutoGrinderGui {
                 .addLoreLine(CC.translate("&6Status: " + (autoGrinder.isActive() ? "&a&lACTIVE" : "&c&lINACTIVE")))
                 .addLoreLine(CC.translate("&6Price: &2$&a" + NumberUtils.formatMoney(autoGrinder.getActivationPrice())))
                 .addLoreLine("")
+                .addLoreLine(CC.translate("&c&lWARNING &7You must stay in a &f16x16&7 radius of"))
+                .addLoreLine(CC.translate("&7this auto grinder block for it to keep grinding keys."))
+                .addLoreLine()
                 .addLoreLine(CC.translate("&7Click to activate this auto grinder"))
+
                 .build();
         return new GuiItem(activateButton, event -> {
             if (EconomyUtils.hasBalance((OfflinePlayer) event.getWhoClicked(), autoGrinder.getActivationPrice())) {

@@ -143,14 +143,11 @@ public class CommandMysteryChest
                     }
                     return true;
                 }
-                if (operation.equalsIgnoreCase("setweeklychest") && args.length == 3) {
+                if (operation.equalsIgnoreCase("setweeklychest") && args.length == 2) {
                     MysteryChest found2 = this.fromName(args[1]);
-                    Long expiration = this.getLong(args[2]);
-                    if (expiration < System.currentTimeMillis()) {
-                        throw new MysteryChestException("You cannot set the expiration date in the past: " + TimeUtils.formatSeconds((long) ((System.currentTimeMillis() - expiration) / 1000L)));
-                    }
-                    this.plugin.getChestManager().setActiveMysteryChest(found2, expiration);
-                    throw new MysteryChestSuccessException("Set Active Mystery Chest to '" + found2.getInternalName() + "', expiring in " + TimeUtils.formatFutureTime((long) expiration));
+                    //Long expiration = this.getLong(args[2]);
+                    this.plugin.getChestManager().setActiveMysteryChest(found2, 1);
+                    throw new MysteryChestSuccessException("Set Active Mystery Chest to '" + found2.getInternalName());
                 }
             }
         } catch (MysteryChestException | IOException ex) {

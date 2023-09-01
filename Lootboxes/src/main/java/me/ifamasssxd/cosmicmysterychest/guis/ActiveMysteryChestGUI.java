@@ -56,7 +56,7 @@ public class ActiveMysteryChestGUI
             lore = Lists.newArrayList();
         }
         lore.add("");
-        lore.add(this.globalMysteryChest.getExpirationString());
+        //lore.add(this.globalMysteryChest.getExpirationString());
         lore.add(CC.Gray + "Right-Click to view lootbox items");
         im.setLore(lore);
         item.setItemMeta(im);
@@ -67,7 +67,7 @@ public class ActiveMysteryChestGUI
             }
             this.closeWithDelay();
             this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Unlock this Lootbox at " + CC.RedU + "buy.astropvp.net" + CC.Red + "!");
-            this.player.sendMessage(CC.Gray + "Use '/help lootbox' for more information!");
+            this.player.sendMessage(CC.Gray + "Visit the AstroPvP store for more information!");
         }).click(ClickType.RIGHT, () -> new MysteryChestItemViewerGUI(this.player, this.globalMysteryChest.getActiveMysteryChest()).openGUI(CosmicMysteryChest.get())));
         for (int i = 0; i < this.inventory.getSize(); ++i) {
             ItemStack found = this.inventory.getItem(i);

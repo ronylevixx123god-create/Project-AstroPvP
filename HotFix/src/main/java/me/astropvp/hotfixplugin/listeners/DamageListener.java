@@ -27,6 +27,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.potion.PotionEffectType;
@@ -53,6 +54,16 @@ public class DamageListener implements Listener {
             event.getPlayer().sendMessage(CC.Red + "Disabled in combat");
             event.setMessage("/null");
             event.setCancelled(true);
+        }
+    }
+
+    @EventHandler
+    public void echestOpenCombat(InventoryOpenEvent event) {
+        if (!(event.getPlayer() instanceof Player)) return;
+        if (CombatLog.inCombat((Player) event.getPlayer()) && event.getInventory().getTitle().contains("Ender")) {
+            event.setCancelled(true);
+            event.getPlayer().closeInventory();
+            event.getPlayer().sendMessage(CC.translate("&cDisabled in combat!"));
         }
     }
 

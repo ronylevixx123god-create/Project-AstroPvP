@@ -62,10 +62,7 @@
             <artifactId>triumph-gui</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>com.massivecraft</groupId>
-            <artifactId>Factions</artifactId>
-        </dependency>
+
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
@@ -89,6 +86,13 @@
 
 
         <!-- System repos -->
+        <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>facs</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Factions (33).jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>net.astropvp</groupId>
             <artifactId>guard</artifactId>

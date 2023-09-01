@@ -8,6 +8,8 @@ import org.bukkit.block.Chest;
 import org.bukkit.craftbukkit.v1_8_R3.CraftChunk;
 import org.bukkit.craftbukkit.v1_8_R3.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftEntity;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -112,5 +114,12 @@ public class ChunkUtil {
         }
         return null;
 
+    }
+
+    public static boolean hasNearbyPlayer(Location location, double radius) {
+        for (Entity entity : location.getWorld().getNearbyEntities(location, radius , radius, radius)) {
+            if (entity instanceof Player) return true;
+        }
+        return  false;
     }
 }

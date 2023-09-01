@@ -4,6 +4,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.massivecraft.factions.FPlayers;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.CustomBlocksAPI;
 import net.astropvp.customblocks.data.CustomBlockManager;
@@ -33,7 +34,7 @@ public class CustomBlockPlaceListener implements Listener {
         if (event.isCancelled()) return;
         if (CustomBlocksAPI.isCustomBlockItem(item)) {
             CustomBlockType type = CustomBlocksAPI.getTypeFromItem(item);
-            if (FactionUtils.getFaction(event.getPlayer()).isNone()) {
+            if (!FPlayers.getInstance().getByPlayer(event.getPlayer()).hasFaction()) {
                 event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place custom blocks without a faction (/f create <name>)"));
                 event.setCancelled(true);
                 return;

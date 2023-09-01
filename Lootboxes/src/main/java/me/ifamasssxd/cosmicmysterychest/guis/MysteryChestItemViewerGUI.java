@@ -49,7 +49,7 @@ public class MysteryChestItemViewerGUI
             this.setItem(slot++, new InventoryItem(item2).click(() -> {
                 this.closeWithDelay();
                 this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Unlock this Lootbox at " + CC.RedU + "buy.astropvp.net" + CC.Red + "!");
-                this.player.sendMessage(CC.Gray + "Use '/help lootbox' for more information!");
+                this.player.sendMessage(CC.Gray + "Visit the AstroPvP store for more information!");
             }));
         }
     }

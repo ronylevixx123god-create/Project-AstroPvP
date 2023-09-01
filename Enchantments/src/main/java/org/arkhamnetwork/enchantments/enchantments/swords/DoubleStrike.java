@@ -18,6 +18,7 @@ package org.arkhamnetwork.enchantments.enchantments.swords;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
+import net.minecraft.server.v1_8_R3.GenLayerBiome;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.listeners.VanillaDamageListener;
 import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
@@ -56,10 +57,12 @@ public class DoubleStrike
                 @Override
                 public void run() {
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0) {
+                        if (GeneralCooldown.isOnGeneralCooldown(pp)) return;
                         playerHit.setMetadata("doubleStriked", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
                         playerHit.damage(fdmg, (Entity)player);
                         pp.sendMessage("§6§l** DOUBLE STRIKE **");
                         DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&6&l* DOUBLE STRIKE *"), "DOUBLE_STRIKE");
+                        GeneralCooldown.enterCooldown(pp);
                     }
                 }
             }, 2L);

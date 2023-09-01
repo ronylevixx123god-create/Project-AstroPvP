@@ -64,14 +64,18 @@ public class HeroicDeathbringer
         @EventHandler
         public void onEntityDamageByEntity(EntityDamageByEntityEvent e) {
             if (e.isCancelled()) return;
-            Entity damage = e.getDamager();
-            if (doubleDamage.contains(damage)) {
-                double random = Math.random();
-                double chance = 0.02 * (double) playerLevels.get(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage);
-                if (random < chance) {
-                    e.setDamage(e.getDamage() * 2);
-                    DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.translate("&d&l* PLANETARY DEATHBRINGER *"), "CITADEL");
-                    e.getEntity().sendMessage(CC.translate("&d&l* PLANETARY DEATHBRINGER *"));
+            if (e.getDamager() instanceof Player) {
+                Entity damage = e.getDamager();
+                if (doubleDamage.contains(damage)) {
+                    double random = Math.random();
+                    double chance = 0.01 * (double) playerLevels.get(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage);
+                    if (random < chance) {
+                        if (GeneralCooldown.isOnGeneralCooldown((Player) e.getDamager())) return;
+                        e.setDamage(e.getDamage() * 2);
+                        DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.translate("&d&l* PLANETARY DEATHBRINGER *"), "CITADEL");
+                        e.getEntity().sendMessage(CC.translate("&d&l* PLANETARY DEATHBRINGER *"));
+                        GeneralCooldown.enterCooldown((Player) e.getDamager());
+                    }
                 }
             }
         }

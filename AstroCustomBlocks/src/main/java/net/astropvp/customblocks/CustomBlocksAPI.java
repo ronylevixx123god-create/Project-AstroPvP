@@ -74,7 +74,7 @@ public class CustomBlocksAPI {
         for (CustomBlock key : customBlockManager.getCacheValues()) {
             if (type != key.getType()) continue;
             FLocation fLocation = new FLocation(key.getLocation());
-            if (!Board.getFactionAt(fLocation).getId().equals(factionId)) continue;
+            if (!Board.getInstance().getFactionAt(fLocation).getId().equals(factionId)) continue;
             amount++;
         }
         return amount;
