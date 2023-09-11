@@ -8,6 +8,7 @@ import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffectType;
 
 public class CorruptPowerBeltSkin extends ItemSkin {
 
@@ -26,7 +27,7 @@ public class CorruptPowerBeltSkin extends ItemSkin {
         System.out.println("[PowrBelt] Attempting to remove godly overload 5]");
         EnchantmentAPI.getEnchantment("Godly Overload").applyUnequipEffect(player, 5);
         PlayerPotionEffects.untrackPotionEffect(player, new SpecificCustomEnchantment(EnchantmentAPI.getEnchantment("Godly Overload"), 5));
-
+        player.removePotionEffect(PotionEffectType.HEALTH_BOOST);
     }
 }
 

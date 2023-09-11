@@ -323,23 +323,25 @@ public class AstroItemSkinsAPI {
     }
 
     public static void updateSkins(Player player) {
-        PlayerInventory inventory = player.getInventory();
-        if (inventory.getHelmet() != null && inventory.getHelmet().getType() != Material.AIR && hasItemSkin(inventory.getHelmet())) {
-            getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onUnequip(player));
-            getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onEquip(player));
-        }
-        if (inventory.getChestplate() != null && inventory.getChestplate().getType() != Material.AIR && hasItemSkin(inventory.getChestplate())) {
-            getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onUnequip(player));
-            getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onEquip(player));
-        }
-        if (inventory.getLeggings() != null && inventory.getLeggings().getType() != Material.AIR && hasItemSkin(inventory.getLeggings())) {
-            getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onUnequip(player));
-            getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onEquip(player));
-        }
-        if (inventory.getBoots() != null && inventory.getBoots().getType() != Material.AIR && hasItemSkin(inventory.getBoots())) {
-            getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onUnequip(player));
-            getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onEquip(player));
-        }
+            PlayerInventory inventory = player.getInventory();
+            if (inventory.getHelmet() != null && inventory.getHelmet().getType() != Material.AIR && hasItemSkin(inventory.getHelmet())) {
+                getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+                getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onEquip(player));
+
+            }
+            if (inventory.getChestplate() != null && inventory.getChestplate().getType() != Material.AIR && hasItemSkin(inventory.getChestplate())) {
+                getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+                getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onEquip(player));
+            }
+            if (inventory.getLeggings() != null && inventory.getLeggings().getType() != Material.AIR && hasItemSkin(inventory.getLeggings())) {
+                getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+                getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onEquip(player));
+            }
+            if (inventory.getBoots() != null && inventory.getBoots().getType() != Material.AIR && hasItemSkin(inventory.getBoots())) {
+                getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+                getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onEquip(player));
+            }
+
     }
 
     public static ItemStack removeNoDisplay(ItemStack item) {
