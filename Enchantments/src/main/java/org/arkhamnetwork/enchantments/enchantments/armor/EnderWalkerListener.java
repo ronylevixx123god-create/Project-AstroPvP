@@ -20,7 +20,7 @@ public class EnderWalkerListener implements Listener {
     public void onPotionAdd(PotionEffectAddEvent event) {
         if (!(event.getEntity() instanceof Player)) return;
         if (!enderWalkerPlayers.contains(event.getEntity().getUniqueId())) return;
-        if (event.getEffect().getType().getName().equals(PotionEffectType.POISON.getName())) {
+        if (event.getEffect().getType().getName().equals(PotionEffectType.POISON.getName()) || event.getEffect().getType().getName().equals(PotionEffectType.WITHER.getName())) {
             PlayerPotionEffects.untrackPotionEffect((Player) event.getEntity(), event.getEffect().getType());
             event.setCancelled(true);
             if (Math.random() < 0.1) {

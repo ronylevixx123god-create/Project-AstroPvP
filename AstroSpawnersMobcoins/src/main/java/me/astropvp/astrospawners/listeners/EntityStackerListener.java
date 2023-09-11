@@ -1,6 +1,8 @@
 package me.astropvp.astrospawners.listeners;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import de.inventivegames.particle.ParticleEffect;
@@ -24,7 +26,6 @@ import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.OutpostUtil;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.loottable.struct.LootTable;
-import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creature;
@@ -226,16 +227,16 @@ public class EntityStackerListener implements Listener {
         }
 
         if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
-            if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, mysteryLootbox)) {
-                PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
-                p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
-                try {
-                    ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
-                } catch (Exception exception) {
-                    exception.printStackTrace();
-                }
-                p.sendMessage(CC.translate("&a&l+ &b&lMystery Lootbox"));
+            //PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
+            LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
+            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
+            try {
+                ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
+            } catch (Exception exception) {
+                exception.printStackTrace();
             }
+            p.sendMessage(CC.translate("&a&l+ &b&lMystery Lootbox"));
+
 
         }
 

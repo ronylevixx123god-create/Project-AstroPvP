@@ -46,10 +46,10 @@ public class HotFixPlugin extends JavaPlugin {
     }
 
     public static int getPing(Player player) {
-        int ping = ((CraftPlayer) player).getHandle().ping;
-        return ping < 45 ? ping : ping -35;
-    }
         /*int ping = ((CraftPlayer) player).getHandle().ping;
+        return ping < 45 ? ping : ping -35;*/
+
+        int ping = ((CraftPlayer) player).getHandle().ping;
         if (ping == 0) {
             ping = ThreadLocalRandom.current().nextInt(90, 150);
         } else if (ping > 80 && ping < 210) {
@@ -60,5 +60,5 @@ public class HotFixPlugin extends JavaPlugin {
             ping = ThreadLocalRandom.current().nextInt(100, 140);
         }
         return ping;
-    }*/
+    }
 }

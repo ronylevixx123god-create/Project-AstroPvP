@@ -22,11 +22,17 @@ public class HeroicInsomnia extends HeroicCustomEnchantment {
 
     @SneakyThrows
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
-        final double random = Math.random();
-        final double chance = 0.030 * level;
-        final int time = (level > 1) ? 4 : 3;
+        int time;
+        double random = Math.random();
+        double chance = 0.03 * (double)level;
+        int n = time = level > 1 ? 6 : 4;
         if (random < chance) {
-            //player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, Math.max(time * 10, 40), Math.min(level - 1, 2)));
+            //player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW_DIGGING, time * 10, Math.min(level - 1, 2)));
+            if (level >= 6) {
+                player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, time * 10, 1));
+            }
+            double multi = 1.0 + (double)level * 0.075;
+            e.setDamage(e.getDamage() * multi);
         }
     }
 }

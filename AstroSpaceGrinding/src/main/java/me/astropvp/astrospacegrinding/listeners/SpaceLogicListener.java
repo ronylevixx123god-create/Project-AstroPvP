@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.sk89q.worldedit.internal.expression.runtime.For;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
 import me.astropvp.astrospacegrinding.data.ForceFieldData;
@@ -40,7 +41,7 @@ public class SpaceLogicListener implements Listener {
 
     static {
         allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "pin", "sc", "staffchat", "mute", "ban", "tempban"));
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "pin", "sc", "staffchat", "mute", "ban", "tempban", "pin"));
     }
 
     @EventHandler(priority = EventPriority.HIGHEST, ignoreCancelled = true)
@@ -132,12 +133,14 @@ public class SpaceLogicListener implements Listener {
             SpacePlayerData dataDamaged = SpacePlayerData.findPlayer(damaged);
 
             if (ForceFieldData.findPlayer(dataDamager.getPlayer()).isActive()) {
+                if (WorldGuardUtils.getRegionsIn(damager.getLocation()).contains("space_cap")) return;
                 e.setCancelled(true);
                 damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() + " because you are still on &f&lFORCEFIELD &bprotection."));
                 damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);
             }
 
             if (ForceFieldData.findPlayer(dataDamaged.getPlayer()).isActive()) {
+                if (WorldGuardUtils.getRegionsIn(damaged.getLocation()).contains("space_cap")) return;
                 e.setCancelled(true);
                 damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() + " because he is still on &f&lFORCEFIELD &bprotection."));
                 damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);

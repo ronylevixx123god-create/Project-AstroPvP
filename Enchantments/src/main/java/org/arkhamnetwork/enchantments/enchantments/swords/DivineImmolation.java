@@ -170,6 +170,8 @@ public class DivineImmolation extends CustomEnchantment {
 
 
 
+
+
                     if (pEnt.getInventory() == null) continue;
                     if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)) {
                         if ((AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
@@ -187,9 +189,14 @@ public class DivineImmolation extends CustomEnchantment {
                         continue;
                     }
 
+                    if (ent.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player) ent).isActive()) {
+                        continue;
+                    }
+
                     final LivingEntity le = (LivingEntity) ent;
                     final Player attacker = (Player) player;
 
+                    le.damage(damage);
 
                     if (AstroItemSkinsAPI.hasSkinEquipped(pEnt, SkinType.THANKSGIVING_SWORD_HARVESTER) && Math.random() < 0.5) {
                         pEnt.sendMessage(CC.translate("&e&l** SOUL HARVESTER [&7Blocked Divine Immolation&e&l] **"));
@@ -220,11 +227,6 @@ public class DivineImmolation extends CustomEnchantment {
                     }
 
 
-
-
-                    if (le.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player) le).isActive())
-                        continue;
-
                     if (playerHit instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_BACKPACK)) {
                         continue;
                     }
@@ -248,11 +250,12 @@ public class DivineImmolation extends CustomEnchantment {
 
 
 
-                    le.damage(damage);
 
-                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 10.0), 1));
-                    ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
-                    ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));
+
+                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5 * 20, 2));
+
+                ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
+                ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));
                 }
             }
         }

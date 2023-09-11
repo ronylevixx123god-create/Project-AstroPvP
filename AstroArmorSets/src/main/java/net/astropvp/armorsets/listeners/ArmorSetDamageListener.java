@@ -159,7 +159,7 @@ public class ArmorSetDamageListener implements Listener {
                 }
 
                 int ladderDifference = ladderAttacker - ladderAttacked;
-                if (ladderDifference < 0) ladderDifference=0;
+                //if (ladderDifference < 0) ladderDifference=0;
                 double damagePercentChange = ladderDifference * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("crystalsLadderDamageDifference");
                 e.setDamage(e.getDamage() * (1 + (damagePercentChange  *  0.01)));
             }

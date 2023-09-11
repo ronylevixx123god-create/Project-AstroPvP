@@ -140,6 +140,8 @@ public class SpaceAlien extends SpaceMonster {
 
         if (Math.random() < chance / 100) {
             rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
 
             if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET) && Math.random() < 0.15) {
                 player.sendMessage(CC.translate("&d&l(Radioactive Amulet) &dYou were &flucky&d and received &fdouble&d space loot."));

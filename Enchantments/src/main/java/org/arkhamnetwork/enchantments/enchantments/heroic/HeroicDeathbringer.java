@@ -68,7 +68,7 @@ public class HeroicDeathbringer
                 Entity damage = e.getDamager();
                 if (doubleDamage.contains(damage)) {
                     double random = Math.random();
-                    double chance = 0.01 * (double) playerLevels.get(damage instanceof Projectile ? ((Projectile) damage).getShooter() : damage);
+                    double chance = 0.04;
                     if (random < chance) {
                         if (GeneralCooldown.isOnGeneralCooldown((Player) e.getDamager())) return;
                         e.setDamage(e.getDamage() * 2);

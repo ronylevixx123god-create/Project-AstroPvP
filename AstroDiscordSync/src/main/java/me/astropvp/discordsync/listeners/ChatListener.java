@@ -82,10 +82,6 @@ public class ChatListener implements Listener {
                     });
                 }
 
-                factionLeaderList.clear();
-                nitroBoosterList.clear();
-                youtuberList.clear();
-                famousList.clear();
 
                 Bukkit.getScheduler().runTask(this.plugin, () -> {
                     factionLeaderList.addAll(toAddLeaders);
