@@ -35,10 +35,10 @@ final class ChunkLoadFlushListener
         this.noRemove.add(EntityType.PRIMED_TNT);
     }
 
-    @EventHandler(priority = EventPriority.LOW)
+    /*@EventHandler(priority = EventPriority.LOW)
     public void onChunkLoad(ChunkLoadEvent e) {
         this.removeEntities(e.getChunk());
-    }
+    }*/
 
     private void removeEntities(Chunk c) {
         for (Entity e : c.getEntities()) {

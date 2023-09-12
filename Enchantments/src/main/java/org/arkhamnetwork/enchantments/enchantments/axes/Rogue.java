@@ -46,7 +46,7 @@ public class Rogue extends CustomEnchantment {
             return;
         }
         if (this.isPlayerBehind(p, playerHit)) {
-            double multi = 1.0D + (0.166666666666666D * (double) level * 0.5) + (Math.random() / 2.0D);
+            double multi = 1.0D + (0.166666666666666D * (double) level * 0.4) + (Math.random() / 2.0D);
             final int soulCost = 150;
             if (soulCost > KillTrackerAPI.getAllSouls(p)) {
                 return;

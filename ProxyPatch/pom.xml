@@ -41,7 +41,13 @@
             <artifactId>lombok</artifactId>
             <version>1.18.10</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>facs</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/Factions (1).jar</systemPath>
+        </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>CosmicPvPUtils</artifactId>

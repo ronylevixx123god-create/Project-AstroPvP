@@ -44,7 +44,7 @@ public class ChatListener implements Listener {
 
     private final Pattern ipPattern = Pattern.compile("((?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[.,-:; ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9]))", Pattern.CASE_INSENSITIVE);
     private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
-    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "nig", "fag", "faggot", "ddos", "doss", "niggar", "hitler");
+    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "nig", "fag", "faggot", "ddos", "doss", "niggar", "hitler", "frans", "jozef", "gronckel", "straat", "lennik", "bryan", "jeetun", "savina", "dox", "doxed", "swat", "swatted", "kys", "gourley", "3dsam", "wendy", "gmail", "hotmail");
     private final ShieldFeature shieldFeature;
     private double chatCooldown;
 
@@ -79,9 +79,9 @@ public class ChatListener implements Listener {
         if (player.hasPermission("astrocore.nebula")) {
             chatCooldown = 0;
         } else if (player.hasPermission("astrocore.apollo")) {
-            chatCooldown = 1;
-        } else {
             chatCooldown = 2;
+        } else {
+            chatCooldown = 4;
         }
 
         if (AstroCore.getInstance().getCooldownUtils().isOnCooldown(player, "chatCooldown")) {
@@ -116,6 +116,14 @@ public class ChatListener implements Listener {
             player.sendMessage(CC.translate("&c&l(!)&c You are not allowed to send links in chat!"));
             StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending a link in chat &7(" + event.getMessage() + "&7)"));
             return;
+        }
+
+        for (String badword : badWords) {
+            if (event.getMessage().toLowerCase().contains(badword)) {
+                player.sendMessage(CC.translate("&c&l(!)&c Please refrain from using bad words! Your message has been reported to the staff."));
+                StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending a bad word in chat &7(" + event.getMessage() + "&7)"));
+                return;
+            }
         }
 
 

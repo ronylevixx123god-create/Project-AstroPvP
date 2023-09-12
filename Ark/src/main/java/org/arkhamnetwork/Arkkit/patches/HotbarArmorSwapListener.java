@@ -135,14 +135,14 @@ final class HotbarArmorSwapListener
         e.setUseInteractedBlock(Event.Result.DENY);
         e.setUseItemInHand(Event.Result.DENY);
         p.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
-
+        ItemStack piece = e.getPlayer().getItemInHand().clone();
         this.equipArmor(p, e.getPlayer().getItemInHand());
         if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
             MaskType.rescanMask(p, true);
         }
         AstroArmorSetsAPI.refreshArmorSets(p, false);
 
-        AstroItemSkinsAPI.updateSkins(p);
+        AstroItemSkinsAPI.updateSkins(p, false, piece);
         p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
     }
 

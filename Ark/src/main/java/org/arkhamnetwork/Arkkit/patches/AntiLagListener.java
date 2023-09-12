@@ -29,13 +29,13 @@ final class AntiLagListener
     AntiLagListener() {
     }
 
-    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    /*@EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onChunkLoad(ChunkLoadEvent e) {
         for (Entity entity : e.getChunk().getEntities().clone()) {
             if (!(entity instanceof Creeper)) continue;
             entity.remove();
         }
-    }
+    }*/
 
 }
 

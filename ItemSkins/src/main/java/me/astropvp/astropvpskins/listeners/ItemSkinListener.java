@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.listeners;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
@@ -241,12 +242,15 @@ public class ItemSkinListener implements Listener {
 
         @EventHandler
         public void onJoin (PlayerJoinEvent event){
-            AstroItemSkinsAPI.updateSkins(event.getPlayer());
+            AstroItemSkinsAPI.updateSkins(event.getPlayer(), true, null);
+            GeneralUtil.healPlayer(event.getPlayer(), event.getPlayer().getMaxHealth());
+
         }
 
         @EventHandler
         public void onWorldChange (PlayerChangedWorldEvent event){
-            AstroItemSkinsAPI.updateSkins(event.getPlayer());
+            AstroItemSkinsAPI.updateSkins(event.getPlayer(), true, null);
+            GeneralUtil.healPlayer(event.getPlayer(), event.getPlayer().getMaxHealth());
         }
 
         @EventHandler

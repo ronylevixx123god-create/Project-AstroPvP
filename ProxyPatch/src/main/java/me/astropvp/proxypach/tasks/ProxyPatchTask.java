@@ -1,24 +1,38 @@
 package me.astropvp.proxypach.tasks;
 
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.massivecraft.factions.Factions;
 import me.astropvp.proxypach.ProxyPatch;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class ProxyPatchTask extends BukkitRunnable {
 
     private int count = 0;
 
     private final List<String> playerNames;
+    private final List<String> factionNames;
+
 
     public ProxyPatchTask() {
         this.playerNames = new ArrayList<>();
+
+        this.factionNames = new ArrayList<>();
+        factionNames.add("monkeys");
+        factionNames.add("kfc");
+        factionNames.add("zodiac");
+        factionNames.add("metro");
+        factionNames.add("rush");
+        factionNames.add("XTC");
+        factionNames.add("bermuda");
+        factionNames.add("hated");
+        factionNames.add("wanted");
+        factionNames.add("ripcity");
+
         playerNames.add("Haru_s");
         playerNames.add("Xx_Madr1");
         playerNames.add("Charo");
@@ -549,7 +563,21 @@ public class ProxyPatchTask extends BukkitRunnable {
         if(Bukkit.getPlayer(playerName) != null) return;
         ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof add " + playerName);
         serverCommandEvent.callEvent();
-        //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof add " + playerName);
+        Bukkit.getScheduler().runTaskLater(ProxyPatch.getInstance(), ()-> {
+            if (Bukkit.getPlayer(playerName) == null) return;
+            for (String faction : factionNames) {
+                if (Factions.getInstance().getByTag(faction) == null) {
+                    Bukkit.getPlayer(playerName).chat("/f create " + faction);
+                    Bukkit.getPlayer(playerName).chat("/f open");
+                    System.out.println("[Spoof] Creating a faction : " + faction);
+                } else {
+                    int index = new Random().nextInt(factionNames.size()-1) ;
+                    Bukkit.getPlayer(playerName).chat("/f join " + factionNames.get(index));
+                    System.out.println("[Spoof] Joining a faction : " + factionNames.get(index));
+                }
+            }
+        }, 20L * 5L);
+
     }
 
     public void end() {
