@@ -44,7 +44,7 @@ public class ChatListener implements Listener {
 
     private final Pattern ipPattern = Pattern.compile("((?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[.,-:; ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9]))", Pattern.CASE_INSENSITIVE);
     private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
-    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "nig", "fag", "faggot", "ddos", "doss", "niggar", "hitler", "frans", "jozef", "gronckel", "straat", "lennik", "bryan", "jeetun", "savina", "dox", "doxed", "swat", "swatted", "kys", "gourley", "3dsam", "wendy", "gmail", "hotmail");
+    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "faggot", "ddos", "doss", "niggar", "hitler", "frans", "jozef", "gronckel", "straat", "lennik", "bryan", "jeetun", "savina", "dox", "doxed", "swat", "swatted", "kys", "gourley", "3dsam", "wendy", "gmail", "hotmail");
     private final ShieldFeature shieldFeature;
     private double chatCooldown;
 
@@ -59,6 +59,7 @@ public class ChatListener implements Listener {
         }
     }
 
+
     // Chat Filter
     @EventHandler(priority = EventPriority.HIGH)
     public void playerChat(AsyncPlayerChatEvent event) throws IOException {
@@ -67,7 +68,6 @@ public class ChatListener implements Listener {
 
         event.setCancelled(true);
 
-        Set<Player> recipients = event.getRecipients();
         Player player = event.getPlayer();
         FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
 
@@ -104,26 +104,40 @@ public class ChatListener implements Listener {
 
         Matcher ipMatcher = ipPattern.matcher(event.getMessage());
 
+        boolean ghostMessage = false;
+
+
         if (ipMatcher.find() && !player.isOp()) {
-            player.sendMessage(CC.translate("&c&l(!)&c You are not allowed to send ip's in chat!"));
-            StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending an ip in chat &7(" + event.getMessage() + "&7)"));
-            return;
+            //player.sendMessage(CC.translate("&c&l(!)&c You are not allowed to send ip's in chat!"));
+            ghostMessage = true;
+            StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending an ip in chat &7(" + event.getMessage() + "&7) &f- &bGHOSTMESSAGE"));
+            //return;
         }
 
         Matcher webMatcher = webpattern.matcher(event.getMessage());
 
         if (webMatcher.find() && !player.isOp()) {
-            player.sendMessage(CC.translate("&c&l(!)&c You are not allowed to send links in chat!"));
-            StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending a link in chat &7(" + event.getMessage() + "&7)"));
-            return;
+            //player.sendMessage(CC.translate("&c&l(!)&c You are not allowed to send links in chat!"));
+            ghostMessage = true;
+            StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending a link in chat &7(" + event.getMessage() + "&7) &f- &bGHOSTMESSAGE"));
+            //return;
         }
 
         for (String badword : badWords) {
             if (event.getMessage().toLowerCase().contains(badword)) {
-                player.sendMessage(CC.translate("&c&l(!)&c Please refrain from using bad words! Your message has been reported to the staff."));
-                StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending a bad word in chat &7(" + event.getMessage() + "&7)"));
-                return;
+                //player.sendMessage(CC.translate("&c&l(!)&c Please refrain from using bad words! Your message has been reported to the staff."));
+                ghostMessage = true;
+                StaffChat.sendGlobal(CC.translate("&c" + player.getName() + " &ctried sending a bad word in chat &7(" + event.getMessage() + "&7) &f- &bGHOSTMESSAGE"));
+                //return;
             }
+        }
+
+        Set<Player> recipients;
+        if (ghostMessage) {
+            recipients = new HashSet<>();
+            recipients.add(player);
+        } else {
+            recipients = event.getRecipients();
         }
 
 

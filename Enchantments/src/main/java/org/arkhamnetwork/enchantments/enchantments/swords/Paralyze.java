@@ -36,9 +36,16 @@ public class Paralyze
         if (!(playerHit instanceof Player)) {
             return;
         }
+        if (!(e.getDamager() instanceof Player)) {
+            return;
+        }
         final double random = Math.random();
-        final double chance = (level == 3) ? 0.05 : (0.03 * level);
+        final double chance = (level == 3) ? 0.02 : (0.01 * level);
         if (random < chance) {
+
+            if (GeneralCooldown.isOnGeneralCooldown((Player) e.getDamager())) return;
+
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2021_HELMET)) {
                 playerHit.sendMessage(CC.translate("&d&l* NEON EMOTIONS &7Blocked Slow Effect &d&l*"));
                 return;
@@ -57,9 +64,12 @@ public class Paralyze
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_MUTATED_BOOTS)) {
                 return;
             }
+
+
+
             playerHit.getLocation().getWorld().strikeLightningEffect(player.getLocation());
             DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&b&l* PARALYZE *"), "PARALYZE");
-            playerHit.damage((double)(1 + level));
+            playerHit.damage((double)(level));
             GeneralCooldown.enterCooldown((Player) player);
 
         }
