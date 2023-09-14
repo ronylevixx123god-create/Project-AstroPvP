@@ -112,7 +112,7 @@ public class ArmorSetDamageListener implements Listener {
 
 
     @EventHandler(
-            priority = EventPriority.LOWEST)
+            priority = EventPriority.LOW)
     public void onHitLadderSystem(EntityDamageByEntityEvent e) {
         Entity attacker = e.getDamager();
         Entity attacked = e.getEntity();

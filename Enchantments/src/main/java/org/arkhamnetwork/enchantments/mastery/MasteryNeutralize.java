@@ -36,9 +36,18 @@ public class MasteryNeutralize extends MasteryCustomEnchantment
         catch (Exception exception) {
             // empty catch block
         }
-        if ((level) * multi >= ThreadLocalRandom.current().nextInt(100)) {
+
+
+        if ((level) * multi >= ThreadLocalRandom.current().nextInt(120)) {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player)pTarget, (SkinType)SkinType.RUINS_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage("§5§l* BLOCKED " + user.getName() + "'s NEUTRALIZE §7(Lost Amulet) §5§l*");
+                return;
+            }
+            if (pTarget.hasMetadata("blackout")) {
+                return;
+            }
+
+            if (pTarget.hasMetadata("neutralized")) {
                 return;
             }
             pTarget.sendMessage(CC.translate((String)("&5&l* NEUTRALIZED &7[" + user.getName() + "&7]&5&l *")));

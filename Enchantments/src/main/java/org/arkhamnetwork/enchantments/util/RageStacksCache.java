@@ -20,7 +20,7 @@ public class RageStacksCache extends Cache {
     public RageStacksCache() {
         super("rage_stacks");
         this.rageStack = 1;
-        this.maxRageStack = 10;
+        this.maxRageStack = 7;
         this.updateLastRageStackTime();
         this.victim = null;
     }

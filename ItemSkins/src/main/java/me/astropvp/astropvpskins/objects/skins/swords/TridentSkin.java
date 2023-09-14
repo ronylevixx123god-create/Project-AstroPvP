@@ -27,8 +27,12 @@ public class TridentSkin extends ItemSkin {
             damaged.sendMessage(CC.translate("&3&l * &7+ Hex"));
             damaged.sendMessage(CC.translate("&3&l * &7+ Mark Of the Beast"));
             damaged.sendMessage(CC.translate("&7"));
-            //(new Hex()).applyEffect((LivingEntity)damager, (LivingEntity)damaged, 4, event);
-            (new MasteryMarkOfTheBeast()).applyDefenseEffect((LivingEntity)damager, (LivingEntity)damaged, 6, event);
+            try {
+                MasteryMarkOfTheBeast.applyMarkEffect((LivingEntity) damaged, damager, 6, event);
+            } catch (Exception exception) {
+                exception.printStackTrace();
+            }
+            (new Blessed()).applyEffect(damager, (LivingEntity)damager,4, event);
 
         }
     }

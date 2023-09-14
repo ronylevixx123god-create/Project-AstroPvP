@@ -244,8 +244,13 @@ public class ItemSkinListener implements Listener {
         public void onJoin (PlayerJoinEvent event){
             AstroItemSkinsAPI.updateSkins(event.getPlayer(), true, null);
             GeneralUtil.healPlayer(event.getPlayer(), event.getPlayer().getMaxHealth());
-
         }
+
+    @EventHandler
+    public void onJoin (PlayerRespawnEvent event){
+        AstroItemSkinsAPI.updateSkins(event.getPlayer(), true, null);
+        GeneralUtil.healPlayer(event.getPlayer(), event.getPlayer().getMaxHealth());
+    }
 
         @EventHandler
         public void onWorldChange (PlayerChangedWorldEvent event){

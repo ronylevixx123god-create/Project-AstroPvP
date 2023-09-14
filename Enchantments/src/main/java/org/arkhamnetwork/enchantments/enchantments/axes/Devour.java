@@ -30,7 +30,7 @@ public class Devour extends CustomEnchantment
                 }
 
             double mod = (double)Bleed.getBleedStack(target) * 0.01D + ((double)enchantLevel * 0.1D + 1.0D)/2;
-            event.setDamage(event.getDamage() * mod);
+            event.setDamage(event.getDamage() * 1.1);
             target.setMetadata("effectedByDevour", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
             final Location l = target.getLocation();
             WorldUtil.sendWorldEffect(l.getBlock(), Material.MYCEL.getId(), 2001);

@@ -48,6 +48,10 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         if (pTarget.hasMetadata("blackout")) {
             return;
         }
+
+        if (pTarget.hasMetadata("neutralized")) {
+            return;
+        }
         if (AstroItemSkinsAPI.hasSkinEquipped((Player)pTarget, (SkinType)SkinType.VIRUS_BELT) && Math.random() < 0.5) {
             pTarget.sendMessage("§2§l* BLOCKED " + ((Player)player).getName() + "'s BLACKOUT §7(First Aid Fannypack) §2§l*");
             ((Player)player).sendMessage(CC.translate((String)("&7&l* &7&l&mBLACKOUT&r &7[Blocked by " + pTarget.getName() + "'s First Aid Fannypack] &7&l*")));
@@ -66,9 +70,9 @@ public class MasteryBlackout extends MasteryCustomEnchantment
             return;
         }
         player.setMetadata("BlackoutCooldown", new FixedMetadataValue((Plugin)Enchantments.getInstance(), System.currentTimeMillis()));
-        long durationInTicks = level * 20;
+        long durationInTicks = level * 20L;
         if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.CHRISTMAS_HELMET_STAR)) {
-            durationInTicks *= (long)0.66;
+            durationInTicks *= 0.7;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_HELMET)) {
             durationInTicks *= 0.4;
@@ -76,10 +80,10 @@ public class MasteryBlackout extends MasteryCustomEnchantment
         }
         pTarget.playSound(pTarget.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
         DamageIndicatorUtils.sendDamageIndicator(pTarget, "&5&l* BLACKOUT *", "blackout");
-        player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + (int)(durationInTicks / 20L) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
-        pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + durationInTicks/20 + "&7s] &5&l *"));
+        player.sendMessage(CC.translate("&5&l* BLACKOUT &5[" + Math.round((double) (durationInTicks / 20L)) + "&5s on &e" + pTarget.getName() + "&5] &5&l*"));
+        pTarget.sendMessage(CC.translate("&5&L* BLACKOUT &7[" + Math.round((double) (durationInTicks / 20L)) + "&7s] &5&l *"));
         pTarget.setMetadata("blackout", new FixedMetadataValue((Plugin)Enchantments.getInstance(), "banana"));
-        Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> pTarget.removeMetadata("blackout", (Plugin)Enchantments.getInstance()), AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.CORRUPT_SWORD) ? (durationInTicks * 2L) : durationInTicks);    }
+        Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> pTarget.removeMetadata("blackout", (Plugin)Enchantments.getInstance()), AstroItemSkinsAPI.hasSkinEquipped((Player)player, SkinType.CORRUPT_SWORD) ? (durationInTicks * 2L) : Math.round((double) (durationInTicks)));    }
 
     private int getLevel(final ItemStack piece, final String name) {
         return EnchantmentAPI.getEnchantments(piece).get(EnchantmentAPI.getEnchantments(piece).keySet().stream().filter(e -> e.name().equals(name)).findFirst().get());

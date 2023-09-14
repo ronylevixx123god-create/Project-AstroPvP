@@ -36,6 +36,7 @@ import com.sk89q.worldedit.Vector;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import com.sk89q.worldguard.protection.flags.StateFlag;
+import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -188,7 +189,12 @@ public class CombatLog
                 pl.sendMessage(CC.translate("&a-15% Incoming Damage &7(15s)"));
                 pl.addPotionEffect(new PotionEffect(PotionEffectType.ABSORPTION, 5 * 20, 4));
             }*/
-            if (EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Opening Combo"))) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pl, SkinType.CHRISTMAS_2022_SWORD_ACTIVE)) {
+                if (!OpeningCombo.isOnCooldown(pl)) {
+                    OpeningCombo.proc(pl, 6);
+                    pl.sendMessage(CC.translate("&4&lOPENING COMBO - ACTIVE &7(&bFrostbound Bonus&7)"));
+                }
+            } else if (EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Opening Combo"))) {
                 int openingComboLevel = EnchantmentAPI.getEnchantments(pl.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Opening Combo"));
                 if (!OpeningCombo.isOnCooldown(pl)) {
                     OpeningCombo.proc(pl, openingComboLevel);
