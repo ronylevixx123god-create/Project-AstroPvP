@@ -40,6 +40,10 @@ final class EssentialsWarpAliasesListener
                 continue;
             }
 
+            if (warp.equalsIgnoreCase("ruins")) {
+                continue;
+            }
+
             if (warp.equalsIgnoreCase("koth")) {
                 continue;
             }

@@ -19,6 +19,7 @@ public enum LootTable {
     SLOTS(Material.PAPER, ChatColor.YELLOW),
     ENVOY(Material.FIREWORK, ChatColor.AQUA),
     GRINDING(Material.MOB_SPAWNER, ChatColor.YELLOW),
+    RUINS(Material.PRISMARINE_SHARD, ChatColor.DARK_AQUA),
 
     ;
 
