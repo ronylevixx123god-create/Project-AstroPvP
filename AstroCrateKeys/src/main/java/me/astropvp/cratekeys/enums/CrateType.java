@@ -3,10 +3,9 @@ package me.astropvp.cratekeys.enums;
 import com.cosmicpvp.cosmicutils.utils.CC;
 
 public enum CrateType {
-    GRINDER("Grinder", "&6", ""),
-    GODLY("Godly", "&e", ""),
-    MUTATED("Mutated", "&2", ""),
-    OP("OP", "&4", "");
+    SOLAR("Solar", "&e", ""),
+    COSMIC("Cosmic", "&b", ""),
+    SPOOKY("Spooky", "&6", "&8");
     private final String name;
 
     private final String prefix;
@@ -29,7 +28,7 @@ public enum CrateType {
     }
 
     public String getPrefixedName() {
-        /*if (this == SEASON) {
+        if (this == SPOOKY) {
             StringBuilder prefix = new StringBuilder();
             boolean color = true;
             String currentColor;
@@ -46,8 +45,8 @@ public enum CrateType {
                 prefix.append(currentColor).append(letter);
             }
             return CC.translate(prefix  + "&r&l" + " &f&lCrate Key");
-        } else {*/
+        } else {
             return CC.translate(getPrefix() + CC.Bold + getName() + " &f&lCrate Key");
-        //}
+        }
     }
 }

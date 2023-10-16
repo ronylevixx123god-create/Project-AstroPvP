@@ -45,10 +45,8 @@ public class KingSlime extends Boss {
         this.health = 0.0;
         this.modifier = new BlockModifier();
         this.waterTrap = new WaterTrap(this, this.modifier);
-        ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
+        ItemStack OPKey = CrateKeyItem.getItem(CrateType.SPOOKY);
         OPKey.setAmount(1);
-        this.getLootPool().add(OPKey);
-        this.getLootPool().add(OPKey);
         this.getLootPool().add(OPKey);
 
     }

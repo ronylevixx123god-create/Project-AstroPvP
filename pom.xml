@@ -9,7 +9,6 @@
     <packaging>pom</packaging>
     <version>1.0</version>
 
-
     <modules>
         <module>Utils</module>
         <module>Ark</module>
@@ -58,6 +57,7 @@
         <module>AstroFactions</module>
         <module>AstroWildPvP</module>
         <module>ProxyPatch</module>
+        <module>MobCoins</module>
         <module>AstroCagePvP</module>
         <module>Outpost</module>
         <module>FactionLogs</module>
@@ -72,10 +72,8 @@
         <module>AstroItemFilter</module>
         <module>AstroChristmas</module>
         <module>AstroFactionLogs</module>
-        <module>Showcase</module>
         <module>ShowcaseGUI</module>
         <module>AstroCustomBlocks</module>
-        <module>Gifts</module>
         <module>Arcade</module>
         <module>AstroKits</module>
         <module>AstroSlotBot</module>

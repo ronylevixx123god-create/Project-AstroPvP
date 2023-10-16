@@ -50,8 +50,8 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final GrindingManager grindingManager;
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
-    private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.GRINDER);
-    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.GODLY);
+    private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.SOLAR);
+    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.COSMIC);
     private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox").createClaimableItem(false);
 
 

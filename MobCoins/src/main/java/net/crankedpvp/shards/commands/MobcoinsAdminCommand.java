@@ -17,7 +17,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 @Command("amobcoins")
-@Alias({"amc", "amobcoins", "acoins", "acoin"})
+@Alias({"amc", "acoins", "acoin"})
 public class MobcoinsAdminCommand extends CommandBase {
 
     @SubCommand("reload")

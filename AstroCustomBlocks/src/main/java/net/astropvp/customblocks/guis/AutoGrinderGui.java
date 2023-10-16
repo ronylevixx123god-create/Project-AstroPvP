@@ -19,8 +19,8 @@ import org.bukkit.inventory.ItemStack;
 @Getter
 public class AutoGrinderGui {
     private PaginatedGui gui;
-    private final ItemStack grinderKeyItem = CrateKeyItem.getItem(CrateType.GRINDER);
-    private final ItemStack godlyKeyItem = CrateKeyItem.getItem(CrateType.GODLY);
+    private final ItemStack grinderKeyItem = CrateKeyItem.getItem(CrateType.SOLAR);
+    private final ItemStack godlyKeyItem = CrateKeyItem.getItem(CrateType.COSMIC);
     public AutoGrinderGui(Player player, AutoGrinder autoGrinder) throws IllegalAccessException, InstantiationException {
         this.gui = new PaginatedGui(3, 27, "Auto Mob Grinder Menu");
         this.gui.setItem(2, 2, getKeyClaimItem(autoGrinder));

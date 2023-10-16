@@ -54,11 +54,7 @@ public class BroodMother extends Boss {
         this.walkFails = 0;
         this.modifier = new BlockModifier();
         this.attack = new WebAttack(this, this.modifier);
-        ItemStack OPKey = CrateKeyItem.getItem(CrateType.OP);
-        OPKey.setAmount(1);
-        this.getLootPool().add(OPKey);
-        this.getLootPool().add(OPKey);
-        this.getLootPool().add(OPKey);
+        ItemStack OPKey = CrateKeyItem.getItem(CrateType.SPOOKY);
         this.getLootPool().add(OPKey);
 
     }
