@@ -9,6 +9,7 @@ import me.mattstudios.mf.base.CommandBase;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.LootTablePlugin;
 import net.astropvp.loottable.guis.LootTableMainGUI;
+import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -43,7 +44,7 @@ public class LootTableCommand extends CommandBase {
 
     @Permission("astro.admin")
     @SubCommand("additem")
-    public void addItem(Player player, @Completion("#loottables") LootTable lootTableType, Double chance) {
+    public void addItem(Player player, @Completion("#loottables") LootTable lootTableType, @Completion("#ecoupdates") ECO_UPDATE ecoUpdate, Double chance) {
         if (ItemUtils.isAirOrNull(player.getItemInHand())) {
             player.sendMessage(CC.translate("&c&l(!)&c Please hold an item!"));
             return;
@@ -52,8 +53,8 @@ public class LootTableCommand extends CommandBase {
             player.sendMessage(CC.translate("&c&l(!)&c Higher the chance retard!"));
             return;
         }
-        player.sendMessage(CC.translate("&a&l(!)&a Added " + ItemUtils.getDisplayName(player.getItemInHand()) + " &ato the " + lootTableType.getFancy() + " &aLoottable!"));
-        LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).addItem(chance, player.getItemInHand().clone());
+        player.sendMessage(CC.translate("&a&l(!)&a Added " + ItemUtils.getDisplayName(player.getItemInHand()) + " &ato the " + lootTableType.getFancy() + " &aLoottable for eco update: &f" + ecoUpdate.getFancy()));
+        LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).addItem(ecoUpdate,chance, player.getItemInHand().clone());
 
     }
 

@@ -34,20 +34,19 @@ import java.util.List;
 
 public class SpookyArmorSet extends ArmorSet {
     public ItemStack getHelmet() {
-        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&7&lUltra Hat")).addLoreLines(CC.translate("&7The Ultra Helmet.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
+        return (new ItemBuilder(Material.DIAMOND_HELMET)).setName(CC.translate("&6&lS&8&lp&6&lo&8&lo&6&lk&8&ly &6&lP&8&lu&6&lm&8&lp&6&lk&8&li&6&ln")).addLoreLines(CC.translate("&7Scary helmet for halloween.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getChestplate() {
-        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&7&lUltra Jacket")).addLoreLines(CC.translate("&7The Ultra Jacket.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
+        return (new ItemBuilder(Material.DIAMOND_CHESTPLATE)).setName(CC.translate("&6&lS&8&lp&6&lo&8&lo&6&lk&8&ly &6&lC&8&lh&6&le&8&ls&6&lt&8&lp&6&ll&8&la&6&lt&8&le")).addLoreLines(CC.translate("&7Scary chestplate for halloween.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getLeggings() {
-        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&7&lUltra Short")).addLoreLines(CC.translate("&7The Ultra Short.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
+        return (new ItemBuilder(Material.DIAMOND_LEGGINGS)).setName(CC.translate("&6&lS&8&lp&6&lo&8&lo&6&lk&8&ly &6&lL&8&le&6&lg&8&lg&6&li&8&ln&6&lg&8&ls")).addLoreLines(CC.translate("&7Scary leggings for halloween.")).addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
     public ItemStack getBoots() {
-        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&7&lUltra Boots.")).addLoreLines(
-                CC.translate("&7The Ultra Boots."))
+        return (new ItemBuilder(Material.DIAMOND_BOOTS)).setName(CC.translate("&6&lS&8&lp&6&lo&8&lo&6&lk&8&ly &6&lB&8&lo&6&lo&8&lt&6&ls")).addLoreLines(CC.translate("&7Scary boots for halloween."))
                 .addEnchantment(Enchantment.PROTECTION_ENVIRONMENTAL, 4).addEnchantment(Enchantment.DURABILITY, 3).build();
     }
 
@@ -57,42 +56,38 @@ public class SpookyArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.2) {
-            activateUltraAbility(attacker, (Player) attacked, event);
-        }
+        double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spookySetDamageIncrease") * 0.01));
+
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
     }
 
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        double increasePercent = 10 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageIncrease") * 0.01));
-        if (Math.random() < 0.1) {
-            activateUltraAbility(attacker, (Player) attacked, event);
-        }
+        double increasePercent = 10 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spookySetDamageIncrease") * 0.01));
+
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
 
     }
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
-        double reductionPercent = 5 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageDecrease") * 0.01));
+        double reductionPercent = 5 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spookySetDamageDecrease") * 0.01));
         event.setDamage(event.getDamage() * (1 - (reductionPercent * amount * 0.01)));
     }
 
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
-        double reductionPercent = 20 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("ultraSetDamageDecrease") * 0.01));
+        double reductionPercent = 20 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spookySetDamageDecrease") * 0.01));
         event.setDamage(event.getDamage() * (1 - (reductionPercent * 0.01)));
     }
 
     public List<String> getArmorLore() {
         List<String> lore = new ArrayList<>();
-        lore.add(CC.translate("&7&lULTRA SET BONUS"));
-        lore.add(CC.translate("&8● &7Deal +35% damage to all enemies."));
-        lore.add(CC.translate("&8● &7Enemies deal 20% less damage to you."));
-        lore.add(CC.translate("&8● &740% Holy Ultra Negation."));
-        lore.add(CC.translate("&8● &7Ultra Rage Ability"));
-        lore.add(CC.translate("&8● &740% Chance to bypass Utility Belt"));
-        lore.add(CC.translate("&7(&oRequires all 4 ultra items.&7)"));
+        lore.add(CC.translate("&6&lS&8&lP&6&lO&8&lO&6&lK&8&lY &6&lS&8&lE&6&lT &8&lB&6&lO&8&lN&6&lU&8&lS"));
+        lore.add(CC.translate( "&6-&820&6% &8Incoming &6Damage"));
+        lore.add(CC.translate( "&6+&835% &8Outgoing &6Damage"));
+        lore.add(CC.translate( "&6Trick&8-&6or&8-&6Treat &8Ability"));
+        lore.add(CC.translate("&6Bypass &8enemy &6Cage &8Ability &6Immunity"));
+        lore.add(CC.translate( "&6Auto &8Bless"));
+        lore.add(CC.translate("&7(&oRequires all 4 spooky items.&7)"));
         return lore;
     }
 
@@ -102,19 +97,18 @@ public class SpookyArmorSet extends ArmorSet {
         message.add(CC.translate( "&6+&810% &8Outgoing &6Damage"));
         message.add(CC.translate( "&6Trick&8-&6or&8-&6Treat &8Ability"));
         message.add(CC.translate("&625% &8to &6bypass &8enemy &6Cage &8Ability &6Immunity"));
-        message.add(CC.translate( "&6Auto &8Bless"));
         return message;
     }
 
     public List<String> getArmorEquipMessage() {
         List<String> message = new ArrayList<>();
         message.add("");
-        message.add(CC.translate("&7&lULTRA SET BONUS"));
-        message.add(CC.translate("&8● &7Deal +35% damage to all enemies."));
-        message.add(CC.translate("&8● &7Enemies deal 20% less damage to you."));
-        message.add(CC.translate("&8● &740% Holy Ultra Negation."));
-        message.add(CC.translate("&8● &625% &8to &6bypass &8enemy &6cage &8pet &6immunity"));
-        message.add(CC.translate("&8● &740% Chance to bypass Utility Belt"));
+        message.add(CC.translate("&6&lS&8&lP&6&lO&8&lO&6&lK&8&lY &6&lS&8&lE&6&lT &8&lB&6&lO&8&lN&6&lU&8&lS"));
+        message.add(CC.translate( "&6-&820&6% &8Incoming &6Damage"));
+        message.add(CC.translate( "&6+&835% &8Outgoing &6Damage"));
+        message.add(CC.translate( "&6Trick&8-&6or&8-&6Treat &8Ability"));
+        message.add(CC.translate("&6Bypass &8enemy &6Cage &8Ability &6Immunity"));
+        message.add(CC.translate( "&6Auto &8Bless"));
         message.add("");
         return message;
     }
@@ -129,14 +123,7 @@ public class SpookyArmorSet extends ArmorSet {
 
     }
 
-    public void activateUltraAbility(Player player, final Player target, EntityDamageByEntityEvent event) {
-        if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.THANKSGIVING_2022_BELT) && Math.random() < 0.25) {
-            target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[Blocked Ultra Rage] &e&l*"));
-            return;
-        }
-        event.setDamage(event.getDamage() * 1.15);
-        target.sendMessage(CC.translate((String) ("&e&l*&4&l*&e&l* &7&lULTRA STRIKED &f[&c" + player.getName() + "&f] &c&l*&4&l*&e&l*")));
-        player.sendMessage(CC.translate((String) "&e&l*&4&l*&e&l* &f&lULTRA STRIKE &7x2 &f&lDMG &e&l*&4&l*&e&l*"));
-        target.playEffect(EntityEffect.VILLAGER_ANGRY);
+    public void activateSpookyAbility(Player player, final Player target, EntityDamageByEntityEvent event) {
+
     }
 }

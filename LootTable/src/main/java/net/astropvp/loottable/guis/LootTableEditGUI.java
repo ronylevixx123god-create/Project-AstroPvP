@@ -8,6 +8,7 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 
 import net.astropvp.loottable.LootTablePlugin;
+import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -19,8 +20,8 @@ import java.util.Map;
 public class LootTableEditGUI {
     private PaginatedGui lootEditGUI;
 
-    public LootTableEditGUI(LootTable lootTableType) {
-        this.lootEditGUI = new PaginatedGui(6, 54, lootTableType.getFancy() + " Loot");
+    public LootTableEditGUI(LootTable lootTableType, ECO_UPDATE ecoUpdate) {
+        this.lootEditGUI = new PaginatedGui(6, 54, lootTableType.getFancy() + " Loot - " + ecoUpdate.getFancy());
         this.lootEditGUI.setItem(6, 1, new GuiItem(createPreviousItem(), event -> {
             LootTableMainGUI lootTableMainGUI = new LootTableMainGUI((Player) event.getWhoClicked());
             lootTableMainGUI.getMainGUI().open(event.getWhoClicked());
@@ -32,7 +33,7 @@ public class LootTableEditGUI {
 
 
 
-        for (Map.Entry<ItemStack, Double> entry : LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).getLootMap().entrySet()) {
+        for (Map.Entry<ItemStack, Double> entry : LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).getLootFromEcoUpdate(ecoUpdate).entrySet()) {
             ItemStack item = entry.getKey();
             double chance = entry.getValue();
             if (ItemUtils.isAirOrNull(item)) continue;
@@ -40,8 +41,8 @@ public class LootTableEditGUI {
                 if (event.isRightClick()) {
                     event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c Removed " + ItemUtils.getDisplayName(item) + "&c from the " + lootTableType.getFancy() + " - " + lootTableType.getFancy()));
                     lootEditGUI.removeItem(event.getSlot());
-                    LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).removeItem(item);
-                    LootTableEditGUI editGUI = new LootTableEditGUI(lootTableType);
+                    LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType).removeItem(ecoUpdate, item);
+                    LootTableEditGUI editGUI = new LootTableEditGUI(lootTableType, ecoUpdate);
                     editGUI.getLootEditGUI().open(event.getWhoClicked());
                 } else {
                     event.getWhoClicked().getInventory().addItem(item);

@@ -7,6 +7,7 @@ import me.mattstudios.mf.base.components.TypeResult;
 
 import net.astropvp.loottable.commands.LootTableCommand;
 import net.astropvp.loottable.data.LootTableManager;
+import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
 import net.astropvp.loottable.typeadapters.LootMapSerializer;
 import net.astropvp.storage.StoragePlugin;
@@ -58,11 +59,18 @@ public class LootTablePlugin extends JavaPlugin {
             LootTable type = LootTable.valueOf(String.valueOf(argument));
             return new TypeResult(type, argument);
         });
+        this.commandManager.getParameterHandler().register(ECO_UPDATE.class, argument -> {
+            ECO_UPDATE ecoUpdate = ECO_UPDATE.valueOf(String.valueOf(argument));
+            return new TypeResult(ecoUpdate, argument);
+        });
     }
 
     private void registerCommandCompletion() {
         this.commandManager.getCompletionHandler().register("#loottables", input -> {
             return Arrays.stream(LootTable.values()).map(LootTable::name).collect(Collectors.toList());
+        });
+        this.commandManager.getCompletionHandler().register("#ecoupdates", input -> {
+            return Arrays.stream(ECO_UPDATE.values()).map(ECO_UPDATE::name).collect(Collectors.toList());
         });
     }
 }

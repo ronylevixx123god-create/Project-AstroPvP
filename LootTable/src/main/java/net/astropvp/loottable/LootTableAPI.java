@@ -19,21 +19,21 @@ public class LootTableAPI {
 
     public static ItemStack getRandomLootItem(LootTable lootTableType) {
         LootTableData lootTable = lootTableManager.getLootTable(lootTableType);
-        return RandomUtils.getRandomItem(lootTable.getLootMap());
+        return RandomUtils.getRandomItem(lootTable.getLootFromEcoUpdate(lootTable.getCurrentEcoUpdateLoot()));
     }
 
     public static List<ItemStack> getAllLootFromLootTable(LootTable type) {
         LootTableData lootTable = lootTableManager.getLootTable(type);
-        Set<ItemStack> loot  = lootTable.getLootMap().keySet();
+        Set<ItemStack> loot  = lootTable.getLootFromEcoUpdate(lootTable.getCurrentEcoUpdateLoot()).keySet();
         return loot.stream().sorted(Comparator.comparing(ItemStack::getType)).collect(Collectors.toList());
     }
 
     public static void fixLoot(LootTable type) {
         LootTableData lootTable = lootTableManager.getLootTable(type);
-        Set<ItemStack> loot  = lootTable.getLootMap().keySet();
+        Set<ItemStack> loot  = lootTable.getLootFromEcoUpdate(lootTable.getCurrentEcoUpdateLoot()).keySet();
         for (ItemStack itemStack  : loot) {
             if (ItemUtils.isAirOrNull(itemStack)) {
-                lootTable.removeItem(itemStack);
+                lootTable.removeItem(lootTable.getCurrentEcoUpdateLoot(), itemStack);
             }
         }
     }
