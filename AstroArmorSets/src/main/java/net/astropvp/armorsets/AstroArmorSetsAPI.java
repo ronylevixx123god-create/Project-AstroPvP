@@ -150,6 +150,12 @@ public class AstroArmorSetsAPI {
         }
     }
 
+    public static ItemStack addWineArmorOverride(ItemStack itemStack, int amount) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+        nbtItem.setInteger("wine-armor-override", amount);
+        return nbtItem.getItem();
+    }
+
     public static void clearCache(Player player) {
 
         CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);

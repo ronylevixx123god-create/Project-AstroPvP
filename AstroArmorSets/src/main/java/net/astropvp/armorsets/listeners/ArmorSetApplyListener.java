@@ -1,5 +1,6 @@
 package net.astropvp.armorsets.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import me.astropvp.proxypach.ProxyPatch;
 import net.astropvp.armorsets.AstroArmorSets;
@@ -16,6 +17,8 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 
@@ -65,6 +68,14 @@ public class ArmorSetApplyListener implements Listener {
             Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {
                 AstroArmorSetsAPI.refreshArmorSets(e.getPlayer(), true);
             }, 30L);
+        }
+    }
+
+    @EventHandler
+    public void headlessClickAbility(InventoryClickEvent event) {
+        if (event.getSlotType() == InventoryType.SlotType.ARMOR && AstroArmorSets.getInstance().getHeadlessAbilityManager().getHeadless().containsKey(event.getWhoClicked().getUniqueId())) {
+            event.getWhoClicked().sendMessage(CC.translate("&c&l(!)&c You cannot switch armor while you are trick or treated"));
+            event.setCancelled(true);
         }
     }
 }

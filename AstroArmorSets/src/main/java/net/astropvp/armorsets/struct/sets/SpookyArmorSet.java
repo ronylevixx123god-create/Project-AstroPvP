@@ -11,6 +11,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import net.astropvp.armorsets.AstroArmorSets;
+import net.astropvp.armorsets.managers.HeadlessAbilityManager;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import org.arkhamnetwork.enchantments.Enchantments;
@@ -59,6 +60,10 @@ public class SpookyArmorSet extends ArmorSet {
         double increasePercent = 35 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spookySetDamageIncrease") * 0.01));
 
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
+
+        if (Math.random() < 0.04 && attacked instanceof Player) {
+            AstroArmorSets.getInstance().getHeadlessAbilityManager().activateAbility(attacker, (Player) attacked);
+        }
     }
 
 
@@ -67,6 +72,9 @@ public class SpookyArmorSet extends ArmorSet {
 
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
 
+        if (Math.random() < 0.01 && attacked instanceof Player) {
+            AstroArmorSets.getInstance().getHeadlessAbilityManager().activateAbility(attacker, (Player) attacked);
+        }
     }
 
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
@@ -123,7 +131,4 @@ public class SpookyArmorSet extends ArmorSet {
 
     }
 
-    public void activateSpookyAbility(Player player, final Player target, EntityDamageByEntityEvent event) {
-
-    }
 }

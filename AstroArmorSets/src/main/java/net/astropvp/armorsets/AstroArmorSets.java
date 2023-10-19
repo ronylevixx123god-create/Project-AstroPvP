@@ -8,6 +8,7 @@ import net.astropvp.armorsets.items.ArmorCrystalItem;
 import net.astropvp.armorsets.items.CrystalExtractionItem;
 import net.astropvp.armorsets.items.OmniCrystal;
 import net.astropvp.armorsets.listeners.*;
+import net.astropvp.armorsets.managers.HeadlessAbilityManager;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -17,6 +18,10 @@ public class AstroArmorSets extends JavaPlugin {
     private static AstroArmorSets instance;
     @Getter
     private ConfigManager configManager;
+
+    @Getter
+    private HeadlessAbilityManager headlessAbilityManager;
+
 
 
 
@@ -31,6 +36,7 @@ public class AstroArmorSets extends JavaPlugin {
         registerListeners();
 
         System.out.println("[AstroArmorSets] Plugin has been enabled!");
+        headlessAbilityManager  = new HeadlessAbilityManager();
     }
 
 

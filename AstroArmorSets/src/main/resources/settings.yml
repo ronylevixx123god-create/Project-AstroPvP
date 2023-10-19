@@ -14,7 +14,10 @@ astroSetDamageIncrease: 10
 astroSetDamageDecrease: 10
 
 ancientSetDamageIncrease: 6.5
-ancientSetDamageDecrease: 6.5
+ancientSetDamageDecrease: 6.
+
+spookySetDamageIncrease: 15
+spookySetDamageDecrease: 15
 
 omniSetDamageIncrease: 15
 omniSetDamageDecrease: 15
