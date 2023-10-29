@@ -38,8 +38,7 @@ public class Enlighted extends CustomEnchantment
         if (random < chance) {
             if (player.hasMetadata("neutralized"))
                 return;
-            if (player.hasMetadata("noDefenseProcs"))
-                return;
+
             Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable() {
                 @Override
                 public void run() {

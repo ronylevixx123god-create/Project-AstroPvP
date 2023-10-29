@@ -68,10 +68,10 @@ public class HeroicDeathbringer
                 Entity damage = e.getDamager();
                 if (doubleDamage.contains(damage)) {
                     double random = Math.random();
-                    double chance = 0.05;
+                    double chance = 0.03;
                     if (random < chance) {
                         if (GeneralCooldown.isOnGeneralCooldown((Player) e.getDamager())) return;
-                        e.setDamage(e.getDamage() * 2);
+                        e.setDamage(e.getDamage() * 1.25);
                         DamageIndicatorUtils.sendDamageIndicator((Player) e.getEntity(), CC.translate("&d&l* PLANETARY DEATHBRINGER *"), "CITADEL");
                         e.getEntity().sendMessage(CC.translate("&d&l* PLANETARY DEATHBRINGER *"));
                         GeneralCooldown.enterCooldown((Player) e.getDamager());

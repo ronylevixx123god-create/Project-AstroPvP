@@ -275,6 +275,14 @@ public class PlayerListener
         }
     }
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void extraDamage(EntityDamageByEntityEvent event) {
+        if (event.getDamager() instanceof Player && !event.isCancelled() && event.getDamager().getLocation().getWorld().getName().equals("world_duels")) {
+            event.setDamage(event.getDamage()*1.5);
+            //This is the official extra duel damage listener
+        }
+    }
+
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onCommandPreProccess(PlayerTeleportEvent e) {
         if (DuelAPI.hasDuel(e.getPlayer())) {

@@ -24,8 +24,7 @@ public class HeroicValor extends HeroicCustomEnchantment
         }
         if (player.hasMetadata("neutralized"))
             return;
-        if (player.hasMetadata("noDefenseProcs"))
-            return;
+
 
         if (attacker instanceof Player) {
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2021_AXE) && Math.random() < 0.5) {

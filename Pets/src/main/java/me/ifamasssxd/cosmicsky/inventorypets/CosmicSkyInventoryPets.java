@@ -1,5 +1,7 @@
 package me.ifamasssxd.cosmicsky.inventorypets;
 
+import com.cosmicpvp.cosmicutils.CosmicUtils;
+import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import lombok.Getter;
 import me.ifamasssxd.cosmicsky.inventorypets.commands.CommandPet;
 import me.ifamasssxd.cosmicsky.inventorypets.items.PetLeashItem;
@@ -28,7 +30,6 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
    private InventoryPetItem petItem;
    private PetLeashItem petLeashItem;
    @Getter
-   //private CooldownUtils cooldownUtils;
    public static Map<UUID, Player> cageCooldown;
    public static Map<UUID, Player> witcherCooldown;
    public static Map<UUID, Player> skrrtCooldown;
@@ -61,7 +62,6 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       }
 
       this.getServer().getScheduler().scheduleAsyncRepeatingTask(this, new BleedTask(), 0L, 10L);
-      //this.cooldownUtils = new CooldownUtils("petsPlugin");
       new PetUpdateTask().runTaskTimer(this, 60L, 30L);
    }
 

@@ -30,10 +30,7 @@ public class HeroicPlagueCarrier extends HeroicCustomEnchantment {
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
         if (player instanceof Player) {
-            if (player.hasMetadata("neutralized"))
-                return;
-            if (player.hasMetadata("noDefenseProcs"))
-                return;
+
             Player p = (Player)player;
             double dmg = e.getFinalDamage();
             if (player.getHealth() - dmg <= 0.0) {

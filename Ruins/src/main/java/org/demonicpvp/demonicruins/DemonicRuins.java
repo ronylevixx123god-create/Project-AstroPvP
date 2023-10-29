@@ -11,6 +11,7 @@ import com.comphenix.protocol.events.*;
 import com.google.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -77,7 +78,7 @@ public class DemonicRuins extends JavaPlugin implements Listener {
     @Override
     public void onDisable() {
         // despawn all ruin mobs
-        Bukkit.getWorld(RUINS_WORLD_NAME).getEntities().stream().filter(MobUtil::isRuinMob).forEach(Entity::remove);
+        Bukkit.getWorld(RUINS_WORLD_NAME).getEntities().stream().filter(entity -> !(entity instanceof Player)).forEach(Entity::remove);
 
         this.commandManager.unregisterCommands();
         this.protocolManager.removePacketListener(this.packetListener);

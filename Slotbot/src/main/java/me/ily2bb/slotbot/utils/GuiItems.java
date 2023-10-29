@@ -31,9 +31,12 @@ public class GuiItems {
         meta.setDisplayName(CC.WhiteB + "Loot Table");
         final AbstractList<String> lore = new ArrayList<String>(Arrays.asList(CC.Gray + "The Roll Bot contains the items", CC.Gray + "from the following Lootboxes,", CC.Gray + "which will randomize every week:", ""));
         final List<ItemStack> items = getShowItems();
+        int count = 0;
         for ( ItemStack x : items) {
+            if (count > 20) break;
             final String display = ItemUtils.getDisplayName(x);
             lore.add(CC.WhiteB + " * " + ((x.getAmount() > 1) ? (x.getAmount() + "x ") : "") + display);
+            count++;
         }
         lore.add("");
         lore.add(CC.Gray + "Click To View All Items");

@@ -2,13 +2,14 @@ package me.astropvp.astropvpskins.objects.skins.boots;
 
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
 public class MaryJanes extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (isCritical(damager)) {
+        if (isCritical(damager) && !MaskType.hasEquipped((Player) damaged, "KILLER_CLOWN")) {
             event.setDamage(event.getDamage() * 1.15);
         }
     }

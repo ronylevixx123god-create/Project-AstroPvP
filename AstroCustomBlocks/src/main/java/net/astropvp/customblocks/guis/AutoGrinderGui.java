@@ -35,8 +35,8 @@ public class AutoGrinderGui {
 
     public GuiItem getKeyClaimItem(AutoGrinder autoGrinder) {
         ItemStack item = new ItemBuilder(Material.GOLD_NUGGET)
-                .setName("&6&lGrinder Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGrinderKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
-                .addLoreLine("&7Click to claim the grinder keys in this auto grinder!")
+                .setName("&e&lSolar Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGrinderKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
+                .addLoreLine("&7Click to claim the solar keys in this auto grinder!")
                 .colorize()
                 .build();
         return new GuiItem(item, event -> {
@@ -51,8 +51,8 @@ public class AutoGrinderGui {
 
     public GuiItem getGodlyKeysClaimItem(AutoGrinder autoGrinder) {
         ItemStack item = new ItemBuilder(Material.GOLD_NUGGET)
-                .setName("&e&lGodly Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGodlyKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
-                .addLoreLine("&7Click to claim the godly keys in this auto grinder!")
+                .setName("&b&lCosmic Keys &7(&f" + NumberUtils.formatMoney(autoGrinder.getGodlyKeys()) + "&7/" + autoGrinder.getMaxKeys(autoGrinder.getLevel()) + "&7)")
+                .addLoreLine("&7Click to claim the cosmic keys in this auto grinder!")
                 .colorize()
                 .build();
         return new GuiItem(item, event -> {

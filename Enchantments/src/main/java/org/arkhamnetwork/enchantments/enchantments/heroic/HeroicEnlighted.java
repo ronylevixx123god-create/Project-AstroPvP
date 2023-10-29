@@ -37,10 +37,7 @@ public class HeroicEnlighted extends CustomEnchantment
             chance*=1.1;
         }
         if (random < chance) {
-            if (player.hasMetadata("neutralized"))
-                return;
-            if (player.hasMetadata("noDefenseProcs"))
-                return;
+
             double toGive = 2.0;
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) player, SkinType.VALENTINES_2021_HELMET)) {
                 toGive *= 1.05;

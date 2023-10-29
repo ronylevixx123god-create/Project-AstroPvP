@@ -127,13 +127,5 @@ outposts:
     location: world:-3070:66:-3070:0.0:0.0
     capturePercent: 0.0
     lastTrophySpawned: 0
-  space:
-    displayName: '&d&lSpace Stronghold'
-    regionName: spacecap
-    blockRegionName: space_blocks
-    lastCapturedTime: 1600288129608
-    location: world:-3070:66:-3070:0.0:0.0
-    capturePercent: 0.0
-    lastTrophySpawned: 0
 last-spawned-chest: 1604930056074
 last-outpost: great_hall

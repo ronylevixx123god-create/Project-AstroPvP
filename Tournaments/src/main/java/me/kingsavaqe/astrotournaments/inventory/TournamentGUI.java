@@ -57,7 +57,7 @@ public class TournamentGUI {
             new PlayerSettingsGUI(astroTournamentsPlugin, astroTournamentsPlugin.getTournamentManager().getTournamentPlayer(player.getUniqueId())).getUI().open(player);
         }));
 
-        if (player.isOp()) {
+        if (player.hasPermission("astro.srmod")) {
             this.astroTournamentInventory.setItem(3, 8, new GuiItem(createAdminMenu(), event -> {
                 new AdminSettingsGUI(astroTournamentsPlugin).getUI().open(player);
             }));

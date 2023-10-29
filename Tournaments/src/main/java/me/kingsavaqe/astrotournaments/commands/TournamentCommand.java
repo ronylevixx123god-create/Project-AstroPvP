@@ -124,7 +124,7 @@ public class TournamentCommand extends CommandBase {
         new TournamentStartTask(astroTournamentsPlugin);
     }
 
-    @SubCommand("end")
+    /*@SubCommand("end")
     @Permission("tournaments.*")
     @NoPermission("&cAn internal error occurred when executing this command.")
     public void endCommand(CommandSender commandSender) {
@@ -141,7 +141,7 @@ public class TournamentCommand extends CommandBase {
         player.sendMessage(Utils.fixColor("&aYou have successfully ended a tournament"));
         player.playSound(player.getLocation(), Sound.BAT_TAKEOFF, 2.0F, 2.0F);
 
-    }
+    }*/
 
     private void sendUserHelp(CommandSender commandSender) {
         commandSender.sendMessage(Utils.fixColor("&a-------[ &2Tournaments &a]-------"));

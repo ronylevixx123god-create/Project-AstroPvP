@@ -36,7 +36,7 @@ public class DeathGod
             return;
         }
         double random = Math.random();
-        if (random < 0.01 * (double)level && player.getHealth() - e.getDamage() <= (double)(4 + level)) {
+        if (random < 0.005 && player.getHealth() - e.getDamage() <= (double)(4 + level)) {
             //e.setCancelled(true);
             e.setDamage(0.0);
             GeneralUtil.healPlayer(player, 5 + level);

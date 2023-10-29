@@ -56,7 +56,7 @@ public class MobUtil {
 
         entity.getEquipment().setItemInHandDropChance(0.0F);
 
-        entity.setMaxHealth(80.0D);
+        entity.setMaxHealth(30.0D);
         entity.setHealth(entity.getMaxHealth());
 
         String entityProperties = new Gson().toJson(new SSetEntityProperties.EntityProperties(1.8, false, false, true, CommonsUtil.color("&3&lGuardian"), 0, zombie ? 1 : 2, false, ""));

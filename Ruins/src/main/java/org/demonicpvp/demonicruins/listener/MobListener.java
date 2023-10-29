@@ -74,7 +74,7 @@ public class MobListener implements Listener {
                     //event.setUseRawDamage(true);
                     event.setDamage(1.0F);
                 } else if (mobType.equals(GUARDIAN_RUINS_MOB_VALUE) || mobType.equals(ELITE_GUARDIAN_RUINS_MOB_VALUE)) {
-                    float maxDamage = 10.0F + new Random().nextInt(4);
+                    float maxDamage = 10.0F + new Random().nextInt(8);
 
                     if (event.getFinalDamage() > maxDamage) {
                         //event.setUseRawDamage(true);

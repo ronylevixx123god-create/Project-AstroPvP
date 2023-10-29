@@ -27,8 +27,7 @@ public class Tank extends CustomEnchantment
 
         if (player.hasMetadata("neutralized"))
             return;
-        if (player.hasMetadata("noDefenseProcs"))
-            return;
+
         if (attacker == null) return;
         if (!(attacker instanceof Player)) return;
         if ( AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.JULY_2021_BELT)) {

@@ -3,6 +3,7 @@ package net.astropvp.loottable.data;
 
 import lombok.Getter;
 
+import lombok.Setter;
 import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
 import net.astropvp.storage.utils.KeyToSave;
@@ -12,6 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Getter
+@Setter
 public class LootTableData implements KeyToSave {
     private Map<ECO_UPDATE, Map<ItemStack, Double>> ecoUpdateMap;
     private ECO_UPDATE currentEcoUpdateLoot;

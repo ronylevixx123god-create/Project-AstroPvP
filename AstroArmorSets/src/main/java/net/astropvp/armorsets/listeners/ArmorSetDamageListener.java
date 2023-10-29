@@ -96,7 +96,7 @@ public class ArmorSetDamageListener implements Listener {
             //crystals damaged
             if (cache != null && !cache.getCurrentSetCrystals().isEmpty()) {
                 Map<ArmorSetType, Integer> crystals = AstroArmorSetsAPI.getBonusCrystalsEquippedIncludingCorruption((Player) attacker, (Player) attacked);
-                if (attacked.hasMetadata("blackout")) return;
+                //if (attacked.hasMetadata("blackout")) return;
                 for (Map.Entry<ArmorSetType, Integer> entry : crystals.entrySet()) {
                     ArmorSetType armorSetType = entry.getKey();
                     int amount = entry.getValue();
@@ -159,7 +159,7 @@ public class ArmorSetDamageListener implements Listener {
                 }
 
                 int ladderDifference = ladderAttacker - ladderAttacked;
-                //if (ladderDifference < 0) ladderDifference=0;
+                if (ladderDifference < 0) ladderDifference=0;
                 double damagePercentChange = ladderDifference * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("crystalsLadderDamageDifference");
                 e.setDamage(e.getDamage() * (1 + (damagePercentChange  *  0.01)));
             }

@@ -45,12 +45,12 @@ public class ChatListener implements Listener {
             public void run() {
                 ChatListener.this.updateNitroBoosters();
             }
-        }).runTaskTimerAsynchronously(plugin, 40L, 2000L);
+        }).runTaskTimer(plugin, 40L, 2000L);
     }
 
     public void updateNitroBoosters() {
         if (this.plugin.getDatabaseManager().isConnected()) {
-            Bukkit.getScheduler().runTaskAsynchronously(this.plugin, () -> {
+            Bukkit.getScheduler().runTask(this.plugin, () -> {
                 Map<UUID, Long> uuidUserMap = this.plugin.getDatabaseManager().fetchMap();
                 Set<UUID> toAdd = new HashSet<>();
                 Set<UUID> toAddLeaders = new HashSet<>();
@@ -60,7 +60,7 @@ public class ChatListener implements Listener {
                 for (UUID uuid : uuidUserMap.keySet()) {
                     Long discordId = uuidUserMap.get(uuid);
                     User user = this.plugin.getJda().getUserById(discordId);
-                    this.plugin.getJda().getGuilds().stream().filter((g) -> g.getName().equals("AstroPvP - Factions")).findFirst().ifPresent((g) -> {
+                    this.plugin.getJda().getGuilds().stream().filter((g) -> g.getName().contains("AstroPvP")).findFirst().ifPresent((g) -> {
                         Member member = this.getMemberById(user, g);
                         if (user != null && member != null) {
                             if (member.getRoles().stream().anyMatch((r) -> r.getId().equals(nitroBoosterRole))) {
@@ -122,13 +122,13 @@ public class ChatListener implements Listener {
         }
 
         if (player.hasPermission("essentials.kit.media") && !isYoutuber(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set apollo");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set interstellar");
         } else if (isYoutuber(player) && !player.hasPermission("essentials.kit.media")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set media");
         }
 
         if (player.hasPermission("essentials.kit.famous") && !isFamous(player)) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set apollo");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set interstellar");
         } else if (isFamous(player) && !player.hasPermission("essentials.kit.famous")) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set famous");
         }

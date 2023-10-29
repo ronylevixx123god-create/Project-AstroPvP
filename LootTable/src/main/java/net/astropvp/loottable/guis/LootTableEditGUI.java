@@ -10,10 +10,14 @@ import lombok.Getter;
 import net.astropvp.loottable.LootTablePlugin;
 import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
+import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Getter
@@ -49,9 +53,45 @@ public class LootTableEditGUI {
                 }
             }));
         }
+
+        lootEditGUI.getFiller().fillBottom(new GuiItem(createFillerItem()));
+
+        ItemStack prevPage = new ItemStack(Material.ARROW);
+        ItemMeta prevMeta = prevPage.getItemMeta();
+        prevMeta.setDisplayName(CC.translate("&c<- Previous Page"));
+        List<String> prevLore = new ArrayList<>();
+        prevLore.add(CC.translate("&7Right-Click&7 to go to the previous page."));
+        prevMeta.setLore(prevLore);
+        prevPage.setItemMeta(prevMeta);
+
+        ItemStack nextPage = new ItemStack(Material.ARROW);
+        ItemMeta nextMeta = nextPage.getItemMeta();
+        nextMeta.setDisplayName(CC.translate("&aNext Page ->"));
+        List<String> nextLore = new ArrayList<>();
+        nextLore.add(CC.translate("&7Right-Click&7 to go to the next page."));
+        nextMeta.setLore(nextLore);
+        nextPage.setItemMeta(nextMeta);
+
+        lootEditGUI.setItem(6, 5, new GuiItem(prevPage, event -> {
+            lootEditGUI.previous();
+            event.setCancelled(true);
+        }));
+
+        lootEditGUI.setItem(6, 6, new GuiItem(nextPage, event -> {
+            lootEditGUI.next();
+            event.setCancelled(true);
+        }));
     }
 
     public ItemStack createPreviousItem() {
         return new ItemBuilder(Material.ARROW, CC.translate("&c<- Go Back"), CC.translate("&7Right-Click&7 to go back.")).build();
+    }
+
+    public ItemStack createFillerItem() {
+        ItemStack item = new ItemStack(Material.STAINED_GLASS_PANE, 1, DyeColor.GRAY.getData());
+        ItemMeta meta = item.getItemMeta();
+        meta.setDisplayName(CC.translate("&f"));
+        item.setItemMeta(meta);
+        return item;
     }
 }

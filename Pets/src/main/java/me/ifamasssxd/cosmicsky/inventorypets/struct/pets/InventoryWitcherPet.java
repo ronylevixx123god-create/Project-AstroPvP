@@ -113,10 +113,11 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             if (!WorldGuardUtils.isPvPEnabled(p.getLocation()))
                 continue;
-/*            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "witcherCooldown")) {
-                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on witcher cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "witcherCooldown") + "&c."));
+
+            if (CooldownUtils.isCooldownActive(p, "witcherCooldown")) {
+                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on witcher cooldown for &n" + CooldownUtils.getFormattedCooldown(p, "witcherCooldown") + "&c."));
                 continue;
-            }*/
+            }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
@@ -150,11 +151,15 @@ public class InventoryWitcherPet extends InventoryPet {
 
 
 
-            CrankedAmuletUtil.tryHatchAbility(p, player);
 
+
+            CrankedAmuletUtil.tryHatchAbility(p, player);
+            CooldownUtils.registerCooldown(p, new PetCooldown("witcherCooldown", 120));
             p.sendMessage(CC.translate("&cWitcher Pet - ( " + sum + "s Ragdoll, Soul Enchantments - BLOCKED)"));
             p.playSound(p.getLocation(), Sound.GHAST_MOAN, 2.0F, 2.0F);
-            p.setWalkSpeed(0.0F);
+            if (!AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_BOOTS_SLIPPERS)) {
+                p.setWalkSpeed(0.0F);
+            }
             p.setMetadata("witcher_ability", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
 
             int witcherCooldown = 120;
@@ -178,13 +183,21 @@ public class InventoryWitcherPet extends InventoryPet {
         DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");
 
         Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), ()-> {
+            for (Player pp : players) {
+                if (pp == null || !player.isOnline())
+                    continue;
+                pp.setWalkSpeed(0.2F);
+            }
+
+        }, 20L);
+
+        Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), ()-> {
             no_kb.remove(uuid);
             for (Player pp : players) {
                 if (pp == null || !player.isOnline())
                     continue;
                 if (pp.hasMetadata("witcher_ability"))
                     pp.removeMetadata("witcher_ability", CosmicSkyInventoryPets.get());
-                pp.setWalkSpeed(0.2F);
             }
             player.sendMessage(CC.translate("&4&lPET:  Witcher Pet - WITCHER has worn off! "));
         }, (sum * 20L));

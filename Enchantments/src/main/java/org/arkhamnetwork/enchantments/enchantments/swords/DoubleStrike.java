@@ -45,7 +45,7 @@ public class DoubleStrike
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double chance;
         double random = Math.random();
-        if (random < (chance = 0.015 * (double)level)) {
+        if (random < (chance = 0.005 * (double)level)) {
             double dmg = VanillaDamageListener.getLastFinalDamage((Entity)playerHit);
             if (dmg == 0.0) {
                 dmg = e.getDamage();
@@ -59,7 +59,7 @@ public class DoubleStrike
                     if (!playerHit.isDead() && playerHit.getHealth() > 0.0) {
                         if (GeneralCooldown.isOnGeneralCooldown(pp)) return;
                         playerHit.setMetadata("doubleStriked", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
-                        playerHit.damage(fdmg, (Entity)player);
+                        playerHit.damage(fdmg/2.5, (Entity)player);
                         pp.sendMessage("§6§l** DOUBLE STRIKE **");
                         DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&6&l* DOUBLE STRIKE *"), "DOUBLE_STRIKE");
                         GeneralCooldown.enterCooldown(pp);

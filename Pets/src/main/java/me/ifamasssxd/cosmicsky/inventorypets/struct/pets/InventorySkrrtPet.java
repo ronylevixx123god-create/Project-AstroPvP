@@ -127,10 +127,10 @@ public class InventorySkrrtPet extends InventoryPet {
             FPlayer castingPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(player);
             FPlayer surroundingPlayer = (FPlayer) FPlayers.getInstance().getByPlayer(p);
 
-/*            if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(p, "skrrtCooldown")) {
-                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on skrrt cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(p, "skrrtCooldown") + "&c."));
+            if (CooldownUtils.isCooldownActive(p, "skrrtCooldown")) {
+                player.sendMessage(CC.translate("&c&lPET: &c" + p.getName() + "&c is still on skrrt cooldown for &n" + CooldownUtils.getFormattedCooldown(p, "skrrtCooldown") + "&c."));
                 continue;
-            }*/
+            }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &8&l*"));
@@ -183,7 +183,7 @@ public class InventorySkrrtPet extends InventoryPet {
                 DamageIndicatorUtils.sendDamageIndicator(p, CC.translate("&4&l* SKRRT PET *"), "SKRRT");
 
                 int skrrtCooldown = 120;
-                //CosmicSkyInventoryPets.get().getCooldownUtils().add(p, "skrrtCooldown", skrrtCooldown * 1000);
+                CooldownUtils.registerCooldown(p, new PetCooldown("skrrtCooldown", skrrtCooldown));
                 CrankedAmuletUtil.tryHatchAbility(p, player);
 
                 CombatLog.flagCombat(p);

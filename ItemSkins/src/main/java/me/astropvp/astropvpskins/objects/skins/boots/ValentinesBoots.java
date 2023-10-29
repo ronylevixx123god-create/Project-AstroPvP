@@ -2,6 +2,7 @@ package me.astropvp.astropvpskins.objects.skins.boots;
 
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.ItemSkin;
+import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import org.arkhamnetwork.enchantments.enchantments.heroic.HeroicAegis;
 import org.bukkit.Bukkit;
@@ -21,7 +22,7 @@ public class ValentinesBoots extends ItemSkin {
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (isCritical(damager)) {
+        if (isCritical(damager) && !MaskType.hasEquipped((Player) damaged, "KILLER_CLOWN")) {
             event.setDamage(event.getDamage() * 1.1);
         }
     }

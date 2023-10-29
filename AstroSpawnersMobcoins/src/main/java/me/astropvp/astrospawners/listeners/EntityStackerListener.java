@@ -21,6 +21,7 @@ import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.OutpostUtil;
@@ -228,14 +229,15 @@ public class EntityStackerListener implements Listener {
 
         if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
             //PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
-            LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
+            //LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
             p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
             try {
                 ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            p.sendMessage(CC.translate("&a&l+ &b&lMystery Lootbox"));
+            p.sendMessage(CC.translate("&a&l+ &b&lSlotbot"));
+            PlayerUtil.giveOrDropProtectedItem(p, CosmicSlotBotAPI.createSlotBotItem(), 60);
 
 
         }

@@ -77,9 +77,9 @@ public class HolyWhiteScrollListener implements Listener {
             return;
         if (e.getKeepInventory())
             return;
-        if (!e.getEntity().getLocation().getWorld().getName().equals("world") && !e.getEntity().getLocation().getWorld().getName().equals("flat"))
+        if (!e.getEntity().getLocation().getWorld().getName().equals("world") && !e.getEntity().getLocation().getWorld().getName().equals("flat") && !e.getEntity().getLocation().getWorld().getName().equals("world_ruins"))
             return;
-        if (!e.getEntity().getKiller().getLocation().getWorld().getName().equals("world") && !e.getEntity().getKiller().getLocation().getWorld().getName().equals("flat"))
+        if (!e.getEntity().getKiller().getLocation().getWorld().getName().equals("world") && !e.getEntity().getKiller().getLocation().getWorld().getName().equals("flat") && !e.getEntity().getKiller().getLocation().getWorld().getName().equals("world_ruins"))
             return;
         Player killer = e.getEntity().getKiller();
         Player killed = e.getEntity();

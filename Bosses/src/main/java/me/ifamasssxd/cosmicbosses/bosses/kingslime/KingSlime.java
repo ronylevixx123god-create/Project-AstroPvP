@@ -103,10 +103,10 @@ public class KingSlime extends Boss {
         if (this.loops % 4 == 0 && this.getAntiFarm().checkStuck()) {
             this.getAntiFarm().unstickBoss();
         }
-        if (this.waterTrap.canUse() && this.random.nextBoolean() && this.loops >= 20) {
+/*        if (this.waterTrap.canUse() && this.random.nextBoolean() && this.loops >= 20) {
             this.waterTrap.onAbility();
             this.sendMessage(ChatColor.ITALIC + "Breath it in!");
-        }
+        }*/
         final Location entityLocation = this.getEntity().getLocation();
         /*if (this.getPhase() == Phase.ONE && this.loops % 4 == 0 && this.getMinions().size() < 6 && this.random.nextInt(3) <= 1) {
             for (final Entity ent : this.getNearbyEntities(20.0, EntityType.PLAYER)) {

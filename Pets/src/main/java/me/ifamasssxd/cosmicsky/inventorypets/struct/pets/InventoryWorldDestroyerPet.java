@@ -136,7 +136,9 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("Could not find a valid target!");
         /*if (CageCooldown.isOnCageCooldown(target))
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");*/
-
+        if (CooldownUtils.isCooldownActive(target, "skrrtCooldown")) {
+            throw new PrefixedPetException("&c&lPET: &c" + target.getName() + "&c is still on skrrt cooldown for &n" + CooldownUtils.getFormattedCooldown(target, "cageCooldown") + "&c.");
+        }
         if (!spookyBypass(player, target)) {
             if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D) {
                 CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
@@ -284,6 +286,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     public static void cagePlayer(final Player player, final Player target, double cageDuration) {
         CrankedAmuletUtil.tryHatchAbility(target, player);
         int cageCooldown = 60;
+        CooldownUtils.registerCooldown(target, new PetCooldown("cageCooldown", cageCooldown));
+
         //CosmicSkyInventoryPets.get().getCooldownUtils().add(target, "cageCooldown", cageCooldown * 1000);
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);

@@ -10,16 +10,13 @@ import org.bukkit.Material;
 
 @AllArgsConstructor
 public enum LootTable {
-    GRINDER(Material.TRIPWIRE_HOOK, ChatColor.GOLD),
-    GODLY(Material.TRIPWIRE_HOOK, ChatColor.YELLOW),
-    OP(Material.TRIPWIRE_HOOK, ChatColor.DARK_RED),
-    MUTATED(Material.EMERALD, ChatColor.DARK_GREEN),
-
+    SOLAR(Material.TRIPWIRE_HOOK, ChatColor.YELLOW),
+    COSMIC(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE),
+    SPOOKY(Material.TRIPWIRE_HOOK, ChatColor.GOLD),
     SLOTS(Material.PAPER, ChatColor.YELLOW),
     ENVOY(Material.FIREWORK, ChatColor.AQUA),
     GRINDING(Material.MOB_SPAWNER, ChatColor.YELLOW),
     RUINS(Material.PRISMARINE_SHARD, ChatColor.DARK_AQUA),
-
     ;
 
     private final Material material;

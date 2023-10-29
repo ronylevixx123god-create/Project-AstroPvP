@@ -22,8 +22,7 @@ import org.bukkit.material.MaterialData;
 public enum OutpostType {
     COURTYARD(new MaterialData(Material.BLAZE_POWDER), ChatColor.RED, Lists.newArrayList("courtyard", "ct", "infernal", "Infernal"), CC.GreenB + "* " + CC.White + "Mob spawning in claims increase by " + CC.Green + "1.5x", CC.GreenB + "* " + CC.White + "Reduced claim purchase costs", CC.GreenB + "* " + CC.White + "Reduced Bard cooldowns by " + CC.Green + "1.5s", CC.GreenB + "* " + CC.White + "Reduced deathbans by " + CC.Green + "25%", CC.GreenB + "* " + CC.White + "Reduced saturation loss by " + CC.Green + "50%", CC.GreenB + "* " + CC.White + "Increased smelting by " + CC.Green + "100%"),
     THE_GREAT_HALL(new MaterialData(Material.INK_SACK, (byte) 15), ChatColor.AQUA, Lists.newArrayList("the_great_hall", "great_hall", "greathall", "frozen", "Frozen"), CC.AquaB + "* " + CC.White + "Increased EXP drops in claims", CC.AquaB + "* " + CC.White + "Reduced DTR freeze", CC.AquaB + "* " + CC.White + "Faster DTR Regen", CC.AquaB + "* " + CC.White + "Reduced Enderpearl cooldown by " + CC.Aqua + "1.5s", CC.AquaB + "* " + CC.White + "Passive Fire Resistance", CC.AquaB + "* " + CC.White + "Increased brewing speed by " + CC.Aqua + "25%"),
-    SPACE(new MaterialData(Material.NETHER_STAR), ChatColor.LIGHT_PURPLE, Lists.newArrayList("space", "Space"), CC.AquaB + "* " + CC.White + "Increased EXP drops in claims", CC.AquaB + "* " + CC.White + "Reduced DTR freeze", CC.AquaB + "* " + CC.White + "Faster DTR Regen", CC.AquaB + "* " + CC.White + "Reduced Enderpearl cooldown by " + CC.Aqua + "1.5s", CC.AquaB + "* " + CC.White + "Passive Fire Resistance", CC.AquaB + "* " + CC.White + "Increased brewing speed by " + CC.Aqua + "25%");
-;
+    ;
     private MaterialData guiMaterial;
     private ChatColor chatColor;
     private List<String> internalNames;
