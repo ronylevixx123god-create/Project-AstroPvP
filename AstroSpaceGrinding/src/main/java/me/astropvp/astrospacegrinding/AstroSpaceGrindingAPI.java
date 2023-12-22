@@ -65,7 +65,7 @@ public class AstroSpaceGrindingAPI {
 	}
 
 	public static List<ItemStack> getListItems(MonsterType type) {
-		return LootTableAPI.getAllLootFromLootTable(LootTable.SPACE);
+		return LootTableAPI.getAllLootFromLootTable(LootTable.RUINS);
 	}
 
 

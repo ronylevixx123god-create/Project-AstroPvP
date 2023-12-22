@@ -9,6 +9,7 @@ import net.astropvp.loottable.struct.LootTable;
 import net.crankedpvp.shards.MobcoinAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -40,6 +41,7 @@ public class RuinsRewardManager implements Listener {
         LivingEntity entity = event.getEntity();
 
         if (MobUtil.isRuinMob(entity)) {
+            if (event.getEntity().getKiller() == null) return;
             event.getDrops().clear();
             //boolean controllingOutpost = false;//entity.getKiller() != null && HCFOutpostAPI.isControllingOutpost(entity.getKiller(), OutpostType.RUINS);
             int mobcoins = ThreadLocalRandom.current().nextInt(1, 10 + 1);

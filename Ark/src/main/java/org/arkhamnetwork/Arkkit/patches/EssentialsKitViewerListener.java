@@ -139,7 +139,7 @@ final class EssentialsKitViewerListener
             String kit_name = data.getKey();
             double delay_ms = 0.0;
             try {
-                delay_ms = EssentialsKitViewer.getEssentials().getSettings().getKit(kit_name).containsKey("delay") ? ((Number) EssentialsKitViewer.getEssentials().getSettings().getKit(kit_name).get("delay")).doubleValue() : 0.0;
+                delay_ms = EssentialsKitViewer.getEssentials().getKits().getKit(kit_name).containsKey("delay") ? ((Number) EssentialsKitViewer.getEssentials().getKits().getKit(kit_name).get("delay")).doubleValue() : 0.0;
                 delay_ms *= 1000.0;
             } catch (Exception err) {
                 err.printStackTrace();

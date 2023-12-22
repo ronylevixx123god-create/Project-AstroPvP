@@ -132,6 +132,13 @@ public class MysteryChestListener
                     if (getEmptySlots(player) < bundleSize) {
                         throw new MysteryChestException(CC.translate("&c&l(!)&c Please clear some inventory slots before opening this lootbox!"));
                     }
+
+                    if (player.getLocation().getWorld().getName().equals("world_duels")) {
+                        player.sendMessage(CC.translate("&c&l(!)&c You cannot open lootboxes in a duel match"));
+                        event.setCancelled(true);
+                        return;
+                    }
+
                     if (event.getAction() == Action.LEFT_CLICK_AIR || event.getAction() == Action.LEFT_CLICK_BLOCK) {
                         new FilterGUI(player, chest).getFilterGUI().open(player);
                         return;

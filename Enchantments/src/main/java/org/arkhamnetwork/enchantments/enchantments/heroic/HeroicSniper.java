@@ -65,6 +65,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         boolean headshot;
+        if (!(target instanceof Player)) return;
         if (event.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
@@ -86,10 +87,8 @@ extends CustomEnchantment {
         double level = enchantLevel;
         boolean bl = headshot = y - victimay > 1.9;
         if (headshot && Math.random() < 0.625 + level * 0.075) {
-            if (GeneralUtil.isEffectedByRage(target)) {
-                return;
-            }
-            double multiplier = Math.min(4.0, level * 0.2 + 3.0);
+
+            double multiplier = Math.floor(Math.random() *(18 - 4 + 1) + 4);
             event.setDamage(event.getDamage() * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
             if (target instanceof Player) {
@@ -101,6 +100,7 @@ extends CustomEnchantment {
 
     private void playBleedEffect(Location loc, int bleedStack) {
         for (int i = Math.max(1, bleedStack / 2); i > 0; --i) {
+            WorldUtil.sendWorldEffect((Block)loc.getBlock(), (int)Material.REDSTONE_BLOCK.getId(), (int)2001);
         }
     }
 }

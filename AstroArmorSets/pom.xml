@@ -93,7 +93,13 @@
         <scope>system</scope>
         <systemPath>${project.basedir}/lib/ParticleAPI_v2.1.1.jar</systemPath>
     </dependency>
-
+    <dependency>
+        <groupId>com.astropvp</groupId>
+        <artifactId>wine</artifactId>
+        <version>1.0</version>
+        <scope>system</scope>
+        <systemPath>${project.basedir}/lib/server (4).jar</systemPath>
+    </dependency>
     <dependency>
         <groupId>com.astropvp</groupId>
         <artifactId>enchants</artifactId>

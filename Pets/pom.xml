@@ -258,6 +258,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>me.kingsavaqe.cagepvp</groupId>
+            <artifactId>AstroCagePvP</artifactId>
+            <version>1.0</version>
+            <scope>compile</scope>
+        </dependency>
 
     </dependencies>
 </project>

@@ -426,7 +426,7 @@
             <artifactId>Essentials</artifactId>
             <version>0.1</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/EssentialsX.jar</systemPath>
+            <systemPath>${project.basedir}/lib/EssentialsX-2.19.7.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>

@@ -1,6 +1,8 @@
 package net.astropvp.armorsets.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
+import com.golfing8.winespigot.event.PlayerUpdateSpeedEvent;
 import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
 import me.astropvp.proxypach.ProxyPatch;
 import net.astropvp.armorsets.AstroArmorSets;
@@ -30,6 +32,19 @@ public class ArmorSetApplyListener implements Listener {
 
     public ArmorSetApplyListener(AstroArmorSets plugin) {
         plugin = AstroArmorSets.getInstance();
+    }
+
+
+    @EventHandler
+    public void walkSpeedChangeFrostySet(PlayerUpdateSpeedEvent event) {
+        if(event.getPlayer() == null) return;
+        if (AstroCore.getInstance().getFreezeCommand().isFrozen(event.getPlayer())) return;
+        if (AstroArmorSetsAPI.getCurrentArmorSet(event.getPlayer()) != ArmorSetType.FROSTY) return;
+        if (!AstroArmorSetsAPI.getBonusCrystalsEquipped(event.getPlayer()).containsKey(ArmorSetType.FROSTY)) return;
+        if(!EssentialsUtils.isVanished(event.getPlayer())) return;
+        if(event.getNewSpeed() != 0.2F) {
+            event.setCancelled(true);
+        }
     }
 
     @EventHandler

@@ -66,7 +66,7 @@ public class DemonicRuins extends JavaPlugin implements Listener {
         //DecimateCommons.setupCommandManagerMessages(this.commandManager);
 
         this.commandManager.registerCommand(new RuinsCommand(this.rewardManager), true);
-        new NoFlyTask().runTaskTimer(this, 20, 20);
+        new NoFlyTask().runTaskTimer(this, 20, 1);
         this.getServer().getPluginManager().registerEvents(new MobListener(), this);
         this.getServer().getPluginManager().registerEvents(this.rewardManager, this);
         this.getServer().getPluginManager().registerEvents(this, this);

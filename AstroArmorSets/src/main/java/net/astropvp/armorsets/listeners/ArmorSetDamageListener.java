@@ -2,6 +2,9 @@ package net.astropvp.armorsets.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.massivecraft.factions.FPlayer;
+import com.massivecraft.factions.FPlayers;
+import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -12,19 +15,25 @@ import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
+import net.astropvp.armorsets.struct.sets.TravelerArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.EntityChangeBlockEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class ArmorSetDamageListener implements Listener {
     @EventHandler(
@@ -67,6 +76,38 @@ public class ArmorSetDamageListener implements Listener {
 
         }
 
+    }
+
+
+    @EventHandler
+    public void onBlockDamage(EntityChangeBlockEvent event) {
+        TravelerArmorSet travelerArmorSet = (TravelerArmorSet) ArmorSetType.DIMENSIONAL_TRAVELER.getArmorSet();
+        if (event.getEntity().getType() != EntityType.FALLING_BLOCK) return;
+        FallingBlock fallingBlock = (FallingBlock)event.getEntity();
+
+        TravelerArmorSet.TravelerFallingBlock block = travelerArmorSet.getTravelerBlock(fallingBlock.getUniqueId());
+
+        if (block == null) return;
+
+        event.setCancelled(true);
+        travelerArmorSet.getFallingBlocks().remove(block.getUUID());
+        FPlayer blockFPlayer = FPlayers.getInstance().getByPlayer(block.getPlayer());
+
+        List<Player> nearbyEnemies = event.getBlock().getLocation().getWorld()
+                .getNearbyEntities(event.getBlock().getLocation(), 2.0D, 2.0D, 2.0D)
+                .stream()
+                .filter(entity -> entity instanceof Player)
+                .map(entity -> (Player)entity).filter(player -> {
+                    FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
+                    Relation relationTo = fPlayer.getRelationTo(blockFPlayer);
+                    return ((relationTo == Relation.ENEMY || relationTo == Relation.NEUTRAL) && !WorldGuardUtils.isPvPDisabled(player.getLocation()));
+                }).collect(Collectors.toList());
+
+        nearbyEnemies.remove(block.getPlayer());
+        nearbyEnemies.forEach(player -> {
+            player.damage(1.0D, block.getPlayer());
+            player.damage(travelerArmorSet.getRandomDamage());
+        });
     }
 
     @EventHandler(

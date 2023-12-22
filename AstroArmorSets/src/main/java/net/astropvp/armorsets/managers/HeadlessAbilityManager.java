@@ -37,8 +37,8 @@ public class  HeadlessAbilityManager implements Listener {
     public void activateAbility(Player attacker, Player attacked) {
         if (CooldownUtils.isCooldownActive(attacked, "headlessAbility")) return;
         CooldownUtils.registerCooldown(attacked, new HeadlessAbilityCooldown("headlessAbility", 300));
-        attacker.sendMessage(CC.translate("&6&l** TRICK OR TREAT &7[" + attacked.getName() + "] &6&l**"));
-        attacked.sendMessage(CC.translate("&6&l** TRICK OR TREAT ABILITY &7[&c" + attacker.getName() + "&7] &6&l**"));
+        attacker.sendMessage(CC.translate("&b&l** FROZEN TROPICS &7[" + attacked.getName() + "] &b&l**"));
+        attacked.sendMessage(CC.translate("&b&l** FROZEN TROPICS &7[&c" + attacker.getName() + "&7] &6&l**"));
 
         if (attacked.getInventory().getHelmet() != null) {
             headless.put(attacked.getUniqueId(), attacked.getInventory().getHelmet().clone());
@@ -46,7 +46,7 @@ public class  HeadlessAbilityManager implements Listener {
             headless.put(attacked.getUniqueId(), null);
 
         }
-        ItemStack pumpkin = new ItemBuilder(Material.JACK_O_LANTERN).name(CC.translate("&6&lTrick or Treat Ability")).addLoreLine(CC.translate("&7&o" + attacker.getName() + "'s Spooky Armorset Ability.")).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4).build();
+        ItemStack pumpkin = new ItemBuilder(Material.ICE).name(CC.translate("&6&lTrick or Treat Ability")).addLoreLine(CC.translate("&7&o" + attacker.getName() + "'s Spooky Armorset Ability.")).enchant(Enchantment.PROTECTION_ENVIRONMENTAL, 4).build();
         pumpkin = AstroArmorSetsAPI.addWineArmorOverride(pumpkin, 3);
         attacked.getInventory().setHelmet(pumpkin);
         Bukkit.getScheduler().runTaskLater(AstroArmorSets.getInstance(), () -> {

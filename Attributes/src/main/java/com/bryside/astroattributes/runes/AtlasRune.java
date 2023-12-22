@@ -93,7 +93,7 @@ public class AtlasRune extends Rune implements Listener {
                 }
                 final int amount = (10 * level) < 80 ? 10 * level : 70;
                 damager.sendMessage(CC.translate("&4&l*ATLAS* &cNext attack: +&f" + (100 + amount) + "% &cDMG"));
-                damager.setLastDamage(damager.getLastDamage()*1.25);
+                //damager.setLastDamage(damager.getLastDamage()*1.1);
                 Bukkit.getScheduler().runTask(DragonRunesPlugin.getInstance(), () -> {
                     atlases.put(damager, amount);
 

@@ -46,7 +46,7 @@ public class InventoryYijkiControllerPet extends InventoryPet {
     }
 
     public int getCooldown() {
-        return 120;
+        return 20;
     }
 
     public int getExpForLevel(int level) {

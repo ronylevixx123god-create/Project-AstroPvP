@@ -124,13 +124,13 @@ public class ChatListener implements Listener {
         if (player.hasPermission("essentials.kit.media") && !isYoutuber(player)) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set interstellar");
         } else if (isYoutuber(player) && !player.hasPermission("essentials.kit.media")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set media");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent add media");
         }
 
         if (player.hasPermission("essentials.kit.famous") && !isFamous(player)) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set interstellar");
         } else if (isFamous(player) && !player.hasPermission("essentials.kit.famous")) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent set famous");
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getUniqueId() + " parent add famous");
         }
     }
 

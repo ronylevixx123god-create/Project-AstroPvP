@@ -41,7 +41,7 @@ public class WarpGUI {
 
         ItemStack desert = new ItemBuilder(Material.SAND, CC.translate("&6&lDesert Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack crates = new ItemBuilder(Material.CHEST, CC.translate("&b&lCrates Warp"), CC.translate("&7Click to teleport to this warp")).build();
-        ItemStack space = new ItemBuilder(Material.ENDER_STONE, CC.translate("&e&lSpace Warp"), CC.translate("&7Click to teleport to this warp")).build();
+        ItemStack space = new ItemBuilder(Material.PRISMARINE, CC.translate("&d&lSpace Warp"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack pluto = new ItemBuilder(Material.QUARTZ, CC.translate("&a&lPluto Outpost"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack mars = new ItemBuilder(Material.NETHER_STALK, CC.translate("&c&lMars Outpost"), CC.translate("&7Click to teleport to this warp")).build();
         ItemStack flat = new ItemBuilder(Material.RED_SANDSTONE, CC.translate("&d&lFlat World"), CC.translate("&7Click to teleport to this warp")).build();

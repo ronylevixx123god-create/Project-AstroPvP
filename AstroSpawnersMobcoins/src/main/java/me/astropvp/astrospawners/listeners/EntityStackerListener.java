@@ -53,7 +53,7 @@ public class EntityStackerListener implements Listener {
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
     private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.SOLAR);
     private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.COSMIC);
-    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("MysteryLootbox").createClaimableItem(false);
+    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ChristmasPresent").createClaimableItem(false);
 
 
     private Map<UUID, Long> blazeCooldown;
@@ -228,16 +228,16 @@ public class EntityStackerListener implements Listener {
         }
 
         if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
-            //PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
-            //LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
+            PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
+            LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
             p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
             try {
                 ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
             } catch (Exception exception) {
                 exception.printStackTrace();
             }
-            p.sendMessage(CC.translate("&a&l+ &b&lSlotbot"));
-            PlayerUtil.giveOrDropProtectedItem(p, CosmicSlotBotAPI.createSlotBotItem(), 60);
+            p.sendMessage(CC.translate("&a&l+ &c&k;&4&l?&c&k;&r &2&lChristmas Present &c&k;&4&l?&c&k;&r"));
+            //PlayerUtil.giveOrDropProtectedItem(p, CosmicSlotBotAPI.createSlotBotItem(), 60);
 
 
         }

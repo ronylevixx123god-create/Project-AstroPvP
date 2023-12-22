@@ -139,17 +139,17 @@ public class SpaceAlien extends SpaceMonster {
 
 
         if (Math.random() < chance / 100) {
-            rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
-            rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
-            rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
+            rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
 
             if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET) && Math.random() < 0.15) {
                 player.sendMessage(CC.translate("&d&l(Radioactive Amulet) &dYou were &flucky&d and received &fdouble&d space loot."));
-                rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+                rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
             }
             if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE) && Math.random() < 0.35) {
                 player.sendMessage(CC.translate("&d&l(Space Stronghold) &dYou were &flucky&d and received &fdouble&d space loot."));
-                rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+                rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
 
             }
         }

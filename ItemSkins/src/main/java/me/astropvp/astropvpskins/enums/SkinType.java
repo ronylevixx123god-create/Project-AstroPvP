@@ -36,7 +36,7 @@ public enum SkinType {
     //SEXY_BELT(CC.LightPurpleB + "Gucci Belt", ItemSkinType.BELT, new SexyBeltSkin(), Arrays.asList(CC.Red + "-25% Incoming Projectile Damage", CC.Red + "All pearls act as escapist pearls"), true),
     CORRUPT_BELT_POWER(CC.DarkPurpleB + "Corrupt Belt", ItemSkinType.BELT, new CorruptPowerBeltSkin(), Arrays.asList(CC.Red + "Godly Overload V"), true),
     CORRUPT_BELT_UTILITY(CC.DarkPurpleB + "Utility Belt", ItemSkinType.BELT, new CorruptUtilityBeltSkin(), Arrays.asList(CC.Red + "Phoenix cannot be blocked", CC.Red + "Auto Feign Death (with Phoenix)"), true),
-    CUPID_BOW(CC.RedB + "Cupid's Bow", ItemSkinType.BOW, new CupidBowSkin(), Arrays.asList(new String[0]), true),
+    CUPID_BOW(CC.RedB + "Cupid's Bow", ItemSkinType.BOW, new CupidBowSkin(), Arrays.asList(CC.Red + "Bypass enemy Arrow Deflect", CC.Red + "Lethal Sniper VI", CC.Red + "Chance to shoot double arrows"), true),
     CUPID_BOOTS(CC.RedB + "Cupid's Winged Boots", ItemSkinType.BOOTS, new CupidBootsSkin(), Arrays.asList(CC.Red + "Chance to push attacker away."), true),
     CORRUPT_BOOTS(CC.DarkPurpleB + "Rocket Boots", ItemSkinType.BOOTS, new CorruptBootsSkin(), Arrays.asList(CC.Red + "Immune to Sabotage", CC.Red + "Gears IV"), true),
     SEXY_BOOTS(CC.LightPurpleB + "Bunny Slippers", ItemSkinType.BOOTS, new SexyBootsSkin(), Arrays.asList(CC.Red + "Web/Lava Walker", CC.Red + "2% Dodge"), true),
@@ -283,6 +283,8 @@ public enum SkinType {
 
 
     ), true),
+
+
 
     VALENTINES_2022_BELT(CC.translate("&c&lBling Belt"), ItemSkinType.BELT, new ValentinesBelt(), Arrays.asList(CC.Red + "+8 % Outgoing Damage", CC.Red + "+15% Pet Leash Negation", CC.Red + "10% Chance to block Rogue"), true),
     VALENTINES_2022_MUTATED_BELT(CC.translate("&2&l&nMutated&r &c&lBling Belt"), ItemSkinType.BELT, new MutatedValentinesBelt(), Arrays.asList(CC.Red + "+8 % Outgoing Damage", CC.Red + "+15% Pet Leash Negation", CC.Red + "10% Chance to block Rogue", CC.DarkGreen + "Soul Master VI"), true),
@@ -639,6 +641,23 @@ public enum SkinType {
             CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
             CC.translate("&c+5% Outgoing PvP Damage when using a sword"),
             CC.translate("&cImmune to enemy Rogue when below 10 HP")), true),
+
+
+    VALENTINES_2023_BACKPACK(CC.translate("&9&lArctic Excursion Pack"), ItemSkinType.BACKPACK, new ArcticExcursionSkin(), Arrays.asList(
+            CC.translate("&c5% chance to silence enemy Ragdoll for 5s"),
+            CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
+                    CC.translate("&c+5% Outgoing PvP Damage when using a sword"),
+                    CC.translate("&cImmune to enemy Rogue when below 10 HP")), true),
+
+
+    VALENTINES_2023_AMULET(CC.translate("&9&lArctic Excursion Pack"), ItemSkinType.BACKPACK, new ArcticExcursionSkin(), Arrays.asList(
+            CC.translate("&c5% chance to silence enemy Ragdoll for 5s"),
+            CC.translate("&c10% chance to block Soul Enchant Damage Multipliers"),
+                    CC.translate("&c+5% Outgoing PvP Damage when using a sword"),
+                    CC.translate("&cImmune to enemy Rogue when below 10 HP")), true),
+
+    JULY_2021_MUTATED_AXE(CC.translate("&2&l&nMutated&r &f&lStormbreaker"), ItemSkinType.AXE, new StormBreaker(), Arrays.asList(CC.Red + "Blackout IV", CC.Red + "Divine Immolation I", CC.Red + "Titan Attribute: Kronos 8", CC.Red + "Extreme Insanity X", CC.Red + "Bypass enemy (Reinforced) Tank"), true),
+
     ;
 
 

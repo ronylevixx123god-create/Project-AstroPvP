@@ -463,6 +463,9 @@ public class AstroCore extends JavaPlugin {
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "arkload death_messages"), 100L);
         Bukkit.getScheduler().runTaskLater(this, () ->
                 Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockcommand remove ver"), 100L);
+
+        Bukkit.getScheduler().runTaskLater(this, () ->
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "blockcommand remove alts"), 100L);
     }
 
     public void registerListeners() {

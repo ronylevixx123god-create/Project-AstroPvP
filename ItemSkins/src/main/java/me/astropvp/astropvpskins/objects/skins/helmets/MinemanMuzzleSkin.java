@@ -30,7 +30,8 @@ public class MinemanMuzzleSkin extends ItemSkin {
             final List<Entity> nearby = damaged.getNearbyEntities(6, 6, 6);
             if (nearby == null) return;
             if (nearby.isEmpty()) return;
-            for (Entity entity : nearby) {
+            for (int i = 0; i < nearby.size(); i++) {
+                Entity entity = nearby.get(i);
                 if (entity == null) continue;
                 if(!(entity instanceof Player)) {
                     nearby.remove(entity);

@@ -5,7 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 public enum CrateType {
     SOLAR("Solar", "&e", ""),
     COSMIC("Cosmic", "&b", ""),
-    SPOOKY("Spooky", "&6", "&8");
+    SEASON("Frosty", "&b", "&3");
     private final String name;
 
     private final String prefix;
@@ -28,7 +28,7 @@ public enum CrateType {
     }
 
     public String getPrefixedName() {
-        if (this == SPOOKY) {
+        if (this == SEASON) {
             StringBuilder prefix = new StringBuilder();
             boolean color = true;
             String currentColor;

@@ -21,6 +21,7 @@
  */
 package org.arkhamnetwork.Arkkit.patches;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ExpUtils;
 import com.wimbli.WorldBorder.WorldBorder;
 import org.bukkit.Bukkit;
@@ -47,6 +48,11 @@ final class ExpBottlesListener
     public void onExpBottleUse(PlayerInteractEvent e) {
         if (e.hasItem() && ExpBottles.isXpBottle(e.getItem())) {
             Player p = e.getPlayer();
+            if (p.getWorld().getName().equals("world_duels")) {
+                p.sendMessage(CC.translate("&c&l(!)&c You can only apply this in the world"));
+                e.setCancelled(true);
+                return;
+            }
             int xpValue = ExpBottles.getXpAmount(e.getItem()) * e.getItem().getAmount();
             if (xpValue < 0)  {
                 xpValue = Integer.MAX_VALUE;

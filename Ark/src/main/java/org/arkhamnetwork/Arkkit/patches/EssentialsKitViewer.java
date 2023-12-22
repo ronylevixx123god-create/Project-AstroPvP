@@ -55,7 +55,7 @@ public class EssentialsKitViewer
                 block10:
                 {
                     try {
-                        if (ess.getSettings().getKit(data.getKey()) == null) {
+                        if (ess.getKits().getKit(data.getKey()) == null) {
                             Bukkit.getLogger().warning("Invalid kit name specified, '" + data.getKey() + "', skipping.");
                         }
                         break block10;

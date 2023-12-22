@@ -133,14 +133,14 @@ public class SpaceLogicListener implements Listener {
             SpacePlayerData dataDamaged = SpacePlayerData.findPlayer(damaged);
 
             if (ForceFieldData.findPlayer(dataDamager.getPlayer()).isActive()) {
-                if (WorldGuardUtils.getRegionsIn(damager.getLocation()).contains("space_cap")) return;
+                if (WorldGuardUtils.getRegionsIn(damager.getLocation()).contains("space_cap_pvp")) return;
                 e.setCancelled(true);
                 damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() + " because you are still on &f&lFORCEFIELD &bprotection."));
                 damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);
             }
 
             if (ForceFieldData.findPlayer(dataDamaged.getPlayer()).isActive()) {
-                if (WorldGuardUtils.getRegionsIn(damaged.getLocation()).contains("space_cap")) return;
+                if (WorldGuardUtils.getRegionsIn(damaged.getLocation()).contains("space_cap_pvp")) return;
                 e.setCancelled(true);
                 damager.sendMessage(CC.translate("&b&l(!)&b You cannot hit " + damaged.getName() + " because he is still on &f&lFORCEFIELD &bprotection."));
                 damager.playSound(damager.getLocation(), Sound.VILLAGER_NO, 5, 5);

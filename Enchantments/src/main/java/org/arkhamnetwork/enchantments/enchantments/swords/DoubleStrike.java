@@ -61,7 +61,9 @@ public class DoubleStrike
                         playerHit.setMetadata("doubleStriked", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)System.currentTimeMillis()));
                         playerHit.damage(fdmg/2.5, (Entity)player);
                         pp.sendMessage("§6§l** DOUBLE STRIKE **");
-                        DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&6&l* DOUBLE STRIKE *"), "DOUBLE_STRIKE");
+                        if (playerHit instanceof Player) {
+                            DamageIndicatorUtils.sendDamageIndicator((Player) playerHit, CC.translate("&6&l* DOUBLE STRIKE *"), "DOUBLE_STRIKE");
+                        }
                         GeneralCooldown.enterCooldown(pp);
                     }
                 }

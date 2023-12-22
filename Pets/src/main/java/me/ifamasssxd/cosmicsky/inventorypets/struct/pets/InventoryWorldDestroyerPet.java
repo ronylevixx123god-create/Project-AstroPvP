@@ -73,7 +73,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
     public boolean spookyBypass(Player attacker, Player attacked) {
-        return AstroArmorSetsAPI.getBonusCrystalsEquipped(attacker).containsKey(ArmorSetType.SPOOKY) && Math.random() < 0.25 || AstroArmorSetsAPI.getCurrentArmorSet(attacker) != null && AstroArmorSetsAPI.getCurrentArmorSet(attacker) == ArmorSetType.SPOOKY;
+        return AstroArmorSetsAPI.getBonusCrystalsEquipped(attacker).containsKey(ArmorSetType.valueOf("FROSTY")) && Math.random() < 0.25 || AstroArmorSetsAPI.getCurrentArmorSet(attacker) != null && AstroArmorSetsAPI.getCurrentArmorSet(attacker) == ArmorSetType.valueOf("FROSTY");
     }
 
 
@@ -188,8 +188,8 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 }
             }
         } else {
-            player.sendMessage(CC.translate("&6&l*&8&l*&6&l* SPOOKY SET &7[Bypassed " + target.getName() + "'s Cage Immunity] &6&l*&8&l*&6&l*"));
-            target.sendMessage(CC.translate("&6&l*&8&l*&6&l* " + player.getName() + "'s SPOOKY SET &7[Bypassed your Cage Immunity] &6&l*&8&l*&6&l*"));
+            player.sendMessage(CC.translate("&b&l*&3&l*&b&l* FROSTY SET &7[Bypassed " + target.getName() + "'s Cage Immunity] &b&l*&3&l*&b&l*"));
+            target.sendMessage(CC.translate("&b&l*&3&l*&b&l* &f" + player.getName() + "&b's FROSTY SET &7[Bypassed your Cage Immunity] &b&l*&3&l*&b&l*"));
         }
 
 

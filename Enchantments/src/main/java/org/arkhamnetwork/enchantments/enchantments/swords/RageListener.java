@@ -21,12 +21,12 @@ final class RageListener implements Listener {
             Player attacked = (Player) event.getEntity();
 
             RageStacksCache victimRageStack = CacheUtils.getRageStackCache(attacked);
-            //if (victimRageStack.isSameVictim(attacker)) {
+            if (victimRageStack.isSameVictim(attacker)) {
                 if (victimRageStack.getRageStack() > 0) {
 
                     victimRageStack.resetRageStack();
                 }
-            //}
+            }
             if (victimRageStack.getRageStack() != 0) {
                 if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.SPRING_2021_BELT) && Math.random() < 0.1) {
                     victimRageStack.decrementRageStack();

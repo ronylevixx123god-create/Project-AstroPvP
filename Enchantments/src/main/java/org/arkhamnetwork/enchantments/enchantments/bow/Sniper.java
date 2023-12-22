@@ -54,6 +54,8 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity user, LivingEntity target, int enchantLevel, EntityDamageByEntityEvent event) {
         boolean headshot;
+        if (!(target instanceof Player)) return;
+
         if (event.getCause() != EntityDamageEvent.DamageCause.PROJECTILE) {
             return;
         }
@@ -71,10 +73,8 @@ extends CustomEnchantment {
         double level = enchantLevel;
         boolean bl = headshot = y - victimay > 1.9;
         if (headshot && Math.random() < 0.35 + level * 0.075) {
-            if (GeneralUtil.isEffectedByRage(target)) {
-                return;
-            }
-            double multiplier = level * 0.42 + 1.0;
+
+            double multiplier = Math.floor(Math.random() *(15 - 4 + 1) + 4);
             event.setDamage(event.getDamage() * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
             ((Player)target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");

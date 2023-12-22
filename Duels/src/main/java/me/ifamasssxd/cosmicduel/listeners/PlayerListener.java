@@ -269,7 +269,7 @@ public class PlayerListener
                     p.setMetadata("last_damage", new FixedMetadataValue(CosmicDuel.get(), System.currentTimeMillis() + TimeUnit.MINUTES.toMillis(2L)));
                 }
                 if (d.getGameTimer() >= 300 && !e.isCancelled()) {
-                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.0);
+                    e.setDamage(e.getDamage(EntityDamageEvent.DamageModifier.BASE) * 2.5);
                 }
             }
         }
@@ -278,7 +278,7 @@ public class PlayerListener
     @EventHandler(priority = EventPriority.LOWEST)
     public void extraDamage(EntityDamageByEntityEvent event) {
         if (event.getDamager() instanceof Player && !event.isCancelled() && event.getDamager().getLocation().getWorld().getName().equals("world_duels")) {
-            event.setDamage(event.getDamage()*1.5);
+            event.setDamage(event.getDamage()*2);
             //This is the official extra duel damage listener
         }
     }

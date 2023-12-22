@@ -2,9 +2,12 @@ package net.astropvp.core.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
+import com.earth2me.essentials.Enchantments;
 import com.earth2me.essentials.Essentials;
 import com.earth2me.essentials.EssentialsConf;
 import com.earth2me.essentials.Worth;
+import com.rit.sucy.EnchantmentAPI;
+import org.arkhamnetwork.enchantments.EnchantmentBook;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -49,6 +52,14 @@ public class CommandDupe implements CommandExecutor {
         if (display.contains(CC.DarkRed)) {
             sender.sendMessage(CC.Red + "You cannot dupe this item.");
             return false;
+        }
+
+        if (EnchantmentBook.isEnchantmentBook(item)) {
+            int level = EnchantmentBook.getEnchantmentLevel(item);
+            if (level > EnchantmentBook.getEnchantment(item).getMaxLevel()) {
+                sender.sendMessage(CC.Red + "You cannot dupe this item.");
+                return false;
+            }
         }
 
         if(display.contains("Omni")) {

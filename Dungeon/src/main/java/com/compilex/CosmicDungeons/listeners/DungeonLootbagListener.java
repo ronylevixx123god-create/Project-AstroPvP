@@ -118,7 +118,7 @@ implements Listener {
         ThreadLocalRandom random = ThreadLocalRandom.current();
         loot.add(ArkhamMoneyNotesAPI.getMoneyNote("Dungeon", random.nextInt(50000000) + 15000000));
         loot.add(ExpBottles.getXpBottle(random.nextInt(75000) + 150000, "Dungeon"));
-        loot.add(CrateKeyItem.getItem(CrateType.SPOOKY));
+        loot.add(CrateKeyItem.getItem(CrateType.valueOf("SEASON")));
         return loot;
     }
 
@@ -139,7 +139,7 @@ implements Listener {
 
         loot.add(ArkhamMoneyNotesAPI.getMoneyNote("Dungeon", random.nextInt(50000000) + 15000000));
         loot.add(ExpBottles.getXpBottle(random.nextInt(75000) + 150000, "Dungeon"));
-        loot.add(CrateKeyItem.getItem(CrateType.SPOOKY));
+        loot.add(CrateKeyItem.getItem(CrateType.valueOf("SEASON")));
         return loot;
     }
 

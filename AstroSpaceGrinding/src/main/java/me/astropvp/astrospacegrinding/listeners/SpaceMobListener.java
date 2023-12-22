@@ -34,7 +34,7 @@ public class SpaceMobListener implements Listener {
             event.getDrops().clear();
             event.setDroppedExp(0);
             for (ItemStack item : type.getInstance().getRewards(event.getEntity().getKiller(), event.getEntity())) {
-                LootFilterAPI.giveItem(entity.getKiller(), LootTable.SPACE, item);
+                LootFilterAPI.giveItem(entity.getKiller(), LootTable.RUINS, item);
                 //event.getDrops().add(item);
             }
             if (event.getEntity().getKiller() != null && event.getEntity().getKiller() != null) {

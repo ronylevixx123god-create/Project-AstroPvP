@@ -1,6 +1,8 @@
 package org.demonicpvp.demonicruins.listener;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.CommonsUtil;
+import com.google.common.collect.Lists;
 import net.minecraft.server.v1_8_R3.GenericAttributes;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -12,17 +14,28 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.world.ChunkUnloadEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.demonicpvp.demonicruins.DemonicRuins;
 import org.demonicpvp.demonicruins.mob.MobUtil;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Random;
 
 import static org.demonicpvp.demonicruins.mob.MobUtil.*;
 
 public class MobListener implements Listener {
     public static final String RUINS_WORLD_NAME = "world_ruins";
+
+    private static List<String> allowedCommands = Lists.newArrayList();
+
+
+    static {
+        allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "spawn", "warp", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "pin", "sc", "staffchat", "mute", "ban", "tempban", "pin"));
+    }
 
     public MobListener() {
         new BukkitRunnable() {
@@ -102,6 +115,28 @@ public class MobListener implements Listener {
                 }
             }
         }
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
+    public void onCommand(PlayerCommandPreprocessEvent event) {
+        Player player = event.getPlayer();
+        if (!player.getWorld().getName().equals(RUINS_WORLD_NAME)) {
+            return;
+        }
+
+        if (player.isOp()) {
+            return;
+        }
+
+        if (player.hasPermission("astrocore.staffmode")) {
+            return;
+        }
+        if (allowedCommands.contains(event.getMessage().split(" ")[0].replace("/", "").toLowerCase())) {
+            return;
+        }
+        player.sendMessage(CC.translate(  "&c&l(!) &c" + event.getMessage() + " is denied in this world!"));
+        event.setMessage("/null");
+        event.setCancelled(true);
     }
 
     @EventHandler

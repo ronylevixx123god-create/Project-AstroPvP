@@ -53,7 +53,7 @@ class HomeGUIListener
         this.manager = manager;
     }
 
-    @EventHandler(priority = EventPriority.HIGH, ignoreCancelled = true)
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onPlayerCommand(PlayerCommandPreprocessEvent event) {
         if (this.aliases.contains(event.getMessage().toLowerCase())) {
             event.setCancelled(true);

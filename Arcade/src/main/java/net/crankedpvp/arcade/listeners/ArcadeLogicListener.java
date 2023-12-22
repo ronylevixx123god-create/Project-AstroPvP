@@ -15,6 +15,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
 
@@ -27,6 +28,20 @@ public class ArcadeLogicListener implements Listener {
     public ArcadeLogicListener(ArcadePlugin plugin) {
         this.plugin = plugin;
         this.arcadeManager = plugin.getArcadeManager();
+    }
+
+    @EventHandler(priority = EventPriority.LOW)
+    public void onArrowDamage(EntityDamageByEntityEvent event) {
+        if (event.getCause() == EntityDamageEvent.DamageCause.PROJECTILE) {
+            if (event.getEntity() instanceof Player) {
+                Player killed = (Player) event.getEntity();
+                if (!ArcadeAPI.inArcadeWorld(killed.getUniqueId())) return;
+                if (CooldownUtils.isCooldownActive(killed, "arcadeGracePeriod")) {
+                    event.setCancelled(true);
+                    return;
+                }
+            }
+        }
     }
 
     @EventHandler(priority = EventPriority.NORMAL)
@@ -122,7 +137,7 @@ public class ArcadeLogicListener implements Listener {
     public void teleportToNoSet(PlayerTeleportEvent event) {
         if (event.getTo().getWorld().getName().equals(ArcadeAPI.WORLD_NAME) && event.getCause() != PlayerTeleportEvent.TeleportCause.ENDER_PEARL && !event.getPlayer().hasPermission("cranked.admin")) {
 
-            if (AstroArmorSetsAPI.getBonusCrystalsEquipped(event.getPlayer()).isEmpty()) {
+            if (AstroArmorSetsAPI.getBonusCrystalsEquipped(event.getPlayer()).isEmpty() && !event.getPlayer().hasPermission("astro.staff")) {
                 event.setCancelled(true);
                 Language.TELEPORT_NO_SET.send(event.getPlayer());
             }

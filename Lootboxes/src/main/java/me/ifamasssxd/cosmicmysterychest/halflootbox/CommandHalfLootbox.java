@@ -19,14 +19,22 @@ public class CommandHalfLootbox implements CommandExecutor {
         Player player = (Player) sender;
         if (!player.isOp())
             return true;
-        if (args.length != 4) {
+        if (args.length < 3) {
             player.sendMessage(error);
             return true;
         }
         Player target = Bukkit.getPlayer(args[1]);
-        HalfLootboxType halfLootboxType = HalfLootboxType.valueOf(args[3]);
         String lootboxInternalName = args[2];
+        if (args.length == 3) {
 
+            HalfLootbox left = new HalfLootbox(lootboxInternalName, HalfLootboxType.LEFT);
+            HalfLootbox right = new HalfLootbox(lootboxInternalName, HalfLootboxType.RIGHT);
+            target.getInventory().addItem(left.getHalfLootboxItem());
+            target.getInventory().addItem(right.getHalfLootboxItem());
+            target.sendMessage(CC.translate("&aYou have received the half lootboxes!"));
+            return true;
+        }
+        HalfLootboxType halfLootboxType = HalfLootboxType.valueOf(args[3]);
         HalfLootbox halfLootbox = new HalfLootbox(lootboxInternalName, halfLootboxType);
 
         target.getInventory().addItem(halfLootbox.getHalfLootboxItem());

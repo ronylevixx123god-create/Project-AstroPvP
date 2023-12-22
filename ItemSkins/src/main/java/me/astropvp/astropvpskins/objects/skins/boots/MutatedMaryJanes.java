@@ -18,8 +18,10 @@ public class MutatedMaryJanes extends ItemSkin {
     }
 
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
-        if (isCritical(damager) && !MaskType.hasEquipped((Player) damaged, "KILLER_CLOWN")) {
-            event.setDamage(event.getDamage() * 1.15);
+        if (damaged instanceof Player && damager != null) {
+            if (isCritical(damager) && !MaskType.hasEquipped((Player) damaged, "KILLER_CLOWN")) {
+                event.setDamage(event.getDamage() * 1.15);
+            }
         }
     }
 

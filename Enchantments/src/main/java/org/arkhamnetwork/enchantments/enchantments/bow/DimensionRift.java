@@ -64,7 +64,7 @@ extends CustomEnchantment {
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         int x;
-        if (Math.random() > (double)level * 0.05) {
+        if (Math.random() > (double)level * 0.1) {
             return;
         }
         if (!(e.getDamager() instanceof Projectile)) {
@@ -79,12 +79,7 @@ extends CustomEnchantment {
             return;
         }
         FLocation fL = new FLocation(enemyLoc);
-        if (FactionUtils.getFactionAt((FLocation)fL).isNormal()) {
-            return;
-        }
-        if (WorldGuardUtils.getRegionName(playerHit.getLocation()).equals("")) {
-            return;
-        }
+
         int n = x = level >= 4 ? -1 : 0;
         while (x <= 1) {
             int z;

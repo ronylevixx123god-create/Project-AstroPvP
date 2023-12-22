@@ -32,9 +32,12 @@ public enum ArmorSetType {
     ASTRO(CC.translate("&a&lAstro"), new AstroArmorSet(), CC.Green, 5765888, Material.FIREBALL),
     ANCIENT(CC.translate("&3&lAncient"), new AncientArmorSet(), CC.DarkAqua, 3650995, Material.QUARTZ),
     CHAMPION(CC.translate("&6&lChampion"), new ChampionArmorSet(), CC.Gold, 15176967, Material.GOLD_NUGGET),
-    SPOOKY(CC.translate("&6&lS&8&lp&6&lo&8&lo&6&lk&8&ly"), new SpookyArmorSet(), CC.DarkGray, 0x404040, Material.JACK_O_LANTERN),
+    FROSTY(CC.translate("&b&lF&3&lr&b&lo&3&ls&b&lt&3&ly"), new FrostyArmorSet(), CC.Aqua, 0x404040, Material.ICE),
     ULTRA(CC.translate("&7&lUltra"), new UltraArmorSet(), CC.Gray, 0xA0A0A0, Material.TORCH),
     APOLLO(CC.translate("&f&lApollo"), new ApolloArmorSet(), CC.White, 0xFFFFFF, Material.NETHER_STAR),
+    RANGER(CC.translate("&a&lRanger"), new RangerArmorSet(), CC.Green, 0xAAFF00, Material.ARROW),
+
+
     ;
 
     //OMNI Rbg -> 0x0027FF

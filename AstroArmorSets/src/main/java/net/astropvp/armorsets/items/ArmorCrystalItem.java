@@ -174,16 +174,16 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
             chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
 
             if (player.hasPermission("astrocore.nebula")) {
-                chanceToApply += 10;
+                chanceToApply += 5;
                 player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Nebula Perk)"));
             } else if (player.hasPermission("astrocore.apollo")) {
-                chanceToApply += 5;
+                chanceToApply += 2.5;
                 player.sendMessage(CC.translate("&a+5% Crystal apply chance &7(Apollo Perk)"));
 
             }
 
             if (OutpostUtil.hasPlutoOutpost(player)) {
-                chanceToApply+=10;
+                chanceToApply+=7.5;
                 player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Pluto Outpost)"));
             }
 

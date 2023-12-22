@@ -10,6 +10,7 @@
  */
 package me.ifamasssxd.cosmicguishop.listeners;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
@@ -83,7 +84,13 @@ public class PlayerListener implements Listener {
     @EventHandler(priority= EventPriority.MONITOR, ignoreCancelled=true)
     public void onInventoryClick(InventoryClickEvent e) {
         if (ArkhamMoneyNotesAPI.isMoneyNote(e.getCurrentItem()) && ArkhamMoneyNotesAPI.isMoneyNote(e.getCursor())) {
+
             Player p = (Player)e.getWhoClicked();
+            if (p.getLocation().getWorld().getName().equals("world")) {
+                p.sendMessage(CC.translate("&c&l(!)&c You can only apply this in the world"));
+                e.setCancelled(true);
+                return;
+            }
             e.setCancelled(true);
             ItemStack newMoneyNote = ArkhamMoneyNotesAPI.getMoneyNote(p.getName(), ArkhamMoneyNotesAPI.getMoneyNoteVal(e.getCurrentItem()) + ArkhamMoneyNotesAPI.getMoneyNoteVal(e.getCursor()));
             e.setCursor(null);
@@ -98,6 +105,10 @@ public class PlayerListener implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             e.setCancelled(true);
             Player pl = e.getPlayer();
+            if (!pl.getLocation().getWorld().getName().equals("world")) {
+                pl.sendMessage(CC.translate("&c&l(!)&c You can only apply this in the world"));
+                return;
+            }
             double bal = CosmicGUIShop.getEconomy().getBalance((OfflinePlayer)pl);
             if (bal == 1.0E15) {
                 pl.sendMessage((Object)ChatColor.RED + "You already have MAX cash. (1 Quadrillion)");

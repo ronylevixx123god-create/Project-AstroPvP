@@ -115,25 +115,25 @@ public class WildPvP {
             corner4 = chunk.getBlock(0, y, 15 - xz).getLocation();
             if (corner1.getBlock().getType() == Material.AIR) {
                //player.sendBlockChange(corner1, Material.STAINED_GLASS, (byte)14);
-               player.sendBlockChange(corner1, Material.IRON_FENCE, (byte)0);
+               player.sendBlockChange(corner1, Material.STAINED_GLASS, (byte)8);
 
             }
 
             if (corner2.getBlock().getType() == Material.AIR) {
                //player.sendBlockChange(corner2, Material.STAINED_GLASS, (byte)14);
-               player.sendBlockChange(corner2, Material.IRON_FENCE, (byte)0);
+               player.sendBlockChange(corner2, Material.STAINED_GLASS, (byte)8);
 
             }
 
             if (corner3.getBlock().getType() == Material.AIR) {
                //player.sendBlockChange(corner3, Material.STAINED_GLASS, (byte)14);
-               player.sendBlockChange(corner3, Material.IRON_FENCE, (byte)0);
+               player.sendBlockChange(corner3, Material.STAINED_GLASS, (byte)8);
 
             }
 
             if (corner4.getBlock().getType() == Material.AIR) {
                //player.sendBlockChange(corner4, Material.STAINED_GLASS, (byte)14);
-               player.sendBlockChange(corner4, Material.IRON_FENCE, (byte)0);
+               player.sendBlockChange(corner4, Material.STAINED_GLASS, (byte)8);
 
             }
          }

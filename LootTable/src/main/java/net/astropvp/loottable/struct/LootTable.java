@@ -12,17 +12,20 @@ import org.bukkit.Material;
 public enum LootTable {
     SOLAR(Material.TRIPWIRE_HOOK, ChatColor.YELLOW),
     COSMIC(Material.TRIPWIRE_HOOK, ChatColor.LIGHT_PURPLE),
-    SPOOKY(Material.TRIPWIRE_HOOK, ChatColor.GOLD),
+    SEASON(Material.TRIPWIRE_HOOK, ChatColor.GOLD),
     SLOTS(Material.PAPER, ChatColor.YELLOW),
     ENVOY(Material.FIREWORK, ChatColor.AQUA),
     GRINDING(Material.MOB_SPAWNER, ChatColor.YELLOW),
-    RUINS(Material.PRISMARINE_SHARD, ChatColor.DARK_AQUA),
+    RUINS(Material.ENDER_STONE, ChatColor.DARK_PURPLE),
     ;
 
     private final Material material;
     private final ChatColor color;
 
     public String getFancy() {
+        if (this == RUINS) {
+            return "Space";
+        }
         return StringUtils.getProperCase(this.name()).replace("_", " ");
     }
 

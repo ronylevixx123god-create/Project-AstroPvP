@@ -6,8 +6,10 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
 
+import lombok.Getter;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -32,6 +34,7 @@ import java.util.stream.Collectors;
 
 public class TravelerArmorSet extends ArmorSet implements Listener {
 
+    @Getter
     private final Map<UUID, TravelerFallingBlock> fallingBlocks;
 
     public TravelerArmorSet() {
@@ -59,7 +62,7 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
     public void onDamagedCrystal(Entity attacker, Player attacked, EntityDamageByEntityEvent event, int amount) {
         if (attacker instanceof Player) {
             if (Math.random() < 0.0075) {
-                //onDimensionalRift((Player) attacked);
+                onDimensionalRift((Player) attacked);
             }
         }
     }
@@ -73,7 +76,7 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
     public void onDamaged(Entity attacker, Player attacked, EntityDamageByEntityEvent event) {
         if (attacker instanceof Player) {
             if (Math.random() < 0.015) {
-                //onDimensionalRift((Player) attacked);
+                onDimensionalRift((Player) attacked);
             }
         }
     }
@@ -135,43 +138,14 @@ public class TravelerArmorSet extends ArmorSet implements Listener {
         }
     }
 
-    @EventHandler()
-    public void onBlockDamage(EntityChangeBlockEvent event) {
-        if (event.getEntity().getType() != EntityType.FALLING_BLOCK) return;
 
-        FallingBlock fallingBlock = (FallingBlock)event.getEntity();
-
-        TravelerFallingBlock block = this.getTravelerBlock(fallingBlock.getUniqueId());
-
-        if (block == null) return;
-
-        event.setCancelled(true);
-        this.fallingBlocks.remove(block.getUUID());
-        FPlayer blockFPlayer = FPlayers.getInstance().getByPlayer(block.getPlayer());
-
-        List<Player> nearbyEnemies = event.getBlock().getLocation().getWorld()
-                .getNearbyEntities(event.getBlock().getLocation(), 2.0D, 2.0D, 2.0D)
-                .stream()
-                .filter(entity -> entity instanceof Player)
-                .map(entity -> (Player)entity).filter(player -> {
-                    FPlayer fPlayer = FPlayers.getInstance().getByPlayer(player);
-                    Relation relationTo = fPlayer.getRelationTo(blockFPlayer);
-                    return ((relationTo == Relation.ENEMY || relationTo == Relation.NEUTRAL) && !WorldGuardUtils.isPvPDisabled(player.getLocation()));
-                }).collect(Collectors.toList());
-
-        nearbyEnemies.remove(block.getPlayer());
-        nearbyEnemies.forEach(player -> {
-            player.damage(1.0D, block.getPlayer());
-            player.damage(this.getRandomDamage());
-        });
-    }
 
     public TravelerFallingBlock getTravelerBlock(UUID fallingBlockUUID) {
         return this.fallingBlocks.get(fallingBlockUUID);
     }
 
     public double getRandomDamage() {
-        return (4 + (new Random()).nextInt(10));
+        return (4 + (new Random()).nextInt(8));
     }
 
     private void spawnDimensionalBlocks(Player player, Player damaged) {

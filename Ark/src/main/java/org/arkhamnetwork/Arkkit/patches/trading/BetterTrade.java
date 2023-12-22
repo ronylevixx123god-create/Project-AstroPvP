@@ -69,8 +69,8 @@ public class BetterTrade extends ArkPlugin {
     }
 
     public void startPlayerTrade(Player player, Player player2) {
-        this.clearTeleportRequests(player);
-        this.clearTeleportRequests(player2);
+        //this.clearTeleportRequests(player);
+        //this.clearTeleportRequests(player2);
         player.closeInventory();
         player2.closeInventory();
         PlayerTrade trade = new PlayerTrade(player, player2);
