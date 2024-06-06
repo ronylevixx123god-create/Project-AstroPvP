@@ -259,10 +259,11 @@
             <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>me.kingsavaqe.cagepvp</groupId>
-            <artifactId>AstroCagePvP</artifactId>
-            <version>1.0</version>
-            <scope>compile</scope>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>cpvp</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/AstroCagePvP-1.0.jar</systemPath>
         </dependency>
 
     </dependencies>

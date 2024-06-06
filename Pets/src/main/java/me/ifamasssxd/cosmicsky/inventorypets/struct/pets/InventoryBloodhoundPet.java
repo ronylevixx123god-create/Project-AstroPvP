@@ -77,13 +77,18 @@ public class InventoryBloodhoundPet extends InventoryPet {
    }
 
    public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-/*      long lastUse = petItem.getLastUsed();
+      long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
+      /*if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+         player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+         return true;
+      }*/
+
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-         throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
+         throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
 
       List<Entity> targets = player.getNearbyEntities(10,10,10);
@@ -134,7 +139,8 @@ public class InventoryBloodhoundPet extends InventoryPet {
       }
 
       //petItem.setLastUsed(System.currentTimeMillis());
-      CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+      petItem.setLastUsed(System.currentTimeMillis());
+      //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
       pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), Boolean.valueOf(true)));
       pTarget.setMetadata("bloodhound_" + name, (MetadataValue)new FixedMetadataValue((Plugin)CosmicSkyInventoryPets.get(), null));

@@ -25,6 +25,7 @@ import net.astropvp.struct.CollectType;
 import net.astropvp.struct.PlayerCollect;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -34,7 +35,7 @@ import java.util.HashMap;
 
 public class GiveAllManager {
     private static long nextGiveAll = 2400;
-    private static ItemStack giveAllItem = CrateKeyItem.getItem(CrateType.valueOf("COSMIC"));
+    private static ItemStack giveAllItem = new ItemStack(Material.DIAMOND);
 
     public static long getNextGiveAll() {
         return nextGiveAll;

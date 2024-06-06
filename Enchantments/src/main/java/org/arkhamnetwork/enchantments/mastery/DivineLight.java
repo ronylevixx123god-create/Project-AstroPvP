@@ -24,6 +24,11 @@ public class DivineLight extends MasteryCustomEnchantment {
 
         if (event.isCancelled()) return;
         if (target instanceof Player && user instanceof Player) {
+
+
+            if (GeneralUtil.isUsingAxe(user)) {
+                event.setDamage(event.getDamage() * 1.15);
+            }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2022_MUTATED_AMULET)) {
                 return;
             }

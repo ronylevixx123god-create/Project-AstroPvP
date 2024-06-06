@@ -47,7 +47,7 @@ public class WarzoneClaimListener implements Listener {
     }
 
     public WarzoneClaimListener() {
-        this.maxClaims = 3;
+        this.maxClaims = 2;
         this.regions = new HashMap<>();
         this.regions.put("spawnwarzone", "spawnwarzoneclaimlimiter");
         this.regions.put("desertwarzone", "desertwarzoneclaimlimiter");

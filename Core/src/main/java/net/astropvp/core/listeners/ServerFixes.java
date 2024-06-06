@@ -1,11 +1,13 @@
 package net.astropvp.core.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Board;
 import com.massivecraft.factions.FLocation;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
+import com.massivecraft.factions.perms.Relation;
 import net.astropvp.core.utils.ChatManager;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.*;
@@ -14,6 +16,7 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.*;
@@ -31,7 +34,6 @@ public class ServerFixes implements Listener {
                 || event.getEntity() instanceof org.bukkit.entity.Skeleton)
             event.setCancelled(true);
     }
-
 
     @EventHandler
     public void onDmg(EntityDamageEvent e) {
@@ -84,6 +86,20 @@ public class ServerFixes implements Listener {
         return coord;
     }
 
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
+    public void onTerritoryLogin(PlayerJoinEvent event) {
+        Faction fac = FactionUtils.getFaction(event.getPlayer());
+        Faction facLand = FactionUtils.getFactionAt(event.getPlayer().getLocation());
+        if (facLand.isWilderness()) return;
+        if (facLand.isWarZone()) return;
+        Relation relation = FactionUtils.getRelationTo(fac, facLand);
+        if (relation.isEnemy() || relation.isNeutral()) {
+            System.out.println("[FactionLand] Teleporting " + event.getPlayer().getName() + " to spawn because logged out in enemy land");
+            event.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You have been teleported to spawn because you logged in in enemy land"));
+        }
+    }
+
 
 
 
@@ -108,9 +124,26 @@ public class ServerFixes implements Listener {
         }
     }
 
+    @EventHandler
+    public void disableHopper(InventoryPickupItemEvent e) {
+        if (e.getInventory().getType() != InventoryType.HOPPER) {
+            return;
+        }
+        if (e.getInventory().getType() == InventoryType.HOPPER) {
+            e.setCancelled(true);
+        }
+    }
 
 
 
+
+    @EventHandler
+    public void onBlockPlace(BlockPlaceEvent e) {
+        if(e.getBlock().getType() == Material.HOPPER) {
+            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place hoppers, buy chunk collectors in /shop instead!"));
+            e.setCancelled(true);
+        }
+    }
     
 
 
@@ -120,10 +153,9 @@ public class ServerFixes implements Listener {
     }
 
     @EventHandler
-    public void onBlockPlace(BlockPlaceEvent e) {
-        if(e.getBlock().getType() == Material.HOPPER) {
-            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot place hoppers, buy chunk collectors in /shop instead!"));
-            e.setCancelled(true);
+    public void seedBreak(BlockBreakEvent event) {
+        if (event.getBlock().getType() == Material.LONG_GRASS || event.getBlock().getType() == Material.RED_ROSE || event.getBlock().getType() == Material.YELLOW_FLOWER || event.getBlock().getType() == Material.DOUBLE_PLANT) {
+            event.getBlock().setType(Material.AIR);
         }
     }
 
@@ -203,16 +235,6 @@ public class ServerFixes implements Listener {
     public void onEntityDamage(EntityDamageEvent e) {
         if (e.getEntity().getType() == EntityType.DROPPED_ITEM)
             e.setCancelled(true);
-    }
-
-    @EventHandler
-    public void disableHopper(InventoryPickupItemEvent e) {
-        if (e.getInventory().getType() != InventoryType.HOPPER) {
-            return;
-        }
-        if (e.getInventory().getType() == InventoryType.HOPPER) {
-            e.setCancelled(true);
-        }
     }
 
 

@@ -1,9 +1,6 @@
 package me.venir.astrocollectors.collector;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.gmail.filoghost.holographicdisplays.api.Hologram;
 import com.gmail.filoghost.holographicdisplays.api.HologramsAPI;
 import com.gmail.filoghost.holographicdisplays.api.line.TextLine;
@@ -17,6 +14,7 @@ import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.data.SpawnerData;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
+import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.language.Language;
 import me.venir.astrocollectors.utils.ChunkUtil;
@@ -29,6 +27,7 @@ import org.bukkit.block.BlockState;
 import org.bukkit.block.CreatureSpawner;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -50,6 +49,10 @@ public final class Collector {
     private double worth;
     @Getter
     private long tnt;
+
+    @Getter
+    private long lootboxes;
+
     @Getter
     private final Map<EntityType, Integer> spawnersInChunk;
     private final Reference<World> reference;
@@ -57,6 +60,9 @@ public final class Collector {
     private final Queue<CollectorSellLog> sellLogs;
     @Getter
     private Hologram hologram;
+
+    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
+
 
 
     public Collector(World world, JSONObject data) {
@@ -89,6 +95,12 @@ public final class Collector {
         }
 
         this.worth = (double) data.get("worth");
+        try {
+            this.tnt = (long) data.get("lootboxes");
+        } catch (Exception e) {
+            this.tnt = 0;
+
+        }
 
         this.tnt = (long) data.get("tnt");
         Location holoLoc = this.getLocation().clone();
@@ -97,6 +109,7 @@ public final class Collector {
         this.hologram = HologramsAPI.createHologram(AstroCollectors.INSTANCE, holoLoc);
         hologram.appendTextLine(CC.translate("&a&lChunk Collector"));
         hologram.appendTextLine(CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
+        hologram.appendTextLine(CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(getLootboxes())));
         hologram.appendTextLine(CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
     }
 
@@ -114,12 +127,14 @@ public final class Collector {
 
         this.worth = 0.0;
         this.tnt = 0L;
+        this.lootboxes = 0L;
         Location holoLoc = this.getLocation().clone();
         holoLoc.add(0.5, 2, 0.5);
 
         this.hologram = HologramsAPI.createHologram(AstroCollectors.INSTANCE, holoLoc);
         hologram.appendTextLine(CC.translate("&a&lChunk Collector"));
         hologram.appendTextLine(CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
+        hologram.appendTextLine(CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(getLootboxes())));
         hologram.appendTextLine(CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
     }
 
@@ -142,6 +157,15 @@ public final class Collector {
         EconomyUtils.depositBalance(player, worth);
         Language.COLLECTOR_SELL.send(player, str -> str.replace("%price%", Utils.formatNum((long) this.worth)));
         this.worth = 0.0;
+    }
+
+    public void claimLootboxes(Player player) {
+        while (player.getInventory().firstEmpty() != -1 && lootboxes > 0) {
+            PlayerUtil.giveOrDropProtectedItem(player, mysteryLootbox, 60);
+            removeLootbox(1);
+
+        }
+
     }
 
     public void claimTNT(Player player) {
@@ -232,6 +256,14 @@ public final class Collector {
         this.tnt += amount;
     }
 
+    public void addLootbox(double amount) {
+        this.lootboxes += amount;
+    }
+
+    public void removeLootbox(double amount) {
+        this.lootboxes -= amount;
+    }
+
     public void addTNTSellLog(Player seller, int amount) {
         boolean canOffer = this.sellLogs.offer(new CollectorSellLog(seller.getName(), CollectorSellLog.SellLogType.TNT, amount));
 
@@ -252,7 +284,9 @@ public final class Collector {
 
     public void updateHologram() {
         updateHologramLine(1, CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
-        updateHologramLine(2, CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
+        updateHologramLine(3, CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
+        updateHologramLine(2, CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(lootboxes)));
+
     }
 
     public List<CollectorSellLog> getSellLogs() {
@@ -298,6 +332,8 @@ public final class Collector {
         jsonObject.put("lastUpdated", this.lastUpdated);
         jsonObject.put("worth", this.worth);
         jsonObject.put("tnt", this.tnt);
+        jsonObject.put("lootboxes", this.lootboxes);
+
         return jsonObject;
     }
 

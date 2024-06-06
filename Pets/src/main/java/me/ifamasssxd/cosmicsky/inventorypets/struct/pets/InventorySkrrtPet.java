@@ -15,6 +15,7 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
@@ -23,6 +24,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
@@ -64,17 +66,20 @@ public class InventorySkrrtPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
 
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
+        /*if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+            player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+            return true;
+        }*/
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
-        //petItem.setLastUsed(System.currentTimeMillis());
-        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
+        petItem.setLastUsed(System.currentTimeMillis());
+        //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
         this.petLevel = 5;
         this.givePlayerGearFive(player);
@@ -150,6 +155,12 @@ public class InventorySkrrtPet extends InventoryPet {
                 player.sendMessage(CC.translate("&6&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[Rolles Skates] &6&l*"));
                 continue;
             }
+
+            if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(p)) {
+                p.sendMessage(CC.translate("&c&lPET: &cYou cannot use pets one someone who has immunity."));
+                continue;
+            }
+
 
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.EASTER_2022_MUTATED_AMULET)) {
                 p.sendMessage(CC.translate("&5&l* Cheshire Grin &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &5&l*"));

@@ -101,7 +101,7 @@ public class Destruction extends CustomEnchantment {
                                                     }
                                                 }
                                                 if (val$level >= 3 && Math.random() <= 0.085) {
-                                                    p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, val$level * 20 * 2, 1));
+                                                    //p.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, val$level * 20 * 2, 1));
                                                     try {
                                                         de.inventivegames.particle.ParticleEffect.WITCH_MAGIC.sendToPlayers(Bukkit.getOnlinePlayers(),p.getLocation(), 0,1,0,0.5f,10);
                                                     } catch (Exception e) {

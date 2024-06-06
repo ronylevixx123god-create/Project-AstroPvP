@@ -15,18 +15,20 @@ import me.astropvp.astrospawners.struct.GrindingManager;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
-import me.astropvp.cratekeys.enums.CrateType;
-import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
+import me.venir.astrocollectors.AstroCollectors;
+import me.venir.astrocollectors.collector.Collector;
+import me.venir.astrocollectors.collector.CollectorManager;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.OutpostUtil;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.loottable.struct.LootTable;
+import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
 import org.bukkit.Sound;
 import org.bukkit.entity.Creature;
@@ -51,9 +53,9 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final GrindingManager grindingManager;
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
-    private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.SOLAR);
-    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.COSMIC);
-    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("ChristmasPresent").createClaimableItem(false);
+    //private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.SOLAR);
+    //private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.COSMIC);
+    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
 
     private Map<UUID, Long> blazeCooldown;
@@ -99,7 +101,7 @@ public class EntityStackerListener implements Listener {
 
             if (p.getInventory().firstEmpty() == -1 && !allowFullInvGrinding) {
                 p.sendMessage(CC.translate("&c&l(!)&c Clear some space in your inventory before you keep grinding mobs!"));
-                p.playSound(p.getLocation(), Sound.VILLAGER_NO, 2f, 2f);
+                //p.playSound(p.getLocation(), Sound.VILLAGER_NO, 2f, 2f);
                 return;
             }
 
@@ -213,7 +215,7 @@ public class EntityStackerListener implements Listener {
 
         int mcAmount = AstroSpawners.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
         if (Math.random() < mobcoinChance) {
-            cache.addCoins(mcAmount);
+            //cache.addCoins(mcAmount);
         }
 
 
@@ -227,24 +229,28 @@ public class EntityStackerListener implements Listener {
             godlyKeyChance *= 1.4;
         }
 
-        if (enchants.containsKey(EnchantmentAPI.getEnchantment("Treasure")) && Math.random() < treasureChance) {
-            PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
-            LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
-            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 1);
-            try {
-                ParticleEffect.HAPPY_VILLAGER.sendToPlayers(Bukkit.getOnlinePlayers(), p.getLocation(), 0, 1, 0, 0.4f, 12);
-            } catch (Exception exception) {
-                exception.printStackTrace();
+        if (Math.random() < treasureChance) {
+            //LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
+            Bukkit.getScheduler().runTaskAsynchronously(AstroSpawners.getInstance(), ()-> {
+
+                if (p.getInventory().firstEmpty() == -1) {
+                    Collector collector = CollectorManager.DELEGATE.getCollector(Arkkit.get().getPlayerLocations().get(p.getName()));
+                    if (collector != null) {
+                        collector.addLootbox(1);
+                        p.sendMessage(CC.translate("&a&l+ &6&lGrinding Lootbox &7(Collector collected [+1])"));
+                    }
+
+
+            } else {
+                p.sendMessage(CC.translate("&a&l+ &6&lGrinding Lootbox"));
+                PlayerUtil.giveOrDropProtectedItem(p, mysteryLootbox, 60);
             }
-            p.sendMessage(CC.translate("&a&l+ &c&k;&4&l?&c&k;&r &2&lChristmas Present &c&k;&4&l?&c&k;&r"));
-            //PlayerUtil.giveOrDropProtectedItem(p, CosmicSlotBotAPI.createSlotBotItem(), 60);
-
-
+            });
         }
 
         double num = Math.random();
 
-        if (godlyKeyChance >= num) {
+        /*if (godlyKeyChance >= num) {
             if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, godlyKey)) {
 
                 PlayerUtil.giveOrDropProtectedItem(p, godlyKey, 60);
@@ -253,7 +259,7 @@ public class EntityStackerListener implements Listener {
             if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, grinderKey)) {
                 PlayerUtil.giveOrDropProtectedItem(p, grinderKey, 60);
             }
-        }
+        }*/
     }
 
 

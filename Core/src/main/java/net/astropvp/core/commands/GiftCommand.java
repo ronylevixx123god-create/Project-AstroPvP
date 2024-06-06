@@ -2,10 +2,7 @@ package net.astropvp.core.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import me.mattstudios.mf.annotations.Command;
-import me.mattstudios.mf.annotations.Completion;
-import me.mattstudios.mf.annotations.Default;
-import me.mattstudios.mf.annotations.WrongUsage;
+import me.mattstudios.mf.annotations.*;
 import me.mattstudios.mf.base.CommandBase;
 
 import net.astropvp.core.AstroCore;
@@ -25,7 +22,10 @@ public class GiftCommand extends CommandBase {
 
     @Default
     @WrongUsage("&c/gift <player> <message>")
-    public void giftToPlayer(Player sender, @Completion("#players") Player receiver, String[] message) {
+    public void giftToPlayer(Player sender, @Completion("#players") Player receiver, @Optional String[] message) {
+        if (message == null) {
+            message = new String[]{""};
+        }
         if (sender.equals(receiver)) {
             sender.sendMessage(CC.translate("&c&l(!)&c You cannot send yourself gifts!"));
             return;

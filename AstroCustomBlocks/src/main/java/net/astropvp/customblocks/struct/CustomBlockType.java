@@ -103,7 +103,10 @@ public enum CustomBlockType {
             "",
             CC.translate("&c&lWARNING &7You must stay in a &f16x16&7 radius of"),
             CC.translate("&7this auto grinder block for it to keep grinding keys.")
-    ), AutoGrinder.class);
+    ), AutoGrinder.class)
+
+
+    ;
 
     private final String displayName;
     private final ChatColor color;

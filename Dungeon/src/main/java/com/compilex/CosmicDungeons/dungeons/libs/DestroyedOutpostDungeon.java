@@ -62,6 +62,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
@@ -167,17 +170,15 @@ public class DestroyedOutpostDungeon
                 continue;
             }
             validLooters.add(p.getUniqueId());
-            p.sendMessage((Object) ChatColor.GOLD + "" + (Object) ChatColor.BOLD + "+1 Dungeon Loot Bag");
-            ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicDestroyedOutpostLootbag").createClaimableItem(false);
-            ItemStack desBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("DestroyedOutpostLootbag").createClaimableItem(false);
 
-            ItemStack lootbag = this.isHeroic() ? heroicBag : desBag;
-            if (p.getInventory().firstEmpty() != -1) {
-                p.getInventory().addItem(new ItemStack[]{lootbag});
-            } else {
-                p.getWorld().dropItem(p.getLocation(), lootbag);
-                p.sendMessage((Object) ChatColor.GRAY + "(No room in inventory, dropped on ground.)");
-            }
+
+            LootFilterAPI.giveItem(p.getPlayer(), LootTable.DESTROYED_OUTPOST_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.DESTROYED_OUTPOST_DUNGEON));
+            LootFilterAPI.giveItem(p.getPlayer(), LootTable.DESTROYED_OUTPOST_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.DESTROYED_OUTPOST_DUNGEON));
+            LootFilterAPI.giveItem(p.getPlayer(), LootTable.DESTROYED_OUTPOST_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.DESTROYED_OUTPOST_DUNGEON));
+            LootFilterAPI.giveItem(p.getPlayer(), LootTable.DESTROYED_OUTPOST_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.DESTROYED_OUTPOST_DUNGEON));
+            LootFilterAPI.giveItem(p.getPlayer(), LootTable.DESTROYED_OUTPOST_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.DESTROYED_OUTPOST_DUNGEON));
+
+
             playerList = playerList + p.getName() + ", ";
             long bonusCD = dp.getCooldowns().addDungeonCooldown(this, 300000L);
             dp.logDungeonComplete(this);
@@ -188,7 +189,7 @@ public class DestroyedOutpostDungeon
         if (playerList.endsWith(", ")) {
             playerList = playerList.substring(0, playerList.length() - 2);
         }
-        this.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", ChatColor.GREEN, ChatColor.GRAY);
+        this.broadcastTitle("DUNGEON COMPLETE!", "+ Dungeon Loot", ChatColor.GREEN, ChatColor.GRAY);
         Bukkit.broadcastMessage((String) "");
         Bukkit.broadcastMessage((String) ((Object) ChatColor.GOLD + "" + (Object) ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
         Bukkit.broadcastMessage((String) ((Object) ChatColor.GOLD + "The " + this.getDungeonName() + (Object) ChatColor.GOLD + " has been cleared by: " + (Object) ChatColor.GRAY + playerList + (Object) ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.getTimeSinceDungeonStart())));

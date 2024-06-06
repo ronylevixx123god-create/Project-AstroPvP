@@ -1,8 +1,10 @@
 package net.astropvp.armorsets.commands;
 
+import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
+import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import de.tr7zw.nbtapi.NBTItem;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.armorsets.utils.Pair;
@@ -35,9 +37,18 @@ public class CommandHeroicFix implements CommandExecutor {
             meta.spigot().setUnbreakable(true);
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE, ItemFlag.HIDE_ATTRIBUTES);
             item.setItemMeta(meta);
-            NBTItem nbtItem = new NBTItem(item);
+
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+            cosmicData.setBoolean("heroicArmor", true);
+            wrapper.setNBTBase("cosmicData", cosmicData.get());
+
+            ItemStack tempItem = wrapper.build();
+
+            NBTItem nbtItem = new NBTItem(tempItem);
             nbtItem.setBoolean("heroic", true);
             nbtItem.setInteger("wine-armor-override", Objects.requireNonNull(HeroicArmor.getFromMaterial(item.getType())).getReduction());
+            nbtItem.addCompound("heroicArmor");
             item = nbtItem.getItem();
             player.setItemInHand(item);
             player.sendMessage(CC.Green + "Successfully made armor into new heroic!");
@@ -49,6 +60,15 @@ public class CommandHeroicFix implements CommandExecutor {
             item.setItemMeta(meta);
             Pair<ModifierType, Double> modifierTypePair = new Pair<>(ModifierType.ATTACK_DAMAGE, 7D);
             player.setItemInHand(AttributeModifier.applyModifications(item, Collections.singletonList(modifierTypePair)));
+
+            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
+            cosmicData.setBoolean("heroicArmor", true);
+            wrapper.setNBTBase("cosmicData", cosmicData.get());
+
+            ItemStack tempItem = wrapper.build();
+            player.setItemInHand(tempItem);
+
             player.sendMessage(CC.Green + "Successfully made weapon into new heroic!");
             return true;
         } else {

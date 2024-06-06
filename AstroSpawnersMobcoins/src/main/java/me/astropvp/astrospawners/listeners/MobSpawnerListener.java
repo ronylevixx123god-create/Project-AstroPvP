@@ -1,6 +1,7 @@
 package me.astropvp.astrospawners.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import me.astropvp.astrospawners.AstroSpawners;
@@ -58,11 +59,12 @@ public class MobSpawnerListener implements Listener {
 
         EntityType type = ItemSpawner.getEntityTypeFromItem(item);
 
-/*        if (event.getBlock().getY() <= 200 && type != EntityType.BLAZE) {
-            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You are not allowed to place &n" + EntityUtils.getEntityName(type) + " Spawners&c under Y 200."));
+        if (FactionUtils.isWilderness(event.getBlock().getLocation())) {
+            event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You are not allowed to place spawners in wilderness!"));
+            event.getPlayer().sendMessage(CC.translate("&7Type &f/f claim&7 to claim this land and place spawners."));
             event.setCancelled(true);
             return;
-        }*/
+        }
 
         if (!SpawnerManager.canPlaceStackedSpawnerInThisChunk(event.getBlock().getChunk(), type)) {
             event.getPlayer().sendMessage(CC.translate("&c&l(!)&c This chunk already contains this spawner type."));

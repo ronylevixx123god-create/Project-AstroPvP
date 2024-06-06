@@ -74,7 +74,7 @@ extends CustomEnchantment {
         boolean bl = headshot = y - victimay > 1.9;
         if (headshot && Math.random() < 0.35 + level * 0.075) {
 
-            double multiplier = Math.floor(Math.random() *(15 - 4 + 1) + 4);
+            double multiplier = Math.floor(Math.random() *(10 - 4 + 1) + 4);
             event.setDamage(event.getDamage() * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
             ((Player)target).sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** HEADSHOT [+" + multiplier + "x DMG] ***");

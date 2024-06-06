@@ -38,7 +38,7 @@ public class HeroicBlock extends HeroicCustomEnchantment
                     player.sendMessage(CC.GreenB + "* BLOCKED §7[" + NumberUtils.formatSeconds((double)finalDamage) + "]§&§l *");
                     if (damageToReflect > 0.0) {
                         Player attacking = (Player)attacker;
-                        //attacking.damage(damageToReflect);
+                        attacking.damage(damageToReflect);
                         player.getWorld().playSound(player.getLocation(), Sound.ZOMBIE_METAL, 10.0f, 2.0f);
                         attacking.sendMessage(CC.RedB + "* " + player.getName() + " REFLECTIVE BLOCK [" + CC.Gray + (int)(reduceDamage * 100.0) + "% DMG" + CC.RedB + "]");
                     }

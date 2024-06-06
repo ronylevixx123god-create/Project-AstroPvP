@@ -16,7 +16,7 @@ public class BlockCommandListener implements Listener {
 
     static {
         allowedCommands.addAll(Arrays.asList("msg", "message", "staffmode", "staff", "freeze", "lms", "ft", "filter", "r", "bless", "blessme", "response", "space", "bless", "heal", "cf", "coinflip", "jackpot",
-                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "outposts"));
+                "feed", "f", "fix", "filter edit", "filter toggle", "ft", "bless", "r", "reply", "spawn", "warp", "pots", "filters", "outpost", "outposts", "pin"));
     }
 
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)

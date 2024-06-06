@@ -29,6 +29,7 @@ public class ChatListener implements Listener {
     private final String mediaRole;
     private final String famousRole;
 
+    private final String galaxyRole;
 
     private final Guild astroDiscord;
     private final DiscordSyncPlugin plugin;
@@ -40,6 +41,7 @@ public class ChatListener implements Listener {
         this.factionLeaderRole = "709442838592618608";
         this.mediaRole = "517312548136026112";
         this.famousRole = "981939448755392512";
+        this.galaxyRole = "914174702853951508";
 
         (new BukkitRunnable() {
             public void run() {
@@ -56,6 +58,7 @@ public class ChatListener implements Listener {
                 Set<UUID> toAddLeaders = new HashSet<>();
                 Set<UUID> toAddYoutubers = new HashSet<>();
                 Set<UUID> toAddFamous = new HashSet<>();
+                Set<UUID> toAddGalaxyRanks = new HashSet<>();
 
                 for (UUID uuid : uuidUserMap.keySet()) {
                     Long discordId = uuidUserMap.get(uuid);
@@ -81,6 +84,8 @@ public class ChatListener implements Listener {
                         }
                     });
                 }
+
+
 
 
                 Bukkit.getScheduler().runTask(this.plugin, () -> {

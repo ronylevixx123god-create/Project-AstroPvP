@@ -41,7 +41,7 @@ extends CosmicGUI {
     }
 
     public void redraw() {
-        int index = 2;
+        int index = 3;
         Calendar current = Calendar.getInstance();
         Calendar cal = Calendar.getInstance();
         cal.setTimeZone(TimeZone.getTimeZone("CST"));

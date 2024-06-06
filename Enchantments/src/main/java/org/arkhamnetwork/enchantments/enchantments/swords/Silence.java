@@ -1,5 +1,6 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
@@ -42,7 +43,7 @@ public class Silence extends CustomEnchantment {
         if (EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).containsKey(EnchantmentAPI.getEnchantment("Perfect Solitude"))) {
             solitudeLevel = EnchantmentAPI.getEnchantments(user.getEquipment().getItemInHand()).get(EnchantmentAPI.getEnchantment("Perfect Solitude")) * 2;
         }
-        final double chance = (enchantLevel + solitudeLevel) * 0.03;
+        double chance = (double)(enchantLevel + solitudeLevel) * 0.09;
         if (Math.random() < chance) {
             final Player pTarget = (Player) target;
             final long durationTicks = (enchantLevel + solitudeLevel) * 20L;
@@ -59,14 +60,6 @@ public class Silence extends CustomEnchantment {
 
         boolean enemyHasApolloSet = false;
         boolean enemyHasApolloCrystal = false;
-
-        if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) silencer).containsKey(ArmorSetType.APOLLO)) {
-            enemyHasApolloCrystal = true;
-        }
-
-        if (AstroArmorSetsAPI.getCurrentArmorSet((Player) silencer) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) silencer) == ArmorSetType.APOLLO) {
-            enemyHasApolloSet = true;
-        }
 
         if (event != null && !new CustomEnchantProcOnEntityEvent(silencer, target, event, this, level).callEvent()) {
             return false;

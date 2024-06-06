@@ -75,6 +75,13 @@ public class GeneralUtil {
         return true;
     }
 
+    public static boolean isUsingAxe(LivingEntity attacker) {
+        if (attacker instanceof Player) {
+            return ((Player)attacker).getItemInHand() != null && ((Player)attacker).getItemInHand().getType().name().endsWith("_AXE");
+        }
+        return false;
+    }
+
     public static ItemStack getPlayerHead(final String p_name) {
         final ItemStack is = new ItemStack(Material.SKULL_ITEM, 1, (short) 3);
         final SkullMeta sm = (SkullMeta) is.getItemMeta();

@@ -7,6 +7,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
@@ -71,17 +72,19 @@ public class InventoryWitcherPet extends InventoryPet {
             throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
                     TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
-
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+        /*if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+            player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+            return true;
+        }*/
 
         //PetUtils.addPetCooldown(player, petItem.getPetType(), (getCooldown(5) * 1000));
-        //petItem.setLastUsed(System.currentTimeMillis());
-        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
+        //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+        petItem.setLastUsed(System.currentTimeMillis());
 
 
 
@@ -92,9 +95,7 @@ public class InventoryWitcherPet extends InventoryPet {
             sum*=1.5;
         }
 
-        if (AstroArmorSetsAPI.getCurrentArmorSet((Player) player) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) player) == ArmorSetType.APOLLO) {
-            sum *= 1.5;
-        }
+
 
         procAbility(player, sum, 5);
 
@@ -122,18 +123,6 @@ public class InventoryWitcherPet extends InventoryPet {
             if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&8&lBig Timbs&7] &8&l*"));
-                continue;
-            }
-
-            if (AstroArmorSetsAPI.getCurrentArmorSet((Player) p) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) p) == ArmorSetType.APOLLO) {
-                p.sendMessage(CC.translate("&f&l* APOLLO SET &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &f&l*"));
-                player.sendMessage(CC.translate("&f&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&f&lApollo Set&7] &f&l*"));
-                continue;
-            }
-
-            if (AstroArmorSetsAPI.getBonusCrystalsEquipped(p).containsKey(ArmorSetType.APOLLO) && Math.random() < 0.2) {
-                p.sendMessage(CC.translate("&f&l* APOLLO CRYSTAL &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &f&l*"));
-                player.sendMessage(CC.translate("&f&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&f&lApollo Crystal&7] &f&l*"));
                 continue;
             }
 

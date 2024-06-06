@@ -202,7 +202,11 @@ public class KothEventTask
             CombatLog.flagCombat(this.playerCapped);
         }
 
-        GiftcardAPI.createGiftCard(this.playerCapped, 10);
+        if (Math.random() < 0.15) {
+            GiftcardAPI.createGiftCard(this.playerCapped, 10);
+        } else {
+            this.playerCapped.sendMessage(CC.translate("&a&l(!)&a Oh no, you got unlucky and didn't get the 10$ KOTH giftcard, better luck next time (&715% chance&a)"));
+        }
         LauncherTask.countdown = 7400;
 
     }

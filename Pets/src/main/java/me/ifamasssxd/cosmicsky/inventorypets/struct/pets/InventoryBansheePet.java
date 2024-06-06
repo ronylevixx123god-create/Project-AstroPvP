@@ -14,6 +14,7 @@ import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
 
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
@@ -22,6 +23,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
+import me.kingsavaqe.cagepvp.AstroCagePvP;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
@@ -68,13 +70,15 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
+        /*if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+            player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+            return true;
+        }*/
 
 
-        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
         List<Player> nearbyEnemies = Lists.newArrayList();
 
         Faction faction = FactionUtils.getFaction(player);
@@ -91,6 +95,14 @@ public class InventoryBansheePet extends InventoryPet {
                     nearPlayer.sendMessage(CC.translate("&c&l* SPIKED BAT SKIN BLOCKED BANSHEE *"));
                     continue;
                 }
+
+                /*if (CooldownUtils.isCooldownActive(nearPlayer, "bansheeCooldown")) {
+                    throw new PrefixedPetException("&c&lPET: &c" + nearPlayer.getName() + "&c is still on banshee cooldown for &n" + CooldownUtils.getFormattedCooldown(nearPlayer, "bansheeCooldown") + "&c.");
+                }*/
+
+                if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+                    throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+
                 if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.THANKSGIVING_HELMET_WITCH) && (!GoldenAdmirer.isAdmirerSilenced(nearPlayer)) && !(((SpinalTab) SkinType.HALLOWEEN_2021_SWORD.getItemSkin())).getWitchSilencedPlayers().contains(nearPlayer.getName()) && !AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.BACK_TO_SCHOOL_2021_BELT)) {
 
                     nearPlayer.sendMessage(CC.translate("&e&l* WITCH HAT &7Blocked &4Banshee Pet &7[&f" + player.getName() + "&7] &e&l*"));
@@ -105,6 +117,10 @@ public class InventoryBansheePet extends InventoryPet {
                 }
 
 
+                if (AstroCagePvP.getInstance().getImmuneManager().hasImmune(nearPlayer)) {
+                    nearPlayer.sendMessage(CC.translate("&c&lPET: &cYou cannot use pets one someone who has immunity."));
+                    continue;
+                }
 
 
 
@@ -128,11 +144,6 @@ public class InventoryBansheePet extends InventoryPet {
 
 
 
-
-/*                if (CosmicSkyInventoryPets.get().getCooldownUtils().isOnCooldown(nearPlayer, "bansheeCooldown")) {
-                    player.sendMessage(CC.translate("&c&lPET: &c" + nearPlayer.getName() + " is still on banshee cooldown for &n" + CosmicSkyInventoryPets.get().getCooldownUtils().getRemainingTimeFormatted(nearPlayer, "bansheeCooldown") + "&c."));
-                    continue;
-                }*/
                 nearbyEnemies.add(nearPlayer);
             }
         }
@@ -142,7 +153,8 @@ public class InventoryBansheePet extends InventoryPet {
         }
 
         //petItem.setLastUsed(System.currentTimeMillis());
-        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+        petItem.setLastUsed(System.currentTimeMillis());
+        //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
         int duration;
 
@@ -158,9 +170,7 @@ public class InventoryBansheePet extends InventoryPet {
         }
 
 
-        if (AstroArmorSetsAPI.getCurrentArmorSet((Player) player) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) player) == ArmorSetType.APOLLO) {
-            duration *= 1.5;
-        }
+
 
         int finalDuration = duration;
         nearbyEnemies.forEach(enemy -> {
@@ -203,6 +213,7 @@ public class InventoryBansheePet extends InventoryPet {
         int bansheeCooldownInSeconds = 20;
         CosmicSkyInventoryPets.get().getCooldownUtils().add(enemy, "bansheeCooldown", bansheeCooldownInSeconds * 1000);*/
 
+        CooldownUtils.registerCooldown(enemy, new PetCooldown("bansheeCooldown", 30*20));
 
         enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
         enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " [7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");

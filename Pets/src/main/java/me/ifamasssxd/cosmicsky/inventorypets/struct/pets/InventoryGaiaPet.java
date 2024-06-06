@@ -44,13 +44,13 @@ public class InventoryGaiaPet extends InventoryPet {
    }
 
    public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws Exception {
-/*      long lastUse = petItem.getLastUsed();
+      long lastUse = petItem.getLastUsed();
       long delay = TimeUnit.SECONDS.toMillis((long)this.getCooldown());
       long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
       if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking())) {
          throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((long)((int)(timeTillCanUse / 1000L))));
-      } */
+      }
 
 
          boolean inWarzone = FactionUtils.getFactionAt(new FLocation(player.getLocation())).isWarZone();
@@ -61,8 +61,7 @@ public class InventoryGaiaPet extends InventoryPet {
          } else {
             player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "PET: ** NATURE'S WRATH **");
             //petItem.setLastUsed(System.currentTimeMillis());
-            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
+            petItem.setLastUsed(System.currentTimeMillis());
             player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
             player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
             return true;

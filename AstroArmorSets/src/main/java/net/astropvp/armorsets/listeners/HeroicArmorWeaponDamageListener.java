@@ -47,6 +47,7 @@ public class HeroicArmorWeaponDamageListener implements Listener {
     public void onDamageSword(EntityDamageByEntityEvent event) {
         if(event.getEntity() == null || event.getDamager() == null) return;
         if(!(event.getDamager() instanceof Player)) return;
+        if (!(event.getEntity() instanceof Player)) return;
         Player player = (Player) event.getDamager();
         if(!AstroArmorSetsAPI.isHeroic(player.getItemInHand())) return;
         double increaseAmount = AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicWeaponDamageIncrease");

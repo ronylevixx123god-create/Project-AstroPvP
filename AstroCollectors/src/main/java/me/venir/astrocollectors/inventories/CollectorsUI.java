@@ -68,6 +68,17 @@ public class CollectorsUI {
                     updateItems();
                 }));
 
+        collectorUI.setItem(4,3, ItemBuilder
+                .from(Material.CHEST)
+                .setName(ChatColor.GOLD + ChatColor.BOLD.toString() + "Grinding Lootboxes")
+                .setLore(getLootboxesLore())
+                .asGuiItem(event -> {
+                    if (collector.getLootboxes() == 0) return;
+                    event.setCancelled(true);
+                    collector.claimLootboxes(player);
+                    updateItems();
+                }));
+
         collectorUI.setItem(3,4, ItemBuilder
                 .from(Material.TNT)
                 .setName(ChatColor.GREEN + ChatColor.BOLD.toString() + "TNT Drops")
@@ -132,6 +143,12 @@ public class CollectorsUI {
                 .from(Material.PAPER)
                 .setName(ChatColor.GREEN + ChatColor.BOLD.toString() + "Sell Logs")
                 .setLore(Utils.format(getSellLogLore()))
+                .asGuiItem().getItemStack());
+
+        collectorUI.updateItem(4,3, ItemBuilder
+                .from(Material.CHEST)
+                .setName(ChatColor.GOLD + ChatColor.BOLD.toString() + "Grinding Lootboxes")
+                .setLore(Utils.format(getLootboxesLore()))
                 .asGuiItem().getItemStack());
 
         collectorUI.update();
@@ -208,6 +225,14 @@ public class CollectorsUI {
                 "&7into your faction TNT bank",
                 "",
                 "&a&l * Amount: &f" + Utils.formatNum(collector.getTnt())));
+    }
+
+    private List<String> getLootboxesLore() {
+        return Utils.format(Arrays.asList("",
+                "&7Right-Click to claim your grinding",
+                "&7lootboxes into your inventory",
+                "",
+                "&a&l * Amount: &f" + Utils.formatNum(collector.getLootboxes())));
     }
 
     private List<String> getMobDropsLore() {

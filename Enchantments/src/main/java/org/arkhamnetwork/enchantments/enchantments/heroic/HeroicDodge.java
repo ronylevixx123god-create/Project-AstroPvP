@@ -48,8 +48,8 @@ public class HeroicDodge
             if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
                 return;
 
-            double chance = 0.01 * (double)level;
-            final boolean sneaking = ((Player) player).isSneaking();
+        double chance = 0.05 * (double)level;
+        final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
                 chance += 0.2;
             }

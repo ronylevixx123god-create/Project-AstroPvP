@@ -21,6 +21,10 @@ public class HeroicInsanity extends HeroicCustomEnchantment
             return;
         }
 
+        if (GeneralUtil.isUsingAxe(player)) {
+            e.setDamage(e.getDamage() * 1.05);
+        }
+
         if (player instanceof Player) {
             if (SinkOrSwipFlippers.insanityDevourSilenced.contains(player)) {
                 return;

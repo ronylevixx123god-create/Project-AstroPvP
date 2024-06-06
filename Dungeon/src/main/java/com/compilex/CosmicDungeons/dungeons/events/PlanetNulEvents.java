@@ -135,6 +135,9 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.CustomLoot;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTable;
 import net.ess3.api.MaxMoneyException;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
@@ -446,12 +449,9 @@ implements CommandExecutor {
     }
 
     private void fillChest(Block block, int lootToFill, Set<UUID> eligible) {
-        List<CustomLoot> potentialLoot = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PlanetNulLootbag").getLootItems();
-        Collections.shuffle(potentialLoot);
         Chest chest = (Chest)block.getState();
-        for (int i = 0; i < lootToFill && i < potentialLoot.size(); ++i) {
-            CustomLoot customLoot = potentialLoot.get(i);
-            ItemStack item = customLoot.getItem();
+        for (int i = 0; i < lootToFill; ++i) {
+            ItemStack item = LootTableAPI.getRandomLootItem(LootTable.PLANET_NUL_DUNGEON);
             if (item == null) continue;
             chest.getInventory().addItem(item);
         }
@@ -498,16 +498,12 @@ implements CommandExecutor {
                     e.printStackTrace();
                 }
 
-                ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicPlanetNulLootbag").createClaimableItem(false);
-                ItemStack nulBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("PlanetNulLootbag").createClaimableItem(false);
+                LootFilterAPI.giveItem(p2.getPlayer(), LootTable.PLANET_NUL_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.PLANET_NUL_DUNGEON));
+                LootFilterAPI.giveItem(p2.getPlayer(), LootTable.PLANET_NUL_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.PLANET_NUL_DUNGEON));
+                LootFilterAPI.giveItem(p2.getPlayer(), LootTable.PLANET_NUL_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.PLANET_NUL_DUNGEON));
+                LootFilterAPI.giveItem(p2.getPlayer(), LootTable.PLANET_NUL_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.PLANET_NUL_DUNGEON));
+                LootFilterAPI.giveItem(p2.getPlayer(), LootTable.PLANET_NUL_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.PLANET_NUL_DUNGEON));
 
-                ItemStack lootbag  = this.dungeon.isHeroic() ? heroicBag : nulBag;
-                if (p2.getInventory().firstEmpty() != -1) {
-                    p2.getInventory().addItem(lootbag);
-                } else {
-                    p2.getWorld().dropItem(p2.getLocation(), lootbag);
-                    p2.sendMessage((Object)ChatColor.GRAY + "(No room in inventory, dropped on ground.)");
-                }
                 playerList.append(p2.getName()).append(", ");
                 long bonusCD = dp.getCooldowns().addDungeonCooldown(this.dungeon, 300000L);
                 dp.logDungeonComplete(this.dungeon);
@@ -515,7 +511,7 @@ implements CommandExecutor {
             if (playerList.toString().endsWith(", ")) {
                 playerList = new StringBuilder(playerList.substring(0, playerList.length() - 2));
             }
-            this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", ChatColor.GREEN, ChatColor.GRAY);
+            this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+ Dungeon Loot", ChatColor.GREEN, ChatColor.GRAY);
             Bukkit.broadcastMessage((String)"");
             Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
             Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The " + this.dungeon.getDungeonName() + (Object)ChatColor.GOLD + " has been cleared by: " + (Object)ChatColor.GRAY + playerList + (Object)ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.dungeon.getTimeSinceDungeonStart())));

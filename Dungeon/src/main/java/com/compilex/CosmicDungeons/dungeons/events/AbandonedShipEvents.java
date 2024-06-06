@@ -50,6 +50,9 @@ import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.DamageTracker;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
+import net.astropvp.lootfilter.LootFilterAPI;
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTable;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -73,6 +76,7 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.loot.LootTables;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
@@ -262,16 +266,15 @@ extends DungeonEvents {
                     }
                     p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
 
-                    ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicAbandonedShipLootbag").createClaimableItem(false);
-                    ItemStack abaBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("AbandonedShipLootbag").createClaimableItem(false);
+                    //ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicAbandonedShipLootbag").createClaimableItem(false);
+                    //ItemStack abaBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("AbandonedShipLootbag").createClaimableItem(false);
 
-                    ItemStack lootbag  = this.dungeon.isHeroic() ? heroicBag : abaBag;
-                    if (p2.getInventory().firstEmpty() != -1) {
-                        p2.getInventory().addItem(lootbag);
-                    } else {
-                        p2.getWorld().dropItem(p2.getLocation(), lootbag);
-                        p2.sendMessage((Object)ChatColor.GRAY + "(No room in inventory, dropped on ground.)");
-                    }
+                    LootFilterAPI.giveItem(p2.getPlayer(), LootTable.ABANDONED_SPACESHIP_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.ABANDONED_SPACESHIP_DUNGEON));
+                    LootFilterAPI.giveItem(p2.getPlayer(), LootTable.ABANDONED_SPACESHIP_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.ABANDONED_SPACESHIP_DUNGEON));
+                    LootFilterAPI.giveItem(p2.getPlayer(), LootTable.ABANDONED_SPACESHIP_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.ABANDONED_SPACESHIP_DUNGEON));
+                    LootFilterAPI.giveItem(p2.getPlayer(), LootTable.ABANDONED_SPACESHIP_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.ABANDONED_SPACESHIP_DUNGEON));
+                    LootFilterAPI.giveItem(p2.getPlayer(), LootTable.ABANDONED_SPACESHIP_DUNGEON, LootTableAPI.getRandomLootItem(LootTable.ABANDONED_SPACESHIP_DUNGEON));
+
                     playerList = playerList + p2.getName() + ", ";
                     long bonusCD = dp2.getCooldowns().addDungeonCooldown(this.dungeon, 300000L);
                     Faction faction = FactionUtils.getFaction((Player)p2);
@@ -281,7 +284,7 @@ extends DungeonEvents {
                 if (playerList.endsWith(", ")) {
                     playerList = playerList.substring(0, playerList.length() - 2);
                 }
-                this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+1 Dungeon Lootbag", ChatColor.GREEN, ChatColor.GRAY);
+                this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+ Dungeon Loot", ChatColor.GREEN, ChatColor.GRAY);
                 Bukkit.broadcastMessage((String)"");
                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
                 Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The " + this.dungeon.getDungeonName() + (Object)ChatColor.GOLD + " has been cleared by: " + (Object)ChatColor.GRAY + playerList + (Object)ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.dungeon.getTimeSinceDungeonStart())));

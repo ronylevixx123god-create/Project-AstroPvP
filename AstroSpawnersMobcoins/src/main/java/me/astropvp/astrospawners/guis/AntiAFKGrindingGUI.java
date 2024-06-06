@@ -40,7 +40,6 @@ public class AntiAFKGrindingGUI {
             astroSpawners.getAfkGrinders().put(uuid, 1);
             astroSpawners.getWaitingForAfkGrindingVerification().remove(uuid);
             player.sendMessage(CC.translate("&a&l(!)&a You have completed the anti afk grinding captcha! You can now enjoy grinding again."));
-            player.playSound(player.getLocation(), Sound.VILLAGER_YES, 50, 50);
             player.closeInventory();
         }));
     }

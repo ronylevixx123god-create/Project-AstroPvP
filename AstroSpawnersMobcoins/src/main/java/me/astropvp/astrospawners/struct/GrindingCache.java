@@ -36,13 +36,13 @@ public class GrindingCache {
 
         ExpUtils.giveXP(player, expEarned);
         EconomyUtils.depositBalance(player,moneyEarned);
-        MobcoinAPI.addMobcoins(player, coinsEarned);
+        //MobcoinAPI.addMobcoins(player, coinsEarned);
 
         player.sendMessage(CC.translate(""));
         player.sendMessage(CC.translate("&6&lGrinding Rewards"));
         player.sendMessage(CC.translate("&8 - &7EXP: &d" + NumberUtils.formatMoney(expEarned)));
         player.sendMessage(CC.translate("&8 - &7Money: &2$&a" + NumberUtils.formatMoney(moneyEarned)));
-        player.sendMessage(CC.translate("&8 - &7Mobcoins: &e" + NumberUtils.formatMoney(coinsEarned)));
+        //player.sendMessage(CC.translate("&8 - &7Mobcoins: &e" + NumberUtils.formatMoney(coinsEarned)));
         player.sendMessage(CC.translate("&8 - &7Mobs Killed: &c" + NumberUtils.formatMoney(mobsKilled)));
         player.sendMessage(CC.translate("&7&o(( Every &f15s&7&o you will receive your grinding rewards from the last 15s. ))"));
         player.sendMessage(CC.translate(""));

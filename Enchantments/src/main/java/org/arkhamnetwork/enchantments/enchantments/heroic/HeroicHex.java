@@ -1,6 +1,7 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import de.inventivegames.particle.ParticleEffect;
+import org.arkhamnetwork.enchantments.enchantments.axes.Hex;
 import org.bukkit.event.entity.*;
 import org.bukkit.entity.*;
 import org.arkhamnetwork.enchantments.*;
@@ -22,32 +23,26 @@ public class HeroicHex
 
     public void applyEffect(LivingEntity player, final LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
         double chance;
-        if (!(playerHit instanceof Player)) {
-            return;
-        }
-        double random = Math.random();
-        if (random < (chance = 0.04 * (double)level) && (!playerHit.hasMetadata("hexEnchantExpire") || playerHit.getMetadata("hexEnchantExpire").get(0).asLong() < System.currentTimeMillis())) {
-            playerHit.setMetadata("hexEnchantExpire", new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), System.currentTimeMillis() + (long)((2 + level / 2) * 1000)));
-            playerHit.setMetadata("hexEnchantLevel", new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), level));
-            ((Player)playerHit).sendMessage((Object)((Object)ChatColor.DARK_PURPLE) + "" + (Object)((Object)ChatColor.BOLD) + "* HEX DEBUFF [" + (Object)((Object)ChatColor.LIGHT_PURPLE) + (Object)((Object)ChatColor.BOLD) + (2 + level / 2) * 2 + "s" + (Object)((Object)ChatColor.DARK_PURPLE) + (Object)((Object)ChatColor.BOLD) + "] *");
-            Bukkit.getScheduler().runTaskLater((Plugin)((Object)Enchantments.getInstance()), new Runnable(){
+        double random;
+        if (playerHit instanceof Player && (random = Math.random()) < (chance = 0.03 * (double)level) && (!playerHit.hasMetadata("hexEnchantExpire") || ((MetadataValue)playerHit.getMetadata("hexEnchantExpire").get(0)).asLong() < System.currentTimeMillis())) {
+            playerHit.setMetadata("hexEnchantExpire", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis() + (long)((2 + level / 2) * 1000)));
+            playerHit.setMetadata("hexEnchantLevel", new FixedMetadataValue(Enchantments.getInstance(), level));
+            ((Player)playerHit).sendMessage(CC.translate( "&d&l* HEX DEBUFF [" + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + (2 + level / 2) + "s" + ChatColor.DARK_PURPLE + ChatColor.BOLD + "] *"));
+            Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), new Runnable(){
 
                 @Override
                 public void run() {
-                    ((Player)playerHit).sendMessage((Object)((Object)ChatColor.LIGHT_PURPLE) + "" + (Object)((Object)ChatColor.BOLD) + "* HEX OFF *");
+                    ((Player)playerHit).sendMessage(CC.translate( "&d&l* HEX OFF *"));
                 }
-            }, (long)((2 + level / 2) * 2) * 20L);
+            }, (long)(2 + level / 2) * 20L);
         }
     }
 
     public static boolean isHexed(LivingEntity e) {
-        return e.hasMetadata("hexEnchantExpire") && e.getMetadata("hexEnchantExpire").get(0).asLong() > System.currentTimeMillis();
+        return e.hasMetadata("hexEnchantExpire") && ((MetadataValue)e.getMetadata("hexEnchantExpire").get(0)).asLong() > System.currentTimeMillis();
     }
 
     public static int getHexLevel(LivingEntity e) {
-        if (!HeroicHex.isHexed(e)) {
-            return 0;
-        }
-        return e.getMetadata("hexEnchantLevel").get(0).asInt();
+        return !Hex.isHexed(e) ? 0 : ((MetadataValue)e.getMetadata("hexEnchantLevel").get(0)).asInt();
     }
 }

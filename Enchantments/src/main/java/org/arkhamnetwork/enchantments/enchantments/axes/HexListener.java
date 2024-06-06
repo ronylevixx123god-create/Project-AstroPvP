@@ -15,15 +15,12 @@ final class HexListener
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onEntityDamage(EntityDamageByEntityEvent e) {
-        if (!(e.getDamager() instanceof LivingEntity)) {
-            return;
-        }
-        LivingEntity damager = (LivingEntity)e.getDamager();
-        if (Hex.isHexed(damager) && e.getFinalDamage() > 0.0) {
-            double damage = Math.min(e.getFinalDamage(), (double)(5 + Math.max(0, Hex.getHexLevel(damager) - 2)));
+        LivingEntity damager;
+        if (e.getDamager() instanceof LivingEntity && Hex.isHexed(damager = (LivingEntity)e.getDamager()) && e.getDamage() > 0.0) {
+            double damage = Math.min(e.getDamage(), (double)(5 + Math.max(0, Hex.getHexLevel(damager) - 2)));
             damager.damage(damage);
             if (damager instanceof Player) {
-                ((Player)damager).sendMessage((Object)((Object)ChatColor.DARK_PURPLE) + "* HEX [" + (Object)((Object)ChatColor.RED) + this.df.format(damage) + (Object)((Object)ChatColor.DARK_PURPLE) + " DMG] *");
+                ((Player)damager).sendMessage(ChatColor.DARK_PURPLE + "* HEX [" + ChatColor.RED + this.df.format(damage) + ChatColor.DARK_PURPLE + " DMG] *");
             }
         }
     }

@@ -86,7 +86,7 @@ public class PlayerListener implements Listener {
         if (ArkhamMoneyNotesAPI.isMoneyNote(e.getCurrentItem()) && ArkhamMoneyNotesAPI.isMoneyNote(e.getCursor())) {
 
             Player p = (Player)e.getWhoClicked();
-            if (p.getLocation().getWorld().getName().equals("world")) {
+            if (p.getWorld().getName().equals("world_duels")) {
                 p.sendMessage(CC.translate("&c&l(!)&c You can only apply this in the world"));
                 e.setCancelled(true);
                 return;
@@ -105,8 +105,9 @@ public class PlayerListener implements Listener {
             e.setUseItemInHand(Event.Result.DENY);
             e.setCancelled(true);
             Player pl = e.getPlayer();
-            if (!pl.getLocation().getWorld().getName().equals("world")) {
+            if (pl.getWorld().getName().equals("world_duels")) {
                 pl.sendMessage(CC.translate("&c&l(!)&c You can only apply this in the world"));
+                e.setCancelled(true);
                 return;
             }
             double bal = CosmicGUIShop.getEconomy().getBalance((OfflinePlayer)pl);

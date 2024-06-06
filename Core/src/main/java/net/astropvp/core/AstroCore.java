@@ -428,7 +428,7 @@ public class AstroCore extends JavaPlugin {
 
     public void registerTasks() {
         new LastManStandingCapTask().runTaskTimer(this, 20L, 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new AutoGiveAllTask(), 20L, 20L);
         /*this.getServer().getScheduler().scheduleSyncRepeatingTask(this, () -> {
             try {
                 this.jackpotManager.onJackpotTick();

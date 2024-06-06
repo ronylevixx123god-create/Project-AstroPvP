@@ -50,7 +50,7 @@ extends BukkitRunnable {
                 if (!(ent instanceof Player) || !this.isAlly(p, (Player)ent)) continue;
                 ++x;
                 Player pAlly = (Player)ent;
-                pAlly.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (level > 3 ? 30 : 15) * 20, level > 4 ? 1 : 0));
+                //pAlly.addPotionEffect(new PotionEffect(PotionEffectType.FAST_DIGGING, (level > 3 ? 30 : 15) * 20, level > 4 ? 1 : 0));
                 if (level >= 2 && pAlly.hasPotionEffect(PotionEffectType.WEAKNESS)) {
                     pAlly.removePotionEffect(PotionEffectType.WEAKNESS);
                 }
@@ -58,7 +58,7 @@ extends BukkitRunnable {
                     pAlly.removePotionEffect(PotionEffectType.CONFUSION);
                 }
                 if (level >= 4) {
-                    pAlly.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, level == 4 ? 0 : 1));
+                    //pAlly.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, 300, level == 4 ? 0 : 1));
                 }
                 if (level != 5 || !pAlly.hasPotionEffect(PotionEffectType.POISON)) continue;
                 pAlly.removePotionEffect(PotionEffectType.POISON);

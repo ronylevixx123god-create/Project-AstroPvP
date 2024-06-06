@@ -36,7 +36,6 @@ public class DamageFixes implements Listener {
                 e.setCancelled(true);
                 ((Player) e.getEntity()).setHealth(((Player) e.getEntity()).getMaxHealth());
                 CooldownUtils.registerCooldown(phurt, new ElfMaskCooldown("elfCooldown", 300));
-
             }
         }
         

@@ -39,7 +39,7 @@ public class DiscordListener implements EventListener {
                         event.getChannel().sendMessage("That player isn't online anymore!").queue();
                     } else {
                         event.getChannel().sendMessage("Congrats! You have successfully linked your account to " + player.getName() + " on AstroPvP.").queue();
-                        Objects.requireNonNull(Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744")).getMember(user)).modifyNickname(player.getName()).queue();
+                        this.plugin.getJda().getGuildById("470324147411615744").getMember(user).modifyNickname(player.getName()).queue();
                         this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(user.getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("980116575736696853"))).queue();
 
                         this.plugin.getSyncManager().getActiveSyncMap().remove(codeEntered, playerId);

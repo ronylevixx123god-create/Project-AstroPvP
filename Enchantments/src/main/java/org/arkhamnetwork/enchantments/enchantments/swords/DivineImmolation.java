@@ -59,6 +59,8 @@ public class DivineImmolation extends CustomEnchantment {
             return;
         }
 
+        if (p.hasMetadata("noDivine")) return;
+
         if (playerHit instanceof Player) {
             if (CannonballAmulet.affected.contains(playerHit)) {
                 return;
@@ -252,8 +254,7 @@ public class DivineImmolation extends CustomEnchantment {
 
 
 
-                le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, 5 * 20, 2));
-
+                    le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 10.0), 1));
                 ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
                 ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));
                 }

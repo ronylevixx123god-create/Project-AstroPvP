@@ -58,13 +58,13 @@ public class InventoryYijkiControllerPet extends InventoryPet {
     }
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis(getCooldown());
         long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
 
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));*/
+            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));
         if (player.hasMetadata("in_duel"))
             return true;
         Location locationClicked = player.getLocation();
@@ -82,8 +82,7 @@ public class InventoryYijkiControllerPet extends InventoryPet {
         ((DungeonYijki)yijki).onPhaseChange(phase);
         this.petLevel = petItem.getLevel();
         //petItem.setLastUsed(System.currentTimeMillis());
-        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
+        petItem.setLastUsed(System.currentTimeMillis());
         int xpGain = 50;
         player.playSound(player.getLocation(), Sound.DIG_SNOW, 1.1F, 3.0F);
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);

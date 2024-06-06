@@ -22,7 +22,7 @@ public class CosmicSlotBotAPI {
     public static ItemStack createSlotBotItem() {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.GoldB + "Astro" + CC.GoldB + " Roll Bot " + CC.WhiteB + "Ticket");
+        meta.setDisplayName(CC.GreenB + "Astro" + CC.YellowB + " Roll Bot " + CC.WhiteB + "Ticket");
         final List<String> lore = Arrays.asList(CC.Gray + "Right-Click the Roll Bot located", String.valueOf(CC.Gray) + "at " + CC.White + "/spawn " + CC.Gray + "or use /bot then", String.valueOf(CC.Gray) + "insert (Left-Click) this ticket", String.valueOf(CC.Gray) + "into the bot");
         meta.setLore((List) lore);
         item.setItemMeta(meta);

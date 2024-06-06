@@ -78,6 +78,12 @@ extends CustomEnchantment {
         if (playerHit.getWorld().getName().equals("world_koth") || player.getWorld().getName().startsWith("dungeon")) {
             return;
         }
+
+        if (!FactionUtils.isWilderness(playerHit.getLocation()) && !FactionUtils.isWarZone(playerHit.getLocation())) {
+            return;
+        }
+
+
         FLocation fL = new FLocation(enemyLoc);
 
         int n = x = level >= 4 ? -1 : 0;

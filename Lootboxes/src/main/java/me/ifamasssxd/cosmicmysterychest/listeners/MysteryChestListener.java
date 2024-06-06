@@ -143,17 +143,27 @@ public class MysteryChestListener
                         new FilterGUI(player, chest).getFilterGUI().open(player);
                         return;
                     }
-                    int amt = event.getItem().getAmount();
-                    if (amt == 1) {
-                        player.setItemInHand(null);
-                    } else if (amt > 1) {
-                        ItemStack i = event.getItem();
-                        i.setAmount(i.getAmount() - 1);
-                        player.setItemInHand(i);
-                    }
 
+                    if (event.getPlayer().isSneaking()){
+                        int counter = 0;
+                        while (counter != event.getItem().getAmount()) {
+                            new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
+                            counter++;
+                        }
+                        player.setItemInHand(null);
+                    } else {
+                        int amt = event.getItem().getAmount();
+                        if (amt == 1) {
+                            player.setItemInHand(null);
+                        } else if (amt > 1) {
+                            ItemStack i = event.getItem();
+                            i.setAmount(i.getAmount() - 1);
+                            player.setItemInHand(i);
+                        }
+
+                        new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
+                    }
                     player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 3.0f);
-                    new MysteryChestGUI(player, chest, 0L).skipGUI(CosmicMysteryChest.get());
 
 
                 } catch (MysteryChestException exception) {

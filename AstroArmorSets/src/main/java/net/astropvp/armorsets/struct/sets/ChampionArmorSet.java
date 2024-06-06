@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
+import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
@@ -143,23 +144,20 @@ public class ChampionArmorSet extends ArmorSet {
         player.sendMessage(CC.translate((String) "&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
         target.sendMessage(CC.translate((String) ("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
-        target.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) AstroArmorSets.getInstance(), (Object) true));
-        player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) AstroArmorSets.getInstance(), (Object) true));
-        target.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) AstroArmorSets.getInstance(), (Object) true));
+
+        InventoryBansheePet.startBansheeEffect(player, target, 8);
+
         target.setMetadata("champion_ability", (MetadataValue) new FixedMetadataValue((Plugin) AstroArmorSets.getInstance(), (Object) true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
         PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 5), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 4));
         new BukkitRunnable() {
 
             public void run() {
-                target.removeMetadata("noDefenseProcs", (Plugin) AstroArmorSets.getInstance());
-                player.removeMetadata("immune_freeze", (Plugin) AstroArmorSets.getInstance());
-                target.removeMetadata("banshee_scrolls", (Plugin) AstroArmorSets.getInstance());
                 target.removeMetadata("champion_ability", (Plugin) AstroArmorSets.getInstance());
                 target.sendMessage(CC.translate((String) ("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
                 PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SPEED);
                 PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 3), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 3));
             }
-        }.runTaskLater((Plugin) AstroArmorSets.getInstance(), 160L);
+        }.runTaskLater((Plugin) AstroArmorSets.getInstance(), 8*20);
     }
 }

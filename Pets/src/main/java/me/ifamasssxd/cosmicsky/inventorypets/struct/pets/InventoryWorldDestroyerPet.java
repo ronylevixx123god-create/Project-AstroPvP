@@ -11,6 +11,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
+import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
@@ -72,19 +73,18 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         return 5;
     }
 
-    public boolean spookyBypass(Player attacker, Player attacked) {
-        return AstroArmorSetsAPI.getBonusCrystalsEquipped(attacker).containsKey(ArmorSetType.valueOf("FROSTY")) && Math.random() < 0.25 || AstroArmorSetsAPI.getCurrentArmorSet(attacker) != null && AstroArmorSetsAPI.getCurrentArmorSet(attacker) == ArmorSetType.valueOf("FROSTY");
-    }
-
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+/*        if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+            player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+            return true;
+        }*/
 
         if (player.hasMetadata("in_duel"))
             return true;
@@ -120,8 +120,6 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             cageDuration = 7.5;
         } else if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.VALENTINES_2022_MUTATED_BOOTS)) {
             cageDuration = 6.5;
-        } else if (AstroArmorSetsAPI.getCurrentArmorSet((Player) player) != null && AstroArmorSetsAPI.getCurrentArmorSet((Player) player) == ArmorSetType.APOLLO) {
-            cageDuration = 7.5;
 
         } else {
             cageDuration = 5.0;
@@ -136,60 +134,54 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("Could not find a valid target!");
         /*if (CageCooldown.isOnCageCooldown(target))
             throw new PrefixedPetException(target.getName() + " is still on Cage Cooldown! This lasts 20 seconds.");*/
-        if (CooldownUtils.isCooldownActive(target, "skrrtCooldown")) {
-            throw new PrefixedPetException("&c&lPET: &c" + target.getName() + "&c is still on skrrt cooldown for &n" + CooldownUtils.getFormattedCooldown(target, "cageCooldown") + "&c.");
+        if (CooldownUtils.isCooldownActive(target, "cageCooldown")) {
+            throw new PrefixedPetException("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CooldownUtils.getFormattedCooldown(target, "cageCooldown") + "&c.");
         }
-        if (!spookyBypass(player, target)) {
-            if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D) {
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D) {
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
+            target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
+            return true;
+        }
+
+        if (UndertowHelmet.undertowField.contains(target)) {
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            target.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4World Destroyer Pet &7[&f" + player.getName() + "&7] &a&l*"));
+            player.sendMessage(CC.translate("&a&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&a&lUndertow Helmet&7] &a&l*"));
+            return true;
+        }
+        if (((Player) target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            player.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&c" + target.getName() + "&7] &8&l*"));
+            target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
+            return true;
+        }
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.THANKSGIVING_2022_BELT)) {
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            player.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&c" + target.getName() + "&7] &e&l*"));
+            target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&cBlocked World Destroyer&7] &e&l*"));
+            return true;
+        }
+
+
+        if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            player.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&c" + target.getName() + "&7] &2&l*"));
+            target.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&cBlocked World Destroyer&7] &2&l*"));
+            return true;
+        }
+
+        if (((Player) target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
+
+            if ((AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_BELT)) && Math.random() < 0.5) {
+                target.sendMessage(CC.translate("&e&l* " + player.getName() + "'s Mischievous Tail Bypassed &7Bloodstained Galoshes &e&l*"));
+            } else {
+
                 CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-                player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
-                target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
+                player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
+                target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
                 return true;
             }
-
-            if (UndertowHelmet.undertowField.contains(target)) {
-                CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-                target.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4World Destroyer Pet &7[&f" + player.getName() + "&7] &a&l*"));
-                player.sendMessage(CC.translate("&a&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&a&lUndertow Helmet&7] &a&l*"));
-                return true;
-            }
-            if (((Player) target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
-                CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-                player.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&c" + target.getName() + "&7] &8&l*"));
-                target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
-                return true;
-            }
-            if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.THANKSGIVING_2022_BELT)) {
-                CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-                player.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&c" + target.getName() + "&7] &e&l*"));
-                target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&cBlocked World Destroyer&7] &e&l*"));
-                return true;
-            }
-
-
-            if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
-                CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-                player.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&c" + target.getName() + "&7] &2&l*"));
-                target.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&cBlocked World Destroyer&7] &2&l*"));
-                return true;
-            }
-
-            if (((Player) target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
-
-                if ((AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_BELT)) && Math.random() < 0.5) {
-                    target.sendMessage(CC.translate("&e&l* " + player.getName() + "'s Mischievous Tail Bypassed &7Bloodstained Galoshes &e&l*"));
-                } else {
-
-                    CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
-                    player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
-                    target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
-                    return true;
-                }
-            }
-        } else {
-            player.sendMessage(CC.translate("&b&l*&3&l*&b&l* FROSTY SET &7[Bypassed " + target.getName() + "'s Cage Immunity] &b&l*&3&l*&b&l*"));
-            target.sendMessage(CC.translate("&b&l*&3&l*&b&l* &f" + player.getName() + "&b's FROSTY SET &7[Bypassed your Cage Immunity] &b&l*&3&l*&b&l*"));
         }
 
 
@@ -201,11 +193,10 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         }
 
 
-        //petItem.setLastUsed(System.currentTimeMillis());
         */
 
-        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
+        //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+        petItem.setLastUsed(System.currentTimeMillis());
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_BOOTS) && Math.random() < 0.3) {
             cagePlayer(target, player, cageDuration);

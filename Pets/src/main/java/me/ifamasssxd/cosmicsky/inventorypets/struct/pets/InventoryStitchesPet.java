@@ -62,16 +62,15 @@ public class InventoryStitchesPet extends InventoryPet {
 
     @Override
     public boolean onPetItemInteract(Player player, ItemStack itemStack, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-/*        final long lastUse = petItem.getLastUsed();
+        final long lastUse = petItem.getLastUsed();
         final long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
-        if (PetUtils.isOnCooldown(player, petItem.getPetType()) && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException(CC.Red + "Ability on cooldown: " + CC.RedU +
-                    TimeUtils.formatSeconds(PetUtils.getSecondsOnCooldown(player, petItem.getPetType())));*/
 
-        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
-
+        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
+            throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
+        petItem.setLastUsed(System.currentTimeMillis());
+        //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 
         List<Player> nearbyEntities = player.getNearbyEntities(14, 14, 14).stream().filter(nearbyEntity -> {
             if (!(nearbyEntity instanceof Player))

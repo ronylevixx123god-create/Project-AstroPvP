@@ -128,7 +128,7 @@
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>Proxy</artifactId>
+            <artifactId>Proxfdy</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/ProxyPatch-0.1.jar</systemPath>

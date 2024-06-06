@@ -66,13 +66,15 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
     @Override
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         FPlayer surroundingPlayer;
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
-        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));*/
+        if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+            player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+            return true;
+        }
 
         if (player.hasMetadata("spectator")) {
             return true;
@@ -114,6 +116,7 @@ public class InventoryAbominableSnowmanPet extends InventoryPet {
         }
         FPlayer castingPlayer = FPlayers.getInstance().getByPlayer(player);
         if (FactionUtils.canPvP(player, p2)) {
+            //petItem.setLastUsed(System.currentTimeMillis());
             //petItem.setLastUsed(System.currentTimeMillis());
             CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
             this.freezeThePlayer(p2, player);

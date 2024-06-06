@@ -22,6 +22,10 @@ public class HeroicOverwhelm extends HeroicCustomEnchantment{
             return;
         }
 
+        if (GeneralUtil.isUsingAxe(user)) {
+            event.setDamage(event.getDamage() * 1.05);
+        }
+
 
         if (target.hasMetadata("overwhelm_effect")) return;
 

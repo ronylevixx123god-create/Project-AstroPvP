@@ -88,7 +88,7 @@ extends CustomEnchantment {
         boolean bl = headshot = y - victimay > 1.9;
         if (headshot && Math.random() < 0.625 + level * 0.075) {
 
-            double multiplier = Math.floor(Math.random() *(18 - 4 + 1) + 4);
+            double multiplier = Math.floor(Math.random() *(14 - 4 + 1) + 4);
             event.setDamage(event.getDamage() * multiplier);
             this.playBleedEffect(target.getEyeLocation(), enchantLevel);
             if (target instanceof Player) {

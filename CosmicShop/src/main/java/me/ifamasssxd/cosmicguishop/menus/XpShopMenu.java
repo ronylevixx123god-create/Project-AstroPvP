@@ -65,7 +65,7 @@ public class XpShopMenu{
             event.setCancelled(true);
         });
 
-        expShopUI.getFiller().fillBorder(new GuiItem(createFillerItem()));
+        expShopUI.getFiller().fillBottom(new GuiItem(createFillerItem()));
 
         ItemStack prevPage = new ItemStack(Material.ARROW);
         ItemMeta prevMeta = prevPage.getItemMeta();

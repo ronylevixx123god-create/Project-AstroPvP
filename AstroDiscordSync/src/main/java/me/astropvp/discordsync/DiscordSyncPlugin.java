@@ -21,7 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 public class DiscordSyncPlugin extends JavaPlugin {
-    private static final String TOKEN = "OTM1ODU1NzI3ODk2MDY4MTQ2.Gvat2I.aZvGBUsFLZ7MXLjjf9AhXmAb1NNG1ar9FpLhdo";
+    private static final String TOKEN = "MTIwMjg4NjE4ODgzOTYwNDI2Nw.GQOWm0.cMqJ-Iw78narO003kktDj581foj1iK7ZZkruEE";
     private JDA jda;
     private SyncManager syncManager;
     private CommandManager commandManager;

@@ -8,6 +8,7 @@ import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
 import org.arkhamnetwork.Arkkit.patches.trading.BetterTrade;
+import org.bukkit.plugin.Plugin;
 
 public enum ArkPlugins {
     ANTI_DUPE(new AntiDupe(Arkkit.get()), "Blocks many common dupe exploits, adds /scanchests"),
@@ -75,6 +76,10 @@ public enum ArkPlugins {
     SHOWCASE_EXPANDER(new ShowcaseExpander(Arkkit.get()), "Enables showcase expander items."),
     ANTI_EXPLOIT(new AntiExploit(Arkkit.get()), "Prevents a number of general server exploits."),
     SUICIDE(new Suicide(Arkkit.get()), "Enables /suicide command for players to use."),
+    MCMMO_CREDITS(new McmmoCredits((Plugin)Arkkit.get()), "Enables ability to claim mcmmo credit vouchers."),
+    REDEEM_MCMMO(new RedeemMCMMO((Plugin)Arkkit.get()), "Enables /redeem mcmmo functionality."),
+    NO_MCMMO_LIMITS(new NoMCMMOLimits((Plugin)Arkkit.get()), "Disables mcMMO level caps without allow them to become more powerful past presets."),
+    WITHDRAW_MCMMO(new WithdrawMCMMO((Plugin)Arkkit.get()), "Enables /withdrawmcmmo ability to withdraw raw mcmmo xp."),
     DEATH_MESSAGES(new DeathMessages(Arkkit.get()), "Enables nice pvp death messages that display a JSON value of the item used."),
     LORE_TAG(new LoreTag(Arkkit.get()), "Enables the lore tag item to add a custom line of lore text to an item"),
     COLOREDLORE_TAG(new ColoredLoreTag(Arkkit.get()), "Enables the colored lore tag item to add a custom line of lore text to an item"),

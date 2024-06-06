@@ -35,11 +35,13 @@ public class InventoryShackledGolem extends InventoryPet {
     }
 
     public boolean onPetItemInteract(final Player player, ItemStack item, final InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
-/*        long lastUse = petItem.getLastUsed();
+        long lastUse = petItem.getLastUsed();
         long delay = TimeUnit.SECONDS.toMillis(getCooldown());
         long timeTillCanUse = delay - System.currentTimeMillis() - lastUse;
-        if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
-            throw new NonPrefixedPetException(String.valueOf(CC.RedB) + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int)(timeTillCanUse / 1000L)));*/
+        if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+            player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
+            return true;
+        }
 
         if (player.hasMetadata("no_knockback"))
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "You already have no knockback, wait for it to run out!");
@@ -52,6 +54,7 @@ public class InventoryShackledGolem extends InventoryPet {
                 petItem.getPetType().sendMsg(player, CC.translate("Shackled Golem worn off!"));
             }
         }, abilitySeconds * 20L);
+        //petItem.setLastUsed(System.currentTimeMillis());
         //petItem.setLastUsed(System.currentTimeMillis());
         CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
 

@@ -75,10 +75,14 @@ public class Rage extends CustomEnchantment {
                 user.sendMessage(CC.translate("&4&l* GRIM CLOAK &7[+25% Rage DMG] &4&l*"));
             }
 
-
-            if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
-                //rageDamage *= 1.05;
+            if (org.arkhamnetwork.enchantments.util.GeneralUtil.isUsingAxe(user)) {
+                rageDamage *= 1.05;
             }
+
+
+            //if (WeaponBonusesAPI.hasWeaponBonuses(((Player) user).getItemInHand()) && WeaponBonusesAPI.hasBonus(((Player) user).getItemInHand(), BonusType.BONUS_RAGE_STACK_DMG)) {
+                //rageDamage *= 1.05;
+            //}
 
             if ((AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.EASTER_2022_MUTATED_AMULET)) && Math.random() < 0.3) {
                 //rageDamage *= 0.65;

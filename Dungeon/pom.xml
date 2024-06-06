@@ -138,7 +138,20 @@
             <scope>provided</scope>
         </dependency>
 
-
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>lbfilt</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LootFilter-0.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>lbfiggglt</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/LootTable.jar</systemPath>
+        </dependency>
         <!-- System Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>

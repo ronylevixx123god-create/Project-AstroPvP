@@ -62,7 +62,8 @@ public class ActiveMysteryChestGUI
         item.setItemMeta(im);
         this.setItem(4, new InventoryItem(item).click(ClickType.LEFT, () -> {
             if (this.globalMysteryChest.getExpiration() <= System.currentTimeMillis()) {
-                this.player.sendMessage(CC.YellowB + "(!) " + CC.Yellow + "This lootbox has expired and is no longer available for purchase! Keep checking back for new chests!");
+                this.player.sendMessage(CC.RedB + "(!) " + CC.Red + "Unlock this Lootbox at " + CC.RedU + "buy.astropvp.net" + CC.Red + "!");
+                this.player.sendMessage(CC.Gray + "Visit the AstroPvP store for more information!");
                 return;
             }
             this.closeWithDelay();

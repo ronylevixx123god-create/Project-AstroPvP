@@ -322,8 +322,9 @@ public class AstroArmorSetsAPI {
     public static boolean isHeroic(ItemStack item) {
         if (item == null)
             return false;
-        if (!item.getType().name().contains("LEATHER") && item.getType() != Material.GOLD_SWORD && item.getType() != Material.GOLD_AXE)
+        if (!item.getType().name().contains("LEATHER") && !item.getType().name().endsWith("_SWORD") && !item.getType().name().endsWith("_AXE")) {
             return false;
+        }
 
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.getCompound("cosmicData");
@@ -418,8 +419,8 @@ public class AstroArmorSetsAPI {
             case ASTRO:
             case ENGINEER:
             case MOTHER_OF_YIJKI:
-            case APOLLO:
-                return true;
+            /*case APOLLO:
+                return true;*/
             default:
                 return false;
         }

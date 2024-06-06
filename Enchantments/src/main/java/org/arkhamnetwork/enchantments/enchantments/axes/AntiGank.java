@@ -32,7 +32,7 @@ public class AntiGank
     }
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
-        if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
+        /*if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
             if ((long)MinecraftServerUtils.getCurrentServerTick() > player.getMetadata(antiGankNextReset_MetadataKey).get(0).asLong()) {
                 player.removeMetadata(antiGankUniqueEnemies_MetadataKey, (Plugin)((Object)Enchantments.getInstance()));
                 player.setMetadata(antiGankNextReset_MetadataKey, new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), MinecraftServerUtils.getCurrentServerTick() + 120));
@@ -45,11 +45,11 @@ public class AntiGank
         if (enemies.size() >= 6 - level) {
             Location l = playerHit.getLocation().add(0.0, 1.0, 0.0);
             WorldUtil.sendWorldEffect((Block)l.getBlock(), (int)86, (int)2001);
-        }
+        }*/
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
-        if (!(attacker instanceof Player)) {
+        /*if (!(attacker instanceof Player)) {
             return;
         }
         if (player.hasMetadata(antiGankNextReset_MetadataKey)) {
@@ -63,5 +63,6 @@ public class AntiGank
         Player pAttacker = (Player)attacker;
         enemies.add(pAttacker.getUniqueId());
         player.setMetadata(antiGankUniqueEnemies_MetadataKey, new FixedMetadataValue((Plugin)((Object)Enchantments.getInstance()), enemies));
+    }*/
     }
 }
