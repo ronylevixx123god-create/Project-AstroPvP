@@ -45,7 +45,7 @@ public class BonusWeapon {
     }
 
     public List<String> getBonuses() {
-        return (List)Arrays.stream(this.getDataCompound().getString("weaponBonuses").split("@")).collect(Collectors.toCollection(ArrayList::new));
+        return Arrays.stream(this.getDataCompound().getString("weaponBonuses").split("@")).collect(Collectors.toCollection(ArrayList::new));
     }
 
     public void setBonuses(List<String> bonuses) {
@@ -64,7 +64,7 @@ public class BonusWeapon {
         if (this.getLevel() == 3) {
             this.setExperience(0);
         } else {
-            Integer toNext = (Integer)this.levelToExperience.get(this.getLevel());
+            Integer toNext = this.levelToExperience.get(this.getLevel());
             if (toNext != null) {
                 this.setExperience(this.getExperience() + experience);
                 if (this.getExperience() >= toNext) {
@@ -96,18 +96,18 @@ public class BonusWeapon {
             ItemMeta newMeta = itemMeta.clone();
             List<String> lore = itemMeta.hasLore() ? itemMeta.getLore() : Lists.newArrayList();
             boolean hasWeaponBonus = false;
-            Iterator var6 = ((List)lore).iterator();
 
-            while(var6.hasNext()) {
-                String l = (String)var6.next();
+            for (Object o : lore) {
+                String l = (String) o;
                 if (l.contains("Weapon Bonuses:")) {
                     hasWeaponBonus = true;
+                    break;
                 }
             }
 
             if (!hasWeaponBonus) {
-                ((List)lore).add("");
-                ((List)lore).add("§" + inColor + "§lWeapon Bonuses:");
+                lore.add("");
+                lore.add("§" + inColor + "§lWeapon Bonuses:");
                 this.getBonuses().stream().filter((strx) -> {
                     return !strx.isEmpty();
                 }).map((raw) -> {
@@ -120,9 +120,9 @@ public class BonusWeapon {
                         throw new IllegalStateException("Could not get BonusType for '" + raw + "'");
                     }
                 }).forEach((type) -> {
-                    lore.add("  §" + inColor + "§l* §7" + type.getFormat().replace("%value%", ((Double)type.getLevelToValue().get(this.getLevel())).toString()));
+                    lore.add("  §" + inColor + "§l* §7" + type.getFormat().replace("%value%", type.getLevelToValue().get(this.getLevel()).toString()));
                 });
-                ((List)lore).add("");
+                lore.add("");
             }
 
             int levelIndex = -1;
@@ -131,13 +131,13 @@ public class BonusWeapon {
             while(var11.hasNext()) {
                 String str = (String)var11.next();
                 if (str.matches("§.§lWEAPON TIER: §a.+")) {
-                    levelIndex = ((List)lore).indexOf(str);
+                    levelIndex = lore.indexOf(str);
                 }
             }
 
             if (levelIndex == -1) {
-                ((List)lore).add("§4Level placeholder");
-                levelIndex = ((List)lore).indexOf("§4Level placeholder");
+                lore.add("§4Level placeholder");
+                levelIndex = lore.indexOf("§4Level placeholder");
             }
 
             int expIndex = -1;
@@ -146,18 +146,18 @@ public class BonusWeapon {
             while(var13.hasNext()) {
                 String str = (String)var13.next();
                 if (str.matches("§.§lWEAPON XP: §7\\(§a\\d+ §7/ \\d+ XP\\)")) {
-                    expIndex = ((List)lore).indexOf(str);
+                    expIndex = lore.indexOf(str);
                 }
             }
 
             if (expIndex == -1) {
-                ((List)lore).add("EXP-placeholder");
-                expIndex = ((List)lore).size() - 1;
+                lore.add("EXP-placeholder");
+                expIndex = lore.size() - 1;
             }
 
             ((List)lore).set(levelIndex, Constants.Lore.WEAPON_LEVEL.replace("%current%", this.getLevel() + "").replace("%max%", "3").replace("%color%", inColor));
             ((List)lore).set(expIndex, Constants.Lore.WEAPON_EXPERIENCE.replace("%current%", this.getExperience() + "").replace("%max%", this.levelToExperience.getOrDefault(this.getLevel(), 0) + "").replace("%color%", inColor));
-            newMeta.setLore((List)lore);
+            newMeta.setLore(lore);
             this.itemStack.setItemMeta(newMeta);
         }
     }

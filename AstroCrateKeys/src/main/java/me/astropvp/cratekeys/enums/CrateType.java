@@ -5,7 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 public enum CrateType {
     SOLAR("Solar", "&e", ""),
     COSMIC("Cosmic", "&b", ""),
-    SEASON("Frosty", "&b", "&3");
+    SEASON("Summer", "&e", "&6");
     private final String name;
 
     private final String prefix;

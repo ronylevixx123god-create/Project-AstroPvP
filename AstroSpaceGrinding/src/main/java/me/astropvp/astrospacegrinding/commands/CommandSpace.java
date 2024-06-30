@@ -37,14 +37,14 @@ public class CommandSpace implements CommandExecutor {
 
             player.sendMessage("");
             player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&lSpace Land Stats" + " &8«&b✰&8»")));
-            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN))));
-            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
-            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Money Made: &3$&b" + NumberUtils.formatMoney(data.getMoneyMade()))));
-            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7XP Earned:&b " + NumberUtils.formatMoney(data.getXpMade()))));
+            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Mobs Killed:&b " + data.getKills(MonsterType.SPACE_ALIEN))));
+            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
+            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Money Made: &3$&b" + NumberUtils.formatMoney(data.getMoneyMade()))));
+            player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7XP Earned:&b " + NumberUtils.formatMoney(data.getXpMade()))));
             if (ForceFieldData.findPlayer(player).isActive()) {
-                player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Forcefield:&a Active &7(" + ForceFieldData.findPlayer(player).getRemainingForceFieldTimeFormatted() + "&7)")));
+                player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Forcefield:&a Active &7(" + ForceFieldData.findPlayer(player).getRemainingForceFieldTimeFormatted() + "&7)")));
             } else {
-                player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Forcefield:&c Inactive")));
+                player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Forcefield:&c Inactive")));
 
             }
             player.sendMessage("");

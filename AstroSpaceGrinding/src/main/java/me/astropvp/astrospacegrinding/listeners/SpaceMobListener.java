@@ -54,8 +54,8 @@ public class SpaceMobListener implements Listener {
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         player.sendMessage("");
                         player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&l" + damager.getName() + "'s Space Land Stats" + " &8«&b✰&8»")));
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Mobs Killed:&b " + totalMobKills)));
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f● &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Mobs Killed:&b " + totalMobKills)));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
                         player.sendMessage("");
                         Clickable spaceClickable = new Clickable("");
                         spaceClickable.add(StringUtils.getCenteredMessage(CC.translate("&7Click &f&nhere&7 to view " + damager.getName() + "'s collected rewards.")), CC.translate("&7View " + damager.getName() + "'s inventory"), "/invsee " + damager.getName());

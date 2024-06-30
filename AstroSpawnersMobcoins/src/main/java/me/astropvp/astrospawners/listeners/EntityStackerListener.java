@@ -5,7 +5,6 @@ import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-import de.inventivegames.particle.ParticleEffect;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -15,22 +14,17 @@ import me.astropvp.astrospawners.struct.GrindingManager;
 import me.astropvp.astrospawners.utils.MobStackerUtils;
 import me.astropvp.astrospawners.utils.StackedMobDeathEvent;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
+import me.astropvp.cratekeys.enums.CrateType;
+import me.astropvp.cratekeys.items.CrateKeyItem;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
-import me.ily2bb.slotbot.CosmicSlotBotAPI;
-import me.venir.astrocollectors.AstroCollectors;
-import me.venir.astrocollectors.collector.Collector;
-import me.venir.astrocollectors.collector.CollectorManager;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.utils.OutpostUtil;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.loottable.struct.LootTable;
-import org.arkhamnetwork.Arkkit.Arkkit;
 import org.bukkit.Bukkit;
-import org.bukkit.Sound;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -53,9 +47,9 @@ public class EntityStackerListener implements Listener {
     private final AstroSpawners plugin;
     private final GrindingManager grindingManager;
     private final Map<UUID, Map<CustomEnchantment, Integer>> cachedWeaponEnchants;
-    //private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.SOLAR);
-    //private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.COSMIC);
-    private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
+    private final ItemStack grinderKey = CrateKeyItem.getItem(CrateType.SOLAR);
+    private final ItemStack godlyKey = CrateKeyItem.getItem(CrateType.COSMIC);
+    //private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
 
     private Map<UUID, Long> blazeCooldown;
@@ -228,9 +222,10 @@ public class EntityStackerListener implements Listener {
             grinderKeyChance *= 1.4;
             godlyKeyChance *= 1.4;
         }
+        /*
 
         if (Math.random() < treasureChance) {
-            //LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
+            LootFilterAPI.giveItem(p, LootTable.GRINDING, mysteryLootbox);
             Bukkit.getScheduler().runTaskAsynchronously(AstroSpawners.getInstance(), ()-> {
 
                 if (p.getInventory().firstEmpty() == -1) {
@@ -248,9 +243,11 @@ public class EntityStackerListener implements Listener {
             });
         }
 
+         */
+
         double num = Math.random();
 
-        /*if (godlyKeyChance >= num) {
+        if (godlyKeyChance >= num) {
             if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, godlyKey)) {
 
                 PlayerUtil.giveOrDropProtectedItem(p, godlyKey, 60);
@@ -259,7 +256,7 @@ public class EntityStackerListener implements Listener {
             if (!LootFilterAPI.isFiltered(p, LootTable.GRINDING, grinderKey)) {
                 PlayerUtil.giveOrDropProtectedItem(p, grinderKey, 60);
             }
-        }*/
+        }
     }
 
 

@@ -9,6 +9,7 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.ily2bb.slotbot.utils.Utils;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTable;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -22,7 +23,7 @@ public class CosmicSlotBotAPI {
     public static ItemStack createSlotBotItem() {
         final ItemStack item = new ItemStack(Material.PAPER);
         final ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.GreenB + "Astro" + CC.YellowB + " Roll Bot " + CC.WhiteB + "Ticket");
+        meta.setDisplayName(ChatColor.translateAlternateColorCodes('&', "&6&lAstro Slot Bot &f&lTicket"));
         final List<String> lore = Arrays.asList(CC.Gray + "Right-Click the Roll Bot located", String.valueOf(CC.Gray) + "at " + CC.White + "/spawn " + CC.Gray + "or use /bot then", String.valueOf(CC.Gray) + "insert (Left-Click) this ticket", String.valueOf(CC.Gray) + "into the bot");
         meta.setLore((List) lore);
         item.setItemMeta(meta);

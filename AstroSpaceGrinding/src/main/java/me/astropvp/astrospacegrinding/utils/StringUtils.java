@@ -6,36 +6,44 @@ public class StringUtils {
     private static final int CENTER_PX = 154;
 
     public static String getCenteredMessage(String message) {
-        if (message == null || message.equals("")) {
+        if (message == null || message.isEmpty()) {
             return "";
         }
+
         message = ChatColor.translateAlternateColorCodes('&', message);
         int messagePxSize = 0;
         boolean previousCode = false;
         boolean isBold = false;
-        for (final char c : message.toCharArray()) {
-            if (c == '§') {
+
+
+        char bobogoob = '\u00a7';
+        for (char c : message.toCharArray()) {
+            if (c == bobogoob) {
                 previousCode = true;
             } else if (previousCode) {
                 previousCode = false;
                 isBold = (c == 'l' || c == 'L');
             } else {
-                final DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
-                messagePxSize += (isBold ? dFI.getBoldLength() : dFI.getLength());
-                ++messagePxSize;
+                DefaultFontInfo dFI = DefaultFontInfo.getDefaultFontInfo(c);
+                messagePxSize += isBold ? dFI.getBoldLength() : dFI.getLength();
+                messagePxSize++; // Add 1 for the space between characters
             }
         }
-        final int halvedMessageSize = messagePxSize / 2;
-        final int toCompensate = 154 - halvedMessageSize;
-        final int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
-        int compensated = 0;
-        final StringBuilder sb = new StringBuilder();
-        while (compensated < toCompensate) {
-            sb.append(" ");
-            compensated += spaceLength;
+
+        int halvedMessageSize = messagePxSize / 2;
+        int toCompensate = 154 - halvedMessageSize;
+        int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
+        int compensatedSpaces = toCompensate / spaceLength;
+
+        StringBuilder sb = new StringBuilder(compensatedSpaces + message.length());
+        for (int i = 0; i < compensatedSpaces; i++) {
+            sb.append(' ');
         }
-        return sb.toString() + message;
+        sb.append(message);
+
+        return sb.toString();
     }
+
 
     public enum DefaultFontInfo {
         A('A', 5),

@@ -40,19 +40,19 @@ public class AstroCrateKeysPlugin extends JavaPlugin {
 
 
     private void registerListeners() {
-        registerListener((Listener)new CrateLogicListener());
-        registerListener((Listener)new CrateKeyInventoryListener());
+        registerListener(new CrateLogicListener());
+        registerListener(new CrateKeyInventoryListener());
     }
 
     private void registerCommands() {
-        getCommand("givecratekey").setExecutor((CommandExecutor)new CommandGiveCrateKey());
-        getCommand("givecrate").setExecutor((CommandExecutor)new CommandGiveCrate());
+        getCommand("givecratekey").setExecutor(new CommandGiveCrateKey());
+        getCommand("givecrate").setExecutor(new CommandGiveCrate());
     }
 
 
 
     public static void registerListener(Listener listener) {
-        Bukkit.getPluginManager().registerEvents(listener, (Plugin) AstroCrateKeysPlugin);
+        Bukkit.getPluginManager().registerEvents(listener, AstroCrateKeysPlugin);
     }
 
 

@@ -3,20 +3,17 @@ package net.astropvp.lootfilter.commands;
 import co.aikar.commands.BaseCommand;
 import co.aikar.commands.annotation.CommandAlias;
 import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Subcommand;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
 import me.mattstudios.mf.annotations.Permission;
-import net.astropvp.core.AstroCore;
-import net.astropvp.core.struct.AstroPlayer;
 import net.astropvp.lootfilter.AstroLootFilterPlugin;
-import net.astropvp.lootfilter.guis.LootFilterMainGUI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 @CommandAlias("lootfrenzy")
 public class LootFrenzyCommand extends BaseCommand {
+    /*
     @Default
     @Permission("astro.lootfrenzy")
     public void onCommand(Player player) {
@@ -44,6 +41,7 @@ public class LootFrenzyCommand extends BaseCommand {
         int messagePxSize = 0;
         boolean previousCode = false;
         boolean isBold = false;
+
         for (char c : message.toCharArray()) {
             if (c == '§') {
                 previousCode = true;
@@ -56,15 +54,21 @@ public class LootFrenzyCommand extends BaseCommand {
                 messagePxSize++;
             }
         }
+
         int halvedMessageSize = messagePxSize / 2;
         int toCompensate = 154 - halvedMessageSize;
         int spaceLength = StringUtils.DefaultFontInfo.SPACE.getLength() + 1;
         int compensated = 0;
         StringBuilder sb = new StringBuilder();
+
         while (compensated < toCompensate) {
             sb.append(" ");
             compensated += spaceLength;
         }
-        Bukkit.broadcastMessage(sb.toString() + message);
+
+        Bukkit.broadcastMessage(sb + message);
     }
+
+     */
+
 }
