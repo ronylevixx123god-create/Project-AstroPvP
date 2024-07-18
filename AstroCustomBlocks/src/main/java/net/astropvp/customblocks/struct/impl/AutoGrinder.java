@@ -38,9 +38,9 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
     @Override
     public void onClick(Player clicker) {
         if (clicker.isSneaking()) {
-            if (EconomyUtils.hasBalance((OfflinePlayer) clicker, this.getActivationPrice())) {
-                this.activate((Player) clicker);
-                EconomyUtils.withdrawBalance((OfflinePlayer) clicker, this.getActivationPrice());
+            if (EconomyUtils.hasBalance(clicker, this.getActivationPrice())) {
+                this.activate(clicker);
+                EconomyUtils.withdrawBalance(clicker, this.getActivationPrice());
                 clicker.sendMessage(CC.translate("&c&l- " + NumberUtils.formatMoney(this.getActivationPrice())));
             } else {
                 clicker.sendMessage(CC.translate("&c&l(!)&c You do not have enough money to activate this auto grinder!"));
