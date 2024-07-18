@@ -140,15 +140,11 @@
 
     <dependencyManagement>
         <dependencies>
-
-
             <dependency>
                 <artifactId>Utils</artifactId>
                 <groupId>net.astropvp</groupId>
                 <version>${project.version}</version>
             </dependency>
-
-
             <dependency>
                 <groupId>net.ess3</groupId>
                 <artifactId>EssentialsX</artifactId>
