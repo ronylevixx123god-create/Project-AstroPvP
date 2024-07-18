@@ -21,7 +21,8 @@ public class AutoGrinderGui {
     private PaginatedGui gui;
     private final ItemStack grinderKeyItem = CrateKeyItem.getItem(CrateType.SOLAR);
     private final ItemStack godlyKeyItem = CrateKeyItem.getItem(CrateType.COSMIC);
-    public AutoGrinderGui(Player player, AutoGrinder autoGrinder) throws IllegalAccessException, InstantiationException {
+    public AutoGrinderGui(Player player, AutoGrinder autoGrinder) {
+        System.out.println("test wtf?");
         this.gui = new PaginatedGui(3, 27, "Auto Mob Grinder Menu");
         this.gui.setItem(2, 2, getKeyClaimItem(autoGrinder));
         this.gui.setItem(3, 2, getGodlyKeysClaimItem(autoGrinder));
