@@ -6,11 +6,6 @@ import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
-
-import java.util.Iterator;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
@@ -33,9 +28,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Iterator;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public class InventorySkrrtPet extends InventoryPet {
     public int petLevel = 5;
@@ -137,7 +134,7 @@ public class InventorySkrrtPet extends InventoryPet {
                 continue;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MMM_BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Skrrt Pet &7[" + player.getName() + "&7] &8&l*"));
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Skrrt Pet &7[&8&lBig Timbs&7] &8&l*"));
                 continue;

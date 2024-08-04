@@ -12,12 +12,8 @@ import java.util.stream.Collectors;
 
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.utils.StringUtils;
-import net.minecraft.server.v1_8_R3.NBTBase;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -70,7 +66,7 @@ public class AstroItemSkinsAPI {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder conaxData = wrapper.getCompoundOrCreate("conaxData");
         conaxData.setBoolean("hasBackpackSocket", true);
-        wrapper.setNBTBase("conaxData", (NBTBase) conaxData.get());
+        wrapper.setNBTBase("conaxData", conaxData.get());
 
         return  wrapper.build();
     }
@@ -119,29 +115,31 @@ public class AstroItemSkinsAPI {
     public static boolean hasSkinEquipped(Player player, SkinType type) {
         switch (type.getItemSkinType()) {
             case HELMET:
-                return (player.getInventory().getHelmet() != null && hasItemSkin(player.getInventory().getHelmet()) && ((List) Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getHelmet()))).contains(type));
+                return (player.getInventory().getHelmet() != null && hasItemSkin(player.getInventory().getHelmet()) && Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getHelmet())).contains(type));
             case AMULET:
             case BACKPACK:
-                return (player.getInventory().getChestplate() != null && hasItemSkin(player.getInventory().getChestplate()) && ((List) Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getChestplate()))).contains(type));
+                return (player.getInventory().getChestplate() != null && hasItemSkin(player.getInventory().getChestplate()) && Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getChestplate())).contains(type));
             case BELT:
-                return (player.getInventory().getLeggings() != null && hasItemSkin(player.getInventory().getLeggings()) && ((List) Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getLeggings()))).contains(type));
+                return (player.getInventory().getLeggings() != null && hasItemSkin(player.getInventory().getLeggings()) && Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getLeggings())).contains(type));
             case BOOTS:
-                return (player.getInventory().getBoots() != null && hasItemSkin(player.getInventory().getBoots()) && ((List) Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getBoots()))).contains(type));
+                return (player.getInventory().getBoots() != null && hasItemSkin(player.getInventory().getBoots()) && Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getBoots())).contains(type));
             case SWORD:
             case AXE:
             case PICKAXE:
             case BOW:
             case TOOL:
-                return (player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR && hasItemSkin(player.getItemInHand()) && ((List) Objects.<List>requireNonNull(getItemSkinByItem(player.getInventory().getItemInHand()))).contains(type));
+                if((player.getItemInHand() != null && player.getItemInHand().getType() != Material.AIR)) {
+                    if(hasItemSkin(player.getItemInHand())) {
+                        return Objects.requireNonNull(getItemSkinByItem(player.getItemInHand())).contains(type);
+                    }
+                }
+
         }
         return false;
     }
 
     public static boolean hasItemSkin(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
-
-
-
         if (!wrapper.hasKey("cosmicData"))
             return false;
         if (wrapper.hasKey("cosmicType") && wrapper.getString("cosmicType").equals("item_skin"))
@@ -157,18 +155,13 @@ public class AstroItemSkinsAPI {
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         if (!cosmicData.hasKey("itemSkinType"))
             return skins;
+        return StringUtils.stringToSkinList(cosmicData.getString("itemSkinType"));
+        /*
         List<String> stringSkins = new ArrayList<>(Arrays.asList(cosmicData.getString("itemSkinType").split(",")));
-        for (String string : stringSkins) {
-            string = string.replace("[", "");
-            string = string.replace("]", "");
-            string = string.replace(" ", "");
-            try {
-                skins.add(SkinType.valueOf(string));
-            } catch (Exception e) {
+        List<String> copy = new ArrayList<>(stringSkins);
+        return StringUtils.getSkinTypes(stringSkins, copy, skins);
 
-            }
-        }
-        return skins;
+         */
     }
 
     public static List<SkinType> getItemSkin(ItemStack item) {
@@ -184,20 +177,9 @@ public class AstroItemSkinsAPI {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         String skinList = cosmicData.getString("itemSkinType");
-        String[] stringArray;
-        List<String> skins = new ArrayList<>(Arrays.asList(stringArray = skinList.split(",")));
-        if (skins == null) return null;
-        if (skins.isEmpty()) return null;
-
-        List<String> skinsCopy = new ArrayList<>();
-
-        for (String skinType : skins) {
-            skinsCopy.add(skinType);
-        }
-
-
-        //[SANTA_CHEST, CURSED_WINGS, VAL_CHEST]
-
+        List<String> actualSkins = StringUtils.fixSkinList(skinList);
+        if (actualSkins.isEmpty()) return null;
+        List<String> skinsCopy = new ArrayList<>(actualSkins);
 
         cosmicData.remove("itemSkinType");
         if (cosmicData.getString("tintColor").equals("-10237440")) {
@@ -205,7 +187,7 @@ public class AstroItemSkinsAPI {
         }
 
 
-        for (String skinType : skins) {
+        for (String skinType : actualSkins) {
             if (skinType.equals(skinType1.name())) {
                 skinsCopy.remove(skinType1.name());
             }
@@ -217,19 +199,19 @@ public class AstroItemSkinsAPI {
 
 
         if (skinsCopy.size() != 0) {
-            String[] remaining = skinsCopy.<String>toArray(new String[0]);
+            String[] remaining = skinsCopy.toArray(new String[0]);
             String s = Arrays.toString( remaining);
             s = s.replaceAll(" ", "");
             s = s.replace("[", "");
             s = s.replace("]", "");
             cosmicData.setString("itemSkinType", s);
         }
-        wrapper.setNBTBase("cosmicData", (NBTBase) cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         item = wrapper.build();
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.getLore();
-        lore = (List<String>) lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(skinType1.getName()))).collect(Collectors.toList());
-        lore = (List<String>) lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(skinType2.getName()))).collect(Collectors.toList());
+        lore = lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(skinType1.getName()))).collect(Collectors.toList());
+        lore = lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(skinType2.getName()))).collect(Collectors.toList());
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;
@@ -239,29 +221,28 @@ public class AstroItemSkinsAPI {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
         String skinList = cosmicData.getString("itemSkinType");
-        String[] stringArray;
-        List<String> skins = new ArrayList<>(Arrays.asList(stringArray = skinList.split(",")));
+        List<String> skins = StringUtils.fixSkinList(skinList);
         cosmicData.remove("itemSkinType");
         if (cosmicData.getString("tintColor").equals("-10237440")) {
 
             cosmicData.remove("tintColor");
         }
 
-        SkinType type = SkinType.valueOf(stringArray[0]);
-        skins.remove(stringArray[0]);
-        if (skins.size() != 0) {
-            String[] remaining = skins.<String>toArray(new String[0]);
+        SkinType type = SkinType.valueOf(skins.get(0));
+        skins.remove(skins.get(0));
+        if (!skins.isEmpty()) {
+            String[] remaining = skins.toArray(new String[0]);
             String s = Arrays.toString( remaining);
             s = s.replaceAll(" ", "");
             s = s.replace("[", "");
             s = s.replace("]", "");
             cosmicData.setString("itemSkinType", s);
         }
-        wrapper.setNBTBase("cosmicData", (NBTBase) cosmicData.get());
+        wrapper.setNBTBase("cosmicData", cosmicData.get());
         item = wrapper.build();
         ItemMeta meta = item.getItemMeta();
         List<String> lore = meta.getLore();
-        lore = (List<String>) lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(type.getName()))).collect(Collectors.toList());
+        lore = lore.stream().filter(s -> !ChatColor.stripColor(s).startsWith("ITEM SKIN: " + ChatColor.stripColor(type.getName()))).collect(Collectors.toList());
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;

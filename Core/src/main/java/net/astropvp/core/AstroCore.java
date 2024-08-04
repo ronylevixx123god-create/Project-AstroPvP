@@ -423,6 +423,7 @@ public class AstroCore extends JavaPlugin {
         this.commandManager.registerCommand(new ReloadCommand());
         commandManager2.register(new GiftCommand(this));
         commandManager2.register(new GiftsCommand());
+        commandManager2.register(new GlintCommand());
 
     }
 

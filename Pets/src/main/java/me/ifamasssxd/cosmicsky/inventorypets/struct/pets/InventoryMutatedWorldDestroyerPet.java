@@ -40,8 +40,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
     public static ArrayList<Location> locations = new ArrayList<>();
 
     public InventoryPets getOwner() {
-        //return InventoryPets.MUTATED_WORLD_DESTROYER;
-        return null;
+        return InventoryPets.MUTATED_WORLD_DESTROYER;
     }
 
     public List<String> getPetDescription() {
@@ -77,7 +76,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
 
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
+        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
@@ -85,6 +84,8 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
 
         if (player.hasMetadata("in_duel"))
+            return true;
+        if (player.hasMetadata("caged"))
             return true;
         if (player.hasMetadata("spectator"))
             return true;
@@ -101,7 +102,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE)
                     continue;
                 Faction nearFac = FactionUtils.getFaction(nearPlayer);
-                Relation rel = nearFac.getRelationTo((RelationParticipator) faction);
+                Relation rel = nearFac.getRelationTo(faction);
                 if (rel.isAlly() || rel.isTruce())
                     continue;
                 if (rel.isMember())
@@ -170,7 +171,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
 
 
         Player finalTarget1 = target;
-        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
             try {
                 player.removeMetadata("caged", CosmicSkyInventoryPets.get());
                 finalTarget1.removeMetadata("caged", CosmicSkyInventoryPets.get());
@@ -230,7 +231,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
             if (loc.getBlock().getType() == Material.AIR) {
                 filteredLocations.add(loc);
                 loc.getBlock().setType(material);
-                loc.getBlock().setMetadata("cage", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), "cage"));
+                loc.getBlock().setMetadata("cage", new FixedMetadataValue(CosmicSkyInventoryPets.get(), "cage"));
             }
         }
         return filteredLocations;
@@ -252,7 +253,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
         list.addAll(setOutside(baseLocation.clone().add(0.0, 2.0, 0.0), Material.IRON_FENCE));
         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.4f);
         InventoryWorldDestroyerPet.locations.addAll(list);
-        scheduler.scheduleSyncDelayedTask((Plugin) CosmicSkyInventoryPets.get(), (Runnable) new BukkitRunnable() {
+        scheduler.scheduleSyncDelayedTask(CosmicSkyInventoryPets.get(), (Runnable) new BukkitRunnable() {
             int count = 0;
 
             public void run() {
@@ -274,7 +275,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
 
                 ++this.count;
             }
-        }.runTaskTimer((Plugin) CosmicSkyInventoryPets.get(), 20L, 20L));
+        }.runTaskTimer(CosmicSkyInventoryPets.get(), 20L, 20L));
     }
 
     public static String stringLocation(Location loc) {
@@ -282,7 +283,7 @@ public class InventoryMutatedWorldDestroyerPet extends InventoryPet {
         int y = (int) loc.getY();
         int z = (int) loc.getZ();
         String world = loc.getWorld().getName();
-        String result = String.valueOf(world) + " " + x + " " + y + " " + z;
+        String result = world + " " + x + " " + y + " " + z;
         return result;
     }
 

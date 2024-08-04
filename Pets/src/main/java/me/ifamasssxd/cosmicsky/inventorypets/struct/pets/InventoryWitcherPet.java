@@ -9,27 +9,20 @@ import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
-import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
-import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import net.astropvp.armorsets.AstroArmorSetsAPI;
-import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -91,7 +84,7 @@ public class InventoryWitcherPet extends InventoryPet {
         player.playSound(player.getLocation(), Sound.WITHER_SHOOT, 1.1F, 3.0F);
         int sum = petItem.getLevel() * 2;
 
- if(MaskType.hasEquipped(player, "ELF")) {
+        if(MaskType.hasEquipped(player, "ELF")) {
             sum*=1.5;
         }
 
@@ -120,7 +113,7 @@ public class InventoryWitcherPet extends InventoryPet {
                 continue;
             }
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.BACK_TO_SCHOOL_2021_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.MMM_BACK_TO_SCHOOL_2021_BOOTS)) {
                 p.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Witcher Pet &7[" + player.getName() + "&7] &8&l*"));
                 player.sendMessage(CC.translate("&8&l* &f" + p.getName() + " &7Blocked &4Witcher Pet &7[&8&lBig Timbs&7] &8&l*"));
                 continue;
@@ -166,7 +159,7 @@ public class InventoryWitcherPet extends InventoryPet {
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
         player.sendMessage(CC.translate("&4&l** WITCHER PET &7[Knockback Immunity 5s] &4&l**"));
         player.sendMessage("");
-        no_kb.add(player.getUniqueId());
+        //no_kb.add(player.getUniqueId());
         //player.setMetadata("no_knockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));
 
         DamageIndicatorUtils.sendDamageIndicator(player, CC.translate("&4&l* WITHER PET *"), "WITHER");

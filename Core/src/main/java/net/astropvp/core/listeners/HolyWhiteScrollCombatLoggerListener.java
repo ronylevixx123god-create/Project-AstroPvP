@@ -40,21 +40,22 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
                 if (e.getDamager() instanceof Player || (e.getDamager() instanceof Projectile && ((Projectile)e.getDamager()).getShooter() instanceof Player))
                     killer = (e.getDamager() instanceof Player) ? (Player)e.getDamager() : (Player)((Projectile)e.getDamager()).getShooter();
             }
-            boolean wearingMonopolyMask = (killer != null && MaskUtils.hasMaskEquipped(killer, "MONOPOLY"));
+            boolean wearingMonopolyMask = isWearingMonopoly(killer);
             for (ItemStack item : Lists.newArrayList(event.getInventoryItems())) {
                 if (item != null && item.getType() != Material.AIR) {
-                    if (HolyWhiteScrollUtils.itemHasHolyWhitescroll(item))
-                        if (wearingMonopolyMask && Math.random() <= 0.33D) {
+                    if (HolyWhiteScrollUtils.itemHasHolyWhitescroll(item)) {
+                        double chance = getChance(killer);
+                        if (wearingMonopolyMask && Math.random() <= chance) {
                             HolyWhiteScrollUtils.removeHolyWhitescroll(item);
                             try {
                                 (new ItemStack[1])[0] = item;
-                                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(UUID.fromString(event.getPlayerUUIDString()), "HOLY_WHITESCROLL_DEATH", new Object[] { Lists.newArrayList(new ItemStack[1]) }));
+                                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(UUID.fromString(event.getPlayerUUIDString()), "HOLY_WHITESCROLL_DEATH", new Object[]{Lists.newArrayList(new ItemStack[1])}));
                             } catch (Exception e2) {
                                 e2.printStackTrace();
                             }
                             entity.getWorld().playSound(entity.getLocation(), Sound.ITEM_BREAK, 5.0F, 1.2F);
                             entity.getWorld().playSound(entity.getLocation(), Sound.WITHER_SHOOT, 3.0F, 10.0F);
-                            killer.sendMessage(CC.GreenB + "* MONOPOLY MASK [" + CC.Gray + event.getPlayerName() + " (+ " + ItemUtils.getDisplayName(item) + CC.Gray + ")" + CC.GreenB + "] *");
+                            sendMessage(killer, event, item);
                             Bukkit.getLogger().info("Dropping " + item + " due to " + killer.getName() + "'s Monopoly Mask procing.");
                             event.getInventoryItems().remove(item);
                             entity.getWorld().dropItemNaturally(entity.getLocation(), item);
@@ -62,12 +63,31 @@ public class HolyWhiteScrollCombatLoggerListener implements Listener {
                             savedItems.add(item);
                             event.getInventoryItems().remove(item);
                         }
-                    if (savedItems.size() <= 0)
-                        continue;
-                    AstroCore.getInstance().getHolyWhiteScrollListener().getSavedItems().put(event.getPlayerUUIDString(), savedItems);
-                    Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray(new ItemStack[savedItems.size()])) + " holy whitescroll'd items for " + event.getPlayerName() + " due to combat logger death!");
+                        if (savedItems.size() <= 0)
+                            continue;
+                        AstroCore.getInstance().getHolyWhiteScrollListener().getSavedItems().put(event.getPlayerUUIDString(), savedItems);
+                        Bukkit.getLogger().info("Storing " + Arrays.toString(savedItems.toArray(new ItemStack[savedItems.size()])) + " holy whitescroll'd items for " + event.getPlayerName() + " due to combat logger death!");
+                    }
                 }
             }
         }
+    }
+
+    private void sendMessage(Player killer, CombatLoggerDeathEvent event, ItemStack item) {
+        if(getChance(killer) == 0.66) {
+            killer.sendMessage(CC.GreenB + "* MUTATED MONOPOLY MASK [" + CC.Gray + event.getPlayerName() + " (+ " + ItemUtils.getDisplayName(item) + CC.Gray + ")" + CC.GreenB + "] *");
+        } else if(getChance(killer) == 0.33) {
+            killer.sendMessage(CC.GreenB + "* MONOPOLY MASK [" + CC.Gray + event.getPlayerName() + " (+ " + ItemUtils.getDisplayName(item) + CC.Gray + ")" + CC.GreenB + "] *");
+
+        }
+    }
+
+    private double getChance(Player killer) {
+        return MaskUtils.hasMaskEquipped(killer, "M_MONOPOLY") ? 0.66 : MaskUtils.hasMaskEquipped(killer, "M_MONOPOLY") ? 0.33 : 0;
+    }
+
+    private boolean isWearingMonopoly(Player killer) {
+        if(killer == null) return false;
+        return MaskUtils.hasMaskEquipped(killer, "MONOPOLY") || MaskUtils.hasMaskEquipped(killer, "M_MONOPOLY");
     }
 }

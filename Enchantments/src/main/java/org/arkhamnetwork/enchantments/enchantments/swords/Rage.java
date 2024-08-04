@@ -6,8 +6,6 @@ import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import net.astropvp.weaponbonuses.api.WeaponBonusesAPI;
-import net.astropvp.weaponbonuses.bonus.BonusType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.CacheUtils;
 import org.arkhamnetwork.enchantments.util.RageStacksCache;
@@ -19,7 +17,6 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
 
 
 public class Rage extends CustomEnchantment {
@@ -42,13 +39,14 @@ public class Rage extends CustomEnchantment {
 
             RageStacksCache rageStacksCache = CacheUtils.getRageStackCache((Player) user);
 
-            if (rageStacksCache.getLastRageStackTime() + 4000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
+            if (rageStacksCache.getLastRageStackTime() + 5000 < System.currentTimeMillis() || !rageStacksCache.isSameVictim((Player) target)) {
                 rageStacksCache.updateLastRageStackTime();
                 rageStacksCache.resetRageStack();
                 rageStacksCache.updateVictim((Player) target);
                 return;
             }
 
+            /*
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {
                 rageStacksCache.setMaxRageStack(8);
             }
@@ -58,13 +56,31 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.resetRageStack();
             }
 
+             */
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(((Player) target).getPlayer(), SkinType.MMM_THANKSGIVING_2022_SWORD_GREEN)) {
+                if(Math.random() < 0.15) {
+                    target.sendMessage(CC.translate("&a&l** &a&lYoda's Sabre &7Reset Rage Stacks &a&l**"));
+                    rageStacksCache.resetRageStack();
+                }
+                if(Math.random() < 0.1) {
+                    user.sendMessage(CC.translate("&a&l** &a&lYoda's Sabre &7[+1 Rage Stack] &a&l**"));
+                    rageStacksCache.incrementRageStack();
+                }
+            }
+
             //double rageDamage = Math.max(1, rageStacksCache.getRageStack()/Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageDivider"));
             double rageDamage = Math.max(1, (1 + (rageStacksCache.getRageStack() * Enchantments.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("rageDivider"))));
 
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
-                //rageDamage *= 0.5;
-                target.sendMessage(CC.translate("&c&l* ROSE AMULET &7[-50% Rage DMG] &c&l*"));
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.MMM_THANKSGIVING_2022_SWORD_GREEN)) {
+                rageDamage *= 1.075;
+                target.sendMessage(CC.translate("&a&l* YODAS SABRE &7[+7.5% Rage DMG] &a&l*"));
             }
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
+                rageDamage *= 0.75;
+                target.sendMessage(CC.translate("&c&l* ROSE AMULET &7[-25% Rage DMG] &c&l*"));
+            }
+
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_SWORD) || AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.CHRISTMAS_2021_MUTATED_SWORD)) {
                 //rageDamage *= 1.05;
@@ -93,10 +109,13 @@ public class Rage extends CustomEnchantment {
                 //rageDamage *= 0.75;
             }
 
+            /*
             if (AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_SWORD) || AstroItemSkinsAPI.hasSkinEquipped(((Player) user).getPlayer(), SkinType.VALENTINES_2022_MUTATED_SWORD)) {
                 //rageDamage *= 1.1;
                 target.sendMessage(CC.translate("&c&l* SKELETON KEY &7[+10% Rage DMG] &c&l*"));
             }
+
+             */
 
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_BOOTS) && Math.random() < 0.1) {
                 target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));

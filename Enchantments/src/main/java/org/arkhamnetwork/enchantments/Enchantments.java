@@ -91,11 +91,12 @@ public class Enchantments extends EnchantPlugin {
                 new HeroicDeathbringer(), new HeroicEnlighted(), new HeroicBlacksmith(), new HeroicSniper(), new HeroicDiminish(), new HeroicAssassin(), new HeroicDetonate(), new HeroicImplants(), new HeroicLifesteal(), new HeroicArmored(),
                 new HeroicDodge(), new HeroKiller(), new BossSlayer(), new HeroicLuck(), new HeroicCleave(), new HeroicExecute(), new HeroicBleed(), this.hex = new Hex(), new Corrupt(), new MasteryMarkOfTheBeast(), new MasteryHorrify(),
                 new MasteryPoltergeist(), new MasteryFeignDeath(), new HeroicRocketEscape(), new HeroicTeleportation(), new HeroicTrap(), new HeroicBlock(), new HeroicGhost(), new MasterySoulSiphon(), new MasteryMortalCoil(), new MasteryRotAndDecay(),
-                new MasteryDemonicGateway(), new Reflect(), new AvengingAngel(), new HeroicReflect(), new MasteryLifesteal(), new MasteryBlackout(), new MasteryNeutralize(), new MasteryDeathPact(), new MasteryTombstone(), new MasteryDiscombobulate(), new MasteryExplosivesExpert(),
+                new MasteryDemonicGateway(), new Reflect(), new HeroicReflect(), new MasteryLifesteal(), new MasteryBlackout(), new MasteryNeutralize(), new MasteryDeathPact(), new MasteryTombstone(), new MasteryDiscombobulate(), new MasteryExplosivesExpert(),
                 this.permafrostEnchant = new MasteryPermafrost(), new HeroicMetaphysical(), new MasteryWebWalker(), new HeroicCactus(), new HeroicTank(), new Sabotage(), new MasteryLavaStrider(), new HeroicInsanity(),
                 new OpeningCombo(), new HeroicOverwhelm(), new SoulMaster(), new KeyGrind(), new Coins(), //new Shiva(),
                 new Treasure()
         };
+        //new AvengingAngel()
         EnchantmentAPI.registerCustomEnchantments(array);
 
 

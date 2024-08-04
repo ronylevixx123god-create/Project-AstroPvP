@@ -1,13 +1,13 @@
 package net.astropvp.core.listeners;
 
 
+import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
+import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.utils.*;
-import javafx.scene.control.Skin;
+import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.boots.MutatedSinkOrSwipFlippers;
-import me.astropvp.astropvpskins.objects.skins.boots.SinkOrSwipFlippers;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
@@ -18,25 +18,13 @@ import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.HolyWhiteScrollUtils;
-import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
-import com.google.common.collect.Lists;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Objects;
-
 import net.astropvp.struct.CollectCategory;
 import net.astropvp.struct.CollectType;
-import net.minecraft.server.v1_8_R3.ItemPotion;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -45,10 +33,14 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Objects;
 
 public class HolyWhiteScrollListener implements Listener {
-    private HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
+    private final HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
 
     public HashMap<String, List<ItemStack>> getSavedItems() {
         return this.savedItems;
@@ -66,7 +58,7 @@ public class HolyWhiteScrollListener implements Listener {
                 NBTWrapper wrapper = (e.getCurrentItem() != null && e.getCurrentItem().getType() != Material.AIR) ? new NBTWrapper(e.getCurrentItem()) : null;
                 AstroCore.getInstance().getHolyWhitescrollItem().onInventoryClick((Player) e.getWhoClicked(), e.getCursor(), cursor, wrapper, e.getCurrentItem(), e);
             } catch (CosmicException e2) {
-                ((Player) e.getWhoClicked()).sendMessage(e2.getMessage());
+                e.getWhoClicked().sendMessage(e2.getMessage());
                 e.setCancelled(true);
             }
     }
@@ -84,7 +76,7 @@ public class HolyWhiteScrollListener implements Listener {
         Player killer = e.getEntity().getKiller();
         Player killed = e.getEntity();
 
-        boolean wearingMonopolyMask = (killer != null && MaskType.MONOPOLY.hasEquipped(killer));
+        boolean wearingMonopolyMask = isWearingMonopoly(killer);
         boolean hasBeenSwimEffected = false;
         boolean hasBeenTailed = false;
         List<ItemStack> savedItems = new ArrayList<>();
@@ -100,7 +92,7 @@ public class HolyWhiteScrollListener implements Listener {
                 boolean killerIsControllingFrozen = (FactionUtils.getFaction(killer).isNormal() && HCFOutpostAPI.isControllingOutpost(FactionUtils.getFaction(killer), OutpostType.THE_GREAT_HALL));
                 boolean isBansheed = e.getEntity().hasMetadata("banshee_scrolls");
                 boolean isUltraad = false;
-                double monoChance = (killerIsControllingFrozen ? 0.50D : 0.40D);
+                double monoChance = getMonoChance(killer, killerIsControllingFrozen);
                 if (AstroArmorSetsAPI.getBonusCrystalsEquipped(e.getEntity().getPlayer()).containsKey(ArmorSetType.ASTRO))
                     monoChance *= 1.05;
                 if (AstroArmorSetsAPI.getCurrentArmorSet(e.getEntity().getPlayer()) != null) {
@@ -188,8 +180,9 @@ public class HolyWhiteScrollListener implements Listener {
                         e.getEntity().sendMessage(CC.RedB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
                         killer.sendMessage(CC.GreenB + "* FROZEN STRONGHOLD MONOPOLY [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                     } else {
-                        e.getEntity().sendMessage(CC.RedB + "* MONOPOLY MASK [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
-                        killer.sendMessage(CC.GreenB + "* MONOPOLY MASK [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
+                        String prefix = getPrefixFromMono(killer);
+                        e.getEntity().sendMessage(CC.RedB + "* " + prefix + " [" + CC.Gray + killer.getName() + " (- " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.RedB + "] *");
+                        killer.sendMessage(CC.GreenB + "* "  + prefix + " [" + CC.Gray + e.getEntity().getName() + " (+ " + ItemUtils.getDisplayName(i) + CC.Gray + ")" + CC.GreenB + "] *");
                     }
                     continue;
                 }
@@ -214,7 +207,7 @@ public class HolyWhiteScrollListener implements Listener {
             }
             if (i.getType() == Material.SKULL_ITEM) {
                 NBTWrapper wrapper = new NBTWrapper(i);
-                InventoryPetItem petItem = (InventoryPetItem) CosmicPersistentItem.constructItem(i, wrapper, InventoryPetItem.class);
+                InventoryPetItem petItem = CosmicPersistentItem.constructItem(i, wrapper, InventoryPetItem.class);
                 if (petItem != null && petItem.getPetType() != null) {
                     if (petItem.isLeashed()) {
                         double chance = 0;
@@ -277,6 +270,20 @@ public class HolyWhiteScrollListener implements Listener {
 
     }
 
+    private String getPrefixFromMono(Player killer) {
+        return MaskUtils.hasMaskEquipped(killer, "M_MONOPOLY") ? CC.translate("MUTATED MONOPOLY") : MaskUtils.hasMaskEquipped(killer, "MONOPOLY") ? "MONOPOLY" : "";
+    }
+
+    private double getMonoChance(Player killer, boolean killerIsControllingFrozen) {
+        double initial = MaskUtils.hasMaskEquipped(killer, "M_MONOPOLY") ? 0.66 : MaskUtils.hasMaskEquipped(killer, "MONOPOLY") ? 0.33 : 0;
+        return (killerIsControllingFrozen ? initial + 0.1D : initial);
+    }
+
+    private boolean isWearingMonopoly(Player killer) {
+        if(killer == null) return false;
+        return MaskUtils.hasMaskEquipped(killer, "MONOPOLY") || MaskUtils.hasMaskEquipped(killer, "M_MONOPOLY");
+    }
+
     @EventHandler(priority = EventPriority.MONITOR)
     public void onPlayerRespawn(PlayerRespawnEvent e) {
         if (e.getPlayer().getLastDamageCause() == null) return;
@@ -288,7 +295,7 @@ public class HolyWhiteScrollListener implements Listener {
             for (ItemStack i : toReturn) {
                 e.getPlayer().getInventory().addItem(HolyWhiteScrollUtils.removeHolyWhitescroll(i));
             }
-            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(e.getPlayer(), "HOLY_WHITESCROLL_DEATH", new Object[]{toReturn}));
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(e.getPlayer(), "HOLY_WHITESCROLL_DEATH", new Object[]{toReturn}));
         }
     }
 }

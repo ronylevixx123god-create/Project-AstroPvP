@@ -95,9 +95,9 @@ final class EssentialsKitViewerListener
                     return;
                 }
                 Player pl = (Player) e.getWhoClicked();
+                pl.closeInventory();
                 pl.chat("/kit " + warp);
                 pl.playSound(pl.getLocation(), Sound.CLICK, 1.0f, 0.75f);
-                pl.closeInventory();
             }
         }
     }

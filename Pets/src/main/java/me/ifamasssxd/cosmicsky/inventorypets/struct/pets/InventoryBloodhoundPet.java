@@ -1,7 +1,8 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.*;
-import com.earth2me.essentials.utils.LocationUtil;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
@@ -9,13 +10,6 @@ import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
 import com.rit.sucy.EnchantmentAPI;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
@@ -29,15 +23,11 @@ import me.ifamasssxd.cosmicsky.inventorypets.libs.Vector3D;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
@@ -49,6 +39,12 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+import java.util.concurrent.TimeUnit;
 
 public class InventoryBloodhoundPet extends InventoryPet {
    static Map items = new HashMap();
@@ -126,7 +122,7 @@ public class InventoryBloodhoundPet extends InventoryPet {
 
 
 
-      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+      if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.BACK_TO_SCHOOL_2021_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.MMM_BACK_TO_SCHOOL_2021_BOOTS)) {
          pTarget.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Bloodhound Pet &7[" + player.getName() + "&7] &8&l*"));
          player.sendMessage(CC.translate("&8&l* &f" + pTarget.getName() + " &7Blocked &4Bloodhound Pet &7[&8&lBig Timbs&7] &8&l*"));
          return true;

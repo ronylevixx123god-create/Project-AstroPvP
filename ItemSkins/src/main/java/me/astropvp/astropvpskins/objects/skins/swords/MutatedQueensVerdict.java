@@ -21,8 +21,8 @@ public class MutatedQueensVerdict extends ItemSkin {
 
         if (!(damaged instanceof Player)) return;
 
-        (new Devour()).applyDefenseEffect((LivingEntity)damager, (LivingEntity)damaged, 6, event);
-        (new DoubleStrike()).applyDefenseEffect((LivingEntity)damager, (LivingEntity)damaged, 4, event);
+        (new Devour()).applyEffect(damager, (LivingEntity)damaged, 6, event);
+        (new DoubleStrike()).applyEffect(damager, (LivingEntity)damaged, 4, event);
 
 
     }

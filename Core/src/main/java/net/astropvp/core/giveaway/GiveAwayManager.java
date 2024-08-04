@@ -2,6 +2,8 @@ package net.astropvp.core.giveaway;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.massivecraft.factions.util.Clickable;
+import lombok.Getter;
+import lombok.Setter;
 import net.astropvp.core.AstroCore;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
@@ -18,6 +20,9 @@ public class GiveAwayManager {
 
     public GiveAway currentGiveAway;
     public AstroCore plugin;
+
+    @Setter @Getter
+    private int fakeJoins = 0;
 
     public GiveAwayManager(AstroCore plugin) {
         this.plugin = plugin;
@@ -43,6 +48,7 @@ public class GiveAwayManager {
             player.sendMessage(CC.translate("&c&l(!)&c Please hold the item you would like to giveaway!"));
             return;
         }
+        this.fakeJoins = 0;
         player.sendMessage(CC.translate("&a&l(!)&a You have started the giveaway with prize: " + player.getItemInHand().getItemMeta().getDisplayName() + " &awith &7" + winnersAmount + " &awinners and will last &7" + timeInSeconds + "s&a."));
         this.currentGiveAway = new GiveAway(winnersAmount, prize, timeInSeconds);
         this.currentGiveAway.setGiveAwayTaskId(Bukkit.getScheduler().scheduleSyncRepeatingTask(AstroCore.getInstance(), new GiveAwayTask(), 0L, 20L));
@@ -131,13 +137,17 @@ public class GiveAwayManager {
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(CC.translate("&c&lAstro Giveaway Countdown"));
         Bukkit.broadcastMessage(CC.translate("&c&l * &cTime Left: &f" + seconds + "s"));
-        Bukkit.broadcastMessage(CC.translate("&c&l * &cEntries: &f" + giveAway.getPlayersJoined().size()));
+        Bukkit.broadcastMessage(CC.translate("&c&l * &cEntries: &f" + getAmountInGiveaway(giveAway)));
 
         for (Player player : Bukkit.getOnlinePlayers()) {
             message.sendToPlayer(player);
             clickable.sendToPlayer(player);
             player.sendMessage("");
         }
+    }
+
+    private int getAmountInGiveaway(GiveAway giveAway) {
+        return giveAway.getPlayersJoined().size() + this.fakeJoins;
     }
 
     public void announceStart(GiveAway giveAway) {
@@ -171,7 +181,7 @@ public class GiveAwayManager {
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(CC.translate("&c&lAstro Giveaway Ended"));
         Bukkit.broadcastMessage(CC.translate("&c&l * &cWinners: &f" + winnersString));
-        Bukkit.broadcastMessage(CC.translate("&c&l * &cEntries: &f" + giveAway.getPlayersJoined().size()));
+        Bukkit.broadcastMessage(CC.translate("&c&l * &cEntries: &f" + getAmountInGiveaway(giveAway)));
 
 
 

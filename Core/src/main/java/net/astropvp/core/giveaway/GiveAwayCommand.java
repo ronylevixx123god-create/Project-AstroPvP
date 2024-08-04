@@ -46,6 +46,8 @@ public class GiveAwayCommand implements CommandExecutor {
             } else if (args[0].equalsIgnoreCase("cancel")) {
                 AstroCore.getInstance().getGiveAwayManager().cancelGiveAway(player);
                 return true;
+            } else if(args[0].equals("addfakejoins")) {
+                AstroCore.getInstance().getGiveAwayManager().setFakeJoins(AstroCore.getInstance().giveAwayManager.getFakeJoins() + Integer.parseInt(args[1]));
             }
         } else {
             player.sendMessage(CC.translate("&cNo Perms."));

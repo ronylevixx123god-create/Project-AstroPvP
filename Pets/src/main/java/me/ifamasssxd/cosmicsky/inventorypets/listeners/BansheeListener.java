@@ -28,7 +28,7 @@ public class BansheeListener implements Listener {
             if (damager.hasMetadata("mutated_banshee")) {
                 if (LunaArmorSet.isLunaStriked((Player) event.getEntity())) return;
                 if (!event.getEntity().hasMetadata("bloodHoundNoBless") && !event.getDamager().hasMetadata("bloodHoundNoBless")) {
-                    event.setDamage(event.getDamage() * 1.5);
+                    event.setDamage(event.getDamage() * 1.4);
                 }
                 damager.sendMessage(CC.translate("&a&l** &2&l&nMUTATED&r &a&lBANSHEE PET &8➥ &22x DMG &a&l**"));
             } else if (damager.hasMetadata("banshee_active")) {

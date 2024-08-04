@@ -1,6 +1,9 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
 import com.massivecraft.factions.iface.RelationParticipator;
@@ -11,7 +14,6 @@ import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import me.astropvp.astropvpskins.objects.skins.helmets.UndertowHelmet;
 import me.astropvp.astropvpskins.objects.skins.swords.SpinalTab;
-
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
@@ -24,8 +26,6 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
 import me.kingsavaqe.cagepvp.AstroCagePvP;
-import net.astropvp.armorsets.AstroArmorSetsAPI;
-import net.astropvp.armorsets.struct.ArmorSetType;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,9 +38,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
 import org.bukkit.metadata.MetadataValue;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -52,7 +50,7 @@ public class InventoryBansheePet extends InventoryPet {
     }
 
     public List getPetDescription() {
-        return Lists.newArrayList(CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players (8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "Gears V (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (8s) ",
+        return Lists.newArrayList(CC.Gray + "Call upon the deadly screeming Banshee.", CC.Gray, CC.WhiteB + "Ability", CC.Gray + "Activates " + CC.DarkRedB + "[RKO]:", CC.DarkRed + "* " + CC.Gray + "1.5x DMG to all players (8s) ", CC.DarkRed + "* " + CC.Gray + "Immune to freezes (8s) ", CC.DarkRed + "* " + CC.Gray + "AoE (8x8) Silence IV (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Phoenix (8s) ", CC.DarkRed + "* " + CC.Gray + "Negates enemy Holy White Scrolls (8s) ",
                 CC.Gray, CC.WhiteB + "Cooldown", CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
@@ -124,7 +122,7 @@ public class InventoryBansheePet extends InventoryPet {
 
 
 
-                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
+                if (AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.BACK_TO_SCHOOL_2021_BOOTS) || AstroItemSkinsAPI.hasSkinEquipped(nearPlayer, SkinType.MMM_BACK_TO_SCHOOL_2021_BOOTS)) {
                     nearPlayer.sendMessage(CC.translate("&8&l* BIG TIMBS &7Blocked &4Banshee Pet &7[" + player.getName() + "&7] &8&l*"));
                     player.sendMessage(CC.translate("&8&l* &f" + nearPlayer.getName() + " &7Blocked &4Banshee Pet &7[&8&lBig Timbs&7] &8&l*"));
                     continue;

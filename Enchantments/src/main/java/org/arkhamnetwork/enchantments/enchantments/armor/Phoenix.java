@@ -208,8 +208,15 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
+            if (MaskType.hasEquipped((Player) damager, "Mutated Cranked Mask") && Math.random() < 0.75) {
+                damager.sendMessage(CC.translate("&4&l* &2&l&nMUTATED&r &4&lCRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
+                player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " &2&l&nMutated&r &4&lCranked Mask&4&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.VALENTINES_2022_MUTATED_SWORD) && Math.random() < 0.25) {
-                damager.sendMessage(CC.translate("&c&l* SKELETON KET BLOCKED PHOENIX [&c" + player.getName() + "&c&l] *"));
+                damager.sendMessage(CC.translate("&c&l* SKELETON KEY BLOCKED PHOENIX [&c" + player.getName() + "&c&l] *"));
                 player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&4" + damager.getName() + " Skeleton Key&c&l] *"));
                 Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
                 return false;

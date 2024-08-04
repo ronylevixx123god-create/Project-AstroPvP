@@ -35,8 +35,7 @@ import java.util.concurrent.TimeUnit;
 public class InventoryMutatedBansheePet extends InventoryPet {
 
     public InventoryPets getOwner() {
-        //return InventoryPets.MUTATED_BANSHEE;
-        return null;
+        return InventoryPets.MUTATED_BANSHEE;
     }
 
     public List<String> getPetDescription() {
@@ -44,10 +43,9 @@ public class InventoryMutatedBansheePet extends InventoryPet {
                 CC.Gray,
                 CC.DarkGreenB + "Ability",
                 CC.Gray + "Activates " + CC.GreenB + "[Mutated RKO]:",
-                CC.Green + "* " + CC.Gray + "2x DMG to all players (10s)",
+                CC.Green + "* " + CC.Gray + "1.75x DMG to all players (10s)",
                 CC.Green + "* " + CC.Gray + "Bypass all ItemSkins",
                 CC.Green + "* " + CC.Gray + "Immune to freezes (10s)",
-                CC.Green + "* " + CC.Gray + "Gears V (10s)",
                 CC.Green + "* " + CC.Gray + "AoE (8x8) Silence IV (10s)",
                 CC.Green + "* " + CC.Gray + "Negates enemy Phoenix (10s)",
                 CC.Green + "* " + CC.Gray + "Negates enemy Holy White Scrolls (10s)",
@@ -70,7 +68,7 @@ public class InventoryMutatedBansheePet extends InventoryPet {
 
     public boolean onPetItemInteract(final Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
+        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
 
@@ -86,7 +84,7 @@ public class InventoryMutatedBansheePet extends InventoryPet {
                 Faction nearFac = FactionUtils.getFaction(nearPlayer);
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE)
                     continue;
-                if (nearFac != null && nearFac.getRelationTo((RelationParticipator) faction) != Relation.ENEMY && nearFac.getRelationTo((RelationParticipator) faction) != Relation.NEUTRAL)
+                if (nearFac != null && nearFac.getRelationTo(faction) != Relation.ENEMY && nearFac.getRelationTo(faction) != Relation.NEUTRAL)
                     continue;
 
 
@@ -143,19 +141,18 @@ public class InventoryMutatedBansheePet extends InventoryPet {
 
         enemy.playSound(enemy.getLocation(), Sound.WITHER_HURT, 1.0f, 0.25f);
         enemy.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " 7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
-        enemy.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        enemy.setMetadata("banshee_scrolls", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        enemy.setMetadata("noDefenseProcs", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        enemy.setMetadata("banshee_scrolls", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
         enemy.sendMessage("");
-        enemy.sendMessage(CC.translate(String.format("&2&l*** " + player.getName() + "&4&l's &nMUTATED&r &a&lBANSHEE PET [&6" + duration + "s&a&l] - RKO! **", new Object[]{Integer.valueOf(duration)})));
-        enemy.sendMessage(CC.translate(String.format("&2( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", new Object[]{Integer.valueOf(duration)})));
+        enemy.sendMessage(CC.translate(String.format("&2&l*** " + player.getName() + "&4&l's &nMUTATED&r &a&lBANSHEE PET [&6" + duration + "s&a&l] - RKO! **", Integer.valueOf(duration))));
+        enemy.sendMessage(CC.translate(String.format("&2( %ds Silence, Phoenix - BLOCKED, Holy White Scrolls - BLOCKED )", Integer.valueOf(duration))));
         enemy.sendMessage("");
         DamageIndicatorUtils.sendDamageIndicator(enemy, CC.translate("&a&l* &2&lMUTATED&r &a&lBANSHEE RKO [&7" + duration + "s&a&l] *"), "RKO");
         CombatLog.flagCombat(player);
-        player.setMetadata("immune_freeze", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        player.setMetadata("banshee_active", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
-        player.setMetadata("mutated_banshee", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        player.setMetadata("immune_freeze", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        player.setMetadata("banshee_active", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
+        player.setMetadata("mutated_banshee", new FixedMetadataValue(CosmicSkyInventoryPets.get(), Boolean.valueOf(true)));
 
-        EnchantmentAPI.getEnchantment("Gears").applyEquipEffect(player, 5);
         player.sendMessage("");
         player.sendMessage(CC.translate("&2&lPET: ** BANSHEE [&6" + duration + "s&2&l] - RKO! **"));
         player.sendMessage("");
@@ -164,14 +161,14 @@ public class InventoryMutatedBansheePet extends InventoryPet {
 
         Bukkit.getScheduler().runTaskLater(CosmicSkyInventoryPets.get(), () -> {
             player.sendMessage(CC.translate("&2&lPET:  BANSHEE - RKO has worn off! "));
-            player.removeMetadata("immune_freeze", (Plugin) CosmicSkyInventoryPets.get());
-            player.removeMetadata("banshee_active", (Plugin) CosmicSkyInventoryPets.get());
-            player.removeMetadata("mutated_banshee", (Plugin) CosmicSkyInventoryPets.get());
+            player.removeMetadata("immune_freeze", CosmicSkyInventoryPets.get());
+            player.removeMetadata("banshee_active", CosmicSkyInventoryPets.get());
+            player.removeMetadata("mutated_banshee", CosmicSkyInventoryPets.get());
 
             EnchantmentAPI.getEnchantment("Gears").applyUnequipEffect(player, 5);
 
-            enemy.removeMetadata("noDefenseProcs", (Plugin) CosmicSkyInventoryPets.get());
-            enemy.removeMetadata("banshee_scrolls", (Plugin) CosmicSkyInventoryPets.get());
+            enemy.removeMetadata("noDefenseProcs", CosmicSkyInventoryPets.get());
+            enemy.removeMetadata("banshee_scrolls", CosmicSkyInventoryPets.get());
             enemy.sendMessage(CC.translate("&2&lPET: &a&l[RKO] &efrom " + player.getName() + "'s Mutated Banshee Pet &e&nEXPIRED!"));
         }, 20L * duration);
 

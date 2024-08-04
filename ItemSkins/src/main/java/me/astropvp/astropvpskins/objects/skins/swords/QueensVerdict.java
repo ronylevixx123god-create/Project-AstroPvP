@@ -21,7 +21,7 @@ public class QueensVerdict extends ItemSkin {
 
         if (!(damaged instanceof Player)) return;
 
-        (new Devour()).applyDefenseEffect((LivingEntity)damager, (LivingEntity)damaged, 6, event);
+        (new Devour()).applyEffect(damager, (LivingEntity)damaged, 6, event);
 
     }
 

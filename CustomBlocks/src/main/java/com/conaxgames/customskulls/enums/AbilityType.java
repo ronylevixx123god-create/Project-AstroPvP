@@ -33,7 +33,9 @@ public enum AbilityType {
             1500000, 300, Material.NOTE_BLOCK),
     BLAZE_STONE_TOTEM("BLAZE_STONE_TOTEM",
             "BLAZE_STONE_TOTEM",
-            1500000, 500000, Material.NOTE_BLOCK);
+            1500000, 500000, Material.NOTE_BLOCK),
+    COSMICCRATE("COSMICCRATE", "COSMICCRATE", 1500000, 0, Material.NOTE_BLOCK),
+    ;
     private final String name; // we will use this as a indexing name and for metadata.
     private final String customBlockSkin; // this is the skin texture for the item
     private final int pickupPrice, pricePerAction;

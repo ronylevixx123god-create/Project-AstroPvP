@@ -1,6 +1,9 @@
 package me.ifamasssxd.cosmicsky.inventorypets.struct.pets;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EssentialsUtils;
+import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
+import com.cosmicpvp.cosmicutils.utils.TimeUtils;
 import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -9,13 +12,10 @@ import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.NonPrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PetException;
-import me.ifamasssxd.cosmicsky.inventorypets.exceptions.PrefixedPetException;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPet;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.PetUtils;
-import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -93,8 +93,14 @@ public class InventoryStitchesPet extends InventoryPet {
             }
 
             if (AstroItemSkinsAPI.hasSkinEquipped(casted, SkinType.BACK_TO_SCHOOL_2021_BOOTS)) {
-                casted.sendMessage(CC.translate("&60l* COWBOY CHAPS &7Blocked &eStitches Pet &7[" + player.getName() + "&7] &6&l*"));
+                casted.sendMessage(CC.translate("&6&l* COWBOY CHAPS &7Blocked &eStitches Pet &7[" + player.getName() + "&7] &6&l*"));
                 player.sendMessage(CC.translate("&6&l* &f" + casted.getName() + " &7Blocked &eStitches Pet &7[&6&lCowboy Chaps&7] &6&l*"));
+                return  false;
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped(casted, SkinType.MMM_BACK_TO_SCHOOL_2021_BOOTS)) {
+                casted.sendMessage(CC.translate("&8&l* &2&l&nMUTATED&r &8&lBIG TIMBS &7Blocked &eStitches Pet &7[" + player.getName() + "&7] &8&l*"));
+                player.sendMessage(CC.translate("&8&l* &f" + casted.getName() + " &7Blocked &eStitches Pet &7[&2&l&nMUTATED&r &8&lBIG TIMBS&7] &6&l*"));
                 return  false;
             }
 

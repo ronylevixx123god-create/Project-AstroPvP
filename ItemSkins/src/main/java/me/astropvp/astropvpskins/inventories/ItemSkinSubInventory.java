@@ -1,14 +1,11 @@
 package me.astropvp.astropvpskins.inventories;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.ArrayList;
 import java.util.Arrays;
 
-import javafx.scene.control.Skin;
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -45,8 +42,8 @@ public class ItemSkinSubInventory {
     public static ItemStack createBackButton() {
         ItemStack item = new ItemStack(Material.ARROW);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(String.valueOf(CC.RedB) + "<- Go Back");
-        meta.setLore(Arrays.asList(new String[] { String.valueOf(CC.Gray) + "Click to return to", String.valueOf(CC.Gray) + "the main skins menu." }));
+        meta.setDisplayName(CC.RedB + "<- Go Back");
+        meta.setLore(Arrays.asList(CC.Gray + "Click to return to", CC.Gray + "the main skins menu."));
         item.setItemMeta(meta);
         return item;
     }
