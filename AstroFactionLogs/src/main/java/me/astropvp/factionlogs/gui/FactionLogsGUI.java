@@ -12,14 +12,37 @@ import me.astropvp.factionlogs.struct.FactionLog;
 import me.astropvp.factionlogs.struct.impl.*;
 import me.astropvp.factionlogs.utils.*;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collections;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 public class FactionLogsGUI {
+
+    private static final File file;
+    private static final FileConfiguration outputFile;
+
+    static {
+        File filePath = new File(FactionLogs.getInstance().getDataFolder().getPath() + "errors.yml");
+
+        if (!filePath.isFile()) {
+            try {
+                filePath.createNewFile();
+            } catch (IOException exc) {
+                exc.printStackTrace();
+            }
+        }
+
+        file = filePath;
+        outputFile = YamlConfiguration.loadConfiguration(filePath);
+    }
 
     @Getter
     private final PaginatedGui fLogGui;
@@ -63,7 +86,22 @@ public class FactionLogsGUI {
                             break;
                         case PLAYER_LEAVE:
                             PlayerLeave playerLeave = (PlayerLeave) log;
-                            item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(playerLeave.getUuid())).getName() + " &7left the faction due to &e" + playerLeave.getPlayerLeaveReason().name().toLowerCase() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                            try {
+                                item.addLoreLine(CC.translate(prefix + Bukkit.getOfflinePlayer(UUID.fromString(playerLeave.getUuid())).getName() + " &7left the faction due to &e" + playerLeave.getPlayerLeaveReason().name().toLowerCase() + "&7. &8(&7" + TimeDateUtils.splitToComponentTimes((System.currentTimeMillis() - log.getTime()) / 1000) + "ago&8)"));
+                            } catch (Exception exc) {
+                                System.out.println("Player null: " + Bukkit.getOfflinePlayer(UUID.fromString(playerLeave.getUuid())).getName());
+
+                                ConfigurationSection currentSection = outputFile.createSection(Long.toString(System.currentTimeMillis()));
+
+                                currentSection.set("p-null", Bukkit.getOfflinePlayer(UUID.fromString(playerLeave.getUuid())) == null);
+                                currentSection.set("reason", playerLeave.getPlayerLeaveReason() == null);
+
+                                try {
+                                    outputFile.save(file);
+                                } catch (Exception ioException) {
+                                    ioException.printStackTrace();
+                                }
+                            }
                             break;
                         case CHUNKBUST:
                             ChunkBust chunkBust = (ChunkBust) log;
