@@ -74,13 +74,13 @@ public class LootboxCmd
     @Default
     @CommandPermission(value = "decimatelootboxes.admin")
     public void onDefaultCommand(CommandSender sender) {
-        CommonsUtil.sendMessage((CommandSender) sender, HELP_MESSAGE);
+        CommonsUtil.sendMessage(sender, HELP_MESSAGE);
     }
 
     @Subcommand(value = "list")
     @CommandPermission(value = "decimatelootboxes.admin")
     public void onListCommand(CommandSender sender) {
-        this.lootboxManager.getLootboxes().forEach(lootbox -> CommonsUtil.sendMessage((CommandSender) sender, (String) (lootbox.getDisplayItem().getItemMeta().getDisplayName() + "&r &8- &f&l(" + lootbox.getName() + "&f&l)")));
+        this.lootboxManager.getLootboxes().forEach(lootbox -> CommonsUtil.sendMessage(sender, lootbox.getDisplayItem().getItemMeta().getDisplayName() + "&r &8- &f&l(" + lootbox.getName() + "&f&l)"));
     }
 
     @Subcommand(value = "give")
@@ -93,10 +93,10 @@ public class LootboxCmd
         Optional<Lootbox> lootboxOptional = this.lootboxManager.getLootbox(lootboxName);
         lootboxOptional.ifPresent(lootbox -> {
             IntStream.range(0, finalAmount).forEach(i -> lootbox.giveItemTo(player.getPlayer(), this.lootboxManager));
-            CommonsUtil.sendMessage((CommandSender) sender, (String) ("&a&l(&f!&a&l) &aLootbox given to &f" + player.getPlayer().getName()));
+            CommonsUtil.sendMessage(sender, "&a&l(&f!&a&l) &aLootbox given to &f" + player.getPlayer().getName());
         });
         if (!lootboxOptional.isPresent()) {
-            CommonsUtil.sendMessage((CommandSender) sender, (String) ("&c&l(!) &cNo lootbox found for &7[" + lootboxName + "]"));
+            CommonsUtil.sendMessage(sender, "&c&l(!) &cNo lootbox found for &7[" + lootboxName + "]");
         }
     }
 
@@ -110,11 +110,11 @@ public class LootboxCmd
     @CommandPermission(value = "decimatelootboxes.admin")
     public void onCloneCommand(Player player, String name, String cloneName) {
         if (this.lootboxManager.getLootbox(cloneName).isPresent()) {
-            CommonsUtil.sendMessage((CommandSender) player, (String) ("&c&l(!) &cThat lootbox already exists! &7[" + cloneName + "]"));
+            CommonsUtil.sendMessage(player, "&c&l(!) &cThat lootbox already exists! &7[" + cloneName + "]");
             return;
         }
         if (!this.lootboxManager.getLootbox(name).isPresent()) {
-            CommonsUtil.sendMessage((CommandSender) player, (String) ("&c&l(!) &cThat lootbox does not exist! &7[" + name + "]"));
+            CommonsUtil.sendMessage(player, "&c&l(!) &cThat lootbox does not exist! &7[" + name + "]");
         }
         this.lootboxManager.getLootbox(name).ifPresent(lootbox -> {
             IncompleteLootbox incompleteLootbox = new IncompleteLootbox(lootbox);
@@ -127,11 +127,11 @@ public class LootboxCmd
     @CommandPermission(value = "decimatelootboxes.admin")
     public void onRenameCommand(Player player, String name, String targetName) {
         if (this.lootboxManager.getLootbox(targetName).isPresent()) {
-            CommonsUtil.sendMessage((CommandSender) player, (String) ("&c&l(!) &cThat lootbox already exists! &7[" + targetName + "]"));
+            CommonsUtil.sendMessage(player, "&c&l(!) &cThat lootbox already exists! &7[" + targetName + "]");
             return;
         }
         if (!this.lootboxManager.getLootbox(name).isPresent()) {
-            CommonsUtil.sendMessage((CommandSender) player, (String) ("&c&l(!) &cThat lootbox does not exist! &7[" + name + "]"));
+            CommonsUtil.sendMessage(player, "&c&l(!) &cThat lootbox does not exist! &7[" + name + "]");
         }
         this.lootboxManager.getLootbox(name).ifPresent(lootbox -> {
             IncompleteLootbox incompleteLootbox = new IncompleteLootbox(lootbox);
@@ -146,11 +146,11 @@ public class LootboxCmd
     public void onEditCommand(Player player, String name) {
         Optional<Lootbox> lootbox = this.lootboxManager.getLootbox(name);
         if (!lootbox.isPresent()) {
-            CommonsUtil.sendMessage((CommandSender) player, (String) "&c&l(!) &cThat lootbox does not exist!");
+            CommonsUtil.sendMessage(player, "&c&l(!) &cThat lootbox does not exist!");
             return;
         }
         if (!this.creationManager.startEditingSession(player, lootbox.get(), this.lootboxManager)) {
-            CommonsUtil.sendMessage((CommandSender) player, (String) "&c&l(!) &cThere was a problem instantiating your edit session!");
+            CommonsUtil.sendMessage(player, "&c&l(!) &cThere was a problem instantiating your edit session!");
         }
     }
 
@@ -160,12 +160,12 @@ public class LootboxCmd
         if (this.confirmingPlayers.containsKey(sender.getName()) && this.confirmingPlayers.get(sender.getName()).equalsIgnoreCase(name)) {
             boolean success = this.lootboxManager.removeLootbox(name);
             if (success) {
-                CommonsUtil.sendMessage((CommandSender) sender, (String) ("&a&lSUCCESS! &aLootbox &f" + name + " &awas removed."));
+                CommonsUtil.sendMessage(sender, "&a&lSUCCESS! &aLootbox &f" + name + " &awas removed.");
             } else {
-                CommonsUtil.sendMessage((CommandSender) sender, (String) ("&c&lFAILURE! &cLootbox &f" + name + " &ccould not be removed."));
+                CommonsUtil.sendMessage(sender, "&c&lFAILURE! &cLootbox &f" + name + " &ccould not be removed.");
             }
         } else {
-            CommonsUtil.sendMessage((CommandSender) sender, (String) "&a&lAre you sure? &aThis will permanently delete the lootbox. Type the command again to confirm.");
+            CommonsUtil.sendMessage(sender, "&a&lAre you sure? &aThis will permanently delete the lootbox. Type the command again to confirm.");
             this.confirmingPlayers.put(sender.getName(), name);
         }
     }
@@ -181,18 +181,18 @@ public class LootboxCmd
     @Syntax(value = "<name/lore/both> <query>")
     public void onSearchCommand(Player player, String type, String[] rawQuery) {
         String query = String.join(" ", rawQuery);
-        String noColorQuery = CommonsUtil.stripColor((String) query).toLowerCase();
+        String noColorQuery = CommonsUtil.stripColor(query).toLowerCase();
         int searchType = type.equalsIgnoreCase("name") ? 0 : (type.equalsIgnoreCase("lore") ? 1 : 2);
         Predicate<List<RewardItem>> containsQuery = list -> list.stream().anyMatch(rewardItem -> {
             if (rewardItem.getItem() == null || !rewardItem.getItem().hasItemMeta()) {
                 return false;
             }
             ItemMeta meta = rewardItem.getItem().getItemMeta();
-            if ((searchType == 2 || searchType == 1) && meta.hasLore() && meta.getLore().stream().anyMatch(s -> CommonsUtil.stripColor((String) s).toLowerCase().contains(noColorQuery))) {
+            if ((searchType == 2 || searchType == 1) && meta.hasLore() && meta.getLore().stream().anyMatch(s -> CommonsUtil.stripColor(s).toLowerCase().contains(noColorQuery))) {
                 return true;
             }
             if (searchType == 2 || searchType == 0) {
-                return meta.hasDisplayName() && CommonsUtil.stripColor((String) meta.getDisplayName()).toLowerCase().contains(noColorQuery);
+                return meta.hasDisplayName() && CommonsUtil.stripColor(meta.getDisplayName()).toLowerCase().contains(noColorQuery);
             }
             return false;
         });
@@ -200,7 +200,7 @@ public class LootboxCmd
         HashMap pluginLootboxesFound = Maps.newHashMap();
         this.foreignLootboxManager.getPluginManagers().forEach(manager -> pluginLootboxesFound.put(manager, manager.getLootboxes().stream().filter(lootbox -> containsQuery.test(lootbox.getRandomRewards()) || containsQuery.test(lootbox.getBonusRewards())).collect(Collectors.toList())));
         if (lootboxesFound.isEmpty() && pluginLootboxesFound.isEmpty()) {
-            player.sendMessage(CommonsUtil.color((String) "&c&l(!) &cNo results found."));
+            player.sendMessage(CommonsUtil.color("&c&l(!) &cNo results found."));
         } else {
             new LootboxSearchGui(this.lootboxManager, this.inventoryManager, this.creationManager, lootboxesFound, pluginLootboxesFound).getInventory().open(player);
         }

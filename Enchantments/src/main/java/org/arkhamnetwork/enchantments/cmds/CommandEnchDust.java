@@ -27,7 +27,7 @@ public class CommandEnchDust implements CommandExecutor {
             sender.sendMessage("/enchdust <player> <rarity> <success> [mystery]");
             return false;
         }
-        if (sender instanceof Player && !((Player) sender).isOp()) {
+        if (sender instanceof Player && !sender.isOp()) {
             return true;
         }
         final String p_name = args[0];
@@ -69,7 +69,7 @@ public class CommandEnchDust implements CommandExecutor {
         final boolean mystery = args.length == 4 && Boolean.valueOf(args[3]);
         final ItemStack i = mystery ? EnchantmentBook.getSecretDust(ir, successAdd) : ((args.length >= 3) ? EnchantmentBook.getMagicDust(ir, successAdd) : EnchantmentBook.getPlatinumMagicDust(ir, successAdd));
         if (pl.getInventory().firstEmpty() != -1) {
-            pl.getInventory().addItem(new ItemStack[]{i});
+            pl.getInventory().addItem(i);
         } else {
             pl.getWorld().dropItem(pl.getLocation(), i);
         }

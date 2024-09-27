@@ -16,6 +16,7 @@ public class CustomBlocksGui {
         this.gui = new PaginatedGui(3, 27, "Astro CustomBlocks");
         this.gui.setDefaultClickAction(event -> event.setCancelled(true));
         for (CustomBlockType type : CustomBlockType.values()) {
+            if(!type.isEnabled()) continue;
             this.gui.addItem(new GuiItem(type.getCustomBlockClass().newInstance() instanceof LevelAble ? type.build(1) : type.build(0), event -> {
                 if (player.isOp()) {
                     try {

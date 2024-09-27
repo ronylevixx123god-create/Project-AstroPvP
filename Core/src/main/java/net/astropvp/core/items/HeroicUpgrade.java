@@ -26,7 +26,7 @@ public class HeroicUpgrade extends CosmicItem
         return this.applyItemData((new ItemBuilder(Material.BLAZE_POWDER, CC.GoldB + "Heroic Weapon Upgrade"
                 , CC.Gray + "Apply this to any weapon"
                 , CC.Gray + "to turn it into a heroic weapon.",
-                CC.Gray + "",
+                CC.Gray,
                 CC.Gray + "You can only apply this to diamond swords/axes.").build())).build();
     }
 
@@ -50,7 +50,7 @@ public class HeroicUpgrade extends CosmicItem
 
         //cosmicData.setInt("heroicWeaponUpgrade", Integer.valueOf(1));
         e.setCancelled(true);
-        e.getWhoClicked().setItemOnCursor((ItemStack)null);
+        e.getWhoClicked().setItemOnCursor(null);
         //clickedWrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
         //clicked = clickedWrapper.build();
 

@@ -17,9 +17,10 @@ import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.language.Language;
-import me.venir.astrocollectors.utils.ChunkUtil;
 import me.venir.astrocollectors.utils.Utils;
 import net.astropvp.core.utils.OutpostUtil;
+import net.astropvp.customblocks.CustomBlocksAPI;
+import net.astropvp.customblocks.struct.CustomBlockType;
 import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.World;
@@ -33,10 +34,7 @@ import org.json.simple.JSONObject;
 
 import java.lang.ref.Reference;
 import java.lang.ref.WeakReference;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
+import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 
@@ -63,7 +61,8 @@ public final class Collector {
 
     private final ItemStack mysteryLootbox = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("GrindingLootbox").createClaimableItem(false);
 
-
+    @Getter
+    private List<EntityType> boosters;
 
     public Collector(World world, JSONObject data) {
         this.reference = new WeakReference<>(world);
@@ -109,8 +108,11 @@ public final class Collector {
         this.hologram = HologramsAPI.createHologram(AstroCollectors.INSTANCE, holoLoc);
         hologram.appendTextLine(CC.translate("&a&lChunk Collector"));
         hologram.appendTextLine(CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
-        hologram.appendTextLine(CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(getLootboxes())));
         hologram.appendTextLine(CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
+        //hologram.appendTextLine(CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(getLootboxes())));
+
+        this.boosters = new ArrayList<>();
+        this.updateBoosters();
     }
 
     public Collector(Location location) {
@@ -134,21 +136,32 @@ public final class Collector {
         this.hologram = HologramsAPI.createHologram(AstroCollectors.INSTANCE, holoLoc);
         hologram.appendTextLine(CC.translate("&a&lChunk Collector"));
         hologram.appendTextLine(CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
-        hologram.appendTextLine(CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(getLootboxes())));
         hologram.appendTextLine(CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
+        //hologram.appendTextLine(CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(getLootboxes())));
+
+        this.boosters = new ArrayList<>();
+        this.updateBoosters();
     }
 
     public void scanSpawners(Location location) {
-
         for (BlockState blockState : location.getChunk().getTileEntities()) {
             if (blockState instanceof CreatureSpawner) {
                 if (AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(blockState.getLocation()) != null) {
                     SpawnerData data = AstroSpawners.getInstance().getSpawnerManager().getSpawnerData(blockState.getLocation());
                     if (data.getEntityType() == EntityType.BLAZE) continue;
+                    if(blockState.getY() < 200) continue;
                     this.spawnersInChunk.put(data.getEntityType(), data.getSpawnerAmount());
                 }
             }
         }
+    }
+
+    public void addBooster(EntityType entity) {
+        this.boosters.add(entity);
+    }
+
+    public void removeBooster(EntityType entity) {
+        this.boosters.remove(entity);
     }
 
     public void sellWorth(Player player) {
@@ -201,11 +214,16 @@ public final class Collector {
         long secondsPassed = (current - this.getLastUpdated()) / 1000;
         double total = 0;
 
+
         for (Map.Entry<EntityType, Integer> entry : getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amountSpawners = entry.getValue();
             total += AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerSecond(type) * secondsPassed * amountSpawners;
-
+            if(!(this.getBoosters() == null) && !this.getBoosters().isEmpty()) {
+                if (this.boosters.contains(type)) {
+                    total *= 1.2;
+                }
+            }
         }
         if (HCFOutpostAPI.isControllingOutpost(FactionUtils.getFactionAt(this.getLocation()), OutpostType.THE_GREAT_HALL)) {
             total *= 1.25;
@@ -215,6 +233,31 @@ public final class Collector {
             total *= 1.25;
         }
         return total;
+    }
+
+    public void updateBoosters() {
+        List<EntityType> entityTypes = Arrays.asList(EntityType.ENDERMAN, EntityType.IRON_GOLEM, EntityType.MUSHROOM_COW, EntityType.GHAST, EntityType.SNOWMAN);
+        for (EntityType entityType : entityTypes) {
+            if(checkCustomBlocks(entityType)) {
+                this.boosters.add(entityType);
+            }
+        }
+    }
+
+    private boolean checkCustomBlocks(EntityType type) {
+        switch (type) {
+            case ENDERMAN:
+                return CustomBlocksAPI.chunkContainsCustomBlock(this.getLocation(), CustomBlockType.ENDERMAN_AUTO_SELL_BOT);
+            case IRON_GOLEM:
+                return CustomBlocksAPI.chunkContainsCustomBlock(this.getLocation(), CustomBlockType.IRON_GOLEM_AUTO_SELL_BOT);
+            case MUSHROOM_COW:
+                return CustomBlocksAPI.chunkContainsCustomBlock(this.getLocation(), CustomBlockType.MUSHROOM_COW_AUTO_SELL_BOT);
+            case GHAST:
+                return CustomBlocksAPI.chunkContainsCustomBlock(this.getLocation(), CustomBlockType.GHAST_AUTO_SELL_BOT);
+            case SNOWMAN:
+                return CustomBlocksAPI.chunkContainsCustomBlock(this.getLocation(), CustomBlockType.SNOWMAN_GOLEM_AUTO_SELL_BOT);
+        }
+        return false;
     }
 
     private int calculateTnt() {
@@ -284,8 +327,8 @@ public final class Collector {
 
     public void updateHologram() {
         updateHologramLine(1, CC.translate("&7TnT: &c" + NumberUtils.formatMoney(tnt)));
-        updateHologramLine(3, CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
-        updateHologramLine(2, CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(lootboxes)));
+        updateHologramLine(2, CC.translate("&7Worth: &2$&a" + NumberUtils.formatMoney(getWorth())));
+        //updateHologramLine(3, CC.translate("&7Lootboxes: &6" + NumberUtils.formatMoney(lootboxes)));
 
     }
 
@@ -343,4 +386,5 @@ public final class Collector {
         if (textLine == null) return;
         textLine.setText(newText);
     }
+
 }

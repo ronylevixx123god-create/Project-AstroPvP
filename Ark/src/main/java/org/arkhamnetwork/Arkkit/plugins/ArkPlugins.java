@@ -3,7 +3,6 @@ package org.arkhamnetwork.Arkkit.plugins;
 import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.PlayerVaultGUI;
 import org.arkhamnetwork.Arkkit.patches.*;
-import org.arkhamnetwork.Arkkit.patches.balancetop.BalanceTop;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.createtitle.CreateTitle;
@@ -49,7 +48,7 @@ public enum ArkPlugins {
     ITEM_ID(new ItemID(Arkkit.get()), "Enables Item ID tracking."),
     GOLDEN_APPLE_SICKNESS(new GoldenAppleSickness(Arkkit.get()), "Enables golden apple sickness."),
     CLEAR_INVENTORY_CONFIRM(new ClearInventoryConfirm(Arkkit.get()), "Adds confirmation support to /clearinventory net.astropvp.armorsets.commands."),
-    BALANCE_TOP(new BalanceTop(Arkkit.get()), "Enables compilex optimized /baltop."),
+    //BALANCE_TOP(new BalanceTop(Arkkit.get()), "Enables compilex optimized /baltop."),
     ANTI_LAG(new AntiLag(Arkkit.get()), "Automatically reboots servers with >9H uptime and <17TPS"),
     SAFE_SHUTDOWN(new SafeShutdown(Arkkit.get()), "Safely unloads all loaded chunks on shutdown."),
     LAVA_SPONGE(new LavaSponge(Arkkit.get()), "Adds capability for sponges to absorb lava."),

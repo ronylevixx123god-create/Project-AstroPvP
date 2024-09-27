@@ -2,10 +2,9 @@ package net.astropvp.lootfilter.guis;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
-import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
-
 import net.astropvp.lootfilter.AstroLootFilterPlugin;
 import net.astropvp.loottable.struct.LootTable;
 import org.bukkit.Bukkit;
@@ -14,10 +13,10 @@ import java.util.UUID;
 
 @Getter
 public class LootFilterMainGUI {
-    private final PaginatedGui lootFilterMainGUI;
+    private final Gui lootFilterMainGUI;
 
     public LootFilterMainGUI(UUID uuid) {
-        this.lootFilterMainGUI = new PaginatedGui(3, 9, "Loot Filter Menu");
+        this.lootFilterMainGUI = new Gui(3, "Loot Filter Menu");
         this.lootFilterMainGUI.setDefaultClickAction(event -> event.setCancelled(true));
         for (LootTable lootTable : LootTable.values()) {
             lootFilterMainGUI.addItem(new GuiItem(new ItemBuilder(lootTable.getMaterial(), CC.translate(lootTable.getColor() + "&l" + lootTable.getFancy() + " Filter"))

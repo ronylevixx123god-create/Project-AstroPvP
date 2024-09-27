@@ -1,12 +1,12 @@
 package me.kingsavaqe.cagepvp.wildpvp;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.bukkit.Chunk;
 import org.bukkit.entity.Player;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class WildPvPManager {
    private final AstroCagePvP instance;

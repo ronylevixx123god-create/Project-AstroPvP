@@ -6,7 +6,6 @@
  */
 package com.compilex.CosmicDungeons.dungeons.events;
 
-import com.compilex.CosmicDungeons.dungeons.events.RegionEvent;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import org.bukkit.ChatColor;
 

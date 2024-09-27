@@ -75,8 +75,8 @@ final class CommandBalance
                 return true;
             }
             BigDecimal bal = target.getMoney();
-            sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + target.getName() + "'s Balance: " + ChatColor.WHITE + "$" + this.formatMoney(target.getMoney()));
-            if (user.getMoney().compareTo(target.getMoney()) == 1) {
+            sender.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + target.getName() + "'s Balance: " + ChatColor.WHITE + "$" + this.formatMoney(target.getMoney()));
+            if (user.getMoney().compareTo(target.getMoney()) > 0) {
                 sender.sendMessage(ChatColor.GRAY + "You're richer than them!");
             } else if (user.getMoney().compareTo(target.getMoney()) == 0) {
                 sender.sendMessage(ChatColor.GRAY + "They're just as rich as you!");
@@ -85,7 +85,7 @@ final class CommandBalance
             }
         } else if (args.length < 2) {
             BigDecimal bal = user.getMoney();
-            user.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Your Balance: " + ChatColor.WHITE + "$" + this.formatMoney(bal));
+            user.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "Your Balance: " + ChatColor.WHITE + "$" + this.formatMoney(bal));
             user.sendMessage(ChatColor.GRAY + "Use /withdraw or /pay to transfer funds.");
         }
         return true;
@@ -126,7 +126,7 @@ final class CommandBalance
         return s.contains(".") ? s.split("\\.")[0] + ChatColor.GRAY + "." + s.split("\\.")[1] : s;
     }
 
-    protected User getPlayer(Server server, CommandSource sender, String[] args, int pos) throws PlayerNotFoundException, NotEnoughArgumentsException {
+    private User getPlayer(Server server, CommandSource sender, String[] args, int pos) throws PlayerNotFoundException, NotEnoughArgumentsException {
         if (sender.isPlayer()) {
             User user = Balance.ess3.getUser(sender.getPlayer());
             return this.getPlayer(server, user, args, pos);
@@ -134,7 +134,7 @@ final class CommandBalance
         return this.getPlayer(server, args, pos, true, false);
     }
 
-    protected User getPlayer(Server server, CommandSource sender, String searchTerm) throws PlayerNotFoundException, NotEnoughArgumentsException {
+    private User getPlayer(Server server, CommandSource sender, String searchTerm) throws PlayerNotFoundException, NotEnoughArgumentsException {
         if (sender.isPlayer()) {
             User user = Balance.ess3.getUser(sender.getPlayer());
             return this.getPlayer(server, user, searchTerm, user.canInteractVanished(), false);
@@ -142,11 +142,11 @@ final class CommandBalance
         return this.getPlayer(server, searchTerm, true, false);
     }
 
-    protected User getPlayer(Server server, User user, String[] args, int pos) throws PlayerNotFoundException, NotEnoughArgumentsException {
+    private User getPlayer(Server server, User user, String[] args, int pos) throws PlayerNotFoundException, NotEnoughArgumentsException {
         return this.getPlayer(server, user, args, pos, user.canInteractVanished(), false);
     }
 
-    protected User getPlayer(Server server, String[] args, int pos, boolean getHidden, boolean getOffline) throws PlayerNotFoundException, NotEnoughArgumentsException {
+    private User getPlayer(Server server, String[] args, int pos, boolean getHidden, boolean getOffline) throws PlayerNotFoundException, NotEnoughArgumentsException {
         return this.getPlayer(server, null, args, pos, getHidden, getOffline);
     }
 
@@ -160,7 +160,7 @@ final class CommandBalance
         return this.getPlayer(server, sourceUser, args[pos], getHidden, getOffline);
     }
 
-    protected User getPlayer(Server server, String searchTerm, boolean getHidden, boolean getOffline) throws PlayerNotFoundException {
+    private User getPlayer(Server server, String searchTerm, boolean getHidden, boolean getOffline) throws PlayerNotFoundException {
         return this.getPlayer(server, null, searchTerm, getHidden, getOffline);
     }
 

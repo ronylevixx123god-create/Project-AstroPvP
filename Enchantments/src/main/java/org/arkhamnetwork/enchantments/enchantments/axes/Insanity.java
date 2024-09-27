@@ -1,12 +1,9 @@
 package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.rit.sucy.CustomEnchantment;
-import org.arkhamnetwork.enchantments.util.GeneralCooldown;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Insanity extends CustomEnchantment {
     public Insanity() {
@@ -22,7 +19,7 @@ public class Insanity extends CustomEnchantment {
             return;
         }
 
-        final double mod = 1.0 + 0.02 * level;
+        final double mod = 1.0 + (0.02 * level);
         e.setDamage(e.getDamage() * mod);
     }
 }

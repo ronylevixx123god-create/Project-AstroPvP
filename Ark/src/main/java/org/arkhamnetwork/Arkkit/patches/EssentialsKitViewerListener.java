@@ -55,7 +55,7 @@ final class EssentialsKitViewerListener
 
     @EventHandler(ignoreCancelled = true)
     public void onPlayerCommandPreProcess(PlayerCommandPreprocessEvent e) {
-        if (e.getMessage().toLowerCase().equals("/kit") || e.getMessage().toLowerCase().equals("/kits") || e.getMessage().toLowerCase().equals("/essentials:kit") || e.getMessage().toLowerCase().equals("/essentials:kits") || e.getMessage().toLowerCase().equals("/essentials:ekit") || e.getMessage().toLowerCase().equals("/essentials:ekits")) {
+        if (e.getMessage().equalsIgnoreCase("/kit") || e.getMessage().equalsIgnoreCase("/kits") || e.getMessage().equalsIgnoreCase("/essentials:kit") || e.getMessage().equalsIgnoreCase("/essentials:kits") || e.getMessage().equalsIgnoreCase("/essentials:ekit") || e.getMessage().equalsIgnoreCase("/essentials:ekits")) {
             Player pl = e.getPlayer();
             e.setCancelled(true);
             if (Bukkit.getPluginManager().isPluginEnabled("CosmicGlobalKits")) {
@@ -96,7 +96,9 @@ final class EssentialsKitViewerListener
                 }
                 Player pl = (Player) e.getWhoClicked();
                 pl.closeInventory();
-                pl.chat("/kit " + warp);
+                Bukkit.getScheduler().runTaskLater(Arkkit.get(), () -> pl.chat("/kit " + warp), 3L);
+                //pl.performCommand("kit " + warp);
+                //pl.chat("/kit " + warp);
                 pl.playSound(pl.getLocation(), Sound.CLICK, 1.0f, 0.75f);
             }
         }
@@ -116,11 +118,11 @@ final class EssentialsKitViewerListener
         }
         boolean masteryKits = Bukkit.getPluginManager().isPluginEnabled("CosmicArmorSets");
         this.kitMenuSelector = Bukkit.createInventory(null, masteryKits ? 18 : 9, "Choose a kit category...");
-        this.kitMenuSelector.setItem(3, ItemUtils.buildItem(Material.BED, (short) 0, ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Rank Kits", ChatColor.GRAY + "Kits unlocked through rank purchases", "", ChatColor.YELLOW.toString() + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
+        this.kitMenuSelector.setItem(3, ItemUtils.buildItem(Material.BED, (short) 0, ChatColor.YELLOW.toString() + ChatColor.BOLD + "Rank Kits", ChatColor.GRAY + "Kits unlocked through rank purchases", "", ChatColor.YELLOW.toString() + ChatColor.UNDERLINE + "buy.astropvp.net"));
         if (Bukkit.getPluginManager().isPluginEnabled("CosmicEvolutionKits")) {
-            this.kitMenuSelector.setItem(4, ItemUtils.buildItem(Material.BLAZE_POWDER, (short) 0, ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD.toString() + "Evolution Kits", ChatColor.GRAY + "Powerful kits that have a chance to", ChatColor.GRAY + "evolve each time you redeem them.", "", ChatColor.DARK_PURPLE.toString() + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
+            this.kitMenuSelector.setItem(4, ItemUtils.buildItem(Material.BLAZE_POWDER, (short) 0, ChatColor.DARK_PURPLE.toString() + ChatColor.BOLD + "Evolution Kits", ChatColor.GRAY + "Powerful kits that have a chance to", ChatColor.GRAY + "evolve each time you redeem them.", "", ChatColor.DARK_PURPLE.toString() + ChatColor.UNDERLINE + "buy.astropvp.net"));
         }
-        this.kitMenuSelector.setItem(5, ItemUtils.buildItem(Material.NETHER_STAR, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "Cosmic Kits", ChatColor.GRAY + "Limited edition kits containing some", ChatColor.GRAY + "of the rarest items in the game.", "", ChatColor.GOLD + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
+        this.kitMenuSelector.setItem(5, ItemUtils.buildItem(Material.NETHER_STAR, (short) 0, ChatColor.GOLD.toString() + ChatColor.BOLD + "Cosmic Kits", ChatColor.GRAY + "Limited edition kits containing some", ChatColor.GRAY + "of the rarest items in the game.", "", ChatColor.GOLD + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         if (masteryKits) {
             this.kitMenuSelector.setItem(13, ItemUtils.buildItem(Material.DIAMOND, (short) 0, CC.RedB + "Mastery Kits", ChatColor.GRAY + "Godly kits only the most skilled", ChatColor.GRAY + "players are capable of unlocking.", "", ChatColor.RED + ChatColor.UNDERLINE.toString() + "buy.astropvp.net"));
         }
@@ -145,7 +147,7 @@ final class EssentialsKitViewerListener
                 err.printStackTrace();
             }
             long cooldown_left_ms = (long) (delay_ms - (double) (System.currentTimeMillis() - ess_usr.getKitTimestamp(kit_name)));
-            warp_items.add(ItemUtils.buildItem(cooldown_left_ms > 0L ? Material.STAINED_GLASS_PANE : (pl.hasPermission("essentials.kits." + data.getKey().toLowerCase()) ? data.getValue() : Material.STAINED_GLASS_PANE), cooldown_left_ms > 0L ? (short) 4 : (pl.hasPermission("essentials.kits." + data.getKey().toLowerCase()) ? (short) 0 : 14), ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + this.toCamelCase(data.getKey()) + " Kit", pl.hasPermission("essentials.kits." + data.getKey().toLowerCase()) ? ChatColor.RED + (cooldown_left_ms > 0L ? ChatColor.RED.toString() + "Cooldown over in " + this.getCooldownString(cooldown_left_ms / 1000L) + "!" : ChatColor.AQUA.toString() + "Click to redeem this kit!") : ChatColor.RED.toString() + "Purchase a higher rank at " + ChatColor.UNDERLINE + Arkkit.get().getConfig().getString("language.spigot_branding.store_url")));
+            warp_items.add(ItemUtils.buildItem(cooldown_left_ms > 0L ? Material.STAINED_GLASS_PANE : (pl.hasPermission("essentials.kits." + data.getKey().toLowerCase()) ? data.getValue() : Material.STAINED_GLASS_PANE), cooldown_left_ms > 0L ? (short) 4 : (pl.hasPermission("essentials.kits." + data.getKey().toLowerCase()) ? (short) 0 : 14), ChatColor.YELLOW.toString() + ChatColor.BOLD + this.toCamelCase(data.getKey()) + " Kit", pl.hasPermission("essentials.kits." + data.getKey().toLowerCase()) ? ChatColor.RED + (cooldown_left_ms > 0L ? ChatColor.RED + "Cooldown over in " + this.getCooldownString(cooldown_left_ms / 1000L) + "!" : ChatColor.AQUA + "Click to redeem this kit!") : ChatColor.RED + "Purchase a higher rank at " + ChatColor.UNDERLINE + Arkkit.get().getConfig().getString("language.spigot_branding.store_url")));
         }
         pl.playSound(pl.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.67f);
         pl.openInventory(this.buildWarpInventory(warp_items));
@@ -160,7 +162,7 @@ final class EssentialsKitViewerListener
 
     private String getCooldownString(long l) {
         int day = (int) TimeUnit.SECONDS.toDays(l);
-        long hours = TimeUnit.SECONDS.toHours(l) - (long) (day * 24);
+        long hours = TimeUnit.SECONDS.toHours(l) - (long) (day * 24L);
         long minute = TimeUnit.SECONDS.toMinutes(l) - TimeUnit.SECONDS.toHours(l) * 60L;
         long second = TimeUnit.SECONDS.toSeconds(l) - TimeUnit.SECONDS.toMinutes(l) * 60L;
         return (day > 0 ? day + "d" : "") + hours + "h " + minute + "m " + second + "s";

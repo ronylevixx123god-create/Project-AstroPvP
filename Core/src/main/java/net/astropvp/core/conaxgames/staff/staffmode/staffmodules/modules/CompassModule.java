@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+/*
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.InteractModule;
 import org.bukkit.Material;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -15,3 +16,5 @@ public class CompassModule extends InteractModule {
 
     }
 }
+
+ */

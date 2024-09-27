@@ -3,7 +3,6 @@ package me.ily2bb.slotbot.listener;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.massivecraft.factions.FPlayer;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
@@ -12,8 +11,8 @@ import me.ily2bb.slotbot.CosmicSlotBotAPI;
 import me.ily2bb.slotbot.SlotBotPlugin;
 import me.ily2bb.slotbot.managers.SlotBotManager;
 import me.ily2bb.slotbot.objects.ItemDeleter;
-import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.GuiItems;
+import me.ily2bb.slotbot.utils.Inventories;
 import me.ily2bb.slotbot.utils.Utils;
 import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
@@ -23,7 +22,7 @@ import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -31,16 +30,15 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 
 public class SlotBotInventoryListener implements Listener {
     public static void returnTickets(int tickets, Player player) {
-        player.sendMessage(String.valueOf(CC.GreenB) + "(!) " + CC.Green + "The bot has returned " + tickets + " " + ((tickets > 1) ? "tickets" : "ticket") + " to your inventory.");
+        player.sendMessage(CC.GreenB + "(!) " + CC.Green + "The bot has returned " + tickets + " " + ((tickets > 1) ? "tickets" : "ticket") + " to your inventory.");
         for (int i = 0; i < tickets; i++) {
             if (!Utils.isInventoryFull(player)) {
-                player.getInventory().addItem(new ItemStack[]{CosmicSlotBotAPI.createSlotBotItem()});
+                player.getInventory().addItem(CosmicSlotBotAPI.createSlotBotItem());
             } else {
                 player.getWorld().dropItem(player.getLocation(), CosmicSlotBotAPI.createSlotBotItem());
             }
@@ -63,7 +61,7 @@ public class SlotBotInventoryListener implements Listener {
             if (item.getType() == GuiItems.createLootTable().getType()) {
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.CHEST_OPEN, 3.0F, 1F);
-                Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createLootboxInventory(player.isOp())), 1L);
+                Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createLootboxInventory(player.isOp())), 1L);
             } else if (item.equals(GuiItems.createRoller(0))) {
                 if (tickets > 0)
                     returnTickets(1, player);
@@ -147,7 +145,7 @@ public class SlotBotInventoryListener implements Listener {
             if (item.equals(GuiItems.createBackButton())) {
                 player.closeInventory();
                 player.playSound(player.getLocation(), Sound.CHEST_CLOSE, 3.0F, 1F);
-                Bukkit.getScheduler().runTaskLater((Plugin) SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createInventory(0)), 1L);
+                Bukkit.getScheduler().runTaskLater(SlotBotPlugin.getInstance(), () -> player.openInventory(Inventories.createInventory(0)), 1L);
             } else {
                 if (!player.hasPermission("slotbot.item.delete"))
                     return;
@@ -209,7 +207,7 @@ public class SlotBotInventoryListener implements Listener {
         if (slots <= 0) {
             for (int i = 2; i <= 6; i++) {
                 if (player.hasMetadata("slot_rolling_" + i)) {
-                    player.removeMetadata("slot_rolling_" + i, (Plugin) SlotBotPlugin.getInstance());
+                    player.removeMetadata("slot_rolling_" + i, SlotBotPlugin.getInstance());
                 }
             }
             return;
@@ -259,7 +257,6 @@ public class SlotBotInventoryListener implements Listener {
             if(e.getEntity().getWorld().getName().contains("dungeon"))
                 return;
             e.setCancelled(true);
-            return;
         }
     }
 

@@ -1,8 +1,10 @@
 package me.astropvp.astrospacegrinding.listeners;
 
+
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
+import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.Clickable;
 import me.astropvp.astrospacegrinding.utils.StringUtils;
 import me.astropvp.astrospacegrinding.utils.TimeUtils;
@@ -18,8 +20,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-
-import me.astropvp.astrospacegrinding.enums.MonsterType;
 import org.bukkit.inventory.ItemStack;
 
 
@@ -34,7 +34,7 @@ public class SpaceMobListener implements Listener {
             event.getDrops().clear();
             event.setDroppedExp(0);
             for (ItemStack item : type.getInstance().getRewards(event.getEntity().getKiller(), event.getEntity())) {
-                LootFilterAPI.giveItem(entity.getKiller(), LootTable.RUINS, item);
+                LootFilterAPI.giveItem(entity.getKiller(), LootTable.SPACE, item);
                 //event.getDrops().add(item);
             }
             if (event.getEntity().getKiller() != null && event.getEntity().getKiller() != null) {
@@ -53,7 +53,7 @@ public class SpaceMobListener implements Listener {
 
                     for (Player player : Bukkit.getOnlinePlayers()) {
                         player.sendMessage("");
-                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✰&8» &b&l" + damager.getName() + "'s Space Land Stats" + " &8«&b✰&8»")));
+                        player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&8«&b✩&8» &b&l" + damager.getName() + "'s Space Land Stats" + " &8«&b✩&8»")));
                         player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Mobs Killed:&b " + totalMobKills)));
                         player.sendMessage(StringUtils.getCenteredMessage(CC.translate("&f* &7Time Spent:&b " + TimeUtils.format(data.getTimeInSpace()))));
                         player.sendMessage("");

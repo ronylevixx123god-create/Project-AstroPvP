@@ -1,17 +1,14 @@
 package me.astropvp.astrospacegrinding.entities.mobs;
 
-import java.util.List;
-import java.util.Random;
-
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import com.google.common.collect.Lists;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
-import me.astropvp.astrospacegrinding.data.ForceFieldData;
+import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import me.astropvp.astrospacegrinding.entities.SpaceMonster;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.ActionBarMessageUtils;
@@ -27,16 +24,18 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.entity.*;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.entity.Zombie;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.inventory.ItemStack;
-
-import com.google.common.collect.Lists;
-
-import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+
+import java.util.List;
+import java.util.Random;
 
 
 public class SpaceAlien extends SpaceMonster {
@@ -44,7 +43,7 @@ public class SpaceAlien extends SpaceMonster {
     @Override
     public LivingEntity spawn(Location location) {
 
-        Zombie entity = (Zombie) AstroSpaceGrindingAPI.getWorld().spawnEntity(location, EntityType.ZOMBIE);
+        Zombie entity = (Zombie) location.getWorld().spawnEntity(location, EntityType.ZOMBIE);
         entity.setCustomName(CC.GreenB + "Space Zombie");
         AstroSpaceGrindingPlugin.activeMonsters.remove(entity.getUniqueId());
 
@@ -84,6 +83,10 @@ public class SpaceAlien extends SpaceMonster {
         return entity;
     }
 
+    private boolean isInForcefieldWorld(Player player) {
+        return player.getLocation().getWorld().getName().equalsIgnoreCase("space");
+    }
+
 
     @Override
     public List<ItemStack> getRewards(Player player, LivingEntity entity) {
@@ -96,9 +99,18 @@ public class SpaceAlien extends SpaceMonster {
             int maxMoney = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxMoney");
             int minMoney = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMinMoney");
             int randomNumberMoney = random.nextInt(maxMoney - minMoney + 1) + minMoney;
+            if(isInForcefieldWorld(player)) {
+                randomNumberMoney *= 0.2;
+            }
+
+        /*
             if (ForceFieldData.findPlayer(player).isActive()) {
                 randomNumberMoney *= 0.7;
             }
+
+         */
+
+
             player.sendMessage(CC.translate("&a&l+ $" + NumberUtils.formatMoney(randomNumberMoney)));
             EconomyUtils.depositBalance(player, randomNumberMoney);
             player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 1, 1);
@@ -108,8 +120,14 @@ public class SpaceAlien extends SpaceMonster {
             int maxXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMaxXP");
             int minXP = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("spaceAlienMinXP");
             int randomNumberXP = random.nextInt(maxXP - minXP + 1) + minXP;
+            /*
             if (ForceFieldData.findPlayer(player).isActive()) {
                 randomNumberXP *= 0.70;
+            }
+
+             */
+            if(isInForcefieldWorld(player)) {
+                randomNumberXP *= 0.2D;
             }
             player.sendMessage(CC.translate("&a&l+ " + NumberUtils.formatMoney(randomNumberXP)) + " xp");
             player.giveExp(randomNumberXP);
@@ -129,8 +147,15 @@ public class SpaceAlien extends SpaceMonster {
             chance *= 2;
         }
 
+        /*
         if (ForceFieldData.findPlayer(player).isActive()) {
             chance *= 0.70;
+        }
+
+         */
+
+        if(isInForcefieldWorld(player)) {
+            chance *= 0.2;
         }
 
         if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE)) {
@@ -138,21 +163,22 @@ public class SpaceAlien extends SpaceMonster {
         }
 
 
-        if (Math.random() < chance / 100) {
-            rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
-            rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
-            rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
+        for (int i = 0; i < 3; i++) {
+            if (Math.random() < chance / 100) {
+                rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
 
-            if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET) && Math.random() < 0.15) {
-                player.sendMessage(CC.translate("&d&l(Radioactive Amulet) &dYou were &flucky&d and received &fdouble&d space loot."));
-                rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
-            }
-            if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE) && Math.random() < 0.35) {
-                player.sendMessage(CC.translate("&d&l(Space Stronghold) &dYou were &flucky&d and received &fdouble&d space loot."));
-                rewards.add(LootTableAPI.getRandomLootItem(LootTable.RUINS));
+                if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.NYE_AMULET) && Math.random() < 0.15) {
+                    player.sendMessage(CC.translate("&d&l(Radioactive Amulet) &dYou were &flucky&d and received &fdouble&d space loot."));
+                    rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
+                }
+                if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE) && Math.random() < 0.35) {
+                    player.sendMessage(CC.translate("&d&l(Space Stronghold) &dYou were &flucky&d and received &fdouble&d space loot."));
+                    rewards.add(LootTableAPI.getRandomLootItem(LootTable.SPACE));
 
+                }
             }
         }
+
 
         int amount = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("mobcoinAmount");
         if (Math.random() < AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("mobcoinChance") / 100) {

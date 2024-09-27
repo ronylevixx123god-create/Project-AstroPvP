@@ -3,19 +3,18 @@ package me.astropvp.astrospawners.ftop;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.Maps;
 import com.massivecraft.factions.Faction;
-import java.util.Map;
-
 import me.astropvp.astrospawners.AstroSpawners;
 import me.astropvp.astrospawners.utils.SortUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.EntityType;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Map;
 
 public class FactionsTopAPI {
     public static void recalculateFactionsTop() {
         FactionCacher.getData().clear();
-        Bukkit.getScheduler().runTaskAsynchronously((Plugin) AstroSpawners.getInstance(), (Runnable)new BukkitRunnable() {
+        Bukkit.getScheduler().runTaskAsynchronously(AstroSpawners.getInstance(), (Runnable)new BukkitRunnable() {
             public void run() {
                 Map<FactionData, Long> factions = Maps.newHashMap();
                 for (Faction faction : FactionUtils.getAllFactions()) {
@@ -39,7 +38,7 @@ public class FactionsTopAPI {
     public static Map<Integer, FactionData> getTopFactions(int from, int to) {
         Map<Integer, FactionData> data = Maps.newHashMap();
         for (Map.Entry<Integer, FactionData> entry : FactionCacher.getData().entrySet()) {
-            int value = ((Integer)entry.getKey()).intValue();
+            int value = entry.getKey().intValue();
             if (from <= value && to >= value)
                 data.put(Integer.valueOf(value), entry.getValue());
         }
@@ -62,6 +61,12 @@ public class FactionsTopAPI {
         switch (type) {
             case BLAZE:
                 return 0L;
+            case MUSHROOM_COW:
+                return 10000000L;
+            case GHAST:
+                return 20000000L;
+            case SNOWMAN:
+                return 40000000L;
             case IRON_GOLEM:
                 return 5000000L;
             case VILLAGER:

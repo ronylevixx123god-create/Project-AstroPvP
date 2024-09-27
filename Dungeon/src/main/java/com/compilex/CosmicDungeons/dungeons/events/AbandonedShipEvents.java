@@ -2,15 +2,6 @@ package com.compilex.CosmicDungeons.dungeons.events;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
-import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
-import com.compilex.CosmicDungeons.dungeons.events.ParkourRestrictionTask;
-import com.compilex.CosmicDungeons.dungeons.events.PlayerEnterBridge;
-import com.compilex.CosmicDungeons.dungeons.events.PlayerEnterHanger;
-import com.compilex.CosmicDungeons.dungeons.events.PlayerEnterMaze;
-import com.compilex.CosmicDungeons.dungeons.events.PlayerEnterParkourA;
-import com.compilex.CosmicDungeons.dungeons.events.PlayerEnterParkourB;
-import com.compilex.CosmicDungeons.dungeons.events.PlayerEnterTeleportationRoom;
 import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
 import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
@@ -21,50 +12,25 @@ import com.compilex.CosmicDungeons.utils.Logger;
 import com.compilex.CosmicDungeons.utils.MonsterUtils;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.gmail.filoghost.holograms.api.Hologram;
 import com.gmail.filoghost.holograms.api.HolographicDisplaysAPI;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import lombok.Getter;
 import lombok.Setter;
 import me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki;
 import me.ifamasssxd.cosmicbosses.struct.Boss;
 import me.ifamasssxd.cosmicbosses.struct.DamageTracker;
 import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTable;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.block.Action;
@@ -76,17 +42,19 @@ import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.loot.LootTables;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class AbandonedShipEvents
 extends DungeonEvents {
     private ParkourRestrictionTask parkourRestrictionTask;
-    private List<Block> blessLeverLocations = new ArrayList<Block>();
+    private final List<Block> blessLeverLocations = new ArrayList<Block>();
     private UUID singularDamager = null;
     @Getter @Setter
     private UUID firstBossUUID;
@@ -117,13 +85,13 @@ extends DungeonEvents {
     }
 
     private void loadTasks() {
-        this.parkourRestrictionTask = new ParkourRestrictionTask(this.dungeon, Lists.newArrayList(new String[]{"parkour_a", "parkour_b", "maze", "maze_start"}));
-        this.parkourRestrictionTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 10L, 10L);
+        this.parkourRestrictionTask = new ParkourRestrictionTask(this.dungeon, Lists.newArrayList("parkour_a", "parkour_b", "maze", "maze_start"));
+        this.parkourRestrictionTask.runTaskTimer(CosmicDungeonsPlugin.get_(), 10L, 10L);
     }
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onYijkiBoss_Death(EntityDeathEvent e) {
-        Boss boss = (Boss)Boss.bosses.get(e.getEntity().getUniqueId());
+        Boss boss = Boss.bosses.get(e.getEntity().getUniqueId());
         if (boss != null && boss instanceof DungeonYijki) {
             DungeonYijki dy = (DungeonYijki)boss;
             if (dy.getBossPhase() == DungeonYijki.BossPhase.PHASE_1) {
@@ -131,13 +99,13 @@ extends DungeonEvents {
                     for (int z = 230; z <= 235; ++z) {
                         for (int y = 89; y <= 92; ++y) {
                             Block b = e.getEntity().getWorld().getBlockAt(x, y, z);
-                            WorldUtil.sendWorldEffect((Block)b, (int)2001);
+                            WorldUtil.sendWorldEffect(b, 2001);
                             b.setType(Material.AIR);
                         }
                     }
                 }
-                BossUtils.createDungeonGhost((Location)e.getEntity().getLocation().add(0.0, 10.0, 0.0), (Location)new Location(this.dungeon.getWorld(), 22.0, 95.0, 233.0), (int)4);
-                this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "The Yijki is fleeing deeper into the collapsing ship! Locate and neutralize it before the ship falls apart!");
+                BossUtils.createDungeonGhost(e.getEntity().getLocation().add(0.0, 10.0, 0.0), new Location(this.dungeon.getWorld(), 22.0, 95.0, 233.0), 4);
+                this.dungeon.broadcastMessage(ChatColor.WHITE + "The Yijki is fleeing deeper into the collapsing ship! Locate and neutralize it before the ship falls apart!");
                 DamageTracker tracker = boss.getDamageTracker();
                 if (tracker.size() == 1) {
                     this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.GUARDIAN);
@@ -151,19 +119,19 @@ extends DungeonEvents {
                 this.checkForQuickKill(this.dungeon);
             } else if (dy.getBossPhase() == DungeonYijki.BossPhase.PHASE_2) {
                 UUID singleDamager;
-                this.dungeon.broadcastMessage((Object)ChatColor.WHITE + "The Yijki is heading for the teleportation room! After him, quickly! The ship cannot hold together much longer!");
+                this.dungeon.broadcastMessage(ChatColor.WHITE + "The Yijki is heading for the teleportation room! After him, quickly! The ship cannot hold together much longer!");
                 this.dungeon.setObjectiveHologram(null);
                 for (int x = -132; x < -126; ++x) {
                     for (int y2 = 79; y2 <= 85; ++y2) {
                         Block b2 = e.getEntity().getWorld().getBlockAt(x, y2, 163);
-                        WorldUtil.sendWorldEffect((Block)b2, (int)2001);
+                        WorldUtil.sendWorldEffect(b2, 2001);
                         b2.setType(Material.AIR);
                     }
                 }
-                BossUtils.createDungeonGhost((Location)e.getEntity().getLocation().add(0.0, 8.0, 0.0), (Location)new Location(this.dungeon.getWorld(), -132.0, 82.0, 163.0), (int)4);
+                BossUtils.createDungeonGhost(e.getEntity().getLocation().add(0.0, 8.0, 0.0), new Location(this.dungeon.getWorld(), -132.0, 82.0, 163.0), 4);
                 DamageTracker tracker = boss.getDamageTracker();
                 if (this.checkForDamage(tracker)) {
-                    if (this.dungeon.getDungeonChallengesCompleted().contains((Object)DungeonChallenge.TAG_TEAM)) {
+                    if (this.dungeon.getDungeonChallengesCompleted().contains(DungeonChallenge.TAG_TEAM)) {
                         this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.WELL_OILED_MACHINE);
                     } else {
                         this.dungeon.getDungeonChallengesCompleted().add(DungeonChallenge.TAG_TEAM);
@@ -190,9 +158,9 @@ extends DungeonEvents {
 
     @EventHandler
     public void onLogout(PlayerQuitEvent event) {
-        if (this.dungeon.getPlayers().contains((Object)event.getPlayer())) {
+        if (this.dungeon.getPlayers().contains(event.getPlayer())) {
             DungeonsAPI.get().getPlayerDungeonData(event.getPlayer()).leaveDungeon(true);
-            this.dungeon.getPlayers().remove((Object)event.getPlayer());
+            this.dungeon.getPlayers().remove(event.getPlayer());
         }
     }
 
@@ -200,14 +168,14 @@ extends DungeonEvents {
     public void onDungeonStateChange(DungeonStateChangeEvent e) {
         if (e.getDungeon().equals(this.dungeon)) {
             if (e.getOldState() == DungeonState.LOADING && e.getNewState() == DungeonState.IN_PROGRESS) {
-                e.getDungeon().broadcastMessage((Object)ChatColor.WHITE + "The dungeon portal has closed, it is time to begin!");
+                e.getDungeon().broadcastMessage(ChatColor.WHITE + "The dungeon portal has closed, it is time to begin!");
                 if (e.getDungeon().isHeroic()) {
                     e.getDungeon().getPlayers().forEach(p -> {
                         ChatUtils.sendCenteredMessage(p, e.getDungeon().getDungeonName());
-                        ChatUtils.sendCenteredMessage(p, CC.translate((String)"&f&l* &7-50% Objective Time"));
-                        ChatUtils.sendCenteredMessage(p, CC.translate((String)"&f&l* &7Bosses take 75% less incoming damage"));
-                        ChatUtils.sendCenteredMessage(p, CC.translate((String)"&f&l* &7Bosses deal 2.5x outgoing damage"));
-                        e.getDungeon().getRandomDungeonDebuffs().forEach(debuff -> ChatUtils.sendCenteredMessage(p, CC.translate((String)("&f&l* &7" + debuff.getName()))));
+                        ChatUtils.sendCenteredMessage(p, CC.translate("&f&l* &7-50% Objective Time"));
+                        ChatUtils.sendCenteredMessage(p, CC.translate("&f&l* &7Bosses take 75% less incoming damage"));
+                        ChatUtils.sendCenteredMessage(p, CC.translate("&f&l* &7Bosses deal 2.5x outgoing damage"));
+                        e.getDungeon().getRandomDungeonDebuffs().forEach(debuff -> ChatUtils.sendCenteredMessage(p, CC.translate("&f&l* &7" + debuff.getName())));
                     });
                 }
                 e.getDungeon().setObjectiveHologram(null);
@@ -215,11 +183,11 @@ extends DungeonEvents {
                 for (int x = 0; x >= -4; --x) {
                     for (int y = 79; y <= 83; ++y) {
                         Block b = e.getDungeon().getWorld().getBlockAt(x, y, 91);
-                        WorldUtil.sendWorldEffect((Block)b, (int)2001);
+                        WorldUtil.sendWorldEffect(b, 2001);
                         b.setType(Material.AIR);
                     }
                 }
-                e.getDungeon().broadcastMessage((Object)ChatColor.WHITE + "The airlock leading to the Abandoned Spaceship has opened... proceed with caution.");
+                e.getDungeon().broadcastMessage(ChatColor.WHITE + "The airlock leading to the Abandoned Spaceship has opened... proceed with caution.");
                 e.getDungeon().updateTimeRestrictionTask(System.currentTimeMillis() + 300000L / (long)(e.getDungeon().isHalfTime() ? 2 : 1), "Enter Ship Hanger");
                 for (Player p2 : this.dungeon.getPlayers()) {
                     DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p2);
@@ -249,22 +217,22 @@ extends DungeonEvents {
                     DungeonPlayer dp2 = DungeonsAPI.get().getPlayerDungeonData(p2);
                     if (dp2 == null || dp2.getCurrentDungeon() == null || !dp2.getCurrentDungeon().equals(e.getDungeon())) continue;
                     ++total;
-                    Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("contests add " + p2.getName() + " dungeonsCompleted 1"));
-                    Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(p2, "DUNGEON_COMPLETE", new Object[]{this.dungeon.dungeonType.name()}));
-                    boolean inTeleportRoom = WorldGuardUtils.getRegionName((Location)p2.getLocation()).equals("teleportation_room");
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contests add " + p2.getName() + " dungeonsCompleted 1");
+                    Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p2, "DUNGEON_COMPLETE", new Object[]{this.dungeon.dungeonType.name()}));
+                    boolean inTeleportRoom = WorldGuardUtils.getRegionName(p2.getLocation()).equals("teleportation_room");
                     if (inTeleportRoom) {
                         dp2.logDungeonComplete(this.dungeon);
                     }
                     if (!dp2.getCooldowns().canPlayerDoDungeon(this.dungeon)) {
-                        p2.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You cannot receive rewards from the " + this.dungeon.getDungeonName() + (Object)ChatColor.RED + " dungeon for " + TimeUtils.formatDifference(dp2.getCooldowns().getCooldown(this.dungeon)) + ".");
+                        p2.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot receive rewards from the " + this.dungeon.getDungeonName() + ChatColor.RED + " dungeon for " + TimeUtils.formatDifference(dp2.getCooldowns().getCooldown(this.dungeon)) + ".");
                         continue;
                     }
                     availableLooters.add(p2.getUniqueId());
                     if (!inTeleportRoom) {
-                        p2.sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "You were not standing in the final room of the dungeon, so you do not get a reward!");
+                        p2.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You were not standing in the final room of the dungeon, so you do not get a reward!");
                         continue;
                     }
-                    p2.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "+1 Dungeon Loot Bag");
+                    p2.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "+1 Dungeon Loot Bag");
 
                     //ItemStack heroicBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("HeroicAbandonedShipLootbag").createClaimableItem(false);
                     //ItemStack abaBag = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("AbandonedShipLootbag").createClaimableItem(false);
@@ -277,7 +245,7 @@ extends DungeonEvents {
 
                     playerList = playerList + p2.getName() + ", ";
                     long bonusCD = dp2.getCooldowns().addDungeonCooldown(this.dungeon, 300000L);
-                    Faction faction = FactionUtils.getFaction((Player)p2);
+                    Faction faction = FactionUtils.getFaction(p2);
                     if (faction == null || !faction.isNormal()) continue;
                     factionIdsToCredit.add(faction.getTag());
                 }
@@ -285,32 +253,32 @@ extends DungeonEvents {
                     playerList = playerList.substring(0, playerList.length() - 2);
                 }
                 this.dungeon.broadcastTitle("DUNGEON COMPLETE!", "+ Dungeon Loot", ChatColor.GREEN, ChatColor.GRAY);
-                Bukkit.broadcastMessage((String)"");
-                Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
-                Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + "The " + this.dungeon.getDungeonName() + (Object)ChatColor.GOLD + " has been cleared by: " + (Object)ChatColor.GRAY + playerList + (Object)ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.dungeon.getTimeSinceDungeonStart())));
+                Bukkit.broadcastMessage("");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*");
+                Bukkit.broadcastMessage(ChatColor.GOLD + "The " + this.dungeon.getDungeonName() + ChatColor.GOLD + " has been cleared by: " + ChatColor.GRAY + playerList + ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.dungeon.getTimeSinceDungeonStart()));
                 if (this.dungeon.isHeroic()) {
-                    Bukkit.broadcastMessage((String)ChatUtils.getCenteredMessage(CC.translate((String)"&7with the following Heroic Dungeon debuffs:")));
-                    Bukkit.broadcastMessage((String)ChatUtils.getCenteredMessage(CC.translate((String)"&6&l* &7-50% Objective Time")));
-                    Bukkit.broadcastMessage((String)ChatUtils.getCenteredMessage(CC.translate((String)"&6&l* &7Bosses take 75% less incoming damage")));
-                    Bukkit.broadcastMessage((String)ChatUtils.getCenteredMessage(CC.translate((String)"&6&l* &7Bosses deal 2.5x outgoing damage")));
-                    this.dungeon.getRandomDungeonDebuffs().forEach(debuff -> Bukkit.broadcastMessage((String)ChatUtils.getCenteredMessage(CC.translate((String)("&6&l* &7" + debuff.getName())))));
+                    Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&7with the following Heroic Dungeon debuffs:")));
+                    Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7-50% Objective Time")));
+                    Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7Bosses take 75% less incoming damage")));
+                    Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7Bosses deal 2.5x outgoing damage")));
+                    this.dungeon.getRandomDungeonDebuffs().forEach(debuff -> Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7" + debuff.getName()))));
                     this.dungeon.getTopHeroicDungeonTime().checkLatestTime((int)(this.dungeon.getTimeSinceDungeonStart() / 1000L), this.dungeon, players, availableLooters);
                 } else {
                     this.dungeon.getTopDungeonTime().checkLatestTime((int)(this.dungeon.getTimeSinceDungeonStart() / 1000L), this.dungeon, players, availableLooters);
                 }
-                Bukkit.broadcastMessage((String)"");
-                factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("fquests add DUNGEON_MASTER " + tag)));
+                Bukkit.broadcastMessage("");
+                factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests add DUNGEON_MASTER " + tag));
                 if (this.dungeon.getDungeonChallengesCompleted().size() > 0) {
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GOLD + ChatColor.BOLD.toString() + "(!) " + (Object)ChatColor.GOLD + "Their team has completed " + (Object)ChatColor.GOLD + (Object)ChatColor.BOLD + ChatColor.UNDERLINE.toString() + this.dungeon.getDungeonChallengesCompleted().size() + (Object)ChatColor.GOLD + " Dungeon Challenges:"));
-                    this.dungeon.getDungeonChallengesCompleted().forEach(challenge -> Bukkit.broadcastMessage((String)(" " + (Object)ChatColor.GOLD + (Object)ChatColor.BOLD + "* " + (Object)ChatColor.GREEN + challenge.getName())));
-                    Bukkit.broadcastMessage((String)((Object)ChatColor.GRAY + "Loot the challenge chests for bonus dungeon items!"));
-                    Bukkit.broadcastMessage((String)"");
+                    Bukkit.broadcastMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + "(!) " + ChatColor.GOLD + "Their team has completed " + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + this.dungeon.getDungeonChallengesCompleted().size() + ChatColor.GOLD + " Dungeon Challenges:");
+                    this.dungeon.getDungeonChallengesCompleted().forEach(challenge -> Bukkit.broadcastMessage(" " + ChatColor.GOLD + ChatColor.BOLD + "* " + ChatColor.GREEN + challenge.getName()));
+                    Bukkit.broadcastMessage(ChatColor.GRAY + "Loot the challenge chests for bonus dungeon items!");
+                    Bukkit.broadcastMessage("");
                     this.dungeon.getPlayers().forEach(pl -> pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 8.0f, 0.6f));
-                    if (this.dungeon.getDungeonChallengesCompleted().contains((Object)DungeonChallenge.NIMBLE_FEET)) {
-                        factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("fquests addexact DUNGEON_RACER_I " + tag)));
+                    if (this.dungeon.getDungeonChallengesCompleted().contains(DungeonChallenge.NIMBLE_FEET)) {
+                        factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests addexact DUNGEON_RACER_I " + tag));
                     }
-                    if (this.dungeon.getDungeonChallengesCompleted().contains((Object)DungeonChallenge.SPEED_RACER)) {
-                        factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), (String)("fquests addexact DUNGEON_RACER_II " + tag)));
+                    if (this.dungeon.getDungeonChallengesCompleted().contains(DungeonChallenge.SPEED_RACER)) {
+                        factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests addexact DUNGEON_RACER_II " + tag));
                     }
                     final AtomicInteger index = new AtomicInteger(0);
                     final double percentageEligible = availableLooters.size() / total;
@@ -329,7 +297,7 @@ extends DungeonEvents {
                                 return;
                             }
                             int itemsPerChest = smallTeam ? ThreadLocalRandom.current().nextInt(2) + 1 : (percentageEligible <= 0.25 ? 1 : (percentageEligible <= 0.75 ? 2 : 3));
-                            AbandonedShipEvents.this.dungeon.getDungeonChallengesCompleted().remove((Object)nextToAnnounce);
+                            AbandonedShipEvents.this.dungeon.getDungeonChallengesCompleted().remove(nextToAnnounce);
                             Location nextToSet = teleportationRoom.buttonLocations.get(index.getAndIncrement());
                             Block block = nextToSet.getBlock();
                             block.setType(Material.CHEST);
@@ -338,7 +306,7 @@ extends DungeonEvents {
                             AbandonedShipEvents.this.dungeon.broadcastTitle(nextToAnnounce.getName(), "", ChatColor.GREEN, ChatColor.GOLD);
                             RandomFireworks.getManager().launchRandomFirework(nextToSet.add(0.5, 1.0, 0.5));
                         }
-                    }.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 20L, 20L);
+                    }.runTaskTimer(CosmicDungeonsPlugin.get_(), 20L, 20L);
                 }
             }
         }
@@ -351,10 +319,10 @@ extends DungeonEvents {
         for (int i = 0; i < lootToFill && i < potentialLoot.size(); ++i) {
             ItemStack item = potentialLoot.get(i);
             if (item == null) continue;
-            chest.getInventory().addItem(new ItemStack[]{item});
+            chest.getInventory().addItem(item);
         }
         chest.update();
-        block.setMetadata("dungeonChallengeLootChest", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), eligible));
+        block.setMetadata("dungeonChallengeLootChest", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), eligible));
     }
 
     private boolean checkForDamage(DamageTracker tracker) {
@@ -380,7 +348,7 @@ extends DungeonEvents {
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
-        if (this.exploredRegions.contains("hanger") && (e.getClickedBlock() == null || !this.blessLeverLocations.contains((Object)e.getClickedBlock()))) {
+        if (this.exploredRegions.contains("hanger") && (e.getClickedBlock() == null || !this.blessLeverLocations.contains(e.getClickedBlock()))) {
             return;
         }
         if (DungeonsAPI.get().getPlayerDungeonData(e.getPlayer()).getCurrentDungeon() == null) {
@@ -392,10 +360,10 @@ extends DungeonEvents {
                 return;
             }
             for (Player p : this.dungeon.getPlayers()) {
-                PlayerPotionEffects.untrackPotionEffect((Player)p, (PotionEffectType)PotionEffectType.SLOW);
-                PlayerPotionEffects.untrackPotionEffect((Player)p, (PotionEffectType)PotionEffectType.SLOW_DIGGING);
-                p.sendMessage(ChatColor.YELLOW.toString() + (Object)ChatColor.BOLD + "BLESSED!");
-                p.sendMessage((Object)ChatColor.GRAY + "The Gods have looked down and cast their blessing upon the weary Cosmonauts about to embark on this mission!");
+                PlayerPotionEffects.untrackPotionEffect(p, PotionEffectType.SLOW);
+                PlayerPotionEffects.untrackPotionEffect(p, PotionEffectType.SLOW_DIGGING);
+                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "BLESSED!");
+                p.sendMessage(ChatColor.GRAY + "The Gods have looked down and cast their blessing upon the weary Cosmonauts about to embark on this mission!");
             }
         }
     }
@@ -411,21 +379,21 @@ extends DungeonEvents {
         if (DungeonsAPI.get().getPlayerDungeonData(e.getPlayer()).getCurrentDungeon() == null) {
             return;
         }
-        if (!WorldGuardUtils.getRegionName((Location)e.getPlayer().getLocation()).equals("maze")) {
+        if (!WorldGuardUtils.getRegionName(e.getPlayer().getLocation()).equals("maze")) {
             return;
         }
-        Block mazeLever = ((PlayerEnterMaze)this.regionEvents.get((Object)"maze_start")).mazeLever;
+        Block mazeLever = ((PlayerEnterMaze)this.regionEvents.get("maze_start")).mazeLever;
         if (mazeLever != null) {
-            if (e.getClickedBlock().equals((Object)mazeLever)) {
+            if (e.getClickedBlock().equals(mazeLever)) {
                 this.dungeon.getWorld().getBlockAt(-76, 79, 172).setType(Material.AIR);
                 this.dungeon.getWorld().getBlockAt(-76, 80, 172).setType(Material.AIR);
-                ((PlayerEnterMaze)this.regionEvents.get((Object)"maze_start")).mazeLever = null;
+                ((PlayerEnterMaze)this.regionEvents.get("maze_start")).mazeLever = null;
                 this.dungeon.setObjectiveHologram(null);
-                this.dungeon.broadcastMessage((Object)ChatColor.GREEN + "As " + e.getPlayer().getName() + " pulls the lever, you hear the generator hum to life. The exit hatch is unlocked!");
+                this.dungeon.broadcastMessage(ChatColor.GREEN + "As " + e.getPlayer().getName() + " pulls the lever, you hear the generator hum to life. The exit hatch is unlocked!");
             } else {
                 Block lever = e.getClickedBlock();
                 if (lever.getType() == Material.LEVER) {
-                    this.dungeon.broadcastMessage((Object)ChatColor.RED + e.getPlayer().getName() + " has pulled the lever at " + lever.getLocation().getBlockX() + "x, " + lever.getLocation().getBlockY() + "y, " + lever.getLocation().getBlockZ() + "z, but nothing seems to happen.");
+                    this.dungeon.broadcastMessage(ChatColor.RED + e.getPlayer().getName() + " has pulled the lever at " + lever.getLocation().getBlockX() + "x, " + lever.getLocation().getBlockY() + "y, " + lever.getLocation().getBlockZ() + "z, but nothing seems to happen.");
                 }
             }
         }
@@ -443,34 +411,34 @@ extends DungeonEvents {
         if (e.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
-        if (!WorldGuardUtils.getRegionName((Location)e.getPlayer().getLocation()).equals("teleportation_room")) {
+        if (!WorldGuardUtils.getRegionName(e.getPlayer().getLocation()).equals("teleportation_room")) {
             return;
         }
-        LinkedList<Location> buttonLocations = ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).buttonLocations;
-        HashMap<Location, ChatColor> buttonColors = ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).buttonColors;
+        LinkedList<Location> buttonLocations = ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).buttonLocations;
+        HashMap<Location, ChatColor> buttonColors = ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).buttonColors;
         if (buttonLocations != null) {
             Logger.debug("" + buttonLocations);
-            if (buttonLocations.contains((Object)e.getClickedBlock().getLocation())) {
-                ChatColor buttonColor = buttonColors.containsKey((Object)e.getClickedBlock().getLocation()) ? buttonColors.get((Object)e.getClickedBlock().getLocation()) : ChatColor.WHITE;
-                ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).currentButtons.add(e.getClickedBlock().getLocation());
-                this.dungeon.broadcastMessage((Object)buttonColor + e.getPlayer().getName() + " pressed the button at " + e.getClickedBlock().getX() + "x, " + e.getClickedBlock().getZ() + "z " + (Object)buttonColor + "(#" + ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).currentButtons.size() + ")");
+            if (buttonLocations.contains(e.getClickedBlock().getLocation())) {
+                ChatColor buttonColor = buttonColors.containsKey(e.getClickedBlock().getLocation()) ? buttonColors.get(e.getClickedBlock().getLocation()) : ChatColor.WHITE;
+                ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.add(e.getClickedBlock().getLocation());
+                this.dungeon.broadcastMessage(buttonColor + e.getPlayer().getName() + " pressed the button at " + e.getClickedBlock().getX() + "x, " + e.getClickedBlock().getZ() + "z " + buttonColor + "(#" + ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.size() + ")");
             }
         }
-        if ((teleportLever = ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).teleportLever) != null && teleportLever.equals((Object)e.getClickedBlock())) {
-            if (((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).currentButtons.size() == 0) {
+        if ((teleportLever = ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).teleportLever) != null && teleportLever.equals(e.getClickedBlock())) {
+            if (((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.size() == 0) {
                 this.dungeon.broadcastMessage("Nothing happens.");
                 return;
             }
             boolean devInstance = this.dungeon.getPlayers().stream().filter(pl -> pl.getName().equals("Bryside") && !pl.hasPotionEffect(PotionEffectType.INVISIBILITY) && pl.isSneaking()).findFirst().orElse(null) != null;
             this.dungeon.broadcastMessage("Loading teleportation matrix...");
             for (int x = 0; x < buttonLocations.size(); ++x) {
-                if (x >= ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).currentButtons.size()) {
-                    this.dungeon.broadcastMessage((Object)ChatColor.RED + "ERROR: Not enough input data!");
+                if (x >= ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.size()) {
+                    this.dungeon.broadcastMessage(ChatColor.RED + "ERROR: Not enough input data!");
                     return;
                 }
-                if (!((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).currentButtons.get(x).equals((Object)buttonLocations.get(x)) && !devInstance) {
-                    this.dungeon.broadcastMessage("#" + (x + 1) + " - " + (Object)ChatColor.RED + "INVALID, reset!");
-                    ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).currentButtons.clear();
+                if (!((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.get(x).equals(buttonLocations.get(x)) && !devInstance) {
+                    this.dungeon.broadcastMessage("#" + (x + 1) + " - " + ChatColor.RED + "INVALID, reset!");
+                    ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).currentButtons.clear();
                     if (Math.random() < 0.33) {
                         this.dungeon.broadcastMessage("Space monsters are attacking the ship!");
                         for (int i = 5; i > 0; --i) {
@@ -483,22 +451,22 @@ extends DungeonEvents {
                     }
                     return;
                 }
-                this.dungeon.broadcastMessage("#" + (x + 1) + " - " + (Object)ChatColor.GREEN + "CORRECT");
+                this.dungeon.broadcastMessage("#" + (x + 1) + " - " + ChatColor.GREEN + "CORRECT");
             }
             this.dungeon.broadcastMessage("Teleportation matrix boot successful!");
             this.dungeon.broadcastMessage("You can now follow Yijki to whatever planet he teleported to. Take some time to resupply, there is no telling what awaits you in the next dungeon.");
-            this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)teleportLever.getLocation().add(0.0, 2.0, 0.5), (String[])new String[]{(Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + "CONGRATULATIONS!", (Object)ChatColor.GRAY + "You have cleared the dungeon!", (Object)ChatColor.GRAY + "Exit through the teleporter."}));
-            ((PlayerEnterTeleportationRoom)this.regionEvents.get((Object)"teleportation_room")).teleportLever = null;
+            this.dungeon.setObjectiveHologram(HolographicDisplaysAPI.createHologram(CosmicDungeonsPlugin.get_(), teleportLever.getLocation().add(0.0, 2.0, 0.5), new String[]{ChatColor.GREEN + "" + ChatColor.BOLD + "CONGRATULATIONS!", ChatColor.GRAY + "You have cleared the dungeon!", ChatColor.GRAY + "Exit through the teleporter."}));
+            ((PlayerEnterTeleportationRoom)this.regionEvents.get("teleportation_room")).teleportLever = null;
             Block dungeon_portalBlockA = this.dungeon.getWorld().getBlockAt(-255, 76, 190);
             Block dungeon_portalBlockB = this.dungeon.getWorld().getBlockAt(-255, 77, 190);
-            dungeon_portalBlockA.setMetadata("dungeonExitPortalBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)this.dungeon.getDungeonID()));
-            dungeon_portalBlockB.setMetadata("dungeonExitPortalBlock", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)this.dungeon.getDungeonID()));
+            dungeon_portalBlockA.setMetadata("dungeonExitPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), this.dungeon.getDungeonID()));
+            dungeon_portalBlockB.setMetadata("dungeonExitPortalBlock", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), this.dungeon.getDungeonID()));
             dungeon_portalBlockA.setTypeIdAndData(90, (byte)0, false);
             dungeon_portalBlockB.setTypeIdAndData(90, (byte)0, false);
-            Hologram holo_a = HolographicDisplaysAPI.createHologram((Plugin)CosmicDungeonsPlugin.get_(), (Location)dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5), (String[])new String[]{(Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "Exit"});
+            Hologram holo_a = HolographicDisplaysAPI.createHologram(CosmicDungeonsPlugin.get_(), dungeon_portalBlockB.getLocation().add(0.5, 1.25, 0.5), new String[]{ChatColor.RED + "" + ChatColor.BOLD + "Exit"});
             this.dungeon.broadcastMessage("");
             this.dungeon.setPortalPlaceCooldown(System.currentTimeMillis() + 120000L);
-            this.dungeon.broadcastMessage((Object)ChatColor.GREEN + "" + (Object)ChatColor.BOLD + "DUNGEON COMPLETE!");
+            this.dungeon.broadcastMessage(ChatColor.GREEN + "" + ChatColor.BOLD + "DUNGEON COMPLETE!");
             this.dungeon.broadcastMessage("");
             this.dungeon.setDungeonStatus(DungeonState.COMPLETE);
             this.dungeon.updateTimeRestrictionTask(System.currentTimeMillis() + 120000L / (long)(this.dungeon.isHalfTime() ? 2 : 1), "Leave the Dungeon");
@@ -520,26 +488,26 @@ extends DungeonEvents {
         if (!this.regionEvents.containsKey("maze_start")) {
             return;
         }
-        String region = WorldGuardUtils.getRegionName((Location)e.getPlayer().getLocation());
+        String region = WorldGuardUtils.getRegionName(e.getPlayer().getLocation());
         if (region.equals("maze")) {
             Block b = e.getPlayer().getLocation().subtract(0.0, 1.0, 0.0).getBlock();
             if (b.getType() != Material.QUARTZ_BLOCK && b.getType() != Material.STAINED_CLAY) {
                 return;
             }
             if (b.hasMetadata("mazeBlockDurability")) {
-                int durability = ((MetadataValue)b.getMetadata("mazeBlockDurability").get(0)).asInt() - 1;
-                WorldUtil.sendWorldEffect((Block)b, (int)2001);
+                int durability = b.getMetadata("mazeBlockDurability").get(0).asInt() - 1;
+                WorldUtil.sendWorldEffect(b, 2001);
                 if (durability <= 0) {
                     b.setTypeIdAndData(Material.ENDER_PORTAL.getId(), (byte)0, false);
-                    b.removeMetadata("mazeBlockDurability", (Plugin)CosmicDungeonsPlugin.get_());
+                    b.removeMetadata("mazeBlockDurability", CosmicDungeonsPlugin.get_());
                 } else if (durability == 1 || b.getData() == 4) {
                     b.setTypeIdAndData(Material.STAINED_CLAY.getId(), (byte)1, false);
                 } else if (durability == 2) {
                     b.setTypeIdAndData(Material.STAINED_CLAY.getId(), (byte)4, false);
                 }
-                b.setMetadata("mazeBlockDurability", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)durability));
+                b.setMetadata("mazeBlockDurability", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), durability));
             } else {
-                b.setMetadata("mazeBlockDurability", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)2));
+                b.setMetadata("mazeBlockDurability", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), 2));
                 b.setTypeIdAndData(Material.STAINED_CLAY.getId(), (byte)4, true);
             }
         }
@@ -554,12 +522,12 @@ extends DungeonEvents {
         if (dp.getBukkitPlayer().isDead()) {
             return;
         }
-        String region = WorldGuardUtils.getRegionName((Location)e.getPlayer().getLocation());
+        String region = WorldGuardUtils.getRegionName(e.getPlayer().getLocation());
         Logger.debug("Player " + dp.getBukkitPlayer().getName() + " portalEvent in region:" + region + ", currentDungeon:" + dp.getCurrentDungeon());
         if (region.equals("maze") || region.equals("parkour_b")) {
             e.setCancelled(true);
             e.getPlayer().setHealth(0.0);
-            e.getPlayer().sendMessage((Object)ChatColor.RED + "" + (Object)ChatColor.BOLD + "(!) " + (Object)ChatColor.RED + "The floor underneath you collapsed and you fell into the void of space!");
+            e.getPlayer().sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "The floor underneath you collapsed and you fell into the void of space!");
         }
     }
 
@@ -579,26 +547,26 @@ extends DungeonEvents {
         if (!this.regionEvents.containsKey("parkour_b")) {
             return;
         }
-        String region = WorldGuardUtils.getRegionName((Location)e.getPlayer().getLocation());
+        String region = WorldGuardUtils.getRegionName(e.getPlayer().getLocation());
         if (region.equals("parkour_b") && (b = e.getPlayer().getLocation().subtract(0.0, 1.0, 0.0).getBlock()).getLocation().getY() < 74.0) {
             if (b.getType() != Material.STEP && b.getType() != Material.DOUBLE_STEP && b.getType() != Material.STAINED_CLAY) {
                 return;
             }
-            WorldUtil.sendWorldEffect((Block)b, (int)2001);
+            WorldUtil.sendWorldEffect(b, 2001);
             b.setTypeIdAndData(Material.ENDER_PORTAL.getId(), (byte)0, false);
         }
     }
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onBlockBreak(BlockBreakEvent e) {
-        if (e.getBlock().getWorld().equals((Object)this.dungeon.getWorld()) && !e.getPlayer().isOp()) {
+        if (e.getBlock().getWorld().equals(this.dungeon.getWorld()) && !e.getPlayer().isOp()) {
             e.setCancelled(true);
         }
     }
 
     @EventHandler(priority=EventPriority.LOWEST)
     public void onBlockPlace(BlockPlaceEvent e) {
-        if (e.getBlock().getWorld().equals((Object)this.dungeon.getWorld()) && !e.getPlayer().isOp()) {
+        if (e.getBlock().getWorld().equals(this.dungeon.getWorld()) && !e.getPlayer().isOp()) {
             e.setCancelled(true);
         }
     }

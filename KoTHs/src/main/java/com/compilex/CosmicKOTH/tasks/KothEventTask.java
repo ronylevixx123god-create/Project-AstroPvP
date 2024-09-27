@@ -62,7 +62,7 @@ public class KothEventTask
             @Override
             public void run() {
                 Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+                Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8| &6&lDesert K.O.T.H")));
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is starting!")));
                 Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
                 Bukkit.broadcastMessage("");
@@ -95,7 +95,7 @@ public class KothEventTask
     private void advertHandler() {
         if (this.runtime % 300 == 0) {
             Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+            Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8| &6&lDesert K.O.T.H")));
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is currently running!")));
             Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
             Bukkit.broadcastMessage("");
@@ -173,7 +173,7 @@ public class KothEventTask
         this.capped = true;
         running = false;
         Bukkit.broadcastMessage("");
-        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8| &6&lDesert K.O.T.H")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe &6Koth&f has been Captured!")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fThe winner received a &6Koth Lootbag &fand &610$ Buycraft&f.")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));

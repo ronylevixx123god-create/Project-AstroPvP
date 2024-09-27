@@ -1,8 +1,5 @@
 package me.astropvp.inventories;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.UUID;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -10,6 +7,10 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.UUID;
 
 public class ScrollerInventory {
     public ArrayList<Inventory> pages = new ArrayList();
@@ -25,10 +26,10 @@ public class ScrollerInventory {
             if (page.firstEmpty() == 46) {
                 this.pages.add(page);
                 page = this.getBlankPage(name);
-                page.addItem(new ItemStack[]{items.get(i)});
+                page.addItem(items.get(i));
                 continue;
             }
-            page.addItem(new ItemStack[]{items.get(i)});
+            page.addItem(items.get(i));
         }
         this.pages.add(page);
         p.openInventory(this.pages.get(this.currpage));

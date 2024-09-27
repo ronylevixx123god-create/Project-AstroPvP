@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+/*
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.EntityInteractModule;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -16,3 +17,5 @@ public class PunishmentModule extends EntityInteractModule {
         //TODO: Open punishment menu
     }
 }
+
+ */

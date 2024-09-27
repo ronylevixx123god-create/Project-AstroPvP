@@ -1,15 +1,18 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.*;
+import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.entity.*;
-import org.bukkit.event.entity.*;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
 public class Dodge extends CustomEnchantment
@@ -32,10 +35,10 @@ public class Dodge extends CustomEnchantment
         if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
             return;
         if (e instanceof EntityDamageByEntityEvent) {
-            double chance = 0.025 * (double)level;
+            double chance = 0.015 * (double)level;
             final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
-                chance += 0.15;
+                chance += 0.05;
             }
 
 
@@ -51,7 +54,7 @@ public class Dodge extends CustomEnchantment
                 if (attacker instanceof Player && !AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.SPRING_2021_SWORD)) {
                     e.setDamage(0);
                     //e.setCancelled(true);
-                    ((Player) player).sendMessage(ChatColor.YELLOW + "*DODGE*");
+                    player.sendMessage(ChatColor.YELLOW + "*DODGE*");
                     try {
                         de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), player.getLocation(), 0, 1, 0, 0.2f, 10);
                     } catch (Exception exception) {

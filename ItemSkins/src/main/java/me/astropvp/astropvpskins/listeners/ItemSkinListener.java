@@ -1,9 +1,7 @@
 package me.astropvp.astropvpskins.listeners;
 
-import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
@@ -26,11 +24,13 @@ import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.*;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 public class ItemSkinListener implements Listener {
 
@@ -202,12 +202,10 @@ public class ItemSkinListener implements Listener {
                 return;
             }
             List<SkinType> damagerSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damager);
-            System.out.println("attackers skins: " + damagerSkins);
             for (SkinType skin : damagerSkins)
                 skin.getItemSkin().onAttack((Player) damager, damaged, event);
             if (damaged instanceof Player) {
                 List<SkinType> damagedSkins = AstroItemSkinsAPI.getItemSkinsOnPlayer((Player) damaged);
-                System.out.println("victims skins: " + damagedSkins);
                 for (SkinType skin : damagedSkins)
                     skin.getItemSkin().onAttacked((Player) damaged, damager, event);
             }

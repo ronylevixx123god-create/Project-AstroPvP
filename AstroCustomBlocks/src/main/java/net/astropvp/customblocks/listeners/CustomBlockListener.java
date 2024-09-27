@@ -3,7 +3,7 @@ package net.astropvp.customblocks.listeners;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
-import net.astropvp.customblocks.struct.CustomBlockType;
+import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -21,10 +21,14 @@ public class CustomBlockListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onInteract(PlayerInteractEvent event) {
-        if (event.getAction() == Action.RIGHT_CLICK_BLOCK && !event.isCancelled() && customBlockManager.getCustomBlockData(event.getClickedBlock().getLocation()) != null) {
-            event.setCancelled(true);
-            CustomBlock customBlock = customBlockManager.getCustomBlockData(event.getClickedBlock().getLocation());
-            customBlock.onClick(event.getPlayer());
+        if(event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            if (event.getClickedBlock() == null || event.getClickedBlock().getType() == Material.AIR) return;
+            if (customBlockManager.getCustomBlockData(event.getClickedBlock().getLocation()) == null) return;
+            if (!event.isCancelled()) {
+                event.setCancelled(true);
+                CustomBlock customBlock = customBlockManager.getCustomBlockData(event.getClickedBlock().getLocation());
+                customBlock.onClick(event.getPlayer());
+            }
         }
     }
 }

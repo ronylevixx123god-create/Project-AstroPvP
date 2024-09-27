@@ -32,7 +32,7 @@ public class Move implements Listener {
          if (fromLocation.getChunk().getX() == wildPvP.getChunk().getX() && fromLocation.getChunk().getZ() == wildPvP.getChunk().getZ() && (toLocation.getChunk().getX() != wildPvP.getChunk().getX() || toLocation.getChunk().getZ() != wildPvP.getChunk().getZ())) {
             Location location = player.getLocation().clone().add(fromLocation.toVector().subtract(toLocation.toVector()).normalize().multiply(2.0D));
             if (location.getBlock().getType().isSolid()) {
-               location.setY((double)location.getWorld().getHighestBlockYAt(location));
+               location.setY(location.getWorld().getHighestBlockYAt(location));
             }
 
             player.teleport(location, TeleportCause.UNKNOWN);
@@ -57,7 +57,7 @@ public class Move implements Listener {
             if (!wildPvP.isParticipant(player)) {
                Location location = player.getLocation().clone().add(fromLocation.toVector().subtract(toLocation.toVector()).normalize().multiply(2.0D));
                if (location.getBlock().getType().isSolid()) {
-                  location.setY((double)location.getWorld().getHighestBlockYAt(location));
+                  location.setY(location.getWorld().getHighestBlockYAt(location));
                }
 
                player.teleport(location, TeleportCause.UNKNOWN);

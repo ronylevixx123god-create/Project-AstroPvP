@@ -23,7 +23,6 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.rit.sucy.CustomEnchantment;
-import de.inventivegames.particle.ParticleEffect;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
@@ -33,12 +32,9 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Zombie;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -51,11 +47,13 @@ extends CustomEnchantment {
         this.max = 10;
         this.base = 20.0;
         this.interval = 5.0;
-        Bukkit.getPluginManager().registerEvents((Listener)new UndeadRuseListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new UndeadRuseListener(), Enchantments.getInstance());
     }
 
     public void applyDefenseEffect(LivingEntity player, LivingEntity attacker, int level, EntityDamageEvent e) {
+        if(level > 0) return;
         if (e instanceof EntityDamageByEntityEvent && ((EntityDamageByEntityEvent)e).getDamager() instanceof Player) {
+
             if (player.hasMetadata("neutralized") || player.hasMetadata("exterminated"))
                 return;
             if (player.hasMetadata("noDefenseProcs"))
@@ -78,8 +76,8 @@ extends CustomEnchantment {
                     --zombie_count;
                     if (spawnLoc.getChunk().getEntities().length >= 50) continue;
                     Zombie z = (Zombie)player.getWorld().spawnEntity(spawnLoc, EntityType.ZOMBIE);
-                    z.setMetadata("undeadruseSummoner", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)p.getName()));
-                    z.setCustomName(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD.toString() + p.getName() + "'s Undead Minion");
+                    z.setMetadata("undeadruseSummoner", new FixedMetadataValue(Enchantments.getInstance(), p.getName()));
+                    z.setCustomName(ChatColor.LIGHT_PURPLE.toString() + ChatColor.BOLD + p.getName() + "'s Undead Minion");
                     z.setCustomNameVisible(true);
                     z.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, level > 6 ? 2 : (level > 3 ? 1 : 0)));
                     if (level > 4) {
@@ -96,7 +94,7 @@ extends CustomEnchantment {
                     } catch (Exception exception) {
                         exception.printStackTrace();
                     }
-                    Bukkit.getScheduler().runTaskLater((Plugin)Enchantments.getInstance(), new Runnable(){
+                    Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), new Runnable(){
 
                         @Override
                         public void run() {

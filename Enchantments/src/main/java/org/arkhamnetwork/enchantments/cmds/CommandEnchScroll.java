@@ -27,7 +27,7 @@ public class CommandEnchScroll implements CommandExecutor {
                 i = RandomizationScroll.getRandomizationScroll(ItemRarity.valueOf(args[2]));
             }
             if (pl.getInventory().firstEmpty() != -1) {
-                pl.getInventory().addItem(new ItemStack[]{i});
+                pl.getInventory().addItem(i);
             } else {
                 pl.getWorld().dropItem(pl.getLocation(), i);
             }

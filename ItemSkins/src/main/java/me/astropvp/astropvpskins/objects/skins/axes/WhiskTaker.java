@@ -11,18 +11,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.metadata.FixedMetadataValue;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 public class WhiskTaker extends ItemSkin {
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (!WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
-        if (!(damager instanceof Player)) return;
         if (!(damaged instanceof Player)) return;
         if (damager.hasMetadata("frozenSkrrt")) return;
         if (damager.hasMetadata("whiskDamage")) {
-            event.setDamage(event.getDamage() * 1.2);
+            event.setDamage(event.getDamage() * 1.125);
         }
 
         event.setDamage(event.getDamage() * 1.025);
@@ -47,7 +42,7 @@ public class WhiskTaker extends ItemSkin {
     public void whiskAbility(Player attacker, Player attacked) throws Exception {
         for (Entity p : attacker.getNearbyEntities(5, 5 , 5)) {
             if (p instanceof Player) {
-                ((Player) p).damage(10);
+                ((Player) p).damage(5);
                 ParticleEffect.EXPLOSION_LARGE.sendToPlayer((Player) p, p.getLocation(),0, 1, 0, 0.5f, 55);
             }
             attacker.setMetadata("whiskDamage", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), true));

@@ -37,13 +37,6 @@ import com.compilex.CosmicDungeons.dungeons.events.AbandonedShipEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
 import com.compilex.CosmicDungeons.dungeons.events.DungeonEvents;
 import com.compilex.CosmicDungeons.dungeons.events.PlanetNulEvents;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonEndReason;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonState;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
-import com.compilex.CosmicDungeons.dungeons.libs.TimeRestrictionTask;
-import com.compilex.CosmicDungeons.dungeons.libs.TopDungeonTime;
-import com.compilex.CosmicDungeons.dungeons.libs.TopHeroicDungeonTime;
 import com.compilex.CosmicDungeons.events.DungeonStateChangeEvent;
 import com.compilex.CosmicDungeons.items.DungeonKeyItem;
 import com.compilex.CosmicDungeons.items.KeyPair;
@@ -58,42 +51,25 @@ import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.gmail.filoghost.holograms.api.Hologram;
 import com.massivecraft.factions.Faction;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.TimeUnit;
-
-import lombok.Getter;
-import lombok.Setter;
-import org.apache.commons.lang.Validate;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.github.paperspigot.Title;
+
+import java.io.IOException;
+import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 public class Dungeon {
     public World world;
-    private String dungeonName;
-    private String worldName;
-    private LinkedList<String> dungeonDescription;
-    private int dungeonID;
+    private final String dungeonName;
+    private final String worldName;
+    private final LinkedList<String> dungeonDescription;
+    private final int dungeonID;
     private DungeonState dungeonStatus;
     private Location spawnLocation;
     private Location portalLocation;
@@ -107,16 +83,16 @@ public class Dungeon {
     private boolean heroic;
     private boolean keyRequired = true;
     private boolean globalPortal = false;
-    private Set<DungeonChallenge> dungeonChallengesCompleted = new HashSet<DungeonChallenge>();
-    private Set<DungeonDebuff> dungeonDebuffs = new HashSet<DungeonDebuff>();
+    private final Set<DungeonChallenge> dungeonChallengesCompleted = new HashSet<DungeonChallenge>();
+    private final Set<DungeonDebuff> dungeonDebuffs = new HashSet<DungeonDebuff>();
     private boolean playersDied = false;
     private boolean bossSpawned = false;
     private boolean onARoll = true;
     private long bossSpawnTime;
     public DungeonType dungeonType;
     protected Random random = new Random();
-    private TopDungeonTime topDungeonTime;
-    private TopHeroicDungeonTime topHeroicDungeonTime;
+    private final TopDungeonTime topDungeonTime;
+    private final TopHeroicDungeonTime topHeroicDungeonTime;
     private ItemStack key;
     public boolean resetting = false;
     private ItemStack dungeonPortal;
@@ -139,7 +115,7 @@ public class Dungeon {
 
     public String getDungeonName() {
         if (this.isHeroic()) {
-            return CC.translate((String)"&b&k!!!&f&l&nHeroic&5&k!!!&r ") + this.dungeonName;
+            return CC.translate("&b&k!!!&f&l&nHeroic&5&k!!!&r ") + this.dungeonName;
         }
         return this.dungeonName;
     }
@@ -217,7 +193,7 @@ public class Dungeon {
     }
 
     public boolean isHalfTime() {
-        return this.getDungeonDebuffs().contains((Object)DungeonDebuff.HALF_OBJECTIVE_TIME);
+        return this.getDungeonDebuffs().contains(DungeonDebuff.HALF_OBJECTIVE_TIME);
     }
 
     public Set<DungeonChallenge> getDungeonChallengesCompleted() {
@@ -230,9 +206,9 @@ public class Dungeon {
 
     public Set<DungeonDebuff> getRandomDungeonDebuffs() {
         HashSet<DungeonDebuff> copy = new HashSet<DungeonDebuff>(this.dungeonDebuffs);
-        copy.remove((Object)DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE);
-        copy.remove((Object)DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE);
-        copy.remove((Object)DungeonDebuff.HALF_OBJECTIVE_TIME);
+        copy.remove(DungeonDebuff.BOSSES_DEAL_MORE_DAMAGE);
+        copy.remove(DungeonDebuff.BOSSES_TAKE_LESS_DAMAGE);
+        copy.remove(DungeonDebuff.HALF_OBJECTIVE_TIME);
         return copy;
     }
 
@@ -304,7 +280,7 @@ public class Dungeon {
     }
 
     public String toString() {
-        return ChatColor.stripColor((String)this.dungeonName) + " (id:" + this.dungeonID + ") (world:" + this.world.getName() + ")";
+        return ChatColor.stripColor(this.dungeonName) + " (id:" + this.dungeonID + ") (world:" + this.world.getName() + ")";
     }
 
     public int getDungeonMenuSlot() {
@@ -329,8 +305,8 @@ public class Dungeon {
             if (item == null || item.getType() == Material.AIR || (keyData = DungeonKeyItem.getDataFromKey(new NBTWrapper(item))) == null) continue;
             Long expiration = keyData.getValue();
             if (expiration > 0L && expiration < System.currentTimeMillis()) {
-                player.sendMessage(CC.RedB + "(!) " + CC.Red + "Removing expired dungeon key " + ItemUtils.getDisplayName((ItemStack)item) + CC.Red + "!");
-                player.getInventory().removeItem(new ItemStack[]{item});
+                player.sendMessage(CC.RedB + "(!) " + CC.Red + "Removing expired dungeon key " + ItemUtils.getDisplayName(item) + CC.Red + "!");
+                player.getInventory().removeItem(item);
                 continue;
             }
             if (keyData.getKey() != this.dungeonType) continue;
@@ -346,7 +322,7 @@ public class Dungeon {
             if (item == null || item.getType() == Material.AIR || (keyData = DungeonKeyItem.getDataFromKey(new NBTWrapper(item))) == null) continue;
             Long expiration = keyData.getValue();
             if (expiration > 0L && expiration <= System.currentTimeMillis()) {
-                player.sendMessage(CC.RedB + "(!) " + CC.Red + "Removing expired dungeon key " + ItemUtils.getDisplayName((ItemStack)item) + CC.Red + "!");
+                player.sendMessage(CC.RedB + "(!) " + CC.Red + "Removing expired dungeon key " + ItemUtils.getDisplayName(item) + CC.Red + "!");
                 player.getInventory().setItem(i, null);
                 continue;
             }
@@ -372,7 +348,7 @@ public class Dungeon {
         if (p.hasPermission(this.getPermissionNode())) {
             return true;
         }
-        Faction faction = FactionUtils.getFaction((Player)p);
+        Faction faction = FactionUtils.getFaction(p);
         if (faction == null || !faction.isNormal()) {
             return false;
         }
@@ -387,14 +363,14 @@ public class Dungeon {
     }
 
     public boolean hasCompletedRecently(DungeonPlayer playerData, long hoursToCheck) {
-        Long lastCompleted = playerData.getLastCompleted().get((Object)this.getDungeonType());
+        Long lastCompleted = playerData.getLastCompleted().get(this.getDungeonType());
         if (playerData.getBukkitPlayer().isOp()) return true;
         return lastCompleted != null && System.currentTimeMillis() - lastCompleted <= TimeUnit.HOURS.toMillis(hoursToCheck);
     }
 
     public void setSpawnLocation(Location l) {
         this.spawnLocation = l;
-        CosmicDungeonsPlugin.get_().getConfig().set("dungeons." + this.getWorldName() + ".spawnLocation", (Object)LocationUtils.convertLocationToString(l));
+        CosmicDungeonsPlugin.get_().getConfig().set("dungeons." + this.getWorldName() + ".spawnLocation", LocationUtils.convertLocationToString(l));
     }
 
     public List<Player> getPlayers() {
@@ -407,26 +383,26 @@ public class Dungeon {
             if (pl.isOp() && EssentialsUtils.isVanished(pl)) {
                 return;
             }
-            retr.add((Player)pl);
+            retr.add(pl);
         });
         return retr;
     }
 
     public void teleportPlayers(Location toTeleportTo, Collection<Player> players) {
         Location finalToTeleportTo = toTeleportTo.clone();
-        players.forEach(p -> this.teleportPlayer(finalToTeleportTo, (Player)p, true));
+        players.forEach(p -> this.teleportPlayer(finalToTeleportTo, p, true));
     }
 
     public void teleportPlayer(Location location, Player p, boolean forceLoad) {
-        p.setMetadata("bypassCombatTeleport", (MetadataValue)new FixedMetadataValue((Plugin)CosmicDungeonsPlugin.get_(), (Object)location));
-        p.setMetadata("queuedTeleportPass", (MetadataValue)new FixedMetadataValue((Plugin)Arkkit.get(), (Object)location));
-        Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicDungeonsPlugin.get(), () -> p.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 1L);
+        p.setMetadata("bypassCombatTeleport", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), location));
+        p.setMetadata("queuedTeleportPass", new FixedMetadataValue(Arkkit.get(), location));
+        Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicDungeonsPlugin.get(), () -> p.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN), 1L);
     }
 
     public Set<UUID> getValidPlayerUUIDs() {
         HashSet<UUID> retr = new HashSet<UUID>();
         this.getPlayers().forEach(pl -> {
-            DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData((Player)pl);
+            DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(pl);
             if (dp == null || !this.equals(dp.getCurrentDungeon())) {
                 return;
             }
@@ -437,7 +413,7 @@ public class Dungeon {
 
     public void broadcastMessage(String message) {
         for (Player p : this.getPlayers()) {
-            p.sendMessage((Object)ChatColor.GOLD + "" + (Object)ChatColor.BOLD + "(DUNGEON) " + (Object)ChatColor.RESET + message);
+            p.sendMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "(DUNGEON) " + ChatColor.RESET + message);
         }
     }
 
@@ -456,17 +432,17 @@ public class Dungeon {
     public Dungeon(World dungeonWorld, DungeonType type, String dungeonName, LinkedList<String> dungeonDescription) {
         this.world = dungeonWorld;
         this.worldName = this.world.getName();
-        this.dungeonName = ChatColor.translateAlternateColorCodes((char)'&', (String)dungeonName);
+        this.dungeonName = ChatColor.translateAlternateColorCodes('&', dungeonName);
         this.dungeonID = CosmicDungeonsPlugin.get_().getApi().nextDungeonID++;
         this.dungeonStatus = DungeonState.EMPTY;
         this.spawnLocation = CosmicDungeonsPlugin.get_().getConfig().contains("dungeons." + this.worldName + ".spawnLocation") ? LocationUtils.convertStringToLocation(CosmicDungeonsPlugin.get_().getConfig().getString("dungeons." + this.worldName + ".spawnLocation")) : this.world.getSpawnLocation();
         this.dungeonDescription = new LinkedList();
         for (String s : dungeonDescription) {
-            this.dungeonDescription.add(ChatColor.translateAlternateColorCodes((char)'&', (String)s));
+            this.dungeonDescription.add(ChatColor.translateAlternateColorCodes('&', s));
         }
         this.dungeonType = type;
         this.dungeonEvents = this.dungeonType.createNewListenerInstance(this);
-        Bukkit.getPluginManager().registerEvents((Listener)this.dungeonEvents, (Plugin)CosmicDungeonsPlugin.get_());
+        Bukkit.getPluginManager().registerEvents(this.dungeonEvents, CosmicDungeonsPlugin.get_());
         this.topDungeonTime = new TopDungeonTime(type, CosmicDungeonsPlugin.get_().getConfig().getConfigurationSection("top-times"));
         this.topHeroicDungeonTime = new TopHeroicDungeonTime(type, CosmicDungeonsPlugin.get_().getConfig().getConfigurationSection("top-heroic-times"));
     }
@@ -484,24 +460,24 @@ public class Dungeon {
         this.heroic = false;
         try {
             if (this.isDestroyedOutpost() || this.isPlanetNul()) {
-                HandlerList.unregisterAll((Listener)this.dungeonEvents);
+                HandlerList.unregisterAll(this.dungeonEvents);
             }
             DungeonsAPI.get().resetDungeonWorldIO(this);
             this.setPortalLocation(null);
             this.setObjectiveHologram(null);
-            this.world = Bukkit.getWorld((String)this.worldName);
+            this.world = Bukkit.getWorld(this.worldName);
             this.setProtectedFor("-1");
             this.setBossSlayerTrinket(false);
             this.spawnLocation = CosmicDungeonsPlugin.get_().getConfig().contains("dungeons." + this.worldName + ".spawnLocation") ? LocationUtils.convertStringToLocation(CosmicDungeonsPlugin.get_().getConfig().getString("dungeons." + this.worldName + ".spawnLocation")) : this.world.getSpawnLocation();
             if (!CosmicDungeonsPlugin.get_().isDisableCalled()) {
-                HandlerList.unregisterAll((Listener)this.dungeonEvents);
-                if (this.getDungeonType().equals((Object)DungeonType.ABANDONED_SHIP)) {
+                HandlerList.unregisterAll(this.dungeonEvents);
+                if (this.getDungeonType().equals(DungeonType.ABANDONED_SHIP)) {
                     ((AbandonedShipEvents)this.dungeonEvents).unregisterTasks();
                     this.dungeonEvents = new AbandonedShipEvents(this);
-                } else if (this.getDungeonType().equals((Object)DungeonType.DESTROYED_OUTPOST)) {
+                } else if (this.getDungeonType().equals(DungeonType.DESTROYED_OUTPOST)) {
                     ((DestroyedOutpostEvents)this.dungeonEvents).unregisterTasks();
                     this.dungeonEvents = new DestroyedOutpostEvents(this);
-                } else if (this.getDungeonType().equals((Object)DungeonType.PLANET_NUL)) {
+                } else if (this.getDungeonType().equals(DungeonType.PLANET_NUL)) {
                     ((PlanetNulEvents)this.dungeonEvents).unregisterTasks();
                 }
                 this.playersDied = false;
@@ -517,13 +493,13 @@ public class Dungeon {
                 } else if (this.dungeonEvents instanceof PlanetNulEvents) {
                     ((PlanetNulEvents)this.dungeonEvents).reset();
                 }
-                Bukkit.getPluginManager().registerEvents((Listener)this.dungeonEvents, (Plugin)Arkkit.get());
+                Bukkit.getPluginManager().registerEvents(this.dungeonEvents, Arkkit.get());
                 this.setDungeonStatus(DungeonState.EMPTY);
                 this.endTimeRestrictionTask();
             }
         }
         catch (IOException e) {
-            Bukkit.getLogger().info("Unable to unload world: " + (Object)this.getWorld() + " Retrying?");
+            Bukkit.getLogger().info("Unable to unload world: " + this.getWorld() + " Retrying?");
             e.printStackTrace();
             this.resetting = false;
             this.reset();
@@ -533,12 +509,12 @@ public class Dungeon {
 
     public void setDungeonStatus(DungeonState newState) {
         DungeonStateChangeEvent event = new DungeonStateChangeEvent(this, newState);
-        Bukkit.getServer().getPluginManager().callEvent((Event)event);
+        Bukkit.getServer().getPluginManager().callEvent(event);
         if (!event.isCancelled()) {
-            if (this.dungeonStatus != DungeonState.LOADING && newState == DungeonState.LOADING && this.dungeonType.equals((Object)DungeonType.DESTROYED_OUTPOST)) {
+            if (this.dungeonStatus != DungeonState.LOADING && newState == DungeonState.LOADING && this.dungeonType.equals(DungeonType.DESTROYED_OUTPOST)) {
                 ((DestroyedOutpostEvents)this.dungeonEvents).restart();
             }
-            if (this.dungeonStatus != DungeonState.LOADING && newState == DungeonState.LOADING && this.dungeonType.equals((Object)DungeonType.PLANET_NUL)) {
+            if (this.dungeonStatus != DungeonState.LOADING && newState == DungeonState.LOADING && this.dungeonType.equals(DungeonType.PLANET_NUL)) {
                 ((PlanetNulEvents)this.dungeonEvents).restart();
             }
             this.dungeonStatus = newState;
@@ -554,10 +530,10 @@ public class Dungeon {
     public void endDungeon(DungeonEndReason reason) {
         for (Player p : this.getPlayers()) {
             p.sendMessage("");
-            p.sendMessage((Object)reason.getDetailColor() + "" + (Object)ChatColor.BOLD + "Dungeon End");
+            p.sendMessage(reason.getDetailColor() + "" + ChatColor.BOLD + "Dungeon End");
             p.sendMessage(reason.getDetailText());
             p.sendMessage("");
-            p.teleport(Bukkit.getWorld((String)"world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            p.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
         }
         this.setKeyRequired(true);
         this.reset();
@@ -577,7 +553,7 @@ public class Dungeon {
     public void updateTimeRestrictionTask(long deadline, String objective) {
         if (this.timeTask == null) {
             this.timeTask = new TimeRestrictionTask(this, deadline, objective);
-            this.timeTask.runTaskTimer((Plugin)CosmicDungeonsPlugin.get_(), 20L, 20L);
+            this.timeTask.runTaskTimer(CosmicDungeonsPlugin.get_(), 20L, 20L);
         } else {
             double timeThreshholdRequired;
             long timeLeft = this.timeTask.getExpireTime() - System.currentTimeMillis();
@@ -590,8 +566,8 @@ public class Dungeon {
             this.timeTask.setExpireTime(deadline);
             this.timeTask.setObjectiveName(objective);
         }
-        this.broadcastMessage((Object)ChatColor.GOLD + "NEW OBJECTIVE: " + CC.YellowU + objective);
-        this.broadcastMessage((Object)ChatColor.GOLD + "Time Limit: " + (Object)ChatColor.GREEN + TimeUtils.formatDifference(deadline + 1000L - System.currentTimeMillis()));
+        this.broadcastMessage(ChatColor.GOLD + "NEW OBJECTIVE: " + CC.YellowU + objective);
+        this.broadcastMessage(ChatColor.GOLD + "Time Limit: " + ChatColor.GREEN + TimeUtils.formatDifference(deadline + 1000L - System.currentTimeMillis()));
     }
 
     public void setObjectiveHologram(Hologram h) {

@@ -51,7 +51,7 @@ public class Arkkit
         registerCommands();
         setupEconomy();
         WorldGuardUtils.hook();
-        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Loading Patches ...");
+        Bukkit.getConsoleSender().sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "Loading Patches ...");
         Bukkit.getScheduler().runTaskLater(this, () -> {
             try {
                 Arkkit.this.convertOldVersions();
@@ -61,8 +61,8 @@ public class Arkkit
             }
             Arkkit.this.registerPatches();
             Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "  *** Compilex Patch Complete! *** ");
-            Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "     Thank you for your patience!");
+            Bukkit.broadcastMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "  *** Compilex Patch Complete! *** ");
+            Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC + "     Thank you for your patience!");
             Bukkit.broadcastMessage("");
         }, 20L);
         this.getServer().getPluginManager().registerEvents(new ArkkitListener(), this);
@@ -84,8 +84,8 @@ public class Arkkit
         this.shutting_down = true;
         try {
             Bukkit.broadcastMessage("");
-            Bukkit.broadcastMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "   *** A Compilex Patch is loading. Please wait... *** ");
-            Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC.toString() + "  This process occurs when Compilex applies a dynamic update.");
+            Bukkit.broadcastMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "   *** A Compilex Patch is loading. Please wait... *** ");
+            Bukkit.broadcastMessage(ChatColor.GRAY.toString() + ChatColor.ITALIC + "  This process occurs when Compilex applies a dynamic update.");
             Bukkit.broadcastMessage("");
         } catch (Exception err) {
             err.printStackTrace();

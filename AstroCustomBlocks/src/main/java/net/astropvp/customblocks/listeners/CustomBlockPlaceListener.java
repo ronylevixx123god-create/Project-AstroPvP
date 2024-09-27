@@ -5,14 +5,15 @@ import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.massivecraft.factions.FPlayers;
+import me.venir.astrocollectors.collector.Collector;
+import me.venir.astrocollectors.collector.CollectorManager;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.CustomBlocksAPI;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
 import net.astropvp.customblocks.struct.abilities.LevelAble;
-import net.astropvp.customblocks.struct.impl.AutoGrinder;
-import net.astropvp.customblocks.utils.config.ConfigManager;
+import net.astropvp.customblocks.struct.abilities.SellBot;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -73,6 +74,13 @@ public class CustomBlockPlaceListener implements Listener {
                 ((LevelAble) customBlock).setLevel(CustomBlocksAPI.getLevelFromItem(item));
             }
             customBlockManager.addToCache(customBlock);
+
+            if(customBlock instanceof SellBot) {
+                if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation().getChunk())) {
+                    Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
+                    collector.addBooster(((SellBot)customBlock).getEntityType());
+                }
+            }
         }
     }
 }

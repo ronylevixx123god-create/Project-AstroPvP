@@ -9,6 +9,7 @@ import com.astropvp.cc.player.CosmicPlayers;
 import com.astropvp.cc.util.Chat;
 import com.astropvp.cc.voice.EnumChannel;
 import com.astropvp.cc.voice.GlobalChannel;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.*;
@@ -113,8 +114,11 @@ public class PacketHandler {
     }
 
     public void handle(PacketInStartEmote startEmote, Player sender){
+        if(!sender.hasPermission("savageastroemotes." + startEmote.getEmote())) {
+            sender.sendMessage(CC.translate("&c&l(!) &cYou do not have access to this emote"));
+            return;
+        }
         PacketOutStartEmote packet = new PacketOutStartEmote(sender.getEntityId(), startEmote.getEmote());
-
         for(CosmicPlayer cosmicPlayer : CosmicPlayers.get().getAll()){
             if(cosmicPlayer.getPlayer() == sender){
                 cosmicPlayer.sendPacket(new PacketOutStartEmote(-1, startEmote.getEmote()));

@@ -13,13 +13,11 @@ import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 
 import java.text.DecimalFormat;
 
 public class HeroicDiminish extends CustomEnchantment {
-    private DecimalFormat df;
+    private final DecimalFormat df;
 
     public HeroicDiminish() {
         super("Vengeful Diminish", GeneralUtil.chestplates, 2);
@@ -54,8 +52,8 @@ public class HeroicDiminish extends CustomEnchantment {
         if (attacker == null) return;
 
         if (player.hasMetadata("diminishEffect")) {
-            maxDmg = ((MetadataValue)player.getMetadata("diminishEffect").get(0)).asDouble();
-            if (maxDmg > 0.0) {
+            maxDmg = player.getMetadata("diminishEffect").get(0).asDouble();
+            if (maxDmg > 0.0 && attacker instanceof Player) {
                 //attacker.damage(maxDmg);
                 Player attackerPlayer = (Player)attacker;
                 Bukkit.getLogger().info("[Heroic Diminish] Damaging attacker " + attackerPlayer.getName() + " for " + maxDmg + " due to being then diminishEffect: " + maxDmg + " maxDmg: " + e.getDamage());
@@ -67,12 +65,9 @@ public class HeroicDiminish extends CustomEnchantment {
             }
         }
         if ((random = Math.random()) < (procChance = 0.001 * (double)level)) {
-            e.setDamage(e.getDamage() / 2.0);
-            if (e.getFinalDamage() > 8.0) {
-                return;
-            }
+            e.setDamage(e.getDamage() * 0.9);
             player.setMetadata("diminishEffect", new FixedMetadataValue(Enchantments.getInstance(), e.getFinalDamage() / 2.0));
-            ((Player)player).sendMessage(CC.translate( "&d&l* VENGEFUL DIMINISH ["  + "&fMAX DMG: " + this.df.format(e.getFinalDamage() / 2.0) + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "] *"));
+            player.sendMessage(CC.translate( "&d&l* VENGEFUL DIMINISH ["  + "&fMAX DMG: " + this.df.format(e.getFinalDamage() / 2.0) + ChatColor.LIGHT_PURPLE + ChatColor.BOLD + "] *"));
         }
     }
 

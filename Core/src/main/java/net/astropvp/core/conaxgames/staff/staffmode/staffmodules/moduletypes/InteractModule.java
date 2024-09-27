@@ -1,16 +1,8 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes;
 
-import lombok.Getter;
-import net.astropvp.core.AstroCore;
-import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModule;
-import org.bukkit.Material;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEvent;
-
+/*
 public abstract class InteractModule extends StaffModule implements Listener {
+
 
     @Getter
     private final StaffModeManager staffModeManager;
@@ -33,3 +25,6 @@ public abstract class InteractModule extends StaffModule implements Listener {
     }
 
 }
+
+
+ */

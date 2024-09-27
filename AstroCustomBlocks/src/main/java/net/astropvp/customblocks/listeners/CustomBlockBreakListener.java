@@ -1,16 +1,14 @@
 package net.astropvp.customblocks.listeners;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
+import me.venir.astrocollectors.collector.Collector;
+import me.venir.astrocollectors.collector.CollectorManager;
 import net.astropvp.customblocks.CustomBlocks;
 import net.astropvp.customblocks.CustomBlocksAPI;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.CustomBlockType;
 import net.astropvp.customblocks.struct.abilities.LevelAble;
-import net.astropvp.customblocks.struct.impl.AutoGrinder;
+import net.astropvp.customblocks.struct.abilities.SellBot;
 import org.bukkit.Material;
 import org.bukkit.block.Block;
 import org.bukkit.event.EventHandler;
@@ -32,16 +30,19 @@ public class CustomBlockBreakListener implements Listener {
 
     @EventHandler(priority = EventPriority.HIGH)
     public void onBreak(BlockBreakEvent event) {
-        if (event.isCancelled()) return;
+        //if (event.isCancelled()) return;
         if (CustomBlocksAPI.isCustomBlock(event.getBlock().getLocation())) {
             CustomBlock customBlockData = CustomBlocksAPI.getCustomBlockData(event.getBlock().getLocation());
             CustomBlockType type = customBlockData.getType();
 
+            /*
             if (!EconomyUtils.hasBalance(event.getPlayer(), type.getMinePrice())) {
                 event.getPlayer().sendMessage(CC.translate("&c&l(!)&c You do not have enough money to mine the " + type.getDisplayName() + " Custom Block!"));
                 event.setCancelled(true);
                 return;
             }
+
+             */
             int level = 0;
             if (customBlockData instanceof LevelAble) {
                 level = ((LevelAble) customBlockData).getLevel();
@@ -49,9 +50,16 @@ public class CustomBlockBreakListener implements Listener {
             event.setCancelled(true);
             event.getBlock().setType(Material.AIR);
             event.getBlock().getLocation().getWorld().dropItemNaturally(event.getBlock().getLocation(), customBlockData.getType().build(level));
-            EconomyUtils.withdrawBalance(event.getPlayer(), type.getMinePrice());
-            event.getPlayer().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(type.getMinePrice())));
+            //EconomyUtils.withdrawBalance(event.getPlayer(), type.getMinePrice());
+            //event.getPlayer().sendMessage(CC.translate("&c&l- $" + NumberUtils.formatMoney(type.getMinePrice())));
             customBlockManager.removeFromCache(customBlockData);
+
+            if(customBlockData instanceof SellBot) {
+                if (CollectorManager.DELEGATE.isCollectorContained(event.getBlock().getLocation().getChunk())) {
+                    Collector collector = CollectorManager.DELEGATE.getCollector(event.getBlock().getLocation());
+                    collector.removeBooster(((SellBot)customBlockData).getEntityType());
+                }
+            }
         }
     }
 

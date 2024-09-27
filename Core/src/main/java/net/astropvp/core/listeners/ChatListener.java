@@ -2,28 +2,26 @@ package net.astropvp.core.listeners;
 
 import com.astropvp.cc.player.CosmicPlayers;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.FactionUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.earth2me.essentials.utils.DateUtil;
 import com.golfing8.kore.FactionsKore;
 import com.golfing8.kore.feature.ShieldFeature;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.FactionsPlugin;
 import com.massivecraft.factions.struct.ChatMode;
 import me.astropvp.astrospawners.ftop.FactionsTopAPI;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.conaxgames.staff.StaffChat;
-import net.astropvp.core.conaxgames.staff.StaffUtil;
 import net.astropvp.core.titles.PlayerTitleAPI;
 import net.astropvp.core.titles.utils.Clickable;
-import net.astropvp.core.utils.CooldownUtils;
+import net.crankedpvp.staff.managers.StaffChatManager;
 import net.luckperms.api.LuckPermsProvider;
-import org.arkhamnetwork.Arkkit.Arkkit;
 import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatFilter;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.arkhamnetwork.Arkkit.utils.EssentialsUtils;
-import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -36,7 +34,6 @@ import org.bukkit.inventory.ItemStack;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.logging.Level;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,7 +41,7 @@ public class ChatListener implements Listener {
 
     private final Pattern ipPattern = Pattern.compile("((?<![0-9])(?:(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[.,-:; ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2})[ ]?[., ][ ]?(?:25[0-5]|2[0-4][0-9]|[0-1]?[0-9]{1,2}))(?![0-9]))", Pattern.CASE_INSENSITIVE);
     private final Pattern webpattern = Pattern.compile("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
-    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "faggot", "ddos", "doss", "niggar", "hitler", "frans", "jozef", "gronckel", "straat", "lennik", "bryan", "jeetun", "savina", "dox", "doxed", "swat", "swatted", "kys", "gourley", "3dsam", "wendy", "gmail", "hotmail", "rewind");
+    private final List<String> badWords = Arrays.asList("nigger", "jew", "kys", "demonicpvp", "jurassicpvp", "cursedpvp", "exoduspvp", "faggot", "ddos", "doss", "niggar", "hitler", "frans", "jozef", "gronckel", "straat", "lennik", "bryan", "jeetun", "savina", "dox", "doxed", "swat", "swatted", "kys", "gourley", "3dsam", "gmail", "hotmail", "rewind");
     private final ShieldFeature shieldFeature;
     private double chatCooldown;
 
@@ -74,7 +71,13 @@ public class ChatListener implements Listener {
 
         if (fPlayer.getChatMode() != ChatMode.PUBLIC) return;
 
-        if (StaffUtil.inStaffChat.contains(event.getPlayer())) return;
+        //if (StaffUtil.inStaffChat.contains(event.getPlayer())) return;
+
+        StaffChatManager staffChatManager = AstroCore.getInstance().getStaffChatManager();
+        if (staffChatManager.getInStaffChat().contains(event.getPlayer())) {
+            staffChatManager.sendStaffMessage(event.getPlayer(), event.getMessage());
+            return;
+        }
 
         if (player.hasPermission("astrocore.nebula")) {
             chatCooldown = 0;

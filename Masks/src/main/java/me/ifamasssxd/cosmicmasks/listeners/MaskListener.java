@@ -40,16 +40,16 @@ import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-import me.astropvp.astropvpskins.armorequip.ArmorEquipEvent;
-import me.astropvp.astropvpskins.armorequip.ArmorType;
 import me.ifamasssxd.cosmicmasks.CosmicMasks;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicmasks.items.MultiMaskItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
-import net.astropvp.armorsets.AstroArmorSetsAPI;
 import org.arkhamnetwork.Arkkit.patches.ItemID;
 import org.arkhamnetwork.Arkkit.plugins.ArkPlugins;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -65,7 +65,6 @@ import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 
 import java.util.List;
 import java.util.concurrent.ThreadLocalRandom;
@@ -84,7 +83,7 @@ public class MaskListener implements Listener {
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onGameModeChange(PlayerGameModeChangeEvent event) {
         if (event.getNewGameMode() == GameMode.CREATIVE) {
-            Bukkit.getScheduler().runTaskLater((Plugin) CosmicMasks.get(), () -> event.getPlayer().updateInventory(), 1L);
+            Bukkit.getScheduler().runTaskLater(CosmicMasks.get(), () -> event.getPlayer().updateInventory(), 1L);
         }
     }
 
@@ -95,26 +94,26 @@ public class MaskListener implements Listener {
         if (item != null && item.getType() == Material.CHEST && (wrapper = new NBTWrapper(item)).getString("cosmicType").equalsIgnoreCase("RANDOM_MASK")) {
             event.setCancelled(true);
             Player player = event.getPlayer();
-            if (!player.getWorld().getName().equalsIgnoreCase(((World) Bukkit.getWorlds().get(0)).getName()) && !player.getWorld().getName().contains("_nether")) {
+            if (!player.getWorld().getName().equalsIgnoreCase(Bukkit.getWorlds().get(0).getName()) && !player.getWorld().getName().contains("_nether")) {
                 player.sendMessage(CC.RedB + "(!) " + CC.Red + "You must open this in the Overworld!");
                 return;
             }
             if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                long id = ItemID.getItemID((ItemStack) item);
+                long id = ItemID.getItemID(item);
                 if (id != -1L && ItemID.blacklist_iid.contains(id)) {
                     player.sendMessage(CC.RedB + "(!) " + CC.Red + "It seems you tried to claim a duplicate Random Mask, it has been removed from your inventory.");
-                    player.setItemInHand((ItemStack) null);
+                    player.setItemInHand(null);
                     player.updateInventory();
                     return;
                 }
                 if (id != -1L) {
-                    ItemID.blacklistIID((long) id, (String) ("random mask: " + player.getName()));
+                    ItemID.blacklistIID(id, "random mask: " + player.getName());
                 }
             }
-            player.setItemInHand((ItemStack) null);
+            player.setItemInHand(null);
             MaskType type = this.getRandomMask();
             player.setItemInHand(type.createMask(true));
-            Bukkit.broadcastMessage((String) (CC.YellowB + "(!) " + CC.Yellow + player.getName() + " has received a " + type.getMaskData().getDisplayName() + CC.Yellow + " from their Mask Generator!"));
+            Bukkit.broadcastMessage(CC.YellowB + "(!) " + CC.Yellow + player.getName() + " has received a " + type.getMaskData().getDisplayName() + CC.Yellow + " from their Mask Generator!");
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 1.0f, 1.1f);
         }
@@ -147,8 +146,8 @@ public class MaskListener implements Listener {
             MaskType found = MaskType.fromPlayer((Player) event.getEntity());
             if (Math.random() <= 0.02 && found == MaskType.TURKEY) {
                 event.setCancelled(true);
-                ((Player) event.getEntity()).sendMessage(CC.YellowB + "* DODGED [" + CC.Gray + "Turkey Mask" + CC.YellowB + "]");
-                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation().add(0.0, 0.5, 0.0), (float) 0.2f, (float) 0.2f, (float) 0.2f, (float) 0.1f, (int) 10);
+                event.getEntity().sendMessage(CC.YellowB + "* DODGED [" + CC.Gray + "Turkey Mask" + CC.YellowB + "]");
+                de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation().add(0.0, 0.5, 0.0), 0.2f, 0.2f, 0.2f, 0.1f, 10);
 
             } else if (found == MaskType.MONOPOLY || found == MaskType.PARTY_HAT) {
                 event.setDamage(event.getDamage() * 0.95);
@@ -186,15 +185,12 @@ public class MaskListener implements Listener {
     public void onPlayerEquip(InventoryClickEvent event) {
         ItemStack applying;
         ItemStack cursor = event.getCursor();
-        boolean applyingInvalidHelmet = false;
-        if (cursor != null && this.isInvalid(cursor) && (event.getClick().isLeftClick() || event.getClick().isRightClick()) && event.getSlotType() == InventoryType.SlotType.ARMOR) {
-            applyingInvalidHelmet = true;
-        }
+        boolean applyingInvalidHelmet = cursor != null && this.isInvalid(cursor) && (event.getClick().isLeftClick() || event.getClick().isRightClick()) && event.getSlotType() == InventoryType.SlotType.ARMOR;
         if (!applyingInvalidHelmet && event.getClick() == ClickType.NUMBER_KEY && (applying = event.getWhoClicked().getInventory().getItem(event.getHotbarButton())) != null && this.isInvalid(applying) && event.getSlotType() == InventoryType.SlotType.ARMOR) {
             applyingInvalidHelmet = true;
         }
         if (applyingInvalidHelmet) {
-            Player player = (Player)((Object)event.getWhoClicked());
+            Player player = (Player) event.getWhoClicked();
             if (player.isOp()) {
                 player.sendMessage(CC.Red + "Allowing you to equip this due to your OP status.");
                 return;
@@ -269,7 +265,7 @@ public class MaskListener implements Listener {
             }
             event.setCancelled(true);
             event.setCurrentItem(type.applyMaskNBT(cursorWrapper, other));
-            player.setItemOnCursor((ItemStack) null);
+            player.setItemOnCursor(null);
             player.updateInventory();
             player.playSound(player.getLocation(), Sound.LEVEL_UP, 2.0f, 1.4f);
             player.playSound(player.getLocation(), Sound.HORSE_ARMOR, 3.0f, 1.1f);

@@ -1,9 +1,10 @@
 name: AstroHypeBoxes
-main: net.crankedpvp.hb.HypeboxesPlugin
+main: net.crankedpvp.hypeboxes.HypeboxesPlugin
 version: ${git.total.commit.count}.0
 description: "§fCommit ID: §a${git.commit.id.abbrev}"
 website: https://crankedpvp.net/
 depend:
+  - StorageUtil
   - CrankedUtils
   - CosmicPvPUtils
   - NBTAPI

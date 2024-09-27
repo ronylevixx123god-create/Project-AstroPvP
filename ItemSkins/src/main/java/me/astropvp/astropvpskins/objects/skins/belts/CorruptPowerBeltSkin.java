@@ -1,12 +1,9 @@
 package me.astropvp.astropvpskins.objects.skins.belts;
 
 import com.rit.sucy.EnchantmentAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import net.minecraft.server.v1_8_R3.ItemStack;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
 import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffectType;
 
@@ -19,6 +16,8 @@ public class CorruptPowerBeltSkin extends ItemSkin {
         if (player.getLocation().getWorld().getName().equals("space"))
             return;
         if (player.getLocation().getWorld().getName().equals("world_outpost_pluto"))
+            return;
+        if (player.getLocation().getWorld().getName().equals("mars"))
             return;
         EnchantmentAPI.getEnchantment("Godly Overload").applyEquipEffect(player, 5);
     }

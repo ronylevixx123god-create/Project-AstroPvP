@@ -2,24 +2,18 @@ package me.astropvp.hotfixplugin.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.*;
-import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.hotfixplugin.HotFixPlugin;
 import me.astropvp.hotfixplugin.utils.DeathUtils;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.apache.commons.lang.StringUtils;
 import org.arkhamnetwork.Arkkit.libs.JSONMessage;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.Arkkit.patches.ItemLinking;
-import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creeper;
-import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -30,12 +24,10 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 import java.util.UUID;
 
 public class DamageListener implements Listener {
@@ -199,7 +191,7 @@ public class DamageListener implements Listener {
 
     @EventHandler
     public void onShoot(EntityShootBowEvent e) {
-        if (e.getEntity().getWorld().getName().equals("space") || e.getEntity().getLocation().getWorld().getName().equals("world_outpost_pluto") ) {
+        if (e.getEntity().getWorld().getName().equals("space") || e.getEntity().getWorld().getName().equals("mars") || e.getEntity().getLocation().getWorld().getName().equals("world_outpost_pluto") ) {
             e.getEntity().sendMessage(CC.translate("&cBows are disabled here"));
             e.setCancelled(true);
         }

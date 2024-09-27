@@ -6,10 +6,10 @@ import lombok.Setter;
 import me.astropvp.proxypach.commands.ProxyPatchCommand;
 import me.astropvp.proxypach.tasks.ProxyPatchTask;
 import me.mattstudios.mf.base.CommandManager;
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class ProxyPatch extends JavaPlugin {
@@ -23,11 +23,49 @@ public class ProxyPatch extends JavaPlugin {
 
     public void onEnable() {
         instance = this;
+        this.addPlayerNames();
         loadConfig();
         this.proxyPatchTask = new ProxyPatchTask();
         this.proxyPatchTask.runTaskTimer(this, 80L, 20L);
         CommandManager commandManager = new CommandManager(this, true);
         commandManager.register(new ProxyPatchCommand(this));
+    }
+
+    public void onDisable() {
+        instance = null;
+    }
+
+    public void loadConfig() {
+        getConfig().options().copyDefaults(true);
+        saveConfig();
+    }
+
+
+    private void addPlayerNames() {
+        playerNames.add("simswapper235");
+        playerNames.add("simswapper532");
+        playerNames.add("Abyss");
+        playerNames.add("Blezzed");
+        playerNames.add("doglover123");
+        playerNames.add("Slurrs");
+        playerNames.add("sistertoucher");
+        playerNames.add("ravagedpvp");
+        playerNames.add("slennn");
+        playerNames.add("qrack");
+        playerNames.add("tantra");
+        playerNames.add("cloutexe");
+        playerNames.add("MWKD");
+        playerNames.add("Punco");
+        playerNames.add("NeeeGuh");
+        playerNames.add("juicyass");
+        playerNames.add("mwkd");
+        playerNames.add("meong");
+        playerNames.add("fatest");
+        playerNames.add("fpsproblems");
+        playerNames.add("thebetterpvper");
+        playerNames.add("ohzesmypet");
+
+
         playerNames.add("Haru_s");
         playerNames.add("Xx_Madr1");
         playerNames.add("Charo");
@@ -546,16 +584,6 @@ public class ProxyPatch extends JavaPlugin {
         playerNames.add("Detophia");
         playerNames.add("KikaBumIsL");
         playerNames.add("Kya0722_");
+        Collections.shuffle(playerNames);
     }
-
-    public void onDisable() {
-        instance = null;
-    }
-
-
-    public void loadConfig() {
-        getConfig().options().copyDefaults(true);
-        saveConfig();
-    }
-
 }

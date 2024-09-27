@@ -25,6 +25,7 @@ public class Teleport implements Listener {
             Player player = event.getPlayer();
             if (this.instance.getWildPvPManager().hasWildPvP(player)) {
                if (player.isOp()) return;
+               if (player.hasPermission("essentials.tp.others")) return;
                event.setCancelled(true);
                player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.instance.getConfig().getString("Listeners.Teleport.Match.Participant.Message")));
                player.playSound(player.getLocation(), Sound.VILLAGER_NO, 1.0F, 1.0F);
@@ -43,6 +44,7 @@ public class Teleport implements Listener {
                WildPvPManager wildPvPManager = this.instance.getWildPvPManager();
                if (wildPvPManager.hasWildPvP(event.getTo().getChunk())) {
                   if (player.isOp()) return;
+                  if (player.hasPermission("essentials.tp.others")) return;
 
                   if (!wildPvPManager.getWildPvP(event.getTo().getChunk()).isParticipant(player)) {
                      event.setCancelled(true);

@@ -1,14 +1,9 @@
 package net.astropvp.armorsets.listeners;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.perms.Relation;
-import com.rit.sucy.EnchantmentAPI;
-import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astropvpskins.objects.skins.swords.WetNoodleSword;
 import me.astropvp.astropvpskins.utils.ItemSkinUtils;
 import me.ifamasssxd.cosmicduel.DuelAPI;
 import net.astropvp.armorsets.AstroArmorSets;
@@ -18,13 +13,10 @@ import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.struct.sets.TravelerArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.core.AstroCore;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
 import org.bukkit.entity.Player;
-
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -182,6 +174,7 @@ public class ArmorSetDamageListener implements Listener {
             //add armorset pvpladder multi
 
             //crystals pvp
+            if(cacheAttacker == null || cacheAttacked == null) return;
             if (!cacheAttacker.getCurrentSetCrystals().isEmpty() && !cacheAttacked.getCurrentSetCrystals().isEmpty()) {
                 int ladderAttacker = 0;
                 int ladderAttacked = 0;

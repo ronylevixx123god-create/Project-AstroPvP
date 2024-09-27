@@ -6,26 +6,19 @@ import com.comphenix.protocol.ProtocolManager;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.events.PacketListener;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.StringUtils;
-import com.massivecraft.factions.util.Clickable;
 import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.hotfixplugin.anvil.AnvilSpamListener;
 import me.astropvp.hotfixplugin.anvil.AnvilSpamRunnable;
 import me.astropvp.hotfixplugin.commands.BlockPacketsCommand;
 import me.astropvp.hotfixplugin.listeners.*;
-
-import me.astropvp.hotfixplugin.tasks.NoFly;
 import me.mattstudios.mf.base.CommandManager;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.potion.PotionEffectType;
 
 import java.text.DecimalFormat;
 import java.util.HashSet;
-import java.util.Objects;
 import java.util.Set;
 
 public class HotFixPlugin extends JavaPlugin {
@@ -47,9 +40,11 @@ public class HotFixPlugin extends JavaPlugin {
         //Bukkit.getPluginManager().registerEvents(new EnderPearlFixes(), this);
         Bukkit.getPluginManager().registerEvents(new CommandPingListener(), this);
         Bukkit.getPluginManager().registerEvents(new AntiInvis(), this);
-        //Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
+        Bukkit.getPluginManager().registerEvents(new AntiDoorHit(), this);
         Bukkit.getPluginManager().registerEvents(new AutoOP(), this);
         Bukkit.getPluginManager().registerEvents(new AnvilSpamListener(), this);
+        Bukkit.getPluginManager().registerEvents(new DisableBows(), this);
+        Bukkit.getPluginManager().registerEvents(new DisableTextOnSignListener(), this);
         //Bukkit.getPluginManager().registerEvents(new AntiPhase(), this);
         //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new NoFly(), 20L, 1L);
 

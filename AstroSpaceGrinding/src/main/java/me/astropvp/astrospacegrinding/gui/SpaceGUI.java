@@ -1,22 +1,18 @@
 package me.astropvp.astrospacegrinding.gui;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import dev.triumphteam.gui.guis.Gui;
 import dev.triumphteam.gui.guis.GuiItem;
 import lombok.Getter;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
-import me.astropvp.astrospacegrinding.data.ForceFieldData;
 import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.config.ConfigManager;
-
 import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
 import me.ifamasssxd.cosmichcf.struct.OutpostType;
-import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -34,7 +30,7 @@ public class SpaceGUI {
         double price = AstroSpaceGrindingPlugin.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("forceFieldPrice");
         if (HCFOutpostAPI.isControllingOutpost(player, OutpostType.SPACE)) price*=0.5;
 
-        ItemStack infoItem = new ItemBuilder(Material.BOOK, CC.translate("&b&lSpace Warp"))
+        ItemStack infoItem = new ItemBuilder(Material.NETHERRACK, CC.translate("&4&lMars Warp &c(PvP Enabled)"))
                 .addLoreLine(CC.translate("&7The space lands have been invaded by numerous"))
                 .addLoreLine(CC.translate("&7weird creatures. &bAstronauts&7 team up to try and"))
                 .addLoreLine(CC.translate("&7fight against these monsters."))
@@ -49,10 +45,34 @@ public class SpaceGUI {
                 .addLoreLine(CC.translate("&dHeroic Enchantments&7 &7and &6Holy Whitescrolls&7."))
                 .addLoreLine(CC.translate("&7are disabled in the space lands."))
                 .addLoreLine("")
+                .addLoreLine(CC.translate("&cThere are currently &4&n" + getActivePlayersAtMars() + "&r &cactive players at /warp mars"))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7&nClick here&7 to teleport to the mars lands."))
+                .build();
+
+        ItemStack shitWarp = new ItemBuilder(Material.ENDER_STONE, CC.translate("&d&lSpace Warp &7(PvP Disabled)"))
+                .addLoreLine(CC.translate("&7The space lands have been invaded by numerous"))
+                .addLoreLine(CC.translate("&7weird creatures. &bAstronauts&7 team up to try and"))
+                .addLoreLine(CC.translate("&7fight against these monsters."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7The creatures have already invaded certain"))
+                .addLoreLine(CC.translate("&7spots in the space lands. Fight the monsters"))
+                .addLoreLine(CC.translate("&7to obtain some of the &bbest items&7 in the universe."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&7Once you are in the space lands, you can"))
+                .addLoreLine(CC.translate("&7type &b/space stats&7 to view your space stats."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&dHeroic Enchantments&7 &7and &6Holy Whitescrolls&7."))
+                .addLoreLine(CC.translate("&7are disabled in the space lands."))
+                .addLoreLine("")
+                .addLoreLine(CC.translate("&cPvP is &ndisabled&r &cat this warp"))
+                .addLoreLine(CC.translate("&cDrop Chances are reduced by 80%"))
+                .addLoreLine("")
                 .addLoreLine(CC.translate("&7&nClick here&7 to teleport to the space lands."))
                 .build();
 
 
+        /*
         ItemStack forceField = new ItemBuilder(Material.DIAMOND_CHESTPLATE, CC.translate("&e&lPurchase Forcefield"))
                 .addLoreLine(CC.translate("&7You can buy forcefield to grind peacefully"))
                 .addLoreLine(CC.translate("&7without having to worry about enemies."))
@@ -70,11 +90,20 @@ public class SpaceGUI {
                 .addLoreLine(CC.translate("&7&nClick here&7 to purchase 30 minutes of forcefield."))
                 .build();
 
-        this.spaceGUI.setItem(1, 4, new GuiItem(infoItem, event -> {
+         */
+
+        this.spaceGUI.setItem(1, 3, new GuiItem(shitWarp, event -> {
+            event.getWhoClicked().closeInventory();
             player.chat("/warp space");
         }));
 
+        this.spaceGUI.setItem(1, 7, new GuiItem(infoItem, event -> {
+            event.getWhoClicked().closeInventory();
+            player.chat("/warp mars");
+        }));
+
         double finalPrice = price;
+        /*
         this.spaceGUI.setItem(2, 5, new GuiItem(forceField, event -> {
             if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
                 player.sendMessage(CC.translate("&b&l(!)&b You can only enable &f&lFORCEFIELD&b in the space warp."));
@@ -100,6 +129,8 @@ public class SpaceGUI {
             }
         }));
 
+         */
+
 
 
         ;
@@ -114,12 +145,16 @@ public class SpaceGUI {
                 .addLoreLine(CC.translate("&7&nClick here&7 to view the loot."))
                 .build();
 
-        this.spaceGUI.setItem(1, 6, new GuiItem(lootItem, event -> {
+        this.spaceGUI.setItem(2, 5, new GuiItem(lootItem, event -> {
             player.openInventory(AstroSpaceGrindingAPI.getLootInventory(MonsterType.SPACE_ALIEN));
         }));
 
         spaceGUI.getFiller().fill(new GuiItem(new ItemBuilder(new ItemStack(Material.STAINED_GLASS_PANE, 1, (short) 7)).name(CC.translate("&7")).build()));
 
+    }
+
+    private int getActivePlayersAtMars() {
+        return Bukkit.getWorld("mars").getPlayers().size();
     }
 
 

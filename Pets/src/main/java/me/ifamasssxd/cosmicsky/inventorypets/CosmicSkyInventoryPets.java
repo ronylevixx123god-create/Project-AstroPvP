@@ -1,7 +1,5 @@
 package me.ifamasssxd.cosmicsky.inventorypets;
 
-import com.cosmicpvp.cosmicutils.CosmicUtils;
-import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import lombok.Getter;
 import me.ifamasssxd.cosmicsky.inventorypets.commands.CommandPet;
 import me.ifamasssxd.cosmicsky.inventorypets.items.PetLeashItem;
@@ -53,9 +51,9 @@ public final class CosmicSkyInventoryPets extends JavaPlugin implements Listener
       InventoryPets[] inventoryPets = InventoryPets.values();
       int length = inventoryPets.length;
 
-      this.cageCooldown = new HashMap<UUID, Player>();
-      this.skrrtCooldown = new HashMap<UUID, Player>();
-      this.witcherCooldown = new HashMap<UUID, Player>();
+      this.cageCooldown = new HashMap<>();
+      this.skrrtCooldown = new HashMap<>();
+      this.witcherCooldown = new HashMap<>();
 
       for (InventoryPets pet : inventoryPets) {
          pet.getInternalClass().onEnable(this);

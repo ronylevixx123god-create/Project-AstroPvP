@@ -18,8 +18,6 @@ import org.arkhamnetwork.enchantments.items.EMPPulseItem;
 import org.arkhamnetwork.enchantments.items.OmniBlackscroll;
 import org.arkhamnetwork.enchantments.listeners.*;
 import org.arkhamnetwork.enchantments.mastery.*;
-import org.arkhamnetwork.enchantments.mastery.MasteryBlackout;
-import org.arkhamnetwork.enchantments.mastery.MasteryNeutralize;
 import org.arkhamnetwork.enchantments.tasks.PlayerPotionEffectPersistTask;
 import org.arkhamnetwork.enchantments.util.WorldGuardUtils;
 import org.arkhamnetwork.enchantments.util.config.ConfigManager;
@@ -83,7 +81,6 @@ public class Enchantments extends EnchantPlugin {
                 new BloodLust(), new Devour(), new Protection(), new Destruction(), new Hellfire(), new Ragdoll(), new Sniper(), new Snare(), new CombatMedic(), new Overwhelm(), new HeroicAntiGank(), new DivineLight(), this.naturesWrathEnchant = new NatureWrath(), new DivineImmolation(),
                 new Rogue(), new HeroicInversion(), new HeroicInsomnia(), new HeroicValor(), new HeroicAegis(), new HeroicEnrage(), new HeroicCorrupt(), new HeroicSolitude(), new HeroicDevour(), new HeroicHex(),
                 new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Pummel(), new Barbarian(), new HeroicBarbarian(), new HeroicDeepWounds(),
-                new Ghost(), new CreeperArmor(), new KillAura(), new Shackle(), new Pummel(), new Barbarian(),
                 new ArrowDeflect(), new Greatsword(), new Virus(), new Unfocus(), new Teleblock(), new Longbow(), new Inversion(), new Farcast(), new Paradox(), new Solitude(),
                 new Heavy(), new Hijack(), new Enrage(), new Dodge(), new Insanity(), new Phoenix(), new Disintegrate(), new BloodLink(), new Resilience(),
                 new Sticky(), new Metaphysical(), new Pacify(), new TargetTracking(), new DimensionRift(), new EagleEye(), new Marksman(), new Blacksmith(), new ArrowBreak(), new Assassin(),
@@ -91,11 +88,13 @@ public class Enchantments extends EnchantPlugin {
                 new HeroicDeathbringer(), new HeroicEnlighted(), new HeroicBlacksmith(), new HeroicSniper(), new HeroicDiminish(), new HeroicAssassin(), new HeroicDetonate(), new HeroicImplants(), new HeroicLifesteal(), new HeroicArmored(),
                 new HeroicDodge(), new HeroKiller(), new BossSlayer(), new HeroicLuck(), new HeroicCleave(), new HeroicExecute(), new HeroicBleed(), this.hex = new Hex(), new Corrupt(), new MasteryMarkOfTheBeast(), new MasteryHorrify(),
                 new MasteryPoltergeist(), new MasteryFeignDeath(), new HeroicRocketEscape(), new HeroicTeleportation(), new HeroicTrap(), new HeroicBlock(), new HeroicGhost(), new MasterySoulSiphon(), new MasteryMortalCoil(), new MasteryRotAndDecay(),
-                new MasteryDemonicGateway(), new Reflect(), new HeroicReflect(), new MasteryLifesteal(), new MasteryBlackout(), new MasteryNeutralize(), new MasteryDeathPact(), new MasteryTombstone(), new MasteryDiscombobulate(), new MasteryExplosivesExpert(),
+                new MasteryDemonicGateway(), new Reflect(), new HeroicReflect(), new MasteryLifesteal(),  new MasteryDeathPact(), new MasteryTombstone(), new MasteryDiscombobulate(), new MasteryExplosivesExpert(),
                 this.permafrostEnchant = new MasteryPermafrost(), new HeroicMetaphysical(), new MasteryWebWalker(), new HeroicCactus(), new HeroicTank(), new Sabotage(), new MasteryLavaStrider(), new HeroicInsanity(),
-                new OpeningCombo(), new HeroicOverwhelm(), new SoulMaster(), new KeyGrind(), new Coins(), //new Shiva(),
-                new Treasure()
+                new HeroicOverwhelm(), new KeyGrind(), new Coins(), //new Shiva(),
+                new Treasure(),
+                new SoulMaster(), new OpeningCombo(), new MasteryBlackout(), new MasteryNeutralize(),
         };
+        //new SoulMaster(), new OpeningCombo(), new MasteryBlackout(), new MasteryNeutralize(),
         //new AvengingAngel()
         EnchantmentAPI.registerCustomEnchantments(array);
 

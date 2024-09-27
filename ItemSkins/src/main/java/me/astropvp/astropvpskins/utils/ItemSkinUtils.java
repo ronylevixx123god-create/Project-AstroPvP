@@ -1,11 +1,8 @@
 package me.astropvp.astropvpskins.utils;
 
-import com.cosmicpvp.cosmicutils.struct.factions.FactionHandler;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.Factions;
-import com.massivecraft.factions.FactionsAPI;
 import com.massivecraft.factions.perms.Relation;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;

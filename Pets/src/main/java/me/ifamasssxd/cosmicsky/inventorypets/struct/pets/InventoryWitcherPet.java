@@ -157,7 +157,7 @@ public class InventoryWitcherPet extends InventoryPet {
 
         player.sendMessage("");
         player.sendMessage(CC.translate("&4&l** WITCHER PET [&6" + sum + "s&4&l] AOE - Ragdoll, Soul Enchantments - BLOCKED **"));
-        player.sendMessage(CC.translate("&4&l** WITCHER PET &7[Knockback Immunity 5s] &4&l**"));
+        //player.sendMessage(CC.translate("&4&l** WITCHER PET &7[Knockback Immunity 5s] &4&l**"));
         player.sendMessage("");
         //no_kb.add(player.getUniqueId());
         //player.setMetadata("no_knockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), null));

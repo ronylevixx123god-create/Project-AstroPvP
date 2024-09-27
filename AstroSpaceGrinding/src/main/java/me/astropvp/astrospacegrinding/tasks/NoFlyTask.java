@@ -1,24 +1,25 @@
 package me.astropvp.astrospacegrinding.tasks;
 
+import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
+import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 
 public class NoFlyTask extends BukkitRunnable {
 
 	@Override
 	public void run() {
-		for(Player player : AstroSpaceGrindingAPI.getWorld().getPlayers()) {
-			if(player.isOp()) {
-				continue;
-			}
-			if(player.isFlying()) {
-				player.setFlying(false);
-				player.setAllowFlight(false);
+		for (World world : AstroSpaceGrindingAPI.getWorlds()) {
+			for(Player player : world.getPlayers()) {
+				if(player.isOp()) {
+					continue;
+				}
+				if(player.isFlying()) {
+					player.setFlying(false);
+					player.setAllowFlight(false);
+				}
 			}
 		}
-		
 	}
 
 }

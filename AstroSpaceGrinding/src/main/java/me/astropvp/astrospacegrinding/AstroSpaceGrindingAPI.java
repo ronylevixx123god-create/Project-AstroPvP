@@ -1,9 +1,9 @@
 package me.astropvp.astrospacegrinding;
 
-import java.util.List;
-
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.InventoryUtils;
+import com.google.common.collect.Lists;
+import me.astropvp.astrospacegrinding.enums.MonsterType;
 import me.astropvp.astrospacegrinding.utils.LocationUtils;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTable;
@@ -11,15 +11,29 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.configuration.file.FileConfiguration;
-
-import com.google.common.collect.Lists;
-
-import me.astropvp.astrospacegrinding.enums.MonsterType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.List;
+import java.util.Objects;
+
 public class AstroSpaceGrindingAPI {
-	private static final String WORLD_NAME = "space";
+	private static final String[] WORLD_NAMES = new String[]{"mars", "space"};
+
+	public static boolean isInSpaceWorld(Player player) {
+		for (String worldName : WORLD_NAMES) {
+			if(Objects.equals(player.getLocation().getWorld().getName(), worldName)) return true;
+		}
+		return false;
+	}
+
+	public static boolean isSpaceWorld(World world) {
+		for (String worldName : WORLD_NAMES) {
+			if(Objects.equals(world.getName(), worldName)) return true;
+		}
+		return false;
+	}
 	
 	public static void addLocation(MonsterType type, Location location) {
 		FileConfiguration file = AstroSpaceGrindingPlugin.getInstance().getConfig();
@@ -56,16 +70,16 @@ public class AstroSpaceGrindingAPI {
 		Lists.newArrayList();
 	}
 	
-	public static String getWorldName() {
-		return WORLD_NAME;
+	public static String[] getWorldNames() {
+		return WORLD_NAMES;
 	}
 	
-	public static World getWorld() {
-		return Bukkit.getWorld(WORLD_NAME);
+	public static World[] getWorlds() {
+		return new World[]{Bukkit.getWorld(WORLD_NAMES[0]), Bukkit.getWorld(WORLD_NAMES[1])};
 	}
 
 	public static List<ItemStack> getListItems(MonsterType type) {
-		return LootTableAPI.getAllLootFromLootTable(LootTable.RUINS);
+		return LootTableAPI.getAllLootFromLootTable(LootTable.SPACE);
 	}
 
 

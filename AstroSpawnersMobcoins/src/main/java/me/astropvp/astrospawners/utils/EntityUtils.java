@@ -1,19 +1,12 @@
 package me.astropvp.astrospawners.utils;
 
-import java.util.List;
-
 import com.cosmicpvp.cosmicutils.utils.CC;
-import me.astropvp.astrospawners.AstroSpawners;
-import me.astropvp.astrospawners.data.SpawnerData;
-import me.astropvp.astrospawners.data.SpawnerManager;
+import com.google.common.collect.Lists;
 import org.bukkit.Bukkit;
-import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.*;
-import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import com.google.common.collect.Lists;
+import java.util.List;
 
 
 public class EntityUtils {
@@ -52,6 +45,9 @@ public class EntityUtils {
         }
         if (type == EntityType.MUSHROOM_COW) {
             return "Mushroom Cow";
+        }
+        if (type == EntityType.SNOWMAN) {
+            return "Snow Golem";
         }
         return type.getName();
     }

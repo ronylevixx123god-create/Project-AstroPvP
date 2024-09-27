@@ -11,7 +11,6 @@ import com.astropvp.cc.packet.PacketCommons;
 import com.astropvp.cc.packet.PacketIO;
 import com.astropvp.cc.voice.VoiceTask;
 import me.astropvp.proxypach.ProxyPatch;
-import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -62,7 +61,7 @@ public class CCVerify extends JavaPlugin implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event){
         if (ProxyPatch.playerNames.contains(event.getPlayer().getName())) return;
-            PacketIO.get().addPlayer(event.getPlayer());
+        PacketIO.get().addPlayer(event.getPlayer());
     }
 
     @EventHandler

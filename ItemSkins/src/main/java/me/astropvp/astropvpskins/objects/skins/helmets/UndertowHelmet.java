@@ -1,16 +1,9 @@
 package me.astropvp.astropvpskins.objects.skins.helmets;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
-import net.astropvp.damagehandler.AstroDamageHandler;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +15,18 @@ public class UndertowHelmet extends ItemSkin {
         undertowField = new ArrayList<>();
     }
 
+    @Override
+    public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if (damaged instanceof Player) {
+            double addition = 0.1;
+            if(damager.getLocation().getBlock().isLiquid()) {
+                addition += 0.1;
+            }
+            event.setDamage(event.getDamage() * (1 + addition));
+        }
+    }
+
+    /*
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
         if (event.isCancelled()) return;
         if (!WorldGuardUtils.isPvPEnabled(damaged.getLocation()) || !WorldGuardUtils.isPvPEnabled(damager.getLocation())) return;
@@ -50,4 +55,6 @@ public class UndertowHelmet extends ItemSkin {
             },15*20);
         }
     }
+
+     */
 }

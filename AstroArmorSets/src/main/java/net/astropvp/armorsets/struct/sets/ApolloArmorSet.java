@@ -4,7 +4,6 @@ import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.struct.ArmorSet;
-import net.astropvp.armorsets.struct.ArmorSetWeapon;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import org.arkhamnetwork.enchantments.enchantments.axes.Blessed;
 import org.arkhamnetwork.enchantments.listeners.AutoBlessListener;
@@ -13,7 +12,6 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -44,12 +42,12 @@ public class ApolloArmorSet extends ArmorSet {
     }
 
     public void onAttack(Player attacker, Entity attacked, EntityDamageByEntityEvent event) {
-        double increasePercent = 40 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("appoloSetDamageIncrease") * 0.01));
+        double increasePercent = 40 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("apolloSetDamageIncrease") * 0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * 0.01)));
     }
 
     public void onAttackCrystal(Player attacker, Entity attacked, EntityDamageByEntityEvent event, int amount) {
-        double increasePercent = 15 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("appoloSetDamageIncrease") * 0.01));
+        double increasePercent = 15 * (1 + (AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("apolloSetDamageIncrease") * 0.01));
         event.setDamage(event.getDamage() * (1 + (increasePercent * amount * 0.01)));
     }
 

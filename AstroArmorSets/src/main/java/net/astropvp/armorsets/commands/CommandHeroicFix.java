@@ -59,14 +59,16 @@ public class CommandHeroicFix implements CommandExecutor {
             meta.addItemFlags(ItemFlag.HIDE_UNBREAKABLE);
             item.setItemMeta(meta);
             Pair<ModifierType, Double> modifierTypePair = new Pair<>(ModifierType.ATTACK_DAMAGE, 7D);
-            player.setItemInHand(AttributeModifier.applyModifications(item, Collections.singletonList(modifierTypePair)));
+            ItemStack newItem = AttributeModifier.applyModifications(item, Collections.singletonList(modifierTypePair));
 
-            NBTWrapper wrapper = new NBTWrapper(item);
+            NBTWrapper wrapper = new NBTWrapper(newItem);
             NBTTagCompoundBuilder cosmicData = wrapper.getCompoundOrCreate("cosmicData");
             cosmicData.setBoolean("heroicArmor", true);
             wrapper.setNBTBase("cosmicData", cosmicData.get());
 
-            ItemStack tempItem = wrapper.build();
+            NBTItem nbtItem = new NBTItem(wrapper.build());
+            nbtItem.setBoolean("heroic", true);
+            ItemStack tempItem = nbtItem.getItem();
             player.setItemInHand(tempItem);
 
             player.sendMessage(CC.Green + "Successfully made weapon into new heroic!");

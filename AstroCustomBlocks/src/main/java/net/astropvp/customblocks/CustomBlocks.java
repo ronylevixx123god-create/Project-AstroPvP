@@ -1,14 +1,11 @@
 package net.astropvp.customblocks;
 
 import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.events.PacketListener;
-import net.astropvp.customblocks.tasks.ChunkCustomBlocksTask;
-import net.astropvp.customblocks.tasks.TickAbleBlocksRunnable;
-import net.astropvp.customblocks.utils.config.ConfigManager;
-import net.astropvp.storage.StoragePlugin;
-import net.astropvp.storage.gson.Gson;import lombok.Getter;
+import lombok.Getter;
 import me.mattstudios.mf.base.CommandManager;
+import net.astropvp.customblocks.commands.AddCBlockCommand;
 import net.astropvp.customblocks.commands.CustomBlockCommand;
+import net.astropvp.customblocks.commands.RemoveCustomBlockCommand;
 import net.astropvp.customblocks.data.CustomBlockManager;
 import net.astropvp.customblocks.listeners.CustomBlockBreakListener;
 import net.astropvp.customblocks.listeners.CustomBlockListener;
@@ -16,6 +13,11 @@ import net.astropvp.customblocks.listeners.CustomBlockPacketListener;
 import net.astropvp.customblocks.listeners.CustomBlockPlaceListener;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.struct.typeadapters.CustomBlockDeserializer;
+import net.astropvp.customblocks.tasks.ChunkCustomBlocksTask;
+import net.astropvp.customblocks.tasks.TickAbleBlocksRunnable;
+import net.astropvp.customblocks.utils.config.ConfigManager;
+import net.astropvp.storage.StoragePlugin;
+import net.astropvp.storage.gson.Gson;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -37,6 +39,8 @@ public class CustomBlocks extends JavaPlugin {
                 .create();
         this.commandManager = new CommandManager(this, true);
         commandManager.register(new CustomBlockCommand());
+        commandManager.register(new AddCBlockCommand());
+        commandManager.register(new RemoveCustomBlockCommand());
         this.customBlockManager = new CustomBlockManager(this);
         customBlockManager.loadAll();
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(this, ()-> {
@@ -47,7 +51,7 @@ public class CustomBlocks extends JavaPlugin {
         configManager.setupFiles();
         registerListeners();
         registerTasks();
-        ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener)new CustomBlockPacketListener());
+        ProtocolLibrary.getProtocolManager().addPacketListener(new CustomBlockPacketListener());
 
     }
 

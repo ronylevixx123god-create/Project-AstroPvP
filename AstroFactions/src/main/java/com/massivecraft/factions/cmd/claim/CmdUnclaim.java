@@ -7,8 +7,8 @@ import com.massivecraft.factions.cmd.FCommand;
 import com.massivecraft.factions.event.LandUnclaimEvent;
 import com.massivecraft.factions.integration.Econ;
 import com.massivecraft.factions.perms.PermissibleAction;
+import com.massivecraft.factions.perms.Role;
 import com.massivecraft.factions.struct.Permission;
-import com.massivecraft.factions.util.AsyncSpiralTask;
 import com.massivecraft.factions.util.SpiralTask;
 import com.massivecraft.factions.util.TL;
 import org.bukkit.Bukkit;
@@ -160,6 +160,11 @@ public class CmdUnclaim extends FCommand {
 
         if (context.faction != targetFaction) {
             context.msg(TL.COMMAND_UNCLAIM_WRONGFACTION);
+            return false;
+        }
+
+        if(targetFaction.getClaimOwnership().containsKey(target) && context.fPlayer.getRole() != Role.ADMIN) {
+            context.msg("&cYou cannot unclaim land that has been /f owner claimed");
             return false;
         }
 

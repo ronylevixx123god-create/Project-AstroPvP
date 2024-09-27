@@ -17,23 +17,17 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
-import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
-import org.arkhamnetwork.enchantments.libs.SpecificCustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.potion.PotionEffect;
-import org.bukkit.potion.PotionEffectType;
 
 public class HeroicDodge
         extends HeroicCustomEnchantment {
@@ -48,10 +42,10 @@ public class HeroicDodge
             if (attacker instanceof Player && (AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.VALENTINES_2022_MUTATED_HELMET)) && Math.random() < 0.15)
                 return;
 
-        double chance = 0.05 * (double)level;
+        double chance = 0.03 * (double)level;
         final boolean sneaking = ((Player) player).isSneaking();
             if (sneaking) {
-                chance += 0.2;
+                chance += 0.05;
             }
             if (Math.random() < chance) {
                 if (Math.random() < 0.03 && !player.hasMetadata("carver_damage")) {
@@ -64,7 +58,7 @@ public class HeroicDodge
 
                 e.setDamage(0);
                 //e.setCancelled(true);
-                ((Player) player).sendMessage((Object) ChatColor.YELLOW + "*DODGE*");
+                player.sendMessage(ChatColor.YELLOW + "*DODGE*");
                 player.getWorld().playSound(player.getLocation(), Sound.BAT_TAKEOFF, 1.0f, 0.75f);
             }
     }

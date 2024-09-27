@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode;
 
+/*
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModulesRegister;
 import org.bukkit.GameMode;
@@ -65,3 +66,5 @@ public class StaffModeManager {
     }
 
 }
+
+ */

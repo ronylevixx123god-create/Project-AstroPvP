@@ -32,7 +32,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class CosmicItemListener
 implements Listener {
-    private CosmicSkyCustomItems plugin;
+    private final CosmicSkyCustomItems plugin;
 
     public CosmicItemListener(CosmicSkyCustomItems plugin) {
         this.plugin = plugin;
@@ -49,7 +49,7 @@ implements Listener {
             return;
         }
         PlayerInteractNBTWrapperEvent newEvent = new PlayerInteractNBTWrapperEvent(event.getPlayer(), event, item, new NBTWrapper(item));
-        Bukkit.getPluginManager().callEvent((Event)newEvent);
+        Bukkit.getPluginManager().callEvent(newEvent);
         if (newEvent.isCancelled()) {
             event.setCancelled(true);
         }
@@ -64,7 +64,7 @@ implements Listener {
             if (customItem == null) {
                 customItem = CosmicPersistentItem.getSampleVersion(keyItem);
             }
-            return new Tuple((Object)item, (Object)customItem);
+            return new Tuple(item, customItem);
         }
         return null;
     }
@@ -72,7 +72,7 @@ implements Listener {
     @EventHandler(priority=EventPriority.HIGHEST, ignoreCancelled=true)
     public void onInventoryClick(InventoryClickEvent event) {
         NBTWrapper clicked;
-        if (event.getClickedInventory() == null || event.getWhoClicked().getOpenInventory() == null || !(event.getWhoClicked() instanceof Player) || event.getWhoClicked().getOpenInventory().getBottomInventory() == null || !event.getClickedInventory().equals((Object)event.getWhoClicked().getOpenInventory().getBottomInventory())) {
+        if (event.getClickedInventory() == null || event.getWhoClicked().getOpenInventory() == null || !(event.getWhoClicked() instanceof Player) || event.getWhoClicked().getOpenInventory().getBottomInventory() == null || !event.getClickedInventory().equals(event.getWhoClicked().getOpenInventory().getBottomInventory())) {
             return;
         }
         NBTWrapper cursor = event.getCursor() != null && event.getCursor().getType() != Material.AIR ? new NBTWrapper(event.getCursor()) : null;
@@ -92,21 +92,21 @@ implements Listener {
             NBTWrapper wrapper;
             Tuple<CosmicItems, CosmicItem> pair;
             ItemStack placed = event.getItemInHand();
-            if (placed != null && placed.getType() != Material.AIR && (pair = this.fromItem(wrapper = new NBTWrapper(placed))) != null && (customItem = (CosmicItem)pair.getRight()) instanceof PlaceableBlockItem) {
-                PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems)((Object)pair.getLeft()), customItem, placed, wrapper);
+            if (placed != null && placed.getType() != Material.AIR && (pair = this.fromItem(wrapper = new NBTWrapper(placed))) != null && (customItem = pair.getRight()) instanceof PlaceableBlockItem) {
+                PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems) pair.getLeft(), customItem, placed, wrapper);
                 if (!newEvent.callEvent()) {
                     event.setCancelled(true);
                     return;
                 }
                 try {
-                    ((PlaceableBlockItem)((Object)customItem)).onPlayerPlace(event.getPlayer(), placed, wrapper, event);
-                    new PostPlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems)((Object)pair.getLeft()), customItem, placed, wrapper).callEvent();
+                    ((PlaceableBlockItem) customItem).onPlayerPlace(event.getPlayer(), placed, wrapper, event);
+                    new PostPlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems) pair.getLeft(), customItem, placed, wrapper).callEvent();
                 }
                 catch (CosmicException e) {
                     event.getPlayer().sendMessage(e.getMessage());
                     event.setCancelled(true);
                     if (!(e instanceof ItemDupedException)) break block4;
-                    DiscordAPI.sendMessage((CosmicDiscordChannels)CosmicDiscordChannels.ADMIN_LOGS, (String)(event.getPlayer().getName() + " tried to use duped item from BlockPlace: " + customItem.getClass().getSimpleName() + " world: " + event.getPlayer().getWorld().getName() + " on " + CosmicUtils.get().getServerName()));
+                    DiscordAPI.sendMessage(CosmicDiscordChannels.ADMIN_LOGS, event.getPlayer().getName() + " tried to use duped item from BlockPlace: " + customItem.getClass().getSimpleName() + " world: " + event.getPlayer().getWorld().getName() + " on " + CosmicUtils.get().getServerName());
                 }
             }
         }
@@ -116,22 +116,22 @@ implements Listener {
         block8: {
             CosmicItem customItem;
             Tuple<CosmicItems, CosmicItem> pair = this.fromItem(wrapper);
-            if (pair != null && (customItem = (CosmicItem)pair.getRight()) instanceof InventoryInteractable) {
-                InventoryInteractable inventoryInteractable = (InventoryInteractable)((Object)customItem);
+            if (pair != null && (customItem = pair.getRight()) instanceof InventoryInteractable) {
+                InventoryInteractable inventoryInteractable = (InventoryInteractable) customItem;
                 if (!inventoryInteractable.acceptsInventoryClickType(itemType)) {
                     return;
                 }
                 try {
-                    PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(player, (CosmicItems)((Object)pair.getLeft()), customItem, itemStack, wrapper);
+                    PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(player, (CosmicItems) pair.getLeft(), customItem, itemStack, wrapper);
                     if (!newEvent.callEvent()) {
                         event.setCancelled(true);
                         return;
                     }
                     inventoryInteractable.onInventoryClick((Player)event.getWhoClicked(), itemStack, wrapper, otherWrapper, otherItem, event);
-                    new PostPlayerUseCosmicItemEvent(player, (CosmicItems)((Object)pair.getLeft()), customItem, itemStack, wrapper).callEvent();
+                    new PostPlayerUseCosmicItemEvent(player, (CosmicItems) pair.getLeft(), customItem, itemStack, wrapper).callEvent();
                 }
                 catch (CosmicException e) {
-                    ((Player)event.getWhoClicked()).sendMessage(e.getMessage());
+                    event.getWhoClicked().sendMessage(e.getMessage());
                     event.setCancelled(true);
                     if (!(e instanceof ItemDupedException)) break block8;
                     if (itemType == InventoryItemType.CURSOR) {
@@ -139,7 +139,7 @@ implements Listener {
                     } else if (itemType == InventoryItemType.CLICKED) {
                         event.setCurrentItem(null);
                     }
-                    DiscordAPI.sendMessage((CosmicDiscordChannels)CosmicDiscordChannels.ADMIN_LOGS, (String)(event.getWhoClicked().getName() + " tried to use duped item from me.astropvp.cratekeys.inventory click " + (Object)((Object)itemType) + ": " + customItem.getClass().getSimpleName() + " world: " + event.getWhoClicked().getWorld().getName() + " on " + CosmicUtils.get().getServerName()));
+                    DiscordAPI.sendMessage(CosmicDiscordChannels.ADMIN_LOGS, event.getWhoClicked().getName() + " tried to use duped item from me.astropvp.cratekeys.inventory click " + itemType + ": " + customItem.getClass().getSimpleName() + " world: " + event.getWhoClicked().getWorld().getName() + " on " + CosmicUtils.get().getServerName());
                 }
             }
         }
@@ -153,11 +153,11 @@ implements Listener {
             }
             Tuple<CosmicItems, CosmicItem> pair = this.fromItem(event.getWrapper());
             if (pair != null) {
-                CosmicItems item = (CosmicItems)((Object)pair.getLeft());
-                CosmicItem customItem = (CosmicItem)pair.getRight();
+                CosmicItems item = pair.getLeft();
+                CosmicItem customItem = pair.getRight();
                 if (item != null || customItem != null) {
                     PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(event.getPlayer(), item, customItem, event.getItem(), event.getWrapper());
-                    Bukkit.getPluginManager().callEvent((Event)newEvent);
+                    Bukkit.getPluginManager().callEvent(newEvent);
                     if (newEvent.isCancelled()) {
                         event.setCancelled(true);
                         event.getRawEvent().setUseItemInHand(Event.Result.DENY);
@@ -166,18 +166,18 @@ implements Listener {
                     try {
                         customItem.onItemUse(event.getPlayer(), event.getItem(), event.getWrapper(), event.getRawEvent());
                         if (customItem instanceof PlayerInteractable) {
-                            ((PlayerInteractable)((Object)customItem)).onPlayerInteractable(event.getPlayer(), event.getItem(), event.getWrapper(), event.getRawEvent());
+                            ((PlayerInteractable) customItem).onPlayerInteractable(event.getPlayer(), event.getItem(), event.getWrapper(), event.getRawEvent());
                         }
-                        Bukkit.getPluginManager().callEvent((Event)new PostPlayerUseCosmicItemEvent(event.getPlayer(), item, customItem, event.getItem(), event.getWrapper()));
+                        Bukkit.getPluginManager().callEvent(new PostPlayerUseCosmicItemEvent(event.getPlayer(), item, customItem, event.getItem(), event.getWrapper()));
                     }
                     catch (CosmicException e) {
                         event.setCancelled(true);
                         event.getPlayer().sendMessage(e.getMessage());
                         if (!(e instanceof ItemDupedException)) break block7;
                         event.getPlayer().getInventory().setItemInHand(null);
-                        event.getPlayer().getInventory().removeItem(new ItemStack[]{event.getItem()});
+                        event.getPlayer().getInventory().removeItem(event.getItem());
                         event.getPlayer().updateInventory();
-                        DiscordAPI.sendMessage((CosmicDiscordChannels)CosmicDiscordChannels.ADMIN_LOGS, (String)(event.getPlayer().getName() + " tried to use duped item: " + customItem.getClass().getSimpleName() + " world: " + event.getPlayer().getWorld().getName() + " on " + CosmicUtils.get().getServerName()));
+                        DiscordAPI.sendMessage(CosmicDiscordChannels.ADMIN_LOGS, event.getPlayer().getName() + " tried to use duped item: " + customItem.getClass().getSimpleName() + " world: " + event.getPlayer().getWorld().getName() + " on " + CosmicUtils.get().getServerName());
                     }
                 }
             }

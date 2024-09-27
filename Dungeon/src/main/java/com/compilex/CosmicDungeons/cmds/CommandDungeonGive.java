@@ -25,12 +25,12 @@ implements CommandExecutor {
             return true;
         }
         if (args.length == 0) {
-            sender.sendMessage(CC.translate((String)"&c/dungeongive <player> <item> <amount>"));
-            sender.sendMessage(CC.translate((String)"&cItems: ABANDONED_SHIP_PORTAL, DESTROYED_OUTPOST_PORTAL, PLANET_NUL_PORTAL"));
+            sender.sendMessage(CC.translate("&c/dungeongive <player> <item> <amount>"));
+            sender.sendMessage(CC.translate("&cItems: ABANDONED_SHIP_PORTAL, DESTROYED_OUTPOST_PORTAL, PLANET_NUL_PORTAL"));
             return true;
         }
         if (args.length == 3) {
-            Player player = Bukkit.getPlayer((String)args[0]);
+            Player player = Bukkit.getPlayer(args[0]);
             return true;
         }
         return true;

@@ -13,8 +13,6 @@
 package me.ifamasssxd.cosmicguishop.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.List;
-
 import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import me.ifamasssxd.cosmicguishop.menus.XpShopMenu;
 import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
@@ -24,6 +22,8 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.List;
 
 public class CommandXpShop
 implements CommandExecutor {
@@ -50,7 +50,7 @@ implements CommandExecutor {
                 return true;
             }
             list.add(Base64Utils.toBase64(new ItemStack[]{item}, 9));
-            String i = (String)list.get(list.size() - 1);
+            String i = list.get(list.size() - 1);
             int cost = 0;
             try {
                 cost = Integer.parseInt(args[1]);
@@ -82,7 +82,7 @@ implements CommandExecutor {
                 ItemStack x = items[i];
                 if (!x.getItemMeta().getDisplayName().equals(item.getItemMeta().getDisplayName())) continue;
                 list.remove(i);
-                CosmicGUIShop.getInstance().getConfig().set("items", (Object)list);
+                CosmicGUIShop.getInstance().getConfig().set("items", list);
                 CosmicGUIShop.getInstance().saveConfig();
                 CosmicGUIShop.getInstance().loadConfig();
                 CosmicGUIShop.getInstance().setItemList(list);

@@ -2,8 +2,6 @@ package net.astropvp.core;
 
 import co.aikar.commands.CommandManager;
 import co.aikar.commands.PaperCommandManager;
-import com.astropvp.cc.player.CosmicPlayer;
-import com.astropvp.cc.player.CosmicPlayers;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.ProtocolManager;
@@ -12,13 +10,42 @@ import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.events.PacketEvent;
 import com.comphenix.protocol.reflect.FieldAccessException;
-import com.cosmicpvp.cosmicutils.utils.CC;
+import com.earth2me.essentials.Essentials;
+import com.earth2me.essentials.I18n;
+import com.massivecraft.factions.Faction;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.SneakyThrows;
+import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
+import net.astropvp.core.autobroadcast.tasks.AutoBroadcastTask;
+import net.astropvp.core.autogiveall.commands.CommandForceGiveAll;
+import net.astropvp.core.autogiveall.commands.CommandNextGiveAll;
+import net.astropvp.core.autogiveall.struct.GiveAllManager;
+import net.astropvp.core.betterpay.PayListener;
+import net.astropvp.core.betterpay.PayToggle;
+import net.astropvp.core.betterpay.commands.CommandTogglePay;
+import net.astropvp.core.commands.*;
+import net.astropvp.core.cosmiccoinflip.commands.CommandCoinFlip;
+import net.astropvp.core.cosmiccoinflip.listeners.InventoryListener;
 import net.astropvp.core.cosmiccoinflip.listeners.PlayerListener;
+import net.astropvp.core.cosmiccoinflip.struct.CoinFlipManager;
+import net.astropvp.core.cosmiccoinflip.struct.CoinFlipMatch;
+import net.astropvp.core.cosmicjackpot.struct.JackpotManager;
+import net.astropvp.core.cosmictoggles.commands.CommandToggles;
+import net.astropvp.core.cosmictoggles.manager.TogglesManager;
 import net.astropvp.core.giveaway.GiveAwayCommand;
 import net.astropvp.core.giveaway.GiveAwayManager;
+import net.astropvp.core.items.*;
 import net.astropvp.core.items.coder.EnchantmentCoderManager;
+import net.astropvp.core.items.coder.HeroicEnchantmentCoderItem;
+import net.astropvp.core.killtracker.commands.CommandGiveSoulGem;
+import net.astropvp.core.killtracker.commands.CommandWithdrawSouls;
+import net.astropvp.core.killtracker.listeners.SoulGemListener;
+import net.astropvp.core.listeners.*;
 import net.astropvp.core.managers.AstroPlayerManager;
 import net.astropvp.core.struct.Gift;
+import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.titles.cmds.CommandTitle;
 import net.astropvp.core.titles.cmds.CommandTitleSet;
 import net.astropvp.core.titles.listeners.PermissionListener;
@@ -27,47 +54,6 @@ import net.astropvp.core.titles.listeners.TitleInventoryListener;
 import net.astropvp.core.titles.sql.SQLConnection;
 import net.astropvp.core.titles.sql.SQLHandler;
 import net.astropvp.core.titles.sql.TitleDatabaseManager;
-import com.earth2me.essentials.Essentials;
-import com.earth2me.essentials.I18n;
-import com.earth2me.essentials.api.NoLoanPermittedException;
-import com.earth2me.essentials.api.UserDoesNotExistException;
-import com.massivecraft.factions.Faction;
-import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.SneakyThrows;
-import net.astropvp.core.autogiveall.tasks.AutoGiveAllTask;
-import net.astropvp.core.betterpay.PayListener;
-import net.astropvp.core.betterpay.PayToggle;
-import net.astropvp.core.betterpay.commands.CommandTogglePay;
-import net.astropvp.core.cosmiccoinflip.commands.CommandCoinFlip;
-import net.astropvp.core.cosmiccoinflip.listeners.InventoryListener;
-import net.astropvp.core.cosmiccoinflip.struct.CoinFlipManager;
-import net.astropvp.core.cosmiccoinflip.struct.CoinFlipMatch;
-
-import net.astropvp.core.cosmicjackpot.commands.CommandJackpot;
-import net.astropvp.core.cosmicjackpot.listeners.JackpotListener;
-import net.astropvp.core.cosmicjackpot.struct.JackpotManager;
-import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import net.astropvp.core.cosmictoggles.commands.CommandToggles;
-import net.astropvp.core.cosmictoggles.manager.TogglesManager;
-import net.astropvp.core.killtracker.commands.CommandGiveSoulGem;
-import net.astropvp.core.killtracker.commands.CommandWithdrawSouls;
-import net.astropvp.core.killtracker.listeners.SoulGemListener;
-import net.astropvp.core.autobroadcast.tasks.AutoBroadcastTask;
-import net.astropvp.core.autogiveall.struct.GiveAllManager;
-import net.astropvp.core.autogiveall.commands.CommandForceGiveAll;
-import net.astropvp.core.autogiveall.commands.CommandNextGiveAll;
-import net.astropvp.core.commands.*;
-import net.astropvp.core.conaxgames.staff.*;
-import net.astropvp.core.conaxgames.staff.staffmode.StaffModeCommand;
-import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModeListeners;
-import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.StaffModulesRegister;
-import net.astropvp.core.items.*;
-import net.astropvp.core.items.coder.HeroicEnchantmentCoderItem;
-import net.astropvp.core.listeners.*;
-import net.astropvp.core.tasks.LastManStandingCapTask;
 import net.astropvp.core.typeadapters.GiftAdapterSerializer;
 import net.astropvp.core.typeadapters.GiftsListAdapterSerializer;
 import net.astropvp.core.utils.CleanseScroll;
@@ -77,14 +63,25 @@ import net.astropvp.core.utils.cache.CacheManager;
 import net.astropvp.storage.StoragePlugin;
 import net.astropvp.storage.gson.Gson;
 import net.astropvp.storage.gson.reflect.TypeToken;
+import net.crankedpvp.staff.commands.FreezeCommand;
+import net.crankedpvp.staff.commands.GhostMuteCommand;
+import net.crankedpvp.staff.commands.StaffChatCommand;
+import net.crankedpvp.staff.commands.StaffModeCommand;
+import net.crankedpvp.staff.listeners.*;
+import net.crankedpvp.staff.managers.FreezeManager;
+import net.crankedpvp.staff.managers.GhostMuteManager;
+import net.crankedpvp.staff.managers.StaffChatManager;
+import net.crankedpvp.staff.managers.StaffManager;
+import net.crankedpvp.staff.tasks.FreezeTeleportTask;
 import net.milkbowl.vault.economy.Economy;
-import org.bukkit.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandMap;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Listener;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.RegisteredServiceProvider;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -113,8 +110,8 @@ public class AstroCore extends JavaPlugin {
     }
     private CommandManager commandManager;
 
-    private StaffModeManager staffModeManager;
-    private StaffModulesRegister staffModulesRegister;
+    //private StaffModeManager staffModeManager;
+    //private StaffModulesRegister staffModulesRegister;
     public static String LORE_SUFFIX = ":  ";
     private File spongeDirectory;
     private HolyWhiteScrollListener holyWhiteScrollListener;
@@ -136,9 +133,24 @@ public class AstroCore extends JavaPlugin {
     private CooldownUtils cooldownUtils;
     @Getter
     @Setter
-    private Freeze freezeCommand;
+    //private Freeze freezeCommand;
     private AutoBroadcastTask autoBroadcastTask;
 
+    public static String prefix = "&a&lStaff &8➥ ";
+
+    @Getter
+    private StaffManager staffManager;
+
+    @Getter
+    private FreezeManager freezeManager;
+
+    @Getter
+    private GhostMuteManager ghostMuteManager;
+
+    private FreezeTeleportTask teleportTask;
+
+    @Getter
+    private StaffChatManager staffChatManager;
 
     @Getter
     public GiveAwayManager giveAwayManager;
@@ -162,15 +174,17 @@ public class AstroCore extends JavaPlugin {
         this.enchantmentCoderManager = new EnchantmentCoderManager();
         this.astroPlayerManager = new AstroPlayerManager();
 
-        this.staffModeManager = new StaffModeManager();
-        this.staffModulesRegister = new StaffModulesRegister(this);
-        this.staffModulesRegister.initialize();
+        //this.staffModeManager = new StaffModeManager();
+        //this.staffModulesRegister = new StaffModulesRegister(this);
+        //this.staffModulesRegister.initialize();
         this.cacheManager = new CacheManager();
         grindingMessages = new HashMap<>();
         this.claimsOnInfernal = new HashMap<>();
         this.claimsOnDesert = new HashMap<>();
         this.claimsOnFrozen = new HashMap<>();
         this.giveAwayManager = new GiveAwayManager(this);
+
+        this.staffChatManager = new StaffChatManager();
 
 
 
@@ -212,10 +226,24 @@ public class AstroCore extends JavaPlugin {
         this.toggleManager.loadToggles();
         try {
             Class.forName("org.arkhamnetwork.Arkkit.patches.combatlog.CombatLoggerDeathEvent");
-            getServer().getPluginManager().registerEvents((Listener) new HolyWhiteScrollCombatLoggerListener(), (Plugin) this);
+            getServer().getPluginManager().registerEvents(new HolyWhiteScrollCombatLoggerListener(), this);
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+
+
+        this.staffManager = new StaffManager(this);
+        this.freezeManager = new FreezeManager(this);
+        this.ghostMuteManager = new GhostMuteManager(this);
+
+        me.mattstudios.mf.base.CommandManager commandManager = new me.mattstudios.mf.base.CommandManager(this);
+        commandManager.register(new StaffModeCommand(this));
+        commandManager.register(new FreezeCommand(this));
+        commandManager.register(new GhostMuteCommand(this));
+        commandManager.register(new StaffChatCommand(this));
+
+        this.teleportTask = new FreezeTeleportTask(this);
+        this.teleportTask.runTaskTimer(this, 80L, 20L);
 
 
         registerCommands();
@@ -250,7 +278,9 @@ public class AstroCore extends JavaPlugin {
 
     @SneakyThrows
     public void onDisable() {
-        this.staffModeManager.toggleOffAllStaffModes();
+        this.staffManager.getPlayersInStaffMode().forEach((player, staffMode) -> staffMode.removePlayerFromStaffMode());
+
+        //this.staffModeManager.toggleOffAllStaffModes();
         this.payToggles.saveToggles();
         /*try {
             this.jackpotManager.saveFileData();
@@ -414,9 +444,10 @@ public class AstroCore extends JavaPlugin {
         getCommand("togglepotsdrop").setExecutor(new TogglePotsDropCommand());
         getCommand("togglebossmessages").setExecutor(new ToggleBossMessagesCommand());
 
-        freezeCommand = new Freeze();
+        //freezeCommand = new Freeze();
 
-        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast(), new FreezeCommand(), new StaffChatCommand(), new StaffModeCommand()).forEach(this::registerCommand);
+        //, new StaffChatCommand(), new StaffModeCommand(), new FreezeCommand()
+        Arrays.asList(new GiveThrowableCreeperEgg(), new Broadcast()).forEach(this::registerCommand);
 
         this.commandManager = new PaperCommandManager(this);
         this.commandManager.registerCommand(new Invsee());
@@ -439,6 +470,7 @@ public class AstroCore extends JavaPlugin {
         }, 20L, 20L);*/
 
         Collection<? extends Player> allPlayers = Bukkit.getOnlinePlayers();
+        /*
         Bukkit.getScheduler().scheduleAsyncRepeatingTask(getInstance(), () -> {
             for (Player p : allPlayers) {
                 CosmicPlayer cosmicPlayer = CosmicPlayers.get().getCosmicPlayer(p);
@@ -451,6 +483,8 @@ public class AstroCore extends JavaPlugin {
                 }
             }
         }, 50L, 7200L);
+
+         */
 
 
 
@@ -471,13 +505,13 @@ public class AstroCore extends JavaPlugin {
 
     public void registerListeners() {
         getServer().getPluginManager().registerEvents(new WarzoneClaimListener(), this);
-        getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
+        //getServer().getPluginManager().registerEvents(new StaffModeListeners(this), this);
         //getServer().getPluginManager().registerEvents(new EnderpearlFixes(), this);
         getServer().getPluginManager().registerEvents(new DamageFixes(), this);
         getServer().getPluginManager().registerEvents(new ChatListener(this), this);
         getServer().getPluginManager().registerEvents(new MagicalLavaBucket(), this);
         getServer().getPluginManager().registerEvents(new MagicalWaterBucket(), this);
-        getServer().getPluginManager().registerEvents(new StaffListeners(), this);
+        //getServer().getPluginManager().registerEvents(new StaffListeners(), this);
         getServer().getPluginManager().registerEvents(new SoulGemListener(), this);
         getServer().getPluginManager().registerEvents(new ApplyEnchantCrystalListener(), this);
         getServer().getPluginManager().registerEvents(new TitleInventoryListener(this.dataManager), this);
@@ -493,7 +527,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new CombatLogBlock(), this);
         getServer().getPluginManager().registerEvents(new LastManStandingListener(), this);
         getServer().getPluginManager().registerEvents(new PayListener(), this);
-        getServer().getPluginManager().registerEvents(new Freeze(), this);
+        //getServer().getPluginManager().registerEvents(new Freeze(), this);
         getServer().getPluginManager().registerEvents(new ArmorColorClickListener(), this);
         getServer().getPluginManager().registerEvents(new BlockCommand(), this);
         getServer().getPluginManager().registerEvents(new SoulItemListener(), this);
@@ -509,6 +543,16 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new GrindingMessagesToggleListener(), this);
         getServer().getPluginManager().registerEvents(new DupePatch(), this);
         getServer().getPluginManager().registerEvents(new KnockbackFixListener(), this);
+
+        PluginManager pluginManager = this.getServer().getPluginManager();
+        pluginManager.registerEvents(new VanishToggleListener(this), this);
+        pluginManager.registerEvents(new RandomTeleportListener(this), this);
+        pluginManager.registerEvents(new net.crankedpvp.staff.listeners.PlayerListener(this), this);
+        pluginManager.registerEvents(new PlayerKickListener(this), this);
+        pluginManager.registerEvents(new PlayerQuitListener(this), this);
+        pluginManager.registerEvents(new FreezeListener(this), this);
+        pluginManager.registerEvents(new StaffJoinListener(this), this);
+        pluginManager.registerEvents(new RemoveKnockbackEnchantListener(), this);
 
     }
 
@@ -538,7 +582,7 @@ public class AstroCore extends JavaPlugin {
 
                     try {
                         PacketContainer packet = event.getPacket();
-                        String message = ((String) packet.getSpecificModifier(String.class).read(0)).toLowerCase();
+                        String message = packet.getSpecificModifier(String.class).read(0).toLowerCase();
                         if (message.startsWith("/?") && !message.contains("  ") || message.startsWith("/") && !message.contains(" ")
                                 || message.startsWith("/help") && !message.contains("  ") || message.startsWith("/ver") && !message.contains("  ")
                                 || message.startsWith("/bukkit") && !message.contains("  ")) {
@@ -620,7 +664,7 @@ public class AstroCore extends JavaPlugin {
     }
 
     public static ItemStack getSoulPearl() {
-        return ItemUtils.addGlow(ItemUtils.buildItem(Material.ENDER_PEARL, (short) 0, (Object) ChatColor.DARK_PURPLE + "" + (Object) ChatColor.BOLD + "Soul Pearl", (Object) ChatColor.LIGHT_PURPLE + "A rare /dungeon trinket that", (Object) ChatColor.LIGHT_PURPLE + "functions like a normal enderpearl,", (Object) ChatColor.LIGHT_PURPLE + "but costs souls instead of being,", (Object) ChatColor.LIGHT_PURPLE + "consumed on use.", "", (Object) ChatColor.DARK_PURPLE + "" + (Object) ChatColor.UNDERLINE + "Soul Cost:" + (Object) ChatColor.LIGHT_PURPLE + " 5/pearl"));
+        return ItemUtils.addGlow(ItemUtils.buildItem(Material.ENDER_PEARL, (short) 0, ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "Soul Pearl", ChatColor.LIGHT_PURPLE + "A rare /dungeon trinket that", ChatColor.LIGHT_PURPLE + "functions like a normal enderpearl,", ChatColor.LIGHT_PURPLE + "but costs souls instead of being,", ChatColor.LIGHT_PURPLE + "consumed on use.", "", ChatColor.DARK_PURPLE + "" + ChatColor.UNDERLINE + "Soul Cost:" + ChatColor.LIGHT_PURPLE + " 5/pearl"));
     }
 
     public static ItemStack getHolyWhiteScroll() {
@@ -629,6 +673,8 @@ public class AstroCore extends JavaPlugin {
 
     @Deprecated
     public static ItemStack getOldHolyWhiteScroll() {
-        return ItemUtils.addGlow(ItemUtils.buildItem(Material.PAPER, (short) 0, (Object) ChatColor.GOLD + "" + (Object) ChatColor.BOLD + "Holy White Scroll", (Object) ChatColor.YELLOW + "A legendary /dungeon reward that", (Object) ChatColor.YELLOW + "can be applied to armor/weapons,", (Object) ChatColor.YELLOW + "gives a 100% chance of not losing", (Object) ChatColor.YELLOW + "the blessed item on death.", "", (Object) ChatColor.GOLD + "" + (Object) ChatColor.UNDERLINE + "REQ:" + (Object) ChatColor.YELLOW + " White Scroll"));
+        return ItemUtils.addGlow(ItemUtils.buildItem(Material.PAPER, (short) 0, ChatColor.GOLD + "" + ChatColor.BOLD + "Holy White Scroll", ChatColor.YELLOW + "A legendary /dungeon reward that", ChatColor.YELLOW + "can be applied to armor/weapons,", ChatColor.YELLOW + "gives a 100% chance of not losing", ChatColor.YELLOW + "the blessed item on death.", "", ChatColor.GOLD + "" + ChatColor.UNDERLINE + "REQ:" + ChatColor.YELLOW + " White Scroll"));
     }
+
+
 }

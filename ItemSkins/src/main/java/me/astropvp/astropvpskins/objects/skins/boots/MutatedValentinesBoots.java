@@ -3,12 +3,9 @@ package me.astropvp.astropvpskins.objects.skins.boots;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.ifamasssxd.cosmicmasks.MaskType;
-import me.ifamasssxd.cosmicsky.inventorypets.CosmicSkyInventoryPets;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
 
 public class MutatedValentinesBoots extends ItemSkin {
     public void onEquip(Player player) {
@@ -27,12 +24,15 @@ public class MutatedValentinesBoots extends ItemSkin {
 
     public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
         if (!(damager instanceof Player)) return;
+        /*
         if (Math.random() < 0.1) {
             damaged.setMetadata("no_knockback", new FixedMetadataValue(CosmicSkyInventoryPets.get(), true));
             Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
                 damaged.removeMetadata("no_knockback", CosmicSkyInventoryPets.get());
             }, 20L);
         }
+
+         */
 
     }
 

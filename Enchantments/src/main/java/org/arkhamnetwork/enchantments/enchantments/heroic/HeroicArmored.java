@@ -18,7 +18,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("neutralized")) {
+        if (player.hasMetadata("neutralized") && Math.random() < 0.5) {
             return;
         }
         ItemStack i = null;
@@ -33,6 +33,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
             }
         }
         double damage_negation = (double)level * 0.005;
+        // 0.02
         if (i != null && i.getType().name().contains("_SWORD") && e.getDamage() * (1.0D - damage_negation) > 1.0D) {
             e.setDamage(e.getDamage() * (1.0D - damage_negation));
             Location l = player.getLocation();

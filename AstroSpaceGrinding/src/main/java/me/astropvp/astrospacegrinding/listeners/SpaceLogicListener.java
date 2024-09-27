@@ -1,37 +1,31 @@
 package me.astropvp.astrospacegrinding.listeners;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.sk89q.worldedit.internal.expression.runtime.For;
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
+import com.google.common.collect.Lists;
+import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
 import me.astropvp.astrospacegrinding.data.ForceFieldData;
+import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
 import org.arkhamnetwork.enchantments.listeners.PlayerPotionEffectListener;
-import org.bukkit.*;
-
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
-import org.bukkit.event.entity.*;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.*;
-import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
-import org.bukkit.inventory.ItemStack;
-
-import com.google.common.collect.Lists;
-
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
-import me.astropvp.astrospacegrinding.data.SpacePlayerData;
 import org.bukkit.potion.PotionEffect;
+
+import java.util.Arrays;
+import java.util.List;
 
 
 public class SpaceLogicListener implements Listener {
@@ -50,8 +44,9 @@ public class SpaceLogicListener implements Listener {
         if (event.getTo() == null) {
             return;
         }
-        if (!event.getFrom().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
-            if (event.getTo().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+        if (!AstroSpaceGrindingAPI.isSpaceWorld(event.getFrom().getWorld())) {
+            if(AstroSpaceGrindingAPI.isSpaceWorld(event.getTo().getWorld())) {
+            //if (event.getTo().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
                 for (PotionEffect pe : player.getActivePotionEffects()) {
                     player.removePotionEffect(pe.getType());
                 }
@@ -103,7 +98,8 @@ public class SpaceLogicListener implements Listener {
 
     @EventHandler(priority = EventPriority.MONITOR)
     public void enchantProc(CustomEnchantProcOnEntityEvent e) {
-        if (!e.getPlayer().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+        if(!AstroSpaceGrindingAPI.isSpaceWorld(e.getPlayer().getWorld())) {
+        //if (!e.getPlayer().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
             return;
         }
         if (e.getEnchant().getTier() > 5) e.setCancelled(true);
@@ -125,7 +121,8 @@ public class SpaceLogicListener implements Listener {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
-            if (!damager.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName()) || !damaged.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            if(!AstroSpaceGrindingAPI.isSpaceWorld(damager.getWorld()) || !AstroSpaceGrindingAPI.isSpaceWorld(damaged.getWorld())) {
+            //if (!damager.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName()) || !damaged.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
                 return;
             }
 
@@ -153,7 +150,8 @@ public class SpaceLogicListener implements Listener {
         if (e.getDamager() instanceof Player && e.getEntity() instanceof Player) {
             Player damager = (Player) e.getDamager();
             Player damaged = (Player) e.getEntity();
-            if (!damager.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName()) || !damaged.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+            if(!AstroSpaceGrindingAPI.isSpaceWorld(damager.getWorld()) || !AstroSpaceGrindingAPI.isSpaceWorld(damaged.getWorld())) {
+            //if (!damager.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName()) || !damaged.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
                 return;
             }
 
@@ -169,7 +167,8 @@ public class SpaceLogicListener implements Listener {
         if (player.isOp()) {
             return;
         }
-        if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+        if(!AstroSpaceGrindingAPI.isSpaceWorld(player.getWorld())) {
+        //if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
             return;
         }
         if (event.isFlying()) {
@@ -181,7 +180,8 @@ public class SpaceLogicListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST, ignoreCancelled = true)
     public void onCommand(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
-        if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
+        if(!AstroSpaceGrindingAPI.isSpaceWorld(player.getWorld())) {
+        //if (!player.getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
             return;
         }
 
@@ -203,9 +203,11 @@ public class SpaceLogicListener implements Listener {
 
     @EventHandler
     public void PlayerSpawnMob(PlayerInteractEvent e) {
-        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getMaterial() == Material.MONSTER_EGG && e.getPlayer().getWorld().getName().equals(AstroSpaceGrindingAPI.getWorldName())) {
-            e.setCancelled(true);
-            e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot use spawn eggs in the space."));
+        if (e.getAction() == Action.RIGHT_CLICK_BLOCK && e.getMaterial() == Material.MONSTER_EGG) {
+            if(AstroSpaceGrindingAPI.isSpaceWorld(e.getPlayer().getWorld())) {
+                e.setCancelled(true);
+                e.getPlayer().sendMessage(CC.translate("&c&l(!)&c You cannot use spawn eggs in the space."));
+            }
         }
     }
 

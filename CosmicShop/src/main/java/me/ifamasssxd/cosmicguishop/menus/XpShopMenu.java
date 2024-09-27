@@ -18,34 +18,23 @@
  */
 package me.ifamasssxd.cosmicguishop.menus;
 
-import com.conaxgames.banana.utils.Utils;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
-
-import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
-import me.ifamasssxd.cosmicguishop.utils.Base64Utils;
-import me.mattstudios.mfgui.gui.components.util.ItemBuilder;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
-import org.bukkit.Bukkit;
+import me.ifamasssxd.cosmicguishop.CosmicGUIShop;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 
 public class XpShopMenu{
@@ -151,7 +140,7 @@ public class XpShopMenu{
     public ItemStack createGUIItem(Player player) {
         ItemStack item = new ItemStack(Material.EXP_BOTTLE);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(CC.GreenB + "Astro Xp Shop");
+        meta.setDisplayName(CC.GreenB + "Astro EXP Shop");
         List<String> lore = Lists.newArrayList();
         lore.add(CC.Gray + "This shop contains various items that will help");
         lore.add(CC.Gray + "you set up on AstroPvP");

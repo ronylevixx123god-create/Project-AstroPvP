@@ -1,6 +1,8 @@
 package net.astropvp.customblocks.struct.impl;
 
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -11,9 +13,7 @@ import net.astropvp.customblocks.struct.CustomBlockType;
 import net.astropvp.customblocks.struct.abilities.ActivateAble;
 import net.astropvp.customblocks.struct.abilities.LevelAble;
 import net.astropvp.customblocks.struct.abilities.TickAble;
-import net.astropvp.customblocks.utils.ChunkUtil;
 import net.astropvp.customblocks.utils.config.ConfigManager;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 @Getter
@@ -69,7 +69,7 @@ public class AutoGrinder extends CustomBlock implements LevelAble, TickAble, Act
     @Override
     public void onTick() {
         if (!isActive()) return;
-        if (!ChunkUtil.hasNearbyPlayer(getLocation(), 14)) return;
+        //if (!ChunkUtil.hasNearbyPlayer(getLocation(), 14)) return;
         double grinderKeyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("grinderKeyChance") * 0.01 * level;
         double godlyKeyChance = CustomBlocks.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getDouble("godlyKeyChance") * 0.01 * level;
 

@@ -8,7 +8,6 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
 import com.google.common.collect.Lists;
 import de.tr7zw.nbtapi.NBTItem;
-import dev.triumphteam.gui.guis.BaseGui;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicskycustoms.struct.CustomItemBuilder;
@@ -22,7 +21,6 @@ import net.astropvp.armorsets.utils.modifiers.ModifierType;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.utils.cache.CacheManager;
 import net.astropvp.core.utils.cache.CachedPlayer;
-import org.bukkit.Bukkit;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -526,8 +524,11 @@ public class AstroArmorSetsAPI {
         cosmicData.setBoolean("heroicArmor", true);
         wrapper.setNBTBase("cosmicData", cosmicData.get());
 
+        NBTItem nbtItem = new NBTItem(wrapper.build());
+        nbtItem.setBoolean("heroic", true);
 
-        ItemStack tempItem = wrapper.build();
+
+        ItemStack tempItem = nbtItem.getItem();
         ItemMeta meta = tempItem.getItemMeta();
         meta.spigot().setUnbreakable(true);
         meta.addItemFlags(ItemFlag.HIDE_ATTRIBUTES);

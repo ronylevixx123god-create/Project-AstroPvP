@@ -9,7 +9,7 @@
         <version>1.0</version>
     </parent>
 
-    <groupId>net.crankedpvp.hb</groupId>
+    <groupId>net.crankedpvp.hypeboxes</groupId>
     <artifactId>HypeBoxes</artifactId>
 
     <properties>
@@ -43,11 +43,16 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>Collect</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>CosmicPvPUtils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
+            <systemPath>${project.basedir}/../.lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
@@ -59,6 +64,13 @@
             <groupId>dev.triumphteam</groupId>
             <artifactId>triumph-gui</artifactId>
             <version>3.1.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.astropvp</groupId>
+            <artifactId>StorageUtilsShaded</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../StorageUtil/target/StorageUtil-0.1-shaded.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>me.mattstudios.utils</groupId>

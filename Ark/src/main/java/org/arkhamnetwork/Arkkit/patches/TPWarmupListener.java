@@ -92,7 +92,7 @@ final class TPWarmupListener
                 TPWarmup.cancelQueuedTeleport(p);
             }
             TPWarmup.queuedTeleport(p, e.getTo(), e.getCause());
-            p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You will be teleported in " + ChatColor.UNDERLINE + this.formatter.format(teleportWarmup) + "s" + ChatColor.YELLOW + "... DON'T MOVE!");
+            p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "(!) " + ChatColor.YELLOW + "You will be teleported in " + ChatColor.UNDERLINE + this.formatter.format(teleportWarmup) + "s" + ChatColor.YELLOW + "... DON'T MOVE!");
             if (!p.hasMetadata("bannerTp")) {
                 p.sendMessage(ChatColor.GRAY + "Decrease this wait time by holding more vanilla XP.");
             }

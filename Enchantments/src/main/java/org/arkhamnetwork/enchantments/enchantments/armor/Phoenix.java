@@ -1,18 +1,13 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.TimeUtils;
-import com.cosmicpvp.cosmicutils.utils.UpgradeUtils;
-import com.earth2me.essentials.Essentials;
 import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
 import me.astropvp.astropvpskins.objects.skins.boots.BarrysBoltsSkin;
 import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
-import me.ifamasssxd.cosmichcf.api.HCFOutpostAPI;
-import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
@@ -23,7 +18,6 @@ import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
@@ -31,8 +25,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.github.paperspigot.Title;
 
 import java.util.HashMap;
@@ -215,6 +207,13 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
+            if ((AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.SPRING_BREAK_2022_HELMET) || AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.SPRING_BREAK_2022_MUTATED_HELMET)) && Math.random() < 0.1) {
+                damager.sendMessage(CC.translate("&a&l* UNDERTOW HELMET BLOCKED PHOENIX [&c" + player.getName() + "&a&l] *"));
+                player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&4" + damager.getName() + " Undertow Helmet &c&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
+
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) damager, SkinType.VALENTINES_2022_MUTATED_SWORD) && Math.random() < 0.25) {
                 damager.sendMessage(CC.translate("&c&l* SKELETON KEY BLOCKED PHOENIX [&c" + player.getName() + "&c&l] *"));
                 player.sendMessage(CC.translate("&c&l* PHOENIX BLOCKED [&4" + damager.getName() + " Skeleton Key&c&l] *"));
@@ -251,8 +250,8 @@ public class Phoenix extends CustomEnchantment {
                 player.setMetadata("phoenixProcs", new FixedMetadataValue(Enchantments.getInstance(), player.hasMetadata("phoenixProcs") ? (player.getMetadata("phoenixProcs").get(0).asInt() + 1) : 1));
                 GeneralUtil.setPlayerHealth(player, player.getMaxHealth());
                 player.sendMessage("");
-                player.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "*** " + ChatColor.UNDERLINE + "PHOENIX SOUL" + ChatColor.GOLD + ChatColor.BOLD + " ***");
-                player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "- " + soulCost + " Soul Gems");
+                player.sendMessage(ChatColor.GOLD.toString() + ChatColor.BOLD + "*** " + ChatColor.UNDERLINE + "PHOENIX SOUL" + ChatColor.GOLD + ChatColor.BOLD + " ***");
+                player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "- " + soulCost + " Soul Gems");
                 player.sendMessage(ChatColor.GRAY + "You have " + ChatColor.UNDERLINE + KillTrackerAPI.getAllSouls(player) + ChatColor.GRAY + " souls left.");
                 player.sendMessage("");
                 player.sendMessage(CC.translate("&7You are now on &nPhoenix Cooldown&7 for 2 minutes."));
@@ -276,7 +275,7 @@ public class Phoenix extends CustomEnchantment {
                 for ( Entity ent : player.getNearbyEntities(48.0, 48.0, 48.0)) {
                     if (ent instanceof Player) {
                         ent.sendMessage(CC.translate(""));
-                        ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "*** PHOENIX SOUL (" + ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + ChatColor.RED + ChatColor.BOLD + ") ***");
+                        ent.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "*** PHOENIX SOUL (" + ChatColor.GRAY + player.getName() + ", -" + soulCost + " souls" + ChatColor.RED + ChatColor.BOLD + ") ***");
                         ent.sendMessage(CC.translate("&7They are now on &nPhoenix Cooldown&7 for 2 minutes."));
                         ent.sendMessage(CC.translate(""));
                         ((Player) ent).playSound(player.getLocation(), Sound.ENDERDRAGON_GROWL, 1.0f, 1.25f);
@@ -289,7 +288,7 @@ public class Phoenix extends CustomEnchantment {
             }
             if (!player.hasMetadata("outOfSoulsMessage") || player.getMetadata("outOfSoulsMessage").get(0).asLong() < System.currentTimeMillis()) {
                 player.playSound(player.getLocation(), Sound.ITEM_BREAK, 0.7f, 0.4f);
-                player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "** OUT OF SOULS **");
+                player.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "** OUT OF SOULS **");
                 player.setMetadata("outOfSoulsMessage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis() + 15000L));
             }
         }

@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules;
 
+/*
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffModeManager;
@@ -109,3 +110,6 @@ public class StaffModeListeners implements Listener {
         event.setCancelled(true);
     }
 }
+
+
+ */

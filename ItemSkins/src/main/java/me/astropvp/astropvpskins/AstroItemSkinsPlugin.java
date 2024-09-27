@@ -8,13 +8,10 @@ import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.listeners.*;
 import me.astropvp.astropvpskins.objects.BackpackSocketItem;
-import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.tasks.SinkEffectTask;
 import me.astropvp.astropvpskins.tasks.SprayAndPrayTask;
 import me.astropvp.astropvpskins.tasks.UndertowFieldTask;
 import me.ifamasssxd.cosmicskycustoms.CosmicSkyCustomItems;
-import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
-import net.astropvp.armorsets.commands.CommandDebugArmorSet;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -65,8 +62,10 @@ public class AstroItemSkinsPlugin extends JavaPlugin {
     }
 
     public void registerTasks() {
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new UndertowFieldTask(), 3*20, 20L);
-        Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SprayAndPrayTask(), 3*20, 20L);
+        new UndertowFieldTask();
+        new SprayAndPrayTask();
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new UndertowFieldTask(), 3*20, 20L);
+        //Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SprayAndPrayTask(), 3*20, 20L);
         Bukkit.getScheduler().scheduleSyncRepeatingTask(this, new SinkEffectTask(), 3*20, 60L);
 
 

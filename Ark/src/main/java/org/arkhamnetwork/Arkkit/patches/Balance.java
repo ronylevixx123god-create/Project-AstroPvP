@@ -27,12 +27,12 @@ public class Balance
     @Override
     public void enable() {
         if (!Bukkit.getPluginManager().isPluginEnabled("Essentials")) {
-            Bukkit.getLogger().info("[Arkkit (Near)] Disabling Near patch due to no Essentials.jar loaded.");
+            Bukkit.getLogger().info("[Arkkit (Balance)] Disabling Near patch due to no Essentials.jar loaded.");
             this.kill();
             return;
         }
         ess3 = (IEssentials) Bukkit.getPluginManager().getPlugin("Essentials");
-        this.registerCommand(new CommandBalance("balance", "/<command> [player]", "States the current balance of a player.", new ArrayList<String>(Arrays.asList("cbal", "bal", "ebal", "ebalance", "money", "emoney"))));
+        this.registerCommand(new CommandBalance("balance", "/<command> [player]", "States the current balance of a player.", new ArrayList<>(Arrays.asList("cbal", "bal", "ebal", "ebalance", "money", "emoney"))));
     }
 
     @Override

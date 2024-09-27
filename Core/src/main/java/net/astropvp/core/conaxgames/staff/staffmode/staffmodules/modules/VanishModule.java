@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+/*
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffMember;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.InteractModule;
@@ -25,3 +26,6 @@ public class VanishModule extends InteractModule {
         player.sendMessage(CC.translate("&8[&a!&8] &7Vanish has been " + status));
     }
 }
+
+
+ */

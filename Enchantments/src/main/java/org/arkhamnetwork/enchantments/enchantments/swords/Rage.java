@@ -77,8 +77,13 @@ public class Rage extends CustomEnchantment {
                 target.sendMessage(CC.translate("&a&l* YODAS SABRE &7[+7.5% Rage DMG] &a&l*"));
             }
             if (AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.VALENTINES_2021_AMULET)) {
-                rageDamage *= 0.75;
-                target.sendMessage(CC.translate("&c&l* ROSE AMULET &7[-25% Rage DMG] &c&l*"));
+                rageDamage *= 0.85;
+                target.sendMessage(CC.translate("&c&l* ROSE AMULET &7[-15% Rage DMG] &c&l*"));
+            }
+
+            if (AstroItemSkinsAPI.hasSkinEquipped((Player) user, SkinType.SPRING_BREAK_2022_MUTATED_HELMET)) {
+                rageDamage *= 1.035;
+                user.sendMessage(CC.translate("&2&l* MUTATED UNDERTOW HELMET &7[+3.5% Rage DMG] &2&l*"));
             }
 
 

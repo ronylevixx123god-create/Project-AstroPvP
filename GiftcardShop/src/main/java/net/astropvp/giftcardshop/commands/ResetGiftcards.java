@@ -16,9 +16,6 @@ import java.util.Arrays;
 
 public class ResetGiftcards implements CommandExecutor {
 
-
-
-
     @SneakyThrows
     public void voidGiftcard(String giftcardID) {
         System.out.println("VOIDING: " + giftcardID);
@@ -106,7 +103,7 @@ public class ResetGiftcards implements CommandExecutor {
             sender.sendMessage(CC.Red + "No perms!");
             return false;
         }
-        if (!sender.getName().equals("Bryside")) return false;
+        if (!sender.getName().equals("KingSavaqe")) return false;
         voidAllGiftcardsOver10();
         sender.sendMessage(CC.Red + "Reset all gc's over 0.01");
         return true;

@@ -17,14 +17,12 @@ import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.ListenerPriority;
 import com.comphenix.protocol.events.PacketAdapter;
 import com.comphenix.protocol.events.PacketEvent;
-import com.comphenix.protocol.events.PacketListener;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.google.common.base.Splitter;
 import com.google.common.collect.Lists;
 import com.google.gson.JsonSyntaxException;
 import io.netty.buffer.Unpooled;
 import me.astropvp.proxypach.ProxyPatch;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import net.luckperms.api.LuckPermsProvider;
 import net.minecraft.server.v1_8_R3.PacketDataSerializer;
 import net.minecraft.server.v1_8_R3.PacketPlayInCustomPayload;
@@ -32,7 +30,6 @@ import net.minecraft.server.v1_8_R3.PacketPlayOutCustomPayload;
 import org.bukkit.Bukkit;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -40,6 +37,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.stream.Collectors;
 
 public class PacketIO {
     private static final long timeInit = System.currentTimeMillis();
@@ -50,9 +48,9 @@ public class PacketIO {
 
     private BukkitTask receiver;
 
-    private PacketAdapter adapter;
+    private final PacketAdapter adapter;
 
-    private Map<String, List<String>> headers;
+    private final Map<String, List<String>> headers;
 
     private static PacketHandler packetHandler;
 
@@ -81,7 +79,7 @@ public class PacketIO {
         if (this.receiver != null)
             this.receiver.cancel();
         if (this.adapter != null)
-            ProtocolLibrary.getProtocolManager().removePacketListener((PacketListener) this.adapter);
+            ProtocolLibrary.getProtocolManager().removePacketListener(this.adapter);
     }
 
     private boolean verifyQueue(ConcurrentLinkedDeque<FutureInPacket> var1) {
@@ -111,7 +109,7 @@ public class PacketIO {
         byte[] array = Base64.getDecoder().decode("13c9esdEOtLC+JPE+GaWFcF86+MqlLoLaY6yRedTwUp3Fx1NFWDwPnBYjCb3Y83yPV8rujPeaCkARIabBx5Ca+J7FstlvlUN2+j5WpCSFUFDvqjw2KG0k6/WoABk1aHQi0n/sypTUB6ZkG2JnyuaNTQh2ebhc5yMIdeAViwIcyW4t3I5p7+VYjcq9YBX4CfKRJjSZaVyJIFBHouCndqlNicc4PvKcmTnYwj66h6rI4t5Iq97ticrbvXdZifre9IGcVLVhOIpCtiXoLBA06t6beLFhOF8OatYVu86CXvT0TBUaidS2NO+l7Qqk4m9k2fDENna2zpOe237XLBm7uKviA==");
         array = PacketSecurity.a(array);
         encryptor = new PacketEncryptor(array, true);
-        this.adapter = new PacketAdapter((Plugin) CCVerify.get(), ListenerPriority.LOWEST, new PacketType[]{PacketType.Play.Client.CUSTOM_PAYLOAD}) {
+        this.adapter = new PacketAdapter(CCVerify.get(), ListenerPriority.LOWEST, PacketType.Play.Client.CUSTOM_PAYLOAD) {
             public void onPacketReceiving(PacketEvent event) {
                 if (event.getPacketType() != PacketType.Play.Client.CUSTOM_PAYLOAD)
                     return;
@@ -125,7 +123,7 @@ public class PacketIO {
 
                 synchronized (PacketIO.inPacketQueue) {
                     if (PacketIO.inPacketQueue.containsKey(event.getPlayer().getUniqueId())) {
-                        ((ConcurrentLinkedDeque<FutureInPacket>) PacketIO.inPacketQueue.get(event.getPlayer().getUniqueId())).add(received);
+                        PacketIO.inPacketQueue.get(event.getPlayer().getUniqueId()).add(received);
                     } else {
                         PacketIO.inPacketQueue.put(event.getPlayer().getUniqueId(), new ConcurrentLinkedDeque(Lists.newArrayList((Object[]) new FutureInPacket[]{received})));
                     }
@@ -135,7 +133,7 @@ public class PacketIO {
             }
 
         };
-        ProtocolLibrary.getProtocolManager().addPacketListener((PacketListener) this.adapter);
+        ProtocolLibrary.getProtocolManager().addPacketListener(this.adapter);
 
     }
 
@@ -149,13 +147,19 @@ public class PacketIO {
         }
     }
 
+    private Set<String> filterPlayerEmotes(Player player) {
+        Set<String> emotes = new HashSet<>(Config.getInst().getEmotes().getAllowedEmotes());
+        Set<String> filteredEmotes = emotes.stream().filter(emote -> player.hasPermission("savagecosmicemote."+emote)).collect(Collectors.toSet());
+        return filteredEmotes;
+    }
+
     public void addPlayer(Player player) {
         if (ProxyPatch.playerNames.contains(player.getName())) return;
         registerPlayer(player);
         CosmicPlayers.get().wrapPlayer(player);
         queuePacket(player, new PacketOutSessionKey("13c9esdEOtLC+JPE+GaWFcF86+MqlLoLaY6yRedTwUp3Fx1NFWDwPnBYjCb3Y83yPV8rujPeaCkARIabBx5Ca+J7FstlvlUN2+j5WpCSFUFDvqjw2KG0k6/WoABk1aHQi0n/sypTUB6ZkG2JnyuaNTQh2ebhc5yMIdeAViwIcyW4t3I5p7+VYjcq9YBX4CfKRJjSZaVyJIFBHouCndqlNicc4PvKcmTnYwj66h6rI4t5Iq97ticrbvXdZifre9IGcVLVhOIpCtiXoLBA06t6beLFhOF8OatYVu86CXvT0TBUaidS2NO+l7Qqk4m9k2fDENna2zpOe237XLBm7uKviA=="));
         queuePacket(player, new PacketOutFeatureSet("COSMICPVP"));
-        queuePacket(player, new PacketOutAllowedEmotes(new HashSet(Config.getInst().getEmotes().getAllowedEmotes())));
+        queuePacket(player, new PacketOutAllowedEmotes(filterPlayerEmotes(player)));
 
 /*        Map<String, List<Double>> cooldowns = new HashMap<>();
         for (InventoryPets type : InventoryPets.values()) {
@@ -185,17 +189,17 @@ public class PacketIO {
             }
         }*/
         if (!player.hasPermission("astrocore.apollo")) return;
-        this.headers.put(player.getName(), Arrays.asList(CC.translate(LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix())));
+        this.headers.put(player.getName(), Collections.singletonList(CC.translate(LuckPermsProvider.get().getUserManager().getUser(player.getUniqueId()).getCachedData().getMetaData().getPrefix())));
         PacketOutPlayerHeaders playerHeaders = new PacketOutPlayerHeaders(this.headers, false);
         for (CosmicPlayer cp : CosmicPlayers.get().getAll())
-            queuePacket(cp.getPlayer(), (Packet) playerHeaders);
+            queuePacket(cp.getPlayer(), playerHeaders);
     }
 
     public void removePlayerFromHeader(Player player) {
         this.headers.remove(player.getName());
         PacketOutPlayerHeaders playerHeaders = new PacketOutPlayerHeaders(this.headers, false);
         for (CosmicPlayer cp : CosmicPlayers.get().getAll())
-            cp.sendPacket((Packet) playerHeaders);
+            cp.sendPacket(playerHeaders);
     }
 
     public void removePlayer(Player player) {
@@ -223,7 +227,7 @@ public class PacketIO {
     public void pumpOutQueue() {
         synchronized (outPacketQueue) {
             for (UUID uuid : outPacketQueue.keySet()) {
-                Iterator<FutureOutPacket> packetIter = ((ConcurrentLinkedDeque<FutureOutPacket>) outPacketQueue.get(uuid)).iterator();
+                Iterator<FutureOutPacket> packetIter = outPacketQueue.get(uuid).iterator();
                 while (packetIter.hasNext()) {
                     FutureOutPacket packet = packetIter.next();
                     packetIter.remove();
@@ -260,7 +264,7 @@ public class PacketIO {
                     continue;
                 while (!packetIter.isEmpty() && verifyQueue(packetIter)) {
                     FutureInPacket packet = packetIter.removeFirst();
-                    PacketContainer container = (PacketContainer) PacketContainer.GSON.fromJson(new String(packet.getData(), StandardCharsets.UTF_8), PacketContainer.class);
+                    PacketContainer container = PacketContainer.GSON.fromJson(new String(packet.getData(), StandardCharsets.UTF_8), PacketContainer.class);
                     short packetID = container.getPacketID();
                     Class<? extends PacketIn> packetClass = (Class) PacketCommons.getPacketClass(packetID);
                     if (packetClass == null) {
@@ -288,7 +292,7 @@ public class PacketIO {
                         int nextSplit = 2;
                         do {
                             FutureInPacket nextPacket = packetIter.removeFirst();
-                            container = (PacketContainer) PacketContainer.GSON.fromJson(new String(nextPacket.getData(), StandardCharsets.UTF_8), PacketContainer.class);
+                            container = PacketContainer.GSON.fromJson(new String(nextPacket.getData(), StandardCharsets.UTF_8), PacketContainer.class);
                             if (packetID != container.getPacketID())
                                 throw new IllegalStateException("Split packet ID mismatch: " + packetID + ", " + container.getPacketID());
                             String extra = container.getContent();
@@ -299,7 +303,7 @@ public class PacketIO {
                         } while (container.isSplitNext());
                     }
                     try {
-                        PacketIn received = (PacketIn) PacketContainer.GSON.fromJson(content, packetClass);
+                        PacketIn received = PacketContainer.GSON.fromJson(content, packetClass);
                         received.handle(packetHandler, player);
                         CosmicPlayer cosmicPlayer = CosmicPlayers.get().getCosmicPlayer(player);
                         if (cosmicPlayer == null)
@@ -314,22 +318,18 @@ public class PacketIO {
     }
 
     private void createSendTask() {
-        this
-
-                .sender = (new BukkitRunnable() {
+        this.sender = (new BukkitRunnable() {
             public void run() {
                 PacketIO.this.pumpOutQueue();
             }
-        }).runTaskTimerAsynchronously((Plugin) CCVerify.get(), 0L, 1L);
+        }).runTaskTimerAsynchronously(CCVerify.get(), 0L, 1L);
     }
 
     private void createReceiveTask() {
-        this
-
-                .receiver = (new BukkitRunnable() {
+        this.receiver = (new BukkitRunnable() {
             public void run() {
                 PacketIO.this.pumpInQueue();
             }
-        }).runTaskTimerAsynchronously((Plugin) CCVerify.get(), 0L, 1L);
+        }).runTaskTimerAsynchronously(CCVerify.get(), 0L, 1L);
     }
 }

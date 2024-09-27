@@ -16,7 +16,6 @@ import me.venir.astrocollectors.AstroCollectors;
 import me.venir.astrocollectors.collector.Collector;
 import me.venir.astrocollectors.collector.CollectorManager;
 import me.venir.astrocollectors.collector.CollectorSellLog;
-import me.venir.astrocollectors.utils.SpawnerUtil;
 import me.venir.astrocollectors.utils.Utils;
 import net.astropvp.core.utils.OutpostUtil;
 import org.bukkit.Bukkit;
@@ -28,10 +27,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class CollectorsUI {
 
@@ -68,6 +64,7 @@ public class CollectorsUI {
                     updateItems();
                 }));
 
+        /*
         collectorUI.setItem(4,3, ItemBuilder
                 .from(Material.CHEST)
                 .setName(ChatColor.GOLD + ChatColor.BOLD.toString() + "Grinding Lootboxes")
@@ -78,6 +75,8 @@ public class CollectorsUI {
                     collector.claimLootboxes(player);
                     updateItems();
                 }));
+
+         */
 
         collectorUI.setItem(3,4, ItemBuilder
                 .from(Material.TNT)
@@ -119,7 +118,8 @@ public class CollectorsUI {
                     .asGuiItem(event -> {
                         event.setCancelled(true);
                         this.collector.clearSpawners();
-                        this.collector.scanSpawners(this.collector.getLocation());
+                        this.collector.scanSpawners(Objects.requireNonNull(this.collector.getLocation()));
+                        this.collector.updateBoosters();
                         player.closeInventory();
                     }));
         }
@@ -145,11 +145,14 @@ public class CollectorsUI {
                 .setLore(Utils.format(getSellLogLore()))
                 .asGuiItem().getItemStack());
 
+        /*
         collectorUI.updateItem(4,3, ItemBuilder
                 .from(Material.CHEST)
                 .setName(ChatColor.GOLD + ChatColor.BOLD.toString() + "Grinding Lootboxes")
                 .setLore(Utils.format(getLootboxesLore()))
                 .asGuiItem().getItemStack());
+
+         */
 
         collectorUI.update();
     }
@@ -168,6 +171,7 @@ public class CollectorsUI {
             hasPlutoOutpost = true;
         }
             lore.add(CC.translate("&e&lSpawners:"));
+
         for (Map.Entry<EntityType, Integer> entry : collector.getSpawnersInChunk().entrySet()) {
             EntityType type = entry.getKey();
             int amount = entry.getValue();
@@ -177,6 +181,11 @@ public class CollectorsUI {
 
             } else {
                 double value = AstroCollectors.INSTANCE.getSpawnerUtil().getMoneyPerMinute(type);
+                if(!(this.collector.getBoosters() == null) && !this.collector.getBoosters().isEmpty()) {
+                    if (this.collector.getBoosters().contains(type)) {
+                        value *= 1.2;
+                    }
+                }
                 if (hasFrozenStronghold) {
                     value *= 1.25;
                 }
@@ -189,6 +198,11 @@ public class CollectorsUI {
         }
         lore.add("");
         lore.add(CC.translate("&e&lMultipliers:"));
+        if(!(this.collector.getBoosters() == null) && !this.collector.getBoosters().isEmpty()) {
+            for (EntityType withBooster : this.collector.getBoosters()) {
+                lore.add(CC.translate("&e&l * &f" + getEntityName(withBooster) + " Collector Booster &7(1.2x Multiplier)"));
+            }
+        }
         if (hasFrozenStronghold) {
             lore.add(CC.translate("&e&l * &fFrozen Stronghold&7 (1.25x Multiplier)"));
         }
@@ -244,6 +258,12 @@ public class CollectorsUI {
     }
 
     public static String getEntityName(EntityType type) {
+        if (type == EntityType.PIG_ZOMBIE) {
+            return "Zombie Pigman";
+        }
+        if (type == EntityType.SNOWMAN) {
+            return "Snow Golem";
+        }
         if (type == EntityType.IRON_GOLEM) {
             return "Iron Golem";
         }

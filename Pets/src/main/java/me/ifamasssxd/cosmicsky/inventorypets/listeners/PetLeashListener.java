@@ -2,12 +2,7 @@ package me.ifamasssxd.cosmicsky.inventorypets.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
-import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import me.ifamasssxd.cosmicmasks.MaskType;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPetItem;
 import me.ifamasssxd.cosmicskycustoms.struct.CosmicPersistentItem;
@@ -19,8 +14,12 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+
 public class PetLeashListener implements Listener {
-    private HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
+    private final HashMap<String, List<ItemStack>> savedItems = new HashMap<>();
 
     @EventHandler
     public void onDeath(PlayerDeathEvent event) {
@@ -33,7 +32,7 @@ public class PetLeashListener implements Listener {
         for (int i = 0; i < drops.size(); i++) {
             ItemStack item = drops.get(i);
             NBTWrapper wrapper = new NBTWrapper(item);
-            InventoryPetItem petItem = (InventoryPetItem)CosmicPersistentItem.constructItem(item, wrapper, InventoryPetItem.class);
+            InventoryPetItem petItem = CosmicPersistentItem.constructItem(item, wrapper, InventoryPetItem.class);
             if (petItem != null && petItem.getPetType() != null)
                 if (petItem.isLeashed()) {
                     petItem.setLeashed(false);
@@ -58,7 +57,7 @@ public class PetLeashListener implements Listener {
         List<ItemStack> toReturn = this.savedItems.remove(e.getPlayer().getUniqueId().toString());
         if (toReturn != null)
             for (ItemStack i : toReturn) {
-                e.getPlayer().getInventory().addItem(new ItemStack[] { i });
+                e.getPlayer().getInventory().addItem(i);
             }
     }
 }

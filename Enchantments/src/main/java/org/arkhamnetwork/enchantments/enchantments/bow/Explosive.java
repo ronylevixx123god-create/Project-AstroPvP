@@ -30,12 +30,9 @@ import org.arkhamnetwork.enchantments.Enchantments;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
-import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.ProjectileLaunchEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
@@ -49,7 +46,7 @@ extends CustomEnchantment {
         this.max = 5;
         this.base = 15.0;
         this.interval = 5.0;
-        Bukkit.getPluginManager().registerEvents((Listener)new ExplosiveListener(), (Plugin)Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new ExplosiveListener(), Enchantments.getInstance());
     }
 
     public void applyEffect(LivingEntity player, LivingEntity playerHit, int level, EntityDamageByEntityEvent e) {
@@ -69,9 +66,9 @@ extends CustomEnchantment {
             WitherSkull ws = (WitherSkull)e.getEntity().getWorld().spawnEntity(e.getEntity().getLocation(), EntityType.WITHER_SKULL);
             ws.setIsIncendiary(false);
             ws.setYield(0.0f);
-            e.getEntity().setPassenger((Entity)ws);
-            e.getEntity().setMetadata(explosiveEncahntmentMetadata, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)level));
-            e.getEntity().setMetadata(explosiveEncahntmentOwnerMetadata, (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)((Player)player).getName()));
+            e.getEntity().setPassenger(ws);
+            e.getEntity().setMetadata(explosiveEncahntmentMetadata, new FixedMetadataValue(Enchantments.getInstance(), level));
+            e.getEntity().setMetadata(explosiveEncahntmentOwnerMetadata, new FixedMetadataValue(Enchantments.getInstance(), player.getName()));
         }
     }
 }

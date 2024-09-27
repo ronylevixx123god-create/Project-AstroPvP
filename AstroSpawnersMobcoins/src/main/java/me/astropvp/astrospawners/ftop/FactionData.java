@@ -1,6 +1,5 @@
 package me.astropvp.astrospawners.ftop;
 
-import com.conaxgames.customskulls.util.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.massivecraft.factions.FPlayer;
@@ -10,8 +9,6 @@ import me.astropvp.astrospawners.data.SpawnerData;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.OfflinePlayer;
-
-import java.util.Map;
 
 public class FactionData {
     private Faction faction;
@@ -51,6 +48,7 @@ public class FactionData {
         String tag = this.faction.getTag();
         for (SpawnerData data : AstroSpawners.getInstance().getSpawnerManager().getCacheValues()) {
             Location location = SpawnerData.locationFromString(data.getKey());
+            if(location.getY() < 200) continue;
             if (FactionUtils.getFactionAt(location).getTag().contentEquals(tag)) {
                 this.stackedSpawners++;
                 this.spawners += data.getSpawnerAmount();

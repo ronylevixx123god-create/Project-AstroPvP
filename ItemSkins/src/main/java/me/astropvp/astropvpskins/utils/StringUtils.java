@@ -46,7 +46,9 @@ public class StringUtils {
             }
         }
         for (String stringSkin : stringSkins) {
-            skins.add(SkinType.valueOf(stringSkin));
+            if(Arrays.stream(SkinType.values()).map(skin -> skin.name()).collect(Collectors.toList()).contains(stringSkin)) {
+                skins.add(SkinType.valueOf(stringSkin));
+            }
         }
         return skins;
     }

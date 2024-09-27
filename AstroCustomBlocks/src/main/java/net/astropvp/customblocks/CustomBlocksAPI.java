@@ -1,7 +1,6 @@
 package net.astropvp.customblocks;
 
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.utils.LocationUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
@@ -14,8 +13,12 @@ import net.astropvp.customblocks.struct.CustomBlockType;
 import net.astropvp.customblocks.tasks.ChunkCustomBlocksTask;
 import net.astropvp.customblocks.utils.ChunkUtil;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class CustomBlocksAPI {
     private static CustomBlockManager customBlockManager = CustomBlocks.getInstance().getCustomBlockManager();
@@ -63,6 +66,20 @@ public class CustomBlocksAPI {
             CustomBlock data = customBlockManager.getCustomBlockData(loc);
             if (ChunkUtil.isLocationAInSameChunkAsLocationB(loc, location) && type == data.getType()) {
                 return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static boolean removeCustomBlockFromChunkOfLocation(Location location, CustomBlockType type) {
+        Set<String> keys = new HashSet<>(customBlockManager.getCacheKeys());
+        for (String key : keys) {
+            Location loc = LocationUtils.getLocationFromString(key, false);
+            CustomBlock data = customBlockManager.getCustomBlockData(loc);
+            if (ChunkUtil.isLocationAInSameChunkAsLocationB(loc, location) && type == data.getType()) {
+                loc.getBlock().setType(Material.AIR);
+                customBlockManager.removeFromCache(key);
             }
         }
         return false;

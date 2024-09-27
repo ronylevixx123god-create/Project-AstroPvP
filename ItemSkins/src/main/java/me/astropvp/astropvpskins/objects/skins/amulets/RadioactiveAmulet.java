@@ -13,6 +13,7 @@ public class RadioactiveAmulet extends ItemSkin {
 
         if (damager instanceof Player) return;
         if (!damaged.getLocation().getWorld().getName().equals("space")) return;
+        if (!damaged.getLocation().getWorld().getName().equals("mars")) return;
         if (!AstroSpaceGrindingPlugin.activeMonsters.containsKey(damager.getUniqueId())) return;
         event.setDamage(event.getDamage()*0.50);
     }

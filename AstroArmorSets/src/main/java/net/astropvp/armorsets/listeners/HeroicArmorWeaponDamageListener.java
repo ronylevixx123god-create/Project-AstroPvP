@@ -5,11 +5,9 @@ import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
-import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.utils.config.ConfigManager;
 import net.astropvp.core.AstroCore;
-import net.astropvp.damagehandler.AstroDamageHandler;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -17,7 +15,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
 
 public class HeroicArmorWeaponDamageListener implements Listener {
@@ -34,7 +31,7 @@ public class HeroicArmorWeaponDamageListener implements Listener {
             double totalReduction = cache.getHeroicPieces() * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicDamageDecrease");
             if (((Player) e.getEntity()).getKiller() != null) {
 
-                if (Math.random() < 0.33 && AstroItemSkinsAPI.hasSkinEquipped((Player) ((Player) e.getEntity()).getKiller(), SkinType.THANKSGIVING_2021_SWORD)) {
+                if (Math.random() < 0.33 && AstroItemSkinsAPI.hasSkinEquipped(((Player) e.getEntity()).getKiller(), SkinType.THANKSGIVING_2021_SWORD)) {
                     e.getEntity().sendMessage(CC.translate("&4&l* HEROIC ARMOR BLOCKED [&7" + ((Player) e.getEntity()).getKiller().getName() + "'s Carver &4&l] *"));
                     return;
                 }
@@ -51,7 +48,7 @@ public class HeroicArmorWeaponDamageListener implements Listener {
         Player player = (Player) event.getDamager();
         if(!AstroArmorSetsAPI.isHeroic(player.getItemInHand())) return;
         double increaseAmount = AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicWeaponDamageIncrease");
-        event.setDamage(event.getDamage()*1+ (increaseAmount/100));
+        event.setDamage(event.getDamage() * 1 + (increaseAmount/100));
 
     }
 

@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+/*
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import net.astropvp.core.conaxgames.staff.staffmode.StaffMember;
@@ -35,3 +36,5 @@ public class RandomTpModule extends InteractModule {
         staffMember.getPlayer().teleport(target, PlayerTeleportEvent.TeleportCause.UNKNOWN);
     }
 }
+
+ */

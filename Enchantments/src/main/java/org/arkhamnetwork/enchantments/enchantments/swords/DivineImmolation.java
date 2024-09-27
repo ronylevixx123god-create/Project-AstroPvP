@@ -1,33 +1,32 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
+import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
+import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import com.massivecraft.factions.Faction;
-import com.rit.sucy.*;
+import com.rit.sucy.CustomEnchantment;
 import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingAPI;
-import me.astropvp.astrospacegrinding.AstroSpaceGrindingPlugin;
-import me.astropvp.astrospacegrinding.data.ForceFieldData;
+import net.astropvp.core.AstroCore;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.core.utils.OutpostUtil;
-import org.arkhamnetwork.enchantments.util.*;
-import org.arkhamnetwork.enchantments.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.*;
-import org.bukkit.plugin.*;
-import org.bukkit.event.entity.*;
-import org.arkhamnetwork.enchantments.cmds.*;
-import com.cosmicpvp.cosmicutils.nms.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
-import org.bukkit.potion.*;
-import org.bukkit.metadata.*;
+import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
+import org.bukkit.Sound;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.potion.PotionEffectType;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DivineImmolation extends CustomEnchantment {
     public DivineImmolation() {
@@ -35,7 +34,7 @@ public class DivineImmolation extends CustomEnchantment {
         this.max = 4;
         this.base = 10.0;
         this.interval = 10.0;
-        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), (Plugin) Enchantments.getInstance());
+        Bukkit.getPluginManager().registerEvents(new DivineImmolationListener(), Enchantments.getInstance());
     }
 
     public void applyEffect(final LivingEntity player, final LivingEntity playerHit, final int level, final EntityDamageByEntityEvent e) {
@@ -45,7 +44,7 @@ public class DivineImmolation extends CustomEnchantment {
 
 
         final Player p = (Player) player;
-        double radius = (double) level;
+        double radius = level;
         double damage = Math.floor((double)level * 2.0);
 
         if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.CHRISTMAS_SWORD_ORNAMENTAL)) {
@@ -175,8 +174,8 @@ public class DivineImmolation extends CustomEnchantment {
 
 
                     if (pEnt.getInventory() == null) continue;
-                    if ((((Player) pEnt).getPlayer().getInventory().getChestplate() != null)) {
-                        if ((AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(((Player) pEnt).getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
+                    if ((pEnt.getPlayer().getInventory().getChestplate() != null)) {
+                        if ((AstroItemSkinsAPI.hasSkinEquipped(pEnt.getPlayer(), SkinType.THANKSGIVING_2021_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(pEnt.getPlayer(), SkinType.THANKSGIVING_2021_MUTATED_BACKPACK)) && Math.random() < 0.075) {
 
                             continue;
                         }
@@ -191,8 +190,12 @@ public class DivineImmolation extends CustomEnchantment {
                         continue;
                     }
 
-                    if (ent.getWorld().getName().equals("space") && ForceFieldData.findPlayer((Player) ent).isActive()) {
+                    if (ent.getWorld().getName().equals("space")) {
                         continue;
+                    }
+
+                    if(AstroCore.getInstance().getFreezeManager().getFrozenPlayers().containsKey(ent.getUniqueId())) {
+                        return;
                     }
 
                     final LivingEntity le = (LivingEntity) ent;
@@ -255,15 +258,15 @@ public class DivineImmolation extends CustomEnchantment {
 
 
                     le.addPotionEffect(new PotionEffect(PotionEffectType.WITHER, (int)(damage * 10.0), 1));
-                ent.setMetadata("divineFire", new FixedMetadataValue((Plugin) Enchantments.getInstance(), System.currentTimeMillis()));
-                ent.setMetadata("divineFireLevel", new FixedMetadataValue((Plugin) Enchantments.getInstance(), multiplier * level));
+                ent.setMetadata("divineFire", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
+                ent.setMetadata("divineFireLevel", new FixedMetadataValue(Enchantments.getInstance(), multiplier * level));
                 }
             }
         }
     }
 
     private List<Player> getNearbyPlayers(final List<Entity> ents) {
-        final List<Player> players = new ArrayList<Player>();
+        final List<Player> players = new ArrayList<>();
         for (final Entity e : ents) {
             if (e instanceof Player) {
                 players.add((Player) e);

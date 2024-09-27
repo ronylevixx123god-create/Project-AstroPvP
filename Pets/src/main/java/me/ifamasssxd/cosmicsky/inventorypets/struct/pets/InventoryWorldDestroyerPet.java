@@ -4,7 +4,6 @@ import com.avaje.ebean.validation.NotNull;
 import com.cosmicpvp.cosmicutils.utils.*;
 import com.google.common.collect.Lists;
 import com.massivecraft.factions.Faction;
-import com.massivecraft.factions.iface.RelationParticipator;
 import com.massivecraft.factions.perms.Relation;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
@@ -20,10 +19,7 @@ import me.ifamasssxd.cosmicsky.inventorypets.struct.InventoryPets;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.PetCooldown;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.CrankedAmuletUtil;
 import me.ifamasssxd.cosmicsky.inventorypets.utils.DamageIndicatorUtils;
-import net.astropvp.armorsets.AstroArmorSetsAPI;
-import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.damagehandler.AstroDamageHandler;
-import net.astropvp.damagehandler.AstroDamageHandlerAPI;
 import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Entity;
@@ -31,8 +27,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitScheduler;
 
@@ -40,6 +34,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
 
 public class InventoryWorldDestroyerPet extends InventoryPet {
     public static ArrayList<Location> locations = new ArrayList<>();
@@ -50,11 +45,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
     public List<String> getPetDescription() {
         return Lists.newArrayList(CC.Gray + "A fragment of the legendary",
-                CC.Gray + "World Destroyer, Yijki.", (new StringBuilder(String.valueOf(CC.Gray))).toString(),
+                CC.Gray + "World Destroyer, Yijki.", String.valueOf(CC.Gray),
                 CC.WhiteB + "Ability",
                 CC.Gray + "Summon the power of Yijki's",
                 CC.Gray + "[" + CC.DarkRed + "Dimensional Cage" + CC.Gray + "] ability (" + this.cageDuration + "s)",
-                (new StringBuilder(String.valueOf(CC.Gray))).toString(), CC.WhiteB + "Cooldown",
+                String.valueOf(CC.Gray), CC.WhiteB + "Cooldown",
                 CC.Gray + " " + TimeUtils.formatSeconds(getCooldown()));
     }
 
@@ -74,17 +69,21 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
     }
 
 
+
     public boolean onPetItemInteract(Player player, ItemStack item, InventoryPetItem petItem, PlayerInteractEvent event) throws PetException {
+        //player.sendMessage(CC.translate("&c&lPET: &cThis pet has been disabled"));
+        //player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.0f);
+        //if(1==1) return false;
         long lastUse = petItem.getLastUsed();
-        long delay = TimeUnit.SECONDS.toMillis((long) this.getCooldown());
+        long delay = TimeUnit.SECONDS.toMillis(this.getCooldown());
         long timeTillCanUse = delay - (System.currentTimeMillis() - lastUse);
 
         if (lastUse > 0L && timeTillCanUse > 0L && (!player.isOp() || !player.isSneaking()))
             throw new NonPrefixedPetException(CC.RedB + "PET: " + CC.Red + "Ability on cooldown: " + CC.RedU + TimeUtils.formatSeconds((int) (timeTillCanUse / 1000L)));
-/*        if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
+        if (CooldownUtils.isCooldownActive(player, petItem.getPetType().name())) {
             player.sendMessage(CC.translate("&c&lPET: &cYou are still on" + petItem.getPetType().getPetName() + " &cfor another &7" + CooldownUtils.getFormattedCooldown(player, petItem.getPetType().name() + "&c.")));
             return true;
-        }*/
+        }
 
         if (player.hasMetadata("in_duel"))
             return true;
@@ -103,7 +102,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                 if (nearPlayer.getGameMode() == GameMode.CREATIVE)
                     continue;
                 Faction nearFac = FactionUtils.getFaction(nearPlayer);
-                Relation rel = nearFac.getRelationTo((RelationParticipator) faction);
+                Relation rel = nearFac.getRelationTo(faction);
                 if (rel.isAlly() || rel.isTruce())
                     continue;
                 if (rel.isMember())
@@ -138,26 +137,30 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             throw new PrefixedPetException("&c&lPET: &c" + target.getName() + "&c is still on cage cooldown for &n" + CooldownUtils.getFormattedCooldown(target, "cageCooldown") + "&c.");
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SEXY_HELMET) && Math.random() < 0.5D) {
-            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
             player.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES BLOCKED &7[&c" + target.getName() + "&7] &d&l*"));
             target.sendMessage(CC.translate("&d&l* CHAD SUNGLASSES &7[&cBlocked World Destroyer&7] &d&l*"));
             return true;
         }
 
         if (UndertowHelmet.undertowField.contains(target)) {
-            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
             target.sendMessage(CC.translate("&a&l* UNDERTOW HELMET &7Blocked &4World Destroyer Pet &7[&f" + player.getName() + "&7] &a&l*"));
             player.sendMessage(CC.translate("&a&l* &f" + target.getName() + " &7Blocked &4World Destroyer Pet &7[&a&lUndertow Helmet&7] &a&l*"));
             return true;
         }
-        if (((Player) target).getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
-            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+        if (target.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2021_AMULET)) {
+            //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
             player.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&c" + target.getName() + "&7] &8&l*"));
             target.sendMessage(CC.translate("&8&l* WATCHMAN AMULET &7[&cBlocked World Destroyer&7] &8&l*"));
             return true;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.THANKSGIVING_2022_BELT)) {
-            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
             player.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&c" + target.getName() + "&7] &e&l*"));
             target.sendMessage(CC.translate("&e&l* MATRIX MASTER BELT &7[&cBlocked World Destroyer&7] &e&l*"));
             return true;
@@ -165,19 +168,21 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_HELMET)) {
-            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+            CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
             player.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&c" + target.getName() + "&7] &2&l*"));
             target.sendMessage(CC.translate("&2&l* LAMP SHADE &7[&cBlocked World Destroyer&7] &2&l*"));
             return true;
         }
 
-        if (((Player) target).getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped((Player) target, SkinType.HALLOWEEN_2021_BOOTS)) {
+        if (target.getInventory().getBoots() != null && AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.HALLOWEEN_2021_BOOTS)) {
 
             if ((AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.EASTER_2022_BELT)) && Math.random() < 0.5) {
                 target.sendMessage(CC.translate("&e&l* " + player.getName() + "'s Mischievous Tail Bypassed &7Bloodstained Galoshes &e&l*"));
             } else {
 
-                CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+                //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+                CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
                 player.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&c" + target.getName() + "&7] &8&l*"));
                 target.sendMessage(CC.translate("&8&l* BLOODSTAINED GALOSHES &7[&cBlocked World Destroyer&7] &8&l*"));
                 return true;
@@ -195,7 +200,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
         */
 
-        //CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), getCooldown()));
+        CooldownUtils.registerCooldown(player, new PetCooldown(petItem.getPetType().name(), 10));
         petItem.setLastUsed(System.currentTimeMillis());
 
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.BACK_TO_SCHOOL_2022_BOOTS) && Math.random() < 0.3) {
@@ -208,7 +213,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
 
 
         Player finalTarget1 = target;
-        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) CosmicSkyInventoryPets.get(), () -> {
+        Bukkit.getScheduler().runTaskLaterAsynchronously(CosmicSkyInventoryPets.get(), () -> {
             try {
                 player.removeMetadata("caged", CosmicSkyInventoryPets.get());
                 finalTarget1.removeMetadata("caged", CosmicSkyInventoryPets.get());
@@ -268,7 +273,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
             if (loc.getBlock().getType() == Material.AIR) {
                 filteredLocations.add(loc);
                 loc.getBlock().setType(material);
-                loc.getBlock().setMetadata("cage", (MetadataValue) new FixedMetadataValue((Plugin) CosmicSkyInventoryPets.get(), "cage"));
+                loc.getBlock().setMetadata("cage", new FixedMetadataValue(CosmicSkyInventoryPets.get(), "cage"));
             }
         }
         return filteredLocations;
@@ -310,7 +315,11 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         list.addAll(setOutside(baseLocation.clone().add(0.0, 2.0, 0.0), Material.IRON_FENCE));
         player.playSound(player.getLocation(), Sound.ANVIL_LAND, 1.0f, 1.4f);
         InventoryWorldDestroyerPet.locations.addAll(list);
-        scheduler.scheduleSyncDelayedTask((Plugin) CosmicSkyInventoryPets.get(), (Runnable) new BukkitRunnable() {
+        List<Player> pl = baseLocation.getWorld().getNearbyEntities(baseLocation, 4, 4, 4)
+                .stream()
+                .filter(e -> e instanceof Player)
+                .map(e -> (Player)e).collect(Collectors.toList());
+        scheduler.scheduleSyncDelayedTask(CosmicSkyInventoryPets.get(), (Runnable) new BukkitRunnable() {
             int count = 0;
 
             public void run() {
@@ -332,10 +341,27 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
                     InventoryWorldDestroyerPet.removeBlocks(list);
                     this.cancel();
                 }
+                /*
+                pl.forEach(p -> {
+                    if(p.getLocation().getBlock().getType() == Material.IRON_BARDING) {
+                        p.teleport(p.getLocation().clone().add(0.5, 0.0, 0.5));
+                    }
+                    if(p.getEyeLocation().getBlock().getType() == Material.IRON_BARDING) {
+                        p.teleport(p.getLocation().clone().add(0.5, 0.0, 0.5));
+                    }
 
+                    if(p.getLocation().getBlock().getType() == Material.OBSIDIAN) {
+                        p.teleport(p.getLocation().clone().add(0.0, 1.0, 0.0));
+                    }
+                    if(p.getEyeLocation().getBlock().getType() == Material.OBSIDIAN) {
+                        p.teleport(p.getLocation().clone().add(0.0, 1.0, 0.0));
+                    }
+                });
+
+                 */
                 ++this.count;
             }
-        }.runTaskTimer((Plugin) CosmicSkyInventoryPets.get(), 20L, 20L));
+        }.runTaskTimer(CosmicSkyInventoryPets.get(), 20L, 20L));
     }
 
     public static String stringLocation(Location loc) {
@@ -343,7 +369,7 @@ public class InventoryWorldDestroyerPet extends InventoryPet {
         int y = (int) loc.getY();
         int z = (int) loc.getZ();
         String world = loc.getWorld().getName();
-        String result = String.valueOf(world) + " " + x + " " + y + " " + z;
+        String result = world + " " + x + " " + y + " " + z;
         return result;
     }
 

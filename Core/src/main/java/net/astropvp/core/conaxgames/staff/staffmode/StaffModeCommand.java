@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode;
 
+/*
 import com.cosmicpvp.cosmicutils.utils.CC;
 import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
@@ -43,3 +44,5 @@ public class StaffModeCommand  extends Command {
         return false;
     }
 }
+
+ */

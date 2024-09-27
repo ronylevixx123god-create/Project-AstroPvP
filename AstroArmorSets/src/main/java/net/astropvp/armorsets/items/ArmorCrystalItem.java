@@ -173,24 +173,26 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
 
             chanceToApply = data.hasKey("bonusChance") ? data.getDouble("bonusChance") : 20.0;
 
-            if (player.hasPermission("astrocore.nebula")) {
-                chanceToApply += 5;
-                player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Nebula Perk)"));
+            if (player.hasPermission("astrocore.galaxy")) {
+                chanceToApply += 10;
+                player.sendMessage(CC.translate("&a+10% Crystal Apply Chance &7(Galaxy Rank Perk)"));
+            } else if (player.hasPermission("astrocore.nebula")) {
+                chanceToApply += 4;
+                player.sendMessage(CC.translate("&a+4% Crystal Apply Chance &7(Nebula Rank Perk)"));
             } else if (player.hasPermission("astrocore.apollo")) {
-                chanceToApply += 2.5;
-                player.sendMessage(CC.translate("&a+5% Crystal apply chance &7(Apollo Perk)"));
-
+                chanceToApply += 2;
+                player.sendMessage(CC.translate("&a+2% Crystal Apply Chance &7(Apollo Rank Perk)"));
             }
 
             if (OutpostUtil.hasPlutoOutpost(player)) {
                 chanceToApply+=7.5;
-                player.sendMessage(CC.translate("&a+10% Crystal apply chance &7(Pluto Outpost)"));
+                player.sendMessage(CC.translate("&a+10% Crystal Apply Chance &7(Pluto Outpost)"));
             }
 
 
             if (Math.random() > chanceToApply * 0.01) {
                 ASound.GLASS.play(player, 1.1f, 0.8f);
-                Bukkit.getLogger().info(String.valueOf(player.getName()) + " failed to apply " + sets.toString() + " armor set crystal!");
+                Bukkit.getLogger().info(player.getName() + " failed to apply " + sets + " armor set crystal!");
                 player.updateInventory();
                 throw new PrefixedException("Your Armor Crystal " + ItemUtils.getDisplayName(cursor) + CC.Red + " fails to apply!");
             }

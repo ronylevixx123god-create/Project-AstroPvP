@@ -36,6 +36,11 @@ public class CmdUnclaimall extends FCommand {
             return;
         }
 
+        if( context.fPlayer.getRole() != Role.ADMIN) {
+            context.msg("&cOnly the faction leader can unclaim ALL land");
+            return;
+        }
+
         if (Econ.shouldBeUsed()) {
             double refund = Econ.calculateTotalLandRefund(context.faction.getLandRounded());
             if (FactionsPlugin.getInstance().conf().economy().isBankEnabled() && FactionsPlugin.getInstance().conf().economy().isBankFactionPaysLandCosts()) {

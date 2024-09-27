@@ -115,14 +115,14 @@
             <artifactId>CustomBlocks</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CustomBlocks.jar</systemPath>
+            <systemPath>${project.basedir}/../.lib/AstroCustomBlocks.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>CosmicPvPUtils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
+            <systemPath>${project.basedir}/../.lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.astropvp</groupId>

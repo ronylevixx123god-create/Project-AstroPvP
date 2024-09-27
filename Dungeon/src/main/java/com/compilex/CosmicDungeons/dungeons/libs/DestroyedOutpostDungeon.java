@@ -34,54 +34,28 @@ package com.compilex.CosmicDungeons.dungeons.libs;
 
 import com.compilex.CosmicDungeons.CosmicDungeonsPlugin;
 import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.DungeonsRewardsAPI;
 import com.compilex.CosmicDungeons.dungeons.events.DestroyedOutpostEvents;
-import com.compilex.CosmicDungeons.dungeons.libs.Dungeon;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonPlayer;
-import com.compilex.CosmicDungeons.dungeons.libs.DungeonType;
 import com.compilex.CosmicDungeons.struct.DungeonChallenge;
 import com.compilex.CosmicDungeons.utils.ChatUtils;
 import com.compilex.CosmicDungeons.utils.TimeUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.FactionUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.cosmicpvp.cosmicutils.utils.RandomFireworks;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
+import com.cosmicpvp.cosmicutils.utils.*;
 import com.massivecraft.factions.Faction;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
-import java.util.concurrent.ThreadLocalRandom;
-import java.util.concurrent.atomic.AtomicInteger;
-
 import me.ifamasssxd.cosmicbosses.dungeonboss.destroyedoutpost.MotherOfYijki;
-import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.struct.LootTable;
-import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Effect;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.Sound;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.block.Block;
 import org.bukkit.block.Chest;
-import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class DestroyedOutpostDungeon
         extends Dungeon {
@@ -113,11 +87,11 @@ public class DestroyedOutpostDungeon
     }
 
     public ItemStack createJunkReturningItem() {
-        return new NBTWrapper(new ItemBuilder(Material.WATCH).name(CC.GoldB + "Clock of Returning " + CC.Gray + "(Right Click)").lore(new String[]{"", CC.Gray + "Capable of transporting you", CC.Gray + "back to the portal dimension."}).build()).setString("cosmicType", "dungeonJunkOfReturning").build();
+        return new NBTWrapper(new ItemBuilder(Material.WATCH).name(CC.GoldB + "Clock of Returning " + CC.Gray + "(Right Click)").lore("", CC.Gray + "Capable of transporting you", CC.Gray + "back to the portal dimension.").build()).setString("cosmicType", "dungeonJunkOfReturning").build();
     }
 
     public ItemStack createReturningClock() {
-        return new NBTWrapper(new ItemBuilder(Material.WATCH).name(CC.GoldB + "Clock of Returning " + CC.Gray + "(Right Click)").lore(new String[]{"", CC.Gray + "Capable of transporting you", CC.Gray + "back to the Mother of Yijki's", CC.Gray + "cave, from the Lava Realm."}).build()).setString("cosmicType", "dungeonClockOfReturning").build();
+        return new NBTWrapper(new ItemBuilder(Material.WATCH).name(CC.GoldB + "Clock of Returning " + CC.Gray + "(Right Click)").lore("", CC.Gray + "Capable of transporting you", CC.Gray + "back to the Mother of Yijki's", CC.Gray + "cave, from the Lava Realm.").build()).setString("cosmicType", "dungeonClockOfReturning").build();
     }
 
     public boolean isJunkOfReturning(ItemStack item) {
@@ -135,10 +109,10 @@ public class DestroyedOutpostDungeon
         for (int i = 0; i < lootToFill && i < potentialLoot.size(); ++i) {
             ItemStack item = potentialLoot.get(i);
             if (item == null) continue;
-            chest.getInventory().addItem(new ItemStack[]{item});
+            chest.getInventory().addItem(item);
         }
         chest.update();
-        block.setMetadata("dungeonChallengeLootChest", (MetadataValue) new FixedMetadataValue((Plugin) CosmicDungeonsPlugin.get_(), eligible));
+        block.setMetadata("dungeonChallengeLootChest", new FixedMetadataValue(CosmicDungeonsPlugin.get_(), eligible));
     }
 
     public void onDungeonComplete() {
@@ -146,7 +120,7 @@ public class DestroyedOutpostDungeon
         String playerList = "";
         boolean firstToComplete = !this.hasBeenDefeated;
         if (firstToComplete) {
-            CosmicDungeonsPlugin.get().getConfig().set("destroyedOutpostDefeated", (Object) true);
+            CosmicDungeonsPlugin.get().getConfig().set("destroyedOutpostDefeated", true);
             CosmicDungeonsPlugin.get().saveConfig();
             this.hasBeenDefeated = true;
             Bukkit.getLogger().info("[CosmicDungeons] Destroyed Outpost Dungeon defeated for the first time! Giving Dimensional Armor..");
@@ -159,14 +133,14 @@ public class DestroyedOutpostDungeon
             DungeonPlayer dp = DungeonsAPI.get().getPlayerDungeonData(p);
             if (dp == null || dp.getCurrentDungeon() == null || !dp.getCurrentDungeon().equals(this)) continue;
             ++total;
-            Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("contests add " + p.getName() + " dungeonsCompleted 1"));
-            Bukkit.getPluginManager().callEvent((Event) new CustomCosmicPlayerEvent(p, "DUNGEON_COMPLETE", new Object[]{this.dungeonType.name()}));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "contests add " + p.getName() + " dungeonsCompleted 1");
+            Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(p, "DUNGEON_COMPLETE", new Object[]{this.dungeonType.name()}));
             if (!dp.getCooldowns().canPlayerDoDungeon(this)) {
-                p.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "You cannot receive rewards from the " + this.getDungeonName() + (Object) ChatColor.RED + " dungeon for " + TimeUtils.formatDifference(dp.getCooldowns().getCooldown(this)) + ".");
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot receive rewards from the " + this.getDungeonName() + ChatColor.RED + " dungeon for " + TimeUtils.formatDifference(dp.getCooldowns().getCooldown(this)) + ".");
                 continue;
             }
-            if (!WorldGuardUtils.getRegionName((Location) p.getLocation()).equals("victory_ship")) {
-                p.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "You were not standing in the victory ship of the dungeon, so you do not get a reward!");
+            if (!WorldGuardUtils.getRegionName(p.getLocation()).equals("victory_ship")) {
+                p.sendMessage(ChatColor.RED + "" + ChatColor.BOLD + "(!) " + ChatColor.RED + "You were not standing in the victory ship of the dungeon, so you do not get a reward!");
                 continue;
             }
             validLooters.add(p.getUniqueId());
@@ -182,7 +156,7 @@ public class DestroyedOutpostDungeon
             playerList = playerList + p.getName() + ", ";
             long bonusCD = dp.getCooldowns().addDungeonCooldown(this, 300000L);
             dp.logDungeonComplete(this);
-            Faction faction = FactionUtils.getFaction((Player) p);
+            Faction faction = FactionUtils.getFaction(p);
             if (faction == null || !faction.isNormal()) continue;
             factionIdsToCredit.add(faction.getTag());
         }
@@ -190,30 +164,30 @@ public class DestroyedOutpostDungeon
             playerList = playerList.substring(0, playerList.length() - 2);
         }
         this.broadcastTitle("DUNGEON COMPLETE!", "+ Dungeon Loot", ChatColor.GREEN, ChatColor.GRAY);
-        Bukkit.broadcastMessage((String) "");
-        Bukkit.broadcastMessage((String) ((Object) ChatColor.GOLD + "" + (Object) ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*"));
-        Bukkit.broadcastMessage((String) ((Object) ChatColor.GOLD + "The " + this.getDungeonName() + (Object) ChatColor.GOLD + " has been cleared by: " + (Object) ChatColor.GRAY + playerList + (Object) ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.getTimeSinceDungeonStart())));
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(ChatColor.GOLD + "" + ChatColor.BOLD + "*-*-* DUNGEON COMPLETE! *-*-*");
+        Bukkit.broadcastMessage(ChatColor.GOLD + "The " + this.getDungeonName() + ChatColor.GOLD + " has been cleared by: " + ChatColor.GRAY + playerList + ChatColor.GOLD + " in " + TimeUtils.formatDifference(this.getTimeSinceDungeonStart()));
         if (this.isHeroic()) {
-            Bukkit.broadcastMessage((String) ChatUtils.getCenteredMessage(CC.translate((String) "&7with the following Heroic Dungeon debuffs:")));
-            Bukkit.broadcastMessage((String) ChatUtils.getCenteredMessage(CC.translate((String) "&6&l* &7-50% Objective Time")));
-            Bukkit.broadcastMessage((String) ChatUtils.getCenteredMessage(CC.translate((String) "&6&l* &7Bosses take 75% less incoming damage")));
-            Bukkit.broadcastMessage((String) ChatUtils.getCenteredMessage(CC.translate((String) "&6&l* &7Bosses deal 2.5x outgoing damage")));
-            this.getRandomDungeonDebuffs().forEach(debuff -> Bukkit.broadcastMessage((String) ChatUtils.getCenteredMessage(CC.translate((String) ("&6&l* &7" + debuff.getName())))));
+            Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&7with the following Heroic Dungeon debuffs:")));
+            Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7-50% Objective Time")));
+            Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7Bosses take 75% less incoming damage")));
+            Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7Bosses deal 2.5x outgoing damage")));
+            this.getRandomDungeonDebuffs().forEach(debuff -> Bukkit.broadcastMessage(ChatUtils.getCenteredMessage(CC.translate("&6&l* &7" + debuff.getName()))));
             this.getTopHeroicDungeonTime().checkLatestTime((int) (this.getTimeSinceDungeonStart() / 1000L), this, winners, validLooters);
         } else {
             this.getTopDungeonTime().checkLatestTime((int) (this.getTimeSinceDungeonStart() / 1000L), this, winners, validLooters);
         }
         if (this.getDungeonChallengesCompleted().size() > 0) {
-            Bukkit.broadcastMessage((String) ((Object) ChatColor.GOLD + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GOLD + "Their team has completed " + (Object) ChatColor.GOLD + (Object) ChatColor.BOLD + ChatColor.UNDERLINE.toString() + this.getDungeonChallengesCompleted().size() + (Object) ChatColor.GOLD + " Dungeon Challenges:"));
-            this.getDungeonChallengesCompleted().forEach(challenge -> Bukkit.broadcastMessage((String) (" " + (Object) ChatColor.GOLD + (Object) ChatColor.BOLD + "* " + (Object) ChatColor.GREEN + challenge.getName())));
-            Bukkit.broadcastMessage((String) ((Object) ChatColor.GRAY + "Loot the challenge chests for bonus dungeon items!"));
-            Bukkit.broadcastMessage((String) "");
+            Bukkit.broadcastMessage(ChatColor.GOLD + ChatColor.BOLD.toString() + "(!) " + ChatColor.GOLD + "Their team has completed " + ChatColor.GOLD + ChatColor.BOLD + ChatColor.UNDERLINE + this.getDungeonChallengesCompleted().size() + ChatColor.GOLD + " Dungeon Challenges:");
+            this.getDungeonChallengesCompleted().forEach(challenge -> Bukkit.broadcastMessage(" " + ChatColor.GOLD + ChatColor.BOLD + "* " + ChatColor.GREEN + challenge.getName()));
+            Bukkit.broadcastMessage(ChatColor.GRAY + "Loot the challenge chests for bonus dungeon items!");
+            Bukkit.broadcastMessage("");
             this.getPlayers().forEach(pl -> pl.playSound(pl.getLocation(), Sound.LEVEL_UP, 8.0f, 0.6f));
-            if (this.getDungeonChallengesCompleted().contains((Object) DungeonChallenge.NIMBLE_FEET)) {
-                factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("fquests addexact DUNGEON_RACER_I " + tag)));
+            if (this.getDungeonChallengesCompleted().contains(DungeonChallenge.NIMBLE_FEET)) {
+                factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests addexact DUNGEON_RACER_I " + tag));
             }
-            if (this.getDungeonChallengesCompleted().contains((Object) DungeonChallenge.SPEED_RACER)) {
-                factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand((CommandSender) Bukkit.getConsoleSender(), (String) ("fquests addexact DUNGEON_RACER_II " + tag)));
+            if (this.getDungeonChallengesCompleted().contains(DungeonChallenge.SPEED_RACER)) {
+                factionIdsToCredit.forEach(tag -> Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "fquests addexact DUNGEON_RACER_II " + tag));
             }
             final AtomicInteger index = new AtomicInteger(0);
             final double percentageEligible = validLooters.size() / total;
@@ -240,8 +214,8 @@ public class DestroyedOutpostDungeon
                         return;
                     }
                     int itemsPerChest = smallTeam ? ThreadLocalRandom.current().nextInt(2) + 1 : (percentageEligible <= 0.25 ? 1 : (percentageEligible <= 0.75 ? 2 : 3));
-                    DestroyedOutpostDungeon.this.getDungeonChallengesCompleted().remove((Object) nextToAnnounce);
-                    Location nextToSet = (Location) endChestLocations.get(index.getAndIncrement());
+                    DestroyedOutpostDungeon.this.getDungeonChallengesCompleted().remove(nextToAnnounce);
+                    Location nextToSet = endChestLocations.get(index.getAndIncrement());
                     Block block = nextToSet.getBlock();
                     block.setType(Material.CHEST);
                     DestroyedOutpostDungeon.this.fillChest(block, itemsPerChest, validLooters);
@@ -249,7 +223,7 @@ public class DestroyedOutpostDungeon
                     DestroyedOutpostDungeon.this.broadcastTitle(nextToAnnounce.getName(), "", ChatColor.GREEN, ChatColor.GOLD);
                     RandomFireworks.getManager().launchRandomFirework(nextToSet.add(0.5, 1.0, 0.5));
                 }
-            }.runTaskTimer((Plugin) CosmicDungeonsPlugin.get_(), 20L, 20L);
+            }.runTaskTimer(CosmicDungeonsPlugin.get_(), 20L, 20L);
         }
         if (firstToComplete) {
             for (Player pl2 : Bukkit.getServer().getOnlinePlayers()) {
@@ -257,7 +231,7 @@ public class DestroyedOutpostDungeon
                 pl2.sendMessage(CC.Gold + "As a reward for being the 1st group to defeat the Destroyed Outpost this map, all members of the party have received a bonus piece of the " + CC.DarkPurple + "Dimensional Traveler Armor Set" + CC.Gold + "!");
             }
         }
-        Bukkit.broadcastMessage((String) "");
+        Bukkit.broadcastMessage("");
     }
 
     @Override

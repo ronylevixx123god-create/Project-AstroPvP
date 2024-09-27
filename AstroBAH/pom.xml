@@ -38,106 +38,37 @@
 
         <dependency>
             <groupId>com.astropvp</groupId>
-            <artifactId>coreee</artifactId>
+            <artifactId>loottables</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/AstroCore.jar</systemPath>
+            <systemPath>${project.basedir}/../.lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
-
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>proxy</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ProxyPatch-0.1.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>factions</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Factions.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>skyitsems</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicSkyCustomItems.jar</systemPath>
-        </dependency>
-
 
 
         <dependency>
             <groupId>com.astropvp</groupId>
-            <artifactId>eapi</artifactId>
+            <artifactId>storage</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/EnchantmentsAPI.jar</systemPath>
+            <systemPath>${project.basedir}/../StorageUtil/target/StorageUtil-0.1-shaded.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>com.astropvp</groupId>
-            <artifactId>skisss</artifactId>
+            <artifactId>collects</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ItemSkins-0.1.jar</systemPath>
+            <systemPath>${project.basedir}/../.lib/Collect.jar</systemPath>
         </dependency>
 
         <dependency>
             <groupId>com.astropvp</groupId>
-            <artifactId>articleafpi</artifactId>
+            <artifactId>utils</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/lib/ParticleAPI_v2.1.1.jar</systemPath>
+            <systemPath>${project.basedir}/lib/LootTable.jar</systemPath>
         </dependency>
 
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>enchants</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>pests</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicSkyInventoryPets.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>duel</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicDuel.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>weaponrunes</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/WeaponRunes.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>CosmicPvPUtils</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.astropvp</groupId>
-            <artifactId>server</artifactId>
-            <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/WineSpigot-V1.1.6.jar</systemPath>
-        </dependency>
         <dependency>
             <groupId>net.astropvp</groupId>
             <artifactId>AstroDamageHandler</artifactId>

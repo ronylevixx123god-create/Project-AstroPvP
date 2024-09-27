@@ -43,9 +43,7 @@ public class WeaponBonusItem extends CosmicItem implements InventoryInteractable
         for(int var7 = 0; var7 < var6; ++var7) {
             Object object = var5[var7];
             if (object instanceof String) {
-                Arrays.stream(BonusType.values()).filter((value) -> {
-                    return value.toString().equals(object.toString());
-                }).findAny().ifPresent(bonuses::add);
+                Arrays.stream(BonusType.values()).filter((value) -> value.toString().equals(object.toString())).findAny().ifPresent(bonuses::add);
             }
         }
 

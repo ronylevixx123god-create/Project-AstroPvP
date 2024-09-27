@@ -11,13 +11,12 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.Random;
 
 public class CommandEnchBook implements CommandExecutor {
     public boolean onCommand(final CommandSender sender, final Command cmd, final String label, final String[] args) {
-        if (sender instanceof Player && !((Player) sender).isOp()) {
+        if (sender instanceof Player && !sender.isOp()) {
             return true;
         }
         if (args.length < 1) {
@@ -33,7 +32,7 @@ public class CommandEnchBook implements CommandExecutor {
                         continue;
                     }
                     if (pl.getInventory().firstEmpty() != -1) {
-                        pl.getInventory().addItem(new ItemStack[]{EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel())});
+                        pl.getInventory().addItem(EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel()));
                     } else {
                         pl.getWorld().dropItem(pl.getLocation(), EnchantmentBook.getEnchantmentBook(ce, ce.getMaxLevel()));
                     }
@@ -51,10 +50,13 @@ public class CommandEnchBook implements CommandExecutor {
         if (args.length == 3) {
             try {
                 amount = Integer.parseInt(args[2]);
+                /*
                 if (amount > ce2.getMaxLevel()) {
                     sender.sendMessage(ChatColor.RED + "Max level: " + ce2.getMaxLevel());
                     return true;
                 }
+
+                 */
             } catch (Exception e) {
                 e.printStackTrace();
                 sender.sendMessage("Please enter a valid level!");
@@ -64,7 +66,7 @@ public class CommandEnchBook implements CommandExecutor {
             amount = new Random().nextInt(ce2.getMaxLevel()) + 1;
         }
         if (pl.getInventory().firstEmpty() != -1) {
-            pl.getInventory().addItem(new ItemStack[]{EnchantmentBook.getEnchantmentBook(ce2, amount)});
+            pl.getInventory().addItem(EnchantmentBook.getEnchantmentBook(ce2, amount));
         } else {
             pl.getWorld().dropItem(pl.getLocation(), EnchantmentBook.getEnchantmentBook(ce2, amount));
         }

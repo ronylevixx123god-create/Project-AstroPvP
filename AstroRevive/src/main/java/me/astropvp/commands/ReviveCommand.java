@@ -1,14 +1,10 @@
 package me.astropvp.commands;
 
-import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
-
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
+import club.minnced.discord.webhook.send.WebhookEmbed;
+import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
+import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import me.astropvp.AstroRevivePlugin;
 import me.astropvp.inventories.ScrollerInventory;
 import me.astropvp.objects.DeathInventory;
@@ -30,6 +26,11 @@ import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.*;
 
 public class ReviveCommand
         implements CommandExecutor,
@@ -91,9 +92,49 @@ public class ReviveCommand
                 deathInventory.revive(player);
                 player.sendMessage("§eThe player §f" + target.getName() + "§e has been revived.");
                 player.closeInventory();
+                sendWebHook(target, player, deathInventory);
                 return;
             }
         }
+    }
+
+    public void sendWebHook(Player target, Player revivedBy, DeathInventory deathInventory) {
+        WebhookClientBuilder builder = new WebhookClientBuilder("https://discord.com/api/webhooks/1272074220939247729/8eZ7BwEbX5S4AJcVVO6jNDk9NBC4OPpQAGa6HetjHxrmMW42SgBnRkVIJVaEP1PmzeKK"); // or id, token
+
+        builder.setThreadFactory((job) -> {
+            Thread thread = new Thread(job);
+            thread.setName("Revive");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        builder.setWait(true);
+
+        WebhookClient client = builder.build();
+
+
+        WebhookEmbed embed = new WebhookEmbedBuilder()
+                .setColor(0XF8EB2A)
+                .setTitle(new WebhookEmbed.EmbedTitle("**Revived - " + target.getName() + "**", null))
+                .setFooter(new WebhookEmbed.EmbedFooter("Revived | " + Instant.now(), null))
+                .setDescription(
+                                "**Player:** `" + target.getName() + "`\n"
+                                + "**Revived By:** `" + revivedBy.getName() + "`\n"
+                                + "**Item Amount:** `" + deathInventory.getTotal() + "`\n"
+                                + "**Killer:** `" + deathInventory.getKiller() + "`\n"
+                                + "**Died At:** <t:" + (deathInventory.getTime()/1000) + ">\n"
+                                //+ "**Armor:** " + deathInventory.getArmor() + "\n"
+                                + "**Damage:** `" + deathInventory.getDamage() + "`\n"
+                                + "\n"
+                )
+                .build();
+
+        WebhookMessageBuilder idBuilder = new WebhookMessageBuilder();
+        idBuilder.setUsername("Revive Log");
+        idBuilder.setAvatarUrl("https://cdn.discordapp.com/avatars/1202888199903641640/cad565e0a6bcd051ce0fd36b70c1f023.webp");
+        idBuilder.addEmbeds(embed);
+
+        client.send(idBuilder.build());
     }
 
     public boolean onCommand(CommandSender sender, Command cmd, String cmdLabel, String[] args) {

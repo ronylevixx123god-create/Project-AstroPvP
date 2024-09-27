@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+/*
 import net.astropvp.core.conaxgames.staff.Freeze;
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.EntityInteractModule;
 import org.bukkit.Material;
@@ -17,3 +18,5 @@ public class FreezeModule extends EntityInteractModule {
         Freeze.handle(clickedPlayer, event.getPlayer());
     }
 }
+
+ */

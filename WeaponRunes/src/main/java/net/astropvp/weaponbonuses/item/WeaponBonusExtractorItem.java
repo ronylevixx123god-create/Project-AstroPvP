@@ -48,7 +48,7 @@ public class WeaponBonusExtractorItem extends CosmicItem implements InventoryInt
     private ItemStack addGlow(ItemStack item) {
         ItemMeta meta = item.getItemMeta();
         meta.addEnchant(Enchantment.LURE, 1, false);
-        meta.addItemFlags(new ItemFlag[]{ItemFlag.HIDE_ENCHANTS});
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
         item.setItemMeta(meta);
         return item;
     }
@@ -70,8 +70,8 @@ public class WeaponBonusExtractorItem extends CosmicItem implements InventoryInt
                 stringBonuses.stream().forEach((string) -> {
                     objects.add(string.replace(" ", "_").toUpperCase());
                 });
-                ItemStack weaponBonusCrystal = CosmicSkyCustomItems.get().getItemManager().getCustomItem("weapon_bonus").createItem((Player)null, objects.toArray());
-                player.getInventory().addItem(new ItemStack[]{weaponBonusCrystal});
+                ItemStack weaponBonusCrystal = CosmicSkyCustomItems.get().getItemManager().getCustomItem("weapon_bonus").createItem(null, objects.toArray());
+                player.getInventory().addItem(weaponBonusCrystal);
                 List<String> lore = clicked.getItemMeta().getLore();
                 this.applyVisuals(clicked, lore, objects);
                 ItemMeta meta = clicked.getItemMeta();
@@ -83,7 +83,7 @@ public class WeaponBonusExtractorItem extends CosmicItem implements InventoryInt
                 if (event.getCursor().getAmount() > 1) {
                     event.getCursor().setAmount(event.getCursor().getAmount() - 1);
                 } else {
-                    event.setCursor((ItemStack)null);
+                    event.setCursor(null);
                 }
 
                 event.setCancelled(true);

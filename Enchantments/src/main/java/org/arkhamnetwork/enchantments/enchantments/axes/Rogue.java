@@ -108,9 +108,13 @@ public class Rogue extends CustomEnchantment {
                 double damage = e.getDamage();
                 if (!(e.getDamager() instanceof Player)) return;
                 if (((Player) e.getDamager()).getItemInHand() == null) return;
-/*                if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master")) {
+                /*
+                if (EnchantmentAPI.itemHasEnchantment(((Player) e.getDamager()).getItemInHand(), "Soul Master")) {
                     damage *= 1.1;
                 }
+
+                 */
+                /*
                 if (AstroItemSkinsAPI.hasSkinEquipped(p, SkinType.VALENTINES_2022_MUTATED_BELT)) {
                     damage *= 1.15;
 

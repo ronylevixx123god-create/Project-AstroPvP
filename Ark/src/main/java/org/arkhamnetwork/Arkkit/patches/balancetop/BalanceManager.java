@@ -45,7 +45,7 @@ public class BalanceManager {
     private static LinkedHashMap<String, Double> balancetop;
     private static String topName;
     private static double topBalance;
-    private static boolean minebansEnabled;
+    private static final boolean minebansEnabled;
 
     static {
         balancetop = null;
@@ -69,20 +69,20 @@ public class BalanceManager {
             BalanceManager.loadOnlinePlayers();
             balancetop = BalanceManager.sortByComparator(balanceMap, false);
             pages.clear();
-            ArrayList<String> page = new ArrayList<String>();
+            ArrayList<String> page = new ArrayList<>();
             int i = 1;
             for (Map.Entry<String, Double> v : balancetop.entrySet()) {
                 if (i == 1 && !v.getKey().equals(topName)) {
                     topBalance = v.getValue();
                     topName = v.getKey();
-                    Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.UNDERLINE.toString() + v.getKey() + ChatColor.GREEN + " has taken the " + ChatColor.GREEN + ChatColor.BOLD.toString() + "#1" + ChatColor.GREEN + " /baltop with " + ChatColor.GREEN + ChatColor.BOLD.toString() + "$" + ChatColor.GREEN + format.format(v.getValue()) + "!");
+                    Bukkit.broadcastMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "(!) " + ChatColor.UNDERLINE + v.getKey() + ChatColor.GREEN + " has taken the " + ChatColor.GREEN + ChatColor.BOLD + "#1" + ChatColor.GREEN + " /baltop with " + ChatColor.GREEN + ChatColor.BOLD + "$" + ChatColor.GREEN + format.format(v.getValue()) + "!");
                 }
                 if (pages.size() >= 20) break;
                 if (page.size() >= 10) {
-                    pages.add(new ArrayList(page));
-                    page = new ArrayList();
+                    pages.add(new ArrayList<>(page));
+                    page.clear();
                 }
-                page.add(ChatColor.WHITE + ChatColor.BOLD.toString() + i++ + ". " + ChatColor.GREEN + v.getKey() + ": " + ChatColor.WHITE + ChatColor.BOLD.toString() + "$" + BalanceManager.insertCommas(v.getValue()));
+                page.add(ChatColor.WHITE + ChatColor.BOLD.toString() + i++ + ". " + ChatColor.GREEN + v.getKey() + ": " + ChatColor.WHITE + ChatColor.BOLD + "$" + BalanceManager.insertCommas(v.getValue()));
             }
             if (pages.size() < 20) {
                 pages.add(page);
@@ -106,19 +106,19 @@ public class BalanceManager {
 
     private static LinkedHashMap<String, Double> sortByComparator(Map<UUID, NameDouble> unsortMap, final boolean order) {
         LinkedList<Map.Entry<UUID, NameDouble>> list = new LinkedList<Map.Entry<UUID, NameDouble>>(unsortMap.entrySet());
-        Collections.sort(list, (o1, o2) -> {
+        list.sort((o1, o2) -> {
             if (order) {
                 return o1.getValue().getAmount().compareTo(o2.getValue().getAmount());
             }
             return o2.getValue().getAmount().compareTo(o1.getValue().getAmount());
         });
         LinkedHashMap<String, Double> sortedMap = new LinkedHashMap<String, Double>();
-        for (Map.Entry entry : list) {
-            if (BalanceManager.isBanned((UUID) entry.getKey()) || ((NameDouble) entry.getValue()).getName() != null && ((NameDouble) entry.getValue()).getName().startsWith("faction_")) {
+        for (Map.Entry<UUID, NameDouble> entry : list) {
+            if (BalanceManager.isBanned(entry.getKey()) || entry.getValue().getName() != null && entry.getValue().getName().startsWith("faction_")) {
                 balanceMap.remove(entry.getKey());
                 continue;
             }
-            sortedMap.put(((NameDouble) entry.getValue()).getName(), ((NameDouble) entry.getValue()).getAmount());
+            sortedMap.put(entry.getValue().getName(), entry.getValue().getAmount());
         }
         return sortedMap;
     }

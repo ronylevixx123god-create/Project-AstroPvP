@@ -1,5 +1,6 @@
 package net.astropvp.core.conaxgames.staff.staffmode.staffmodules.modules;
 
+/*
 import net.astropvp.core.conaxgames.staff.staffmode.staffmodules.moduletypes.EntityInteractModule;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -17,3 +18,6 @@ public class InventoryExaminerModule extends EntityInteractModule {
         Bukkit.dispatchCommand(event.getPlayer(), "invsee " + clickedPlayer.getName());
     }
 }
+
+
+ */

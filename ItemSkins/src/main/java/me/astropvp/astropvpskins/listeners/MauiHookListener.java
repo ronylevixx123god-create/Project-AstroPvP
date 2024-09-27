@@ -1,8 +1,6 @@
 package me.astropvp.astropvpskins.listeners;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
-import java.util.List;
-
 import com.cosmicpvp.cosmicutils.utils.FactionUtils;
 import com.cosmicpvp.cosmicutils.utils.GeneralUtil;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
@@ -13,18 +11,16 @@ import me.astropvp.astropvpskins.objects.skins.swords.MauisHookSkin;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
-import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.github.paperspigot.Title;
+
+import java.util.List;
 
 public class MauiHookListener implements Listener {
 
@@ -53,13 +49,13 @@ public class MauiHookListener implements Listener {
                             continue;
                         if (!WorldGuardUtils.isPvPEnabled(target.getLocation()))
                             continue;
-                        target.setMetadata("transEffect", (MetadataValue) new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), ""));
+                        target.setMetadata("transEffect", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), ""));
                         target.sendTitle(new Title(CC.translate("&c&l* &f" + e.getPlayer().getName() + "'s &cTranscendence Ability &c&l*"), CC.translate("&7Silenced (Pets) and Massive Damage"), 10, 20, 10));
                         target.playSound(target.getLocation(), Sound.WITHER_HURT, 1.0F, 0.25F);
                         target.sendMessage(ChatColor.DARK_PURPLE + "" + ChatColor.BOLD + "* SILENCED " + ChatColor.GRAY + " [7s] " + ChatColor.DARK_PURPLE + ChatColor.BOLD + "*");
-                        target.setMetadata("noDefenseProcs", (MetadataValue) new FixedMetadataValue((Plugin) AstroItemSkinsPlugin.getInstance(), Boolean.valueOf(true)));
-                        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) AstroItemSkinsPlugin.getInstance(), () -> target.removeMetadata("noDefenseProcs", (Plugin) AstroItemSkinsPlugin.getInstance()), 140L);
-                        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) AstroItemSkinsPlugin.getInstance(), () -> target.damage(2.0D), 140L);
+                        target.setMetadata("noDefenseProcs", new FixedMetadataValue(AstroItemSkinsPlugin.getInstance(), Boolean.valueOf(true)));
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> target.removeMetadata("noDefenseProcs", AstroItemSkinsPlugin.getInstance()), 140L);
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> target.damage(2.0D), 140L);
                         (new BukkitRunnable() {
                             int count = 0;
 
@@ -71,10 +67,10 @@ public class MauiHookListener implements Listener {
                                     target.damage(4.0D);
                                 }
                             }
-                        }).runTaskTimer((Plugin) AstroItemSkinsPlugin.getInstance(), 0L, 10L);
-                        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin) AstroItemSkinsPlugin.getInstance(), () -> {
+                        }).runTaskTimer(AstroItemSkinsPlugin.getInstance(), 0L, 10L);
+                        Bukkit.getScheduler().runTaskLaterAsynchronously(AstroItemSkinsPlugin.getInstance(), () -> {
                             target.sendMessage(CC.translate("&a&lPET: &aYour Pets are no longer Silenced."));
-                            target.removeMetadata("transEffect", (Plugin) AstroItemSkinsPlugin.getInstance());
+                            target.removeMetadata("transEffect", AstroItemSkinsPlugin.getInstance());
                         }, 200L);
                     }
                 }

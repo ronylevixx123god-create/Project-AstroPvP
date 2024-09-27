@@ -10,16 +10,13 @@ package com.compilex.CosmicKOTH.tasks;
 import com.compilex.CosmicKOTH.CosmicKOTHAPI;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.StringUtils;
-import net.minecraft.server.v1_8_R3.ChatComponentUtils;
-import org.arkhamnetwork.Arkkit.patches.chat_filter.ChatUtils;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 
 public class LauncherTask implements Runnable {
     public static int countdown;
 
     public LauncherTask(int secondsUntilKoth) {
-        this.countdown = secondsUntilKoth;
+        countdown = secondsUntilKoth;
     }
 
     public void run() {
@@ -83,13 +80,13 @@ public class LauncherTask implements Runnable {
 
 
     private void notifyPlayers(String delay) {
-        Bukkit.broadcastMessage((String) "");
-        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8⎜ &6&lDesert K.O.T.H")));
+        Bukkit.broadcastMessage("");
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8| &6&lDesert K.O.T.H")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event has been started!")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lTime Left&7: &f" + delay)));
-        Bukkit.broadcastMessage((String) "");
+        Bukkit.broadcastMessage("");
     }
 }
 

@@ -82,6 +82,12 @@
         <module>Ruins</module>
         <module>AstroBAH</module>
         <module>HypeBoxes</module>
+        <module>WarzoneChests</module>
+        <module>AntiRightClick</module>
+        <module>PvPTop</module>
+        <module>Vouchers</module>
+        <module>ChatGames</module>
+        <module>SpaceRecode</module>
 
     </modules>
 
@@ -141,6 +147,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <dependency>
+                <groupId>org.mongodb</groupId>
+                <artifactId>mongodb-driver-kotlin-sync</artifactId>
+                <version>4.11.0</version>
+            </dependency>
+            <dependency>
+                <groupId>net.boxserver.kotlin</groupId>
+                <artifactId>Kotlin</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
             <dependency>
                 <artifactId>Utils</artifactId>
                 <groupId>net.astropvp</groupId>

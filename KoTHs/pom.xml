@@ -66,10 +66,10 @@
 
         <dependency>
             <groupId>com.conaxgames</groupId>
-            <artifactId>CosmicPvPUtils</artifactId>
+            <artifactId>CosmicPvPUtilss</artifactId>
             <version>1.0</version>
             <scope>system</scope>
-            <systemPath>${project.basedir}/../Utils/target/CosmicPvPUtils.jar</systemPath>
+            <systemPath>${project.basedir}/../.lib/CosmicPvPUtils.jar</systemPath>
         </dependency>
 
 

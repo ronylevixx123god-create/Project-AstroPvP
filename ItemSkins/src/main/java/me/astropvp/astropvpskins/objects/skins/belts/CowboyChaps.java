@@ -17,6 +17,8 @@ public class CowboyChaps extends ItemSkin {
             return;
         if (player.getLocation().getWorld().getName().equals("space"))
             return;
+        if (player.getLocation().getWorld().getName().equals("mars"))
+            return;
         if (player.getLocation().getWorld().getName().equals("world_outpost_pluto"))
             return;
         EnchantmentAPI.getEnchantment("Godly Overload").applyEquipEffect(player, 4);

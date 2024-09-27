@@ -1,27 +1,15 @@
 package net.astropvp.weaponbonuses.command;
 
 import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandCompletion;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.annotation.Default;
-import co.aikar.commands.annotation.Syntax;
+import co.aikar.commands.annotation.*;
 import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.CommonsUtil;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-
 import com.google.common.collect.Lists;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import javax.annotation.Nullable;
-
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.weaponbonuses.api.WeaponBonusesAPI;
 import net.astropvp.weaponbonuses.bonus.BonusType;
@@ -31,6 +19,12 @@ import org.bukkit.Sound;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+
+import javax.annotation.Nullable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class WeaponBonusCommand extends BaseCommand {
     private ItemStack build;

@@ -86,7 +86,7 @@ public enum MaskType {
 
     M_ANIMAL_CONTROL(new MaskData(null, "", "eyJ0aW1lc3RhbXAiOjE1NzQxMzU1OTc0NTMsInByb2ZpbGVJZCI6IjdjODk1YWQwMTFkMDQzNTA5YWU1ZjJiYjFjZjZjOGVhIiwicHJvZmlsZU5hbWUiOiJCYXNpY0JBRSIsInRleHR1cmVzIjp7IlNLSU4iOnsidXJsIjoiaHR0cDovL3RleHR1cmVzLm1pbmVjcmFmdC5uZXQvdGV4dHVyZS85NTZjZWNlYTA5MzU3NDhiMTA2ZTM2ZjhlZmE2NmNjOGExN2IxODdiNjgzMzU5YWQ1MWEwNmM3MzJlYjg5YWE2In19fQ==",
             "Mutated Animal Control Mask", true, UUID.randomUUID(),
-            CC.DarkGreenB + CC.Underline + "Mutated" + CC.Reset + CC.AquaB + "Animal Control Mask",
+            CC.DarkGreenB + CC.Underline + "Mutated" + CC.Reset + CC.AquaB + " Animal Control Mask",
             CC.DarkGreen + "66% Pet Leash Negation",
             Lists.newArrayList(CC.DarkGreen + "66% Pet Leash Negation", CC.Gray + "Hide your cats, dogs, and pets -", CC.Gray + "animal control is coming for you!", CC.GoldB + " * " + CC.Gold + "Map One"))),
 

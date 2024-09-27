@@ -1,16 +1,17 @@
 package org.arkhamnetwork.enchantments.mastery;
 
+import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.MasteryCustomEnchantment;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Sound;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.plugin.*;
-import org.bukkit.metadata.*;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
 
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -31,7 +32,7 @@ public class MasteryNeutralize extends MasteryCustomEnchantment
         Player pTarget = (Player)target;
         int multi = 1;
         try {
-            multi = AstroItemSkinsAPI.hasSkinEquipped((Player)user, (SkinType)SkinType.CORRUPT_SWORD) ? 2 : 1;
+            multi = AstroItemSkinsAPI.hasSkinEquipped(user, SkinType.CORRUPT_SWORD) ? 2 : 1;
         }
         catch (Exception exception) {
             // empty catch block
@@ -39,7 +40,7 @@ public class MasteryNeutralize extends MasteryCustomEnchantment
 
 
         if ((level) * multi >= ThreadLocalRandom.current().nextInt(180)) {
-            if (AstroItemSkinsAPI.hasSkinEquipped((Player)pTarget, (SkinType)SkinType.RUINS_AMULET) && Math.random() < 0.5) {
+            if (AstroItemSkinsAPI.hasSkinEquipped(pTarget, SkinType.RUINS_AMULET) && Math.random() < 0.5) {
                 pTarget.sendMessage("§5§l* BLOCKED " + user.getName() + "'s NEUTRALIZE §7(Lost Amulet) §5§l*");
                 return;
             }
@@ -50,17 +51,17 @@ public class MasteryNeutralize extends MasteryCustomEnchantment
             if (pTarget.hasMetadata("neutralized")) {
                 return;
             }
-            pTarget.sendMessage(CC.translate((String)("&5&l* NEUTRALIZED &7[" + user.getName() + "&7]&5&l *")));
+            pTarget.sendMessage(CC.translate("&5&l* NEUTRALIZED &7[" + user.getName() + "&7]&5&l *"));
             if (!pTarget.hasMetadata("noDefenseProcs")) {
-                pTarget.setMetadata("noDefenseProcs", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)"banana"));
+                pTarget.setMetadata("noDefenseProcs", new FixedMetadataValue(Enchantments.getInstance(), "banana"));
             } else {
-                pTarget.setMetadata("silenced", (MetadataValue)new FixedMetadataValue((Plugin)Enchantments.getInstance(), (Object)"banana"));
+                pTarget.setMetadata("silenced", new FixedMetadataValue(Enchantments.getInstance(), "banana"));
             }
             pTarget.playSound(pTarget.getLocation(), Sound.ENDERMAN_SCREAM, 1.0f, 0.3f);
             user.sendMessage(CC.translate("&5&l* NEUTRALIZED &7[" + pTarget.getName() + "&7]&5&l *"));
-            DamageIndicatorUtils.sendDamageIndicator((Player) pTarget, CC.DarkPurpleB + "* NEUTRALIZED" + CC.Gray +  "[5s]" + CC.Gray + " *", "NEUTRALIZE");
-            pTarget.setMetadata("neutralized", new FixedMetadataValue((Plugin)Enchantments.getInstance(), "true"));
-            Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously((Plugin)Enchantments.getInstance(), () -> pTarget.removeMetadata("neutralized", (Plugin)Enchantments.getInstance()), 20L * 4);        }
+            DamageIndicatorUtils.sendDamageIndicator(pTarget, CC.DarkPurpleB + "* NEUTRALIZED" + CC.Gray +  "[5s]" + CC.Gray + " *", "NEUTRALIZE");
+            pTarget.setMetadata("neutralized", new FixedMetadataValue(Enchantments.getInstance(), "true"));
+            Enchantments.getInstance().getServer().getScheduler().runTaskLaterAsynchronously(Enchantments.getInstance(), () -> pTarget.removeMetadata("neutralized", Enchantments.getInstance()), 20L * 4);        }
     }
 }
 
