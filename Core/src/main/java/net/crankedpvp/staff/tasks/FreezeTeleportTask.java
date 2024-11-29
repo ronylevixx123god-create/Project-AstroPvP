@@ -25,7 +25,7 @@ public class FreezeTeleportTask extends BukkitRunnable {
     public void run() {
         for(Map.Entry<UUID, Location> playerLocationEntry : this.plugin.getFreezeManager().getFrozenPlayers().entrySet()) {
             OfflinePlayer oplayer = Bukkit.getOfflinePlayer(playerLocationEntry.getKey());
-            if(!oplayer.isOnline()) return;
+            if(!oplayer.isOnline()) continue;
             Player player = (Player)oplayer;
             Location location = playerLocationEntry.getValue();
             if(!player.getLocation().equals(location)) {

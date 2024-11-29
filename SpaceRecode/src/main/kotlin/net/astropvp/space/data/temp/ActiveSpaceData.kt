@@ -62,8 +62,8 @@ class ActiveSpaceData(val uuid: UUID) {
         Bukkit.getScheduler().runTaskLater(SpacePlugin.instance, {
 
             player.msg("&aYou have been safely teleported to spawn and your inventory has been rolled back!")
-            clear(player())
-            inventory.restore(player())
+            clear(player)
+            //inventory.restore(player())
             val collect = CollectPlugin.getInstance().collectManager.getOrCreate(player.uniqueId.toString())
             val collectCategory = CollectCategory(CollectType.SPACE, grindedItems.sortedBy { it.type.name }.toTypedArray().clone(), CC.translate("&d&lSpace Loot"), System.currentTimeMillis())
             collect.add(collectCategory)
@@ -76,12 +76,14 @@ class ActiveSpaceData(val uuid: UUID) {
 
     fun enter() {
         val player = player()
+        player.allowFlight = false
+        player.isFlying = false
         player.msg("&dYou have entered the &fSpace Lands&d, be careful...")
         for (activePotionEffect in player.activePotionEffects) {
             player.removePotionEffect(activePotionEffect.type)
         }
         val inv = player.inventory
-        addContentsToPlayerInventoryContents(inv)
+        //addContentsToPlayerInventoryContents(inv)
         clear(player())
         giveYourItems(inv)
 
@@ -113,9 +115,13 @@ class ActiveSpaceData(val uuid: UUID) {
     }
 
     private fun clear(player: Player) {
-
         player.inventory.clear()
         player.inventory.armorContents = emptyArray()
+        player.inventory.armorContents = null
+        player.inventory.helmet = null
+        player.inventory.chestplate = null
+        player.inventory.leggings = null
+        player.inventory.boots = null
         player.removePotionEffect(PotionEffectType.SPEED)
         Bukkit.getScheduler().runTaskLater(SpacePlugin.instance, {
             player.removePotionEffect(PotionEffectType.SPEED)

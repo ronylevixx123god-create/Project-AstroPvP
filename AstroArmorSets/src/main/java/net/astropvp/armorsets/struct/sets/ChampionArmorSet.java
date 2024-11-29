@@ -2,7 +2,6 @@ package net.astropvp.armorsets.struct.sets;
 
 import com.cosmicpvp.cosmicutils.itembuilder.ItemBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
-import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
@@ -22,8 +21,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -138,26 +135,26 @@ public class ChampionArmorSet extends ArmorSet {
         }
 
         player.sendMessage("");
-        player.sendMessage(CC.translate((String) "&6&l* CHAMPION WRATH PROC *"));
-        player.sendMessage(CC.translate((String) "&a&lBUFF: &cBanshee RKO Proc &aActivated"));
-        player.sendMessage(CC.translate((String) "&a&lBUFF: &cAnti Utility Proc &aActivated"));
-        player.sendMessage(CC.translate((String) "&4&lTARGET: &f") + target.getName());
+        player.sendMessage(CC.translate("&6&l* CHAMPION WRATH PROC *"));
+        player.sendMessage(CC.translate("&a&lBUFF: &cBanshee RKO Proc &aActivated"));
+        player.sendMessage(CC.translate("&a&lBUFF: &cAnti Utility Proc &aActivated"));
+        player.sendMessage(CC.translate("&4&lTARGET: &f") + target.getName());
         player.sendMessage("");
-        target.sendMessage(CC.translate((String) ("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]")));
+        target.sendMessage(CC.translate("&6&l* CHAMPION WRATH &7[&c" + player.getName() + "&7]"));
 
         InventoryBansheePet.startBansheeEffect(player, target, 8);
 
-        target.setMetadata("champion_ability", (MetadataValue) new FixedMetadataValue((Plugin) AstroArmorSets.getInstance(), (Object) true));
+        target.setMetadata("champion_ability", new FixedMetadataValue(AstroArmorSets.getInstance(), true));
         target.playSound(target.getLocation(), Sound.BLAZE_DEATH, 10.0f, 10.0f);
-        PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 5), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 4));
+        PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 5), new PotionEffect(PotionEffectType.SPEED, 160, 4));
         new BukkitRunnable() {
 
             public void run() {
-                target.removeMetadata("champion_ability", (Plugin) AstroArmorSets.getInstance());
-                target.sendMessage(CC.translate((String) ("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*")));
-                PlayerPotionEffects.untrackPotionEffect((Player) player, (PotionEffectType) PotionEffectType.SPEED);
-                PlayerPotionEffects.trackPotionEffect((Player) player, (SpecificCustomEnchantment) new SpecificCustomEnchantment((CustomEnchantment) new Gears(), 3), (PotionEffect) new PotionEffect(PotionEffectType.SPEED, 160, 3));
+                target.removeMetadata("champion_ability", AstroArmorSets.getInstance());
+                target.sendMessage(CC.translate("&6&l* CHAMPION WRATH FROM &7" + player.getName() + " &c&lEXPIRED &6&l*"));
+                PlayerPotionEffects.untrackPotionEffect(player, PotionEffectType.SPEED);
+                PlayerPotionEffects.trackPotionEffect(player, new SpecificCustomEnchantment(new Gears(), 3), new PotionEffect(PotionEffectType.SPEED, 160, 3));
             }
-        }.runTaskLater((Plugin) AstroArmorSets.getInstance(), 8*20);
+        }.runTaskLater(AstroArmorSets.getInstance(), 8*20);
     }
 }

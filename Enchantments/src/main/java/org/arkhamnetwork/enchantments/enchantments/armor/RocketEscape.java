@@ -25,21 +25,16 @@ package org.arkhamnetwork.enchantments.enchantments.armor;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.rit.sucy.CustomEnchantment;
-import de.inventivegames.particle.ParticleEffect;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
 import org.arkhamnetwork.enchantments.libs.PlayerPotionEffects;
-import org.arkhamnetwork.enchantments.util.ArmorUtil;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.*;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.util.Vector;
@@ -96,8 +91,8 @@ public class RocketEscape
 
                 Player pl = (Player) player;
                 last_rocket_escape.put(pl.getUniqueId().toString(), System.currentTimeMillis());
-                if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - ((MetadataValue) pl.getMetadata("sabotage").get(0)).asLong() <= 1000L) {
-                    int sabotageLevel = ((MetadataValue) pl.getMetadata("sabotageLevel").get(0)).asInt();
+                if (pl.hasMetadata("sabotage") && System.currentTimeMillis() - pl.getMetadata("sabotage").get(0).asLong() <= 1000L) {
+                    int sabotageLevel = pl.getMetadata("sabotageLevel").get(0).asInt();
                     double negationChance = (double) sabotageLevel * 0.1;
                     if (Math.random() < negationChance) {
                         pl.sendMessage(CC.RedB + " ** " + CC.Gray + "Rocket Escape:" + CC.RedB + " SABOTAGED **");
@@ -106,10 +101,10 @@ public class RocketEscape
                 }
                 e.setDamage(0.0);
                 pl.sendMessage("");
-                pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD.toString() + "(!) " + (Object) ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
+                pl.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "(!) " + ChatColor.GREEN + "Your Rocket Escape boots have activated, recover while they last!");
                 pl.sendMessage("");
                 pl.playSound(pl.getLocation(), Sound.EXPLODE, 1.0f, 0.54f);
-                pl.setMetadata("no_fall_damage", (MetadataValue) new FixedMetadataValue((Plugin) Enchantments.getInstance(), (Object) true));
+                pl.setMetadata("no_fall_damage", new FixedMetadataValue(Enchantments.getInstance(), true));
                 pl.setVelocity(new Vector(0, pl.getWorld().getName().equals("world_duels") || pl.getWorld().getName().equals("world_duels2") ? 2 + level : 4 + level * 2, 0));
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW);
                 PlayerPotionEffects.untrackPotionEffect(pl, PotionEffectType.SLOW_DIGGING);
@@ -122,11 +117,11 @@ public class RocketEscape
                 } catch (Exception exception) {
                     exception.printStackTrace();
                 }
-                Bukkit.getScheduler().runTaskLater((Plugin) Enchantments.getInstance(), new Runnable() {
+                Bukkit.getScheduler().runTaskLater(Enchantments.getInstance(), new Runnable() {
 
                     @Override
                     public void run() {
-                        if (Bukkit.getPlayer((UUID) uuid) != null) {
+                        if (Bukkit.getPlayer(uuid) != null) {
                             try {
                                 //ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), loc, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, (float) Math.random() * 2.0f, 1.25f, 69);
                             } catch (Exception exception) {
@@ -136,7 +131,7 @@ public class RocketEscape
                         }
                         rocket_escapists.remove(uuid);
                     }
-                }, (long) (20 * (level + 2) + 5));
+                }, 20L * (level + 2) + 5);
             }
         }
     }

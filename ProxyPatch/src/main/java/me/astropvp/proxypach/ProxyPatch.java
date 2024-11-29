@@ -26,7 +26,7 @@ public class ProxyPatch extends JavaPlugin {
         this.addPlayerNames();
         loadConfig();
         this.proxyPatchTask = new ProxyPatchTask();
-        this.proxyPatchTask.runTaskTimer(this, 80L, 20L);
+        runProxyPatchTask();
         CommandManager commandManager = new CommandManager(this, true);
         commandManager.register(new ProxyPatchCommand(this));
     }
@@ -585,5 +585,9 @@ public class ProxyPatch extends JavaPlugin {
         playerNames.add("KikaBumIsL");
         playerNames.add("Kya0722_");
         Collections.shuffle(playerNames);
+    }
+
+    public void runProxyPatchTask() {
+        getProxyPatchTask().runTaskTimer(this, 60L, 5L);
     }
 }

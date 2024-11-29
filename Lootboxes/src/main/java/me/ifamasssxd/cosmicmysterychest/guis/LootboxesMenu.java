@@ -1,21 +1,25 @@
 package me.ifamasssxd.cosmicmysterychest.guis;
 
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
+import club.minnced.discord.webhook.send.WebhookEmbed;
+import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
+import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
+import de.tr7zw.nbtapi.NBTItem;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import me.ifamasssxd.cosmicmysterychest.CosmicMysteryChest;
 import me.ifamasssxd.cosmicmysterychest.struct.MysteryChest;
-
+import me.ifamasssxd.cosmicmysterychest.utils.TimeUtils;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
@@ -79,14 +83,55 @@ public class LootboxesMenu {
                     return;
 
                 }
-                player.getInventory().addItem(item);
+                player.getInventory().addItem(addMetadataStringsToLootbox(item, player));
                 player.sendMessage(CC.translate("&a&l(!)&a Given you &a" + chest.getInternalName() + "&a."));
+                sendWebHook(player.getName(), chest.getInternalName());
                 }
             ));
         }
 
 
 
+    }
+
+    private ItemStack addMetadataStringsToLootbox(ItemStack itemStack, Player player) {
+        NBTItem nbtItem = new NBTItem(itemStack);
+        nbtItem.setString("lootboxCreatedBy", player.getName());
+        return nbtItem.getItem();
+    }
+
+
+    private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1300481180449112166/Qo9ULWz9fPNhUFePIxwtynIMW40QpbJmPUEYziYRqK4qvoBEUjhDLLGahab5k-ajOLDj";
+
+
+    public void sendWebHook(String playerName, String itemName) {
+        WebhookClientBuilder builder = new WebhookClientBuilder(DISCORD_WEBHOOK_URL); // or id, token
+
+        builder.setThreadFactory((job) -> {
+            Thread thread = new Thread(job);
+            thread.setName("Taken Lootbox");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        builder.setWait(true);
+
+        WebhookClient client = builder.build();
+
+
+        WebhookEmbed embed = new WebhookEmbedBuilder()
+                .setColor(0Xff7575)
+                .setTitle(new WebhookEmbed.EmbedTitle("**Taken Lootbox - " + itemName + "**", null))
+                .setFooter(new WebhookEmbed.EmbedFooter("At: | " + TimeUtils.formatTimeMillis(System.currentTimeMillis()), null))
+                .setDescription("**Player:** `" + playerName + "`\n" + "**Lootbox:** `" + itemName + "`\n")
+                .build();
+
+        WebhookMessageBuilder idBuilder = new WebhookMessageBuilder();
+        idBuilder.setUsername("Lootbox Given");
+        idBuilder.setAvatarUrl("https://cdn.discordapp.com/avatars/1202888199903641640/cad565e0a6bcd051ce0fd36b70c1f023.webp");
+        idBuilder.addEmbeds(embed);
+
+        client.send(idBuilder.build());
     }
 
 

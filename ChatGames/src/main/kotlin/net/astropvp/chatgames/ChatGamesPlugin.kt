@@ -28,7 +28,7 @@ class ChatGamesPlugin : JavaPlugin() {
         commandManager.register(ChatGameCommand())
 
         val startChatGameTask = StartChatGameTask()
-        startChatGameTask.runTaskTimer(this, 15 * 60 * 20L, 15 * 60 * 20L)
+        startChatGameTask.runTaskTimer(this, 15 * 60 * 20L, 5 * 60 * 20L)
 
         val checkTimerTask = CheckTimerTask()
         checkTimerTask.runTaskTimer(this, 30 * 20L, 30 * 20L)

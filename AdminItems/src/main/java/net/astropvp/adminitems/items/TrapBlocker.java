@@ -102,7 +102,11 @@ public class TrapBlocker extends AdminItem implements Interactable {
             if (AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.EASTER_2022_MUTATED_BACKPACK)) {
                 player.sendMessage("&c&l(!)&c " + enemy.getName() + " has bypassed your trapblocker due to his Door To Wonderland ItemSkin!");
                 continue;
+            }
 
+            if (AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.SPRING_BREAK_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped(enemy, SkinType.SPRING_BREAK_2022_MUTATED_BACKPACK)) {
+                player.sendMessage("&c&l(!)&c " + enemy.getName() + " has bypassed your trapblocker via their Spray and Pray Backpack");
+                continue;
             }
             trapBlockedPossibleList.add(uuid);
 

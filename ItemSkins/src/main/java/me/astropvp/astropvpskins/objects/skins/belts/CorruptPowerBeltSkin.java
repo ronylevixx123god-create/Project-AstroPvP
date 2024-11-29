@@ -11,22 +11,24 @@ public class CorruptPowerBeltSkin extends ItemSkin {
 
     public void onEquip(Player player) {
 
-        if (player.getLocation().getWorld().getName().equals("world_the_end"))
-            return;
-        if (player.getLocation().getWorld().getName().equals("space"))
-            return;
-        if (player.getLocation().getWorld().getName().equals("world_outpost_pluto"))
-            return;
-        if (player.getLocation().getWorld().getName().equals("mars"))
-            return;
+        String world = player.getWorld().getName();
+
+        switch (world) {
+            case "world_the_end":
+            case "world_outpost_pluto":
+            case "space":
+            case "mars":
+                return;
+        }
         EnchantmentAPI.getEnchantment("Godly Overload").applyEquipEffect(player, 5);
     }
 
     public void onUnequip(Player player) {
-        System.out.println("[PowrBelt] Attempting to remove godly overload 5]");
+        System.out.println("[PowerBelt] Attempting to remove godly overload 5]");
         EnchantmentAPI.getEnchantment("Godly Overload").applyUnequipEffect(player, 5);
         PlayerPotionEffects.untrackPotionEffect(player, new SpecificCustomEnchantment(EnchantmentAPI.getEnchantment("Godly Overload"), 5));
         player.removePotionEffect(PotionEffectType.HEALTH_BOOST);
+
     }
 }
 

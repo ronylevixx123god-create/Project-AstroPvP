@@ -5,6 +5,7 @@ import com.cosmicpvp.cosmicutils.utils.ItemBuilder
 import net.astropvp.loottable.LootTableAPI
 import net.astropvp.loottable.struct.LootTable
 import net.astropvp.space.hostile.MobManager
+import net.astropvp.space.hostile.MobType
 import net.astropvp.space.hostile.SpaceHostile
 import net.astropvp.space.utils.ActionBarMessageUtils
 import org.bukkit.Location
@@ -58,10 +59,12 @@ class SpaceZombie : SpaceHostile() {
             entity.equipment.bootsDropChance = 0.0f
         }
 
-        MobManager.add(entity)
+        MobManager.add("SPACE_ZOMBIE", entity)
         return entity
     }
 
+    override val amountOfRewards: Int
+        get() = 3
 
     override fun getPossibleRewards(): List<ItemStack> {
         return LootTableAPI.getAllLootFromLootTable(LootTable.SPACE)

@@ -6,6 +6,8 @@ import org.bukkit.Bukkit
 
 class ActiveChatGame(val question: MutableList<String>, val answer: String, val type: ChatGameType) {
 
+    private val time = 45
+
     private val startTime: Long = System.currentTimeMillis()
 
     fun post() {
@@ -24,7 +26,7 @@ class ActiveChatGame(val question: MutableList<String>, val answer: String, val 
     }
 
     fun checkTimer(): Boolean {
-        if(System.currentTimeMillis() > startTime + (1 * 60 * 1000)) {
+        if(System.currentTimeMillis() > startTime + (time * 1000)) {
             cancel()
             return true
         }

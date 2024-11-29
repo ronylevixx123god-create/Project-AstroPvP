@@ -262,18 +262,25 @@ public class ItemSkinListener implements Listener {
             if (event.getPlayer().getWorld().getName().equals("world_outpost_pluto")) {
                 return;
             }
+            System.out.println(event.getMethod().name());
             if (event.getMethod() == ArmorEquipEvent.EquipMethod.HOTBAR) {
                 return;
             }
             if (event.getOldArmorPiece() != null && event.getOldArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getOldArmorPiece())) {
                 List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getOldArmorPiece());
                 assert skins != null;
-                skins.forEach(skin -> skin.getItemSkin().onUnequip(event.getPlayer()));
+                for (SkinType skin : skins) {
+                    System.out.println("just unequipped a " + skin.name());
+                    skin.getItemSkin().onUnequip(event.getPlayer());
+                }
             }
             if (event.getNewArmorPiece() != null && event.getNewArmorPiece().getType() != Material.AIR && AstroItemSkinsAPI.hasItemSkin(event.getNewArmorPiece())) {
                 List<SkinType> skins = AstroItemSkinsAPI.getItemSkinByItem(event.getNewArmorPiece());
                 assert skins != null;
-                skins.forEach(skin -> skin.getItemSkin().onEquip(event.getPlayer()));
+                for (SkinType skin : skins) {
+                    System.out.println("just equipped a " + skin.name());
+                    skin.getItemSkin().onEquip(event.getPlayer());
+                }
             }
         }
 

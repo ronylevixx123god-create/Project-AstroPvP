@@ -25,13 +25,14 @@ object ChatGameManager {
 
     fun giveReward(player: Player) {
         val slotbot = CosmicSlotBotAPI.createSlotBotItem()
+        slotbot.amount = 4
         player.inventory.addItem(slotbot)
         announceReward(player)
     }
 
     private fun announceReward(player: Player) {
         "&6&lChat Games &8➥ &6${player.name} &fhas guessed the answer &6${currentGame?.answer} &ffirst!".sendToAllOnlinePlayers()
-        "&6&lChat Games &8➥ &fThey have won an &6&lAstro &f&lSlot Bot &6&lTicket".sendToAllOnlinePlayers()
+        "&6&lChat Games &8➥ &fThey have won 4x &6&lAstro &f&lSlot Bot &6&lTicket".sendToAllOnlinePlayers()
         reset()
     }
 

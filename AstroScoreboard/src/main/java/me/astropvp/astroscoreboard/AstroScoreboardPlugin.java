@@ -8,7 +8,6 @@ import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.massivecraft.factions.Faction;
 import me.astropvp.astroscoreboard.board.Scoreboard;
-import me.astropvp.astroscoreboard.listeners.ListenerSB;
 import me.astropvp.astroscoreboard.manager.BoardManager;
 import me.astropvp.astroscoreboard.utils.TimeUtils;
 import me.astropvp.astrospacegrinding.data.ForceFieldData;
@@ -25,17 +24,13 @@ import me.ifamasssxd.cosmichcf.struct.OutpostType;
 import me.kingsavaqe.astrotournaments.AstroTournamentsPlugin;
 import me.kingsavaqe.astrotournaments.managers.TournamentManager;
 import me.kingsavaqe.astrotournaments.objects.TournamentMatch;
-import me.kingsavaqe.astrotournaments.objects.TournamentPlayer;
 import me.neznamy.tab.api.TabAPI;
 import net.crankedpvp.shards.MobcoinAPI;
+import net.md_5.bungee.api.ProxyServer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
 
 
 public class AstroScoreboardPlugin extends JavaPlugin {
@@ -59,6 +54,7 @@ public class AstroScoreboardPlugin extends JavaPlugin {
         registerDuelScoreboard();
         //registerSpaceScoreboard();
         registerTournamentScoreboard();
+        //registerBungeeScoreboardPlaceholders();
         //registerListener(new ListenerSB());
     }
 
@@ -66,6 +62,11 @@ public class AstroScoreboardPlugin extends JavaPlugin {
     @Override
     public void onDisable() {
         astroScoreboardPlugin = null;
+    }
+
+    public void registerBungeeScoreboardPlaceholders() {
+        TabAPI.getInstance().getPlaceholderManager().registerPlayerPlaceholder("%sav_player_count%", getMS(1), player -> ProxyServer.getInstance().getOnlineCount());
+
     }
 
     public void registerStrongHoldScoreboard() {

@@ -8,6 +8,7 @@ import me.mattstudios.mf.base.CommandBase;
 
 import net.astropvp.loottable.LootTableAPI;
 import net.astropvp.loottable.LootTablePlugin;
+import net.astropvp.loottable.data.LootTableData;
 import net.astropvp.loottable.guis.LootTableMainGUI;
 import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
@@ -40,6 +41,22 @@ public class LootTableCommand extends CommandBase {
             LootTableAPI.fixLoot(table);
         }
         sender.sendMessage(CC.Green + "Fixed!!!");
+    }
+
+    @Permission("astro.admin")
+    @SubCommand("clone")
+    public void cloneCommand(Player player, @Completion("#loottables") LootTable lootTableType, @Completion("#ecoupdates") ECO_UPDATE from, @Completion("#ecoupdates") ECO_UPDATE to) {
+        LootTableData lootTable = LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTableType);
+        lootTable.cloneFromTo(from, to);
+        player.sendMessage(CC.translate("&a&l(!) &aCloned all data from " + from.getFancy() + " to " + to.getFancy()));
+    }
+
+    @Permission("astro.admin")
+    @SubCommand("clonetest")
+    public void cloneCommand(Player player, @Completion("#loottables") LootTable fromType, @Completion("#ecoupdates") ECO_UPDATE from, @Completion("#loottables") LootTable toType, @Completion("#ecoupdates") ECO_UPDATE to) {
+        LootTableData lootTableFrom = LootTablePlugin.getInstance().getLootTableManager().getLootTable(fromType);
+        lootTableFrom.cloneFromTo(from, toType, to);
+        player.sendMessage(CC.translate("&a&l(!) &aCloned all data from &2" + fromType.getFancy() + " " + from.getFancy() + " &ato &2" + toType + " " + to.getFancy()));
     }
 
     @Permission("astro.admin")

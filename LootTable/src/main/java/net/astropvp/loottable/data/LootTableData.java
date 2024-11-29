@@ -4,6 +4,7 @@ package net.astropvp.loottable.data;
 import lombok.Getter;
 
 import lombok.Setter;
+import net.astropvp.loottable.LootTablePlugin;
 import net.astropvp.loottable.struct.ECO_UPDATE;
 import net.astropvp.loottable.struct.LootTable;
 import net.astropvp.storage.utils.KeyToSave;
@@ -59,5 +60,14 @@ public class LootTableData implements KeyToSave {
     @Override
     public void setKey(String key) {
         this.lootTableType = key;
+    }
+
+    public void cloneFromTo(ECO_UPDATE from, ECO_UPDATE to) {
+        ecoUpdateMap.put(to, new HashMap<>(ecoUpdateMap.get(from)));
+    }
+
+    public void cloneFromTo(ECO_UPDATE from, LootTable lootTable, ECO_UPDATE to) {
+        LootTableData lootTableData = LootTablePlugin.getInstance().getLootTableManager().getLootTable(lootTable);
+        lootTableData.ecoUpdateMap.put(to, new HashMap<>(ecoUpdateMap.get(from)));
     }
 }

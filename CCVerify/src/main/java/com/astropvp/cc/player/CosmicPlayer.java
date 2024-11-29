@@ -1,7 +1,6 @@
 package com.astropvp.cc.player;
 
 import com.astropvp.cc.CCVerify;
-import com.astropvp.cc.packet.FutureInPacket;
 import com.astropvp.cc.packet.PacketIO;
 import com.astropvp.cc.packet.type.Packet;
 import com.astropvp.cc.packet.type.in.PacketIn;
@@ -17,7 +16,6 @@ import org.bukkit.plugin.Plugin;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ConcurrentLinkedDeque;
 
 public class CosmicPlayer {
 
@@ -75,7 +73,6 @@ public class CosmicPlayer {
 
     public boolean isOnCosmicClient() {
         List<Short> packets = PacketIO.receivedIDS.get(player.getUniqueId());
-
         return onCosmicClient && packets.contains((short)17) && packets.contains((short)11) && packets.contains((short)51) && packets.contains((short)7) && packets.contains((short)9);
     }
 

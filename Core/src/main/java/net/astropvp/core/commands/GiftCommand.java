@@ -1,5 +1,10 @@
 package net.astropvp.core.commands;
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
+import club.minnced.discord.webhook.send.WebhookEmbed;
+import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
+import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.ItemUtils;
 import me.mattstudios.mf.annotations.*;
@@ -8,6 +13,7 @@ import me.mattstudios.mf.base.CommandBase;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.managers.AstroPlayerManager;
 import net.astropvp.core.struct.AstroPlayer;
+import net.astropvp.core.utils.TimeUtils;
 import org.arkhamnetwork.Arkkit.patches.CombatLog;
 import org.bukkit.entity.Player;
 
@@ -53,9 +59,44 @@ public class GiftCommand extends CommandBase {
             return;
         }
 
+        sendWebHook(sender.getName(), crankedUser.getPlayer().getName(), System.currentTimeMillis(), CC.strip(sender.getItemInHand().getItemMeta().getDisplayName()));
+
         crankedUser.addGift(sender, sender.getItemInHand(), message);
         crankedUser.getPlayer().sendMessage(CC.translate("&a&l(!)&a You have received a gift from &f" + sender.getName() + "&a! Type &f/gifts&a to view all your gifts."));
         sender.sendMessage(CC.translate("&a&l(!)&a You have sent a gift to &f" + crankedUser.getPlayer().getName() + "&a!"));
         sender.setItemInHand(null);
+    }
+
+
+    private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1310784744660664350/jGGMbcFMOJYhrJWZxIlmPlLQCOcmb793Q_Pwz1nzEvwevhTOe6sBolLQegTgDktRtcxo";
+
+    public void sendWebHook(String playerName, String givenTo, long dupedAt, String itemName) {
+        WebhookClientBuilder builder = new WebhookClientBuilder(DISCORD_WEBHOOK_URL); // or id, token
+
+        builder.setThreadFactory((job) -> {
+            Thread thread = new Thread(job);
+            thread.setName("Gifts");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        builder.setWait(true);
+
+        WebhookClient client = builder.build();
+
+
+        WebhookEmbed embed = new WebhookEmbedBuilder()
+                .setColor(0X610000)
+                .setTitle(new WebhookEmbed.EmbedTitle("**Gift - " + itemName + "**", null))
+                .setFooter(new WebhookEmbed.EmbedFooter("Gifted At: | " + TimeUtils.formatTimeMillis(dupedAt), null))
+                .setDescription("**Sender:** `" + playerName + "`\n" + "**Receiver:** `" + givenTo + "`\n" + "**Item:** `" + itemName + "`\n")
+                .build();
+
+        WebhookMessageBuilder idBuilder = new WebhookMessageBuilder();
+        idBuilder.setUsername("/customitems");
+        idBuilder.setAvatarUrl("https://cdn.discordapp.com/avatars/1202888199903641640/cad565e0a6bcd051ce0fd36b70c1f023.webp");
+        idBuilder.addEmbeds(embed);
+
+        client.send(idBuilder.build());
     }
 }

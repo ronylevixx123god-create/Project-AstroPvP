@@ -6,8 +6,6 @@ import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.astropvp.cratekeys.items.CrateKeyItem;
-import net.astropvp.customblocks.struct.CustomBlockType;
-import net.astropvp.customblocks.struct.abilities.LevelAble;
 import net.astropvp.customblocks.struct.impl.AutoGrinder;
 import net.astropvp.customblocks.utils.ItemBuilder;
 import net.astropvp.customblocks.utils.TimeUtil;
@@ -22,7 +20,6 @@ public class AutoGrinderGui {
     private final ItemStack grinderKeyItem = CrateKeyItem.getItem(CrateType.SOLAR);
     private final ItemStack godlyKeyItem = CrateKeyItem.getItem(CrateType.COSMIC);
     public AutoGrinderGui(Player player, AutoGrinder autoGrinder) {
-        System.out.println("test wtf?");
         this.gui = new PaginatedGui(3, 27, "Auto Mob Grinder Menu");
         this.gui.setItem(2, 2, getKeyClaimItem(autoGrinder));
         this.gui.setItem(3, 2, getGodlyKeysClaimItem(autoGrinder));

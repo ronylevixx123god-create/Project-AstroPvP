@@ -19,29 +19,21 @@ package org.arkhamnetwork.enchantments.enchantments.axes;
 
 import com.cosmicpvp.cosmicutils.nms.MinecraftServerUtils;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-import com.massivecraft.factions.Faction;
 import com.rit.sucy.CustomEnchantment;
 import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
-import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
-import me.astropvp.astropvpskins.objects.ItemSkin;
 import me.astropvp.astropvpskins.objects.skins.amulets.CannonballAmulet;
 import me.astropvp.astropvpskins.objects.skins.axes.BoostedChainsaw;
-import net.astropvp.armorsets.AstroArmorSetsAPI;
-import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.sets.LunaArmorSet;
 import net.astropvp.core.killtracker.KillTrackerAPI;
-import net.astropvp.core.utils.OutpostUtil;
 import org.arkhamnetwork.enchantments.cmds.CommandEnchDust;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.metadata.MetadataValue;
 
 public class HeroKiller
         extends CustomEnchantment {
@@ -61,7 +53,7 @@ public class HeroKiller
         }
         Player p = (Player) player;
         ItemStack used = p.getItemInHand();
-        if (used == null || !EnchantmentAPI.itemHasEnchantment((ItemStack) used, (String) this.enchantName)) {
+        if (used == null || !EnchantmentAPI.itemHasEnchantment(used, this.enchantName)) {
             return;
         }
         if (p.hasMetadata("witcher_ability"))
@@ -100,14 +92,15 @@ public class HeroKiller
         }
 
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.EASTER_2022_BACKPACK)) return;
+        if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SPRING_BREAK_2022_BACKPACK) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.SPRING_BREAK_2022_MUTATED_BACKPACK)) return;
 
         if (((Player) playerHit).getPlayer().getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(((Player) playerHit).getPlayer(), SkinType.VALENTINES_2021_BACKPACK)) {
             return;
         }
-        if (p.hasMetadata("lastItemHeldChange") && (long) MinecraftServerUtils.getCurrentServerTick() - ((MetadataValue) p.getMetadata("lastItemHeldChange").get(0)).asLong() <= 5L) {
+        if (p.hasMetadata("lastItemHeldChange") && (long) MinecraftServerUtils.getCurrentServerTick() - p.getMetadata("lastItemHeldChange").get(0).asLong() <= 5L) {
             return;
         }
-        if (p.hasMetadata("soulTrap") && ((MetadataValue) p.getMetadata("soulTrap").get(0)).asLong() > System.currentTimeMillis()) {
+        if (p.hasMetadata("soulTrap") && p.getMetadata("soulTrap").get(0).asLong() > System.currentTimeMillis()) {
             return;
         }
 
@@ -118,13 +111,13 @@ public class HeroKiller
         if (AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_MUTATED_AMULET) || AstroItemSkinsAPI.hasSkinEquipped((Player) playerHit, SkinType.VALENTINES_2022_AMULET))
             return;
 
-        if (KillTrackerAPI.hasGodMode((Player) p) && KillTrackerAPI.getAllSouls((Player) p) > 0) {
+        if (KillTrackerAPI.hasGodMode(p) && KillTrackerAPI.getAllSouls(p) > 0) {
             if (!this.isWearingHeroic((Player) playerHit)) {
                 return;
             }
             if (LunaArmorSet.isLunaStriked((Player) playerHit)) return;
-            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - ((MetadataValue) p.getMetadata("lastSoulRemoveEvent").get(0)).asLong() > 1000L) {
-                KillTrackerAPI.removeSoulsFromGems((Player) p, (int) 4);
+            if (!p.hasMetadata("lastSoulRemoveEvent") || System.currentTimeMillis() - p.getMetadata("lastSoulRemoveEvent").get(0).asLong() > 1000L) {
+                KillTrackerAPI.removeSoulsFromGems(p, 4);
             }
             double increase = 0.1D * (double) level;
 /*            if (AstroArmorSetsAPI.getBonusCrystalsEquipped((Player) player).containsKey(ArmorSetType.LUNA)) {

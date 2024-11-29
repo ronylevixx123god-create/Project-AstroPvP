@@ -70,7 +70,7 @@ public class MOTD implements Listener {
             player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&a&lSHOP &fbuy.astropvp.net")));
             player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&6&lDISCORD &fdiscord.astropvp.net")));
             player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&c&lRULES &frules.astropvp.net")));
-            player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&e&lCRYPTO &fcrypto.astropvp.net")));
+            //player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&e&lCRYPTO &fcrypto.astropvp.net")));
 
             player.sendMessage("");
             player.sendMessage(CC.translate(StringUtils.getCenteredMessage("&f&lWE RECOMMEND YOU TO USE &6CosmicClient &f&lOR &61.8.9")));

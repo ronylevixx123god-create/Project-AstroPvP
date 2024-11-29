@@ -8,7 +8,11 @@ import me.mattstudios.mf.annotations.Command;
 import me.mattstudios.mf.annotations.Permission;
 import me.mattstudios.mf.annotations.SubCommand;
 import me.mattstudios.mf.base.CommandBase;
+import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Command("proxypatch")
 public class ProxyPatchCommand extends CommandBase {
@@ -16,6 +20,28 @@ public class ProxyPatchCommand extends CommandBase {
     private ProxyPatch plugin;
     public ProxyPatchCommand(ProxyPatch plugin) {
         this.plugin = plugin;
+    }
+
+    @SubCommand("addall")
+    @Permission("astro.admin")
+    public void addAllCommand(final CommandSender commandSender) {
+        for (String playerName : ProxyPatch.playerNames) {
+            Set<String> redo = new HashSet<>();
+            if(Bukkit.getPlayer(playerName) != null) return;
+            for (int i = 0; i < 3; i++) {
+                if(Bukkit.getPlayer(playerName) != null) continue;
+                Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof add " + playerName);
+                redo.add(playerName);
+            }
+            Bukkit.getScheduler().runTaskLater(ProxyPatch.getInstance(), ()-> {
+                for (String s : redo) {
+                    for (int i = 0; i < 3; i++) {
+                        if(Bukkit.getPlayer(s) != null) continue;
+                        Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof add " + s);
+                    }
+                }
+            }, 1L);
+        }
     }
 
     @SubCommand("end")
@@ -29,7 +55,7 @@ public class ProxyPatchCommand extends CommandBase {
     @Permission("astro.admin")
     public void startCommand(final CommandSender commandSender) {
         this.plugin.setProxyPatchTask(new ProxyPatchTask());
-        this.plugin.getProxyPatchTask().runTaskTimer(this.plugin, 60L, 20L);
+        this.plugin.runProxyPatchTask();
     }
 
     @SubCommand("restart")
@@ -37,7 +63,8 @@ public class ProxyPatchCommand extends CommandBase {
     public void restartCommand(final CommandSender commandSender) {
         this.plugin.getProxyPatchTask().end();
         this.plugin.setProxyPatchTask(new ProxyPatchTask());
-        this.plugin.getProxyPatchTask().runTaskTimer(this.plugin, 60L, 20L);
+        this.plugin.runProxyPatchTask();
+
     }
 
     @SubCommand("stop")

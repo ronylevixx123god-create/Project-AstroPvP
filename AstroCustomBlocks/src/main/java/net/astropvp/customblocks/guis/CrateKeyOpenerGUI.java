@@ -3,52 +3,35 @@ package net.astropvp.customblocks.guis;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
-import dev.triumphteam.gui.guis.GuiItem;
-import dev.triumphteam.gui.guis.PaginatedGui;
-import lombok.Getter;
-
-import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
-import me.ily2bb.slotbot.CosmicSlotBotAPI;
-import net.astropvp.customblocks.struct.CustomBlock;
-import net.astropvp.customblocks.utils.ChunkUtil;
-import net.astropvp.customblocks.utils.CrateKeyAPI;
-import net.astropvp.lootfilter.LootFilterAPI;
-import net.astropvp.loottable.LootTableAPI;
-import net.astropvp.loottable.struct.LootTable;
-import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.bukkit.*;
-import org.bukkit.block.Block;
-import org.bukkit.block.Chest;
-import org.bukkit.entity.Player;
-import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
-
-import java.util.ArrayList;
-import java.util.List;
-import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
-import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
 import me.astropvp.cratekeys.AstroCrateKeysAPI;
 import me.astropvp.cratekeys.enums.CrateType;
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
+import net.astropvp.CollectPlugin;
+import net.astropvp.customblocks.struct.CustomBlock;
+import net.astropvp.customblocks.utils.ChunkUtil;
+import net.astropvp.customblocks.utils.CrateKeyAPI;
 import net.astropvp.lootfilter.LootFilterAPI;
-
+import net.astropvp.loottable.LootTableAPI;
+import net.astropvp.loottable.struct.LootTable;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
+import net.astropvp.struct.PlayerCollect;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.bukkit.*;
-import org.bukkit.block.Block;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Getter
 public class CrateKeyOpenerGUI {
@@ -87,7 +70,46 @@ public class CrateKeyOpenerGUI {
             }
 
 
+            long money = 0L;
+            int exp = 0;
+            List<ItemStack> rewardedItems = new ArrayList<>();
+            for (Map.Entry<CrateType, Integer> crate : keys.entrySet()) {
+                CrateType type = crate.getKey();
+                Integer amount = crate.getValue();
+                while (amount != 0) {
+                    ItemStack itemStack = LootTableAPI.getRandomLootItem(net.astropvp.loottable.struct.LootTable.valueOf(type.name()));
+                    if (!LootFilterAPI.isFiltered(player, LootTable.valueOf(type.name()), itemStack)) {
+                        if (ArkhamMoneyNotesAPI.isMoneyNote(itemStack)) {
+                            double moneyNoteVal = ArkhamMoneyNotesAPI.getMoneyNoteVal(itemStack);
+                            money += (long) moneyNoteVal;
+                            /*
+                            EconomyUtils.depositBalance(player, moneyNoteVal);
+                            player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                            player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ $" + moneyNoteVal);
 
+                             */
+                        } else if (ExpBottles.isXpBottle(itemStack)) {
+                            int xpValue = ExpBottles.getXpAmount(itemStack);
+                            exp += xpValue;
+                            /*
+                            int exp = (player.getTotalExperience() + xpValue);
+                            player.setTotalExperience(0);
+                            player.setExp(0);
+                            player.setLevel(0);
+                            player.giveExp(exp);
+                            player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                            player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ " + xpValue + " xp");
+
+                             */
+                        } else {
+                            rewardedItems.add(itemStack);
+                        }
+                    }
+                    amount--;
+                }
+            }
+
+            /*
             Location nearbyChest = ChunkUtil.getClosestChestLocation(customBlock.getLocation());
             if (nearbyChest != null) {
                 Chest chest = (Chest) nearbyChest.getBlock().getState();
@@ -134,6 +156,22 @@ public class CrateKeyOpenerGUI {
                 return;
             }
 
+             */
+
+            if(exp > 0) {
+                int finalExp = player.getTotalExperience() + exp;
+                player.setTotalExperience(0);
+                player.setExp(0);
+                player.setLevel(0);
+                player.giveExp(finalExp);
+                player.playSound(player.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ " + exp + " xp");
+            }
+
+            if(money > 0) {
+                EconomyUtils.depositBalance(player, money);
+                player.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ $" + NumberUtils.formatMoney(money));
+            }
 
             //remove slots from player inv
             Inventory inventory = player.getInventory();
@@ -145,6 +183,13 @@ public class CrateKeyOpenerGUI {
             player.getInventory().setContents(inventory.getContents());
             player.closeInventory();
             player.playSound(player.getLocation(), Sound.VILLAGER_YES, 5, 5);
+
+            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getOrCreate(player.getUniqueId().toString());
+            ItemStack[] sortedArray = rewardedItems.stream()
+                    .sorted(Comparator.comparing(item -> item.getType().name()))
+                    .toArray(ItemStack[]::new);
+            CollectCategory collectCategory = new CollectCategory(CollectType.CRTAEKEY, sortedArray, CC.translate("&6&lCrate Key Opener Loot"), System.currentTimeMillis());
+            collect.add(collectCategory);
 
         }));
 

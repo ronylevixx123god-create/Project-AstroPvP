@@ -455,6 +455,8 @@ public class AstroCore extends JavaPlugin {
         commandManager2.register(new GiftCommand(this));
         commandManager2.register(new GiftsCommand());
         commandManager2.register(new GlintCommand());
+        //commandManager2.register(new MoreCommand());
+        //commandManager2.register(new HasBeenDupedCommand());
 
     }
 
@@ -520,6 +522,7 @@ public class AstroCore extends JavaPlugin {
         getServer().getPluginManager().registerEvents(new DungeonInventoryEvent(), this);
         getServer().getPluginManager().registerEvents(new ServerFixes(), this);
         getServer().getPluginManager().registerEvents(new MOTD(), this);
+        getServer().getPluginManager().registerEvents(new CheckCreativeDupeListener(), this);
         getServer().getPluginManager().registerEvents(new ChunkBusterListener(), this);
         getServer().getPluginManager().registerEvents(new OmniGemFix(), this);
         getServer().getPluginManager().registerEvents(new CommandAliases(), this);

@@ -32,7 +32,6 @@ import me.ifamasssxd.cosmicmasks.MaskType;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.minecraft.server.v1_8_R3.MinecraftServer;
 import org.arkhamnetwork.Arkkit.Arkkit;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.block.*;
@@ -54,7 +53,7 @@ final class HotbarArmorSwapListener
 
     public boolean isArmor(Material m) {
         String n = m.toString().toLowerCase();
-        if (m == null || m == Material.AIR) {
+        if (m == Material.AIR) {
             return false;
         }
         return n.contains("helmet") || n.contains("chestplate") || n.contains("leggings") || n.contains("boots");
@@ -111,39 +110,38 @@ final class HotbarArmorSwapListener
     }
 
     @EventHandler(priority = EventPriority.MONITOR)
-    public void onPlayerInteract(PlayerInteractEvent e) {
-        if (e.getAction() != Action.RIGHT_CLICK_AIR && e.getAction() != Action.RIGHT_CLICK_BLOCK) {
+    public void onPlayerInteract(PlayerInteractEvent event) {
+        if (event.getAction() != Action.RIGHT_CLICK_AIR && event.getAction() != Action.RIGHT_CLICK_BLOCK) {
             return;
         }
-        if (e.getPlayer().getItemInHand() == null || !this.isArmor(e.getPlayer().getItemInHand().getType())) {
+        if (event.getPlayer().getItemInHand() == null || !this.isArmor(event.getPlayer().getItemInHand().getType())) {
             return;
         }
-        if (e.hasBlock() && (e.getClickedBlock().getState() instanceof Chest || e.getClickedBlock().getState() instanceof Dispenser || e.getClickedBlock().getState() instanceof Dropper || e.getClickedBlock().getState() instanceof Furnace || e.getClickedBlock().getState() instanceof Hopper || e.getClickedBlock().getType() == Material.GOLD_BLOCK || e.getClickedBlock().getType() == Material.IRON_BLOCK)) {
+        if (event.hasBlock() && (event.getClickedBlock().getState() instanceof Chest || event.getClickedBlock().getState() instanceof Dispenser || event.getClickedBlock().getState() instanceof Dropper || event.getClickedBlock().getState() instanceof Furnace || event.getClickedBlock().getState() instanceof Hopper || event.getClickedBlock().getType() == Material.GOLD_BLOCK || event.getClickedBlock().getType() == Material.IRON_BLOCK)) {
             return;
         }
-        String worldName = e.getPlayer().getWorld().getName();
+        String worldName = event.getPlayer().getWorld().getName();
 
-        Player p = e.getPlayer();
-        if (p.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - p.getMetadata("lastArmorSwap").get(0).asLong() <= 15L) {
+        Player player = event.getPlayer();
+        if (player.hasMetadata("lastArmorSwap") && (long) MinecraftServer.currentTick - player.getMetadata("lastArmorSwap").get(0).asLong() <= 15L) {
             return;
         }
-        if (e.isCancelled() && p.hasMetadata("noArmorSwap")) {
+        if (event.isCancelled() && player.hasMetadata("noArmorSwap")) {
             return;
         }
-
-        e.setCancelled(true);
-        e.setUseInteractedBlock(Event.Result.DENY);
-        e.setUseItemInHand(Event.Result.DENY);
-        p.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
-        ItemStack piece = e.getPlayer().getItemInHand().clone();
-        this.equipArmor(p, e.getPlayer().getItemInHand());
-        if (HotbarArmorSwap.masksEnabled && e.hasItem() && e.getItem().getType().toString().toLowerCase().contains("helmet")) {
-            MaskType.rescanMask(p, true);
+        event.setCancelled(true);
+        event.setUseInteractedBlock(Event.Result.DENY);
+        event.setUseItemInHand(Event.Result.DENY);
+        player.setMetadata("lastArmorSwap", new FixedMetadataValue(Arkkit.get(), MinecraftServer.currentTick));
+        ItemStack piece = event.getPlayer().getItemInHand().clone();
+        System.out.println("tries to update");
+        this.equipArmor(player, player.getItemInHand());
+        if (HotbarArmorSwap.masksEnabled && event.hasItem() && event.getItem().getType().toString().toLowerCase().contains("helmet")) {
+            MaskType.rescanMask(player, true);
         }
-        AstroArmorSetsAPI.refreshArmorSets(p, false);
-
-        AstroItemSkinsAPI.updateSkins(p, false, piece);
-        p.playSound(p.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
+        AstroArmorSetsAPI.refreshArmorSets(player, false);
+        //AstroItemSkinsAPI.updateSkins(player, true, piece);
+        player.playSound(player.getLocation(), Sound.SUCCESSFUL_HIT, 10.0f, 0.95f);
     }
 
     public ItemStack getOldArmorPiece(Player player, ItemStack itemStack) {

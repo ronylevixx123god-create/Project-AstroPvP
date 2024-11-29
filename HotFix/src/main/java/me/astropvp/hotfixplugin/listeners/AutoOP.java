@@ -3,41 +3,30 @@ package me.astropvp.hotfixplugin.listeners;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.hotfixplugin.HotFixPlugin;
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AutoOP implements Listener {
 
 
-        @EventHandler
-        public void onPlayerJoinEvent(PlayerJoinEvent e) {
-            List<String> list = new ArrayList<String>();
-            list.add("KingSavaqe");
-            list.add("Fallwen");
-            list.add("STB123");
-            list.add("Egypt");
-            list.add("M0");
-            list.add("Ohze");
-            list.add("Spic");
-            list.add("Daffy");
-            list.add("Sike");
-            list.add("L33T");
-            list.add("cxzc");
+    @EventHandler
+    public void onPlayerJoinEvent(PlayerJoinEvent e) {
+        FileConfiguration config = HotFixPlugin.getInstance().getConfig();
+        List<String> list = config.getStringList("auto-op-players");
 
-            Bukkit.getScheduler().runTaskLater(HotFixPlugin.getInstance(), ()-> {
-                for (String l : list) {
-                    if (e.getPlayer().getName().equalsIgnoreCase(l)) {
-                        e.getPlayer().sendMessage(CC.translate("&6&l(!)&6 You have been &7auto-op'd&6."));
-                        e.getPlayer().setOp(true);
-                    }
+        Bukkit.getScheduler().runTaskLater(HotFixPlugin.getInstance(), () -> {
+            for (String l : list) {
+                if (e.getPlayer().getName().equalsIgnoreCase(l)) {
+                    e.getPlayer().sendMessage(CC.translate("&6&l(!)&6 You have been &7auto-op'd&6."));
+                    e.getPlayer().setOp(true);
                 }
-            },40L);
-
-        }
+            }
+        }, 40L);
+    }
 
     @EventHandler
     public void onPlayerJoinEvent2(PlayerJoinEvent e) {

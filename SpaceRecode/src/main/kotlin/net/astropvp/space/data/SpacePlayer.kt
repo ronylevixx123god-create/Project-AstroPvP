@@ -43,6 +43,9 @@ data class SpacePlayer(
         if(sword.skinType != null) {
             itemStack = sword.skinType!!.apply(itemStack)
         }
+        if(sword.enchant != null) {
+            itemStack = ItemBuilder(itemStack).addLoreLine("&3&l+ AUGMENT [&f${sword.enchant?.name?.capitalCase()} &8➥ &f${sword.enchant?.level}&3&l]").colorize().build()
+        }
         return itemStack
     }
 
@@ -51,6 +54,9 @@ data class SpacePlayer(
         if(helmet.skinType != null) {
             itemStack = helmet.skinType!!.apply(itemStack)
         }
+        if(helmet.enchant != null) {
+            itemStack = ItemBuilder(itemStack).addLoreLine("&3&l+ AUGMENT [&f${helmet.enchant?.name?.capitalCase()} &8➥ &f${helmet.enchant?.level}&3&l]").colorize().build()
+        }
         return itemStack
     }
 
@@ -58,6 +64,9 @@ data class SpacePlayer(
         var itemStack = buildArmorItem(Material.DIAMOND_CHESTPLATE)
         if(chestplate.skinType != null) {
             itemStack = chestplate.skinType!!.apply(itemStack)
+        }
+        if(chestplate.enchant != null) {
+            itemStack = ItemBuilder(itemStack).addLoreLine("&3&l+ AUGMENT [&f${chestplate.enchant?.name?.capitalCase()} &8➥ &f${chestplate.enchant?.level}&3&l]").colorize().build()
         }
         val enchantment = EnchantmentAPI.getEnchantment("overload")
         itemStack = enchantment.addToItem(itemStack, 3)
@@ -69,6 +78,9 @@ data class SpacePlayer(
         if(leggings.skinType != null) {
             itemStack = leggings.skinType!!.apply(itemStack)
         }
+        if(leggings.enchant != null) {
+            itemStack = ItemBuilder(itemStack).addLoreLine("&3&l+ AUGMENT [&f${leggings.enchant?.name?.capitalCase()} &8➥ &f${leggings.enchant?.level}&3&l]").colorize().build()
+        }
         return itemStack
     }
 
@@ -76,6 +88,9 @@ data class SpacePlayer(
         var itemStack = buildArmorItem(Material.DIAMOND_BOOTS)
         if(boots.skinType != null) {
             itemStack = boots.skinType!!.apply(itemStack)
+        }
+        if(boots.enchant != null) {
+            itemStack = ItemBuilder(itemStack).addLoreLine("&3&l+ AUGMENT [&f${boots.enchant?.name?.capitalCase()} &8➥ &f${boots.enchant?.level}&3&l]").colorize().build()
         }
         return itemStack
     }

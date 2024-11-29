@@ -10,6 +10,8 @@ import io.netty.util.internal.ThreadLocalRandom;
 import me.astropvp.hotfixplugin.anvil.AnvilSpamListener;
 import me.astropvp.hotfixplugin.anvil.AnvilSpamRunnable;
 import me.astropvp.hotfixplugin.commands.BlockPacketsCommand;
+import me.astropvp.hotfixplugin.commands.HasBeenDupedCommand;
+import me.astropvp.hotfixplugin.commands.MoreCommand;
 import me.astropvp.hotfixplugin.listeners.*;
 import me.mattstudios.mf.base.CommandManager;
 import org.bukkit.Bukkit;
@@ -33,6 +35,7 @@ public class HotFixPlugin extends JavaPlugin {
     @Override
     public void onEnable() {
         instance = this;
+        saveDefaultConfig();
         System.out.println("[HotFix] HotFixPlugin has been Loaded!");
         Bukkit.getPluginManager().registerEvents(new DamageListener(), this);
         Bukkit.getPluginManager().registerEvents(new TeleportSafetyListener(), this);
@@ -50,6 +53,8 @@ public class HotFixPlugin extends JavaPlugin {
 
         this.commandManager = new CommandManager(this);
         this.commandManager.register(new BlockPacketsCommand(this));
+        this.commandManager.register(new MoreCommand());
+        this.commandManager.register(new HasBeenDupedCommand());
 
         Bukkit.getScheduler().runTaskTimer(this, new AnvilSpamRunnable(), 5 * 20L, 5 * 20L);
 
@@ -75,7 +80,8 @@ public class HotFixPlugin extends JavaPlugin {
         if (ping == 0) {
             ping = ThreadLocalRandom.current().nextInt(90, 150);
         } else if (ping > 80 && ping < 210) {
-            ping = ThreadLocalRandom.current().nextInt(40, 80);
+            //ping = ThreadLocalRandom.current().nextInt(40, 80);
+            ping = ping - 25;
 
         } else if
         (ping > 210) {

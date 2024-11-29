@@ -1,23 +1,25 @@
 package me.astropvp.discordsync.commands;
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
-import co.aikar.commands.annotation.CommandPermission;
-import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 
-
-import java.util.ArrayList;
-import java.util.List;
 
 import me.astropvp.discordsync.DiscordSyncPlugin;
 import me.astropvp.discordsync.managers.SyncManager;
 import me.astropvp.discordsync.utils.CC;
+import me.mattstudios.mf.annotations.*;
 import net.dv8tion.jda.api.entities.User;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class SyncCommand  extends BaseCommand {
+import me.mattstudios.mf.base.CommandBase;
+
+import java.util.ArrayList;
+import java.util.List;
+
+
+@Command("discordsync")
+@Alias({"sync", "syncaccount", "syncdiscord"})
+public class SyncCommand extends CommandBase {
     private DiscordSyncPlugin plugin;
     private SyncManager syncManager;
 
@@ -26,7 +28,8 @@ public class SyncCommand  extends BaseCommand {
         this.syncManager = plugin.getSyncManager();
     }
 
-    @CommandAlias("sync|syncaccount|syncdiscord")
+
+    @Default
     public void onCommand(Player player) {
         if (!this.plugin.getDatabaseManager().isConnected()) {
             player.sendMessage(CC.translate("&c&l(!)&c Account Sync is currently unavailable right now, please try again in a few."));
@@ -58,16 +61,16 @@ public class SyncCommand  extends BaseCommand {
         }
     }
 
-    @CommandAlias("updateboosters")
-    @CommandPermission("admin")
+    @SubCommand("updateboosters")
+    @Permission("admin")
     public void onUpdateBoosters(Player player) {
         this.plugin.getChatListener().updateNitroBoosters();
         player.sendMessage((String)CC.translate("&a&l(!) &aUpdate has occured!"));
     }
 
-    @CommandAlias("checksync")
-    @CommandPermission("admin")
-    public void onCheck(CommandSender sender, OnlinePlayer target) {
+    @SubCommand("checksync")
+    @Permission("admin")
+    public void onCheck(CommandSender sender, @Completion("#players") Player target) {
         if (!this.plugin.getDatabaseManager().isConnected()) {
             sender.sendMessage(CC.translate("The DB isn't connected. You may use &7/forcerecon&c to force a re-connection."));
         } else if (!this.syncManager.isAccountLinked(target.getPlayer().getUniqueId())) {
@@ -78,8 +81,8 @@ public class SyncCommand  extends BaseCommand {
         }
     }
 
-    @CommandAlias("forcerecon")
-    @CommandPermission("admin")
+    @SubCommand("forcerecon")
+    @Permission("admin")
     public void onForceRecon(final CommandSender sender) {
         sender.sendMessage("Forcing database re-connection...");
         (new BukkitRunnable() {

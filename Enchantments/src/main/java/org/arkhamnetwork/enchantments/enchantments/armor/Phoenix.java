@@ -200,7 +200,7 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
-            if (MaskType.hasEquipped((Player) damager, "Mutated Cranked Mask") && Math.random() < 0.75) {
+            if (MaskType.hasEquipped((Player) damager, "M_CRANKED") && Math.random() < 0.75) {
                 damager.sendMessage(CC.translate("&4&l* &2&l&nMUTATED&r &4&lCRANKED MASK BLOCKED PHOENIX [&c" + player.getName() + "&4&l] *"));
                 player.sendMessage(CC.translate("&4&l* PHOENIX BLOCKED [&c" + damager.getName() + " &2&l&nMutated&r &4&lCranked Mask&4&l] *"));
                 Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
@@ -242,8 +242,15 @@ public class Phoenix extends CustomEnchantment {
                 return false;
             }
 
+            if(player.hasMetadata("champion_ability")) {
+                damager.sendMessage(CC.translate("&6&l* &6&lCHAMPION PHOENIX NEGATION &7Blocked &cPhoenix &6&l[&c" + player.getName() + "&6&l] &6&l*"));
+                player.sendMessage(CC.translate("&c&l* &c&lPHOENIX BLOCKED &6&l[&c" + damager.getName() + " Champion Wrath&6&l] *"));
+                Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
+                return false;
+            }
 
-             int soulCost = getPhoenixProcSoulCost(player);
+
+            int soulCost = getPhoenixProcSoulCost(player);
             if (KillTrackerAPI.hasSoulAmount(player, soulCost)) {
                 KillTrackerAPI.removeSoulsFromGems(player, soulCost);
                 Phoenix.last_phoenix.put(player.getUniqueId().toString(), System.currentTimeMillis());
@@ -311,7 +318,7 @@ public class Phoenix extends CustomEnchantment {
     }
 
     static {
-        Phoenix.last_phoenix = new HashMap<String, Long>();
-        Phoenix.phoenixEquipped = new HashMap<UUID, Integer>();
+        Phoenix.last_phoenix = new HashMap<>();
+        Phoenix.phoenixEquipped = new HashMap<>();
     }
 }

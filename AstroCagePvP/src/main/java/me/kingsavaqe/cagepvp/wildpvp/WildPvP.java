@@ -1,19 +1,23 @@
 package me.kingsavaqe.cagepvp.wildpvp;
 
-import java.util.Random;
-
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.ProtocolManager;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.EnumWrappers;
 import me.kingsavaqe.cagepvp.AstroCagePvP;
 import me.kingsavaqe.cagepvp.utils.TitleManager;
 import org.arkhamnetwork.Arkkit.patches.combatlog.CombatLog;
 import org.bukkit.ChatColor;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.util.Random;
 
 
 public class WildPvP {
@@ -100,6 +104,58 @@ public class WildPvP {
       return this.creator != null && this.joined != null;
    }
 
+
+   public void showBorder(Player player) {
+
+
+      Chunk chunk = this.getChunk();
+      Location corner1 = chunk.getBlock(0, 0, 0).getLocation();
+      Location corner3 = chunk.getBlock(15, 0, 15).getLocation();
+      // Calculate center and size based on corners
+      ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+      double centerX = (corner1.getX() + corner3.getX()) / 2;
+      double centerZ = (corner1.getZ() + corner3.getZ()) / 2;
+      double size = Math.max(Math.abs(corner1.getX() - corner3.getX()), Math.abs(corner1.getZ() - corner3.getZ()));
+
+      PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.WORLD_BORDER);
+      packet.getWorldBorderActions().write(0, EnumWrappers.WorldBorderAction.INITIALIZE);  // Set action to initialize the border
+      packet.getDoubles().write(0, centerX);                                   // Center X
+      packet.getDoubles().write(1, centerZ);                                   // Center Z
+      packet.getDoubles().write(2, size);                                      // Border size
+      packet.getLongs().write(0, 0L);                                           // Delay to resize
+      packet.getDoubles().write(3, size);                                      // Target size for animation
+      packet.getIntegers().write(0, 0);                                        // Warning time in seconds
+      packet.getIntegers().write(1, 0);                                        // Warning distance in blocks
+
+      // Send the packet to the player
+      try {
+         protocolManager.sendServerPacket(player, packet);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   public void hideBorder(Player player) {
+      ProtocolManager protocolManager = ProtocolLibrary.getProtocolManager();
+
+      PacketContainer packet = protocolManager.createPacket(PacketType.Play.Server.WORLD_BORDER);
+      packet.getWorldBorderActions().write(0, EnumWrappers.WorldBorderAction.INITIALIZE); // Correctly set the action
+      packet.getDoubles().write(0, player.getLocation().getX()); // Center X
+      packet.getDoubles().write(1, player.getLocation().getZ()); // Center Z
+      packet.getDoubles().write(2, 60000000D);                    // Large size
+      packet.getIntegers().write(0, 0);                          // Warning time
+      packet.getIntegers().write(1, 0);                          // Warning blocks
+      packet.getLongs().write(0, Long.MAX_VALUE);             // Delay time
+
+      try {
+         protocolManager.sendServerPacket(player, packet);
+      } catch (Exception e) {
+         e.printStackTrace();
+      }
+   }
+
+   /*
    public void showBorder(Player player) {
       Chunk chunk = this.getChunk();
       Location corner1 = chunk.getBlock(0, 0, 0).getLocation();
@@ -141,6 +197,9 @@ public class WildPvP {
 
    }
 
+    */
+
+   /*
    public void hideBorder(Player player) {
       Chunk chunk = this.getChunk();
       Location corner1 = chunk.getBlock(0, 0, 0).getLocation();
@@ -173,6 +232,8 @@ public class WildPvP {
       }
 
    }
+
+    */
 
    public void teleport(Player player) {
       Random random = new Random();

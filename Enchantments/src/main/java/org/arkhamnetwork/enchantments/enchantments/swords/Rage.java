@@ -7,6 +7,7 @@ import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.util.ActionBarMessageUtils;
 import org.arkhamnetwork.enchantments.util.CacheUtils;
 import org.arkhamnetwork.enchantments.util.RageStacksCache;
 import org.arkhamnetwork.enchantments.util.config.ConfigManager;
@@ -43,6 +44,7 @@ public class Rage extends CustomEnchantment {
                 rageStacksCache.updateLastRageStackTime();
                 rageStacksCache.resetRageStack();
                 rageStacksCache.updateVictim((Player) target);
+                sendRageResetActionBar((Player) user);
                 return;
             }
 
@@ -126,13 +128,11 @@ public class Rage extends CustomEnchantment {
                 target.sendMessage(CC.translate("&8&l* BIG TIMBS &7[Cancelled Rage Stack DMG] &8&l*"));
             } else {
                 //event.setDamage(event.getDamage() * (1 + rageDamage));
+                this.sendRageActionBar((Player)user, (Player)target, rageStacksCache);
+                this.playRageEffect(target.getLocation());
+                if(rageDamage < 1) rageDamage = 1;
                 event.setDamage(event.getDamage() * rageDamage);
-
             }
-
-
-
-            this.playRageEffect(target.getLocation());
 
 
             rageStacksCache.incrementRageStack();
@@ -141,6 +141,14 @@ public class Rage extends CustomEnchantment {
 
             target.setMetadata("effectedByRage", new FixedMetadataValue(Enchantments.getInstance(), System.currentTimeMillis()));
         }
+    }
+
+    private void sendRageActionBar(Player player, Player effected, RageStacksCache rageStacksCache) {
+        ActionBarMessageUtils.sendMessage(player, CC.translate("&eRage Stacks &8| &6" + rageStacksCache.getRageStack() + "x &8| &6" + effected.getName()));
+    }
+
+    private void sendRageResetActionBar(Player player) {
+        ActionBarMessageUtils.sendMessage(player, CC.translate("&eRage Stacks &8| &cReset"));
     }
 
     private void playRageEffect(Location loc) {

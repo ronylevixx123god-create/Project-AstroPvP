@@ -9,7 +9,7 @@ class SpaceDataCacheFixTask : BukkitRunnable() {
 
     override fun run() {
         for (spacePlayer in SpacePlugin.activeSpaceDataManager.spacePlayers) {
-            val player = Bukkit.getPlayer(spacePlayer.key)
+            val player = Bukkit.getPlayer(spacePlayer.key) ?: continue
             if(!SpaceAPI.WORLDS.contains(player.world.name)) {
                 SpacePlugin.activeSpaceDataManager.remove(spacePlayer.key)
             }

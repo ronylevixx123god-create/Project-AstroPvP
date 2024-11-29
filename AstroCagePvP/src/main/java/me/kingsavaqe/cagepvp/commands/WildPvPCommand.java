@@ -24,7 +24,6 @@ public class WildPvPCommand implements CommandExecutor {
    public boolean onCommand(CommandSender sender, Command command, String s, String[] args) {
       if (!(sender instanceof Player)) {
          sender.sendMessage(this.instance.getDescription().getName() + " | Error: You must be a player to perform that command.");
-         return true;
       } else {
          Player player = (Player)sender;
          CombatTagManager combatTagManager = this.instance.getCombatTagManager();
@@ -101,7 +100,7 @@ public class WildPvPCommand implements CommandExecutor {
             Matches.getInstance().open(player);
             player.playSound(player.getLocation(), Sound.CHEST_OPEN, 1.0F, 1.0F);
          }
-         return true;
       }
+       return true;
    }
 }

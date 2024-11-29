@@ -4,14 +4,10 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.CooldownUtils;
 import com.cosmicpvp.cosmicutils.utils.MaskUtils;
 import net.astropvp.core.cooldown.ElfMaskCooldown;
-import org.bukkit.Material;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.inventory.ItemStack;
 
 public class DamageFixes implements Listener {
 
@@ -33,8 +29,9 @@ public class DamageFixes implements Listener {
             if (CooldownUtils.isCooldownActive(phurt, "elfCooldown")) return;
             if (MaskUtils.hasMaskEquipped(phurt, "ELF") && Math.random() <= 0.15) {
                 e.getEntity().sendMessage(CC.translate("&a&l * ELF MASK HEAL ABILITY &a&l*"));
+                e.getDamager().sendMessage(CC.translate("&c&l * ELF MASK HEAL ABILITY &8[&4" + e.getEntity().getName() + "&8]&c&l*"));
                 e.setCancelled(true);
-                ((Player) e.getEntity()).setHealth(((Player) e.getEntity()).getMaxHealth());
+                ((Player) e.getEntity()).setHealth(((Player) e.getEntity()).getMaxHealth() / 2);
                 CooldownUtils.registerCooldown(phurt, new ElfMaskCooldown("elfCooldown", 300));
             }
         }

@@ -3,29 +3,22 @@ package me.astropvp.astrospawners;
 import lombok.Getter;
 import me.astropvp.astrospawners.commands.*;
 import me.astropvp.astrospawners.customitems.SpawnerCustomItem;
-import me.astropvp.astrospawners.data.SpawnerData;
 import me.astropvp.astrospawners.data.SpawnerManager;
 import me.astropvp.astrospawners.ftop.CommandAdminFactionsTop;
 import me.astropvp.astrospawners.ftop.CommandFactionsTop;
 import me.astropvp.astrospawners.ftop.FactionsTopAPI;
 import me.astropvp.astrospawners.ftop.RecalculationTask;
-import me.astropvp.astrospawners.guis.AntiAFKGrindingGUI;
-import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.listeners.*;
-import me.astropvp.astrospawners.utils.*;
+import me.astropvp.astrospawners.utils.EntityUtils;
+import me.astropvp.astrospawners.utils.MobStackerUtils;
+import me.astropvp.astrospawners.utils.PlayerDataManager;
 import me.astropvp.astrospawners.utils.config.ConfigManager;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.WorldCreator;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Listener;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.io.File;
 import java.util.*;
 
 public class AstroSpawners extends JavaPlugin {
@@ -89,7 +82,7 @@ public class AstroSpawners extends JavaPlugin {
         new SpawnerCustomItem("spawner", "<amount> <entity>");
 
         runTasks();
-        Bukkit.getScheduler().runTaskLaterAsynchronously((Plugin)this, FactionsTopAPI::recalculateFactionsTop, 100L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(this, FactionsTopAPI::recalculateFactionsTop, 100L);
 
         this.afkGrinders = new HashMap<>();
         this.waitingForAfkGrindingVerification = new ArrayList<>();
@@ -148,9 +141,9 @@ public class AstroSpawners extends JavaPlugin {
 
         //getCommand("mobcoinshop").setExecutor((CommandExecutor) new CommandMobCoinShop());
         //getCommand("mobcoins").setExecutor((CommandExecutor) new CommandMobCoins());
-        getCommand("factionstop").setExecutor((CommandExecutor)new CommandFactionsTop());
-        getCommand("adminfactionstop").setExecutor((CommandExecutor)new CommandAdminFactionsTop());
-        getCommand("clearafk").setExecutor((CommandExecutor)new CommandClearAfkGrinders());
+        getCommand("factionstop").setExecutor(new CommandFactionsTop());
+        getCommand("adminfactionstop").setExecutor(new CommandAdminFactionsTop());
+        getCommand("clearafk").setExecutor(new CommandClearAfkGrinders());
 
     }
 

@@ -31,6 +31,13 @@
 
     <dependencies>
         <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>protocol</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../.lib/ProtocolLib(2).jar</systemPath>
+        </dependency>
+        <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <version>1.18.22</version>

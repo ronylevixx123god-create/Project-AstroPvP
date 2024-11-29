@@ -1,22 +1,30 @@
 package me.astropvp.astropvpskins.objects.skins.backpacks;
 
-import com.cosmicpvp.cosmicutils.utils.CC;
-import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
-import me.astropvp.astropvpskins.AstroItemSkinsPlugin;
 import me.astropvp.astropvpskins.objects.ItemSkin;
-import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
-import me.ifamasssxd.cosmicsky.inventorypets.struct.pets.InventoryBansheePet;
-import net.astropvp.damagehandler.AstroDamageHandler;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class SprayPrayBackpack extends ItemSkin {
+
+
+    @Override
+    public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
+        if(!(damaged instanceof Player)) return;
+
+        ItemStack wieldedItem = ((Player) damaged).getInventory().getItemInHand();
+        if(!wieldedItem.getType().name().endsWith("_AXE")) return;
+
+        event.setDamage(event.getDamage() * 1.05);
+    }
+
+    @Override
+    public void onAttacked(Player damaged, Entity damager, EntityDamageByEntityEvent event) {
+    }
 
     public static List<Player> sprayed;
     public List<Player> sprayer;
@@ -26,6 +34,7 @@ public class SprayPrayBackpack extends ItemSkin {
         sprayed = new ArrayList<>();
         sprayer = new ArrayList<>();
     }
+    /*
 
     @Override
     public void onAttack(Player damager, Entity damaged, EntityDamageByEntityEvent event) {
@@ -58,4 +67,7 @@ public class SprayPrayBackpack extends ItemSkin {
             event.setDamage(event.getDamage() * 0.94);
         }
     }
+
+
+     */
 }

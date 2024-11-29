@@ -88,6 +88,7 @@
         <module>Vouchers</module>
         <module>ChatGames</module>
         <module>SpaceRecode</module>
+        <module>LPXPatches</module>
 
     </modules>
 

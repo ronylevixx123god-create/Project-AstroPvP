@@ -29,6 +29,11 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>club.minnced</groupId>
+            <artifactId>discord-webhooks</artifactId>
+            <version>0.8.1</version>
+        </dependency>
         <!-- ConaxGames repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>

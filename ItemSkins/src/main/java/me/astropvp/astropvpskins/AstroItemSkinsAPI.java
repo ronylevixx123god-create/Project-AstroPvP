@@ -3,13 +3,6 @@ package me.astropvp.astropvpskins;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.NBTWrapper;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
-
 import me.astropvp.astropvpskins.enums.ItemSkinType;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.utils.StringUtils;
@@ -19,6 +12,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class AstroItemSkinsAPI {
     public static List<SkinType> getItemSkinsOnPlayer(Player player) {
@@ -332,6 +331,27 @@ public class AstroItemSkinsAPI {
 
     }
 
+
+    public static void refreshAllSkinsOfPlayer(Player player) {
+        PlayerInventory inventory = player.getInventory();
+        if (inventory.getHelmet() != null && inventory.getHelmet().getType() != Material.AIR && hasItemSkin(inventory.getHelmet())) {
+            getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+            getItemSkinByItem(inventory.getHelmet()).forEach(skin -> skin.getItemSkin().onEquip(player));
+        }
+        if (inventory.getChestplate() != null && inventory.getChestplate().getType() != Material.AIR && hasItemSkin(inventory.getChestplate())) {
+            getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+            getItemSkinByItem(inventory.getChestplate()).forEach(skin -> skin.getItemSkin().onEquip(player));
+        }
+        if (inventory.getLeggings() != null && inventory.getLeggings().getType() != Material.AIR && hasItemSkin(inventory.getLeggings())) {
+            getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+            getItemSkinByItem(inventory.getLeggings()).forEach(skin -> skin.getItemSkin().onEquip(player));
+        }
+        if (inventory.getBoots() != null && inventory.getBoots().getType() != Material.AIR && hasItemSkin(inventory.getBoots())) {
+            getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onUnequip(player));
+            getItemSkinByItem(inventory.getBoots()).forEach(skin -> skin.getItemSkin().onEquip(player));
+        }
+    }
+
     public static ItemStack removeNoDisplay(ItemStack item) {
         NBTWrapper wrapper = new NBTWrapper(item);
         NBTTagCompoundBuilder cosmicData = wrapper.hasKey("cosmicData") ? new NBTTagCompoundBuilder(wrapper.getNBTBase("cosmicData")) : new NBTTagCompoundBuilder();
@@ -344,4 +364,5 @@ public class AstroItemSkinsAPI {
         wrapper.setNBTBase("cosmicData", cosmicData.get());
         return wrapper.build();
     }
+
 }

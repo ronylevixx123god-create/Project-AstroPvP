@@ -6,10 +6,10 @@ import org.bukkit.entity.LivingEntity
 
 object MobManager {
 
-    val activeEntities: MutableMap<Int, LivingEntity> = mutableMapOf()
+    val activeEntities: MutableMap<Int, Pair<String, LivingEntity>> = mutableMapOf()
 
-    fun add(entity: LivingEntity) {
-        activeEntities[entity.entityId] = entity
+    fun add(mobType: String, entity: LivingEntity) {
+        activeEntities[entity.entityId] = Pair(mobType, entity)
     }
 
     fun remove(entity: LivingEntity) {

@@ -12,7 +12,7 @@ class ClearMobsTask : BukkitRunnable() {
 
     override fun run() {
         MobManager.activeEntities.forEach {
-            it.value.remove()
+            it.value.second.remove()
         }
         MobManager.activeEntities.clear()
 

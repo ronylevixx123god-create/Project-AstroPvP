@@ -82,7 +82,7 @@ public class LauncherTask implements Runnable {
     private void notifyPlayers(String delay) {
         Bukkit.broadcastMessage("");
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lAstro&f&lPvP &8| &6&lDesert K.O.T.H")));
-        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event has been started!")));
+        Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fA &6/koth&f event is starting soon")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&fCapture koth to win a &610$ Buycraft Giftcard&f.")));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(""));
         Bukkit.broadcastMessage(StringUtils.getCenteredMessage(CC.translate("&6&lTime Left&7: &f" + delay)));

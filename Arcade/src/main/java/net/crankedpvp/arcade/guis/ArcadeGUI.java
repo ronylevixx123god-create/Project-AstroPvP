@@ -31,6 +31,7 @@ public class ArcadeGUI {
             }
             this.arcadeGui.updateItem(4, new GuiItem(getArcadeItem(color), event -> {
                 if (ArcadePlugin.getInstance().getArcadeManager().isEnabled()) {
+                    event.getWhoClicked().closeInventory();
                     ((Player) event.getWhoClicked()).chat("/warp arcade");
                 } else {
                     event.getWhoClicked().sendMessage(CC.translate("&d&l(!)&d The arcade warp opens in &f" + ArcadePlugin.getInstance().getArcadeManager().timeUntilArcadeEnabled() + "&d."));

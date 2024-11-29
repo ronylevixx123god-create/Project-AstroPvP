@@ -1,7 +1,5 @@
 package me.kingsavaqe.cagepvp.listeners;
 
-import java.util.Iterator;
-
 import me.kingsavaqe.cagepvp.AstroCagePvP;
 import org.bukkit.ChatColor;
 import org.bukkit.Sound;
@@ -10,6 +8,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+
+import java.util.Iterator;
 
 public class Command implements Listener {
    private final AstroCagePvP instance;
@@ -23,7 +23,7 @@ public class Command implements Listener {
       if (!event.getMessage().toLowerCase().startsWith("/wildpvp") && !event.getMessage().toLowerCase().startsWith("/1v1")) {
          Player player = event.getPlayer();
          FileConfiguration configLoad = this.instance.getConfig();
-         Iterator var4 = configLoad.getStringList("Listeners.Command.AllowedCommands").iterator();
+         Iterator<String> var4 = configLoad.getStringList("Listeners.Command.AllowedCommands").iterator();
 
          String allowedCommand;
          do {
@@ -38,7 +38,7 @@ public class Command implements Listener {
                return;
             }
 
-            allowedCommand = (String)var4.next();
+            allowedCommand = var4.next();
          } while(!event.getMessage().split(" ")[0].toLowerCase().equalsIgnoreCase("/" + allowedCommand.toLowerCase()));
 
       }

@@ -1,25 +1,28 @@
 package net.astropvp.space
 
-import me.astropvp.astropvpskins.enums.SkinType
 import me.mattstudios.mf.base.CommandManager
+import me.mattstudios.mf.base.components.TypeResult
 import net.astropvp.space.commands.AdminSpaceCommand
 import net.astropvp.space.commands.SpaceCommand
 import net.astropvp.space.data.SpacePlayerManager
 import net.astropvp.space.data.temp.ActiveSpaceDataManager
+import net.astropvp.space.hostile.MobTypeRegister
 import net.astropvp.space.listeners.*
-import net.astropvp.space.serialization.SkinTypeSerializerDeserializer
 import net.astropvp.space.struct.LocationManager
+import net.astropvp.space.struct.SpaceAugmentRegister
 import net.astropvp.space.tasks.ClearMobsTask
 import net.astropvp.space.tasks.LongestSurvivorTask
 import net.astropvp.space.tasks.MobSpawnTask
 import net.astropvp.space.tasks.SpaceDataCacheFixTask
 import net.astropvp.storage.StoragePlugin
 import org.bukkit.Bukkit
+import org.bukkit.entity.Player
 import org.bukkit.plugin.java.JavaPlugin
 
 class SpacePlugin : JavaPlugin() {
 
     var spacePlayerManager: SpacePlayerManager? = null
+
 
     init {
         instance = this
@@ -29,6 +32,7 @@ class SpacePlugin : JavaPlugin() {
     companion object {
         lateinit var instance : SpacePlugin
         lateinit var activeSpaceDataManager : ActiveSpaceDataManager
+        lateinit var commandManager: CommandManager
     }
 
     override fun onEnable() {
@@ -40,7 +44,12 @@ class SpacePlugin : JavaPlugin() {
         spacePlayerManager = SpacePlayerManager(this, gson)
         spacePlayerManager!!.loadAll()
 
-        val commandManager = CommandManager(this)
+        MobTypeRegister.initialize()
+
+        SpaceAugmentRegister.registerAll()
+
+        commandManager = CommandManager(this)
+        registerCommandParameters()
         commandManager.register(SpaceCommand())
         commandManager.register(AdminSpaceCommand())
         LocationManager.loadLocationsFromDisk()
@@ -74,10 +83,25 @@ class SpacePlugin : JavaPlugin() {
     }
 
     override fun onDisable() {
-        SpaceAPI.WORLDS.forEach { Bukkit.getWorld(it).entities.forEach { entity -> entity.remove() }}
+        for (world in SpaceAPI.WORLDS) {
+            for (player in Bukkit.getWorld(world).players) {
+                player.teleport(Bukkit.getWorld("world").spawnLocation)
+            }
+            for (entity in Bukkit.getWorld(world).entities) {
+                if(entity !is Player) {
+                    entity.remove()
+                }
+            }
+        }
         spacePlayerManager?.saveAll()
-        activeSpaceDataManager.spacePlayers.values.forEach { it.teleportAndExit() }
         LocationManager.saveLocationsToDisk()
+    }
+
+    private fun registerCommandParameters() {
+        commandManager.parameterHandler.register(Player::class.java) { argument ->
+            val player = Bukkit.getPlayer(argument.toString()) ?: return@register TypeResult(argument)
+            return@register TypeResult(player, argument)
+        }
     }
 
 

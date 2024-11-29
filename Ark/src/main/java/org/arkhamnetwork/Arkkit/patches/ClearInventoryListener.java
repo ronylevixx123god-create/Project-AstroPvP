@@ -47,12 +47,11 @@ final class ClearInventoryListener
                 if (!CombatLog.inCombat(p)) {
                     p.performCommand(cmd);
                 } else {
-                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD.toString() + "(!) " + ChatColor.RED + "You cannot clear your inventory while in combat!");
+                    p.sendMessage(ChatColor.RED.toString() + ChatColor.BOLD + "(!) " + ChatColor.RED + "You cannot clear your inventory while in combat!");
                 }
             } else {
                 p.sendMessage(ChatColor.RED + "Invalid /clearinventory response.");
-                p.sendMessage(ChatColor.GRAY + "Please type " + ChatColor.GREEN + ChatColor.BOLD + "YES" + ChatColor.GRAY + " or " + ChatColor.RED + ChatColor.BOLD.toString() + "NO" + ChatColor.GRAY + " to confirm " + ChatColor.UNDERLINE + "deleting your inventory.");
-                return;
+                p.sendMessage(ChatColor.GRAY + "Please type " + ChatColor.GREEN + ChatColor.BOLD + "YES" + ChatColor.GRAY + " or " + ChatColor.RED + ChatColor.BOLD + "NO" + ChatColor.GRAY + " to confirm " + ChatColor.UNDERLINE + "deleting your inventory.");
             }
         }
     }
@@ -77,11 +76,10 @@ final class ClearInventoryListener
                 e.setMessage("/null");
                 p.setMetadata("compilex_clearinventory_pending", new FixedMetadataValue(Arkkit.get(), cmd));
                 p.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "Are you sure you want to delete items in your inventory?");
-                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD.toString() + "Command: " + ChatColor.GRAY + cmd);
-                p.sendMessage(ChatColor.YELLOW + "** " + ChatColor.GRAY + "Please type " + ChatColor.GREEN + ChatColor.BOLD + ChatColor.UNDERLINE + "YES" + ChatColor.GRAY + " or " + ChatColor.RED + ChatColor.BOLD.toString() + ChatColor.UNDERLINE + "NO");
+                p.sendMessage(ChatColor.YELLOW.toString() + ChatColor.BOLD + "Command: " + ChatColor.GRAY + cmd);
+                p.sendMessage(ChatColor.YELLOW + "** " + ChatColor.GRAY + "Please type " + ChatColor.GREEN + ChatColor.BOLD + ChatColor.UNDERLINE + "YES" + ChatColor.GRAY + " or " + ChatColor.RED + ChatColor.BOLD + ChatColor.UNDERLINE + "NO");
             } else {
                 p.removeMetadata("compilex_clearinventory_confirmed", Arkkit.get());
-                return;
             }
         }
     }

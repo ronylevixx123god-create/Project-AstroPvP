@@ -76,7 +76,7 @@ public class CategoryInventory {
             event.setCancelled(true);
         }));
 
-        categoryInventory.setItem(6, 4, new GuiItem(removeCategory, event -> {
+        categoryInventory.setItem(6, 3, new GuiItem(removeCategory, event -> {
             CollectPlugin.getInstance().getCollectManager().removeCategoryFromCache(player.getUniqueId().toString(), category);
             new CollectInventory(player).getCollectUI().open(player);
             event.setCancelled(true);
@@ -85,7 +85,7 @@ public class CategoryInventory {
 
         }));
 
-        categoryInventory.setItem(6, 5, new GuiItem(new ItemBuilder(Material.BED, CC.translate("&c&lMain Menu"), CC.translate("&7Click to go to the main menu")).build(), event -> {
+        categoryInventory.setItem(6, 4, new GuiItem(new ItemBuilder(Material.BED, CC.translate("&c&lMain Menu"), CC.translate("&7Click to go to the main menu")).build(), event -> {
                     CollectInventory collectInventory = new CollectInventory(player);
                     collectInventory.getCollectUI().open(player);
                 })
@@ -96,6 +96,34 @@ public class CategoryInventory {
             category.sort();
             new CategoryInventory(player, category).getCollectUI().open(player);
             event.setCancelled(true);
+        }));
+
+        categoryInventory.setItem(6, 7, new GuiItem(createCollectAllItem(), event -> {
+            player.playSound(player.getLocation(), Sound.VILLAGER_YES, 1f, 1f);
+            for (ItemStack item : category.getItems().clone()) {
+                if (player.getInventory().firstEmpty() == -1) {
+                    player.sendMessage(CC.translate("&c&l(!)&c You do not have enough inventory slots to claim any more items"));
+                    event.setCancelled(true);
+                    return;
+                }
+
+
+                player.getInventory().addItem(item);
+                categoryInventory.getInventory().remove(event.getCurrentItem());
+                category.setItems(category.removeItem(item));
+
+
+                if (category.onlyContainsAir()) {
+                    categoryInventory.close(player);
+                    CollectPlugin.getInstance().getCollectManager().removeCategoryFromCache(player.getUniqueId().toString(), category);
+                    new CollectInventory(player).getCollectUI().open(player);
+                } else {
+                    category.sort();
+                    new CategoryInventory(player, category).getCollectUI().open(player);
+                    event.setCancelled(true);
+                }
+                event.setCancelled(true);
+            }
         }));
 
         for (ItemStack item : category.getItems().clone()) {
@@ -125,6 +153,16 @@ public class CategoryInventory {
 
             }));
         }
+    }
+
+    public ItemStack createCollectAllItem() {
+        ItemBuilder itemBuilder = new ItemBuilder(Material.CHEST);
+        itemBuilder.name(CC.translate("&d&lCollect All"));
+        itemBuilder.lore(
+                CC.translate("&7Click to collect all of the items"),
+                CC.translate("&7in this collect category")
+        );
+        return itemBuilder.build();
     }
 
     public ItemStack createFillerItem() {

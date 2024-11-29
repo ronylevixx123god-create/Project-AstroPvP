@@ -8,17 +8,22 @@ import net.astropvp.loottable.struct.LootTable
 import net.astropvp.space.SpaceAPI
 import net.astropvp.space.SpacePlugin
 import net.astropvp.space.hostile.MobManager
-import net.astropvp.space.hostile.MobType
+import net.astropvp.space.hostile.MobTypeRegister
 import net.astropvp.space.utils.msg
+import org.bukkit.Material
+import org.bukkit.entity.LivingEntity
 import org.bukkit.entity.Player
 import org.bukkit.event.EventHandler
 import org.bukkit.event.EventPriority
 import org.bukkit.event.Listener
 import org.bukkit.event.entity.EntityDamageByEntityEvent
 import org.bukkit.event.entity.EntityDeathEvent
-import org.bukkit.event.player.*
+import org.bukkit.event.player.PlayerChangedWorldEvent
+import org.bukkit.event.player.PlayerCommandPreprocessEvent
+import org.bukkit.event.player.PlayerTeleportEvent
 import org.bukkit.inventory.ItemStack
 import java.util.*
+import kotlin.random.Random
 
 class SpaceLogicListener : Listener {
 
@@ -26,13 +31,16 @@ class SpaceLogicListener : Listener {
     fun onSpaceMobDeath(event: EntityDeathEvent) {
         if(event.entity is Player) {
             val spacePlayer = SpacePlugin.activeSpaceDataManager.get(event.entity as Player) ?: return
-            spacePlayer.exit()
+            spacePlayer.teleportAndExit()
             return
         }
         if(MobManager.isActiveEntity(event.entity).not()) return
         val player = event.entity.killer ?: return
         val spacePlayer = SpacePlugin.activeSpaceDataManager.get(player) ?: return
-        MobType.SPACE_ZOMBIE.onDeath(event, player)
+        val mobType = MobManager.activeEntities[event.entity.entityId]?.first ?: return
+        val hostile = MobTypeRegister.get(mobType) ?: return
+        hostile.onDeath(event, player)
+        //MobType.getInstance(mobType).onDeath(event, player)
         event.drops.clear()
         event.droppedExp = 0
         MobManager.remove(event.entity)
@@ -45,7 +53,7 @@ class SpaceLogicListener : Listener {
         if (AstroItemSkinsAPI.hasSkinEquipped(player, SkinType.SUMMER_2021_BELT)) {
             chance *= 1.30
         }
-        for (i in 0..3) {
+        for (i in 0..hostile.amountOfRewards) {
             if (Math.random() < chance) {
                 val reward = LootTableAPI.getRandomLootItem(LootTable.SPACE)
                 rewardsToPlayer.add(reward)
@@ -71,19 +79,69 @@ class SpaceLogicListener : Listener {
         if(!SpaceAPI.WORLDS.contains(event.damager.world.name)) return
         if(event.entity is Player) {
             if(event.damager !is Player) {
+                if(SpaceAPI.hasAugmentEquipped(event.entity as Player, "reinforced")) {
+                    if(Random.nextDouble(100.0) < 0.5*SpaceAPI.getAugmentLevel(event.entity as Player, "reinforced")) {
+                        val reducedDmgPerLevel = 0.04
+                        val reducedDmg = reducedDmgPerLevel * SpaceAPI.getAugmentLevel(event.entity as Player, "reinforced")
+                        event.damage *= (1-reducedDmg)
+                        event.damager.sendMessage(CC.translate("&3&lSpace Augment &8➥ &7Your &6Reinforced &7augment has taken effect!"))
+                    }
+                }
                 event.damage *= 1+(((200..600).random())/100)
                 if(MobManager.isActiveEntity(event.damager.entityId).not()) return
-                MobType.SPACE_ZOMBIE.onGetDamagedByMob(event, event.entity as Player)
+                val mobType = MobManager.activeEntities[event.damager.entityId]?.first ?: return
+                val hostile = MobTypeRegister.get(mobType) ?: return
+
+                hostile.onGetDamagedByMob(event, event.entity as Player)
             } else {
                 event.damage *= 1+(((100..300).random())/100)
+
             }
+
+
+
+            if(SpaceAPI.hasAugmentEquipped(event.entity as Player, "retaliate")) {
+                if(Random.nextDouble(100.0) < 0.1*SpaceAPI.getAugmentLevel(event.entity as Player, "retaliate")) {
+                    val dmgPerLevel = 0.5
+                    val dmg = dmgPerLevel * SpaceAPI.getAugmentLevel(event.entity as Player, "retaliate")
+                    if(event.damager is Player) {
+                        (event.damager as Player).damage(dmg)
+                    } else {
+                        (event.damager as LivingEntity).damage(dmg * 4)
+                    }
+                    event.entity.sendMessage(CC.translate("&3&lSpace Augment &8➥ &7Your &aRetaliate &7augment has taken effect!"))
+                }
+            }
+
             return
         }
 
         if(event.damager is Player) {
             if(event.entity is Player) return
             if(MobManager.isActiveEntity(event.entity.entityId).not()) return
-            MobType.SPACE_ZOMBIE.onPlayerDamageMob(event, event.damager as Player)
+            val mobType = MobManager.activeEntities[event.damager.entityId]?.first ?: return
+            val hostile = MobTypeRegister.get(mobType) ?: return
+            if(SpaceAPI.hasAugmentEquipped(event.damager as Player, "terminate")) {
+                if(Random.nextDouble(100.0) < 0.1*SpaceAPI.getAugmentLevel(event.damager as Player, "terminate")) {
+                    event.damage *= 1000
+                    event.damager.sendMessage(CC.translate("&3&lSpace Augment &8➥ &7Your &4Terminate &7augment has taken effect!"))
+                }
+            }
+            if(SpaceAPI.hasAugmentEquipped(event.damager as Player, "sweeping_edge")) {
+                if(Random.nextDouble(100.0) < 0.1*SpaceAPI.getAugmentLevel(event.damager as Player, "sweeping_edge")) {
+                    event.entity.getNearbyEntities(7.0, 7.0, 7.0)
+                        .filter { !it.isDead }
+                        .filter { it !is Player }
+                        .filterIsInstance<LivingEntity>()
+                        .forEach {
+                            it.damage(4.0)
+                            val direction = it.location.direction.normalize()
+                            it.velocity = direction.multiply(-1)
+                        }
+                    event.damager.sendMessage(CC.translate("&3&lSpace Augment &8➥ &7Your &bSweeping Edge &7augment has taken effect!"))
+                }
+            }
+            hostile.onPlayerDamageMob(event, event.entity as Player)
             return
         }
     }
@@ -110,8 +168,36 @@ class SpaceLogicListener : Listener {
 
         // If the player exits a space world
         if (SpaceAPI.WORLDS.contains(fromWorld.name)) {
-            val activeSpacePlayer = SpacePlugin.activeSpaceDataManager.get(player) ?: return
+            val activeSpacePlayer = SpacePlugin.activeSpaceDataManager.get(player)
+            if(activeSpacePlayer == null) {
+                println("[SpaceRecode] Internal error occurred while leaving space: " + player.name)
+                return
+            }
             activeSpacePlayer.exit()
+        }
+    }
+
+
+    fun isInventoryAndArmorEmpty(player: Player): Boolean {
+        return player.inventory.contents.all { it == null || it.type == Material.AIR } && player.inventory.armorContents.all { it == null || it.type == Material.AIR }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    fun onEnterSpaceWorld(event: PlayerTeleportEvent) {
+        val player = event.player
+        if (SpaceAPI.WORLDS.contains(event.to.world.name) && !SpaceAPI.WORLDS.contains(event.from.world.name)) {
+            if(!isInventoryAndArmorEmpty(player)) {
+                if(!player.isOp || !player.hasPermission("space.bypass")) {
+                    event.isCancelled = true
+                    player.msg("&cYou can only enter the &4Space Lands &cwith an empty inventory!")
+                } else {
+                    player.msg("&cAs an &4Admin &cyou bypassed the Empty Inventory check for the &4Space Lands!")
+                }
+            }
+        }
+        if (SpaceAPI.WORLDS.contains(event.from.world.name) && !SpaceAPI.WORLDS.contains(event.to.world.name)) {
+            event.player.inventory.clear()
+            event.player.inventory.armorContents = emptyArray()
         }
     }
 

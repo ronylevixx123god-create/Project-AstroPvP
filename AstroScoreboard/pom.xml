@@ -42,6 +42,13 @@
         <!-- ConaxGames repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
+            <artifactId>flamecord</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../.lib/flamecord.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.conaxgames</groupId>
             <artifactId>server</artifactId>
             <version>1.8.8-R0.2-SNAPSHOT</version>
             <scope>provided</scope>

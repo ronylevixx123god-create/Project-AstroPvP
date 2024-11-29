@@ -118,7 +118,7 @@ public enum SkinType {
     VALENTINES_2021_AMULET(CC.RedB + "Rose Amulet", ItemSkinType.AMULET, new RoseAmuletSkin(), Arrays.asList(CC.Red + "Immune to Snowflake Axe skin abilities", CC.Red + "-15% damage from enemy Rage", CC.Red + "Automatic Phoenix Feather (30m cooldown)"), true),
     HALLOWEEN_2022_AMULET(CC.translate("&4&lMomento Mori"), ItemSkinType.AMULET, new MomentoMoriSkin(), Arrays.asList(
             CC.translate("&cImmune to Rogue Enchant"),
-            CC.translate("&c30 Chance to block Champion Ability"),
+            CC.translate("&c30% Chance to block Champion Ability"),
             CC.translate("&c+5% Outgoing Damage to players wielding Diamond Weapons")
     ), true),
     CHRISTMAS_2022_AMULET_ACTIVE(CC.translate("&b&lIcicle Amulet"), ItemSkinType.AMULET, new IcicleSkin(), Arrays.asList(
@@ -166,10 +166,17 @@ public enum SkinType {
 
     ), true),
     SPRING_BREAK_2022_BACKPACK(CC.translate("&a&lSpray and Pray Backpack"), ItemSkinType.BACKPACK, new SprayPrayBackpack(), Arrays.asList(
-            CC.translate("")
+            CC.translate("&cImmune to trap blockers"),
+            CC.translate("&cImmune to hero killer"),
+            CC.translate("&c+5% Outgoing damage to enemies wielding an axe"),
+            CC.translate("&c1.05x Rage Multiplier")
     ), true),
     SPRING_BREAK_2022_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &a&lSpray and Pray Backpack"), ItemSkinType.BACKPACK, new MutatedSprayPrayBackpack(), Arrays.asList(
-            CC.translate("")
+            CC.translate("&cImmune to trap blockers"),
+            CC.translate("&cImmune to hero killer"),
+            CC.translate("&c+5% Outgoing damage to enemies wielding an axe"),
+            CC.translate("&c1.05x Rage Multiplier"),
+            CC.translate("&2xxx")
     ), true),
     THANKSGIVING_2021_BACKPACK(CC.translate("&6&lTommy Tail"), ItemSkinType.BACKPACK, new TommyTail(), Arrays.asList(CC.Red + "+5% Outgoing PvP Damage when using a sword", CC.Red + "Immune to Hero Killer", CC.Red + "7.5% chance to block Soul Enchant Damage", CC.Red + "2% chance to activate a LVL 10", CC.Red + "Banshee Pet effect when damaged", CC.Red + "2x Outgoing Damage on any hit that makes", CC.Red + "your enemy's (Guided) Rocket Escape", CC.Red + "Immune to (Lethal) Sniper"), true),
     THANKSGIVING_2021_MUTATED_BACKPACK(CC.translate("&2&l&nMutated&r &6&lTommy Tail"), ItemSkinType.BACKPACK, new MutatedTommyTail(), Arrays.asList(CC.Red + "+5% Outgoing PvP Damage when using a sword", CC.Red + "Immune to Hero Killer", CC.Red + "7.5% chance to block Soul Enchant Damage", CC.Red + "2% chance to activate a LVL 10", CC.Red + "Banshee Pet effect when damaged", CC.Red + "2x Outgoing Damage on any hit that makes", CC.Red + "your enemy's (Guided) Rocket Escape", CC.Red + "Immune to (Lethal) Sniper", CC.DarkGreen + "Increases outgoing damage by up to 10%", CC.DarkGreen + "when under 60% HP"), true),

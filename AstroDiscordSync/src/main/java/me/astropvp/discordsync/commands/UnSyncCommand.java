@@ -1,26 +1,23 @@
 package me.astropvp.discordsync.commands;
 
-import co.aikar.commands.BaseCommand;
-import co.aikar.commands.annotation.CommandAlias;
 
-import co.aikar.commands.annotation.Subcommand;
-import co.aikar.commands.annotation.Syntax;
-import co.aikar.commands.bukkit.contexts.OnlinePlayer;
 import me.astropvp.discordsync.DiscordSyncPlugin;
 import me.astropvp.discordsync.managers.SyncManager;
 import me.astropvp.discordsync.utils.CC;
+import me.mattstudios.mf.annotations.Alias;
+import me.mattstudios.mf.annotations.Command;
+import me.mattstudios.mf.annotations.Default;
+import me.mattstudios.mf.base.CommandBase;
 import net.dv8tion.jda.api.entities.Guild;
-import net.dv8tion.jda.api.entities.Member;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
-import java.util.HashSet;
 import java.util.Objects;
-import java.util.Set;
-import java.util.UUID;
 
-public class UnSyncCommand extends BaseCommand {
+@Command("unsync")
+@Alias({"unsyncaccount", "unsyncdiscord"})
+public class UnSyncCommand extends CommandBase {
     private DiscordSyncPlugin plugin;
     private SyncManager syncManager;
     private static final long ASTRO_GUILD_ID = 470324147411615744L;
@@ -32,7 +29,7 @@ public class UnSyncCommand extends BaseCommand {
 
     }
 
-    @CommandAlias("unsync|unsyncaccount|unsyncdiscord")
+    @Default
     public void onCommand(Player player, String toUnsync) {
         if (!player.isOp()) {
             player.sendMessage(CC.translate("&c&l(!)&c Only administrators can unsync your account, open a #general-support ticket in the astropvp /discord!"));

@@ -4,12 +4,9 @@ import com.massivecraft.factions.Factions;
 import lombok.Getter;
 import me.astropvp.proxypach.ProxyPatch;
 import org.bukkit.Bukkit;
-import org.bukkit.event.server.ServerCommandEvent;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 public class ProxyPatchTask extends BukkitRunnable {
 
@@ -22,16 +19,12 @@ public class ProxyPatchTask extends BukkitRunnable {
     public ProxyPatchTask() {
         this.factionNames = new ArrayList<>();
         factionNames.add("monkeys");
-        factionNames.add("kfc");
         factionNames.add("zodiac");
-        factionNames.add("metro");
         factionNames.add("rush");
-        factionNames.add("XTC");
         factionNames.add("bermuda");
         factionNames.add("hated");
-        factionNames.add("wanted");
-        factionNames.add("ripcity");
-
+        factionNames.add("Acid");
+        factionNames.add("WhySoSalty");
     }
 
     @Override
@@ -40,9 +33,15 @@ public class ProxyPatchTask extends BukkitRunnable {
         if(count >= ProxyPatch.playerNames.size()-1) count = 0;
         String playerName = ProxyPatch.playerNames.get(count);
         count++;
+        Set<String> redo = new HashSet<>();
         if(Bukkit.getPlayer(playerName) != null) return;
-        ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof add " + playerName);
-        serverCommandEvent.callEvent();
+        for (int i = 0; i < 1; i++) {
+            if(Bukkit.getPlayer(playerName) != null) continue;
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof add " + playerName);
+            redo.add(playerName);
+            //ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof add " + playerName);
+            //serverCommandEvent.callEvent();
+        }
         Bukkit.getScheduler().runTaskLater(ProxyPatch.getInstance(), ()-> {
             if (Bukkit.getPlayer(playerName) == null) return;
             for (String faction : factionNames) {
@@ -58,15 +57,26 @@ public class ProxyPatchTask extends BukkitRunnable {
             }
         }, 20L * 5L);
 
+        Bukkit.getScheduler().runTaskLater(ProxyPatch.getInstance(), ()-> {
+            for (String s : redo) {
+                for (int i = 0; i < 1; i++) {
+                    if(Bukkit.getPlayer(s) != null) continue;
+                    Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof add " + s);
+                }
+            }
+        }, 1L);
+
+
+
     }
 
     public void end() {
         cancel();
         for(String playerName : ProxyPatch.playerNames) {
-            if(Bukkit.getPlayer(playerName) == null) continue; // continue if player exists :p
-            ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof remove " + playerName);
-            serverCommandEvent.callEvent();
-            //Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof remove " + playerName);
+            //if(Bukkit.getPlayer(playerName) == null) continue; // continue if player exists :p
+            //ServerCommandEvent serverCommandEvent = new ServerCommandEvent(Bukkit.getConsoleSender(), "spoof remove " + playerName);
+            //serverCommandEvent.callEvent();
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "spoof remove " + playerName);
 
         }
     }

@@ -4,19 +4,25 @@ package net.astropvp.customblocks.guis;
 import com.cosmicpvp.cosmicutils.utils.CC;
 import com.cosmicpvp.cosmicutils.utils.EconomyUtils;
 import com.cosmicpvp.cosmicutils.utils.ItemBuilder;
+import com.cosmicpvp.cosmicutils.utils.NumberUtils;
 import dev.triumphteam.gui.guis.GuiItem;
 import dev.triumphteam.gui.guis.PaginatedGui;
 import lombok.Getter;
-
 import me.ifamasssxd.cosmicguishop.ArkhamMoneyNotesAPI;
 import me.ily2bb.slotbot.CosmicSlotBotAPI;
+import net.astropvp.CollectPlugin;
 import net.astropvp.customblocks.struct.CustomBlock;
 import net.astropvp.customblocks.utils.ChunkUtil;
 import net.astropvp.lootfilter.LootFilterAPI;
 import net.astropvp.loottable.struct.LootTable;
+import net.astropvp.struct.CollectCategory;
+import net.astropvp.struct.CollectType;
+import net.astropvp.struct.PlayerCollect;
 import org.arkhamnetwork.Arkkit.patches.ExpBottles;
-import org.bukkit.*;
-import org.bukkit.block.Block;
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Chest;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
@@ -24,6 +30,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 @Getter
@@ -62,6 +69,49 @@ public class SlotBotOpenerGUI {
 
             int a = tickets;
 
+            Inventory inventory = p.getInventory();
+            for (ItemStack itemStack : inventory) {
+                if (CosmicSlotBotAPI.isSlotbotTicket(itemStack)) {
+                    inventory.remove(itemStack);
+                }
+            }
+
+
+            long money = 0L;
+            int exp = 0;
+            List<ItemStack> rewardedItems = new ArrayList<>();
+            while (a != 0) {
+
+                final ItemStack itemStack = CosmicSlotBotAPI.getRandomSlotBotLootItem();
+                if (!LootFilterAPI.isFiltered(p, LootTable.SLOTS, itemStack)) {
+                    if (ArkhamMoneyNotesAPI.isMoneyNote(itemStack)) {
+                        double moneyNoteVal = ArkhamMoneyNotesAPI.getMoneyNoteVal(itemStack);
+                        money += (long) moneyNoteVal;
+                        //EconomyUtils.depositBalance(p, moneyNoteVal);
+                        //p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                        //p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ $" + moneyNoteVal);
+                    } else if (ExpBottles.isXpBottle(itemStack)) {
+                        int xpValue = ExpBottles.getXpAmount(itemStack);
+                        exp += xpValue;
+                        /*
+                        int exp = (p.getTotalExperience() + xpValue);
+                        p.setTotalExperience(0);
+                        p.setExp(0);
+                        p.setLevel(0);
+                        p.giveExp(exp);
+                        p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                        p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ " + xpValue + " xp");
+
+                         */
+                    } else {
+                        if (itemStack == null) continue;
+                        rewardedItems.add(itemStack);
+                    }
+                }
+                a--;
+            }
+
+            /*
             Location nearbyChest = ChunkUtil.getClosestChestLocation(customBlock.getLocation());
             if (nearbyChest != null) {
                 Chest chest = (Chest) nearbyChest.getBlock().getState();
@@ -119,7 +169,33 @@ public class SlotBotOpenerGUI {
             }
 
 
+             */
 
+            if(exp > 0) {
+                int finalExp = p.getTotalExperience() + exp;
+                p.setTotalExperience(0);
+                p.setExp(0);
+                p.setLevel(0);
+                p.giveExp(finalExp);
+                p.playSound(p.getLocation(), Sound.ORB_PICKUP, 1.0f, 1.0f);
+                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ " + exp + " xp");
+            }
+
+            if(money > 0) {
+                EconomyUtils.depositBalance(p, money);
+                p.sendMessage(ChatColor.GREEN.toString() + ChatColor.BOLD + "+ $" + NumberUtils.formatMoney(money));
+            }
+
+            p.getInventory().setContents(inventory.getContents());
+            p.closeInventory();
+            p.playSound(p.getLocation(), Sound.VILLAGER_YES, 5, 5);
+
+            PlayerCollect collect = CollectPlugin.getInstance().getCollectManager().getOrCreate(p.getUniqueId().toString());
+            ItemStack[] sortedArray = rewardedItems.stream()
+                    .sorted(Comparator.comparing(item -> item.getType().name()))
+                    .toArray(ItemStack[]::new);
+            CollectCategory collectCategory = new CollectCategory(CollectType.SLOTBOT, sortedArray, CC.translate("&6&lSlot Bot Opener Loot"), System.currentTimeMillis());
+            collect.add(collectCategory);
 
 
         }));

@@ -21,4 +21,5 @@ class ChatGameListener : Listener {
         val game = ChatGameManager.currentGame!!
         return event.message.toLowerCase() == (game.answer.toLowerCase())
     }
+
 }

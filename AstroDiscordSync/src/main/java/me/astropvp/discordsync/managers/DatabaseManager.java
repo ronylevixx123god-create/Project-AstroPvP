@@ -1,17 +1,13 @@
 package me.astropvp.discordsync.managers;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+
+import me.astropvp.discordsync.DiscordSyncPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
+
+import java.sql.*;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
-
-import me.astropvp.discordsync.DiscordSyncPlugin;
-import org.bukkit.scheduler.BukkitRunnable;
 public class DatabaseManager {
     private static final String TABLE_NAME = "discord_data";
     private Connection connection;
@@ -169,7 +165,7 @@ public class DatabaseManager {
             } else {
                 Class.forName("com.mysql.jdbc.Driver");
                 //this.connection = DriverManager.getConnection("jdbc:mysql://u4_1KRTto7gWF:96+HGu!c8h5Tt0PZ^5Nc=l3+@127.0.0.1:3306/s4_DiscordSync");
-                this.connection = DriverManager.getConnection("jdbc:mysql://172.18.0.1:3306/s1_DiscordSync", "u1_1GI0GFneaV", "vs86RbJySGp.usFNEAC1.!0H");
+                this.connection = DriverManager.getConnection("jdbc:mysql://172.18.0.1:3306/s1_DiscordSync", "u1_aUILDUBrgS", "X1Zhdvq^^sJoIv0aaBdm.V.^");
                 System.out.println("DB connected!");
             }
         }

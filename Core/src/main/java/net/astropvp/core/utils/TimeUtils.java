@@ -1,6 +1,43 @@
 package net.astropvp.core.utils;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class TimeUtils {
+
+    public static String formatCurrentTimeMillis() {
+       return formatTimeMillis(System.currentTimeMillis());
+    }
+
+    private static String addDaySuffix(String dateStr) {
+        // Extract the day from the formatted date
+        String[] parts = dateStr.split(" ");
+        String day = parts[0];
+        String suffix;
+
+        // Determine the correct suffix
+        switch (day) {
+            case "1":
+            case "21":
+            case "31":
+                suffix = "st";
+                break;
+            case "2":
+            case "22":
+                suffix = "nd";
+                break;
+            case "3":
+            case "23":
+                suffix = "rd";
+                break;
+            default:
+                suffix = "th";
+        }
+
+        // Return the date with the suffix
+        return dateStr.replaceFirst(day, day + suffix);
+    }
 
     public static String format(int seconds) {
         StringBuilder builder = new StringBuilder();
@@ -61,5 +98,20 @@ public class TimeUtils {
         if (secondsLeft > 0)
             time = time + " " + secondsLeft + "s";
         return time;
+    }
+
+    public static String formatTimeMillis(long millis) {
+        Date date = new Date(millis);
+
+        // Define the desired format
+        SimpleDateFormat formatter = new SimpleDateFormat("d 'of' MMMM HH:mm yyyy", Locale.ENGLISH);
+
+        // Format the date
+        String formattedDate = formatter.format(date);
+
+        // Replace "of" with the appropriate suffix for the day
+        formattedDate = addDaySuffix(formattedDate);
+
+        return formattedDate;
     }
 }

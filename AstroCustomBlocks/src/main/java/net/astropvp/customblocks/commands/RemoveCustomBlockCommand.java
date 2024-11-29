@@ -2,6 +2,7 @@ package net.astropvp.customblocks.commands;
 
 import com.cosmicpvp.cosmicutils.utils.CC;
 import me.mattstudios.mf.annotations.Command;
+import me.mattstudios.mf.annotations.Completion;
 import me.mattstudios.mf.annotations.Default;
 import me.mattstudios.mf.annotations.Permission;
 import me.mattstudios.mf.base.CommandBase;
@@ -14,7 +15,7 @@ public class RemoveCustomBlockCommand extends CommandBase {
 
     @Default
     @Permission("cblocks.remove")
-    public void removeCblock(Player player, CustomBlockType customBlockType) {
+    public void removeCblock(Player player, @Completion("#cblocks") CustomBlockType customBlockType) {
         if(!CustomBlocksAPI.chunkContainsCustomBlock(player.getLocation(), customBlockType)) {
             player.sendMessage(CC.translate("&cThere is no " + customBlockType.name() + " in this chunk"));
             return;

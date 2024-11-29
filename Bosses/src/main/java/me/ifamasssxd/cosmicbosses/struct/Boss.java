@@ -1,66 +1,43 @@
 package me.ifamasssxd.cosmicbosses.struct;
 
-import com.compilex.CosmicDungeons.DungeonsAPI;
-import com.compilex.CosmicDungeons.struct.DungeonDebuff;
 import com.cosmicpvp.CosmicSpaceChests.CosmicSpaceChestsAPI;
 import com.cosmicpvp.CosmicSpaceChests.libs.ItemRarity;
 import com.cosmicpvp.CosmicSpaceChests.utils.ItemUtils;
 import com.cosmicpvp.cosmicutils.customevents.CustomCosmicPlayerEvent;
-import com.cosmicpvp.cosmicutils.utils.*;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.cosmicpvp.cosmicutils.utils.PlayerUtil;
+import com.cosmicpvp.cosmicutils.utils.WorldGuardUtils;
 import com.google.common.collect.Lists;
-import java.text.DecimalFormat;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.UUID;
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.stream.Collectors;
 import me.ifamasssxd.cosmicbosses.CosmicBosses;
 import me.ifamasssxd.cosmicbosses.bosses.GuardBoss;
 import me.ifamasssxd.cosmicbosses.struct.enums.BossType;
 import me.ifamasssxd.cosmicbosses.struct.enums.DamageType;
 import me.ifamasssxd.cosmicbosses.struct.enums.Difficulty;
 import me.ifamasssxd.cosmicbosses.struct.enums.Equipable;
-import me.ifamasssxd.cosmicbosses.utils.BossUtils;
-import me.ifamasssxd.cosmicbosses.utils.MapUtils;
-import me.ifamasssxd.cosmicbosses.utils.NumberUtils;
-import me.ifamasssxd.cosmicbosses.utils.ScoreboardUtils;
-import me.ifamasssxd.cosmicbosses.utils.StringUtils;
+import me.ifamasssxd.cosmicbosses.utils.*;
 import net.astropvp.core.AstroCore;
 import net.astropvp.core.struct.AstroPlayer;
-import net.astropvp.core.utils.InventoryUtils;
 import net.crankedpvp.shards.MobcoinAPI;
-import net.minecraft.server.v1_8_R3.*;
+import net.minecraft.server.v1_8_R3.EntityInsentient;
+import net.minecraft.server.v1_8_R3.PathfinderGoalFloat;
+import net.minecraft.server.v1_8_R3.PathfinderGoalRandomLookaround;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Sound;
-import org.bukkit.command.CommandSender;
 import org.bukkit.craftbukkit.v1_8_R3.entity.CraftLivingEntity;
-import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
-import org.bukkit.entity.LivingEntity;
-import org.bukkit.entity.Player;
-import org.bukkit.entity.Projectile;
+import org.bukkit.entity.*;
 import org.bukkit.event.Event;
-import org.bukkit.event.entity.EntityChangeBlockEvent;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.event.entity.EntityTeleportEvent;
+import org.bukkit.event.entity.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.metadata.FixedMetadataValue;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
+
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 public abstract class Boss extends Equipable implements Healable {
     public Boss(Location location, BossType bossType) {
@@ -97,8 +74,8 @@ public abstract class Boss extends Equipable implements Healable {
 
     public LivingEntity setupBoss(LivingEntity e) {
         this.uuid = e.getUniqueId();
-        (this.entity = e).setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), ""));
-        e.setMetadata("boss", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), ""));
+        (this.entity = e).setMetadata("do_not_clear", new FixedMetadataValue(CosmicBosses.getInstance(), ""));
+        e.setMetadata("boss", new FixedMetadataValue(CosmicBosses.getInstance(), ""));
         e.setMaxHealth(getMaxHealth());
         e.setRemoveWhenFarAway(false);
         e.setHealth(e.getMaxHealth());
@@ -179,7 +156,7 @@ public abstract class Boss extends Equipable implements Healable {
         if (event.getCause() == EntityDamageEvent.DamageCause.FIRE || event.getCause() == EntityDamageEvent.DamageCause.FIRE_TICK || event.getCause() == EntityDamageEvent.DamageCause.LAVA) {
             event.setCancelled(true);
             Entity ent = event.getEntity();
-            Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicBosses.getInstance(), () -> {
+            Bukkit.getScheduler().scheduleSyncDelayedTask(CosmicBosses.getInstance(), () -> {
                 if (ent != null && !ent.isDead())
                     ent.setFireTicks(0);
             },1L);
@@ -232,7 +209,7 @@ public abstract class Boss extends Equipable implements Healable {
             }
         }
         if (event != null)
-            event.getEntity().setMetadata("killed", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), ""));
+            event.getEntity().setMetadata("killed", new FixedMetadataValue(CosmicBosses.getInstance(), ""));
         this.dead = true;
         clearScoreboard();
     }
@@ -281,12 +258,12 @@ public abstract class Boss extends Equipable implements Healable {
         String str1;
         if (this instanceof me.ifamasssxd.cosmicbosses.bosses.soulreaper.SoulReaper || this instanceof me.ifamasssxd.cosmicbosses.bosses.holidayspirit.HolidaySpirit || this instanceof me.ifamasssxd.cosmicbosses.bosses.xmasbattlefield.BattlefieldSnowman || this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.planetnul.CorruptCosmonaut || this instanceof me.ifamasssxd.cosmicbosses.dungeonboss.DungeonYijki || this instanceof me.ifamasssxd.cosmicbosses.evilabomination.EvilAbomination || (this instanceof me.ifamasssxd.cosmicbosses.bosses.plaguebloater.PlagueBloater && getEntity().getWorld().getName().equals(CosmicBosses.battlefieldWorld)))
             return;
-        str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE.toString() + getCustomName() + getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + getColor(false) + "defend AstroPvP!";
+        str1 = getColor(true) + "(!) " + getColor(false) + "A " + getColor(true) + ChatColor.UNDERLINE + getCustomName() + getColor(false) + " Boss has been summoned to the /spawn WarZone, at " + getColor(true) + this.location.getBlockX() + "x, " + this.location.getBlockY() + "y, " + this.location.getBlockZ() + "z " + getColor(false) + "defend AstroPvP!";
         if (this instanceof me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon)
             str1 = CC.RedB + "(!) " + CC.Red + "A " + CC.DarkRedB + CC.Underline + getCustomName() + CC.Red + " has been awoken in the Ender Dimension. Travel to " + CC.DarkRed + "/warp end" + CC.Red + " to subdue it before it finds a way into the Cosmonaut realm!";
         Location loc = getLocation();
-        String debug = ChatColor.YELLOW + "Spawning boss " + getCustomName() + ChatColor.YELLOW + " at " + ChatColor.YELLOW + ChatColor.BOLD.toString() + "x" + loc.getBlockX() + " y" + loc.getBlockY() + " z" + loc.getBlockZ() + "!";
-        Collection<? extends Player> pls = this.naturallySpawned ? Bukkit.getOnlinePlayers() : Bukkit.getOnlinePlayers();
+        String debug = ChatColor.YELLOW + "Spawning boss " + getCustomName() + ChatColor.YELLOW + " at " + ChatColor.YELLOW + ChatColor.BOLD + "x" + loc.getBlockX() + " y" + loc.getBlockY() + " z" + loc.getBlockZ() + "!";
+        Collection<? extends Player> pls = Bukkit.getOnlinePlayers();
 
         boolean dragon = this instanceof me.ifamasssxd.cosmicbosses.bosses.dragon.EndDragon;
         for (Player pl : pls) {
@@ -319,7 +296,7 @@ public abstract class Boss extends Equipable implements Healable {
     }
 
     public BossMessage getGeneralMessage() {
-        List<BossMessage> msg = (List<BossMessage>)getGeneralMessages().stream().filter(bMsg -> (bMsg.getPhase() == 0 && !bMsg.isPhaseDependent())).collect(Collectors.toList());
+        List<BossMessage> msg = getGeneralMessages().stream().filter(bMsg -> (bMsg.getPhase() == 0 && !bMsg.isPhaseDependent())).collect(Collectors.toList());
         if (msg.size() <= 0)
             return null;
         return msg.get(this.random.nextInt(msg.size()));
@@ -391,8 +368,8 @@ public abstract class Boss extends Equipable implements Healable {
 
     public Entity spawnMinion(EntityType type, Location l) {
         Entity ent = l.getWorld().spawnEntity(l, type);
-        ent.setMetadata("minion", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), getEntity().getUniqueId()));
-        ent.setMetadata("do_not_clear", (MetadataValue)new FixedMetadataValue((Plugin)CosmicBosses.getInstance(), ""));
+        ent.setMetadata("minion", new FixedMetadataValue(CosmicBosses.getInstance(), getEntity().getUniqueId()));
+        ent.setMetadata("do_not_clear", new FixedMetadataValue(CosmicBosses.getInstance(), ""));
         getMinions().add(ent);
         if (ent instanceof LivingEntity) {
             LivingEntity li = (LivingEntity)ent;
@@ -410,8 +387,8 @@ public abstract class Boss extends Equipable implements Healable {
         if (type == EntityType.HORSE) {
             EntityInsentient insent = (EntityInsentient)((CraftLivingEntity)ent).getHandle();
             BossUtils.clearGoalSelectors(insent);
-            BossUtils.addSelector(insent, 0, (PathfinderGoal)new PathfinderGoalFloat(insent));
-            BossUtils.addSelector(insent, 8, (PathfinderGoal)new PathfinderGoalRandomLookaround(insent));
+            BossUtils.addSelector(insent, 0, new PathfinderGoalFloat(insent));
+            BossUtils.addSelector(insent, 8, new PathfinderGoalRandomLookaround(insent));
         }
         return ent;
     }
@@ -444,7 +421,7 @@ public abstract class Boss extends Equipable implements Healable {
     }
 
     public void sendMessage(String msg) {
-        sendMessage(msg, (Sound)null, 0.0F);
+        sendMessage(msg, null, 0.0F);
     }
 
     public int getMessageRadius() {
@@ -489,15 +466,13 @@ public abstract class Boss extends Equipable implements Healable {
         if (topDamage.size() > 0) {
             Player most = topDamage.get(0);
             if (most != null) {
-                Bukkit.getPluginManager().callEvent((Event)new CustomCosmicPlayerEvent(most, "BOSS_TOP_DAMAGE", new Object[] { this.bossType.name(), getEntity() }));
+                Bukkit.getPluginManager().callEvent(new CustomCosmicPlayerEvent(most, "BOSS_TOP_DAMAGE", new Object[] { this.bossType.name(), getEntity() }));
             }
         }
         Random random = new Random();
         int placement = 1;
         for (Player player : topDamage) {
-            boolean noRoom = false;
-            if (title != null && this.random.nextInt(100) == 0 && !addItem(player, title))
-                noRoom = true;
+            boolean noRoom = title != null && this.random.nextInt(100) == 0 && !addItem(player, title);
             int coinsAmount = random.nextInt(250 - 100) + 100;
             MobcoinAPI.addMobcoins(player, coinsAmount);
             player.sendMessage(CC.translate("&6&l+ &6⛃&e" + coinsAmount));
@@ -514,12 +489,12 @@ public abstract class Boss extends Equipable implements Healable {
                 (new BukkitRunnable() {
                     public void run() {
                         if (player.isValid())
-                            player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new items in your " + ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "/collect" + ChatColor.YELLOW + " stash!");
+                            player.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new items in your " + ChatColor.YELLOW + ChatColor.BOLD + ChatColor.UNDERLINE + "/collect" + ChatColor.YELLOW + " stash!");
                     }
-                }).runTaskLater((Plugin)CosmicBosses.getInstance(), 5L);
+                }).runTaskLater(CosmicBosses.getInstance(), 5L);
             if (!itemsReceived.isEmpty())
                 loot.put(player.getUniqueId(), itemsReceived);
-            Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + player.getName() + " bossKills 1");
+            //Bukkit.dispatchCommand((CommandSender)Bukkit.getConsoleSender(), "contest add " + player.getName() + " bossKills 1");
         }
         if (getLootPool().size() > 0) {
             Bukkit.getLogger().info("Found left over loot: " + getLootPool());
@@ -535,9 +510,9 @@ public abstract class Boss extends Equipable implements Healable {
                     (new BukkitRunnable() {
                         public void run() {
                             if (pl.isValid())
-                                pl.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new items in your " + ChatColor.YELLOW + ChatColor.BOLD.toString() + ChatColor.UNDERLINE.toString() + "/collect" + ChatColor.YELLOW + " stash!");
+                                pl.sendMessage(ChatColor.YELLOW + ChatColor.BOLD.toString() + "(!) " + ChatColor.YELLOW + "You have new items in your " + ChatColor.YELLOW + ChatColor.BOLD + ChatColor.UNDERLINE + "/collect" + ChatColor.YELLOW + " stash!");
                         }
-                    }).runTaskLater((Plugin)CosmicBosses.getInstance(), 5L);
+                    }).runTaskLater(CosmicBosses.getInstance(), 5L);
                 loot.put(pl.getUniqueId(), lootGiven);
             }
         }
@@ -578,7 +553,7 @@ public abstract class Boss extends Equipable implements Healable {
             String centered = StringUtils.getCenteredMessage(ChatColor.RED + "You did not do enough damage to earn loot!");
             for (Map.Entry<Player, Integer> players : playerMap.entrySet()) {
                 Player pl = players.getKey();
-                if (((Integer)players.getValue()).intValue() < minRequiredDamage) {
+                if (players.getValue().intValue() < minRequiredDamage) {
                     pl.sendMessage(centered);
                     continue;
                 }
@@ -613,7 +588,7 @@ public abstract class Boss extends Equipable implements Healable {
                 percent = 100;
             }
             sent++;
-            String message = ChatColor.GREEN + ChatColor.BOLD.toString() + ++index + ". " + ChatColor.GREEN + topDamageDealer.getName() + ChatColor.GREEN + ChatColor.BOLD.toString() + " - " + this.format.format(percent) + "%";
+            String message = ChatColor.GREEN + ChatColor.BOLD.toString() + ++index + ". " + ChatColor.GREEN + topDamageDealer.getName() + ChatColor.GREEN + ChatColor.BOLD + " - " + this.format.format(percent) + "%";
             if (items.containsKey(topDamageDealer.getUniqueId()))
                 message = message + " - " + getLootString(items.get(topDamageDealer.getUniqueId()));
             p.sendMessage(StringUtils.getCenteredMessage(message));
@@ -631,7 +606,7 @@ public abstract class Boss extends Equipable implements Healable {
                     percent = 100;
                 }
                 index++;
-                String message = StringUtils.getCenteredMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + index + ". " + ChatColor.GREEN + pl.getName() + ChatColor.GREEN + ChatColor.BOLD.toString() + " - " + this.format.format(percent) + "%");
+                String message = StringUtils.getCenteredMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + index + ". " + ChatColor.GREEN + pl.getName() + ChatColor.GREEN + ChatColor.BOLD + " - " + this.format.format(percent) + "%");
                 p.sendMessage(message);
                 shown++;
             }
@@ -639,16 +614,16 @@ public abstract class Boss extends Equipable implements Healable {
     }
 
     public String getLootString(List<ItemStack> items) {
-        return ChatColor.GOLD.toString() + ChatColor.BOLD.toString() + "OP Key" + "";
+        return ChatColor.GOLD.toString() + ChatColor.BOLD + "OP Key";
     }
 
     public LinkedList<Player> getTopDamage(int amount, boolean checkDamage) {
         LinkedList<Player> topPlayer = new LinkedList<>();
         LinkedHashMap<UUID, Integer> sortedMap = MapUtils.sortByComparator(getDamageTracker(), false, amount);
-        int minRequiredDamage = (int)(getTotalDamageTaken((Map<Player, Integer>)null) * 0.1D);
+        int minRequiredDamage = (int)(getTotalDamageTaken(null) * 0.1D);
         System.out.println("Min REquired DAmage: " + minRequiredDamage);
         for (Map.Entry<UUID, Integer> uuid : sortedMap.entrySet()) {
-            if (topPlayer.size() < amount && (!checkDamage || ((Integer)uuid.getValue()).intValue() > minRequiredDamage)) {
+            if (topPlayer.size() < amount && (!checkDamage || uuid.getValue().intValue() > minRequiredDamage)) {
                 Player p = Bukkit.getPlayer(uuid.getKey());
                 if (p == null)
                     continue;
@@ -662,10 +637,10 @@ public abstract class Boss extends Equipable implements Healable {
         int totalDamage = 0;
         if (playerMap != null) {
             for (Map.Entry<Player, Integer> entry : playerMap.entrySet())
-                totalDamage += ((Integer)entry.getValue()).intValue();
+                totalDamage += entry.getValue().intValue();
         } else {
             for (Map.Entry<UUID, Integer> entry2 : getDamageTracker().entrySet())
-                totalDamage += ((Integer)entry2.getValue()).intValue();
+                totalDamage += entry2.getValue().intValue();
         }
         return totalDamage;
     }
@@ -752,9 +727,9 @@ public abstract class Boss extends Equipable implements Healable {
 
     private List<Entity> minions;
 
-    private LinkedList<ItemStack> lootPool;
+    private final LinkedList<ItemStack> lootPool;
 
-    private DamageTracker damageTracker;
+    private final DamageTracker damageTracker;
 
     private Phase phase;
 
@@ -768,7 +743,7 @@ public abstract class Boss extends Equipable implements Healable {
 
     protected AntiFarm antiFarm;
 
-    private BossType bossType;
+    private final BossType bossType;
 
     private boolean naturallySpawned;
 
@@ -776,7 +751,7 @@ public abstract class Boss extends Equipable implements Healable {
 
     DecimalFormat format;
 
-    private int totalPlayerDamageReceived;
+    private final int totalPlayerDamageReceived;
 
     public abstract EntityType getEntityType();
 
