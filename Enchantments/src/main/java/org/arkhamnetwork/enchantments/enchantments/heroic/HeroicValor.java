@@ -1,13 +1,14 @@
 package org.arkhamnetwork.enchantments.enchantments.heroic;
 
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class HeroicValor extends HeroicCustomEnchantment
 {
@@ -22,7 +23,7 @@ public class HeroicValor extends HeroicCustomEnchantment
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("neutralized"))
+        if (player.hasMetadata("neutralized") && Math.random() < 0.1)
             return;
 
 
@@ -31,7 +32,8 @@ public class HeroicValor extends HeroicCustomEnchantment
                 return;
             }
         }
-        double damage_negation = level * 0.015D;
+        //double damage_negation = level * 0.015D;
+        double damage_negation = level * 0.013D;
         double hp_threshold = (level * 5 + 6);
 
         if (attacker instanceof Player && AstroItemSkinsAPI.hasSkinEquipped((Player) attacker, SkinType.BACK_TO_SCHOOL_2021_BELT)) {

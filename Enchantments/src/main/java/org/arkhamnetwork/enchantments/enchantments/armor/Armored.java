@@ -25,7 +25,7 @@ public class Armored extends CustomEnchantment
             return;
         }
 
-        if (player.hasMetadata("neutralized") && Math.random() < 0.5) {
+        if (player.hasMetadata("neutralized") && Math.random() < 0.3) {
             return;
         }
 

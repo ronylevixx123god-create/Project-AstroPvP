@@ -1,28 +1,25 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
 
-import com.cosmicpvp.cosmicutils.utils.ParticleEffect;
+import com.cosmicpvp.cosmicutils.utils.CC;
+import com.rit.sucy.CustomEnchantment;
+import com.rit.sucy.EnchantmentAPI;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import me.astropvp.astropvpskins.objects.skins.axes.GoldenAdmirer;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
-import org.arkhamnetwork.enchantments.util.*;
+import org.arkhamnetwork.enchantments.Enchantments;
+import org.arkhamnetwork.enchantments.events.CustomEnchantProcOnEntityEvent;
+import org.arkhamnetwork.enchantments.util.DamageIndicatorUtils;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import com.rit.sucy.*;
-import me.ifamasssxd.cosmicmasks.*;
-import org.arkhamnetwork.enchantments.*;
-import org.bukkit.scheduler.*;
-import com.google.common.collect.*;
-import org.bukkit.entity.*;
-
-import java.util.*;
-
-import org.bukkit.plugin.*;
-import org.arkhamnetwork.enchantments.events.*;
-import org.bukkit.metadata.*;
-import org.bukkit.*;
-import com.cosmicpvp.cosmicutils.utils.*;
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.Sound;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.metadata.FixedMetadataValue;
+import org.bukkit.plugin.Plugin;
 
 public class Silence extends CustomEnchantment {
     public Silence() {
@@ -75,7 +72,7 @@ public class Silence extends CustomEnchantment {
             return false;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.CORRUPT_HELMET) ) {
-            durationTicks /= 2.0;
+            durationTicks /= 1.5;
         }
         if (AstroItemSkinsAPI.hasSkinEquipped(target, SkinType.SUMMER_2021_HELMET)) {
             durationTicks *= 0.6;

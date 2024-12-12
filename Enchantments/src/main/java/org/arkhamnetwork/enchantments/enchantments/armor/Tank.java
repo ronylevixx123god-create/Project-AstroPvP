@@ -1,15 +1,15 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.rit.sucy.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.rit.sucy.CustomEnchantment;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.util.*;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.inventory.*;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class Tank extends CustomEnchantment
 {
@@ -25,7 +25,7 @@ public class Tank extends CustomEnchantment
             return;
         }
 
-        if (player.hasMetadata("neutralized"))
+        if (player.hasMetadata("neutralized") && Math.random() < 0.1)
             return;
 
         if (attacker == null) return;

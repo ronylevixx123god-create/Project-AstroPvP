@@ -1,5 +1,10 @@
 package net.astropvp.core.items;
 
+import club.minnced.discord.webhook.WebhookClient;
+import club.minnced.discord.webhook.WebhookClientBuilder;
+import club.minnced.discord.webhook.send.WebhookEmbed;
+import club.minnced.discord.webhook.send.WebhookEmbedBuilder;
+import club.minnced.discord.webhook.send.WebhookMessageBuilder;
 import com.cosmicpvp.cosmicutils.exceptions.CosmicException;
 import com.cosmicpvp.cosmicutils.exceptions.PrefixedException;
 import com.cosmicpvp.cosmicutils.nbt.NBTTagCompoundBuilder;
@@ -10,7 +15,7 @@ import me.ifamasssxd.cosmicskycustoms.struct.CosmicItem;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryInteractable;
 import me.ifamasssxd.cosmicskycustoms.struct.InventoryItemType;
 import me.ily2bb.slotbot.utils.Utils;
-import net.minecraft.server.v1_8_R3.NBTBase;
+import net.astropvp.core.utils.TimeUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -25,10 +30,10 @@ public class GalaxyRank extends CosmicItem implements InventoryInteractable {
 
     public ItemStack createItem(Player player, Object ... objects) {
         ItemStack itemStack = this.applyItemData((new ItemBuilder(Material.NETHER_STAR, CC.translate("&f&l<&f&k;&r&c&lG&6&lA&e&lL&a&lA&b&lX&d&lY&f&k;&f&l>&c&l RANK &f&l&oVoucher &7(Right Click)")
-                , CC.Gray + ""
+                , CC.Gray
                 , CC.translate("&7&nRight-Click&7 to unlock"),
                 CC.translate("&7the &f&l<&f&k;&r&c&lG&6&lA&e&lL&a&lA&b&lX&d&lY&f&k;&f&l> &7rank on this server!"),
-                CC.Gray + "",
+                CC.Gray,
                 CC.translate("&c&lGalaxy Perks"),
                 CC.translate("&c&l* &fAll Nebula Perks"),
                 CC.translate("&c&l* &fNebula shop is FREE"),
@@ -88,7 +93,7 @@ public class GalaxyRank extends CosmicItem implements InventoryInteractable {
         cosmicData.setInt("galaxyRank", 1);
         event.setCancelled(true);
         player.setItemInHand(null);
-        wrapper.setNBTBase("conaxData", (NBTBase)cosmicData.get());
+        wrapper.setNBTBase("conaxData", cosmicData.get());
         item = wrapper.build();
 
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "lp user " + player.getName() + " parent set galaxy");
@@ -101,6 +106,41 @@ public class GalaxyRank extends CosmicItem implements InventoryInteractable {
         Bukkit.broadcastMessage(CC.translate("&8[&6&lAstro&f&lPvP&8] &c" + player.getName() + "&f has unlocked the &f&l<&f&k;&r&c&lG&6&lA&e&lL&a&lA&b&lX&d&lY&f&k;&f&l>&c&l Rank&f!"));
         Bukkit.broadcastMessage(CC.translate("&7Purchase this rank on &f&nbuy.astropvp.net&7! (/buy)"));
         Bukkit.broadcastMessage("");
+
+        sendWebHook(player.getName(), System.currentTimeMillis(), "Galaxy Rank");
+    }
+
+
+    private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1316690017195655168/KSsoCSg0jin0Vu61ih3YZ7lbHAUkri7MnLNI1_XFffM1FdzXUv-Cq2FK6XTVA6ipnLkV";
+
+    public void sendWebHook(String playerName, long dupedAt, String itemName) {
+        WebhookClientBuilder builder = new WebhookClientBuilder(DISCORD_WEBHOOK_URL); // or id, token
+
+        builder.setThreadFactory((job) -> {
+            Thread thread = new Thread(job);
+            thread.setName("Rank Claim");
+            thread.setDaemon(true);
+            return thread;
+        });
+
+        builder.setWait(true);
+
+        WebhookClient client = builder.build();
+
+
+        WebhookEmbed embed = new WebhookEmbedBuilder()
+                .setColor(0X610000)
+                .setTitle(new WebhookEmbed.EmbedTitle("**Rank Claim - " + itemName + "**", null))
+                .setFooter(new WebhookEmbed.EmbedFooter("Claimed At: | " + TimeUtils.formatTimeMillis(dupedAt), null))
+                .setDescription("**Player:** `" + playerName + "`\n" + "**Rank:** `" + itemName)
+                .build();
+
+        WebhookMessageBuilder idBuilder = new WebhookMessageBuilder();
+        idBuilder.setUsername("Rank Claim");
+        idBuilder.setAvatarUrl("https://cdn.discordapp.com/avatars/1202888199903641640/cad565e0a6bcd051ce0fd36b70c1f023.webp");
+        idBuilder.addEmbeds(embed);
+
+        client.send(idBuilder.build());
     }
 }
 

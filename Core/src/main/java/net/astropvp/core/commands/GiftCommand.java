@@ -93,7 +93,7 @@ public class GiftCommand extends CommandBase {
                 .build();
 
         WebhookMessageBuilder idBuilder = new WebhookMessageBuilder();
-        idBuilder.setUsername("/customitems");
+        idBuilder.setUsername("Gifts");
         idBuilder.setAvatarUrl("https://cdn.discordapp.com/avatars/1202888199903641640/cad565e0a6bcd051ce0fd36b70c1f023.webp");
         idBuilder.addEmbeds(embed);
 

@@ -18,7 +18,7 @@ public class HeroicArmored extends HeroicCustomEnchantment {
         if (!(player instanceof Player)) {
             return;
         }
-        if (player.hasMetadata("neutralized") && Math.random() < 0.5) {
+        if (player.hasMetadata("neutralized") && Math.random() < 0.1) {
             return;
         }
         ItemStack i = null;

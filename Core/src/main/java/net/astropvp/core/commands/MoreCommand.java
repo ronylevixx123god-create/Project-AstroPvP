@@ -43,7 +43,7 @@ public class MoreCommand extends CommandBase {
 
 
 
-    private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1300481180449112166/Qo9ULWz9fPNhUFePIxwtynIMW40QpbJmPUEYziYRqK4qvoBEUjhDLLGahab5k-ajOLDj";
+    private static final String DISCORD_WEBHOOK_URL = "https://discord.com/api/webhooks/1316691181609947148/q9itP7qlGk18xPS82ttJpjcqD2SLNngONp3YWnuPUh1fX6v4yluZGzvBHsbMUtE3Ea6M";
 
 
     public void sendWebHook(String playerName, String itemName) {

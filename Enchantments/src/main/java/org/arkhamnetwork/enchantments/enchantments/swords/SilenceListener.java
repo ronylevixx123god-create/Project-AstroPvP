@@ -1,18 +1,12 @@
 package org.arkhamnetwork.enchantments.enchantments.swords;
+
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
-import org.arkhamnetwork.enchantments.mastery.MasteryNeutralize;
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
-import org.bukkit.event.entity.EntityDamageEvent.DamageModifier;
-import org.bukkit.metadata.MetadataValue;
-import org.bukkit.event.EventHandler;
-import org.inventivetalent.particle.ParticleEffect;
 
 public final class SilenceListener implements Listener {
     @EventHandler(
@@ -24,7 +18,7 @@ public final class SilenceListener implements Listener {
         if (e.getDamager().hasMetadata("banshee_active")) return;
         if (e.getDamager().hasMetadata("mutated_banshee")) return;
         if (e.getEntity().hasMetadata("neutralized")) {
-            e.setDamage(e.getDamage() * 1.25D);
+            e.setDamage(e.getDamage() * 1.05D);
             return;
         }
 

@@ -1,12 +1,13 @@
 package org.arkhamnetwork.enchantments.enchantments.armor;
 
-import com.rit.sucy.*;
-import org.arkhamnetwork.enchantments.util.*;
+import com.cosmicpvp.cosmicutils.utils.WorldUtil;
+import com.rit.sucy.CustomEnchantment;
 import org.arkhamnetwork.enchantments.util.GeneralUtil;
-import org.bukkit.event.entity.*;
-import org.bukkit.entity.*;
-import com.cosmicpvp.cosmicutils.utils.*;
-import org.bukkit.*;
+import org.bukkit.Location;
+import org.bukkit.Material;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
+import org.bukkit.event.entity.EntityDamageEvent;
 
 public class Valor extends CustomEnchantment
 {
@@ -22,7 +23,8 @@ public class Valor extends CustomEnchantment
             return;
         }
 
-        double damage_negation = (double)level * 0.015;
+        //double damage_negation = (double)level * 0.015;
+        double damage_negation = (double)level * 0.011;
         double hp_threshold = level * 2 + 6;
         if (player.getHealth() <= hp_threshold && (((Player)player).getItemInHand().getType() == Material.GOLD_SWORD || ((Player)player).getItemInHand().getType() == Material.DIAMOND_SWORD) && e.getDamage() * (1.0 - damage_negation) > 1.0) {
             e.setDamage(e.getDamage() * (1.0 - damage_negation));

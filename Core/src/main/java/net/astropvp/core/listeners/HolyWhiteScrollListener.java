@@ -125,6 +125,7 @@ public class HolyWhiteScrollListener implements Listener {
                 if ((AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_MUTATED_BELT) || AstroItemSkinsAPI.hasSkinEquipped(killer, SkinType.EASTER_2022_BELT)) && !hasBeenTailed) {
                     isMonopolied = true;
                     hasBeenTailed = true;
+                    killer.sendMessage(CC.translate("&e&l* MISCHEVIOUS TAIL: &b&l100% Monopoly e&l* "));
                 }
                 boolean isTravAxe = false;
                 boolean isKilledHoldingTravAxe = false;
