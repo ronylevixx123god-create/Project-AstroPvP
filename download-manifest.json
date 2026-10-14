@@ -1,0 +1,26 @@
+{
+  "archive": "AstroPvP-Windows-Test.zip",
+  "archive_sha256": "69077d24c0faa3e3d10f4b41e79aad7c48c041df60171344a451f7dab436612b",
+  "parts": [
+    {
+      "name": "AstroPvP-Windows-Test.zip.part01",
+      "bytes": 41943040,
+      "sha256": "2ebe41ba04b9353b55c3ef6c4f4046feaab8e38377e1a351d060637a3cbb2c47"
+    },
+    {
+      "name": "AstroPvP-Windows-Test.zip.part02",
+      "bytes": 41943040,
+      "sha256": "b917a4db4a221b1facbc197b0c850db2f540b6a6eca38f503d3d38b88df9d74c"
+    },
+    {
+      "name": "AstroPvP-Windows-Test.zip.part03",
+      "bytes": 41943040,
+      "sha256": "8ec308a1582ef4ef7189dc533d9f9f570e61aef234571a4e0605ea4f68c66808"
+    },
+    {
+      "name": "AstroPvP-Windows-Test.zip.part04",
+      "bytes": 17551029,
+      "sha256": "9cafc0f52ab8133c3347012b3482813438fd3b1c1f81e6f5672969228560d5c4"
+    }
+  ]
+}
