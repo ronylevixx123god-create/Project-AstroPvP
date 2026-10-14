@@ -4,8 +4,6 @@ import com.cosmicpvp.cosmicutils.utils.CC;
 import me.astropvp.astropvpskins.AstroItemSkinsAPI;
 import me.astropvp.astropvpskins.enums.SkinType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
-import net.astropvp.core.AstroCore;
-import net.astropvp.core.utils.cache.CachedPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -34,8 +32,7 @@ public class CommandDebugArmorSet implements CommandExecutor {
 
 
     public void checkArmor(Player toCheck, Player sender) {
-        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(toCheck);
-        ArmorSetCache cache = (ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(toCheck)));
+        ArmorSetCache cache = net.astropvp.armorsets.AstroArmorSetsAPI.getArmorCache(toCheck);
 
         sender.sendMessage(CC.translate("&fChecking armorsets for: " + toCheck.getName()));
         sender.sendMessage(CC.translate("&aCurrent ArmorSet: &f" + cache.getCurrentArmorSet()));

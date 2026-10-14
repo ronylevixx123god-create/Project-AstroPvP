@@ -36,6 +36,7 @@ import org.bukkit.inventory.ItemStack;
 
 public class InternalMaskListener
 implements Listener {
+    @EventHandler(priority=EventPriority.MONITOR)
     public void onPlayerEquip(PlayerInteractEvent event) {
         if (event.hasItem() && event.getItem() != null && GeneralUtil.isArmor((ItemStack)event.getItem())) {
             MaskType.scheduleRescan(event.getPlayer());

@@ -8,7 +8,6 @@ import net.astropvp.armorsets.struct.ArmorSet;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
-import net.astropvp.core.utils.cache.Cache;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,7 +18,8 @@ import java.util.Map;
 
 @Setter
 @Getter
-public class ArmorSetCache extends Cache {
+public class ArmorSetCache {
+    private final String name = "armor_set";
     private final Map<ArmorSetType, Integer> currentArmorSets;
     private final Map<ArmorSetType, Integer> currentSetCrystals;
     private final Map<AntiMkit, Integer> currentAntiMkitCrystals;
@@ -31,7 +31,6 @@ public class ArmorSetCache extends Cache {
     private final Player player;
 
     public ArmorSetCache(Player player) {
-        super("armor_set");
         this.player = player;
         this.currentArmorSets = new HashMap<>();
         this.currentSetCrystals = new HashMap<>();

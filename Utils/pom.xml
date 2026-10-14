@@ -34,9 +34,11 @@
 
 
         <dependency>
-            <groupId>com.sk89q</groupId>
-            <artifactId>worldguard</artifactId>
-            <scope>provided</scope>
+            <groupId>legacy.bundled</groupId>
+            <artifactId>worldguard-cosmic-api</artifactId>
+            <version>cosmicpvp-5.9</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../HotFix/lib/WorldGuard.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -56,6 +58,7 @@
             <artifactId>item-nbt-api-plugin</artifactId>
             <version>2.9.2</version>
 
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>dev.triumphteam</groupId>
@@ -66,6 +69,7 @@
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>net.luckperms</groupId>
@@ -143,7 +147,7 @@
             <systemPath>${project.basedir}/lib/mcMMO.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>net.astropvp</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Lootboxes</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -257,7 +261,7 @@
             <systemPath>${project.basedir}/lib/CosmicMasks.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>net.astropvp</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Core</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -286,12 +290,29 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>legacy.bundled</groupId>
+            <artifactId>faction-points</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/CosmicFactionPoints.jar</systemPath>
+        </dependency>
     </dependencies>
 
     <build>
         <defaultGoal>clean install</defaultGoal>
         <finalName>CosmicPvPUtils</finalName>
         <plugins>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.4.1</version>
+                <configuration>
+                    <forceCreation>true</forceCreation>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>

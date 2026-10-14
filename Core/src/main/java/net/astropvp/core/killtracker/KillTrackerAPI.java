@@ -52,7 +52,8 @@ public class KillTrackerAPI {
 
     public static void removeSoulsFromGems(Player p, int amount) {
         PlayerSubtractSoulsEvent soulsEvent = new PlayerSubtractSoulsEvent(p, amount);
-        if (!soulsEvent.callEvent()) {
+        org.bukkit.Bukkit.getPluginManager().callEvent(soulsEvent);
+        if (soulsEvent.isCancelled()) {
             return;
         }
         int to_remove = amount = soulsEvent.getSoulsToSubtract();

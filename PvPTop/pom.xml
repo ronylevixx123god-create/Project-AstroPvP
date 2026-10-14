@@ -19,6 +19,7 @@
     </properties>
 
     <dependencies>
+        <dependency><groupId>dev.triumphteam</groupId><artifactId>triumph-gui</artifactId><version>3.1.2</version></dependency>
         <dependency>
             <groupId>net.astropvp</groupId>
             <artifactId>utils</artifactId>
@@ -63,4 +64,4 @@
         </dependency>
     </dependencies>
 
-</project>
+<build><plugins><plugin><groupId>org.apache.maven.plugins</groupId><artifactId>maven-shade-plugin</artifactId><version>3.2.4</version><executions><execution><phase>package</phase><goals><goal>shade</goal></goals></execution></executions><configuration><createDependencyReducedPom>false</createDependencyReducedPom><relocations><relocation><pattern>dev.triumphteam.gui</pattern><shadedPattern>net.crankedpvp.pvptop.internal.gui</shadedPattern></relocation></relocations></configuration></plugin></plugins></build></project>

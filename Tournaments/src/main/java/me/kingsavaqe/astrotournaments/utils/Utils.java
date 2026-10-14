@@ -32,12 +32,19 @@ public class Utils {
 
     public static Location getLocationFromString(String string) {
         String[] arg = string.split(",");
-        double[] parsed = new double[5];
-        for (int a = 0; a < 5; a++) {
-            parsed[a] = Double.parseDouble(arg[a + 1]);
+        if (arg.length != 4 && arg.length != 6) {
+            throw new IllegalArgumentException("Location must contain world,x,y,z[,yaw,pitch]: " + string);
         }
-
-        return new Location(Bukkit.getWorld(arg[0]), parsed[0], parsed[1], parsed[2], (float) parsed[3], (float) parsed[4]);
+        World world = Bukkit.getWorld(arg[0]);
+        if (world == null) {
+            throw new IllegalArgumentException("Configured tournament world is not loaded: " + arg[0]);
+        }
+        double x = Double.parseDouble(arg[1]);
+        double y = Double.parseDouble(arg[2]);
+        double z = Double.parseDouble(arg[3]);
+        float yaw = arg.length == 6 ? Float.parseFloat(arg[4]) : 0F;
+        float pitch = arg.length == 6 ? Float.parseFloat(arg[5]) : 0F;
+        return new Location(world, x, y, z, yaw, pitch);
     }
 
     public static String getProperCase(String text) {

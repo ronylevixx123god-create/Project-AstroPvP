@@ -157,6 +157,11 @@ public class AstroCore extends JavaPlugin {
 
     @SneakyThrows
     public void onEnable() {
+        if (!Bukkit.getPluginManager().isPluginEnabled("FactionsKore")) {
+            getLogger().severe("AstroCore requires authorized, enabled FactionsKore for original shield gameplay; resolve license/IP validation first");
+            Bukkit.getPluginManager().disablePlugin(this);
+            return;
+        }
         instance = this;
         this.gson = StoragePlugin.getInstance()
                 .getGson()
@@ -278,6 +283,7 @@ public class AstroCore extends JavaPlugin {
 
     @SneakyThrows
     public void onDisable() {
+        if (this.staffManager == null) return;
         this.staffManager.getPlayersInStaffMode().forEach((player, staffMode) -> staffMode.removePlayerFromStaffMode());
 
         //this.staffModeManager.toggleOffAllStaffModes();

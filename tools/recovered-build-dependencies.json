@@ -1,0 +1,74 @@
+[
+  {
+    "group": "org.spigotmc",
+    "artifact": "spigot-api",
+    "version": "1.16.2-R0.1-SNAPSHOT",
+    "path": "/workspace/project-repair-next/spigot-api-1.16.2.jar",
+    "sha256": "2a792bb6ba7f6f53b5ae64b564aa21812acb3befccbb4c735d219335209b7f2e"
+  },
+  {
+    "group": "io.papermc",
+    "artifact": "paperlib",
+    "version": "1.0.4",
+    "path": "/workspace/project-repair-next/paperlib-1.0.4.jar",
+    "sha256": "3abac195af3cb0fdb68f640fa6b6896ad18b26330485bacd771b8f43f968df2c"
+  },
+  {
+    "group": "net.milkbowl.vault",
+    "artifact": "VaultAPI",
+    "version": "1.7",
+    "path": "/workspace/project-repair/recovered-api/VaultAPI.jar",
+    "sha256": "5def58e5ddcd134d1eb13c6e1262076f5a17851cb5eb67de7c95809a483cd5b6"
+  },
+  {
+    "group": "org.spongepowered",
+    "artifact": "configurate-hocon",
+    "version": "3.6.1",
+    "path": "/workspace/project-repair-next/configurate-build/target/configurate-hocon-3.6.1.jar",
+    "sha256": "948b4054901b4fa1dcc8c8e0e63f0130ba5fb70ed77721581aaca0b12f292c68",
+    "pom": "/workspace/project-repair-next/configurate-build/pom.xml",
+    "pom_sha256": "11459b66c9e6f068043f3f55c23f5de9130483c1dba006f5060fb0f27ed2f067"
+  },
+  {
+    "group": "net.kyori",
+    "artifact": "adventure-text-minimessage",
+    "version": "4.2.0-SNAPSHOT",
+    "path": "/workspace/project-repair-next/minimessage-4.2.0-SNAPSHOT.jar",
+    "sha256": "18ca76c9646be41a163afcd36df0719ae9f45670c9636366b9dfc460a66486a8"
+  },
+  {
+    "group": "org.kitteh",
+    "artifact": "cardboardbox",
+    "version": "0.2.2",
+    "path": "/workspace/project-repair-next/cardboardbox-0.2.2.jar",
+    "sha256": "68d92547ecdd5bd2453f34089ddeaa03b0812f504328bf62b4c8517e0e14a7a6"
+  },
+  {
+    "group": "me.clip",
+    "artifact": "placeholderapi",
+    "version": "2.10.6",
+    "path": "/workspace/project-repair-next/PlaceholderAPI/target/PlaceholderAPI-2.10.6.jar",
+    "sha256": "7f2c54672bc5492b454ac2783efa058139086c0a911c18d58da700246f735558"
+  },
+  {
+    "group": "org.bstats",
+    "artifact": "bstats-bukkit",
+    "version": "1.4",
+    "path": "/workspace/project-repair-next/bstats-bukkit-1.4.jar",
+    "sha256": "644877bedcd573d22e7fa26fd58424a96e2af5ff5ef9cf8fea806c939ff86c8c"
+  },
+  {
+    "group": "org.bstats",
+    "artifact": "bstats-bukkit",
+    "version": "1.5",
+    "path": "/workspace/project-repair-next/bstats-bukkit-1.5.jar",
+    "sha256": "3339adcb522b73bda1ff9782336dbbc0fe13f509e58df348bc9788c777081062"
+  },
+  {
+    "group": "co.aikar",
+    "artifact": "acf-paper",
+    "version": "0.5.0-SNAPSHOT",
+    "path": "/workspace/project-repair-next/acf-paper-complete.jar",
+    "sha256": "5159005df05e715846910b2cdebc4bece3c53af9f3cfa6a2ac433bbb82aae458"
+  }
+]

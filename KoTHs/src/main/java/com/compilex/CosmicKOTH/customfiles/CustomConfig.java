@@ -46,9 +46,11 @@ public class CustomConfig {
     public static Map<String, Integer> load() {
         Map<String, Integer> kothWins = new HashMap<>();
         try {
-            for (String key : customFile.getConfigurationSection("kothWins.").getKeys(false)) {
+            org.bukkit.configuration.ConfigurationSection section = customFile.getConfigurationSection("kothWins");
+            if (section == null) return kothWins;
+            for (String key : section.getKeys(false)) {
                 if (key == null) continue;
-                int wins = customFile.getInt("kothWins." + Integer.parseInt(key));
+                int wins = section.getInt(key);
                 kothWins.put(key, wins);
             }
             return kothWins;

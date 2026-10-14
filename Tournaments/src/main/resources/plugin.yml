@@ -5,3 +5,5 @@ author: KingSavaqe
 depend:
   - AstroKillCounters
   - StorageUtil
+softdepend:
+  - Multiverse-Core

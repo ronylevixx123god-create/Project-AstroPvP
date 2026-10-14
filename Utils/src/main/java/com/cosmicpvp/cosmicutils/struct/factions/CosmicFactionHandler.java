@@ -124,7 +124,7 @@ public class CosmicFactionHandler extends FactionHandler {
     public Map<String, Map<String, String>> dumpAsSaveFormat() {
         try {
             Method saveFormat = ReflectionUtils.getMethod(Board.class, "dumpAsSaveFormat");
-            return (Map) saveFormat.invoke(null, new Object[0]);
+            return (Map) saveFormat.invoke(java.lang.reflect.Modifier.isStatic(saveFormat.getModifiers()) ? null : Board.getInstance(), new Object[0]);
         } catch (Exception e) {
             e.printStackTrace();
             return new HashMap<String, Map<String, String>>();

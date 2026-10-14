@@ -27,13 +27,16 @@ public class SantaMask extends CosmicMask {
         if (player.getWorld().getName().equals("world_outpost_pluto")) {
             return;
         }
-        if (!modifyStoredEffect(player, PotionEffectType.HEALTH_BOOST, false))
-
+        if (modifyStoredEffect(player, PotionEffectType.HEALTH_BOOST, false)) {
+            PlayerPotionEffects.getTrackedPotionEffects(player).applyPotionEffects(false);
+        } else {
             player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, 0), true);
+        }
     }
 
     public void onUnequip(Player player) {
-        if (modifyStoredEffect(player, PotionEffectType.HEALTH_BOOST, true)) {
+        boolean storedEffectReset = modifyStoredEffect(player, PotionEffectType.HEALTH_BOOST, true);
+        if (storedEffectReset || hasEffect(player, PotionEffectType.HEALTH_BOOST, 0, false)) {
             player.removePotionEffect(PotionEffectType.HEALTH_BOOST);
             Bukkit.getLogger().info("[Santa Mask] Unequipping health boost from santa mask for " + player.getName());
         }
@@ -63,7 +66,7 @@ public class SantaMask extends CosmicMask {
         } catch (Exception exception) {}
         if (!player.hasPotionEffect(PotionEffectType.HEALTH_BOOST)) {
             int storedMmax = getMaxActivePotionLevel(player);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, (storedMmax == -1) ? 0 : 0),
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, (storedMmax == -1) ? 0 : storedMmax),
                     true);
             return;
         }
@@ -82,10 +85,13 @@ public class SantaMask extends CosmicMask {
                     }
                 }
             }
+        if (detectedNew) {
+            effects.applyPotionEffects(false);
+        }
         if ((!detectedNew && hasEffect(player, PotionEffectType.HEALTH_BOOST, 0, false)) || (
                 !detectedNew && !player.hasPotionEffect(PotionEffectType.HEALTH_BOOST))) {
             int stored = getMaxActivePotionLevel(player);
-            player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, (stored == -1) ? 0 : 0), true);
+            player.addPotionEffect(new PotionEffect(PotionEffectType.HEALTH_BOOST, 200, (stored == -1) ? 0 : stored), true);
         }
     }
 }

@@ -12,7 +12,6 @@ import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.struct.sets.TravelerArmorSet;
 import net.astropvp.armorsets.utils.config.ConfigManager;
-import net.astropvp.core.AstroCore;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.FallingBlock;
@@ -51,7 +50,7 @@ public class ArmorSetDamageListener implements Listener {
 
         ArmorSetCache cache;
         if (attacker instanceof Player) {
-            cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
+            cache = AstroArmorSetsAPI.getArmorCache((Player) attacker);
             if (cache.getCurrentArmorSet() != null) {
                 cache.getCurrentArmorSet().getArmorSet().onAttack((Player) attacker, attacked, e);
             }
@@ -120,7 +119,7 @@ public class ArmorSetDamageListener implements Listener {
         }
         ArmorSetCache cache;
         if (attacker instanceof Player && attacked instanceof Player) {
-            cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");
+            cache = AstroArmorSetsAPI.getArmorCache((Player) attacked);
             //armor set damaged
             if (cache != null && cache.getCurrentArmorSet() != null) {
                 cache.getCurrentArmorSet().getArmorSet().onDamaged(attacker, (Player) attacked, e);
@@ -168,8 +167,8 @@ public class ArmorSetDamageListener implements Listener {
         ArmorSetCache cacheAttacker;
         ArmorSetCache cacheAttacked;
         if (attacker instanceof Player && attacked instanceof Player) {
-            cacheAttacker = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacker).getCache("armor_set");
-            cacheAttacked = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer((Player) attacked).getCache("armor_set");
+            cacheAttacker = AstroArmorSetsAPI.getArmorCache((Player) attacker);
+            cacheAttacked = AstroArmorSetsAPI.getArmorCache((Player) attacked);
 
             //add armorset pvpladder multi
 

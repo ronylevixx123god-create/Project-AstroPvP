@@ -80,6 +80,11 @@ implements Rerollable {
 
     @Override
     public void loadData(String data) {
+        if (data == null || data.isEmpty()) {
+            this.reroll();
+            return;
+        }
+        SkillType.valueOf(data);
         this.setSkillName(data);
     }
 

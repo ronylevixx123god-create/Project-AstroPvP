@@ -45,6 +45,7 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
     private final List<SkinType> bannedSkins;
     private final List<ArmorSetType> currentArmorCrystal;
+    private me.kingsavaqe.astrotournaments.tasks.TournamentStartTask startTask;
     private boolean active;
     private boolean joinable;
     private Location waitingRoomLocation;
@@ -78,26 +79,29 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
 
         Queue<TournamentPlayer> playersInTournament = getPlayerQueue();
 
+        if (!active || joinable) return;
+        if (tournamentParticipants.isEmpty()) { end(); return; }
+        if (astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size() == 1) {
+            TournamentPlayer winnerTournamentPlayer = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(0);
+            Player winner = winnerTournamentPlayer.getPlayer();
+            Bukkit.broadcastMessage("");
+            Bukkit.broadcastMessage(Utils.fixColor("&6&lAstro&f&lPvP &6&lTournaments"));
+            Bukkit.broadcastMessage(Utils.fixColor(" &f&l* &fTournament Winner: &e" + winner.getName()));
+            Bukkit.broadcastMessage("");
+            astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().clear();
+            astroTournamentsPlugin.getTournamentManager().getPlayerQueue().clear();
+            astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
+            astroTournamentsPlugin.getTournamentManager().setJoinable(false);
+            astroTournamentsPlugin.getTournamentManager().setActive(false);
+            winner.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
+            winnerTournamentPlayer.increaseWins();
+            winnerTournamentPlayer.setInTournament(false);
+            winnerTournamentPlayer.setPendingTournamentRewards(winnerTournamentPlayer.getPendingTournamentRewards() + 1);
+            saveAll();
+            deliverPendingRewards(winnerTournamentPlayer);
+            return;
+        }
         this.astroTournamentsPlugin.getArenaRegister().getArenas().values().forEach(arena -> {
-
-            if (astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().size() == 1) {
-                TournamentPlayer winnerTournamentPlayer = astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().get(0);
-                Player winner = winnerTournamentPlayer.getPlayer();
-                Bukkit.broadcastMessage("");
-                Bukkit.broadcastMessage(Utils.fixColor("&6&lAstro&f&lPvP &6&lTournaments"));
-                Bukkit.broadcastMessage(Utils.fixColor(" &f&l* &fTournament Winner: &e" + winner.getName()));
-                Bukkit.broadcastMessage("");
-                astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().clear();
-                astroTournamentsPlugin.getTournamentManager().getPlayerQueue().clear();
-                astroTournamentsPlugin.getTournamentManager().getTournamentParticipants().clear();
-                astroTournamentsPlugin.getTournamentManager().setJoinable(false);
-                astroTournamentsPlugin.getTournamentManager().setActive(false);
-                winner.teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
-                winner.getInventory().addItem(CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox").createClaimableItem(false));
-                winnerTournamentPlayer.increaseWins();
-                winnerTournamentPlayer.setInTournament(false);
-                return;
-            }
 
             if (!arena.isInUse() && playersInTournament.size() >= 2) {
 
@@ -105,29 +109,51 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
                 TournamentPlayer player2 = playersInTournament.dequeue();
                 arena.setCurrentlyFighting(new Pair<>(player1, player2));
                 arena.setInUse(true);
-                this.astroTournamentsPlugin.getTournamentManager().getTournamentMatchList().add(new TournamentMatch(player1, player2, arena));
+                TournamentMatch match = new TournamentMatch(player1, player2, arena);
+                this.tournamentMatchList.add(match);
                 Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, ()-> {
-                    setupPlayer(player1, arena.getLocations().getLeft());
-                    setupPlayer(player2, arena.getLocations().getRight());
+                    if (!active || !tournamentMatchList.contains(match)) return;
+                    setupPlayer(player1, arena.getLocations().getLeft(), match);
+                    setupPlayer(player2, arena.getLocations().getRight(), match);
                 }, 40L);
             }
         });
 
     }
 
-    private void setupPlayer(TournamentPlayer tournamentPlayer, Location location) {
+    public void deliverPendingRewards(TournamentPlayer participant) {
+        Player player = participant.getPlayer();
+        if (player == null || participant.getPendingTournamentRewards() <= 0) return;
+        if (CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox") == null) {
+            astroTournamentsPlugin.getLogger().warning("Original TournamentLootbox definition is missing; retaining pending reward for " + participant.getUuid());
+            return;
+        }
+        while (participant.getPendingTournamentRewards() > 0) {
+            ItemStack reward = CosmicMysteryChest.get().getChestManager().getMysteryChestMap().get("TournamentLootbox").createClaimableItem(false);
+            if (player.getInventory().firstEmpty() == -1) return;
+            player.getInventory().addItem(reward);
+            participant.setPendingTournamentRewards(participant.getPendingTournamentRewards() - 1);
+            player.saveData();
+            saveAll();
+        }
+    }
+
+    private void setupPlayer(TournamentPlayer tournamentPlayer, Location location, TournamentMatch match) {
         Player player = tournamentPlayer.getPlayer();
+        if (player == null || !player.isOnline()) return;
         player.closeInventory();
         player.teleport(location, PlayerTeleportEvent.TeleportCause.UNKNOWN);
         player.setHealth(20);
         player.setFlying(false);
         player.setAllowFlight(false);
         Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
+            if (!active || !tournamentMatchList.contains(match) || tournamentPlayer.getPlayer() == null) return;
             tournamentPlayer.getPlayer().sendMessage(CC.translate("&a&l(!)&a You have been given your tournament set! Good Luck!"));
             giveItems(tournamentPlayer);
         }, 20L);
         Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
-            Blessed.blessPlayer(tournamentPlayer.getPlayer());
+            if (active && tournamentMatchList.contains(match) && tournamentPlayer.getPlayer() != null)
+                Blessed.blessPlayer(tournamentPlayer.getPlayer());
         }, 100L);
     }
 
@@ -207,11 +233,50 @@ public class TournamentManager extends SaveLoadManager<TournamentPlayer> {
         }
     }
 
+    /** One idempotent exit path for death, leaving, disconnect and kick. */
+    public void eliminate(TournamentPlayer loser, boolean died) {
+        if (!loser.isInTournament() && !tournamentParticipants.contains(loser)) return;
+        TournamentMatch match = null;
+        for (TournamentMatch candidate : tournamentMatchList)
+            if (candidate.getPlayerOne() == loser || candidate.getPlayerTwo() == loser) { match = candidate; break; }
+        loser.setInTournament(false);
+        if (loser.getPlayer() != null) loser.getPlayer().sendMessage(Utils.fixColor("&cYou have been eliminated from the tournament"));
+        tournamentParticipants.remove(loser);
+        playerQueue.removeFromQueue(loser);
+        if (loser.getPlayer() != null) Utils.emptyInventory(loser.getPlayer());
+        if (match == null) {
+            if (active && !joinable) putNextPlayersInArenas();
+            return;
+        }
+        TournamentPlayer winner = match.getPlayerOne() == loser ? match.getPlayerTwo() : match.getPlayerOne();
+        tournamentMatchList.remove(match);
+        match.getArena().reset();
+        for (TournamentPlayer participant : tournamentParticipants) {
+            if (participant.getPlayer() != null)
+                participant.getPlayer().sendMessage(Utils.fixColor("&6Tournaments &8| &7" + (winner.getPlayer() == null ? winner.getUuid().toString() : winner.getPlayer().getName()) + " &ehas beaten the player &7" + (loser.getPlayer() == null ? loser.getUuid() : loser.getPlayer().getName()) + " &ein a tournament match"));
+        }
+        if (died) { winner.increaseKills(); loser.increaseDeaths(); loser.increaseLosses(); }
+        if (winner.getPlayer() != null) {
+            Utils.emptyInventory(winner.getPlayer());
+            winner.getPlayer().setFireTicks(0);
+            org.arkhamnetwork.enchantments.util.GeneralUtil.healPlayer(winner.getPlayer(), winner.getPlayer().getMaxHealth());
+            winner.getPlayer().teleport(waitingRoomLocation, PlayerTeleportEvent.TeleportCause.UNKNOWN);
+        }
+        playerQueue.removeFromQueue(winner);
+        playerQueue.enqueue(winner);
+        Bukkit.getScheduler().runTaskLater(astroTournamentsPlugin, () -> {
+            if (active && !joinable) putNextPlayersInArenas();
+        }, 20L);
+    }
+
     public void end() {
+        if (startTask != null) { startTask.cancel(); startTask = null; }
+        astroTournamentsPlugin.getArenaRegister().getArenas().values().forEach(arena -> arena.reset());
         for (TournamentPlayer tournamentPlayer : getTournamentParticipants()) {
 
-            Utils.emptyInventory(tournamentPlayer.getPlayer());
             tournamentPlayer.setInTournament(false);
+            if (tournamentPlayer.getPlayer() == null) continue;
+            Utils.emptyInventory(tournamentPlayer.getPlayer());
             tournamentPlayer.getPlayer().teleport(Bukkit.getWorld("world").getSpawnLocation(), PlayerTeleportEvent.TeleportCause.UNKNOWN);
             tournamentPlayer.getPlayer().sendMessage(CC.translate("&c&l(!)&c The tournament has been force ended and you have been teleported to spawn!"));
         }

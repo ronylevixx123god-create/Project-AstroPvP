@@ -4,6 +4,5 @@ version: ${git.total.commit.count}.0
 description: "§fCommit ID: §a${git.commit.id.abbrev}"
 website: https://crankedpvp.net/
 depend:
-  - CrankedUtils
   - Factions
   - StorageUtil

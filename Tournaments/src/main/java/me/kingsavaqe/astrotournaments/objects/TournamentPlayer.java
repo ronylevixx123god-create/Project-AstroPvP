@@ -46,6 +46,8 @@ public class TournamentPlayer implements KeyToSave {
     private int deaths;
     private int tournamenWins;
     private int tournamenLosses;
+    // Persist entitlement when the original reward definition is unavailable.
+    private int pendingTournamentRewards;
 
 
     private boolean inTournament;
@@ -240,14 +242,9 @@ public class TournamentPlayer implements KeyToSave {
 
 
     public void leaveTournament() {
-        if (inTournament) {
-            if (AstroTournamentsPlugin.instance.getTournamentManager().getPlayerQueue().contains(this)) {
-                AstroTournamentsPlugin.instance.getTournamentManager().getPlayerQueue().removeFromQueue(this);
-            }
-            AstroTournamentsPlugin.instance.getTournamentManager().getTournamentParticipants().remove(this);
-            this.inTournament = false;
-        }
+        AstroTournamentsPlugin.instance.getTournamentManager().eliminate(this, false);
     }
+
 
     public void increaseKills() {
         this.kills +=1;

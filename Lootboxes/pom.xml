@@ -93,7 +93,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
             <scope>system</scope>

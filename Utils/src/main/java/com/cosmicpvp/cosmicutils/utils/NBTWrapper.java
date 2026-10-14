@@ -27,10 +27,23 @@ public class NBTWrapper {
     private ItemStack defaultItem;
     private Long foundIID;
 
+    // Spigot 1.8.8 exposes the backing stack as a package-private field, not
+    // the custom server's getHandle() method. Preserve the original shared
+    // handle so modifying existing CraftItemStacks retains its behavior.
+    private static net.minecraft.server.v1_8_R3.ItemStack getCraftHandle(CraftItemStack item) {
+        try {
+            java.lang.reflect.Field handle = CraftItemStack.class.getDeclaredField("handle");
+            handle.setAccessible(true);
+            return (net.minecraft.server.v1_8_R3.ItemStack) handle.get(item);
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Cannot access the Spigot 1.8.8 item handle", exception);
+        }
+    }
+
     public NBTWrapper(ItemStack item, boolean useDefault) {
         this.defaultItem = item;
         if (!useDefault) {
-            this.nmsItem = item instanceof CraftItemStack ? ((CraftItemStack) item).getHandle() : CraftItemStack.asNMSCopy(item);
+            this.nmsItem = item instanceof CraftItemStack ? getCraftHandle((CraftItemStack) item) : CraftItemStack.asNMSCopy(item);
             this.compound = this.nmsItem.getTag();
         }
     }
@@ -41,7 +54,7 @@ public class NBTWrapper {
     }
 
     private void load() {
-        this.nmsItem = this.defaultItem instanceof CraftItemStack ? ((CraftItemStack) this.defaultItem).getHandle() : CraftItemStack.asNMSCopy((ItemStack) this.defaultItem);
+        this.nmsItem = this.defaultItem instanceof CraftItemStack ? getCraftHandle((CraftItemStack) this.defaultItem) : CraftItemStack.asNMSCopy((ItemStack) this.defaultItem);
         this.compound = this.nmsItem.getTag();
     }
 

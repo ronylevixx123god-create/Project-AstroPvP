@@ -88,6 +88,9 @@ public class ContestManager {
             Bukkit.getLogger().info("Setting last reset to 00:00 of today: " + this.lastReset);
         }
         this.loadActiveContests(configuration);
+        if (configuration.getStringList("active").contains("MCMMO_SKILL&") && CosmicContests.get().isMcMMOEnabled()) {
+            this.saveActiveContests();
+        }
         Bukkit.getLogger().info("Loaded " + this.activeContests.size() + " Active Contests...");
         this.resetTimeSpan = configuration.getInt("resetTimer");
         this.nextResetTime = this.lastReset + this.resetUnit.toMillis(this.resetTimeSpan);
@@ -110,7 +113,7 @@ public class ContestManager {
                             Bukkit.getLogger().info("Error loading data for " + user.getName() + " (" + user.getUuid() + "), exception:");
                             e.printStackTrace();
                         }
-                        if (!CosmicContests.get().isFactionsEnabled() || (player = FPlayers.i.get(user.getUuid().toString())) == null || !player.hasFaction() || !player.getFaction().isNormal()) continue;
+                        if (!CosmicContests.get().isFactionsEnabled() || (player = FPlayers.getInstance().getById(user.getUuid().toString())) == null || !player.hasFaction() || !player.getFaction().isNormal()) continue;
                         user.setFactionTag(player.getFaction().getTag());
                     }
                 }
@@ -242,12 +245,18 @@ public class ContestManager {
             Contests contest;
             String extraData = "";
             if (active.contains("&")) {
-                extraData = active.split("&")[1];
-                active = active.split("&")[0];
+                String[] parts = active.split("&", 2);
+                extraData = parts[1];
+                active = parts[0];
             }
             if ((contest = Contests.getFromName(active)) == null) continue;
             if (contest.getContest() instanceof Rerollable) {
-                ((Rerollable)((Object)contest.getContest())).loadData(extraData);
+                try {
+                    ((Rerollable)((Object)contest.getContest())).loadData(extraData);
+                } catch (IllegalArgumentException invalidData) {
+                    CosmicContests.get().getLogger().warning("Invalid saved data for contest " + contest.name() + "; leaving other saved contests intact.");
+                    continue;
+                }
             }
             this.activeContests.add(contest);
         }

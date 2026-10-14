@@ -16,7 +16,6 @@
  */
 package me.ifamasssxd.cosmiccontests.listeners;
 
-import com.compilex.CompilexPermissions.PermissionsAPI;
 import com.massivecraft.factions.FPlayer;
 import com.massivecraft.factions.FPlayers;
 import com.massivecraft.factions.event.FPlayerJoinEvent;
@@ -37,7 +36,7 @@ implements Listener {
     public void onPlayerLeave(FPlayerJoinEvent event) {
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicContests.get(), () -> {
             ContestUser user;
-            if (event.getFPlayer() != null && event.getFPlayer().hasFaction() && (user = ContestUser.getUser(event.getFPlayer().getCachedUUID())) != null) {
+            if (event.getfPlayer() != null && event.getfPlayer().hasFaction() && (user = ContestUser.getUser(java.util.UUID.fromString(event.getfPlayer().getId()))) != null) {
                 if (event.getFaction().isNormal()) {
                     user.setFactionTag(event.getFaction().getTag());
                 } else {
@@ -51,7 +50,7 @@ implements Listener {
     public void onPlayerLeave(FPlayerLeaveEvent event) {
         Bukkit.getScheduler().scheduleSyncDelayedTask((Plugin)CosmicContests.get(), () -> {
             ContestUser user;
-            if (event.getFPlayer() != null && (user = ContestUser.getUser(event.getFPlayer().getCachedUUID())) != null) {
+            if (event.getfPlayer() != null && (user = ContestUser.getUser(java.util.UUID.fromString(event.getfPlayer().getId()))) != null) {
                 user.setFactionTag(null);
             }
         }, 1L);
@@ -59,7 +58,7 @@ implements Listener {
 
     @EventHandler(priority=EventPriority.MONITOR)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        FPlayer player = (FPlayer)FPlayers.i.get((OfflinePlayer)event.getPlayer());
+        FPlayer player = (FPlayer)FPlayers.getInstance().getByPlayer(event.getPlayer());
         ContestUser user = ContestUser.getUser(event.getPlayer().getUniqueId());
         if (player != null && player.hasFaction() && player.getFaction().isNormal() && user != null) {
             user.setFactionTag(player.getFaction().getTag());

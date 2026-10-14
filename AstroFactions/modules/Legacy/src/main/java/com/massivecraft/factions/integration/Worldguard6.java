@@ -45,7 +45,11 @@ public class Worldguard6 implements IWorldguard {
 
         RegionManager regionManager = wg.getRegionManager(world);
         ApplicableRegionSet set = regionManager.getApplicableRegions(pt);
-        return set.allows(DefaultFlag.PVP);
+        try {
+            return (Boolean) ApplicableRegionSet.class.getMethod("allows", com.sk89q.worldguard.protection.flags.StateFlag.class).invoke(set, DefaultFlag.PVP);
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Cannot query the installed WorldGuard PVP flag API", exception);
+        }
     }
 
     // Check if player can build at location by worldguards rules.
@@ -56,7 +60,12 @@ public class Worldguard6 implements IWorldguard {
         World world = loc.getWorld();
         Vector pt = toVector(loc);
 
-        return wg.getRegionManager(world).getApplicableRegions(pt).size() > 0 && wg.canBuild(player, loc);
+        try {
+            ApplicableRegionSet regions = wg.getRegionManager(world).getApplicableRegions(pt);
+            return ((Number) ApplicableRegionSet.class.getMethod("size").invoke(regions)).intValue() > 0 && wg.canBuild(player, loc);
+        } catch (ReflectiveOperationException exception) {
+            throw new IllegalStateException("Cannot query the installed WorldGuard region API", exception);
+        }
     }
 
     // Check for Regions in chunk the chunk

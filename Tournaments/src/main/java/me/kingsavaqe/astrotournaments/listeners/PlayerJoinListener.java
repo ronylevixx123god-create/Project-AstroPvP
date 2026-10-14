@@ -21,5 +21,6 @@ public class PlayerJoinListener implements Listener {
             player.getPlayer().sendMessage(CC.translate("&c&l(!)&c An error occured when leaving the tournament, your inventory has been cleared and you have been teleported to /spawn."));
             player.setInTournament(false);
         }
+        AstroTournamentsPlugin.instance.getTournamentManager().deliverPendingRewards(player);
     }
 }

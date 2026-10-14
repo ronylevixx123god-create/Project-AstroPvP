@@ -10,8 +10,8 @@ import java.util.EnumMap;
 public class SpawnerUtil {
 
     private final ConfigManager configManager;
-    private final EnumMap<EntityType, Integer> mobIncomeMap;
-    private int tntPerHour;
+    private final EnumMap<EntityType, Double> mobIncomeMap;
+    private double tntPerMinute;
 
     public SpawnerUtil() {
         this.configManager = AstroCollectors.INSTANCE.getConfigManager();
@@ -22,16 +22,20 @@ public class SpawnerUtil {
 
     public void reloadMobIncomeMap() {
         this.mobIncomeMap.clear();
-        ConfigurationSection configurationSection = this.configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getConfigurationSection("spawner-income-per-minute");
+        org.bukkit.configuration.file.FileConfiguration config = this.configManager.getConfig(ConfigManager.ConfigFile.SETTINGS);
+        boolean perMinute = config.isConfigurationSection("spawner-income-per-minute");
+        ConfigurationSection configurationSection = config.getConfigurationSection(perMinute ? "spawner-income-per-minute" : "spawner-income-per-hour");
+        if (configurationSection == null) throw new IllegalArgumentException("settings.yml requires spawner-income-per-hour or spawner-income-per-minute");
         for (String key : configurationSection.getKeys(false)) {
-            int value = configurationSection.getInt(key);
+            double value = configurationSection.getDouble(key) / (perMinute ? 1.0 : 60.0);
             EntityType entityType = EntityType.valueOf(key);
             mobIncomeMap.put(entityType, value);
         }
     }
 
     public void reloadTntIncomeValue() {
-        this.tntPerHour = configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("tnt-per-minute");
+        org.bukkit.configuration.file.FileConfiguration config = configManager.getConfig(ConfigManager.ConfigFile.SETTINGS);
+        this.tntPerMinute = config.contains("tnt-per-minute") ? config.getDouble("tnt-per-minute") : config.getDouble("tnt-per-hour") / 60.0;
     }
 
     public double getMoneyPerMinute(EntityType type) {
@@ -45,7 +49,7 @@ public class SpawnerUtil {
 
     public double getTnTPerHour() {
         try {
-            return configManager.getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("tnt-per-minute");
+            return this.tntPerMinute * 60.0;
         } catch (Exception e) {
             return 0;
         }
@@ -56,7 +60,7 @@ public class SpawnerUtil {
     }
 
     public double getTntPerMinute() {
-        return this.tntPerHour;
+        return this.tntPerMinute;
     }
 
     public double getTntPerSecond() {

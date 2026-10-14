@@ -215,14 +215,20 @@ public class Controller {
     }
 
     public static void claim(Player player, UnclaimedListing listing) {
-        DataHolder.getUnclaimedListings().get(player.getUniqueId()).remove(listing);
-        DataHandler.deleteUnclaimedListing(listing, true);
+        if (!player.getUniqueId().equals(listing.getListedBy()) || DataHolder.getUnclaimedListings().get(player.getUniqueId()) == null ||
+                !DataHolder.getUnclaimedListings().get(player.getUniqueId()).contains(listing)) return;
+        if (!Util.hasInventorySpace(player)) { Util.message(player, "&cYour inventory is full.");return; }
+        me.recolance.auction.data.ClaimJournal journal = new me.recolance.auction.data.ClaimJournal(listing);
+        if (journal.exists()) { Util.message(player, "&cInterrupted reward claim requires administrator reconciliation."); return; }
+        journal.begin(player,listing);
         if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
             long itemID = ItemID.getItemID((ItemStack) listing.getItem());
             if (itemID != -1L) {
                 if (ItemID.blacklist_iid.contains(itemID)) {
                     Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " found in /ah expired of player " + player.getName() + " item: " + (Object) listing.getItem());
                     player.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "An item you just attempted to claim from your Collection Bin, with IID " + itemID + ", has been flagged as a duplicated item, and has been removed.");
+                    journal.finish(listing);
+                    DataHolder.removeUnclaimedListing(player.getUniqueId(),listing);
                     return;
                 }
                 ItemID.blacklistIID((long) itemID, (String) "expiredItemClaim");
@@ -239,49 +245,21 @@ public class Controller {
         } else {
             player.getInventory().addItem(new ItemStack[]{listing.getItem()});
         }
+        journal.saveInventory(player);
+        journal.finish(listing);
+        DataHolder.removeUnclaimedListing(player.getUniqueId(),listing);
     }
 
     public static void claimAll(Player player) {
-        int space = Util.getFreeInventorySpace(player);
-        int i = 0;
-        ArrayList<UnclaimedListing> claim = new ArrayList<UnclaimedListing>();
-        for (UnclaimedListing listing : DataHolder.getUnclaimedListings().get(player.getUniqueId())) {
-            if (i >= space && !Util.hasInventorySpace(player)) {
-                Util.message(player, "&c&l(!) &cYou don't have enough inventory space.");
-                break;
-            }
-            if (ArkPlugins.ITEM_ID.getArkPlugin().isRunning()) {
-                long itemID = ItemID.getItemID((ItemStack) listing.getItem());
-                if (itemID != -1L) {
-                    if (ItemID.blacklist_iid.contains(itemID)) {
-                        Bukkit.getLogger().info("[ItemID] Blacklisted IID #" + itemID + " found in /ah expired of player " + player.getName() + " item: " + (Object) listing.getItem());
-                        player.sendMessage((Object) ChatColor.RED + "" + (Object) ChatColor.BOLD + "(!) " + (Object) ChatColor.RED + "An item you just attempted to claim from your Collection Bin, with IID " + itemID + ", has been flagged as a duplicated item, and has been removed.");
-                        claim.add(listing);
-                        ++i;
-                        continue;
-                    }
-                    ItemID.blacklistIID((long) itemID, (String) "expiredItemClaimAll");
-                    ItemStack listingItem = listing.getItem();
-                    if (ItemID.doesItemIDNeedToPersist((ItemStack) listingItem)) {
-                        ItemID.setItemID((ItemStack) listingItem, (long) ItemID.generateNewItemID());
-                    } else {
-                        ItemID.removeItemID((ItemStack) listingItem);
-                    }
-                    player.getInventory().addItem(new ItemStack[]{listingItem});
-                } else {
-                    player.getInventory().addItem(new ItemStack[]{listing.getItem()});
-                }
-            } else {
-                player.getInventory().addItem(new ItemStack[]{listing.getItem()});
-            }
-            claim.add(listing);
-            ++i;
+        List<UnclaimedListing> listings = DataHolder.getUnclaimedListings().get(player.getUniqueId());
+        if(listings == null) return;
+        int claimed = 0;
+        for(UnclaimedListing listing : new ArrayList<UnclaimedListing>(listings)) {
+            if(!Util.hasInventorySpace(player)) break;
+            claim(player,listing);
+            if(!listings.contains(listing)) claimed++;
         }
-        for (UnclaimedListing listing : claim) {
-            DataHolder.removeUnclaimedListing(player.getUniqueId(), listing);
-            DataHandler.deleteUnclaimedListing(listing, true);
-        }
-        Util.message(player, "&e&l(!) &eYou have claimed &6" + i + " &e expired listings.");
+        Util.message(player, "&e&l(!) &eYou have claimed &6" + claimed + " &e expired listings.");
     }
 
     public static void help(Player player) {

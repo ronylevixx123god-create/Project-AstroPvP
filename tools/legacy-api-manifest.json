@@ -1,0 +1,149 @@
+[
+  {
+    "group": "com.conaxgames",
+    "artifact": "server",
+    "version": "1.8.8-R0.2-SNAPSHOT",
+    "source": "AstroCollect/lib/banana.jar",
+    "sha256": "f6cded1600e4b58d978faf45a4b113884540b514afad7c7ebca85b36d0929d5f",
+    "prefixes": null
+  },
+  {
+    "group": "org.spigotmc",
+    "artifact": "spigot-api",
+    "version": "1.8.8-R0.1-SNAPSHOT",
+    "source": "AstroCollect/lib/spigot-1.8.8-R0.1-SNAPSHOT-latest.jar",
+    "sha256": "d9b8e7ed157dbb4bc638b96763b0ad955719acbbdf7ff4378e119ad7010595ca",
+    "prefixes": null
+  },
+  {
+    "group": "com.sk89q.worldguard",
+    "artifact": "worldguard",
+    "version": "6.1",
+    "source": "Utils/lib/worldguard-6.1.jar",
+    "sha256": "33980e3e38cab6f937f07d1bc00a61211b20cc57b1706e1b0029c94aeb2cfc5c",
+    "prefixes": null
+  },
+  {
+    "group": "com.github.MilkBowl",
+    "artifact": "VaultAPI",
+    "version": "1.7",
+    "source": ".lib/CosmicPvPUtils.jar",
+    "sha256": "1fa762e7a66a392ec97ff4f6f9cf677ee56dd83d6c64cea725031fc3e096d1ce",
+    "prefixes": [
+      "net/milkbowl/vault/",
+      "META-INF/maven/net.milkbowl.vault/"
+    ]
+  },
+  {
+    "group": "net.ess3",
+    "artifact": "EssentialsX",
+    "version": "2.17.2",
+    "source": ".lib/CosmicPvPUtils.jar",
+    "sha256": "1fa762e7a66a392ec97ff4f6f9cf677ee56dd83d6c64cea725031fc3e096d1ce",
+    "prefixes": [
+      "com/earth2me/essentials/",
+      "net/ess3/",
+      "META-INF/maven/net.ess3/"
+    ]
+  },
+  {
+    "group": "de.tr7zw",
+    "artifact": "item-nbt-api-plugin",
+    "version": "2.9.2",
+    "source": ".lib/CosmicPvPUtils.jar",
+    "sha256": "1fa762e7a66a392ec97ff4f6f9cf677ee56dd83d6c64cea725031fc3e096d1ce",
+    "prefixes": [
+      "de/tr7zw/",
+      "META-INF/maven/de.tr7zw/"
+    ]
+  },
+  {
+    "group": "de.tr7zw",
+    "artifact": "item-nbt-api-plugin",
+    "version": "2.7.1",
+    "source": ".lib/AstroCollectors-1.0-SNAPSHOT.jar",
+    "sha256": "01400bca8aab3e770d3969e8813430a1e8e462e8326d30d216c2c1d3085507ca",
+    "prefixes": [
+      "de/tr7zw/",
+      "javassist/",
+      "META-INF/maven/de.tr7zw/"
+    ]
+  },
+  {
+    "group": "de.tr7zw",
+    "artifact": "item-nbt-api-plugin",
+    "version": "2.6.0",
+    "source": "AstroScoreboard/lib/AstroEvents-1.0.jar",
+    "sha256": "12c069827f3974e7cd77858f6157181e18caf62426aa4c7bdbd5116456c73d70",
+    "prefixes": [
+      "de/tr7zw/",
+      "javassist/",
+      "META-INF/maven/de.tr7zw/"
+    ]
+  },
+  {
+    "group": "co.aikar",
+    "artifact": "acf-paper",
+    "version": "0.5.0-SNAPSHOT",
+    "source": "Core/lib/AstroDiscordSync-0.1.jar",
+    "sha256": "09179cfa39c843469c6c2877a54211c0c3c4b8d1765a9b677dba434e3dd52712",
+    "prefixes": [
+      "co/aikar/",
+      "net/jodah/",
+      "org/apache/commons/collections4/",
+      "net/kyori/",
+      "META-INF/maven/co.aikar/"
+    ]
+  },
+  {
+    "group": "net.dv8tion",
+    "artifact": "JDA",
+    "version": "4.2.0_204",
+    "source": "Core/lib/AstroDiscordSync-0.1.jar",
+    "sha256": "09179cfa39c843469c6c2877a54211c0c3c4b8d1765a9b677dba434e3dd52712",
+    "prefixes": [
+      "net/dv8tion/",
+      "club/",
+      "gnu/",
+      "javax/annotation/",
+      "okhttp3/",
+      "okio/",
+      "tomp2p/",
+      "org/slf4j/",
+      "org/apache/commons/collections4/",
+      "com/fasterxml/",
+      "com/neovisionaries/"
+    ]
+  },
+  {
+    "group": "com.gmail.filoghost.holographicdisplays",
+    "artifact": "holographicdisplays-api",
+    "version": "2.4.9",
+    "source": "AdminItems/lib/HolographicDisplays.jar",
+    "sha256": "6ba5cfab439d61cb340be8ec3d14597a39f09879a03698497bf13d1a02880711",
+    "prefixes": null
+  },
+  {
+    "group": "io.puharesource.mc",
+    "artifact": "TitleManager",
+    "version": "2.3.1",
+    "source": "HotFix/lib/TitleManager-2.3.1.jar",
+    "sha256": "8dc48c6b8bc571de839d2d412350d386ecc41165c46a782f1253657b23bbabea",
+    "prefixes": null
+  },
+  {
+    "group": "com.massivecraft",
+    "artifact": "Factions",
+    "version": "1.6.9.5-U0.5.18",
+    "source": "ProxyPatch/lib/Factions (1).jar",
+    "sha256": "0fb5c5f2a3ab1dafbf5f541673ac2d2d874461ad7d11e4b90bfbbf29994cfc11",
+    "prefixes": null
+  },
+  {
+    "group": "com.comphenix.protocol",
+    "artifact": "ProtocolLib",
+    "version": "4.5.0",
+    "url": "https://github.com/dmulloy2/ProtocolLib/releases/download/4.5.0/ProtocolLib.jar",
+    "sha256": "57764b115d7093008ab0e0e2ea03c4a633e49c3a85fe589788852cb69b4a4e79"
+  }
+]

@@ -29,6 +29,13 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>legacy.bundled</groupId>
+            <artifactId>Factions</artifactId>
+            <version>0.1</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/../AstroFactions/target/Factions.jar</systemPath>
+        </dependency>
         <!-- ConaxGames Repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>

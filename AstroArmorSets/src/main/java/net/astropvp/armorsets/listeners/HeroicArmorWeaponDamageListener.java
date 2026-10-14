@@ -7,7 +7,6 @@ import net.astropvp.armorsets.AstroArmorSets;
 import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
 import net.astropvp.armorsets.utils.config.ConfigManager;
-import net.astropvp.core.AstroCore;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -26,7 +25,7 @@ public class HeroicArmorWeaponDamageListener implements Listener {
         if (e.getEntity().getWorld().getName().equals("world_outpost_pluto")) {
             return;
         }
-        ArmorSetCache cache = (ArmorSetCache) AstroCore.getInstance().getCacheManager().getCachedPlayer(player).getCache("armor_set");
+        ArmorSetCache cache = AstroArmorSetsAPI.getArmorCache(player);
         if (cache != null && cache.getHeroicPieces() != 0) {
             double totalReduction = cache.getHeroicPieces() * AstroArmorSets.getInstance().getConfigManager().getConfig(ConfigManager.ConfigFile.SETTINGS).getInt("heroicDamageDecrease");
             if (((Player) e.getEntity()).getKiller() != null) {

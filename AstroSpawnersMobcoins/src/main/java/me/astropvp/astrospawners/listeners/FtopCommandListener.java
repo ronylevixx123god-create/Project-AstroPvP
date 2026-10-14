@@ -52,7 +52,7 @@ public class FtopCommandListener implements Listener {
                             CC.White + "Richest Member:\n" +
                             " " + CC.Green + faction.getRichestPlayer() + ": $" + NumberUtils.formatMoney(faction.getRichestPlayerBalance());
                     msg.setHoverEvent(new HoverEvent(HoverEvent.Action.SHOW_TEXT, (new ComponentBuilder(builder)).create()));
-                    player.sendMessage(msg);
+                    player.spigot().sendMessage(msg);
                     pos++;
                 }
             }

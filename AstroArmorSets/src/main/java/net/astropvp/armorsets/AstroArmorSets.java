@@ -26,6 +26,16 @@ public class AstroArmorSets extends JavaPlugin {
 
 
 
+    private final java.util.Map<java.util.UUID, net.astropvp.armorsets.struct.cache.ArmorSetCache> armorCaches = new java.util.HashMap<>();
+
+    public net.astropvp.armorsets.struct.cache.ArmorSetCache getArmorCache(org.bukkit.entity.Player player) {
+        return armorCaches.computeIfAbsent(player.getUniqueId(), id -> new net.astropvp.armorsets.struct.cache.ArmorSetCache(player));
+    }
+
+    public void forgetArmorCache(org.bukkit.entity.Player player) {
+        armorCaches.remove(player.getUniqueId());
+    }
+
     public void onEnable() {
         instance = this;
         registerCommands();
@@ -42,6 +52,7 @@ public class AstroArmorSets extends JavaPlugin {
 
     public void onDisable() {
         System.out.println("[AstroArmorSets] Plugin has been disabled!");
+        armorCaches.clear();
         this.configManager = null;
         instance = null;
     }

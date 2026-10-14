@@ -17,12 +17,16 @@ public class TournamentStartTask extends BukkitRunnable {
         if(!astroTournamentsPlugin.getTournamentManager().isActive()) {
             return;
         }
+        if (astroTournamentsPlugin.getTournamentManager().getStartTask() != null)
+            astroTournamentsPlugin.getTournamentManager().getStartTask().cancel();
+        astroTournamentsPlugin.getTournamentManager().setStartTask(this);
         this.seconds = 121;
         this.runTaskTimer(astroTournamentsPlugin, 20L * 2, 20L);
     }
 
     @Override
     public void run() {
+        if (!astroTournamentsPlugin.getTournamentManager().isActive()) { cancel(); return; }
         this.seconds--;
         if(this.seconds == 0) {
 
@@ -38,6 +42,8 @@ public class TournamentStartTask extends BukkitRunnable {
             Bukkit.broadcastMessage(Utils.fixColor("&6Tournament entry has now &c&nCLOSED"));
             Bukkit.broadcastMessage("");
 
+            this.cancel();
+            astroTournamentsPlugin.getTournamentManager().setStartTask(null);
             this.astroTournamentsPlugin.getTournamentManager().putNextPlayersInArenas();
 
             return;

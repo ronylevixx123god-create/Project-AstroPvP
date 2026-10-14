@@ -1,0 +1,116 @@
+[
+  {
+    "name": "ASM",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/asm-9.1.jar",
+    "sha256": "cda4de455fab48ff0bcb7c48b4639447d4de859a7afc30a094a986f0936beba2",
+    "source": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm/9.1/asm-9.1.jar"
+  },
+  {
+    "name": "ASM_COMMONS",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/asm-commons-9.1.jar",
+    "sha256": "afcb26dc1fc12c0c4a99ada670908dd82e18dfc488caf5ee92546996b470c00c",
+    "source": "https://repo.maven.apache.org/maven2/org/ow2/asm/asm-commons/9.1/asm-commons-9.1.jar"
+  },
+  {
+    "name": "JAR_RELOCATOR",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/jar-relocator-1.4.jar",
+    "sha256": "d51b22177062573b6395f4c0facbc30aea0348616e4a94d9607bd42bcc81c7c2",
+    "source": "https://repo.maven.apache.org/maven2/me/lucko/jar-relocator/1.4/jar-relocator-1.4.jar"
+  },
+  {
+    "name": "ADVENTURE",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/adventure-4.11.0.jar",
+    "sha256": "ef1ac56816ec4e240f64a043cef0e74ddf172203ac1d3cbda902029b7df8d865",
+    "source": "https://repo.maven.apache.org/maven2/me/lucko/adventure-api/4.11.0/adventure-api-4.11.0.jar"
+  },
+  {
+    "name": "ADVENTURE_PLATFORM",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/adventure-platform-4.11.1.jar",
+    "sha256": "cc29f1360a2c99efbe4ec85e15a2fe60776d448ae9fa826152223c6b0b0a81f4",
+    "source": "https://repo.maven.apache.org/maven2/me/lucko/adventure-platform-api/4.11.1/adventure-platform-api-4.11.1.jar"
+  },
+  {
+    "name": "ADVENTURE_PLATFORM_BUKKIT",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/adventure-platform-bukkit-4.11.1.jar",
+    "sha256": "fb1a4f8cecf5624841d83abc24334f70a3a6e085228e8960d746b6c7e212a417",
+    "source": "https://repo.maven.apache.org/maven2/me/lucko/adventure-platform-bukkit/4.11.1/adventure-platform-bukkit-4.11.1.jar"
+  },
+  {
+    "name": "EVENT",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/event-3.0.0.jar",
+    "sha256": "ca3bdd4dd03292d97788511014b1c2dea630c2deff0db09ded973c4384a521a8",
+    "source": "https://repo.maven.apache.org/maven2/net/kyori/event-api/3.0.0/event-api-3.0.0.jar"
+  },
+  {
+    "name": "CAFFEINE",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/caffeine-2.9.0.jar",
+    "sha256": "545328b443b75cb6d31df44a7cbde6dfa1a537bd84fddcd1147f41e412625f6a",
+    "source": "https://repo.maven.apache.org/maven2/com/github/ben-manes/caffeine/caffeine/2.9.0/caffeine-2.9.0.jar"
+  },
+  {
+    "name": "OKIO",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/okio-1.17.5.jar",
+    "sha256": "19a7ff48d86d3cf4497f7f250fbf295f430c13a528dd5b7b203f821802b886ad",
+    "source": "https://repo.maven.apache.org/maven2/com/squareup/okio/okio/1.17.5/okio-1.17.5.jar"
+  },
+  {
+    "name": "OKHTTP",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/okhttp-3.14.9.jar",
+    "sha256": "2570fab55515cbf881d7a4ceef49fc515490bc027057e666776a2832465aeca0",
+    "source": "https://repo.maven.apache.org/maven2/com/squareup/okhttp3/okhttp/3.14.9/okhttp-3.14.9.jar"
+  },
+  {
+    "name": "BYTEBUDDY",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/bytebuddy-1.10.22.jar",
+    "sha256": "f931adc4393177afa5244c47257a83955e27fe047c409378c6eda090fb074a84",
+    "source": "https://repo.maven.apache.org/maven2/net/bytebuddy/byte-buddy/1.10.22/byte-buddy-1.10.22.jar"
+  },
+  {
+    "name": "H2_DRIVER",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/h2-driver-1.4.199.jar",
+    "sha256": "3125a16743bc6b4cfbb61abba783203f1fb68230aa0fdc97898f796f99a5d42e",
+    "source": "https://repo.maven.apache.org/maven2/com/h2database/h2/1.4.199/h2-1.4.199.jar"
+  },
+  {
+    "name": "HIKARI",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/hikari-4.0.3.jar",
+    "sha256": "7c024aeff1c1063576d74453513f9de6447d8e624d17f8e27f30a2e97688c6c9",
+    "source": "https://repo.maven.apache.org/maven2/com/zaxxer/HikariCP/4.0.3/HikariCP-4.0.3.jar"
+  },
+  {
+    "name": "SLF4J_SIMPLE",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/slf4j-simple-1.7.30.jar",
+    "sha256": "8b9279cbff6b9f88594efae3cf02039b6995030eec023ed43928748c41670fee",
+    "source": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-simple/1.7.30/slf4j-simple-1.7.30.jar"
+  },
+  {
+    "name": "SLF4J_API",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/slf4j-api-1.7.30.jar",
+    "sha256": "cdba07964d1bb40a0761485c6b1e8c2f8fd9eb1d19c53928ac0d7f9510105c57",
+    "source": "https://repo.maven.apache.org/maven2/org/slf4j/slf4j-api/1.7.30/slf4j-api-1.7.30.jar"
+  },
+  {
+    "name": "CONFIGURATE_CORE",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/configurate-core-3.7.2.jar",
+    "sha256": "5c5d8bcd62e4495d30c90443b77dc8fa00e57f7b765b3c47d61f090996603e9e",
+    "source": "https://repo.maven.apache.org/maven2/org/spongepowered/configurate-core/3.7.2/configurate-core-3.7.2.jar"
+  },
+  {
+    "name": "CONFIGURATE_GSON",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/configurate-gson-3.7.2.jar",
+    "sha256": "f52fe6a77220f437bb34d77afb6917f8be11f746c79c0a2c48d55b163ae5eec3",
+    "source": "https://repo.maven.apache.org/maven2/org/spongepowered/configurate-gson/3.7.2/configurate-gson-3.7.2.jar"
+  },
+  {
+    "name": "CONFIGURATE_YAML",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/configurate-yaml-3.7.2.jar",
+    "sha256": "3817d89f89d230665f55fd83a19859abe1bd4c5d663835ff0b938ecff9a43e67",
+    "source": "https://repo.maven.apache.org/maven2/org/spongepowered/configurate-yaml/3.7.2/configurate-yaml-3.7.2.jar"
+  },
+  {
+    "name": "SNAKEYAML",
+    "path": "/workspace/project-full-server/plugins/LuckPerms/libs/snakeyaml-1.28.jar",
+    "sha256": "35446a1421435d45e4c6ac0de3b5378527d5cc2446c07183e24447730ce1fffa",
+    "source": "https://repo.maven.apache.org/maven2/org/yaml/snakeyaml/1.28/snakeyaml-1.28.jar"
+  }
+]

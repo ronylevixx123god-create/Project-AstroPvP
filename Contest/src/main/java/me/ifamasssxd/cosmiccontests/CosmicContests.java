@@ -78,7 +78,7 @@ extends JavaPlugin {
 
     private void registerArkkitListener() {
         try {
-            Bukkit.getLogger().info(r);
+            Bukkit.getLogger().info("Registering contest Arkkit listener");
             this.getServer().getPluginManager().registerEvents((Listener)new ArkkitListener(), (Plugin)this);
         }
         catch (Exception e) {

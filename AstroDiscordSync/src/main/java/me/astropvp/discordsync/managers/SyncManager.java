@@ -21,7 +21,7 @@ public class SyncManager {
 
     public SyncManager(DiscordSyncPlugin plugin) {
         this.plugin = plugin;
-        this.astroDiscord = plugin.getJda().getGuildById(ASTRO_GUILD_ID);
+        this.astroDiscord = plugin.getJda().getGuildById(plugin.getConfig().getString("guild-id"));
     }
 
     public int getRandomCode() {

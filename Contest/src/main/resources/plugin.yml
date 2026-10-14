@@ -2,7 +2,7 @@ version: 1.0
 name: CosmicContests
 main: me.ifamasssxd.cosmiccontests.CosmicContests
 depend: [Arkkit]
-soft-depend: [Factions]
+softdepend: [Factions, mcMMO]
 commands:
   challenge:
     description: Contest command.

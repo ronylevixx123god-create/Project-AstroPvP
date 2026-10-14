@@ -22,12 +22,20 @@ public class DiscordListener implements EventListener {
 
     public void onEvent(GenericEvent gEvent) {
         if (gEvent instanceof PrivateMessageReceivedEvent) {
+            Bukkit.getScheduler().runTask(this.plugin, () -> handleEvent(gEvent));
+        }
+    }
+
+    private void handleEvent(GenericEvent gEvent) {
+        if (gEvent instanceof PrivateMessageReceivedEvent) {
             PrivateMessageReceivedEvent event = (PrivateMessageReceivedEvent)gEvent;
             User user = event.getAuthor();
             String message = event.getMessage().getContentStripped();
             if (message.startsWith("!verify ")) {
                 //int codeEntered = CommonsUtil.tryParseInt(message.split(" ")[1]);
-                int codeEntered = Integer.parseInt(message.split(" ")[1]);
+                int codeEntered;
+                try { codeEntered = Integer.parseInt(message.substring(8).trim()); }
+                catch (NumberFormatException invalid) { event.getChannel().sendMessage("Enter a valid verification code.").queue(); return; }
                 if (this.plugin.getDatabaseManager().contains(user.getIdLong())) {
                     event.getChannel().sendMessage("Your discord account is already linked!").queue();
                 } else if (!this.plugin.getSyncManager().isActiveCode(codeEntered)) {
@@ -39,8 +47,8 @@ public class DiscordListener implements EventListener {
                         event.getChannel().sendMessage("That player isn't online anymore!").queue();
                     } else {
                         event.getChannel().sendMessage("Congrats! You have successfully linked your account to " + player.getName() + " on AstroPvP.").queue();
-                        this.plugin.getJda().getGuildById("470324147411615744").getMember(user).modifyNickname(player.getName()).queue();
-                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(user.getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("980116575736696853"))).queue();
+                        this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getMember(user).modifyNickname(player.getName()).queue();
+                        this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).addRoleToMember(user.getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getRoleById(this.plugin.getConfig().getString("linked-role-id")))).queue();
 
                         this.plugin.getSyncManager().getActiveSyncMap().remove(codeEntered, playerId);
                         player.sendMessage(CC.translate("&a&l(!)&a You have successfully linked your account to &f&n" + user.getAsTag() + "&a."));
@@ -56,12 +64,18 @@ public class DiscordListener implements EventListener {
 
 
             if (message.startsWith("!ownerupdate")) {
+                net.dv8tion.jda.api.entities.Guild guild = this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id"));
+                net.dv8tion.jda.api.entities.Member caller = guild == null ? null : guild.getMember(user);
+                if (caller == null || caller.getRoles().stream().noneMatch(role -> role.getId().equals(this.plugin.getConfig().getString("owner-role-id")))) {
+                    event.getChannel().sendMessage("Owner role required.").queue();
+                    return;
+                }
                 //int codeEntered = CommonsUtil.tryParseInt(message.split(" ")[1]);
 
                         event.getChannel().sendMessage("We have new owners!").queue();
-                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(this.plugin.getJda().getGuildById("470324147411615744").getMemberById("1145878058545451069"), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("787283466089136149"))).queue();
-                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(this.plugin.getJda().getGuildById("470324147411615744").getMemberById("1032931682187223090"), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("787283466089136149"))).queue();
-                        this.plugin.getJda().getGuildById("470324147411615744").addRoleToMember(this.plugin.getJda().getGuildById("470324147411615744").getMemberById("1188991508209217587"), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("787283466089136149"))).queue();
+                        this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).addRoleToMember(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getMemberById("1145878058545451069"), Objects.requireNonNull(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getRoleById("787283466089136149"))).queue();
+                        this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).addRoleToMember(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getMemberById("1032931682187223090"), Objects.requireNonNull(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getRoleById("787283466089136149"))).queue();
+                        this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).addRoleToMember(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getMemberById("1188991508209217587"), Objects.requireNonNull(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getRoleById("787283466089136149"))).queue();
 
 
 

@@ -25,7 +25,7 @@ public class UnSyncCommand extends CommandBase {
     public UnSyncCommand(DiscordSyncPlugin plugin) {
         this.plugin = plugin;
         this.syncManager = plugin.getSyncManager();
-        this.astroDiscord = plugin.getJda().getGuildById(ASTRO_GUILD_ID);
+        this.astroDiscord = plugin.getJda().getGuildById(plugin.getConfig().getString("guild-id"));
 
     }
 
@@ -51,7 +51,7 @@ public class UnSyncCommand extends CommandBase {
 
 
             if (syncManager.isAccountLinked(offlinePlayer.getUniqueId())) {
-                this.plugin.getJda().getGuildById("470324147411615744").removeRoleFromMember(this.syncManager.getLinkedUser(offlinePlayer.getUniqueId()).getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById("470324147411615744").getRoleById("980116575736696853"))).queue();
+                this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).removeRoleFromMember(this.syncManager.getLinkedUser(offlinePlayer.getUniqueId()).getId(), Objects.requireNonNull(this.plugin.getJda().getGuildById(this.plugin.getConfig().getString("guild-id")).getRoleById(this.plugin.getConfig().getString("linked-role-id")))).queue();
             }
         }
     }

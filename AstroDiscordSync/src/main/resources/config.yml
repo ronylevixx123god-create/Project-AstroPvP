@@ -1,0 +1,11 @@
+# Original guild and role IDs; verify ownership before authenticating a bot.
+guild-id: '470324147411615744'
+linked-role-id: '980116575736696853'
+owner-role-id: '787283466089136149'
+whitelist-role-id: '1165312504289841152'
+roles:
+  nitro: '646509833448587325'
+  faction-leader: '709442838592618608'
+  media: '517312548136026112'
+  famous: '981939448755392512'
+  galaxy: '914174702853951508'

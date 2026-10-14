@@ -38,13 +38,20 @@
     </repositories>
 
     <dependencies>
-        <!-- ConaxGames repos -->
         <dependency>
             <groupId>com.conaxgames</groupId>
             <artifactId>server</artifactId>
             <version>1.8.8-R0.2-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
+        <!-- Use the current tracker API before historical transitive binaries. -->
+        <dependency>
+            <groupId>com.conaxgames</groupId>
+            <artifactId>Explosive</artifactId>
+            <version>0.1</version>
+        </dependency>
+        <!-- ConaxGames repos -->
+
         <dependency>
             <groupId>net.ess3</groupId>
             <artifactId>EssentialsX</artifactId>
@@ -259,35 +266,29 @@
             <systemPath>${project.basedir}/lib/CosmicMysteryChest.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Enchantments</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Enchantments.jar</systemPath>
         </dependency>
+
         <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Explosive</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/Explosive.jar</systemPath>
-        </dependency>
-        <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>SpaceChests</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicSpaceChests.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>AuctionHouse</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/Auction.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -322,14 +323,14 @@
             <systemPath>${project.basedir}/lib/CompilexPermissions_2_1_1_1.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Duels</artifactId>
             <version>0.1</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/CosmicDuel (1).jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Conquest</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -359,15 +360,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
-            <artifactId>Creepers</artifactId>
-            <version>0.1</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/CosmicCustomCreepers.jar</systemPath>
-        </dependency>
-
-        <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Pets</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -375,7 +368,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>CustomBlocks</artifactId>
             <version>0.1</version>
             <scope>system</scope>

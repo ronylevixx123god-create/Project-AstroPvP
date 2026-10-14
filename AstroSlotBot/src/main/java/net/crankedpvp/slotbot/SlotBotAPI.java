@@ -15,7 +15,8 @@ import java.util.List;
 public class SlotBotAPI {
 
     public static boolean isSlotBot(final ItemStack itemStack) {
-        return CustomItemUtils.getCrankedCustomItem(itemStack).equals("slotBotTicket");
+        if (ItemUtils.isAirOrNull(itemStack)) return false;
+        return "slotBotTicket".equals(new NBTItem(itemStack).getString("crankedCustomItem"));
     }
 
     public static SlotBotType getSlotBotType(ItemStack itemStack) {

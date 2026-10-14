@@ -36,12 +36,12 @@ public class ChatListener implements Listener {
 
     public ChatListener(DiscordSyncPlugin plugin) {
         this.plugin = plugin;
-        this.astroDiscord = plugin.getJda().getGuildById(ASTRO_GUILD_ID);
-        this.nitroBoosterRole = "646509833448587325";
-        this.factionLeaderRole = "709442838592618608";
-        this.mediaRole = "517312548136026112";
-        this.famousRole = "981939448755392512";
-        this.galaxyRole = "914174702853951508";
+        this.astroDiscord = plugin.getJda().getGuildById(plugin.getConfig().getString("guild-id"));
+        this.nitroBoosterRole = plugin.getConfig().getString("roles.nitro");
+        this.factionLeaderRole = plugin.getConfig().getString("roles.faction-leader");
+        this.mediaRole = plugin.getConfig().getString("roles.media");
+        this.famousRole = plugin.getConfig().getString("roles.famous");
+        this.galaxyRole = plugin.getConfig().getString("roles.galaxy");
 
         (new BukkitRunnable() {
             public void run() {

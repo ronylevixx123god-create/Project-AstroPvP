@@ -416,7 +416,7 @@ public class CorruptCosmonaut extends Boss implements DungeonBoss {
         this.sendMessage("Hahaha, not bad for a group of filthy Cosmonauts! I wonder though, can you handle the HEAT?!");
 
         World bukkitWorld = Bukkit.getWorld("dungeon_planet_nul");
-        com.sk89q.worldedit.world.World weWorld = new BukkitWorld(bukkitWorld);
+        com.sk89q.worldedit.LocalWorld weWorld = new BukkitWorld(bukkitWorld);
         ;
 
 

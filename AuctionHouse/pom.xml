@@ -69,7 +69,7 @@
         </dependency>
         <!-- System Repos -->
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>EnchantmentsAPI</artifactId>
             <version>0.1</version>
             <scope>system</scope>

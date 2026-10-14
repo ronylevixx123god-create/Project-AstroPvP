@@ -53,14 +53,14 @@ implements Listener {
     public void onCreatureSpawn(CreatureSpawnEvent e) {
         if (e.getSpawnReason() == CreatureSpawnEvent.SpawnReason.SPAWNER) {
             Chunk c = e.getEntity().getLocation().getChunk();
-            long chunkKey = LongHash.toLong((int)c.getX(), (int)c.getZ());
+            String chunkKey = c.getWorld().getUID() + ":" + LongHash.toLong((int)c.getX(), (int)c.getZ());
             if (!this.expiringChunkMap.containsKey(chunkKey)) {
                 for (Entity ent : c.getEntities()) {
                     if (!(ent instanceof Player) || !MaskUtils.hasMaskEquipped((Player)((Player)ent), (String)MaskType.BUNNY.name())) continue;
-                    this.expiringChunkMap.put(LongHash.toLong((int)c.getX(), (int)c.getZ()), true);
+                    this.expiringChunkMap.put(chunkKey, true);
                     return;
                 }
-                this.expiringChunkMap.put(LongHash.toLong((int)c.getX(), (int)c.getZ()), false);
+                this.expiringChunkMap.put(chunkKey, false);
             } else {
                 boolean bunnyMask = (boolean) this.expiringChunkMap.get(chunkKey);
                 if (bunnyMask && Math.random() < 0.65) {
@@ -74,11 +74,11 @@ implements Listener {
     public void onPlayerDamageBoss(EntityDamageByEntityEvent e) {
         Entity damager = e.getDamager();
         if (damager instanceof Projectile) {
-            LivingEntity ps = (LivingEntity) ((Projectile)damager).getShooter();
-            if (ps == null) {
+            org.bukkit.projectiles.ProjectileSource shooter = ((Projectile)damager).getShooter();
+            if (!(shooter instanceof LivingEntity)) {
                 return;
             }
-            damager = (Entity)ps;
+            damager = (LivingEntity)shooter;
         }
         if (e.getEntity().hasMetadata("boss")) {
             if (damager instanceof Player && MaskUtils.hasMaskEquipped((Player)((Player)damager), (String)"BOSS")) {

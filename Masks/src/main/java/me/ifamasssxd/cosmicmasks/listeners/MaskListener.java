@@ -131,25 +131,27 @@ public class MaskListener implements Listener {
     public void onPlayerDamageOther(EntityDamageByEntityEvent event) throws Exception {
         if (event.getDamager() instanceof Player) {
             Player player = (Player) event.getDamager();
-            MaskType equipped = MaskType.fromPlayer(player);
-            if (equipped == MaskType.PURGE) {
+            if (MaskType.PURGE.hasEquipped(player)) {
                 event.setDamage(event.getDamage() * 1.025);
-            } else if (equipped == MaskType.DRAGON_MASK) {
+            }
+            if (MaskType.DRAGON_MASK.hasEquipped(player)) {
                 event.setDamage(event.getDamage() * 1.05);
-            } else if (equipped == MaskType.PARTY_HAT) {
+            }
+            if (MaskType.PARTY_HAT.hasEquipped(player)) {
                 event.setDamage(event.getDamage() * 1.04);
-            } else if (equipped == MaskType.DEATH_KNIGHT) {
+            }
+            if (MaskType.DEATH_KNIGHT.hasEquipped(player)) {
                 event.setDamage(event.getDamage() * 1.025);
             }
         }
         if (event.getEntity() instanceof Player) {
-            MaskType found = MaskType.fromPlayer((Player) event.getEntity());
-            if (Math.random() <= 0.02 && found == MaskType.TURKEY) {
+            Player victim = (Player) event.getEntity();
+            if (Math.random() <= 0.02 && MaskType.TURKEY.hasEquipped(victim)) {
                 event.setCancelled(true);
                 event.getEntity().sendMessage(CC.YellowB + "* DODGED [" + CC.Gray + "Turkey Mask" + CC.YellowB + "]");
                 de.inventivegames.particle.ParticleEffect.CLOUD.sendToPlayers(Bukkit.getOnlinePlayers(), event.getEntity().getLocation().add(0.0, 0.5, 0.0), 0.2f, 0.2f, 0.2f, 0.1f, 10);
 
-            } else if (found == MaskType.MONOPOLY || found == MaskType.PARTY_HAT) {
+            } else if (MaskType.MONOPOLY.hasEquipped(victim) || MaskType.PARTY_HAT.hasEquipped(victim)) {
                 event.setDamage(event.getDamage() * 0.95);
             }
         }

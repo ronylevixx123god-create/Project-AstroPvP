@@ -24,7 +24,7 @@ public class AntiMkitDamagedListener implements Listener {
                 Player target;
                 Map<AntiMkit, Integer> equipped;
                 String armorSetFrom;
-                if (event.getEnchant() instanceof MasteryCustomEnchantment && event.getTarget() instanceof Player && (armorSetFrom = ((MasteryCustomEnchantment) event.getEnchant()).getArmorSet()) != null && !armorSetFrom.isEmpty() && (equipped = AstroArmorSetsAPI.getAntiMkitCrystalsEquipped(target = (Player) event.getTarget())) != null && equipped.containsKey(armorSetFrom)) {
+                if (event.getEnchant() instanceof MasteryCustomEnchantment && event.getTarget() instanceof Player && (armorSetFrom = ((MasteryCustomEnchantment) event.getEnchant()).getArmorSet()) != null && !armorSetFrom.isEmpty() && (equipped = AstroArmorSetsAPI.getAntiMkitCrystalsEquipped(target = (Player) event.getTarget())) != null && equipped.containsKey(AstroArmorSetsAPI.mkitFromName(armorSetFrom))) {
                     if (target.hasMetadata("revoked")) {
                         return;
                     }

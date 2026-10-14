@@ -12,7 +12,7 @@ public class DatabaseManager {
     private static final String TABLE_NAME = "discord_data";
     private Connection connection;
     private DiscordSyncPlugin plugin;
-    private Map<UUID, Long> cachedResults = new HashMap<>();
+    private Map<UUID, Long> cachedResults = new java.util.concurrent.ConcurrentHashMap<>();
 
     public Connection getConnection() {
         return this.connection;
@@ -132,7 +132,7 @@ public class DatabaseManager {
         try {
             PreparedStatement statement = this.connection.prepareStatement("SELECT * FROM discord_data");
             ResultSet results = statement.executeQuery();
-            Map<UUID, Long> fetchedMap = new HashMap<>();
+            Map<UUID, Long> fetchedMap = new java.util.concurrent.ConcurrentHashMap<>();
 
             while(results.next()) {
                 try {
@@ -158,14 +158,19 @@ public class DatabaseManager {
         return null;
     }
 
+    private static String requiredEnvironment(String name) {
+        String value = System.getenv(name);
+        if (value == null || value.trim().isEmpty()) throw new IllegalStateException(name + " is not configured");
+        return value;
+    }
+
     public void connect() throws Exception {
         synchronized(this) {
             if (this.getConnection() != null && !this.getConnection().isClosed()) {
                 System.out.println("Current connect isn't closed!");
             } else {
                 Class.forName("com.mysql.jdbc.Driver");
-                //this.connection = DriverManager.getConnection("jdbc:mysql://u4_1KRTto7gWF:96+HGu!c8h5Tt0PZ^5Nc=l3+@127.0.0.1:3306/s4_DiscordSync");
-                this.connection = DriverManager.getConnection("jdbc:mysql://172.18.0.1:3306/s1_DiscordSync", "u1_aUILDUBrgS", "X1Zhdvq^^sJoIv0aaBdm.V.^");
+                this.connection = DriverManager.getConnection(requiredEnvironment("ASTRO_DISCORD_DB_URL"), requiredEnvironment("ASTRO_DISCORD_DB_USER"), requiredEnvironment("ASTRO_DISCORD_DB_PASSWORD"));
                 System.out.println("DB connected!");
             }
         }

@@ -9,7 +9,6 @@ import net.astropvp.armorsets.AstroArmorSetsAPI;
 import net.astropvp.armorsets.struct.ArmorSetType;
 import net.astropvp.armorsets.struct.antiMkit.AntiMkit;
 import net.astropvp.armorsets.struct.cache.ArmorSetCache;
-import net.astropvp.core.AstroCore;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Entity;
@@ -64,6 +63,11 @@ public class ArmorSetApplyListener implements Listener {
                 AstroArmorSetsAPI.refreshArmorSets(e.getEntity(), true);
             }, 30L);
         }
+    }
+
+    @EventHandler
+    public void onQuit(org.bukkit.event.player.PlayerQuitEvent event) {
+        AstroArmorSets.getInstance().forgetArmorCache(event.getPlayer());
     }
 
     @EventHandler

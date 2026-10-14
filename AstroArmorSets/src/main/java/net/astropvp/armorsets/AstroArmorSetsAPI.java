@@ -18,9 +18,6 @@ import net.astropvp.armorsets.struct.heroicArmor.HeroicArmor;
 import net.astropvp.armorsets.utils.Pair;
 import net.astropvp.armorsets.utils.modifiers.AttributeModifier;
 import net.astropvp.armorsets.utils.modifiers.ModifierType;
-import net.astropvp.core.AstroCore;
-import net.astropvp.core.utils.cache.CacheManager;
-import net.astropvp.core.utils.cache.CachedPlayer;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;
 import org.bukkit.Material;
@@ -33,6 +30,11 @@ import org.bukkit.inventory.meta.LeatherArmorMeta;
 import java.util.*;
 
 public class AstroArmorSetsAPI {
+
+    /** Armor state belongs to the armor plugin, independent of Core authorization. */
+    public static ArmorSetCache getArmorCache(Player player) {
+        return AstroArmorSets.getInstance().getArmorCache(player);
+    }
 
 
     public static ArmorSetType getSetTypeOnItem(ItemStack item) {
@@ -77,8 +79,7 @@ public class AstroArmorSetsAPI {
     }
 
     public static ArmorSetType getCurrentArmorSet(Player player) {
-        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        ArmorSetCache cache = getArmorCache(player);
         if (cache == null) return null;
         return cache.getCurrentArmorSet();
     }
@@ -86,23 +87,20 @@ public class AstroArmorSetsAPI {
 
     public static Map<ArmorSetType, Integer> getCurrentCrystals(Player player) {
         Map<ArmorSetType, Integer> empty = new HashMap<>();
-        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        ArmorSetCache cache = getArmorCache(player);
         if (cache == null) return empty;
         return cache.getCurrentSetCrystals();
     }
 
     public static boolean isInOmni(Player player) {
-        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        ArmorSetCache cache = getArmorCache(player);
         if (cache == null) return false;
         return cache.getOmniPieces() == 3 && cache.getCurrentArmorSet() != null;
     }
 
     public static void refreshArmorSets(Player player, boolean silent) {
 
-        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
+        ArmorSetCache cache = getArmorCache(player);
         clearCache(player);
 
         ItemStack[] armor = player.getInventory().getArmorContents();
@@ -156,8 +154,7 @@ public class AstroArmorSetsAPI {
 
     public static void clearCache(Player player) {
 
-        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
+        ArmorSetCache cache = getArmorCache(player);
         cache.setHeroicPieces(0);
         cache.setOmniPieces(0);
         cache.getCurrentAntiMkitCrystals().clear();
@@ -168,8 +165,7 @@ public class AstroArmorSetsAPI {
 
     public static void refreshArmorPiece(ItemStack newArmorPiece, ItemStack oldArmorPiece, Player player) {
 
-        CachedPlayer armorSetPlayer = AstroCore.getInstance().getCacheManager().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) ((ArmorSetCache) (armorSetPlayer.hasCache("armor_set") ? armorSetPlayer.getCache("armor_set") : armorSetPlayer.registerCache(new ArmorSetCache(player))));
+        ArmorSetCache cache = getArmorCache(player);
         if (isOmniPiece(oldArmorPiece)) {
             cache.removeOmniPiece(oldArmorPiece);
         }
@@ -339,8 +335,7 @@ public class AstroArmorSetsAPI {
 
     public static Map<ArmorSetType, Integer> getBonusCrystalsEquipped(Player player) {
         Map<ArmorSetType, Integer> empty = new HashMap<>();
-        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        ArmorSetCache cache = getArmorCache(player);
         if (cache == null) return empty;
         if (cache.getCurrentSetCrystals() != null && !cache.getCurrentSetCrystals().isEmpty()) {
             return cache.getCurrentSetCrystals();
@@ -350,8 +345,7 @@ public class AstroArmorSetsAPI {
 
     public static Map<ArmorSetType, Integer> getBonusCrystalsEquippedIncludingCorruption(Player attacker, Player attacked) {
         Map<ArmorSetType, Integer> map = new HashMap<>();
-        CachedPlayer cachedOther = CacheManager.getInstance().getCachedPlayer(attacked);
-        ArmorSetCache cacheOther = (ArmorSetCache) cachedOther.getCache("armor_set");
+        ArmorSetCache cacheOther = getArmorCache(attacked);
         if (attacker.getInventory().getChestplate() != null && AstroItemSkinsAPI.hasSkinEquipped(attacker, SkinType.CORRUPT_AMULET_CORRUPTION)) {
 
             if (AstroItemSkinsAPI.hasSkinEquipped(attacked, SkinType.RUINS_HELMET)) {
@@ -427,8 +421,7 @@ public class AstroArmorSetsAPI {
     public static Map<AntiMkit, Integer> getAntiMkitCrystalsEquipped(Player player) {
         Map<AntiMkit, Integer> empty = new HashMap<>();
 
-        CachedPlayer cachedPlayer = CacheManager.getInstance().getCachedPlayer(player);
-        ArmorSetCache cache = (ArmorSetCache) cachedPlayer.getCache("armor_set");
+        ArmorSetCache cache = getArmorCache(player);
         if (cache.getCurrentAntiMkitCrystals() != null && !cache.getCurrentAntiMkitCrystals().isEmpty()) {
             return cache.getCurrentAntiMkitCrystals();
         }

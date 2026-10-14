@@ -164,6 +164,11 @@ public class ArmorCrystalItem extends CosmicItem implements InventoryInteractabl
             if (bonusApplied != null && !bonusApplied.isEmpty()) {
                 throw new PrefixedException("You cannot apply multiple Armor Set Crystals to a single piece of gear!");
             }
+            // Outpost ownership cannot be determined without authorized Kore.
+            // Refuse before consuming the crystal rather than lose it on a linkage error.
+            if (!Bukkit.getPluginManager().isPluginEnabled("FactionsKore") || !Bukkit.getPluginManager().isPluginEnabled("AstroCore")) {
+                throw new PrefixedException("Armor crystal application requires authorized FactionsKore/AstroCore to preserve your outpost bonus. Your crystal has not been consumed.");
+            }
             if (cursor.getAmount() > 1) {
                 cursor.setAmount(cursor.getAmount() - 1);
                 player.setItemOnCursor(cursor);

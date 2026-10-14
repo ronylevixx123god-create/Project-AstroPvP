@@ -94,13 +94,14 @@ implements Listener {
             ItemStack placed = event.getItemInHand();
             if (placed != null && placed.getType() != Material.AIR && (pair = this.fromItem(wrapper = new NBTWrapper(placed))) != null && (customItem = pair.getRight()) instanceof PlaceableBlockItem) {
                 PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems) pair.getLeft(), customItem, placed, wrapper);
-                if (!newEvent.callEvent()) {
+                org.bukkit.Bukkit.getPluginManager().callEvent(newEvent);
+                if (newEvent.isCancelled()) {
                     event.setCancelled(true);
                     return;
                 }
                 try {
                     ((PlaceableBlockItem) customItem).onPlayerPlace(event.getPlayer(), placed, wrapper, event);
-                    new PostPlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems) pair.getLeft(), customItem, placed, wrapper).callEvent();
+                    org.bukkit.Bukkit.getPluginManager().callEvent(new PostPlayerUseCosmicItemEvent(event.getPlayer(), (CosmicItems) pair.getLeft(), customItem, placed, wrapper));
                 }
                 catch (CosmicException e) {
                     event.getPlayer().sendMessage(e.getMessage());
@@ -123,12 +124,13 @@ implements Listener {
                 }
                 try {
                     PrePlayerUseCosmicItemEvent newEvent = new PrePlayerUseCosmicItemEvent(player, (CosmicItems) pair.getLeft(), customItem, itemStack, wrapper);
-                    if (!newEvent.callEvent()) {
+                    org.bukkit.Bukkit.getPluginManager().callEvent(newEvent);
+                if (newEvent.isCancelled()) {
                         event.setCancelled(true);
                         return;
                     }
                     inventoryInteractable.onInventoryClick((Player)event.getWhoClicked(), itemStack, wrapper, otherWrapper, otherItem, event);
-                    new PostPlayerUseCosmicItemEvent(player, (CosmicItems) pair.getLeft(), customItem, itemStack, wrapper).callEvent();
+                    org.bukkit.Bukkit.getPluginManager().callEvent(new PostPlayerUseCosmicItemEvent(player, (CosmicItems) pair.getLeft(), customItem, itemStack, wrapper));
                 }
                 catch (CosmicException e) {
                     event.getWhoClicked().sendMessage(e.getMessage());

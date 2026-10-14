@@ -94,11 +94,6 @@
             <version>2.10.4</version>
         </dependency>
         <dependency>
-            <groupId>com.github.sk89q.worldedit</groupId>
-            <artifactId>ap</artifactId>
-            <version>7.0.1</version>
-        </dependency>
-        <dependency>
             <groupId>com.google.code.gson</groupId>
             <artifactId>gson</artifactId>
             <version>2.8.6</version>
@@ -262,7 +257,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Kits</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -288,7 +283,7 @@
 
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Conquest</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -304,7 +299,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Masks</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -321,7 +316,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>KoTHs</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -356,7 +351,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Duels</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -364,7 +359,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Bosses</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -380,7 +375,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Explosive</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -404,7 +399,7 @@
         </dependency>
 
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Enchantments</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -444,7 +439,8 @@
             <systemPath>${project.basedir}/lib/CosmicMasks.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <!-- Bundled API binary, not a dependency on the reactor project. -->
+            <groupId>legacy.bundled</groupId>
             <artifactId>SpaceChests</artifactId>
             <version>0.1</version>
             <scope>system</scope>

@@ -82,21 +82,9 @@
             <version>1.2</version>
         </dependency>
         <dependency>
-            <groupId>me.clip</groupId>
-            <artifactId>placeholderapi</artifactId>
-            <version>2.0.6</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>net.ess3</groupId>
-            <artifactId>Essentials</artifactId>
-            <version>2.13.1</version>
-        </dependency>
-        <dependency>
-            <groupId>net.dv8tion</groupId>
-            <artifactId>JDA</artifactId>
-            <version>4.ALPHA.0_64</version>
-            <scope>compile</scope>
+            <artifactId>EssentialsX</artifactId>
+            <version>2.17.2</version>
         </dependency>
         <dependency>
             <groupId>com.conaxgames</groupId>
@@ -153,7 +141,7 @@
             <systemPath>${project.basedir}/lib/LibsDisguises.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>EnchantmentsAPI</artifactId>
             <version>0.1</version>
             <scope>system</scope>
@@ -188,7 +176,7 @@
             <systemPath>${project.basedir}/lib/CCVerify-1.0.jar</systemPath>
         </dependency>
         <dependency>
-            <groupId>com.conaxgames</groupId>
+            <groupId>legacy.bundled</groupId>
             <artifactId>Arkkit</artifactId>
             <version>0.1</version>
             <scope>system</scope>
